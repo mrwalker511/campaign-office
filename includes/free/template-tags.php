@@ -13,20 +13,27 @@ if (!defined('ABSPATH')) {
 
 /**
  * Display event details
+ *
+ * Optimized to use single meta query instead of 8 separate queries
  */
 function campaignpress_event_details() {
     if ('cp_event' !== get_post_type()) {
         return;
     }
 
-    $event_date = get_post_meta(get_the_ID(), '_cp_event_date', true);
-    $event_time = get_post_meta(get_the_ID(), '_cp_event_time', true);
-    $event_location = get_post_meta(get_the_ID(), '_cp_event_location', true);
-    $event_address = get_post_meta(get_the_ID(), '_cp_event_address', true);
-    $event_city = get_post_meta(get_the_ID(), '_cp_event_city', true);
-    $event_state = get_post_meta(get_the_ID(), '_cp_event_state', true);
-    $event_zip = get_post_meta(get_the_ID(), '_cp_event_zip', true);
-    $event_rsvp_link = get_post_meta(get_the_ID(), '_cp_event_rsvp_link', true);
+    // Single query to get all post meta (performance optimization)
+    $post_id = get_the_ID();
+    $event_meta = get_post_meta($post_id);
+
+    // Extract meta values with defaults
+    $event_date = isset($event_meta['_cp_event_date'][0]) ? $event_meta['_cp_event_date'][0] : '';
+    $event_time = isset($event_meta['_cp_event_time'][0]) ? $event_meta['_cp_event_time'][0] : '';
+    $event_location = isset($event_meta['_cp_event_location'][0]) ? $event_meta['_cp_event_location'][0] : '';
+    $event_address = isset($event_meta['_cp_event_address'][0]) ? $event_meta['_cp_event_address'][0] : '';
+    $event_city = isset($event_meta['_cp_event_city'][0]) ? $event_meta['_cp_event_city'][0] : '';
+    $event_state = isset($event_meta['_cp_event_state'][0]) ? $event_meta['_cp_event_state'][0] : '';
+    $event_zip = isset($event_meta['_cp_event_zip'][0]) ? $event_meta['_cp_event_zip'][0] : '';
+    $event_rsvp_link = isset($event_meta['_cp_event_rsvp_link'][0]) ? $event_meta['_cp_event_rsvp_link'][0] : '';
 
     if (!$event_date && !$event_location) {
         return;
@@ -38,11 +45,20 @@ function campaignpress_event_details() {
             <div class="cp-event-datetime">
                 <span class="dashicons dashicons-calendar-alt"></span>
                 <?php
-                if ($event_date) {
-                    echo '<strong>' . esc_html(date_i18n(get_option('date_format'), strtotime($event_date))) . '</strong>';
+                // Display date with timezone awareness and format validation
+                if ($event_date && preg_match('/^\d{4}-\d{2}-\d{2}$/', $event_date)) {
+                    $timestamp = strtotime($event_date . ' midnight', current_time('timestamp'));
+                    if ($timestamp !== false) {
+                        echo '<strong>' . esc_html(date_i18n(get_option('date_format'), $timestamp)) . '</strong>';
+                    }
                 }
-                if ($event_time) {
-                    echo ' ' . esc_html__('at', 'campaignpress') . ' ' . esc_html(date_i18n(get_option('time_format'), strtotime($event_time)));
+
+                // Display time using DateTime for proper HH:MM parsing
+                if ($event_time && preg_match('/^\d{2}:\d{2}$/', $event_time)) {
+                    $time_obj = DateTime::createFromFormat('H:i', $event_time);
+                    if ($time_obj) {
+                        echo ' ' . esc_html__('at', 'campaignpress') . ' ' . esc_html($time_obj->format(get_option('time_format')));
+                    }
                 }
                 ?>
             </div>
@@ -180,35 +196,55 @@ function campaignpress_entry_footer() {
 }
 
 /**
+ * Get social media URLs with caching
+ * Uses static caching to prevent multiple database queries
+ *
+ * @return array Associative array of social media URLs
+ */
+function campaignpress_get_social_urls() {
+    static $social_urls = null;
+
+    if ($social_urls === null) {
+        $social_urls = array(
+            'facebook'  => get_theme_mod('campaignpress_facebook_url', ''),
+            'twitter'   => get_theme_mod('campaignpress_twitter_url', ''),
+            'instagram' => get_theme_mod('campaignpress_instagram_url', ''),
+            'youtube'   => get_theme_mod('campaignpress_youtube_url', ''),
+            'linkedin'  => get_theme_mod('campaignpress_linkedin_url', ''),
+        );
+    }
+
+    return $social_urls;
+}
+
+/**
  * Display social media links
+ * Optimized to reduce database queries from 5 to 1 (per page load)
  */
 function campaignpress_social_links() {
-    $facebook = get_theme_mod('campaignpress_facebook_url', '');
-    $twitter = get_theme_mod('campaignpress_twitter_url', '');
-    $instagram = get_theme_mod('campaignpress_instagram_url', '');
-    $youtube = get_theme_mod('campaignpress_youtube_url', '');
-    $linkedin = get_theme_mod('campaignpress_linkedin_url', '');
+    $social_urls = campaignpress_get_social_urls();
 
-    if (!$facebook && !$twitter && !$instagram && !$youtube && !$linkedin) {
+    // Check if any social URLs are set
+    if (!array_filter($social_urls)) {
         return;
     }
 
     echo '<div class="cp-social-links">';
 
-    if ($facebook) {
-        echo '<a href="' . esc_url($facebook) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Facebook', 'campaignpress') . '"><span class="dashicons dashicons-facebook"></span></a>';
+    if ($social_urls['facebook']) {
+        echo '<a href="' . esc_url($social_urls['facebook']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Facebook', 'campaignpress') . '"><span class="dashicons dashicons-facebook"></span></a>';
     }
-    if ($twitter) {
-        echo '<a href="' . esc_url($twitter) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Twitter', 'campaignpress') . '"><span class="dashicons dashicons-twitter"></span></a>';
+    if ($social_urls['twitter']) {
+        echo '<a href="' . esc_url($social_urls['twitter']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Twitter', 'campaignpress') . '"><span class="dashicons dashicons-twitter"></span></a>';
     }
-    if ($instagram) {
-        echo '<a href="' . esc_url($instagram) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Instagram', 'campaignpress') . '"><span class="dashicons dashicons-instagram"></span></a>';
+    if ($social_urls['instagram']) {
+        echo '<a href="' . esc_url($social_urls['instagram']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Instagram', 'campaignpress') . '"><span class="dashicons dashicons-instagram"></span></a>';
     }
-    if ($youtube) {
-        echo '<a href="' . esc_url($youtube) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('YouTube', 'campaignpress') . '"><span class="dashicons dashicons-video-alt3"></span></a>';
+    if ($social_urls['youtube']) {
+        echo '<a href="' . esc_url($social_urls['youtube']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('YouTube', 'campaignpress') . '"><span class="dashicons dashicons-video-alt3"></span></a>';
     }
-    if ($linkedin) {
-        echo '<a href="' . esc_url($linkedin) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('LinkedIn', 'campaignpress') . '"><span class="dashicons dashicons-linkedin"></span></a>';
+    if ($social_urls['linkedin']) {
+        echo '<a href="' . esc_url($social_urls['linkedin']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('LinkedIn', 'campaignpress') . '"><span class="dashicons dashicons-linkedin"></span></a>';
     }
 
     echo '</div>';

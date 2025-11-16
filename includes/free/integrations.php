@@ -12,6 +12,13 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Add custom CSS class to Contact Form 7 forms
+ */
+function campaignpress_wpcf7_form_class($class) {
+    return $class . ' cp-contact-form';
+}
+
+/**
  * Check if Contact Form 7 is active and add custom styling
  */
 function campaignpress_contact_form_7_support() {
@@ -20,9 +27,7 @@ function campaignpress_contact_form_7_support() {
     }
 
     // Add custom CSS class to Contact Form 7 forms
-    add_filter('wpcf7_form_class_attr', function($class) {
-        return $class . ' cp-contact-form';
-    });
+    add_filter('wpcf7_form_class_attr', 'campaignpress_wpcf7_form_class');
 }
 add_action('wp', 'campaignpress_contact_form_7_support');
 
@@ -45,7 +50,7 @@ add_action('after_setup_theme', 'campaignpress_events_calendar_support');
 function campaignpress_mailchimp_integration_notice() {
     // Check if user is on the theme options page or widgets page
     $screen = get_current_screen();
-    if (!$screen || !in_array($screen->id, array('appearance_page_campaignpress-settings', 'widgets'))) {
+    if (!$screen || !in_array($screen->id, array('appearance_page_campaignpress-settings', 'widgets'), true)) {
         return;
     }
 
@@ -76,10 +81,16 @@ add_action('admin_notices', 'campaignpress_mailchimp_integration_notice');
 
 /**
  * Get the donation URL from theme settings
+ * Uses static caching to prevent multiple database queries
  */
 function campaignpress_get_donation_url() {
-    $donation_url = get_theme_mod('campaignpress_donation_url', '');
-    return esc_url($donation_url);
+    static $donation_url = null;
+
+    if ($donation_url === null) {
+        $donation_url = esc_url(get_theme_mod('campaignpress_donation_url', ''));
+    }
+
+    return $donation_url;
 }
 
 /**

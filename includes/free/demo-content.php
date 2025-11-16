@@ -1,0 +1,766 @@
+<?php
+/**
+ * Demo Content Generator
+ *
+ * Provides sample content for testing CampaignPress theme
+ *
+ * @package CampaignPress
+ * @since 1.0.0
+ */
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+class CampaignPress_Demo_Content {
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        add_action('admin_menu', array($this, 'add_admin_menu'));
+        add_action('admin_post_cp_import_demo', array($this, 'handle_import'));
+        add_action('admin_post_cp_delete_demo', array($this, 'handle_delete'));
+    }
+
+    /**
+     * Add admin menu
+     */
+    public function add_admin_menu() {
+        add_theme_page(
+            __('CampaignPress Demo Content', 'campaignpress'),
+            __('Demo Content', 'campaignpress'),
+            'manage_options',
+            'campaignpress-demo',
+            array($this, 'render_admin_page')
+        );
+    }
+
+    /**
+     * Render admin page
+     */
+    public function render_admin_page() {
+        $demo_exists = get_option('campaignpress_demo_imported', false);
+        ?>
+        <div class="wrap">
+            <h1><?php esc_html_e('CampaignPress Demo Content', 'campaignpress'); ?></h1>
+
+            <?php if (isset($_GET['imported'])) : ?>
+                <div class="notice notice-success is-dismissible">
+                    <p><?php esc_html_e('Demo content imported successfully!', 'campaignpress'); ?></p>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_GET['deleted'])) : ?>
+                <div class="notice notice-success is-dismissible">
+                    <p><?php esc_html_e('Demo content deleted successfully!', 'campaignpress'); ?></p>
+                </div>
+            <?php endif; ?>
+
+            <div class="card" style="max-width: 800px;">
+                <h2><?php esc_html_e('Sample Campaign Content', 'campaignpress'); ?></h2>
+                <p><?php esc_html_e('This will create sample content to help you see how CampaignPress works. Perfect for testing and demonstrations.', 'campaignpress'); ?></p>
+
+                <h3><?php esc_html_e('Content to be created:', 'campaignpress'); ?></h3>
+                <ul style="list-style: disc; margin-left: 20px;">
+                    <li><?php esc_html_e('6 Policy Issues (Healthcare, Education, Environment, Economy, Justice, Infrastructure)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('4 Campaign Events (Town Hall, Fundraiser, Rally, Debate)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('8 Endorsements (Officials, Organizations, Community Leaders)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('5 Team Members (Campaign Manager, Finance Director, etc.)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('4 Volunteer Opportunities (Canvassing, Phone Banking, etc.)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Sample homepage with CampaignPress blocks', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('About page with candidate bio', 'campaignpress'); ?></li>
+                </ul>
+
+                <?php if (!$demo_exists) : ?>
+                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+                        <input type="hidden" name="action" value="cp_import_demo">
+                        <?php wp_nonce_field('cp_import_demo', 'cp_demo_nonce'); ?>
+                        <p>
+                            <button type="submit" class="button button-primary button-hero">
+                                <?php esc_html_e('Import Demo Content', 'campaignpress'); ?>
+                            </button>
+                        </p>
+                        <p class="description">
+                            <?php esc_html_e('This creates sample content. You can delete it anytime.', 'campaignpress'); ?>
+                        </p>
+                    </form>
+                <?php else : ?>
+                    <div class="notice notice-info inline">
+                        <p><?php esc_html_e('Demo content is currently installed.', 'campaignpress'); ?></p>
+                    </div>
+                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('<?php esc_attr_e('Are you sure you want to delete all demo content? This cannot be undone.', 'campaignpress'); ?>');">
+                        <input type="hidden" name="action" value="cp_delete_demo">
+                        <?php wp_nonce_field('cp_delete_demo', 'cp_demo_nonce'); ?>
+                        <p>
+                            <button type="submit" class="button button-secondary">
+                                <?php esc_html_e('Delete Demo Content', 'campaignpress'); ?>
+                            </button>
+                        </p>
+                    </form>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Handle import
+     */
+    public function handle_import() {
+        // Check nonce
+        if (!isset($_POST['cp_demo_nonce']) || !wp_verify_nonce($_POST['cp_demo_nonce'], 'cp_import_demo')) {
+            wp_die(__('Security check failed', 'campaignpress'));
+        }
+
+        // Check permissions
+        if (!current_user_can('manage_options')) {
+            wp_die(__('Insufficient permissions', 'campaignpress'));
+        }
+
+        // Import content
+        $demo_post_ids = array();
+
+        // Import Issues
+        $demo_post_ids['issues'] = $this->import_issues();
+
+        // Import Events
+        $demo_post_ids['events'] = $this->import_events();
+
+        // Import Endorsements
+        $demo_post_ids['endorsements'] = $this->import_endorsements();
+
+        // Import Team Members
+        $demo_post_ids['team'] = $this->import_team();
+
+        // Import Volunteer Opportunities
+        $demo_post_ids['volunteers'] = $this->import_volunteers();
+
+        // Import Sample Pages
+        $demo_post_ids['pages'] = $this->import_pages();
+
+        // Save demo post IDs for later deletion
+        update_option('campaignpress_demo_post_ids', $demo_post_ids);
+        update_option('campaignpress_demo_imported', true);
+
+        // Redirect back
+        wp_redirect(add_query_arg('imported', '1', wp_get_referer()));
+        exit;
+    }
+
+    /**
+     * Handle delete
+     */
+    public function handle_delete() {
+        // Check nonce
+        if (!isset($_POST['cp_demo_nonce']) || !wp_verify_nonce($_POST['cp_demo_nonce'], 'cp_delete_demo')) {
+            wp_die(__('Security check failed', 'campaignpress'));
+        }
+
+        // Check permissions
+        if (!current_user_can('manage_options')) {
+            wp_die(__('Insufficient permissions', 'campaignpress'));
+        }
+
+        // Get demo post IDs
+        $demo_post_ids = get_option('campaignpress_demo_post_ids', array());
+
+        // Delete all demo posts
+        foreach ($demo_post_ids as $post_type => $ids) {
+            if (is_array($ids)) {
+                foreach ($ids as $post_id) {
+                    wp_delete_post($post_id, true);
+                }
+            }
+        }
+
+        // Clean up options
+        delete_option('campaignpress_demo_post_ids');
+        delete_option('campaignpress_demo_imported');
+
+        // Redirect back
+        wp_redirect(add_query_arg('deleted', '1', wp_get_referer()));
+        exit;
+    }
+
+    /**
+     * Import sample issues
+     */
+    private function import_issues() {
+        $issues = array(
+            array(
+                'title' => 'Universal Healthcare',
+                'content' => '<p>Healthcare is a human right, not a privilege. We need to ensure that every person in our community has access to quality, affordable healthcare regardless of their income or employment status.</p>
+
+<h3>Our Plan:</h3>
+<ul>
+    <li>Expand access to affordable health insurance</li>
+    <li>Lower prescription drug costs through bulk negotiation</li>
+    <li>Invest in community health centers</li>
+    <li>Protect coverage for pre-existing conditions</li>
+    <li>Support mental health and addiction services</li>
+</ul>
+
+<p>We spend more on healthcare than any other developed nation, yet millions still lack coverage. It\'s time to put people before profits and build a healthcare system that works for everyone.</p>',
+                'category' => 'Healthcare',
+            ),
+            array(
+                'title' => 'Quality Public Education',
+                'content' => '<p>Every child deserves access to excellent public education. We must invest in our schools, support our teachers, and prepare our students for the jobs of tomorrow.</p>
+
+<h3>Our Commitment:</h3>
+<ul>
+    <li>Increase teacher salaries to attract and retain the best educators</li>
+    <li>Reduce class sizes for more personalized attention</li>
+    <li>Modernize school facilities and technology</li>
+    <li>Expand access to pre-K and early childhood education</li>
+    <li>Make college and vocational training more affordable</li>
+</ul>
+
+<p>Education is the foundation of opportunity. By investing in our schools today, we\'re investing in our community\'s future.</p>',
+                'category' => 'Education',
+            ),
+            array(
+                'title' => 'Climate Action & Clean Energy',
+                'content' => '<p>Climate change is the defining challenge of our generation. We must act now to protect our environment and transition to a clean energy economy.</p>
+
+<h3>Our Action Plan:</h3>
+<ul>
+    <li>Achieve 100% renewable energy by 2035</li>
+    <li>Create green jobs through clean energy investments</li>
+    <li>Protect our air and water from pollution</li>
+    <li>Preserve parks and natural spaces</li>
+    <li>Support sustainable agriculture and local food systems</li>
+</ul>
+
+<p>We can fight climate change while creating good-paying jobs and building a sustainable economy for future generations.</p>',
+                'category' => 'Environment',
+            ),
+            array(
+                'title' => 'Economic Opportunity for All',
+                'content' => '<p>Our economy should work for everyone, not just those at the top. We need to create good-paying jobs, support small businesses, and ensure economic security for all families.</p>
+
+<h3>Our Economic Agenda:</h3>
+<ul>
+    <li>Raise the minimum wage to a living wage</li>
+    <li>Support small businesses and local entrepreneurs</li>
+    <li>Invest in infrastructure to create jobs</li>
+    <li>Protect workers\' rights to organize</li>
+    <li>Close tax loopholes for wealthy corporations</li>
+</ul>
+
+<p>When working families thrive, our entire community prospers. We\'ll build an economy that rewards hard work and provides opportunity for all.</p>',
+                'category' => 'Economy',
+            ),
+            array(
+                'title' => 'Criminal Justice Reform',
+                'content' => '<p>Our justice system must be fair, equitable, and focused on rehabilitation rather than punishment. We need comprehensive reform to end mass incarceration and rebuild trust.</p>
+
+<h3>Reform Priorities:</h3>
+<ul>
+    <li>End cash bail that criminalizes poverty</li>
+    <li>Invest in community policing and accountability</li>
+    <li>Expand mental health and addiction treatment</li>
+    <li>Reform sentencing guidelines for non-violent offenses</li>
+    <li>Support re-entry programs for formerly incarcerated individuals</li>
+</ul>
+
+<p>Justice means treating people with dignity, addressing root causes of crime, and giving everyone a second chance.</p>',
+                'category' => 'Justice',
+            ),
+            array(
+                'title' => 'Infrastructure & Transportation',
+                'content' => '<p>Modern infrastructure is essential for economic growth and quality of life. We need to rebuild our roads, bridges, and public transit while investing in 21st-century solutions.</p>
+
+<h3>Infrastructure Plan:</h3>
+<ul>
+    <li>Repair deteriorating roads and bridges</li>
+    <li>Expand public transportation options</li>
+    <li>Build out high-speed internet access</li>
+    <li>Upgrade water and sewer systems</li>
+    <li>Invest in electric vehicle infrastructure</li>
+</ul>
+
+<p>Smart infrastructure investments create jobs, improve safety, and connect our communities. It\'s time to build for the future.</p>',
+                'category' => 'Infrastructure',
+            ),
+        );
+
+        $post_ids = array();
+
+        foreach ($issues as $issue) {
+            $post_id = wp_insert_post(array(
+                'post_title'   => $issue['title'],
+                'post_content' => $issue['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'cp_issue',
+                'post_author'  => get_current_user_id(),
+            ));
+
+            if ($post_id && !is_wp_error($post_id)) {
+                // Add to category
+                $term = term_exists($issue['category'], 'issue_category');
+                if (!$term) {
+                    $term = wp_insert_term($issue['category'], 'issue_category');
+                }
+                if (!is_wp_error($term)) {
+                    wp_set_object_terms($post_id, $term['term_id'], 'issue_category');
+                }
+
+                $post_ids[] = $post_id;
+            }
+        }
+
+        return $post_ids;
+    }
+
+    /**
+     * Import sample events
+     */
+    private function import_events() {
+        $events = array(
+            array(
+                'title' => 'Community Town Hall - Healthcare Discussion',
+                'content' => '<p>Join us for an important conversation about the future of healthcare in our community. We\'ll discuss our plan for universal healthcare access and answer your questions.</p>
+
+<p>This is your opportunity to share your healthcare stories, concerns, and ideas. Together, we can build a system that works for everyone.</p>
+
+<p>Light refreshments will be served. All are welcome!</p>',
+                'date' => date('Y-m-d', strtotime('+14 days')),
+                'time' => '18:00',
+                'location' => 'Central Community Center',
+                'address' => '123 Main Street',
+                'city' => 'Springfield',
+                'state' => 'IL',
+                'zip' => '62701',
+                'rsvp_link' => '#',
+                'type' => 'Town Hall',
+            ),
+            array(
+                'title' => 'Grassroots Fundraiser BBQ',
+                'content' => '<p>Help us fuel our grassroots campaign! Join us for a family-friendly BBQ fundraiser with great food, live music, and community spirit.</p>
+
+<p>This campaign is powered by people, not special interests. Your support helps us reach voters, spread our message, and build a movement for change.</p>
+
+<p>Suggested donation: $25 per person, but all contributions welcome. No one turned away!</p>',
+                'date' => date('Y-m-d', strtotime('+21 days')),
+                'time' => '14:00',
+                'location' => 'Riverside Park',
+                'address' => '456 Park Avenue',
+                'city' => 'Springfield',
+                'state' => 'IL',
+                'zip' => '62702',
+                'rsvp_link' => '#',
+                'type' => 'Fundraiser',
+            ),
+            array(
+                'title' => 'Get Out The Vote Rally',
+                'content' => '<p>The election is almost here! Join us for a high-energy rally to energize our volunteers and get out the vote.</p>
+
+<p>We\'ll have special guests, inspiring speakers, and marching music. Then we\'ll head out together to knock doors and make calls.</p>
+
+<p>This is it - the final push. Every conversation, every door, every vote counts. Let\'s finish strong together!</p>',
+                'date' => date('Y-m-d', strtotime('+60 days')),
+                'time' => '10:00',
+                'location' => 'Campaign Headquarters',
+                'address' => '789 Campaign Trail',
+                'city' => 'Springfield',
+                'state' => 'IL',
+                'zip' => '62703',
+                'rsvp_link' => '#',
+                'type' => 'Rally',
+            ),
+            array(
+                'title' => 'Candidate Debate - Community Issues',
+                'content' => '<p>Watch our candidate discuss the issues that matter most to our community in this important debate.</p>
+
+<p>Topics will include education, healthcare, economic development, and public safety. The debate will be followed by a Q&A session with audience members.</p>
+
+<p>This is your chance to see where the candidates stand and make an informed decision on Election Day.</p>',
+                'date' => date('Y-m-d', strtotime('+45 days')),
+                'time' => '19:00',
+                'location' => 'Springfield High School Auditorium',
+                'address' => '321 Education Way',
+                'city' => 'Springfield',
+                'state' => 'IL',
+                'zip' => '62704',
+                'rsvp_link' => '#',
+                'type' => 'Debate',
+            ),
+        );
+
+        $post_ids = array();
+
+        foreach ($events as $event) {
+            $post_id = wp_insert_post(array(
+                'post_title'   => $event['title'],
+                'post_content' => $event['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'cp_event',
+                'post_author'  => get_current_user_id(),
+            ));
+
+            if ($post_id && !is_wp_error($post_id)) {
+                // Add event metadata
+                update_post_meta($post_id, '_cp_event_date', $event['date']);
+                update_post_meta($post_id, '_cp_event_time', $event['time']);
+                update_post_meta($post_id, '_cp_event_location', $event['location']);
+                update_post_meta($post_id, '_cp_event_address', $event['address']);
+                update_post_meta($post_id, '_cp_event_city', $event['city']);
+                update_post_meta($post_id, '_cp_event_state', $event['state']);
+                update_post_meta($post_id, '_cp_event_zip', $event['zip']);
+                update_post_meta($post_id, '_cp_event_rsvp_link', $event['rsvp_link']);
+
+                // Add event type
+                $term = term_exists($event['type'], 'event_type');
+                if (!$term) {
+                    $term = wp_insert_term($event['type'], 'event_type');
+                }
+                if (!is_wp_error($term)) {
+                    wp_set_object_terms($post_id, $term['term_id'], 'event_type');
+                }
+
+                $post_ids[] = $post_id;
+            }
+        }
+
+        return $post_ids;
+    }
+
+    /**
+     * Import sample endorsements
+     */
+    private function import_endorsements() {
+        $endorsements = array(
+            array(
+                'title' => 'Mayor Jennifer Williams',
+                'content' => '"I\'ve worked with this candidate on numerous community initiatives, and I can say without hesitation that they have the integrity, vision, and dedication we need in office. They listen to constituents, build consensus, and get results. I\'m proud to endorse their campaign."',
+            ),
+            array(
+                'title' => 'Springfield Teachers Association',
+                'content' => '"Our members have seen firsthand this candidate\'s commitment to public education. They understand that investing in schools means investing in our future. We\'re confident they will fight for our teachers, our students, and quality education for all."',
+            ),
+            array(
+                'title' => 'Dr. Robert Chen - Community Health Director',
+                'content' => '"As a healthcare professional, I\'m supporting this campaign because they understand that healthcare is a human right. Their plan to expand access and lower costs will save lives in our community. We need this kind of leadership."',
+            ),
+            array(
+                'title' => 'Small Business Coalition of Springfield',
+                'content' => '"This candidate gets it - they understand the challenges small businesses face and have real solutions to help us thrive. They\'re committed to supporting local entrepreneurs and creating an economy that works for everyone, not just big corporations."',
+            ),
+            array(
+                'title' => 'Environmental Action League',
+                'content' => '"Climate change demands bold action, and this candidate has the courage to fight for our planet. Their clean energy plan will create jobs, reduce pollution, and protect our environment for future generations. The time to act is now."',
+            ),
+            array(
+                'title' => 'Police Chief (Ret.) Marcus Johnson',
+                'content' => '"I\'ve dedicated my career to public safety, and I believe this candidate will make our community safer. They support both our officers and common-sense reforms. They understand that real safety comes from strong communities, good schools, and economic opportunity."',
+            ),
+            array(
+                'title' => 'Young Democrats of Springfield',
+                'content' => '"Our generation is ready for change, and this candidate represents the future we\'re fighting for. They\'re not afraid to tackle big challenges like student debt, climate change, and economic inequality. We\'re all in for this campaign!"',
+            ),
+            array(
+                'title' => 'Rev. Sarah Martinez - Faith Leaders Coalition',
+                'content' => '"This candidate embodies the values we cherish - compassion, justice, and service to others. They have shown a deep commitment to lifting up those in need and fighting for the marginalized. Our faith calls us to support leaders like this."',
+            ),
+        );
+
+        $post_ids = array();
+
+        foreach ($endorsements as $endorsement) {
+            $post_id = wp_insert_post(array(
+                'post_title'   => $endorsement['title'],
+                'post_content' => $endorsement['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'cp_endorsement',
+                'post_author'  => get_current_user_id(),
+            ));
+
+            if ($post_id && !is_wp_error($post_id)) {
+                $post_ids[] = $post_id;
+            }
+        }
+
+        return $post_ids;
+    }
+
+    /**
+     * Import sample team members
+     */
+    private function import_team() {
+        $team = array(
+            array(
+                'title' => 'Sarah Johnson - Campaign Manager',
+                'content' => '<p>Sarah brings 15 years of campaign experience to our team. She\'s managed successful races from local school board to statewide initiatives. Sarah is a strategic thinker who knows how to build winning coalitions and mobilize grassroots support.</p>
+
+<p>Before joining our campaign, Sarah worked as Political Director for the state party and managed three winning congressional campaigns. She holds a degree in Political Science from State University.</p>',
+            ),
+            array(
+                'title' => 'Michael Torres - Finance Director',
+                'content' => '<p>Michael oversees all fundraising operations and ensures our campaign runs efficiently. With a background in nonprofit development and political fundraising, he understands the importance of building a people-powered campaign.</p>
+
+<p>Michael previously served as Development Director for several advocacy organizations and has raised millions for progressive causes. He believes in transparent, grassroots fundraising that puts people first.</p>',
+            ),
+            array(
+                'title' => 'Emily Washington - Communications Director',
+                'content' => '<p>Emily crafts our message and manages all media relations. She\'s an award-winning journalist turned political communicator who knows how to tell our story effectively across all platforms.</p>
+
+<p>Previously a reporter for the Springfield Times and communications advisor to several elected officials, Emily brings both media savvy and a deep understanding of the issues facing our community.</p>',
+            ),
+            array(
+                'title' => 'David Kim - Field Director',
+                'content' => '<p>David leads our grassroots organizing efforts, training volunteers and building our ground game. He\'s a community organizer at heart who believes in the power of one-on-one conversations to build a movement.</p>
+
+<p>David has organized successful voter registration drives, led canvassing operations, and built volunteer teams across the state. He knows that elections are won by talking to voters where they are.</p>',
+            ),
+            array(
+                'title' => 'Maria Rodriguez - Policy Director',
+                'content' => '<p>Maria develops our policy positions and ensures our platform addresses the real needs of our community. She brings deep expertise in public policy and a commitment to evidence-based solutions.</p>
+
+<p>With a Ph.D. in Public Policy and experience working in both government and advocacy, Maria translates complex policy into practical solutions that improve people\'s lives.</p>',
+            ),
+        );
+
+        $post_ids = array();
+
+        foreach ($team as $member) {
+            $post_id = wp_insert_post(array(
+                'post_title'   => $member['title'],
+                'post_content' => $member['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'cp_team',
+                'post_author'  => get_current_user_id(),
+            ));
+
+            if ($post_id && !is_wp_error($post_id)) {
+                $post_ids[] = $post_id;
+            }
+        }
+
+        return $post_ids;
+    }
+
+    /**
+     * Import sample volunteer opportunities
+     */
+    private function import_volunteers() {
+        $volunteers = array(
+            array(
+                'title' => 'Door-to-Door Canvassing',
+                'content' => '<p>Join our canvassing team and talk to voters in your neighborhood! This is the most effective way to reach voters and share our message.</p>
+
+<h3>What You\'ll Do:</h3>
+<ul>
+    <li>Walk through assigned neighborhoods</li>
+    <li>Have friendly conversations with voters</li>
+    <li>Share information about our candidate and campaign</li>
+    <li>Collect valuable voter data</li>
+</ul>
+
+<h3>Time Commitment:</h3>
+<p>Flexible shifts available: weekday evenings and weekend afternoons. We provide all training and materials. No experience necessary!</p>',
+                'excerpt' => 'Talk to voters in your neighborhood and help build our grassroots movement. Training provided!',
+            ),
+            array(
+                'title' => 'Phone Banking',
+                'content' => '<p>Make calls from home (or our office) to reach voters across the district. Phone banking is a great way to get involved if you can\'t canvass in person.</p>
+
+<h3>What You\'ll Do:</h3>
+<ul>
+    <li>Call voters from provided lists</li>
+    <li>Answer questions about our candidate</li>
+    <li>Identify supporters and persuade undecided voters</li>
+    <li>Remind people to vote</li>
+</ul>
+
+<h3>Time Commitment:</h3>
+<p>Virtual phone banks available daily. Shifts are typically 2-3 hours. We provide scripts and training!</p>',
+                'excerpt' => 'Call voters from the comfort of your home. Flexible hours and full training provided.',
+            ),
+            array(
+                'title' => 'Event Support & Logistics',
+                'content' => '<p>Help make our campaign events successful! We need volunteers to assist with setup, registration, and logistics for rallies, town halls, and fundraisers.</p>
+
+<h3>What You\'ll Do:</h3>
+<ul>
+    <li>Set up and break down event spaces</li>
+    <li>Greet attendees and help with check-in</li>
+    <li>Distribute campaign materials</li>
+    <li>Assist with event coordination</li>
+</ul>
+
+<h3>Time Commitment:</h3>
+<p>Events are typically on evenings and weekends. Shifts are usually 3-4 hours. Great for people who enjoy working with others!</p>',
+                'excerpt' => 'Make our campaign events shine! Help with setup, registration, and event support.',
+            ),
+            array(
+                'title' => 'Social Media & Digital Outreach',
+                'content' => '<p>Use your digital skills to amplify our message online! Help us engage supporters, create content, and reach new audiences on social media.</p>
+
+<h3>What You\'ll Do:</h3>
+<ul>
+    <li>Share campaign posts on social media</li>
+    <li>Create graphics and content</li>
+    <li>Engage with supporters online</li>
+    <li>Help manage digital volunteer groups</li>
+</ul>
+
+<h3>Time Commitment:</h3>
+<p>This is a flexible, remote opportunity. Work on your own schedule, anywhere you have internet access. Perfect for busy schedules!</p>',
+                'excerpt' => 'Help spread our message online! Remote, flexible opportunity for digital-savvy volunteers.',
+            ),
+        );
+
+        $post_ids = array();
+
+        foreach ($volunteers as $opportunity) {
+            $post_id = wp_insert_post(array(
+                'post_title'   => $opportunity['title'],
+                'post_content' => $opportunity['content'],
+                'post_excerpt' => $opportunity['excerpt'],
+                'post_status'  => 'publish',
+                'post_type'    => 'cp_volunteer',
+                'post_author'  => get_current_user_id(),
+            ));
+
+            if ($post_id && !is_wp_error($post_id)) {
+                $post_ids[] = $post_id;
+            }
+        }
+
+        return $post_ids;
+    }
+
+    /**
+     * Import sample pages
+     */
+    private function import_pages() {
+        $pages = array(
+            array(
+                'title' => 'Sample Homepage - CampaignPress Demo',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Fighting for Our Community\'s Future</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Join our grassroots movement to bring real change to our community. Together, we can build a future that works for everyone.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:campaignpress/donation-button {"buttonText":"Donate to Our Campaign","buttonStyle":"primary","alignment":"center"} /-->
+
+<!-- wp:heading -->
+<h2>Our Campaign Progress</h2>
+<!-- /wp:heading -->
+
+<!-- wp:campaignpress/campaign-progress {"goalAmount":50000,"raisedAmount":32500} /-->
+
+<!-- wp:heading -->
+<h2>Why I\'m Running</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Our community faces real challenges - from healthcare costs to crumbling infrastructure, from underfunded schools to climate change. But I believe we have the power to solve these problems when we work together.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I\'m running for office because I\'ve seen firsthand the difference that dedicated public service can make. As a community organizer, teacher, and parent, I understand the issues facing working families. And I have a proven track record of bringing people together to get things done.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Countdown to Election Day</h2>
+<!-- /wp:heading -->
+
+<!-- wp:campaignpress/event-countdown {"eventDate":"' . date('Y-m-d', strtotime('+90 days')) . '","eventTitle":"Election Day"} /-->
+
+<!-- wp:heading -->
+<h2>Key Issues</h2>
+<!-- /wp:heading -->
+
+<!-- wp:campaignpress/issue-card {"issueTitle":"Universal Healthcare","issueDescription":"Healthcare is a human right. We need to ensure everyone has access to quality, affordable healthcare.","iconName":"heart"} /-->
+
+<!-- wp:campaignpress/issue-card {"issueTitle":"Quality Education","issueDescription":"Every child deserves access to excellent public education with well-paid teachers and modern facilities.","iconName":"book"} /-->
+
+<!-- wp:campaignpress/issue-card {"issueTitle":"Climate Action","issueDescription":"We must act now on climate change, transitioning to clean energy and creating green jobs.","iconName":"admin-site"} /-->
+
+<!-- wp:heading -->
+<h2>Get Involved</h2>
+<!-- /wp:heading -->
+
+<!-- wp:campaignpress/volunteer-cta {"title":"Join Our Movement","description":"This campaign is powered by people like you. Whether you can knock doors, make calls, or help at events - we need your help to win!","buttonText":"Sign Up to Volunteer"} /-->',
+            ),
+            array(
+                'title' => 'About - Sample Bio',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Meet the Candidate</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p><strong>A Lifelong Commitment to Service</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I was born and raised in Springfield, attending public schools and learning the value of hard work from my parents - a teacher and a factory worker. They taught me that everyone deserves a fair shot and that we all have a responsibility to give back to our community.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>After earning my degree from State University, I came home to Springfield to teach in the same public schools I attended. For the past 15 years, I\'ve worked with students, parents, and educators to improve our schools and expand opportunities for all children.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As a community organizer, I\'ve fought for affordable housing, quality healthcare, and good-paying jobs. I\'ve brought together neighbors, businesses, and local leaders to solve problems and make our community stronger.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Why I\'m Running</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I\'m running for office because I believe our community deserves better. Better schools, better healthcare, better opportunities for everyone. I\'ve spent my career fighting for working families, and I\'m ready to take that fight to the next level.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This campaign is about all of us - about building a future where everyone can thrive, where healthcare is a right, where quality education is guaranteed, and where good jobs are available to all who want to work.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>My Values</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul>
+<li><strong>Integrity:</strong> I believe in honesty, transparency, and always doing what\'s right - even when it\'s hard.</li>
+<li><strong>Compassion:</strong> Everyone deserves to be treated with dignity and respect, regardless of their background.</li>
+<li><strong>Community:</strong> We\'re stronger together. Real change comes from listening to people and working as a team.</li>
+<li><strong>Justice:</strong> Our systems should be fair and equitable, providing opportunity for all.</li>
+<li><strong>Sustainability:</strong> We must protect our environment and build an economy that lasts for generations.</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:campaignpress/donation-button {"buttonText":"Support This Campaign","alignment":"center"} /-->',
+            ),
+        );
+
+        $post_ids = array();
+
+        foreach ($pages as $page) {
+            $post_id = wp_insert_post(array(
+                'post_title'   => $page['title'],
+                'post_content' => $page['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_author'  => get_current_user_id(),
+            ));
+
+            if ($post_id && !is_wp_error($post_id)) {
+                $post_ids[] = $post_id;
+            }
+        }
+
+        return $post_ids;
+    }
+}
+
+// Initialize
+new CampaignPress_Demo_Content();

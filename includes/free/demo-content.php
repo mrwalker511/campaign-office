@@ -1040,6 +1040,349 @@ class CampaignPress_Demo_Content {
 <p>Want to host a house party, fundraiser, or meet-and-greet? Contact our campaign to learn how!</p>
 <!-- /wp:paragraph -->',
             ),
+            array(
+                'title' => 'Issues',
+                'slug' => 'issues',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Our Issues</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Our campaign is built on a foundation of progressive values and real solutions to the challenges facing our community. Here are the key issues we\'re fighting for:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Universal Healthcare</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Healthcare is a human right, not a privilege. We need a system that guarantees quality, affordable healthcare for everyone - regardless of employment status or pre-existing conditions. Our plan will lower prescription drug costs, expand access to mental health services, and ensure no one goes bankrupt due to medical bills.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Quality Public Education</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Every child deserves access to excellent public education. We will fight to fully fund our schools, raise teacher salaries to competitive levels, reduce class sizes, and invest in modern facilities and technology. Education is the foundation of opportunity.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Climate Action & Clean Energy</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Climate change is the defining challenge of our time. We will transition to 100% clean energy, create thousands of green jobs, invest in public transportation, and ensure environmental justice for communities that have been disproportionately impacted by pollution.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Economic Opportunity for All</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We need an economy that works for everyone, not just those at the top. We will raise the minimum wage to a living wage, support small businesses, invest in workforce development, and ensure workers have the right to organize and bargain collectively.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Criminal Justice Reform</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Our justice system must be fair and equitable. We will end mass incarceration, invest in community-based alternatives to imprisonment, eliminate cash bail, and ensure accountability in law enforcement while supporting community safety.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Infrastructure & Transportation</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We need to rebuild and modernize our infrastructure. We will fix our roads and bridges, expand public transportation, invest in broadband access for all communities, and ensure our infrastructure is resilient to climate change.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/get-involved/')) . '">Join the Fight</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->',
+            ),
+            array(
+                'title' => 'Our Team',
+                'slug' => 'team',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Meet Our Team</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Our campaign is powered by dedicated professionals who share a commitment to progressive values and winning this election. Meet the team working tirelessly to bring change to our community.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Campaign Leadership</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We\'ve assembled a team of experienced political professionals, grassroots organizers, and community leaders who bring diverse perspectives and proven track records of success.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Campaign Manager</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Leading our overall strategy and operations, ensuring we reach voters effectively and build a winning coalition.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Field Director</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Organizing our grassroots volunteer network, coordinating canvassing efforts, and building relationships in communities across the district.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Communications Director</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Crafting our message, managing media relations, and ensuring our campaign communicates effectively across all platforms.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Finance Director</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Managing fundraising operations, ensuring compliance with campaign finance laws, and building our donor network.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Policy Director</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Developing detailed policy proposals, conducting research, and ensuring our platform addresses the real needs of our community.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Join Our Team</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Interested in joining our campaign team? We\'re always looking for talented, passionate individuals to help us win. <a href="' . esc_url(home_url('/contact/')) . '">Get in touch</a> to learn about opportunities.</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Events',
+                'slug' => 'events',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Upcoming Events</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Join us at one of our upcoming campaign events! Whether it\'s a town hall, rally, fundraiser, or volunteer event, we\'d love to see you there.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Town Halls & Community Events</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Our town halls are your opportunity to hear directly from the candidate, ask questions, and share your concerns. We believe in accessible, transparent leadership - and that starts with listening to you.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Volunteer Events</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Get involved by joining us for canvassing, phone banking, or event support. No experience necessary - we\'ll train you and provide all the materials you need. Together, we can make a difference!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Fundraisers</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Our grassroots fundraising events are fun, casual gatherings where you can meet the candidate, connect with fellow supporters, and help fuel our campaign. From backyard BBQs to virtual events, there\'s something for everyone.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Stay Updated</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Don\'t miss an event! Sign up for our email list to receive notifications about upcoming events in your area.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/contact/')) . '">Get Updates</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->',
+            ),
+            array(
+                'title' => 'Endorsements',
+                'slug' => 'endorsements',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Endorsements</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We\'re honored to have the support of leaders, organizations, and community members who share our vision for a better future. Here\'s what they\'re saying about our campaign:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Community Leaders</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Local elected officials, community organizers, and civic leaders who know firsthand the difference that dedicated public service can make.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>"I\'ve worked with this candidate on numerous community initiatives, and I can say without hesitation that they have the integrity, vision, and dedication we need in office."</p>
+<!-- /wp:paragraph --><cite>Mayor Jennifer Williams</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:heading -->
+<h2>Organizations</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Unions, advocacy groups, and community organizations that are committed to fighting for working families, quality education, healthcare access, and environmental justice.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>"Our members have seen firsthand this candidate\'s commitment to public education. We\'re confident they will fight for our teachers, our students, and quality education for all."</p>
+<!-- /wp:paragraph --><cite>Springfield Teachers Association</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:heading -->
+<h2>Professionals & Experts</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Healthcare professionals, educators, business leaders, and policy experts who understand the challenges we face and believe in our solutions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>"As a healthcare professional, I\'m supporting this campaign because they understand that healthcare is a human right. Their plan to expand access and lower costs will save lives in our community."</p>
+<!-- /wp:paragraph --><cite>Dr. Robert Chen - Community Health Director</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p><strong>Want to endorse our campaign?</strong> <a href="' . esc_url(home_url('/contact/')) . '">Contact us</a> to add your voice of support!</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Volunteer Opportunities',
+                'slug' => 'volunteer-opportunities',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Volunteer Opportunities</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Ready to make a difference? Our campaign needs volunteers like you! Whether you have an hour a week or can commit to more, there are many ways to get involved and help us win.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Door-to-Door Canvassing</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Connect with voters in your neighborhood! Canvassing is one of the most effective ways to reach voters. We\'ll provide training, materials, and ongoing support. You\'ll meet great people and make a real impact.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul>
+<li><strong>Time Commitment:</strong> 2-4 hours per shift</li>
+<li><strong>Skills Needed:</strong> Friendly, outgoing personality</li>
+<li><strong>Training Provided:</strong> Yes - full training on messaging and safety</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2>Phone Banking</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Prefer to volunteer from home? Join our phone banking team! You\'ll call voters to share information about our campaign, answer questions, and help get out the vote. Perfect for evenings or weekends.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul>
+<li><strong>Time Commitment:</strong> 2-3 hours per shift</li>
+<li><strong>Skills Needed:</strong> Good communication skills</li>
+<li><strong>Training Provided:</strong> Yes - scripts and calling guide provided</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2>Event Support & Logistics</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Help us host amazing events! We need volunteers to help with setup, registration, refreshments, and more. Great for people who enjoy organizing and creating welcoming spaces.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul>
+<li><strong>Time Commitment:</strong> Varies by event (typically 3-5 hours)</li>
+<li><strong>Skills Needed:</strong> Organized, detail-oriented</li>
+<li><strong>Training Provided:</strong> Event-specific orientation</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2>Social Media & Digital Outreach</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Are you social media savvy? Help us spread our message online! Create content, engage with supporters, and help build our digital presence across platforms.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul>
+<li><strong>Time Commitment:</strong> Flexible - work on your own schedule</li>
+<li><strong>Skills Needed:</strong> Social media experience, creativity</li>
+<li><strong>Training Provided:</strong> Brand guidelines and content calendar</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2>Office & Administrative Support</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Every campaign needs behind-the-scenes support! Help with data entry, mailings, research, and general office tasks at our campaign headquarters.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul>
+<li><strong>Time Commitment:</strong> Flexible shifts available</li>
+<li><strong>Skills Needed:</strong> Basic computer skills, reliable</li>
+<li><strong>Training Provided:</strong> On-the-job training for all tasks</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2>Ready to Join Us?</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Sign up today and we\'ll match you with opportunities that fit your interests, skills, and schedule. Together, we can win this!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/contact/')) . '">Sign Up to Volunteer</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->',
+            ),
         );
 
         $post_ids = array();

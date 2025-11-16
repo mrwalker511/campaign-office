@@ -146,11 +146,11 @@ class CampaignPress_Demo_Content {
         // Import Volunteer Opportunities
         $demo_post_ids['volunteers'] = $this->import_volunteers();
 
-        // Import Sample Pages
+        // Import Sample Pages (must be before menus)
         $demo_post_ids['pages'] = $this->import_pages();
 
-        // Import Navigation Menus
-        $demo_post_ids['menus'] = $this->import_menus();
+        // Import Navigation Menus (uses page IDs)
+        $demo_post_ids['menus'] = $this->import_menus($demo_post_ids['pages']);
 
         // Populate Theme Options
         $this->populate_theme_options();
@@ -708,7 +708,8 @@ class CampaignPress_Demo_Content {
     private function import_pages() {
         $pages = array(
             array(
-                'title' => 'Sample Homepage - CampaignPress Demo',
+                'title' => 'Home',
+                'slug' => 'home',
                 'content' => '<!-- wp:heading {"level":1} -->
 <h1>Fighting for Our Community\'s Future</h1>
 <!-- /wp:heading -->
@@ -717,13 +718,15 @@ class CampaignPress_Demo_Content {
 <p>Join our grassroots movement to bring real change to our community. Together, we can build a future that works for everyone.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:campaignpress/donation-button {"buttonText":"Donate to Our Campaign","buttonStyle":"primary","alignment":"center"} /-->
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/issues/')) . '">Our Issues</a></div>
+<!-- /wp:button -->
 
-<!-- wp:heading -->
-<h2>Our Campaign Progress</h2>
-<!-- /wp:heading -->
-
-<!-- wp:campaignpress/campaign-progress {"goalAmount":50000,"raisedAmount":32500} /-->
+<!-- wp:button {"className":"is-style-outline"} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/events/')) . '">Upcoming Events</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
 
 <!-- wp:heading -->
 <h2>Why I\'m Running</h2>
@@ -738,29 +741,63 @@ class CampaignPress_Demo_Content {
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
-<h2>Countdown to Election Day</h2>
-<!-- /wp:heading -->
-
-<!-- wp:campaignpress/event-countdown {"eventDate":"' . date('Y-m-d', strtotime('+90 days')) . '","eventTitle":"Election Day"} /-->
-
-<!-- wp:heading -->
 <h2>Key Issues</h2>
 <!-- /wp:heading -->
 
-<!-- wp:campaignpress/issue-card {"issueTitle":"Universal Healthcare","issueDescription":"Healthcare is a human right. We need to ensure everyone has access to quality, affordable healthcare.","iconName":"heart"} /-->
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:heading {"level":3} -->
+<h3>Universal Healthcare</h3>
+<!-- /wp:heading -->
 
-<!-- wp:campaignpress/issue-card {"issueTitle":"Quality Education","issueDescription":"Every child deserves access to excellent public education with well-paid teachers and modern facilities.","iconName":"book"} /-->
+<!-- wp:paragraph -->
+<p>Healthcare is a human right. We need to ensure everyone has access to quality, affordable healthcare.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
 
-<!-- wp:campaignpress/issue-card {"issueTitle":"Climate Action","issueDescription":"We must act now on climate change, transitioning to clean energy and creating green jobs.","iconName":"admin-site"} /-->
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:heading {"level":3} -->
+<h3>Quality Education</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Every child deserves access to excellent public education with well-paid teachers and modern facilities.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:heading {"level":3} -->
+<h3>Climate Action</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We must act now on climate change, transitioning to clean energy and creating green jobs.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
 
 <!-- wp:heading -->
 <h2>Get Involved</h2>
 <!-- /wp:heading -->
 
-<!-- wp:campaignpress/volunteer-cta {"title":"Join Our Movement","description":"This campaign is powered by people like you. Whether you can knock doors, make calls, or help at events - we need your help to win!","buttonText":"Sign Up to Volunteer"} /-->',
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">This campaign is powered by people like you. Whether you can knock doors, make calls, or help at events - we need your help to win!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://secure.actblue.com/donate/example">Donate</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline"} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="https://example.com/volunteer">Volunteer</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->',
+                'is_front_page' => true,
             ),
             array(
-                'title' => 'About - Sample Bio',
+                'title' => 'About',
+                'slug' => 'about',
                 'content' => '<!-- wp:heading {"level":1} -->
 <h1>Meet the Candidate</h1>
 <!-- /wp:heading -->
@@ -805,22 +842,221 @@ class CampaignPress_Demo_Content {
 <li><strong>Justice:</strong> Our systems should be fair and equitable, providing opportunity for all.</li>
 <li><strong>Sustainability:</strong> We must protect our environment and build an economy that lasts for generations.</li>
 </ul>
+<!-- /wp:list -->',
+            ),
+            array(
+                'title' => 'Contact',
+                'slug' => 'contact',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Get in Touch</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We\'d love to hear from you! Whether you have questions, want to volunteer, or just want to share your thoughts, please reach out.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Campaign Headquarters</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p><strong>Address:</strong><br>123 Campaign Trail<br>Springfield, IL 62701</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Email:</strong> info@campaignexample.com</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Phone:</strong> (555) 123-4567</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Office Hours</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Connect on Social Media</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Follow us on Facebook, Twitter, and Instagram for the latest campaign updates, event announcements, and ways to get involved!</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Privacy Policy',
+                'slug' => 'privacy-policy',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Privacy Policy</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p><em>Last Updated: ' . date('F j, Y') . '</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Information We Collect</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>When you interact with our campaign website, we may collect certain information including your name, email address, phone number, and mailing address if you choose to provide it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>How We Use Your Information</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We use the information you provide to:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul>
+<li>Send you campaign updates and newsletters</li>
+<li>Coordinate volunteer activities</li>
+<li>Process donations</li>
+<li>Respond to your questions and comments</li>
+<li>Comply with federal and state campaign finance laws</li>
+</ul>
 <!-- /wp:list -->
 
-<!-- wp:campaignpress/donation-button {"buttonText":"Support This Campaign","alignment":"center"} /-->',
+<!-- wp:heading -->
+<h2>Information Sharing</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We do not sell, trade, or rent your personal information to third parties. We may share information as required by law or to comply with campaign finance regulations.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Contact Us</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>If you have questions about this Privacy Policy, please contact us at info@campaignexample.com</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Press & Media',
+                'slug' => 'press',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Press & Media</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Welcome to our press and media center. Here you\'ll find press releases, media kits, and contact information for media inquiries.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Media Contact</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p><strong>Press Secretary:</strong> Sarah Communications<br><strong>Email:</strong> press@campaignexample.com<br><strong>Phone:</strong> (555) 123-4568</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Recent Press Releases</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Check back soon for our latest press releases and campaign announcements.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Media Kit</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Download our media kit including high-resolution photos, campaign logo, and candidate biography.</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Get Involved',
+                'slug' => 'get-involved',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Get Involved</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This campaign is powered by people like you. There are many ways to get involved and help us win!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Volunteer</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Join our team of dedicated volunteers! We need help with:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul>
+<li>Door-to-door canvassing</li>
+<li>Phone banking</li>
+<li>Event support</li>
+<li>Social media outreach</li>
+<li>Office work</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/volunteer-opportunities/')) . '">View Volunteer Opportunities</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:heading -->
+<h2>Donate</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Your financial support helps us reach more voters, run ads, and organize events. Every dollar makes a difference!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://secure.actblue.com/donate/example">Donate Now</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:heading -->
+<h2>Spread the Word</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Follow us on social media and share our posts with your friends and family. Word of mouth is one of our most powerful tools!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Host an Event</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Want to host a house party, fundraiser, or meet-and-greet? Contact our campaign to learn how!</p>
+<!-- /wp:paragraph -->',
             ),
         );
 
         $post_ids = array();
+        $front_page_id = null;
+        $blog_page_id = null;
 
-        foreach ($pages as $page) {
-            $post_id = wp_insert_post(array(
-                'post_title'   => $page['title'],
-                'post_content' => $page['content'],
+        foreach ($pages as $page_data) {
+            $page_args = array(
+                'post_title'   => $page_data['title'],
+                'post_content' => $page_data['content'],
                 'post_status'  => 'publish',
                 'post_type'    => 'page',
                 'post_author'  => get_current_user_id(),
-            ));
+                'post_name'    => $page_data['slug'],
+            );
+
+            $post_id = wp_insert_post($page_args);
 
             if (is_wp_error($post_id)) {
                 error_log('CampaignPress demo content error: ' . $post_id->get_error_message());
@@ -828,11 +1064,37 @@ class CampaignPress_Demo_Content {
             }
 
             if (!$post_id) {
-                error_log('CampaignPress: Failed to create demo page - ' . $page['title']);
+                error_log('CampaignPress: Failed to create demo page - ' . $page_data['title']);
                 continue;
             }
 
-            $post_ids[] = $post_id;
+            // Store front page ID
+            if (isset($page_data['is_front_page']) && $page_data['is_front_page']) {
+                $front_page_id = $post_id;
+            }
+
+            $post_ids[$page_data['slug']] = $post_id;
+        }
+
+        // Set front page
+        if ($front_page_id) {
+            update_option('show_on_front', 'page');
+            update_option('page_on_front', $front_page_id);
+
+            // Create a blog page for posts
+            $blog_page_id = wp_insert_post(array(
+                'post_title'   => 'News & Updates',
+                'post_content' => '<!-- wp:paragraph --><p>Stay up to date with the latest campaign news and announcements.</p><!-- /wp:paragraph -->',
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_author'  => get_current_user_id(),
+                'post_name'    => 'news',
+            ));
+
+            if ($blog_page_id && !is_wp_error($blog_page_id)) {
+                update_option('page_for_posts', $blog_page_id);
+                $post_ids['news'] = $blog_page_id;
+            }
         }
 
         return $post_ids;
@@ -840,8 +1102,10 @@ class CampaignPress_Demo_Content {
 
     /**
      * Import navigation menus
+     *
+     * @param array $page_ids Array of created page IDs
      */
-    private function import_menus() {
+    private function import_menus($page_ids = array()) {
         $menu_ids = array();
 
         // Create Primary Menu
@@ -849,24 +1113,29 @@ class CampaignPress_Demo_Content {
         if (!is_wp_error($primary_menu_id)) {
             $menu_ids['primary'] = $primary_menu_id;
 
-            // Add menu items
-            wp_update_nav_menu_item($primary_menu_id, 0, array(
-                'menu-item-title' => 'Home',
-                'menu-item-url' => home_url('/'),
-                'menu-item-status' => 'publish',
-                'menu-item-position' => 1,
-            ));
+            $menu_position = 1;
 
-            // Get the About page ID
-            $about_page = get_page_by_title('About - Sample Bio');
-            if ($about_page) {
+            // Add Home page
+            if (isset($page_ids['home'])) {
+                wp_update_nav_menu_item($primary_menu_id, 0, array(
+                    'menu-item-title' => 'Home',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['home'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => $menu_position++,
+                ));
+            }
+
+            // Add About page
+            if (isset($page_ids['about'])) {
                 wp_update_nav_menu_item($primary_menu_id, 0, array(
                     'menu-item-title' => 'About',
                     'menu-item-object' => 'page',
-                    'menu-item-object-id' => $about_page->ID,
+                    'menu-item-object-id' => $page_ids['about'],
                     'menu-item-type' => 'post_type',
                     'menu-item-status' => 'publish',
-                    'menu-item-position' => 2,
+                    'menu-item-position' => $menu_position++,
                 ));
             }
 
@@ -875,7 +1144,7 @@ class CampaignPress_Demo_Content {
                 'menu-item-title' => 'Issues',
                 'menu-item-url' => get_post_type_archive_link('cp_issue'),
                 'menu-item-status' => 'publish',
-                'menu-item-position' => 3,
+                'menu-item-position' => $menu_position++,
             ));
 
             // Add Events link
@@ -883,7 +1152,7 @@ class CampaignPress_Demo_Content {
                 'menu-item-title' => 'Events',
                 'menu-item-url' => get_post_type_archive_link('cp_event'),
                 'menu-item-status' => 'publish',
-                'menu-item-position' => 4,
+                'menu-item-position' => $menu_position++,
             ));
 
             // Add Team link
@@ -891,24 +1160,44 @@ class CampaignPress_Demo_Content {
                 'menu-item-title' => 'Team',
                 'menu-item-url' => get_post_type_archive_link('cp_team'),
                 'menu-item-status' => 'publish',
-                'menu-item-position' => 5,
+                'menu-item-position' => $menu_position++,
             ));
 
-            // Add Endorsements link
-            wp_update_nav_menu_item($primary_menu_id, 0, array(
-                'menu-item-title' => 'Endorsements',
-                'menu-item-url' => get_post_type_archive_link('cp_endorsement'),
-                'menu-item-status' => 'publish',
-                'menu-item-position' => 6,
-            ));
+            // Add Get Involved page
+            if (isset($page_ids['get-involved'])) {
+                wp_update_nav_menu_item($primary_menu_id, 0, array(
+                    'menu-item-title' => 'Get Involved',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['get-involved'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => $menu_position++,
+                ));
+            }
 
-            // Add Volunteer link
-            wp_update_nav_menu_item($primary_menu_id, 0, array(
-                'menu-item-title' => 'Volunteer',
-                'menu-item-url' => get_post_type_archive_link('cp_volunteer'),
-                'menu-item-status' => 'publish',
-                'menu-item-position' => 7,
-            ));
+            // Add News page
+            if (isset($page_ids['news'])) {
+                wp_update_nav_menu_item($primary_menu_id, 0, array(
+                    'menu-item-title' => 'News',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['news'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => $menu_position++,
+                ));
+            }
+
+            // Add Contact page
+            if (isset($page_ids['contact'])) {
+                wp_update_nav_menu_item($primary_menu_id, 0, array(
+                    'menu-item-title' => 'Contact',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['contact'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => $menu_position++,
+                ));
+            }
 
             // Assign to primary location
             $locations = get_theme_mod('nav_menu_locations');
@@ -924,27 +1213,43 @@ class CampaignPress_Demo_Content {
         if (!is_wp_error($footer_menu_id)) {
             $menu_ids['footer'] = $footer_menu_id;
 
-            // Add footer menu items
-            wp_update_nav_menu_item($footer_menu_id, 0, array(
-                'menu-item-title' => 'Privacy Policy',
-                'menu-item-url' => '#',
-                'menu-item-status' => 'publish',
-                'menu-item-position' => 1,
-            ));
+            $menu_position = 1;
 
-            wp_update_nav_menu_item($footer_menu_id, 0, array(
-                'menu-item-title' => 'Contact Us',
-                'menu-item-url' => '#',
-                'menu-item-status' => 'publish',
-                'menu-item-position' => 2,
-            ));
+            // Add Privacy Policy page
+            if (isset($page_ids['privacy-policy'])) {
+                wp_update_nav_menu_item($footer_menu_id, 0, array(
+                    'menu-item-title' => 'Privacy Policy',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['privacy-policy'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => $menu_position++,
+                ));
+            }
 
-            wp_update_nav_menu_item($footer_menu_id, 0, array(
-                'menu-item-title' => 'Press',
-                'menu-item-url' => '#',
-                'menu-item-status' => 'publish',
-                'menu-item-position' => 3,
-            ));
+            // Add Contact page
+            if (isset($page_ids['contact'])) {
+                wp_update_nav_menu_item($footer_menu_id, 0, array(
+                    'menu-item-title' => 'Contact',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['contact'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => $menu_position++,
+                ));
+            }
+
+            // Add Press page
+            if (isset($page_ids['press'])) {
+                wp_update_nav_menu_item($footer_menu_id, 0, array(
+                    'menu-item-title' => 'Press',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['press'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => $menu_position++,
+                ));
+            }
 
             // Assign to footer location
             $locations = get_theme_mod('nav_menu_locations');
@@ -963,7 +1268,7 @@ class CampaignPress_Demo_Content {
             // Add social menu items
             wp_update_nav_menu_item($social_menu_id, 0, array(
                 'menu-item-title' => 'Facebook',
-                'menu-item-url' => 'https://facebook.com',
+                'menu-item-url' => 'https://facebook.com/campaignpress',
                 'menu-item-status' => 'publish',
                 'menu-item-position' => 1,
                 'menu-item-attr-title' => 'Follow us on Facebook',
@@ -971,7 +1276,7 @@ class CampaignPress_Demo_Content {
 
             wp_update_nav_menu_item($social_menu_id, 0, array(
                 'menu-item-title' => 'Twitter',
-                'menu-item-url' => 'https://twitter.com',
+                'menu-item-url' => 'https://twitter.com/campaignpress',
                 'menu-item-status' => 'publish',
                 'menu-item-position' => 2,
                 'menu-item-attr-title' => 'Follow us on Twitter',
@@ -979,7 +1284,7 @@ class CampaignPress_Demo_Content {
 
             wp_update_nav_menu_item($social_menu_id, 0, array(
                 'menu-item-title' => 'Instagram',
-                'menu-item-url' => 'https://instagram.com',
+                'menu-item-url' => 'https://instagram.com/campaignpress',
                 'menu-item-status' => 'publish',
                 'menu-item-position' => 3,
                 'menu-item-attr-title' => 'Follow us on Instagram',

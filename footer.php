@@ -9,9 +9,9 @@
 
     </div><!-- #content -->
 
-    <footer id="colophon" class="site-footer">
+    <footer id="colophon" class="site-footer" role="contentinfo">
         <div class="site-container">
-            <div class="footer-widgets">
+            <div class="footer-widgets" role="complementary" aria-label="<?php esc_attr_e( 'Footer Widgets', 'campaignpress' ); ?>">
                 <div class="footer-widget-area">
                     <?php if (is_active_sidebar('footer-1')) : ?>
                         <div class="footer-widget-column">
@@ -66,13 +66,20 @@
 
                 <?php
                 if (has_nav_menu('footer')) :
-                    wp_nav_menu(
-                        array(
-                            'theme_location' => 'footer',
-                            'menu_class'     => 'footer-menu',
-                            'depth'          => 1,
-                        )
-                    );
+                    ?>
+                    <nav class="footer-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Footer Navigation', 'campaignpress' ); ?>">
+                        <?php
+                        wp_nav_menu(
+                            array(
+                                'theme_location' => 'footer',
+                                'menu_class'     => 'footer-menu',
+                                'depth'          => 1,
+                                'fallback_cb'    => false,
+                            )
+                        );
+                        ?>
+                    </nav>
+                    <?php
                 endif;
                 ?>
             </div><!-- .footer-bottom -->

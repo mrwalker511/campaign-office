@@ -21,7 +21,7 @@
 <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'campaignpress'); ?></a>
 
 <div id="page" class="site">
-    <header id="masthead" class="site-header">
+    <header id="masthead" class="site-header" role="banner">
         <div class="site-container">
             <div class="site-branding">
                 <?php
@@ -42,15 +42,21 @@
                 <?php endif; ?>
             </div><!-- .site-branding -->
 
-            <nav id="site-navigation" class="main-navigation">
-                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                    <?php esc_html_e('Menu', 'campaignpress'); ?>
+            <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Primary Navigation', 'campaignpress' ); ?>">
+                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation menu', 'campaignpress' ); ?>">
+                    <span class="menu-toggle-text"><?php esc_html_e('Menu', 'campaignpress'); ?></span>
+                    <span class="menu-toggle-icon" aria-hidden="true">
+                        <span class="menu-bar"></span>
+                        <span class="menu-bar"></span>
+                        <span class="menu-bar"></span>
+                    </span>
                 </button>
                 <?php
                 wp_nav_menu(
                     array(
                         'theme_location' => 'primary',
                         'menu_id'        => 'primary-menu',
+                        'fallback_cb'    => false,
                     )
                 );
                 ?>
@@ -64,4 +70,4 @@
         </div>
     </header><!-- #masthead -->
 
-    <div id="content" class="site-content site-container">
+    <div id="content" class="site-content site-container" role="main">

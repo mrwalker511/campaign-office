@@ -92,14 +92,31 @@ Create an integrated campaign operations system disguised as a WordPress theme�
 4. Click **Activate** to activate the theme
 5. Go to **Appearance > Customize** to configure your theme settings
 
-### Recommended Plugins
+### Automatic Plugin Installation
 
-For the best experience, install these free plugins:
+Upon activating CampaignPress, you'll see an admin notice offering to install recommended plugins. Simply click **"Begin installing plugins"** to install all recommended plugins with one click!
 
-- **Contact Form 7** - For contact forms
-- **The Events Calendar** - Enhanced event management
-- **MailChimp for WordPress** - Email list building
-- **Yoast SEO** - Search engine optimization
+**Recommended plugins include:**
+
+**Essential Campaign Tools:**
+- **Contact Form 7** - Contact forms for campaign inquiries
+- **The Events Calendar** - Advanced event management for rallies, town halls, and fundraisers
+- **GiveWP** - Professional donation management with FEC-ready reporting
+
+**Email & Analytics:**
+- **MC4WP: Mailchimp for WordPress** - Email list building and newsletter management
+- **MonsterInsights** - Google Analytics integration for campaign tracking
+
+**Optimization & Security:**
+- **Yoast SEO** - Search engine optimization for better visibility
+- **Wordfence Security** - Security hardening for campaign websites
+- **WP Fastest Cache** - Performance optimization for faster page loads
+- **Really Simple SSL** - Automatic SSL/HTTPS enforcement
+
+**Social Media:**
+- **Social Warfare** - Social sharing optimization for viral content spread
+
+All plugins are optional and can be installed individually or in bulk. You can dismiss the notice if you prefer to manage plugins manually.
 
 ### First-Time Setup
 
@@ -175,7 +192,10 @@ campaignpress/
 │   │   ├── customizer.php           # Theme customizer
 │   │   ├── template-functions.php   # Template helpers
 │   │   ├── template-tags.php        # Template tags
-│   │   └── integrations.php         # Third-party integrations
+│   │   ├── integrations.php         # Third-party integrations
+│   │   └── tgmpa-config.php         # Plugin recommendations
+│   ├── lib/
+│   │   └── tgmpa/                   # TGM Plugin Activation library
 │   └── premium/                     # Premium features (future)
 ├── assets/
 │   ├── css/                         # Stylesheets
@@ -270,6 +290,7 @@ GNU General Public License for more details.
 - React components powered by [@wordpress/element](https://www.npmjs.com/package/@wordpress/element)
 - Build system: [Vite](https://vitejs.dev/)
 - Icons: [Dashicons](https://developer.wordpress.org/resource/dashicons/)
+- Plugin installation powered by [TGM Plugin Activation](http://tgmpluginactivation.com/)
 
 ## Changelog
 
@@ -280,6 +301,8 @@ GNU General Public License for more details.
 - Theme customizer with color schemes
 - Responsive design system
 - Third-party plugin integrations
+- One-click plugin installation via TGM Plugin Activation
+- 10 recommended campaign-optimized plugins
 
 ---
 

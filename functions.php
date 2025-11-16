@@ -239,6 +239,7 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-functions.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/integrations.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/tgmpa-config.php';
 
 // Check if Elementor is active
 if (did_action('elementor/loaded')) {

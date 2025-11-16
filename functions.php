@@ -132,11 +132,19 @@ add_action('after_setup_theme', 'campaignpress_content_width', 0);
  * Enqueue scripts and styles
  */
 function campaignpress_scripts() {
+    // Bootstrap 5.3 CSS (from CDN)
+    wp_enqueue_style(
+        'bootstrap',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
+        array(),
+        '5.3.3'
+    );
+
     // Theme stylesheet
     wp_enqueue_style(
         'campaignpress-style',
         get_stylesheet_uri(),
-        array(),
+        array('bootstrap'),
         CAMPAIGNPRESS_VERSION
     );
 
@@ -148,11 +156,20 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
+    // Bootstrap 5.3 JS Bundle (includes Popper)
+    wp_enqueue_script(
+        'bootstrap',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+        array(),
+        '5.3.3',
+        true
+    );
+
     // Main theme JS
     wp_enqueue_script(
         'campaignpress-main',
         CAMPAIGNPRESS_ASSETS_URI . '/js/main.js',
-        array('jquery'),
+        array('jquery', 'bootstrap'),
         CAMPAIGNPRESS_VERSION,
         true
     );
@@ -234,6 +251,7 @@ add_action('widgets_init', 'campaignpress_widgets_init');
  */
 
 // Free version features
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-bootstrap-navwalker.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
@@ -278,6 +296,32 @@ function campaignpress_body_classes($classes) {
     return $classes;
 }
 add_filter('body_class', 'campaignpress_body_classes');
+
+/**
+ * Custom template loader for organized folder structure
+ * Allows template files to be located in subdirectories
+ */
+function campaignpress_template_loader($template) {
+    // Get the template file name
+    $template_name = basename($template);
+
+    // Check if it's a custom post type template
+    if (strpos($template_name, 'single-cp_') === 0) {
+        $custom_template = CAMPAIGNPRESS_THEME_DIR . '/templates/custom-post-types/single/' . $template_name;
+        if (file_exists($custom_template)) {
+            return $custom_template;
+        }
+    } elseif (strpos($template_name, 'archive-cp_') === 0) {
+        $custom_template = CAMPAIGNPRESS_THEME_DIR . '/templates/custom-post-types/archive/' . $template_name;
+        if (file_exists($custom_template)) {
+            return $custom_template;
+        }
+    }
+
+    return $template;
+}
+add_filter('single_template', 'campaignpress_template_loader');
+add_filter('archive_template', 'campaignpress_template_loader');
 
 /**
  * Custom template tags for this theme

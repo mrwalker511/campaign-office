@@ -115,7 +115,7 @@ function campaignpress_customize_register($wp_customize) {
     // General layout
     $wp_customize->add_setting('campaignpress_layout', array(
         'default'           => 'default',
-        'sanitize_callback' => 'sanitize_text_field',
+        'sanitize_callback' => 'campaignpress_sanitize_general_layout',
     ));
 
     $wp_customize->add_control('campaignpress_layout', array(
@@ -281,11 +281,19 @@ function campaignpress_sanitize_color_scheme($input) {
 }
 
 /**
- * Sanitize layout
+ * Sanitize layout (homepage layout)
  */
 function campaignpress_sanitize_layout($input) {
     $valid = array('classic', 'modern', 'traditional');
     return in_array($input, $valid, true) ? $input : 'modern';
+}
+
+/**
+ * Sanitize general layout setting
+ */
+function campaignpress_sanitize_general_layout($input) {
+    $valid = array('default', 'left-sidebar', 'no-sidebar');
+    return in_array($input, $valid, true) ? $input : 'default';
 }
 
 /**

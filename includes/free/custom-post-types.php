@@ -459,7 +459,10 @@ function campaignpress_save_event_meta($post_id) {
         return;
     }
 
-    // Save fields
+    // Define allowed sanitization callbacks (whitelist for security)
+    $allowed_callbacks = array('sanitize_text_field', 'esc_url_raw');
+
+    // Save fields with validated callbacks
     $fields = array(
         'cp_event_date' => 'sanitize_text_field',
         'cp_event_time' => 'sanitize_text_field',
@@ -472,7 +475,7 @@ function campaignpress_save_event_meta($post_id) {
     );
 
     foreach ($fields as $field => $sanitize_callback) {
-        if (isset($_POST[$field])) {
+        if (isset($_POST[$field]) && in_array($sanitize_callback, $allowed_callbacks, true)) {
             update_post_meta($post_id, '_' . $field, call_user_func($sanitize_callback, $_POST[$field]));
         }
     }
@@ -481,13 +484,7 @@ add_action('save_post_cp_event', 'campaignpress_save_event_meta');
 
 /**
  * Flush rewrite rules on theme activation
+ *
+ * Note: Moved to functions.php using after_setup_theme hook
+ * because register_activation_hook() doesn't work in themes.
  */
-function campaignpress_rewrite_flush() {
-    campaignpress_register_issues_post_type();
-    campaignpress_register_events_post_type();
-    campaignpress_register_endorsements_post_type();
-    campaignpress_register_team_post_type();
-    campaignpress_register_volunteer_post_type();
-    flush_rewrite_rules();
-}
-register_activation_hook(__FILE__, 'campaignpress_rewrite_flush');

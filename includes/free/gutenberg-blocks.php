@@ -184,10 +184,37 @@ add_action('init', 'campaignpress_register_blocks');
  * Render Donation Button Block
  */
 function campaignpress_render_donation_button_block($attributes) {
-    $button_text = isset($attributes['buttonText']) ? $attributes['buttonText'] : __('Donate Now', 'campaignpress');
-    $donation_url = isset($attributes['donationUrl']) ? $attributes['donationUrl'] : campaignpress_get_donation_url();
-    $button_style = isset($attributes['buttonStyle']) ? $attributes['buttonStyle'] : 'primary';
-    $alignment = isset($attributes['alignment']) ? $attributes['alignment'] : 'left';
+    // Type-safe attribute extraction with validation
+    $button_text = isset($attributes['buttonText']) && is_string($attributes['buttonText'])
+        ? $attributes['buttonText']
+        : __('Donate Now', 'campaignpress');
+
+    $donation_url = isset($attributes['donationUrl']) && is_string($attributes['donationUrl'])
+        ? $attributes['donationUrl']
+        : campaignpress_get_donation_url();
+
+    // Validate URL format
+    if (!empty($donation_url) && !filter_var($donation_url, FILTER_VALIDATE_URL)) {
+        $donation_url = '';
+    }
+
+    // Whitelist validation for button style
+    $button_style = isset($attributes['buttonStyle']) && is_string($attributes['buttonStyle'])
+        ? $attributes['buttonStyle']
+        : 'primary';
+    $valid_styles = array('primary', 'secondary', 'outline');
+    if (!in_array($button_style, $valid_styles, true)) {
+        $button_style = 'primary';
+    }
+
+    // Whitelist validation for alignment
+    $alignment = isset($attributes['alignment']) && is_string($attributes['alignment'])
+        ? $attributes['alignment']
+        : 'left';
+    $valid_alignments = array('left', 'center', 'right');
+    if (!in_array($alignment, $valid_alignments, true)) {
+        $alignment = 'left';
+    }
 
     if (empty($donation_url)) {
         if (current_user_can('edit_posts')) {
@@ -212,10 +239,22 @@ function campaignpress_render_donation_button_block($attributes) {
  * Render Campaign Progress Block
  */
 function campaignpress_render_campaign_progress_block($attributes) {
-    $goal_amount = isset($attributes['goalAmount']) ? intval($attributes['goalAmount']) : 10000;
-    $raised_amount = isset($attributes['raisedAmount']) ? intval($attributes['raisedAmount']) : 0;
-    $title = isset($attributes['title']) ? $attributes['title'] : __('Campaign Progress', 'campaignpress');
-    $show_percentage = isset($attributes['showPercentage']) ? $attributes['showPercentage'] : true;
+    // Type-safe attribute extraction with validation
+    $goal_amount = isset($attributes['goalAmount']) && is_numeric($attributes['goalAmount'])
+        ? max(0, intval($attributes['goalAmount']))
+        : 10000;
+
+    $raised_amount = isset($attributes['raisedAmount']) && is_numeric($attributes['raisedAmount'])
+        ? max(0, intval($attributes['raisedAmount']))
+        : 0;
+
+    $title = isset($attributes['title']) && is_string($attributes['title'])
+        ? $attributes['title']
+        : __('Campaign Progress', 'campaignpress');
+
+    $show_percentage = isset($attributes['showPercentage']) && is_bool($attributes['showPercentage'])
+        ? $attributes['showPercentage']
+        : true;
 
     $percentage = $goal_amount > 0 ? min(100, ($raised_amount / $goal_amount) * 100) : 0;
 
@@ -248,9 +287,21 @@ function campaignpress_render_campaign_progress_block($attributes) {
  * Render Issue Card Block
  */
 function campaignpress_render_issue_card_block($attributes) {
-    $title = isset($attributes['issueTitle']) ? $attributes['issueTitle'] : '';
-    $description = isset($attributes['issueDescription']) ? $attributes['issueDescription'] : '';
-    $icon = isset($attributes['iconName']) ? $attributes['iconName'] : 'megaphone';
+    // Type-safe attribute extraction with validation
+    $title = isset($attributes['issueTitle']) && is_string($attributes['issueTitle'])
+        ? $attributes['issueTitle']
+        : '';
+
+    $description = isset($attributes['issueDescription']) && is_string($attributes['issueDescription'])
+        ? $attributes['issueDescription']
+        : '';
+
+    $icon = isset($attributes['iconName']) && is_string($attributes['iconName'])
+        ? $attributes['iconName']
+        : 'megaphone';
+
+    // Sanitize icon name to prevent CSS injection (only alphanumeric and hyphens)
+    $icon = preg_replace('/[^a-z0-9\-]/', '', strtolower($icon));
 
     $output = '<div class="cp-issue-card">';
 
@@ -275,17 +326,27 @@ function campaignpress_render_issue_card_block($attributes) {
  * Render Event Countdown Block
  */
 function campaignpress_render_event_countdown_block($attributes) {
-    $event_date = isset($attributes['eventDate']) ? $attributes['eventDate'] : '';
-    $event_title = isset($attributes['eventTitle']) ? $attributes['eventTitle'] : __('Election Day', 'campaignpress');
+    // Type-safe attribute extraction with validation
+    $event_date = isset($attributes['eventDate']) && is_string($attributes['eventDate'])
+        ? $attributes['eventDate']
+        : '';
 
-    if (empty($event_date)) {
+    $event_title = isset($attributes['eventTitle']) && is_string($attributes['eventTitle'])
+        ? $attributes['eventTitle']
+        : __('Election Day', 'campaignpress');
+
+    // Validate date format (YYYY-MM-DD)
+    if (empty($event_date) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $event_date)) {
         if (current_user_can('edit_posts')) {
-            return '<div class="cp-block-notice">' . __('Please set an event date.', 'campaignpress') . '</div>';
+            return '<div class="cp-block-notice">' . __('Please set a valid event date (YYYY-MM-DD format).', 'campaignpress') . '</div>';
         }
         return '';
     }
 
-    $target_timestamp = strtotime($event_date);
+    $target_timestamp = strtotime($event_date . ' midnight', current_time('timestamp'));
+    if ($target_timestamp === false) {
+        return '';
+    }
     $current_timestamp = current_time('timestamp');
     $time_diff = $target_timestamp - $current_timestamp;
 
@@ -310,10 +371,27 @@ function campaignpress_render_event_countdown_block($attributes) {
  * Render Volunteer CTA Block
  */
 function campaignpress_render_volunteer_cta_block($attributes) {
-    $title = isset($attributes['title']) ? $attributes['title'] : __('Join Our Campaign', 'campaignpress');
-    $description = isset($attributes['description']) ? $attributes['description'] : '';
-    $button_text = isset($attributes['buttonText']) ? $attributes['buttonText'] : __('Sign Up to Volunteer', 'campaignpress');
-    $button_url = isset($attributes['buttonUrl']) ? $attributes['buttonUrl'] : '';
+    // Type-safe attribute extraction with validation
+    $title = isset($attributes['title']) && is_string($attributes['title'])
+        ? $attributes['title']
+        : __('Join Our Campaign', 'campaignpress');
+
+    $description = isset($attributes['description']) && is_string($attributes['description'])
+        ? $attributes['description']
+        : '';
+
+    $button_text = isset($attributes['buttonText']) && is_string($attributes['buttonText'])
+        ? $attributes['buttonText']
+        : __('Sign Up to Volunteer', 'campaignpress');
+
+    $button_url = isset($attributes['buttonUrl']) && is_string($attributes['buttonUrl'])
+        ? $attributes['buttonUrl']
+        : '';
+
+    // Validate URL format
+    if (!empty($button_url) && !filter_var($button_url, FILTER_VALIDATE_URL)) {
+        $button_url = '';
+    }
 
     $output = '<div class="cp-volunteer-cta">';
 

@@ -291,9 +291,38 @@ remove_action('wp_head', 'wp_generator');
 /**
  * Improve security headers
  */
-function campaignpress_security_headers() {
-    header('X-Content-Type-Options: nosniff');
-    header('X-Frame-Options: SAMEORIGIN');
-    header('X-XSS-Protection: 1; mode=block');
+function campaignpress_security_headers($headers) {
+    $headers['X-Content-Type-Options'] = 'nosniff';
+    $headers['X-Frame-Options'] = 'SAMEORIGIN';
+    $headers['X-XSS-Protection'] = '1; mode=block';
+    $headers['Referrer-Policy'] = 'strict-origin-when-cross-origin';
+    return $headers;
 }
-add_action('send_headers', 'campaignpress_security_headers');
+add_filter('wp_headers', 'campaignpress_security_headers');
+
+/**
+ * Flush rewrite rules on theme activation
+ * This runs once after theme activation to ensure custom post type permalinks work
+ */
+function campaignpress_flush_rewrite_rules() {
+    // Check if we've already flushed for this theme activation
+    if (get_option('campaignpress_rewrite_rules_flushed')) {
+        return;
+    }
+
+    // Flush rewrite rules (CPTs are already registered via init hook)
+    flush_rewrite_rules();
+
+    // Set flag so we don't flush on every page load
+    update_option('campaignpress_rewrite_rules_flushed', true);
+}
+add_action('after_setup_theme', 'campaignpress_flush_rewrite_rules', 20);
+
+/**
+ * Reset rewrite flush flag when theme is switched
+ */
+function campaignpress_theme_deactivation() {
+    delete_option('campaignpress_rewrite_rules_flushed');
+    flush_rewrite_rules();
+}
+add_action('switch_theme', 'campaignpress_theme_deactivation');

@@ -305,18 +305,29 @@ class CampaignPress_Demo_Content {
                 'post_author'  => get_current_user_id(),
             ));
 
-            if ($post_id && !is_wp_error($post_id)) {
-                // Add to category
-                $term = term_exists($issue['category'], 'issue_category');
-                if (!$term) {
-                    $term = wp_insert_term($issue['category'], 'issue_category');
-                }
-                if (!is_wp_error($term)) {
-                    wp_set_object_terms($post_id, $term['term_id'], 'issue_category');
-                }
-
-                $post_ids[] = $post_id;
+            if (is_wp_error($post_id)) {
+                error_log('CampaignPress demo content error: ' . $post_id->get_error_message());
+                continue;
             }
+
+            if (!$post_id) {
+                error_log('CampaignPress: Failed to create demo issue - ' . $issue['title']);
+                continue;
+            }
+
+            // Add to category
+            $term = term_exists($issue['category'], 'issue_category');
+            if (!$term) {
+                $term = wp_insert_term($issue['category'], 'issue_category');
+            }
+
+            if (is_wp_error($term)) {
+                error_log('CampaignPress: Failed to create issue category - ' . $issue['category'] . ': ' . $term->get_error_message());
+            } elseif ($term) {
+                wp_set_object_terms($post_id, $term['term_id'], 'issue_category');
+            }
+
+            $post_ids[] = $post_id;
         }
 
         return $post_ids;
@@ -408,28 +419,39 @@ class CampaignPress_Demo_Content {
                 'post_author'  => get_current_user_id(),
             ));
 
-            if ($post_id && !is_wp_error($post_id)) {
-                // Add event metadata
-                update_post_meta($post_id, '_cp_event_date', $event['date']);
-                update_post_meta($post_id, '_cp_event_time', $event['time']);
-                update_post_meta($post_id, '_cp_event_location', $event['location']);
-                update_post_meta($post_id, '_cp_event_address', $event['address']);
-                update_post_meta($post_id, '_cp_event_city', $event['city']);
-                update_post_meta($post_id, '_cp_event_state', $event['state']);
-                update_post_meta($post_id, '_cp_event_zip', $event['zip']);
-                update_post_meta($post_id, '_cp_event_rsvp_link', $event['rsvp_link']);
-
-                // Add event type
-                $term = term_exists($event['type'], 'event_type');
-                if (!$term) {
-                    $term = wp_insert_term($event['type'], 'event_type');
-                }
-                if (!is_wp_error($term)) {
-                    wp_set_object_terms($post_id, $term['term_id'], 'event_type');
-                }
-
-                $post_ids[] = $post_id;
+            if (is_wp_error($post_id)) {
+                error_log('CampaignPress demo content error: ' . $post_id->get_error_message());
+                continue;
             }
+
+            if (!$post_id) {
+                error_log('CampaignPress: Failed to create demo event - ' . $event['title']);
+                continue;
+            }
+
+            // Add event metadata
+            update_post_meta($post_id, '_cp_event_date', $event['date']);
+            update_post_meta($post_id, '_cp_event_time', $event['time']);
+            update_post_meta($post_id, '_cp_event_location', $event['location']);
+            update_post_meta($post_id, '_cp_event_address', $event['address']);
+            update_post_meta($post_id, '_cp_event_city', $event['city']);
+            update_post_meta($post_id, '_cp_event_state', $event['state']);
+            update_post_meta($post_id, '_cp_event_zip', $event['zip']);
+            update_post_meta($post_id, '_cp_event_rsvp_link', $event['rsvp_link']);
+
+            // Add event type
+            $term = term_exists($event['type'], 'event_type');
+            if (!$term) {
+                $term = wp_insert_term($event['type'], 'event_type');
+            }
+
+            if (is_wp_error($term)) {
+                error_log('CampaignPress: Failed to create event type - ' . $event['type'] . ': ' . $term->get_error_message());
+            } elseif ($term) {
+                wp_set_object_terms($post_id, $term['term_id'], 'event_type');
+            }
+
+            $post_ids[] = $post_id;
         }
 
         return $post_ids;
@@ -485,9 +507,17 @@ class CampaignPress_Demo_Content {
                 'post_author'  => get_current_user_id(),
             ));
 
-            if ($post_id && !is_wp_error($post_id)) {
-                $post_ids[] = $post_id;
+            if (is_wp_error($post_id)) {
+                error_log('CampaignPress demo content error: ' . $post_id->get_error_message());
+                continue;
             }
+
+            if (!$post_id) {
+                error_log('CampaignPress: Failed to create demo endorsement - ' . $endorsement['title']);
+                continue;
+            }
+
+            $post_ids[] = $post_id;
         }
 
         return $post_ids;
@@ -541,9 +571,17 @@ class CampaignPress_Demo_Content {
                 'post_author'  => get_current_user_id(),
             ));
 
-            if ($post_id && !is_wp_error($post_id)) {
-                $post_ids[] = $post_id;
+            if (is_wp_error($post_id)) {
+                error_log('CampaignPress demo content error: ' . $post_id->get_error_message());
+                continue;
             }
+
+            if (!$post_id) {
+                error_log('CampaignPress: Failed to create demo team member - ' . $member['title']);
+                continue;
+            }
+
+            $post_ids[] = $post_id;
         }
 
         return $post_ids;
@@ -632,9 +670,17 @@ class CampaignPress_Demo_Content {
                 'post_author'  => get_current_user_id(),
             ));
 
-            if ($post_id && !is_wp_error($post_id)) {
-                $post_ids[] = $post_id;
+            if (is_wp_error($post_id)) {
+                error_log('CampaignPress demo content error: ' . $post_id->get_error_message());
+                continue;
             }
+
+            if (!$post_id) {
+                error_log('CampaignPress: Failed to create demo volunteer opportunity - ' . $opportunity['title']);
+                continue;
+            }
+
+            $post_ids[] = $post_id;
         }
 
         return $post_ids;
@@ -760,9 +806,17 @@ class CampaignPress_Demo_Content {
                 'post_author'  => get_current_user_id(),
             ));
 
-            if ($post_id && !is_wp_error($post_id)) {
-                $post_ids[] = $post_id;
+            if (is_wp_error($post_id)) {
+                error_log('CampaignPress demo content error: ' . $post_id->get_error_message());
+                continue;
             }
+
+            if (!$post_id) {
+                error_log('CampaignPress: Failed to create demo page - ' . $page['title']);
+                continue;
+            }
+
+            $post_ids[] = $post_id;
         }
 
         return $post_ids;

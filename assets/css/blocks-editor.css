@@ -1,0 +1,24 @@
+/**
+ * CampaignPress Blocks Editor Styles
+ *
+ * @package CampaignPress
+ * @since 1.0.0
+ */
+
+.wp-block-campaignpress-donation-button,
+.wp-block-campaignpress-campaign-progress,
+.wp-block-campaignpress-issue-card,
+.wp-block-campaignpress-event-countdown,
+.wp-block-campaignpress-volunteer-cta {
+  margin: 1.5rem 0;
+}
+
+.components-panel__body-title {
+  font-weight: 600;
+}
+
+/* Block icons in inserter */
+.editor-block-list-item-campaignpress-donation-button .block-editor-block-icon,
+.editor-block-list-item-campaignpress-campaign-progress .block-editor-block-icon {
+  color: #0066cc;
+}

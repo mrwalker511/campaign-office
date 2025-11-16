@@ -1,0 +1,450 @@
+/**
+ * CampaignPress Main Stylesheet
+ *
+ * @package CampaignPress
+ * @since 1.0.0
+ */
+
+/* ============================================
+   Variables
+   ============================================ */
+:root {
+  /* Color Schemes */
+  --cp-primary: #0066cc;
+  --cp-secondary: #333333;
+  --cp-accent: #ff9800;
+  --cp-text: #333333;
+  --cp-text-light: #666666;
+  --cp-background: #ffffff;
+  --cp-background-alt: #f5f5f5;
+  --cp-border: #e0e0e0;
+
+  /* Typography */
+  --cp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --cp-font-size-base: 16px;
+  --cp-line-height: 1.6;
+
+  /* Spacing */
+  --cp-spacing-xs: 0.5rem;
+  --cp-spacing-sm: 1rem;
+  --cp-spacing-md: 1.5rem;
+  --cp-spacing-lg: 2rem;
+  --cp-spacing-xl: 3rem;
+
+  /* Breakpoints */
+  --cp-breakpoint-sm: 576px;
+  --cp-breakpoint-md: 768px;
+  --cp-breakpoint-lg: 992px;
+  --cp-breakpoint-xl: 1200px;
+
+  /* Border Radius */
+  --cp-border-radius: 4px;
+  --cp-border-radius-lg: 8px;
+
+  /* Transitions */
+  --cp-transition: all 0.3s ease;
+}
+
+/* Color Scheme: Democrat Blue */
+body.color-scheme-democrat-blue {
+  --cp-primary: #0015BC;
+  --cp-secondary: #1a4d99;
+}
+
+/* Color Scheme: Republican Red */
+body.color-scheme-republican-red {
+  --cp-primary: #E81B23;
+  --cp-secondary: #b71419;
+}
+
+/* Color Scheme: Independent Purple */
+body.color-scheme-independent-purple {
+  --cp-primary: #6B3FA0;
+  --cp-secondary: #4a2b70;
+}
+
+/* Color Scheme: Green Party */
+body.color-scheme-green-party {
+  --cp-primary: #17aa5c;
+  --cp-secondary: #0d7a41;
+}
+
+/* ============================================
+   Layout
+   ============================================ */
+.site-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--cp-spacing-md);
+}
+
+.site-header {
+  background-color: var(--cp-background);
+  border-bottom: 1px solid var(--cp-border);
+  padding: var(--cp-spacing-md) 0;
+}
+
+.site-main {
+  padding: var(--cp-spacing-xl) 0;
+}
+
+.site-footer {
+  background-color: var(--cp-secondary);
+  color: #ffffff;
+  padding: var(--cp-spacing-xl) 0 var(--cp-spacing-md);
+  margin-top: var(--cp-spacing-xl);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.cp-button,
+.cp-donation-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: var(--cp-border-radius);
+  cursor: pointer;
+  transition: var(--cp-transition);
+  line-height: 1.5;
+}
+
+.cp-button-primary,
+.cp-donation-button {
+  background-color: var(--cp-primary);
+  color: #ffffff;
+}
+
+.cp-button-primary:hover,
+.cp-donation-button:hover {
+  background-color: var(--cp-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cp-button-secondary {
+  background-color: transparent;
+  color: var(--cp-primary);
+  border: 2px solid var(--cp-primary);
+}
+
+.cp-button-secondary:hover {
+  background-color: var(--cp-primary);
+  color: #ffffff;
+}
+
+.cp-button-large {
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+}
+
+/* ============================================
+   Campaign Components
+   ============================================ */
+
+/* Donation Button */
+.cp-donation-button-wrapper {
+  margin: var(--cp-spacing-md) 0;
+}
+
+.cp-donation-button-wrapper.align-center {
+  text-align: center;
+}
+
+.cp-donation-button-wrapper.align-right {
+  text-align: right;
+}
+
+/* Campaign Progress Bar */
+.cp-campaign-progress {
+  background-color: var(--cp-background-alt);
+  padding: var(--cp-spacing-md);
+  border-radius: var(--cp-border-radius-lg);
+  margin-bottom: var(--cp-spacing-lg);
+}
+
+.cp-progress-title {
+  margin-top: 0;
+  margin-bottom: var(--cp-spacing-sm);
+  font-size: 1.5rem;
+}
+
+.cp-progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--cp-spacing-sm);
+  font-size: 0.875rem;
+  color: var(--cp-text-light);
+}
+
+.cp-progress-raised {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cp-primary);
+}
+
+.cp-progress-bar-container {
+  width: 100%;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: var(--cp-border-radius);
+  overflow: hidden;
+  position: relative;
+}
+
+.cp-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cp-primary), var(--cp-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.6s ease;
+}
+
+.cp-progress-percentage {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+/* Issue Card */
+.cp-issue-card {
+  background-color: var(--cp-background);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-border-radius-lg);
+  padding: var(--cp-spacing-md);
+  margin-bottom: var(--cp-spacing-md);
+  transition: var(--cp-transition);
+}
+
+.cp-issue-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.cp-issue-icon {
+  font-size: 2.5rem;
+  color: var(--cp-primary);
+  margin-bottom: var(--cp-spacing-sm);
+}
+
+.cp-issue-title {
+  margin-top: 0;
+  margin-bottom: var(--cp-spacing-sm);
+  color: var(--cp-secondary);
+}
+
+.cp-issue-description {
+  color: var(--cp-text);
+  line-height: 1.6;
+}
+
+/* Endorsement Grid */
+.cp-endorsement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--cp-spacing-md);
+  margin-bottom: var(--cp-spacing-lg);
+}
+
+.cp-endorsement-card {
+  background-color: var(--cp-background);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-border-radius-lg);
+  padding: var(--cp-spacing-md);
+  text-align: center;
+}
+
+.cp-endorsement-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto var(--cp-spacing-sm);
+  object-fit: cover;
+}
+
+/* Event Details */
+.cp-event-details {
+  background-color: var(--cp-background-alt);
+  padding: var(--cp-spacing-md);
+  border-radius: var(--cp-border-radius-lg);
+  margin-bottom: var(--cp-spacing-lg);
+}
+
+.cp-event-datetime,
+.cp-event-location {
+  margin-bottom: var(--cp-spacing-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cp-spacing-xs);
+}
+
+.cp-event-rsvp {
+  margin-top: var(--cp-spacing-md);
+}
+
+/* Event Countdown */
+.cp-event-countdown {
+  background: linear-gradient(135deg, var(--cp-primary), var(--cp-secondary));
+  color: #ffffff;
+  padding: var(--cp-spacing-xl);
+  border-radius: var(--cp-border-radius-lg);
+  text-align: center;
+  margin-bottom: var(--cp-spacing-lg);
+}
+
+.cp-countdown-title {
+  margin-top: 0;
+  margin-bottom: var(--cp-spacing-md);
+  font-size: 2rem;
+}
+
+.cp-countdown-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cp-countdown-number {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cp-countdown-label {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Volunteer CTA */
+.cp-volunteer-cta {
+  background-color: var(--cp-background-alt);
+  padding: var(--cp-spacing-xl);
+  border-radius: var(--cp-border-radius-lg);
+  text-align: center;
+  margin-bottom: var(--cp-spacing-lg);
+}
+
+.cp-cta-title {
+  margin-top: 0;
+  margin-bottom: var(--cp-spacing-sm);
+  font-size: 2rem;
+  color: var(--cp-secondary);
+}
+
+.cp-cta-description {
+  margin-bottom: var(--cp-spacing-md);
+  font-size: 1.125rem;
+  color: var(--cp-text);
+}
+
+/* Social Links */
+.cp-social-links {
+  display: flex;
+  gap: var(--cp-spacing-sm);
+  align-items: center;
+}
+
+.cp-social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--cp-primary);
+  color: #ffffff;
+  transition: var(--cp-transition);
+}
+
+.cp-social-links a:hover {
+  background-color: var(--cp-secondary);
+  transform: scale(1.1);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  :root {
+    --cp-font-size-base: 14px;
+  }
+
+  .site-container {
+    padding: 0 var(--cp-spacing-sm);
+  }
+
+  .cp-endorsement-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-countdown-number {
+    font-size: 3rem;
+  }
+
+  .cp-progress-stats {
+    flex-direction: column;
+    gap: var(--cp-spacing-xs);
+  }
+
+  .cp-button,
+  .cp-donation-button {
+    width: 100%;
+    display: block;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+.cp-button:focus,
+.cp-donation-button:focus {
+  outline: 3px solid var(--cp-accent);
+  outline-offset: 2px;
+}
+
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--cp-primary);
+  color: #ffffff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--cp-spacing-xs); }
+.mb-2 { margin-bottom: var(--cp-spacing-sm); }
+.mb-3 { margin-bottom: var(--cp-spacing-md); }
+.mb-4 { margin-bottom: var(--cp-spacing-lg); }
+.mb-5 { margin-bottom: var(--cp-spacing-xl); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--cp-spacing-xs); }
+.mt-2 { margin-top: var(--cp-spacing-sm); }
+.mt-3 { margin-top: var(--cp-spacing-md); }
+.mt-4 { margin-top: var(--cp-spacing-lg); }
+.mt-5 { margin-top: var(--cp-spacing-xl); }

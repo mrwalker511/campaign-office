@@ -38,7 +38,7 @@
                 $campaignpress_description = get_bloginfo('description', 'display');
                 if ($campaignpress_description || is_customize_preview()) :
                     ?>
-                    <p class="site-description"><?php echo $campaignpress_description; ?></p>
+                    <p class="site-description"><?php echo esc_html($campaignpress_description); ?></p>
                 <?php endif; ?>
             </div><!-- .site-branding -->
 

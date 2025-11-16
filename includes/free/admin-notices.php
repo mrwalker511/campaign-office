@@ -12,6 +12,26 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Enqueue admin notice scripts
+ */
+function campaignpress_enqueue_admin_notice_scripts() {
+    wp_enqueue_script(
+        'campaignpress-admin-notices',
+        CAMPAIGNPRESS_ASSETS_URI . '/js/admin-notices.js',
+        array('jquery'),
+        CAMPAIGNPRESS_VERSION,
+        true
+    );
+
+    wp_localize_script('campaignpress-admin-notices', 'campaignpress_admin_notices', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'demo_nonce' => wp_create_nonce('campaignpress_dismiss_demo_notice'),
+        'donation_nonce' => wp_create_nonce('campaignpress_dismiss_donation_notice'),
+    ));
+}
+add_action('admin_enqueue_scripts', 'campaignpress_enqueue_admin_notice_scripts');
+
+/**
  * Show demo content notice on theme activation
  */
 function campaignpress_demo_content_notice() {
@@ -32,7 +52,7 @@ function campaignpress_demo_content_notice() {
 
     // Only show on theme-related pages
     $screen = get_current_screen();
-    if (!$screen || !in_array($screen->id, array('themes', 'dashboard', 'appearance_page_campaignpress-demo'))) {
+    if (!$screen || !in_array($screen->id, array('themes', 'dashboard', 'appearance_page_campaignpress-demo'), true)) {
         return;
     }
 
@@ -49,21 +69,6 @@ function campaignpress_demo_content_notice() {
             </a>
         </p>
     </div>
-
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $('.campaignpress-dismiss-demo-notice').on('click', function(e) {
-            e.preventDefault();
-
-            $.post(ajaxurl, {
-                action: 'campaignpress_dismiss_demo_notice',
-                nonce: '<?php echo wp_create_nonce('campaignpress_dismiss_demo_notice'); ?>'
-            });
-
-            $('.campaignpress-demo-notice').fadeOut();
-        });
-    });
-    </script>
     <?php
 }
 add_action('admin_notices', 'campaignpress_demo_content_notice');
@@ -76,9 +81,10 @@ function campaignpress_dismiss_demo_notice_handler() {
 
     if (current_user_can('manage_options')) {
         update_user_meta(get_current_user_id(), 'campaignpress_demo_notice_dismissed', true);
+        wp_send_json_success();
+    } else {
+        wp_send_json_error(array('message' => __('Insufficient permissions', 'campaignpress')));
     }
-
-    wp_die();
 }
 add_action('wp_ajax_campaignpress_dismiss_demo_notice', 'campaignpress_dismiss_demo_notice_handler');
 
@@ -93,7 +99,7 @@ function campaignpress_activation_notice() {
     }
 
     // Only show on themes page immediately after activation
-    if ($pagenow !== 'themes.php' || !isset($_GET['activated'])) {
+    if ($pagenow !== 'themes.php' || empty($_GET['activated']) || !wp_validate_boolean($_GET['activated'])) {
         return;
     }
 
@@ -142,7 +148,7 @@ function campaignpress_donation_url_notice() {
 
     // Only show on specific pages
     $screen = get_current_screen();
-    if (!$screen || !in_array($screen->id, array('dashboard', 'edit-page', 'page'))) {
+    if (!$screen || !in_array($screen->id, array('dashboard', 'edit-page', 'page'), true)) {
         return;
     }
 
@@ -159,17 +165,6 @@ function campaignpress_donation_url_notice() {
             </button>
         </p>
     </div>
-
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $('.campaignpress-dismiss-donation-notice, .campaignpress-donation-notice .notice-dismiss').on('click', function(e) {
-            $.post(ajaxurl, {
-                action: 'campaignpress_dismiss_donation_notice',
-                nonce: '<?php echo wp_create_nonce('campaignpress_dismiss_donation_notice'); ?>'
-            });
-        });
-    });
-    </script>
     <?php
 }
 add_action('admin_notices', 'campaignpress_donation_url_notice');
@@ -182,8 +177,9 @@ function campaignpress_dismiss_donation_notice_handler() {
 
     if (current_user_can('manage_options')) {
         update_user_meta(get_current_user_id(), 'campaignpress_donation_notice_dismissed', true);
+        wp_send_json_success();
+    } else {
+        wp_send_json_error(array('message' => __('Insufficient permissions', 'campaignpress')));
     }
-
-    wp_die();
 }
 add_action('wp_ajax_campaignpress_dismiss_donation_notice', 'campaignpress_dismiss_donation_notice_handler');

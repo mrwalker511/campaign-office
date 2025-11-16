@@ -46,13 +46,13 @@ class CampaignPress_Demo_Content {
         <div class="wrap">
             <h1><?php esc_html_e('CampaignPress Demo Content', 'campaignpress'); ?></h1>
 
-            <?php if (isset($_GET['imported'])) : ?>
+            <?php if (!empty($_GET['imported']) && sanitize_key($_GET['imported']) === '1') : ?>
                 <div class="notice notice-success is-dismissible">
                     <p><?php esc_html_e('Demo content imported successfully!', 'campaignpress'); ?></p>
                 </div>
             <?php endif; ?>
 
-            <?php if (isset($_GET['deleted'])) : ?>
+            <?php if (!empty($_GET['deleted']) && sanitize_key($_GET['deleted']) === '1') : ?>
                 <div class="notice notice-success is-dismissible">
                     <p><?php esc_html_e('Demo content deleted successfully!', 'campaignpress'); ?></p>
                 </div>
@@ -90,7 +90,7 @@ class CampaignPress_Demo_Content {
                     <div class="notice notice-info inline">
                         <p><?php esc_html_e('Demo content is currently installed.', 'campaignpress'); ?></p>
                     </div>
-                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('<?php esc_attr_e('Are you sure you want to delete all demo content? This cannot be undone.', 'campaignpress'); ?>');">
+                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-delete-demo-form">
                         <input type="hidden" name="action" value="cp_delete_demo">
                         <?php wp_nonce_field('cp_delete_demo', 'cp_demo_nonce'); ?>
                         <p>
@@ -99,6 +99,13 @@ class CampaignPress_Demo_Content {
                             </button>
                         </p>
                     </form>
+                    <script>
+                    document.getElementById('cp-delete-demo-form').addEventListener('submit', function(e) {
+                        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete all demo content? This cannot be undone.', 'campaignpress')); ?>')) {
+                            e.preventDefault();
+                        }
+                    });
+                    </script>
                 <?php endif; ?>
             </div>
         </div>

@@ -43,7 +43,7 @@ get_header();
                 // Start the Loop.
                 while ( have_posts() ) :
                     the_post();
-                    get_template_part( 'templates/content', get_post_type() );
+                    get_template_part( 'templates/parts/content', get_post_type() );
                 endwhile;
                 ?>
             </div>
@@ -56,7 +56,7 @@ get_header();
 
         else :
 
-            get_template_part( 'templates/content', 'none' );
+            get_template_part( 'templates/parts/content', 'none' );
 
         endif;
         ?>

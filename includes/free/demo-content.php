@@ -71,6 +71,8 @@ class CampaignPress_Demo_Content {
                     <li><?php esc_html_e('4 Volunteer Opportunities (Canvassing, Phone Banking, etc.)', 'campaignpress'); ?></li>
                     <li><?php esc_html_e('Sample homepage with CampaignPress blocks', 'campaignpress'); ?></li>
                     <li><?php esc_html_e('About page with candidate bio', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('3 Navigation Menus (Primary, Footer, Social)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Complete Theme Options populated with sample campaign data', 'campaignpress'); ?></li>
                 </ul>
 
                 <?php if (!$demo_exists) : ?>
@@ -147,6 +149,12 @@ class CampaignPress_Demo_Content {
         // Import Sample Pages
         $demo_post_ids['pages'] = $this->import_pages();
 
+        // Import Navigation Menus
+        $demo_post_ids['menus'] = $this->import_menus();
+
+        // Populate Theme Options
+        $this->populate_theme_options();
+
         // Save demo post IDs for later deletion
         update_option('campaignpress_demo_post_ids', $demo_post_ids);
         update_option('campaignpress_demo_imported', true);
@@ -175,12 +183,20 @@ class CampaignPress_Demo_Content {
 
         // Delete all demo posts
         foreach ($demo_post_ids as $post_type => $ids) {
-            if (is_array($ids)) {
+            if ($post_type === 'menus' && is_array($ids)) {
+                // Delete menus
+                foreach ($ids as $menu_id) {
+                    wp_delete_nav_menu($menu_id);
+                }
+            } elseif (is_array($ids)) {
                 foreach ($ids as $post_id) {
                     wp_delete_post($post_id, true);
                 }
             }
         }
+
+        // Clear theme options (but don't delete them, just reset to defaults)
+        $this->reset_theme_options();
 
         // Clean up options
         delete_option('campaignpress_demo_post_ids');
@@ -820,6 +836,294 @@ class CampaignPress_Demo_Content {
         }
 
         return $post_ids;
+    }
+
+    /**
+     * Import navigation menus
+     */
+    private function import_menus() {
+        $menu_ids = array();
+
+        // Create Primary Menu
+        $primary_menu_id = wp_create_nav_menu('Demo Primary Menu');
+        if (!is_wp_error($primary_menu_id)) {
+            $menu_ids['primary'] = $primary_menu_id;
+
+            // Add menu items
+            wp_update_nav_menu_item($primary_menu_id, 0, array(
+                'menu-item-title' => 'Home',
+                'menu-item-url' => home_url('/'),
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 1,
+            ));
+
+            // Get the About page ID
+            $about_page = get_page_by_title('About - Sample Bio');
+            if ($about_page) {
+                wp_update_nav_menu_item($primary_menu_id, 0, array(
+                    'menu-item-title' => 'About',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $about_page->ID,
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => 2,
+                ));
+            }
+
+            // Add Issues link
+            wp_update_nav_menu_item($primary_menu_id, 0, array(
+                'menu-item-title' => 'Issues',
+                'menu-item-url' => get_post_type_archive_link('cp_issue'),
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 3,
+            ));
+
+            // Add Events link
+            wp_update_nav_menu_item($primary_menu_id, 0, array(
+                'menu-item-title' => 'Events',
+                'menu-item-url' => get_post_type_archive_link('cp_event'),
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 4,
+            ));
+
+            // Add Team link
+            wp_update_nav_menu_item($primary_menu_id, 0, array(
+                'menu-item-title' => 'Team',
+                'menu-item-url' => get_post_type_archive_link('cp_team'),
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 5,
+            ));
+
+            // Add Endorsements link
+            wp_update_nav_menu_item($primary_menu_id, 0, array(
+                'menu-item-title' => 'Endorsements',
+                'menu-item-url' => get_post_type_archive_link('cp_endorsement'),
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 6,
+            ));
+
+            // Add Volunteer link
+            wp_update_nav_menu_item($primary_menu_id, 0, array(
+                'menu-item-title' => 'Volunteer',
+                'menu-item-url' => get_post_type_archive_link('cp_volunteer'),
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 7,
+            ));
+
+            // Assign to primary location
+            $locations = get_theme_mod('nav_menu_locations');
+            if (!is_array($locations)) {
+                $locations = array();
+            }
+            $locations['primary'] = $primary_menu_id;
+            set_theme_mod('nav_menu_locations', $locations);
+        }
+
+        // Create Footer Menu
+        $footer_menu_id = wp_create_nav_menu('Demo Footer Menu');
+        if (!is_wp_error($footer_menu_id)) {
+            $menu_ids['footer'] = $footer_menu_id;
+
+            // Add footer menu items
+            wp_update_nav_menu_item($footer_menu_id, 0, array(
+                'menu-item-title' => 'Privacy Policy',
+                'menu-item-url' => '#',
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 1,
+            ));
+
+            wp_update_nav_menu_item($footer_menu_id, 0, array(
+                'menu-item-title' => 'Contact Us',
+                'menu-item-url' => '#',
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 2,
+            ));
+
+            wp_update_nav_menu_item($footer_menu_id, 0, array(
+                'menu-item-title' => 'Press',
+                'menu-item-url' => '#',
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 3,
+            ));
+
+            // Assign to footer location
+            $locations = get_theme_mod('nav_menu_locations');
+            if (!is_array($locations)) {
+                $locations = array();
+            }
+            $locations['footer'] = $footer_menu_id;
+            set_theme_mod('nav_menu_locations', $locations);
+        }
+
+        // Create Social Menu
+        $social_menu_id = wp_create_nav_menu('Demo Social Menu');
+        if (!is_wp_error($social_menu_id)) {
+            $menu_ids['social'] = $social_menu_id;
+
+            // Add social menu items
+            wp_update_nav_menu_item($social_menu_id, 0, array(
+                'menu-item-title' => 'Facebook',
+                'menu-item-url' => 'https://facebook.com',
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 1,
+                'menu-item-attr-title' => 'Follow us on Facebook',
+            ));
+
+            wp_update_nav_menu_item($social_menu_id, 0, array(
+                'menu-item-title' => 'Twitter',
+                'menu-item-url' => 'https://twitter.com',
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 2,
+                'menu-item-attr-title' => 'Follow us on Twitter',
+            ));
+
+            wp_update_nav_menu_item($social_menu_id, 0, array(
+                'menu-item-title' => 'Instagram',
+                'menu-item-url' => 'https://instagram.com',
+                'menu-item-status' => 'publish',
+                'menu-item-position' => 3,
+                'menu-item-attr-title' => 'Follow us on Instagram',
+            ));
+
+            // Assign to social location
+            $locations = get_theme_mod('nav_menu_locations');
+            if (!is_array($locations)) {
+                $locations = array();
+            }
+            $locations['social'] = $social_menu_id;
+            set_theme_mod('nav_menu_locations', $locations);
+        }
+
+        return $menu_ids;
+    }
+
+    /**
+     * Populate theme options with demo data
+     */
+    private function populate_theme_options() {
+        // General Options
+        update_option('campaignpress_candidate_name', 'Alex Thompson');
+        update_option('campaignpress_office_seeking', 'State Senate - District 12');
+        update_option('campaignpress_campaign_tagline', 'Fighting for Our Community\'s Future');
+        update_option('campaignpress_campaign_year', date('Y'));
+        update_option('campaignpress_election_date', date('Y-m-d', strtotime('+90 days')));
+        update_option('campaignpress_donation_url', 'https://secure.actblue.com/donate/example');
+        update_option('campaignpress_volunteer_url', 'https://example.com/volunteer');
+
+        // Design Options
+        update_option('campaignpress_color_scheme', 'democrat-blue');
+        update_option('campaignpress_primary_color', '#0066cc');
+        update_option('campaignpress_secondary_color', '#333333');
+        update_option('campaignpress_accent_color', '#ff6b35');
+        update_option('campaignpress_homepage_layout', 'classic-candidate');
+        update_option('campaignpress_layout', 'sidebar-right');
+        update_option('campaignpress_logo_width', 200);
+        update_option('campaignpress_enable_sticky_header', 1);
+
+        // Typography Options
+        update_option('campaignpress_heading_font', 'system-ui');
+        update_option('campaignpress_body_font', 'system-ui');
+        update_option('campaignpress_font_size_base', 16);
+
+        // Social Media Options
+        update_option('campaignpress_facebook_url', 'https://facebook.com/campaignpress');
+        update_option('campaignpress_twitter_url', 'https://twitter.com/campaignpress');
+        update_option('campaignpress_instagram_url', 'https://instagram.com/campaignpress');
+        update_option('campaignpress_youtube_url', 'https://youtube.com/@campaignpress');
+        update_option('campaignpress_linkedin_url', '');
+        update_option('campaignpress_tiktok_url', '');
+
+        // Footer Options
+        update_option('campaignpress_show_footer_widgets', 1);
+        update_option('campaignpress_footer_text', '<p><strong>Alex Thompson for State Senate</strong><br>Building a better future for our community.</p>');
+        update_option('campaignpress_disclaimer_text', '<p><small>Paid for by Friends of Alex Thompson. Not authorized by any candidate or candidate\'s committee.</small></p>');
+
+        // Advanced Options (leave blank for security)
+        update_option('campaignpress_custom_css', '/* Add your custom CSS here */');
+        update_option('campaignpress_google_analytics_id', '');
+        update_option('campaignpress_facebook_pixel_id', '');
+        update_option('campaignpress_enable_maintenance_mode', 0);
+
+        // Customizer Options (for backwards compatibility)
+        set_theme_mod('campaignpress_color_scheme', 'democrat-blue');
+        set_theme_mod('campaignpress_primary_color', '#0066cc');
+        set_theme_mod('campaignpress_secondary_color', '#333333');
+        set_theme_mod('campaignpress_layout', 'sidebar-right');
+        set_theme_mod('campaignpress_homepage_layout', 'classic-candidate');
+        set_theme_mod('campaignpress_candidate_name', 'Alex Thompson');
+        set_theme_mod('campaignpress_office_seeking', 'State Senate - District 12');
+        set_theme_mod('campaignpress_campaign_tagline', 'Fighting for Our Community\'s Future');
+        set_theme_mod('campaignpress_donation_url', 'https://secure.actblue.com/donate/example');
+        set_theme_mod('campaignpress_facebook_url', 'https://facebook.com/campaignpress');
+        set_theme_mod('campaignpress_twitter_url', 'https://twitter.com/campaignpress');
+        set_theme_mod('campaignpress_instagram_url', 'https://instagram.com/campaignpress');
+        set_theme_mod('campaignpress_youtube_url', 'https://youtube.com/@campaignpress');
+    }
+
+    /**
+     * Reset theme options to defaults
+     */
+    private function reset_theme_options() {
+        // General Options
+        delete_option('campaignpress_candidate_name');
+        delete_option('campaignpress_office_seeking');
+        delete_option('campaignpress_campaign_tagline');
+        delete_option('campaignpress_campaign_year');
+        delete_option('campaignpress_election_date');
+        delete_option('campaignpress_donation_url');
+        delete_option('campaignpress_volunteer_url');
+
+        // Design Options
+        delete_option('campaignpress_color_scheme');
+        delete_option('campaignpress_primary_color');
+        delete_option('campaignpress_secondary_color');
+        delete_option('campaignpress_accent_color');
+        delete_option('campaignpress_homepage_layout');
+        delete_option('campaignpress_layout');
+        delete_option('campaignpress_logo_width');
+        delete_option('campaignpress_enable_sticky_header');
+
+        // Typography Options
+        delete_option('campaignpress_heading_font');
+        delete_option('campaignpress_body_font');
+        delete_option('campaignpress_font_size_base');
+
+        // Social Media Options
+        delete_option('campaignpress_facebook_url');
+        delete_option('campaignpress_twitter_url');
+        delete_option('campaignpress_instagram_url');
+        delete_option('campaignpress_youtube_url');
+        delete_option('campaignpress_linkedin_url');
+        delete_option('campaignpress_tiktok_url');
+
+        // Footer Options
+        delete_option('campaignpress_show_footer_widgets');
+        delete_option('campaignpress_footer_text');
+        delete_option('campaignpress_disclaimer_text');
+
+        // Advanced Options
+        delete_option('campaignpress_custom_css');
+        delete_option('campaignpress_google_analytics_id');
+        delete_option('campaignpress_facebook_pixel_id');
+        delete_option('campaignpress_enable_maintenance_mode');
+
+        // Customizer Options
+        remove_theme_mod('campaignpress_color_scheme');
+        remove_theme_mod('campaignpress_primary_color');
+        remove_theme_mod('campaignpress_secondary_color');
+        remove_theme_mod('campaignpress_layout');
+        remove_theme_mod('campaignpress_homepage_layout');
+        remove_theme_mod('campaignpress_candidate_name');
+        remove_theme_mod('campaignpress_office_seeking');
+        remove_theme_mod('campaignpress_campaign_tagline');
+        remove_theme_mod('campaignpress_donation_url');
+        remove_theme_mod('campaignpress_facebook_url');
+        remove_theme_mod('campaignpress_twitter_url');
+        remove_theme_mod('campaignpress_instagram_url');
+        remove_theme_mod('campaignpress_youtube_url');
+
+        // Remove menu locations
+        set_theme_mod('nav_menu_locations', array());
     }
 }
 

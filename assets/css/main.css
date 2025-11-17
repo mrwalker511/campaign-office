@@ -119,17 +119,37 @@ body.color-scheme-green-party {
   padding: 0.5rem 1rem;
   border-radius: var(--cp-border-radius);
   transition: var(--cp-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar-nav .nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.navbar-nav .nav-link:hover::before {
+  left: 100%;
 }
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
   color: var(--cp-primary);
   background-color: var(--cp-background-alt);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .navbar-nav .nav-link.active {
   color: var(--cp-primary);
   background-color: rgba(0, 102, 204, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 102, 204, 0.2);
 }
 
 /* Dropdown Menu */
@@ -138,18 +158,49 @@ body.color-scheme-green-party {
   border-radius: var(--cp-border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-top: 0.5rem;
+  animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .navbar-nav .dropdown-item {
   color: var(--cp-secondary);
   padding: 0.5rem 1rem;
   transition: var(--cp-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar-nav .dropdown-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--cp-primary);
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .dropdown-item:hover::after {
+  width: 100%;
 }
 
 .navbar-nav .dropdown-item:hover,
 .navbar-nav .dropdown-item:focus {
   background-color: var(--cp-background-alt);
   color: var(--cp-primary);
+  transform: translateX(5px);
+  padding-left: 1.25rem;
 }
 
 .navbar-nav .dropdown-item.active {
@@ -183,6 +234,173 @@ body.color-scheme-green-party {
 
   .navbar-nav .dropdown-item {
     padding-left: 2rem;
+  }
+}
+
+/* ============================================
+   Campaign Hero Section
+   ============================================ */
+.campaign-hero {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0 calc(-1 * var(--cp-spacing-md));
+  margin-bottom: var(--cp-spacing-xl);
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: #ffffff;
+  padding: var(--cp-spacing-xl) var(--cp-spacing-md);
+  max-width: 800px;
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0 0 var(--cp-spacing-sm);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease 0.2s backwards;
+}
+
+.hero-subtitle {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 0 0 var(--cp-spacing-md);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease 0.4s backwards;
+}
+
+.hero-tagline {
+  font-size: 1.25rem;
+  margin: 0 0 var(--cp-spacing-lg);
+  opacity: 0.95;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease 0.6s backwards;
+}
+
+.hero-cta {
+  display: flex;
+  gap: var(--cp-spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease 0.8s backwards;
+}
+
+.hero-cta .button {
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--cp-border-radius);
+  transition: var(--cp-transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-cta .button-primary {
+  background-color: var(--cp-primary);
+  color: #ffffff;
+  border: 2px solid var(--cp-primary);
+}
+
+.hero-cta .button-primary:hover {
+  background-color: var(--cp-secondary);
+  border-color: var(--cp-secondary);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.hero-cta .button-secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+.hero-cta .button-secondary:hover {
+  background-color: #ffffff;
+  color: var(--cp-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.hero-cta .button-large {
+  padding: 1.25rem 3rem;
+  font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .campaign-hero {
+    min-height: 400px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta .button {
+    width: 100%;
   }
 }
 

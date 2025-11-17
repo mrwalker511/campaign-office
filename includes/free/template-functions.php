@@ -228,6 +228,131 @@ function campaignpress_save_layout_meta($post_id) {
 add_action('save_post', 'campaignpress_save_layout_meta');
 
 /**
+ * Add hero video meta box to pages
+ */
+function campaignpress_add_hero_video_meta_box() {
+    add_meta_box(
+        'campaignpress_hero_video_meta_box',
+        __('Hero Video Overlay', 'campaignpress'),
+        'campaignpress_hero_video_meta_box_callback',
+        'page',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'campaignpress_add_hero_video_meta_box');
+
+/**
+ * Hero video meta box callback
+ */
+function campaignpress_hero_video_meta_box_callback($post) {
+    wp_nonce_field('campaignpress_hero_video_meta_box', 'campaignpress_hero_video_meta_box_nonce');
+
+    $video_url = get_post_meta($post->ID, '_campaignpress_hero_video_url', true);
+    $video_type = get_post_meta($post->ID, '_campaignpress_hero_video_type', true);
+    $show_hero = get_post_meta($post->ID, '_campaignpress_show_hero', true);
+
+    if ($show_hero === '') {
+        $show_hero = '1'; // Default to showing hero
+    }
+    ?>
+    <div class="campaignpress-hero-video-settings">
+        <p>
+            <label for="campaignpress_show_hero">
+                <input type="checkbox" id="campaignpress_show_hero" name="campaignpress_show_hero" value="1" <?php checked($show_hero, '1'); ?>>
+                <strong><?php esc_html_e('Display Hero Section', 'campaignpress'); ?></strong>
+            </label>
+            <br>
+            <span class="description"><?php esc_html_e('Show the hero section with video or image background on this page.', 'campaignpress'); ?></span>
+        </p>
+
+        <p>
+            <label for="campaignpress_hero_video_url">
+                <strong><?php esc_html_e('Hero Video URL', 'campaignpress'); ?></strong>
+            </label><br>
+            <input type="url" id="campaignpress_hero_video_url" name="campaignpress_hero_video_url" value="<?php echo esc_url($video_url); ?>" class="widefat" placeholder="https://example.com/video.mp4">
+            <span class="description"><?php esc_html_e('Enter the URL of your hero video. If left empty, the featured image will be used instead. Recommended formats: MP4, WebM', 'campaignpress'); ?></span>
+        </p>
+
+        <p>
+            <label for="campaignpress_hero_video_type">
+                <strong><?php esc_html_e('Video MIME Type', 'campaignpress'); ?></strong>
+            </label><br>
+            <select id="campaignpress_hero_video_type" name="campaignpress_hero_video_type" class="widefat">
+                <option value="video/mp4" <?php selected($video_type, 'video/mp4'); ?>>MP4 (video/mp4)</option>
+                <option value="video/webm" <?php selected($video_type, 'video/webm'); ?>>WebM (video/webm)</option>
+                <option value="video/ogg" <?php selected($video_type, 'video/ogg'); ?>>OGG (video/ogg)</option>
+            </select>
+            <span class="description"><?php esc_html_e('Select the video format type.', 'campaignpress'); ?></span>
+        </p>
+
+        <div class="notice notice-info inline">
+            <p>
+                <strong><?php esc_html_e('Tips for best results:', 'campaignpress'); ?></strong>
+            </p>
+            <ul style="margin-left: 20px; list-style-type: disc;">
+                <li><?php esc_html_e('Keep video files under 5MB for faster loading', 'campaignpress'); ?></li>
+                <li><?php esc_html_e('Use compressed, web-optimized video formats', 'campaignpress'); ?></li>
+                <li><?php esc_html_e('Video will autoplay, loop, and be muted by default', 'campaignpress'); ?></li>
+                <li><?php esc_html_e('Always set a featured image as a fallback', 'campaignpress'); ?></li>
+            </ul>
+        </div>
+    </div>
+
+    <style>
+        .campaignpress-hero-video-settings p {
+            margin-bottom: 15px;
+        }
+        .campaignpress-hero-video-settings .description {
+            display: block;
+            margin-top: 5px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+    <?php
+}
+
+/**
+ * Save hero video meta
+ */
+function campaignpress_save_hero_video_meta($post_id) {
+    // Check nonce
+    if (!isset($_POST['campaignpress_hero_video_meta_box_nonce']) ||
+        !wp_verify_nonce($_POST['campaignpress_hero_video_meta_box_nonce'], 'campaignpress_hero_video_meta_box')) {
+        return;
+    }
+
+    // Check autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // Check permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Save show hero checkbox
+    if (isset($_POST['campaignpress_show_hero'])) {
+        update_post_meta($post_id, '_campaignpress_show_hero', '1');
+    } else {
+        update_post_meta($post_id, '_campaignpress_show_hero', '0');
+    }
+
+    // Save video URL
+    if (isset($_POST['campaignpress_hero_video_url'])) {
+        update_post_meta($post_id, '_campaignpress_hero_video_url', esc_url_raw($_POST['campaignpress_hero_video_url']));
+    }
+
+    // Save video type
+    if (isset($_POST['campaignpress_hero_video_type'])) {
+        update_post_meta($post_id, '_campaignpress_hero_video_type', sanitize_text_field($_POST['campaignpress_hero_video_type']));
+    }
+}
+add_action('save_post', 'campaignpress_save_hero_video_meta');
+
+/**
  * Get formatted event date/time
  *
  * @param int $post_id Event post ID

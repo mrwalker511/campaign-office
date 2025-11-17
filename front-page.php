@@ -32,7 +32,24 @@ get_header();
                 ?>
 
                 <section class="campaign-hero">
-                    <?php if ( has_post_thumbnail() ) : ?>
+                    <?php
+                    // Check for video overlay option
+                    $hero_video_url = get_post_meta( get_the_ID(), '_campaignpress_hero_video_url', true );
+                    $hero_video_type = get_post_meta( get_the_ID(), '_campaignpress_hero_video_type', true );
+
+                    if ( ! empty( $hero_video_url ) ) :
+                        ?>
+                        <div class="hero-background">
+                            <video autoplay muted loop playsinline>
+                                <?php if ( $hero_video_type ) : ?>
+                                    <source src="<?php echo esc_url( $hero_video_url ); ?>" type="<?php echo esc_attr( $hero_video_type ); ?>">
+                                <?php else : ?>
+                                    <source src="<?php echo esc_url( $hero_video_url ); ?>" type="video/mp4">
+                                <?php endif; ?>
+                                <?php esc_html_e( 'Your browser does not support the video tag.', 'campaignpress' ); ?>
+                            </video>
+                        </div>
+                    <?php elseif ( has_post_thumbnail() ) : ?>
                         <div class="hero-background">
                             <?php the_post_thumbnail( 'full' ); ?>
                         </div>

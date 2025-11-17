@@ -51,6 +51,9 @@ function campaignpress_register_theme_options() {
     register_setting( 'campaignpress_design_options', 'campaignpress_layout', 'sanitize_text_field' );
     register_setting( 'campaignpress_design_options', 'campaignpress_logo_width', 'absint' );
     register_setting( 'campaignpress_design_options', 'campaignpress_enable_sticky_header', 'absint' );
+    register_setting( 'campaignpress_design_options', 'campaignpress_hero_video_url', 'esc_url_raw' );
+    register_setting( 'campaignpress_design_options', 'campaignpress_hero_video_type', 'sanitize_text_field' );
+    register_setting( 'campaignpress_design_options', 'campaignpress_enable_hero_video', 'absint' );
 
     // Social Media Settings
     register_setting( 'campaignpress_social_options', 'campaignpress_facebook_url', 'esc_url_raw' );
@@ -424,6 +427,59 @@ function campaignpress_render_design_tab() {
                     </td>
                 </tr>
             </table>
+        </div>
+
+        <div class="campaignpress-section">
+            <h2 class="section-title">
+                <span class="dashicons dashicons-video-alt3"></span>
+                <?php esc_html_e( 'Hero Video Overlay', 'campaignpress' ); ?>
+            </h2>
+            <p class="section-description"><?php esc_html_e( 'Set a default video overlay for hero sections. This can be overridden on individual pages.', 'campaignpress' ); ?></p>
+
+            <table class="form-table">
+                <tr>
+                    <th scope="row">
+                        <label for="campaignpress_enable_hero_video"><?php esc_html_e( 'Enable Hero Video', 'campaignpress' ); ?></label>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" id="campaignpress_enable_hero_video" name="campaignpress_enable_hero_video" value="1" <?php checked( get_option( 'campaignpress_enable_hero_video' ), 1 ); ?>>
+                            <?php esc_html_e( 'Use video overlay for hero sections by default', 'campaignpress' ); ?>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">
+                        <label for="campaignpress_hero_video_url"><?php esc_html_e( 'Default Hero Video URL', 'campaignpress' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="url" id="campaignpress_hero_video_url" name="campaignpress_hero_video_url" value="<?php echo esc_url( get_option( 'campaignpress_hero_video_url' ) ); ?>" class="regular-text" placeholder="https://example.com/video.mp4">
+                        <p class="description"><?php esc_html_e( 'URL to your default hero video. Recommended formats: MP4, WebM. Keep file size under 5MB for best performance.', 'campaignpress' ); ?></p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">
+                        <label for="campaignpress_hero_video_type"><?php esc_html_e( 'Video Format', 'campaignpress' ); ?></label>
+                    </th>
+                    <td>
+                        <select id="campaignpress_hero_video_type" name="campaignpress_hero_video_type" class="regular-text">
+                            <option value="video/mp4" <?php selected( get_option( 'campaignpress_hero_video_type', 'video/mp4' ), 'video/mp4' ); ?>><?php esc_html_e( 'MP4 (video/mp4)', 'campaignpress' ); ?></option>
+                            <option value="video/webm" <?php selected( get_option( 'campaignpress_hero_video_type' ), 'video/webm' ); ?>><?php esc_html_e( 'WebM (video/webm)', 'campaignpress' ); ?></option>
+                            <option value="video/ogg" <?php selected( get_option( 'campaignpress_hero_video_type' ), 'video/ogg' ); ?>><?php esc_html_e( 'OGG (video/ogg)', 'campaignpress' ); ?></option>
+                        </select>
+                        <p class="description"><?php esc_html_e( 'Select the video MIME type that matches your video file format.', 'campaignpress' ); ?></p>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="notice notice-info inline" style="margin: 20px 0;">
+                <p>
+                    <strong><?php esc_html_e( 'Note:', 'campaignpress' ); ?></strong>
+                    <?php esc_html_e( 'Individual pages can override this default by setting their own video in the "Hero Video Overlay" meta box when editing the page.', 'campaignpress' ); ?>
+                </p>
+            </div>
         </div>
     </div>
     <?php

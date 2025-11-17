@@ -33,9 +33,15 @@ get_header();
 
                 <section class="campaign-hero">
                     <?php
-                    // Check for video overlay option
+                    // Check for video overlay option - page-specific first, then theme default
                     $hero_video_url = get_post_meta( get_the_ID(), '_campaignpress_hero_video_url', true );
                     $hero_video_type = get_post_meta( get_the_ID(), '_campaignpress_hero_video_type', true );
+
+                    // If no page-specific video, check theme options
+                    if ( empty( $hero_video_url ) && get_option( 'campaignpress_enable_hero_video' ) ) {
+                        $hero_video_url = get_option( 'campaignpress_hero_video_url' );
+                        $hero_video_type = get_option( 'campaignpress_hero_video_type', 'video/mp4' );
+                    }
 
                     if ( ! empty( $hero_video_url ) ) :
                         ?>

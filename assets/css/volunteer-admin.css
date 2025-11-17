@@ -1,0 +1,171 @@
+/**
+ * Volunteer Admin Styles
+ *
+ * Styles for the volunteer management admin interface
+ *
+ * @package CampaignPress
+ * @since 2.0.0
+ */
+
+.cp-volunteer-form-wrapper {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cp-volunteer-form-wrapper h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.cp-volunteer-signup-form .cp-form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.cp-volunteer-signup-form .cp-form-group {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.cp-volunteer-signup-form .cp-form-group-small {
+    flex: 0 0 100px;
+}
+
+.cp-volunteer-signup-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+.cp-volunteer-signup-form .required {
+    color: #e74c3c;
+}
+
+.cp-volunteer-signup-form input[type="text"],
+.cp-volunteer-signup-form input[type="email"],
+.cp-volunteer-signup-form input[type="tel"],
+.cp-volunteer-signup-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+.cp-volunteer-signup-form input[type="text"]:focus,
+.cp-volunteer-signup-form input[type="email"]:focus,
+.cp-volunteer-signup-form input[type="tel"]:focus,
+.cp-volunteer-signup-form textarea:focus {
+    outline: none;
+    border-color: #0073aa;
+}
+
+.cp-volunteer-signup-form .cp-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cp-volunteer-signup-form .cp-checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.cp-volunteer-signup-form .cp-checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.cp-volunteer-submit-btn {
+    width: 100%;
+    padding: 12px 24px;
+    background: #0073aa;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.cp-volunteer-submit-btn:hover {
+    background: #005a87;
+}
+
+.cp-volunteer-submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.cp-form-message {
+    margin: 15px 0;
+}
+
+.cp-success-message {
+    padding: 12px;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    color: #155724;
+}
+
+.cp-error-message {
+    padding: 12px;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    color: #721c24;
+}
+
+/* Admin table styles */
+.cp-status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.cp-status-new {
+    background: #e5f5ff;
+    color: #0073aa;
+}
+
+.cp-status-contacted {
+    background: #fff4e5;
+    color: #f56e28;
+}
+
+.cp-status-active {
+    background: #e8f5e9;
+    color: #46b450;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .cp-volunteer-form-wrapper {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .cp-volunteer-signup-form .cp-form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .cp-volunteer-signup-form .cp-form-group-small {
+        flex: 1;
+    }
+}

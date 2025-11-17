@@ -3,8 +3,8 @@ Theme Name: CampaignPress
 Theme URI: https://campaignpress.org
 Author: CampaignPress Team
 Author URI: https://campaignpress.org
-Description: A freemium political WordPress theme that transforms into a complete campaign operations platform. Free version includes custom Gutenberg blocks, event management, and donation integration. Premium version adds political CRM, field operations (canvassing, phone banking), GOTV tools, and FEC compliance automation - replacing expensive solutions like NationBuilder and NGP VAN.
-Version: 1.0.0
+Description: A freemium political WordPress theme that transforms into a complete campaign operations platform. Version 2.0.0 adds enhanced volunteer management, event RSVPs, multi-language support, accessibility compliance, Elementor integration, and premium features including political CRM, field operations, GOTV tools, FEC compliance, and campaign automation - replacing expensive solutions like NationBuilder ($500-$1,000/mo) and NGP VAN ($1,500-$3,000/mo).
+Version: 2.0.0
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.1
@@ -12,7 +12,7 @@ License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: campaignpress
 Domain Path: /languages
-Tags: politics, campaign, political, election, candidate, government, nonprofit, activism, one-column, two-columns, custom-colors, custom-menu, custom-logo, editor-style, featured-images, threaded-comments, translation-ready, block-patterns, full-site-editing
+Tags: politics, campaign, political, election, candidate, government, nonprofit, activism, accessibility-ready, one-column, two-columns, custom-colors, custom-menu, custom-logo, editor-style, featured-images, threaded-comments, translation-ready, rtl-language-support, elementor
 
 CampaignPress WordPress Theme
 Copyright (C) 2024 CampaignPress Team

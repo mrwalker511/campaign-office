@@ -1,0 +1,773 @@
+<?php
+/**
+ * CampaignPress CRM System Initialization
+ *
+ * Main initialization file for the CampaignPress political CRM system.
+ * Handles class loading, database initialization, hooks, and integration
+ * with the main CampaignPress plugin.
+ *
+ * This CRM system is designed for political campaigns and provides:
+ * - Voter database management (50K+ contacts)
+ * - Interaction tracking (calls, texts, door knocks, emails)
+ * - Smart segmentation and tagging
+ * - Engagement scoring algorithm
+ * - CSV import/export for voter files (L2, TargetSmart, NGP VAN)
+ * - Duplicate detection and merging
+ * - Household grouping
+ * - Custom field management
+ * - Advanced search and filtering
+ * - Bulk operations
+ *
+ * @package CampaignPress
+ * @subpackage CRM
+ * @since 1.0.0
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * CRM System Initialization Class
+ *
+ * @since 1.0.0
+ */
+class CampaignPress_CRM_Init {
+
+	/**
+	 * CRM version
+	 *
+	 * @var string
+	 */
+	const VERSION = '1.0.0';
+
+	/**
+	 * Instance of this class
+	 *
+	 * @var CampaignPress_CRM_Init
+	 */
+	private static $instance = null;
+
+	/**
+	 * CRM Database instance
+	 *
+	 * @var CampaignPress_CRM_Database
+	 */
+	public $database;
+
+	/**
+	 * CRM Contacts instance
+	 *
+	 * @var CampaignPress_CRM_Contacts
+	 */
+	public $contacts;
+
+	/**
+	 * CRM Interactions instance
+	 *
+	 * @var CampaignPress_CRM_Interactions
+	 */
+	public $interactions;
+
+	/**
+	 * CRM Segments instance
+	 *
+	 * @var CampaignPress_CRM_Segments
+	 */
+	public $segments;
+
+	/**
+	 * CRM Import/Export instance
+	 *
+	 * @var CampaignPress_CRM_Import_Export
+	 */
+	public $import_export;
+
+	/**
+	 * Get singleton instance
+	 *
+	 * @since 1.0.0
+	 * @return CampaignPress_CRM_Init
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @since 1.0.0
+	 */
+	private function __construct() {
+		$this->define_constants();
+		$this->load_dependencies();
+		$this->init_hooks();
+	}
+
+	/**
+	 * Define CRM constants
+	 *
+	 * @since 1.0.0
+	 */
+	private function define_constants() {
+		if ( ! defined( 'CP_CRM_VERSION' ) ) {
+			define( 'CP_CRM_VERSION', self::VERSION );
+		}
+
+		if ( ! defined( 'CP_CRM_PATH' ) ) {
+			define( 'CP_CRM_PATH', dirname( __FILE__ ) . '/' );
+		}
+	}
+
+	/**
+	 * Load required dependencies
+	 *
+	 * @since 1.0.0
+	 */
+	private function load_dependencies() {
+		// Load class files
+		require_once CP_CRM_PATH . 'class-crm-database.php';
+		require_once CP_CRM_PATH . 'class-crm-contacts.php';
+		require_once CP_CRM_PATH . 'class-crm-interactions.php';
+		require_once CP_CRM_PATH . 'class-crm-segments.php';
+		require_once CP_CRM_PATH . 'class-crm-import-export.php';
+
+		// Initialize core classes
+		$this->database      = new CampaignPress_CRM_Database();
+		$this->contacts      = new CampaignPress_CRM_Contacts();
+		$this->interactions  = new CampaignPress_CRM_Interactions();
+		$this->segments      = new CampaignPress_CRM_Segments();
+		$this->import_export = new CampaignPress_CRM_Import_Export();
+	}
+
+	/**
+	 * Initialize WordPress hooks
+	 *
+	 * @since 1.0.0
+	 */
+	private function init_hooks() {
+		// Activation hook
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+
+		// Deactivation hook
+		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+
+		// Initialize CRM on plugins loaded
+		add_action( 'plugins_loaded', array( $this, 'init' ) );
+
+		// Admin initialization
+		add_action( 'admin_init', array( $this, 'admin_init' ) );
+
+		// AJAX hooks
+		add_action( 'wp_ajax_cp_crm_search_contacts', array( $this, 'ajax_search_contacts' ) );
+		add_action( 'wp_ajax_cp_crm_import_csv', array( $this, 'ajax_import_csv' ) );
+		add_action( 'wp_ajax_cp_crm_export_csv', array( $this, 'ajax_export_csv' ) );
+
+		// REST API hooks
+		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+
+		// Scheduled tasks
+		add_action( 'cp_crm_daily_maintenance', array( $this, 'daily_maintenance' ) );
+		add_action( 'cp_crm_recalculate_engagement_scores', array( $this, 'recalculate_engagement_scores' ) );
+
+		// Integration hooks
+		do_action( 'cp_crm_loaded', $this );
+	}
+
+	/**
+	 * Initialize CRM system
+	 *
+	 * @since 1.0.0
+	 */
+	public function init() {
+		// Check if database tables exist
+		if ( ! $this->database->tables_exist() ) {
+			// Create tables if they don't exist
+			$this->database->create_tables();
+
+			// Create default tags
+			$this->create_default_tags();
+		}
+
+		// Load text domain for translations
+		load_plugin_textdomain( 'campaignpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
+		// Allow customization after initialization
+		do_action( 'cp_crm_init', $this );
+	}
+
+	/**
+	 * Admin initialization
+	 *
+	 * @since 1.0.0
+	 */
+	public function admin_init() {
+		// Check for database updates
+		$db_version = get_option( 'cp_crm_db_version', '0.0.0' );
+		if ( version_compare( $db_version, CampaignPress_CRM_Database::DB_VERSION, '<' ) ) {
+			$this->database->create_tables();
+		}
+
+		// Register settings
+		$this->register_settings();
+	}
+
+	/**
+	 * Plugin activation
+	 *
+	 * @since 1.0.0
+	 */
+	public function activate() {
+		// Create database tables
+		$this->database->create_tables();
+
+		// Create default tags
+		$this->create_default_tags();
+
+		// Schedule cron jobs
+		if ( ! wp_next_scheduled( 'cp_crm_daily_maintenance' ) ) {
+			wp_schedule_event( time(), 'daily', 'cp_crm_daily_maintenance' );
+		}
+
+		if ( ! wp_next_scheduled( 'cp_crm_recalculate_engagement_scores' ) ) {
+			wp_schedule_event( time(), 'twicedaily', 'cp_crm_recalculate_engagement_scores' );
+		}
+
+		// Set activation flag
+		update_option( 'cp_crm_activated', time() );
+
+		// Log activation
+		error_log( 'CampaignPress CRM activated at ' . date( 'Y-m-d H:i:s' ) );
+	}
+
+	/**
+	 * Plugin deactivation
+	 *
+	 * @since 1.0.0
+	 */
+	public function deactivate() {
+		// Clear scheduled events
+		wp_clear_scheduled_hook( 'cp_crm_daily_maintenance' );
+		wp_clear_scheduled_hook( 'cp_crm_recalculate_engagement_scores' );
+
+		// Log deactivation
+		error_log( 'CampaignPress CRM deactivated at ' . date( 'Y-m-d H:i:s' ) );
+	}
+
+	/**
+	 * Create default tags
+	 *
+	 * @since 1.0.0
+	 */
+	private function create_default_tags() {
+		$default_tags = array(
+			array(
+				'name'      => 'Strong Support',
+				'slug'      => 'strong-support',
+				'tag_type'  => 'support_level',
+				'color'     => '#27ae60',
+				'is_system' => 1,
+			),
+			array(
+				'name'      => 'Support',
+				'slug'      => 'support',
+				'tag_type'  => 'support_level',
+				'color'     => '#2ecc71',
+				'is_system' => 1,
+			),
+			array(
+				'name'      => 'Undecided',
+				'slug'      => 'undecided',
+				'tag_type'  => 'support_level',
+				'color'     => '#f39c12',
+				'is_system' => 1,
+			),
+			array(
+				'name'      => 'Volunteer',
+				'slug'      => 'volunteer',
+				'tag_type'  => 'role',
+				'color'     => '#3498db',
+				'is_system' => 1,
+			),
+			array(
+				'name'      => 'Donor',
+				'slug'      => 'donor',
+				'tag_type'  => 'role',
+				'color'     => '#9b59b6',
+				'is_system' => 1,
+			),
+			array(
+				'name'      => 'VIP',
+				'slug'      => 'vip',
+				'tag_type'  => 'role',
+				'color'     => '#e74c3c',
+				'is_system' => 1,
+			),
+			array(
+				'name'      => 'Contacted',
+				'slug'      => 'contacted',
+				'tag_type'  => 'status',
+				'color'     => '#1abc9c',
+				'is_system' => 1,
+			),
+			array(
+				'name'      => 'Needs Follow-up',
+				'slug'      => 'needs-follow-up',
+				'tag_type'  => 'status',
+				'color'     => '#e67e22',
+				'is_system' => 1,
+			),
+		);
+
+		foreach ( $default_tags as $tag_data ) {
+			// Check if tag already exists
+			$existing = $this->segments->get_tags( array( 'tag_type' => $tag_data['tag_type'] ) );
+			$exists = false;
+			foreach ( $existing as $existing_tag ) {
+				if ( $existing_tag->slug === $tag_data['slug'] ) {
+					$exists = true;
+					break;
+				}
+			}
+
+			// Create tag if doesn't exist
+			if ( ! $exists ) {
+				$this->segments->create_tag( $tag_data );
+			}
+		}
+	}
+
+	/**
+	 * Register plugin settings
+	 *
+	 * @since 1.0.0
+	 */
+	private function register_settings() {
+		// CRM settings
+		register_setting( 'cp_crm_settings', 'cp_crm_enable_duplicate_detection' );
+		register_setting( 'cp_crm_settings', 'cp_crm_enable_household_grouping' );
+		register_setting( 'cp_crm_settings', 'cp_crm_engagement_score_algorithm' );
+		register_setting( 'cp_crm_settings', 'cp_crm_import_batch_size' );
+		register_setting( 'cp_crm_settings', 'cp_crm_enable_geocoding' );
+		register_setting( 'cp_crm_settings', 'cp_crm_default_import_format' );
+	}
+
+	/**
+	 * Daily maintenance task
+	 *
+	 * Runs optimization, cleanup, and maintenance tasks
+	 *
+	 * @since 1.0.0
+	 */
+	public function daily_maintenance() {
+		// Optimize database tables
+		$this->database->optimize_tables();
+
+		// Clean up old export files (older than 7 days)
+		$this->cleanup_export_files();
+
+		// Recalculate dynamic segments
+		$this->recalculate_dynamic_segments();
+
+		// Log maintenance
+		error_log( 'CampaignPress CRM daily maintenance completed at ' . date( 'Y-m-d H:i:s' ) );
+	}
+
+	/**
+	 * Recalculate engagement scores
+	 *
+	 * Recalculates engagement scores for all contacts
+	 *
+	 * @since 1.0.0
+	 */
+	public function recalculate_engagement_scores() {
+		$batch_size = 100;
+		$page = 1;
+
+		do {
+			$result = $this->contacts->get_contacts( array(
+				'page'     => $page,
+				'per_page' => $batch_size,
+			) );
+
+			foreach ( $result['contacts'] as $contact ) {
+				$this->contacts->update_engagement_score( $contact->id );
+			}
+
+			$page++;
+		} while ( $page <= $result['pages'] );
+
+		// Log completion
+		error_log( 'CampaignPress CRM engagement scores recalculated at ' . date( 'Y-m-d H:i:s' ) );
+	}
+
+	/**
+	 * Recalculate dynamic segments
+	 *
+	 * @since 1.0.0
+	 */
+	private function recalculate_dynamic_segments() {
+		$segments = $this->segments->get_segments( array(
+			'segment_type' => 'dynamic',
+			'is_active'    => 1,
+		) );
+
+		foreach ( $segments as $segment ) {
+			$this->segments->recalculate_segment( $segment->id );
+		}
+	}
+
+	/**
+	 * Cleanup old export files
+	 *
+	 * @since 1.0.0
+	 */
+	private function cleanup_export_files() {
+		$upload_dir = wp_upload_dir();
+		$export_dir = $upload_dir['basedir'] . '/crm-exports/';
+
+		if ( ! file_exists( $export_dir ) ) {
+			return;
+		}
+
+		$files = glob( $export_dir . '*.csv' );
+		$cutoff = time() - ( 7 * DAY_IN_SECONDS );
+
+		foreach ( $files as $file ) {
+			if ( filemtime( $file ) < $cutoff ) {
+				wp_delete_file( $file );
+			}
+		}
+	}
+
+	/**
+	 * AJAX: Search contacts
+	 *
+	 * @since 1.0.0
+	 */
+	public function ajax_search_contacts() {
+		// Check nonce
+		check_ajax_referer( 'cp_crm_search', 'nonce' );
+
+		// Check capabilities
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
+		}
+
+		$query = isset( $_GET['q'] ) ? sanitize_text_field( $_GET['q'] ) : '';
+		$limit = isset( $_GET['limit'] ) ? absint( $_GET['limit'] ) : 20;
+
+		if ( empty( $query ) ) {
+			wp_send_json_error( array( 'message' => __( 'Search query required.', 'campaignpress' ) ) );
+		}
+
+		$contacts = $this->contacts->search_contacts( $query, $limit );
+
+		wp_send_json_success( array( 'contacts' => $contacts ) );
+	}
+
+	/**
+	 * AJAX: Import CSV
+	 *
+	 * @since 1.0.0
+	 */
+	public function ajax_import_csv() {
+		// Check nonce
+		check_ajax_referer( 'cp_crm_import', 'nonce' );
+
+		// Check capabilities
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
+		}
+
+		// Handle file upload
+		if ( empty( $_FILES['file'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'No file uploaded.', 'campaignpress' ) ) );
+		}
+
+		$file = $_FILES['file'];
+
+		// Validate file
+		$validation = $this->import_export->validate_import_file( $file['tmp_name'] );
+		if ( is_wp_error( $validation ) ) {
+			wp_send_json_error( array( 'message' => $validation->get_error_message() ) );
+		}
+
+		// Get import settings
+		$format = isset( $_POST['format'] ) ? sanitize_text_field( $_POST['format'] ) : 'generic';
+		$update_existing = isset( $_POST['update_existing'] ) ? (bool) $_POST['update_existing'] : false;
+
+		// Import file
+		$result = $this->import_export->import_csv( $file['tmp_name'], array(
+			'format'          => $format,
+			'update_existing' => $update_existing,
+		) );
+
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( array( 'message' => $result->get_error_message() ) );
+		}
+
+		wp_send_json_success( $result );
+	}
+
+	/**
+	 * AJAX: Export CSV
+	 *
+	 * @since 1.0.0
+	 */
+	public function ajax_export_csv() {
+		// Check nonce
+		check_ajax_referer( 'cp_crm_export', 'nonce' );
+
+		// Check capabilities
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
+		}
+
+		// Get export parameters
+		$segment_id = isset( $_POST['segment_id'] ) ? absint( $_POST['segment_id'] ) : null;
+		$tag_id = isset( $_POST['tag_id'] ) ? absint( $_POST['tag_id'] ) : null;
+
+		// Export contacts
+		$result = $this->import_export->export_csv( array(
+			'segment_id' => $segment_id,
+			'tag_id'     => $tag_id,
+		) );
+
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( array( 'message' => $result->get_error_message() ) );
+		}
+
+		// Return download URL
+		$upload_dir = wp_upload_dir();
+		$file_url = str_replace( $upload_dir['basedir'], $upload_dir['baseurl'], $result );
+
+		wp_send_json_success( array(
+			'file_path' => $result,
+			'file_url'  => $file_url,
+		) );
+	}
+
+	/**
+	 * Register REST API routes
+	 *
+	 * @since 1.0.0
+	 */
+	public function register_rest_routes() {
+		$namespace = 'campaignpress/v1';
+
+		// Contacts endpoints
+		register_rest_route( $namespace, '/crm/contacts', array(
+			'methods'             => 'GET',
+			'callback'            => array( $this, 'rest_get_contacts' ),
+			'permission_callback' => array( $this, 'rest_permission_check' ),
+		) );
+
+		register_rest_route( $namespace, '/crm/contacts/(?P<id>\d+)', array(
+			'methods'             => 'GET',
+			'callback'            => array( $this, 'rest_get_contact' ),
+			'permission_callback' => array( $this, 'rest_permission_check' ),
+		) );
+
+		register_rest_route( $namespace, '/crm/contacts', array(
+			'methods'             => 'POST',
+			'callback'            => array( $this, 'rest_create_contact' ),
+			'permission_callback' => array( $this, 'rest_permission_check' ),
+		) );
+
+		register_rest_route( $namespace, '/crm/contacts/(?P<id>\d+)', array(
+			'methods'             => 'PUT',
+			'callback'            => array( $this, 'rest_update_contact' ),
+			'permission_callback' => array( $this, 'rest_permission_check' ),
+		) );
+
+		// Interactions endpoints
+		register_rest_route( $namespace, '/crm/interactions', array(
+			'methods'             => 'POST',
+			'callback'            => array( $this, 'rest_log_interaction' ),
+			'permission_callback' => array( $this, 'rest_permission_check' ),
+		) );
+
+		// Segments endpoints
+		register_rest_route( $namespace, '/crm/segments', array(
+			'methods'             => 'GET',
+			'callback'            => array( $this, 'rest_get_segments' ),
+			'permission_callback' => array( $this, 'rest_permission_check' ),
+		) );
+
+		// Tags endpoints
+		register_rest_route( $namespace, '/crm/tags', array(
+			'methods'             => 'GET',
+			'callback'            => array( $this, 'rest_get_tags' ),
+			'permission_callback' => array( $this, 'rest_permission_check' ),
+		) );
+
+		// Statistics endpoint
+		register_rest_route( $namespace, '/crm/statistics', array(
+			'methods'             => 'GET',
+			'callback'            => array( $this, 'rest_get_statistics' ),
+			'permission_callback' => array( $this, 'rest_permission_check' ),
+		) );
+	}
+
+	/**
+	 * REST API permission check
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return bool True if user has permission
+	 */
+	public function rest_permission_check( $request ) {
+		return current_user_can( 'edit_posts' );
+	}
+
+	/**
+	 * REST: Get contacts
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response Response object
+	 */
+	public function rest_get_contacts( $request ) {
+		$args = array(
+			'page'     => $request->get_param( 'page' ) ?: 1,
+			'per_page' => $request->get_param( 'per_page' ) ?: 50,
+			'search'   => $request->get_param( 'search' ) ?: '',
+		);
+
+		$result = $this->contacts->get_contacts( $args );
+
+		return new WP_REST_Response( $result, 200 );
+	}
+
+	/**
+	 * REST: Get single contact
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response Response object
+	 */
+	public function rest_get_contact( $request ) {
+		$contact = $this->contacts->get_contact( $request['id'] );
+
+		if ( ! $contact ) {
+			return new WP_Error( 'not_found', __( 'Contact not found.', 'campaignpress' ), array( 'status' => 404 ) );
+		}
+
+		return new WP_REST_Response( $contact, 200 );
+	}
+
+	/**
+	 * REST: Create contact
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response Response object
+	 */
+	public function rest_create_contact( $request ) {
+		$result = $this->contacts->create_contact( $request->get_json_params() );
+
+		if ( is_wp_error( $result ) ) {
+			return new WP_REST_Response( array( 'error' => $result->get_error_message() ), 400 );
+		}
+
+		return new WP_REST_Response( array( 'id' => $result ), 201 );
+	}
+
+	/**
+	 * REST: Update contact
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response Response object
+	 */
+	public function rest_update_contact( $request ) {
+		$result = $this->contacts->update_contact( $request['id'], $request->get_json_params() );
+
+		if ( is_wp_error( $result ) ) {
+			return new WP_REST_Response( array( 'error' => $result->get_error_message() ), 400 );
+		}
+
+		return new WP_REST_Response( array( 'success' => true ), 200 );
+	}
+
+	/**
+	 * REST: Log interaction
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response Response object
+	 */
+	public function rest_log_interaction( $request ) {
+		$result = $this->interactions->log_interaction( $request->get_json_params() );
+
+		if ( is_wp_error( $result ) ) {
+			return new WP_REST_Response( array( 'error' => $result->get_error_message() ), 400 );
+		}
+
+		return new WP_REST_Response( array( 'id' => $result ), 201 );
+	}
+
+	/**
+	 * REST: Get segments
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response Response object
+	 */
+	public function rest_get_segments( $request ) {
+		$segments = $this->segments->get_segments();
+		return new WP_REST_Response( $segments, 200 );
+	}
+
+	/**
+	 * REST: Get tags
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response Response object
+	 */
+	public function rest_get_tags( $request ) {
+		$tags = $this->segments->get_tags();
+		return new WP_REST_Response( $tags, 200 );
+	}
+
+	/**
+	 * REST: Get statistics
+	 *
+	 * @since 1.0.0
+	 * @param WP_REST_Request $request Request object
+	 * @return WP_REST_Response Response object
+	 */
+	public function rest_get_statistics( $request ) {
+		$stats = $this->database->get_statistics();
+		return new WP_REST_Response( $stats, 200 );
+	}
+
+	/**
+	 * Get CRM version
+	 *
+	 * @since 1.0.0
+	 * @return string CRM version
+	 */
+	public function get_version() {
+		return self::VERSION;
+	}
+}
+
+/**
+ * Initialize the CRM system
+ *
+ * @since 1.0.0
+ * @return CampaignPress_CRM_Init
+ */
+function cp_crm() {
+	return CampaignPress_CRM_Init::get_instance();
+}
+
+// Initialize CRM
+cp_crm();

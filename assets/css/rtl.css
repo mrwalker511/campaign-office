@@ -1,0 +1,93 @@
+/**
+ * RTL (Right-to-Left) Stylesheet
+ *
+ * Styles for RTL languages (Arabic, Hebrew, Persian, Urdu, etc.)
+ *
+ * @package CampaignPress
+ * @since 2.0.0
+ */
+
+/* Global RTL adjustments */
+body.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Navigation */
+.rtl .navbar-nav {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.rtl .dropdown-menu {
+    text-align: right;
+}
+
+/* Floats */
+.rtl .float-start {
+    float: right !important;
+}
+
+.rtl .float-end {
+    float: left !important;
+}
+
+/* Text alignment */
+.rtl .text-start {
+    text-align: right !important;
+}
+
+.rtl .text-end {
+    text-align: left !important;
+}
+
+/* Margins and padding */
+.rtl .me-1, .rtl .me-2, .rtl .me-3, .rtl .me-4, .rtl .me-5 {
+    margin-right: 0 !important;
+    margin-left: var(--bs-gutter-x, 1rem) !important;
+}
+
+.rtl .ms-1, .rtl .ms-2, .rtl .ms-3, .rtl .ms-4, .rtl .ms-5 {
+    margin-left: 0 !important;
+    margin-right: var(--bs-gutter-x, 1rem) !important;
+}
+
+/* Buttons and icons */
+.rtl .btn i,
+.rtl .button i {
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+/* Forms */
+.rtl input[type="checkbox"],
+.rtl input[type="radio"] {
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+/* Lists */
+.rtl ul,
+.rtl ol {
+    padding-right: 20px;
+    padding-left: 0;
+}
+
+/* Sidebar */
+.rtl .sidebar {
+    border-left: 1px solid #ddd;
+    border-right: none;
+    padding-left: 30px;
+    padding-right: 0;
+}
+
+/* Campaign blocks */
+.rtl .cp-volunteer-form-wrapper,
+.rtl .cp-event-rsvp-wrapper {
+    text-align: right;
+}
+
+/* Dashboard widgets */
+.rtl .cp-dashboard-widget {
+    text-align: right;
+}

@@ -260,19 +260,20 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/integrations.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-notices.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-theme-options.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-widgets.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/donation-enhancements.php';
 
 // Check if Elementor is active
 if (did_action('elementor/loaded')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/elementor-widgets.php';
 }
 
-// Premium features (only load if premium version is active)
-if (get_option('campaignpress_premium_active', false)) {
-    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/crm/crm-init.php';
-    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/field-operations/field-ops-init.php';
-    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/compliance/compliance-init.php';
-    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/api/api-init.php';
-}
+// Premium activation system (always load to manage license)
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php';
 
 /**
  * Add body classes for customizer options

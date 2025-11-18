@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 /**
  * Define Constants
  */
-define('CAMPAIGNPRESS_VERSION', '1.0.0');
+define('CAMPAIGNPRESS_VERSION', '2.0.0');
 define('CAMPAIGNPRESS_THEME_DIR', get_template_directory());
 define('CAMPAIGNPRESS_THEME_URI', get_template_directory_uri());
 define('CAMPAIGNPRESS_INCLUDES_DIR', CAMPAIGNPRESS_THEME_DIR . '/includes');
@@ -272,8 +272,10 @@ if (did_action('elementor/loaded')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/elementor-widgets.php';
 }
 
-// Premium activation system (always load to manage license)
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php';
+// Premium activation system (load if exists)
+if (file_exists(CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php')) {
+    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php';
+}
 
 /**
  * Add body classes for customizer options

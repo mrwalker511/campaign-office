@@ -189,6 +189,14 @@ class CampaignPress_Premium {
                 'required_license' => 'basic',
                 'icon' => 'dashicons-update',
             ),
+            'developer_console' => array(
+                'name' => __('Developer Console', 'campaignpress'),
+                'description' => __('Advanced developer tools and system management console', 'campaignpress'),
+                'enabled' => true,
+                'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/developer-console/developer-console-init.php',
+                'required_license' => 'basic',
+                'icon' => 'dashicons-code-standards',
+            ),
         ));
     }
 

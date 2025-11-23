@@ -106,6 +106,16 @@ class CampaignPress_Premium {
         // Initialize hooks
         $this->init_hooks();
 
+        // In dev mode, relax CSP on admin pages served from localhost so previews and
+        // local setups can load scripts/styles. This only runs when dev_mode is true
+        // and when in admin to avoid changing site-wide CSP in production.
+        if ($this->dev_mode && is_admin() && in_array($_SERVER['HTTP_HOST'] ?? '', array('localhost', '127.0.0.1')) ) {
+            add_action('send_headers', function() {
+                // Allow scripts/styles/images/connects for local development only
+                header("Content-Security-Policy: default-src 'self' data: blob: http: https: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http: https:; style-src 'self' 'unsafe-inline' http: https:; img-src 'self' data: http: https:; connect-src 'self' http: https:; frame-ancestors 'self' http: https:");
+            });
+        }
+
         // Log initialization
         $this->log_event('premium_system_initialized', array(
             'version' => self::VERSION,
@@ -554,10 +564,18 @@ class CampaignPress_Premium {
      * @since 2.0.0
      */
     public function ajax_validate_license() {
-        // Security checks
-        check_ajax_referer('cp_premium_nonce', 'nonce');
+        // Log that the AJAX endpoint was called (do not log sensitive license values)
+        error_log('cp_validate_license called; user=' . get_current_user_id());
+
+        // Security checks - use non-die check to log/debug failures gracefully in dev
+        $nonce_ok = check_ajax_referer('cp_premium_nonce', 'nonce', false);
+        if (!$nonce_ok) {
+            error_log('cp_validate_license: nonce verification failed; user=' . get_current_user_id());
+            wp_send_json_error(array('message' => __('Security check failed (invalid nonce).', 'campaignpress')));
+        }
 
         if (!current_user_can('manage_options')) {
+            error_log('cp_validate_license: insufficient permissions; user=' . get_current_user_id());
             wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
         }
 

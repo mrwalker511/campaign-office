@@ -558,4 +558,21 @@
     window.CPFeatureManager = CPFeatureManager;
     window.CPSystemStatus = CPSystemStatus;
 
+    // Defensive fallback for cpPremium localization object. Some preview tools
+    // or sandboxed frames may prevent `wp_localize_script` from running; this
+    // prevents JS errors and provides reasonable defaults for local dev.
+    if (typeof window.cpPremium === 'undefined') {
+        window.cpPremium = {
+            ajax_url: (typeof ajaxurl !== 'undefined') ? ajaxurl : (window.location.origin ? window.location.origin + '/wp-admin/admin-ajax.php' : '/wp-admin/admin-ajax.php'),
+            nonce: '',
+            strings: {
+                validating: 'Validating license...',
+                deactivating: 'Deactivating license...',
+                success: 'Success!',
+                error: 'An error occurred.',
+                confirm_deactivate: 'Are you sure you want to deactivate your license?'
+            }
+        };
+    }
+
 })(jQuery);

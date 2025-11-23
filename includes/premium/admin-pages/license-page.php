@@ -553,7 +553,41 @@ jQuery(document).ready(function($) {
         var $form = $(this);
         var $btn = $('#cp-activate-license-btn');
         var $message = $('#cp-license-message');
-        var originalText = $btn.text();
+        var originalText = $btn.html();
+        var licenseKey = $('#license_key').val().trim();
+        var licenseEmail = $('#license_email').val().trim();
+
+        // Validation
+        if (!licenseKey) {
+            $message.removeClass('success').addClass('error')
+                .html('<strong>' + cpPremium.strings.error + '</strong> License key is required.')
+                .show();
+            return false;
+        }
+
+        if (!licenseEmail) {
+            $message.removeClass('success').addClass('error')
+                .html('<strong>' + cpPremium.strings.error + '</strong> License email is required.')
+                .show();
+            return false;
+        }
+
+        // Validate email format
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(licenseEmail)) {
+            $message.removeClass('success').addClass('error')
+                .html('<strong>' + cpPremium.strings.error + '</strong> Please enter a valid email address.')
+                .show();
+            return false;
+        }
+
+        // Check if cpPremium object exists and has required properties
+        if (typeof cpPremium === 'undefined' || !cpPremium.ajax_url || !cpPremium.nonce) {
+            $message.removeClass('success').addClass('error')
+                .html('<strong>' + cpPremium.strings.error + '</strong> Page configuration error. Please refresh and try again.')
+                .show();
+            return false;
+        }
 
         $btn.prop('disabled', true).html('<span class="dashicons dashicons-update-alt"></span> ' + cpPremium.strings.validating);
         $message.hide();
@@ -564,8 +598,8 @@ jQuery(document).ready(function($) {
             data: {
                 action: 'cp_validate_license',
                 nonce: cpPremium.nonce,
-                license_key: $('#license_key').val(),
-                license_email: $('#license_email').val()
+                license_key: licenseKey,
+                license_email: licenseEmail
             },
             success: function(response) {
                 if (response.success) {
@@ -577,18 +611,26 @@ jQuery(document).ready(function($) {
                     }, 1500);
                 } else {
                     $message.removeClass('success').addClass('error')
-                        .html('<strong>' + cpPremium.strings.error + '</strong> ' + response.data.message)
+                        .html('<strong>' + cpPremium.strings.error + '</strong> ' + (response.data && response.data.message ? response.data.message : 'License validation failed.'))
                         .show();
                     $btn.prop('disabled', false).html(originalText);
                 }
             },
-            error: function() {
+            error: function(xhr, status, error) {
+                var errorMsg = 'Failed to connect to server.';
+                if (xhr.status === 403) {
+                    errorMsg = 'Access denied. Please make sure you are logged in as an administrator.';
+                } else if (xhr.status === 400) {
+                    errorMsg = 'Invalid request. Please check your input and try again.';
+                }
                 $message.removeClass('success').addClass('error')
-                    .html('<strong>' + cpPremium.strings.error + '</strong> Failed to connect to server.')
+                    .html('<strong>' + cpPremium.strings.error + '</strong> ' + errorMsg)
                     .show();
                 $btn.prop('disabled', false).html(originalText);
             }
         });
+        
+        return false;
     });
 
     // Deactivate license
@@ -600,7 +642,7 @@ jQuery(document).ready(function($) {
         }
 
         var $btn = $(this);
-        var originalText = $btn.text();
+        var originalText = $btn.html();
 
         $btn.prop('disabled', true).html('<span class="dashicons dashicons-update-alt"></span> ' + cpPremium.strings.deactivating);
 
@@ -615,12 +657,12 @@ jQuery(document).ready(function($) {
                 if (response.success) {
                     window.location.reload();
                 } else {
-                    alert(response.data.message);
+                    alert(response.data && response.data.message ? response.data.message : 'Deactivation failed. Please try again.');
                     $btn.prop('disabled', false).html(originalText);
                 }
             },
             error: function() {
-                alert('Failed to connect to server.');
+                alert('Failed to connect to server. Please try again.');
                 $btn.prop('disabled', false).html(originalText);
             }
         });
@@ -634,7 +676,9 @@ jQuery(document).ready(function($) {
 
         $btn.prop('disabled', true).html('<span class="dashicons dashicons-update-alt"></span> Checking...');
 
-        window.location.reload();
+        setTimeout(function() {
+            window.location.reload();
+        }, 500);
     });
 
     // Copy system info

@@ -75,8 +75,10 @@ class CampaignPress_Developer_Console {
      * Initialize the developer console
      */
     private function init() {
-        // Load database class
-        require_once plugin_dir_path(__FILE__) . 'class-developer-console-database.php';
+        // Load database class (only if not already loaded)
+        if (!class_exists('CampaignPress_Developer_Console_Database')) {
+            require_once __DIR__ . '/class-developer-console-database.php';
+        }
         $this->database = new CampaignPress_Developer_Console_Database();
 
         // Check if tables exist, create if not
@@ -229,6 +231,10 @@ class CampaignPress_Developer_Console {
      * Record failed login attempt
      */
     private function record_failed_attempt() {
+        if (!$this->settings) {
+            return;
+        }
+
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'cp_dev_console_settings';
@@ -274,6 +280,10 @@ class CampaignPress_Developer_Console {
      * Unlock account
      */
     private function unlock_account() {
+        if (!$this->settings) {
+            return;
+        }
+
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'cp_dev_console_settings';
@@ -296,6 +306,10 @@ class CampaignPress_Developer_Console {
      * Reset failed login attempts
      */
     private function reset_failed_attempts() {
+        if (!$this->settings) {
+            return;
+        }
+
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'cp_dev_console_settings';
@@ -454,6 +468,10 @@ class CampaignPress_Developer_Console {
      * Update last access time and IP
      */
     private function update_last_access() {
+        if (!$this->settings) {
+            return;
+        }
+
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'cp_dev_console_settings';
@@ -544,7 +562,7 @@ class CampaignPress_Developer_Console {
         $this->log_activity('auth', 'console_accessed', 'Developer console accessed successfully', array(), 'success');
 
         // Include the console page
-        require_once plugin_dir_path(__FILE__) . 'admin-page.php';
+        require_once __DIR__ . '/admin-page.php';
     }
 
     /**
@@ -599,7 +617,9 @@ class CampaignPress_Developer_Console {
             wp_send_json_error(array('message' => $access['message']));
         }
 
-        require_once plugin_dir_path(__FILE__) . 'class-system-health.php';
+        if (!class_exists('CampaignPress_Developer_System_Health')) {
+            require_once __DIR__ . '/class-system-health.php';
+        }
         $health = new CampaignPress_Developer_System_Health();
 
         $data = $health->get_all_health_data();
@@ -620,7 +640,9 @@ class CampaignPress_Developer_Console {
             wp_send_json_error(array('message' => $access['message']));
         }
 
-        require_once plugin_dir_path(__FILE__) . 'class-database-manager.php';
+        if (!class_exists('CampaignPress_Developer_Database_Manager')) {
+            require_once __DIR__ . '/class-database-manager.php';
+        }
         $db_manager = new CampaignPress_Developer_Database_Manager();
 
         $result = $db_manager->execute_query($_POST);
@@ -675,7 +697,9 @@ class CampaignPress_Developer_Console {
             wp_send_json_error(array('message' => $access['message']));
         }
 
-        require_once plugin_dir_path(__FILE__) . 'class-api-tester.php';
+        if (!class_exists('CampaignPress_Developer_API_Tester')) {
+            require_once __DIR__ . '/class-api-tester.php';
+        }
         $api_tester = new CampaignPress_Developer_API_Tester();
 
         $result = $api_tester->test_endpoint($_POST);
@@ -692,6 +716,10 @@ class CampaignPress_Developer_Console {
         $access = $this->verify_access();
         if (!$access['allowed']) {
             wp_send_json_error(array('message' => $access['message']));
+        }
+
+        if (!$this->settings) {
+            wp_send_json_error(array('message' => 'Settings not initialized'));
         }
 
         global $wpdb;
@@ -751,7 +779,9 @@ class CampaignPress_Developer_Console {
             wp_send_json_error(array('message' => $access['message']));
         }
 
-        require_once plugin_dir_path(__FILE__) . 'class-data-exporter.php';
+        if (!class_exists('CampaignPress_Developer_Data_Exporter')) {
+            require_once __DIR__ . '/class-data-exporter.php';
+        }
         $exporter = new CampaignPress_Developer_Data_Exporter();
 
         $result = $exporter->export($_POST);

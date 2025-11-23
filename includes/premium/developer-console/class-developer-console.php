@@ -82,22 +82,32 @@ class CampaignPress_Developer_Console {
         $this->database = new CampaignPress_Developer_Console_Database();
 
         // Check if tables exist, create if not
+        $tables_created = false;
         if (!$this->database->tables_exist()) {
             $this->database->create_tables();
-            $this->initialize_creator_settings();
+            $tables_created = true;
         }
 
         // Load settings
         $this->load_settings();
 
-        // Add admin menu
-        add_action('admin_menu', array($this, 'add_admin_menu'), 999);
+        // Initialize creator settings if tables were just created OR if settings don't exist
+        if ($tables_created || !$this->settings) {
+            $this->initialize_creator_settings();
+            $this->load_settings(); // Reload after initialization
+        }
 
-        // Register AJAX handlers
-        $this->register_ajax_handlers();
+        // Only add hooks if in admin context
+        if (is_admin()) {
+            // Add admin menu
+            add_action('admin_menu', array($this, 'add_admin_menu'), 999);
 
-        // Add security headers
-        add_action('admin_head', array($this, 'add_security_headers'));
+            // Register AJAX handlers
+            $this->register_ajax_handlers();
+
+            // Add security headers
+            add_action('admin_head', array($this, 'add_security_headers'));
+        }
     }
 
     /**
@@ -109,15 +119,42 @@ class CampaignPress_Developer_Console {
         // Get license email as creator
         $creator_email = get_option('campaignpress_license_email', '');
 
-        // Get current user as creator
-        $creator_user_id = get_current_user_id();
+        // Get current user as creator (only if in admin context)
+        $creator_user_id = 0;
+        if (is_user_logged_in()) {
+            $creator_user_id = get_current_user_id();
+        }
 
+        // If no creator email from license, try to get from current user or first admin
         if (empty($creator_email)) {
-            // Fallback to current admin user email
-            $user = wp_get_current_user();
-            if ($user && in_array('administrator', $user->roles)) {
-                $creator_email = $user->user_email;
+            if (is_user_logged_in()) {
+                $user = wp_get_current_user();
+                if ($user && in_array('administrator', $user->roles)) {
+                    $creator_email = $user->user_email;
+                }
             }
+
+            // Still no email? Get first administrator
+            if (empty($creator_email)) {
+                $admins = get_users(array(
+                    'role' => 'administrator',
+                    'number' => 1,
+                    'orderby' => 'ID',
+                    'order' => 'ASC'
+                ));
+
+                if (!empty($admins)) {
+                    $creator_email = $admins[0]->user_email;
+                    if ($creator_user_id === 0) {
+                        $creator_user_id = $admins[0]->ID;
+                    }
+                }
+            }
+        }
+
+        // Don't initialize if we still don't have a creator email
+        if (empty($creator_email)) {
+            return;
         }
 
         // Insert initial settings
@@ -823,5 +860,45 @@ class CampaignPress_Developer_Console {
             default:
                 wp_send_json_error(array('message' => 'Invalid action'));
         }
+    }
+
+    /**
+     * Manually reinitialize the developer console
+     * Useful for troubleshooting after demo import or other setup issues
+     *
+     * @return array Status information
+     */
+    public function manual_reinit() {
+        $result = array(
+            'tables_existed' => $this->database->tables_exist(),
+            'settings_existed' => $this->settings !== null,
+            'actions_taken' => array()
+        );
+
+        // Force table creation if needed
+        if (!$this->database->tables_exist()) {
+            $this->database->create_tables();
+            $result['actions_taken'][] = 'Created database tables';
+        }
+
+        // Reload settings
+        $this->load_settings();
+
+        // Force settings initialization if needed
+        if (!$this->settings) {
+            $this->initialize_creator_settings();
+            $this->load_settings();
+            $result['actions_taken'][] = 'Initialized creator settings';
+        }
+
+        $result['tables_exist_now'] = $this->database->tables_exist();
+        $result['settings_exist_now'] = $this->settings !== null;
+
+        if ($this->settings) {
+            $result['creator_email'] = $this->settings->creator_email;
+            $result['creator_user_id'] = $this->settings->creator_user_id;
+        }
+
+        return $result;
     }
 }

@@ -14,12 +14,12 @@ if (!defined('ABSPATH')) {
 }
 
 // Load required classes
-require_once plugin_dir_path(__FILE__) . 'class-developer-console-database.php';
-require_once plugin_dir_path(__FILE__) . 'class-developer-console.php';
-require_once plugin_dir_path(__FILE__) . 'class-system-health.php';
-require_once plugin_dir_path(__FILE__) . 'class-database-manager.php';
-require_once plugin_dir_path(__FILE__) . 'class-api-tester.php';
-require_once plugin_dir_path(__FILE__) . 'class-data-exporter.php';
+require_once __DIR__ . '/class-developer-console-database.php';
+require_once __DIR__ . '/class-developer-console.php';
+require_once __DIR__ . '/class-system-health.php';
+require_once __DIR__ . '/class-database-manager.php';
+require_once __DIR__ . '/class-api-tester.php';
+require_once __DIR__ . '/class-data-exporter.php';
 
 // Initialize developer console
 $campaignpress_developer_console = CampaignPress_Developer_Console::get_instance();

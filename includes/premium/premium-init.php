@@ -381,12 +381,14 @@ class CampaignPress_Premium {
         );
 
         // Admin scripts
+        // Load in header (not footer) so localized `cpPremium` is available
+        // for inline scripts output on the admin page.
         wp_enqueue_script(
             'campaignpress-premium-admin',
             CAMPAIGNPRESS_THEME_URI . '/assets/js/premium-admin.js',
             array('jquery'),
             self::VERSION,
-            true
+            false
         );
 
         // Localize script with AJAX data

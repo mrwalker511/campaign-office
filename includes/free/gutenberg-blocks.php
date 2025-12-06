@@ -40,7 +40,15 @@ function campaignpress_register_blocks() {
         return;
     }
 
-    // Styles for legacy blocks or general editor styles if needed
+    // Enqueue block editor assets
+    wp_register_script(
+        'campaignpress-blocks-js',
+        CAMPAIGNPRESS_ASSETS_URI . '/js/blocks.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n'),
+        CAMPAIGNPRESS_VERSION,
+        true
+    );
+
     wp_register_style(
         'campaignpress-blocks-editor-css',
         CAMPAIGNPRESS_ASSETS_URI . '/css/blocks-editor.css',

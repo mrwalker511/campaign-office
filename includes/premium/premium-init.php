@@ -18,6 +18,17 @@
  * - XSS protection via output escaping
  * - CSRF protection via WordPress nonces
  *
+ * Developer Mode:
+ * Enable developer mode to bypass license checks and test all premium features.
+ * Add to wp-config.php:
+ *   define('CAMPAIGNPRESS_DEV_MODE', true);
+ *
+ * This will:
+ * - Unlock all premium features (Enterprise tier)
+ * - Bypass license validation
+ * - Enable all modules with init files
+ * - Show fake enterprise license in admin (expires in 10 years)
+ *
  * @author CampaignPress Team
  * @license GPL-2.0+
  */
@@ -1107,6 +1118,11 @@ class CampaignPress_Premium {
      * @return bool True if premium is active
      */
     public function is_premium_active() {
+        // Developer mode bypass - always active
+        if ($this->dev_mode) {
+            return true;
+        }
+
         $is_active = get_option('campaignpress_premium_active', false);
 
         // Check grace period if expired
@@ -1123,6 +1139,11 @@ class CampaignPress_Premium {
      * @return bool True if expired
      */
     public function is_license_expired() {
+        // Developer mode bypass - never expired
+        if ($this->dev_mode) {
+            return false;
+        }
+
         $expiry_date = get_option('campaignpress_license_expiry');
         if (!$expiry_date) {
             return false;
@@ -1157,6 +1178,11 @@ class CampaignPress_Premium {
             return false;
         }
 
+        // Developer mode bypass - enable all features with init files
+        if ($this->dev_mode && isset($this->premium_features[$feature]['init_file']) && $this->premium_features[$feature]['init_file']) {
+            return true;
+        }
+
         $enabled_features = get_option('campaignpress_enabled_features', array());
 
         // If not explicitly set, use default from feature config
@@ -1173,6 +1199,18 @@ class CampaignPress_Premium {
      * @return array|false License data or false
      */
     public function get_license_data() {
+        // Developer mode bypass - return fake enterprise license
+        if ($this->dev_mode) {
+            return array(
+                'license_key' => 'DEV-MODE-' . wp_generate_password(12, false),
+                'license_email' => get_option('admin_email'),
+                'license_status' => 'active',
+                'license_type' => 'enterprise',
+                'expiry_date' => date('Y-m-d', strtotime('+10 years')),
+                'activated_date' => date('Y-m-d'),
+            );
+        }
+
         $license_key = get_option('campaignpress_license_key');
         if (!$license_key) {
             return false;

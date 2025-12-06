@@ -34,7 +34,7 @@ if (version_compare(get_bloginfo('version'), '6.9', '<')) {
  */
 function campaignpress_setup() {
     // Make theme available for translation
-    load_theme_textdomain('campaignpress', CAMPAIGNPRESS_THEME_DIR . '/languages');
+    load_theme_textdomain('campaign-office', get_template_directory() . '/languages');
 
     // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -53,9 +53,9 @@ function campaignpress_setup() {
 
     // Register navigation menus
     register_nav_menus(array(
-        'primary' => esc_html__('Primary Menu', 'campaignpress'),
-        'footer'  => esc_html__('Footer Menu', 'campaignpress'),
-        'social'  => esc_html__('Social Links Menu', 'campaignpress'),
+        'primary' => esc_html__('Primary Menu', 'campaign-office'),
+        'footer'  => esc_html__('Footer Menu', 'campaign-office'),
+        'social'  => esc_html__('Social Links Menu', 'campaign-office'),
     ));
 
     // Switch default core markup to output valid HTML5
@@ -85,15 +85,9 @@ function campaignpress_setup() {
     add_theme_support('wp-block-styles');
     add_theme_support('align-wide');
     add_theme_support('responsive-embeds');
-    add_theme_support('custom-line-height');
-    add_theme_support('custom-spacing');
-    add_theme_support('custom-units', array('px', 'em', 'rem', 'vh', 'vw', '%'));
-    add_theme_support('link-color');
-    add_theme_support('border');
 
     // Editor styles
     add_theme_support('editor-styles');
-    add_editor_style('assets/css/design-system-wp69.css');
     add_editor_style('assets/css/editor-style.css');
 
     // Disable default block patterns (we'll create custom ones)
@@ -138,10 +132,11 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Main theme CSS
+    // WordPress 6.9 Enhanced Design System
+    // This CSS uses theme.json variables and adds advanced animations
     wp_enqueue_style(
-        'campaignpress-main',
-        CAMPAIGNPRESS_ASSETS_URI . '/css/main.css',
+        'campaignpress-design-wp69',
+        get_template_directory_uri() . '/assets/css/design-system-wp69.css',
         array('campaignpress-style'),
         CAMPAIGNPRESS_VERSION
     );
@@ -158,7 +153,7 @@ function campaignpress_scripts() {
     // Main theme JS
     wp_enqueue_script(
         'campaignpress-main',
-        CAMPAIGNPRESS_ASSETS_URI . '/js/main.js',
+        get_template_directory_uri() . '/assets/js/main.js',
         array('jquery', 'bootstrap'),
         CAMPAIGNPRESS_VERSION,
         true
@@ -203,6 +198,96 @@ function campaignpress_block_editor_assets() {
     );
 }
 add_action('enqueue_block_editor_assets', 'campaignpress_block_editor_assets');
+
+function campaignpress_register_block_patterns() {
+    // Hero Section Pattern
+    register_block_pattern(
+        'campaignpress/hero-section',
+        array(
+            'title'       => __('Campaign Hero Section', 'campaign-office'),
+            'description' => __('Full-width hero with heading, tagline, and CTA buttons', 'campaign-office'),
+            'categories'  => array('campaignpress'),
+            'content'     => '<!-- wp:cover {"url":"' . get_template_directory_uri() . '/assets/images/hero-placeholder.jpg","dimRatio":50,"overlayColor":"primary-900","className":"is-style-campaign-hero"} -->
+                <div class="wp-block-cover is-style-campaign-hero">
+                    <span aria-hidden="true" class="wp-block-cover__background has-primary-900-background-color has-background-dim"></span>
+                    <div class="wp-block-cover__inner-container">
+                        <!-- wp:heading {"level":1,"fontSize":"4-xl"} -->
+                        <h1 class="wp-block-heading has-4-xl-font-size">Fighting for Our Future</h1>
+                        <!-- /wp:heading -->
+
+                        <!-- wp:paragraph {"fontSize":"2-xl"} -->
+                        <p class="has-2-xl-font-size">Together, we can build a better tomorrow</p>
+                        <!-- /wp:paragraph -->
+
+                        <!-- wp:buttons -->
+                        <div class="wp-block-buttons">
+                            <!-- wp:button {"className":"is-style-fill"} -->
+                            <div class="wp-block-button is-style-fill"><a class="wp-block-button__link">Donate Now</a></div>
+                            <!-- /wp:button -->
+
+                            <!-- wp:button {"className":"is-style-outline"} -->
+                            <div class="wp-block-button is-style-outline"><a class="wp-block-button__link">Get Involved</a></div>
+                            <!-- /wp:button -->
+                        </div>
+                        <!-- /wp:buttons -->
+                    </div>
+                </div>
+                <!-- /wp:cover -->',
+        )
+    );
+
+    // Issue Card Pattern
+    register_block_pattern(
+        'campaignpress/issue-card',
+        array(
+            'title'       => __('Issue Position Card', 'campaign-office'),
+            'description' => __('Highlight a policy position with icon and description', 'campaign-office'),
+            'categories'  => array('campaignpress'),
+            'content'     => '<!-- wp:group {"className":"is-style-issue-card"} -->
+                <div class="wp-block-group is-style-issue-card">
+                    <!-- wp:paragraph {"fontSize":"4-xl"} -->
+                    <p class="has-4-xl-font-size">📚</p>
+                    <!-- /wp:paragraph -->
+
+                    <!-- wp:heading {"level":3} -->
+                    <h3>Education Reform</h3>
+                    <!-- /wp:heading -->
+
+                    <!-- wp:paragraph -->
+                    <p>Every child deserves access to quality education. We will invest in teachers, modernize classrooms, and make college affordable for all.</p>
+                    <!-- /wp:paragraph -->
+                </div>
+                <!-- /wp:group -->',
+        )
+    );
+}
+add_action('init', 'campaignpress_register_block_patterns');
+
+/**
+ * Register Block Pattern Category
+ */
+function campaignpress_register_block_pattern_category() {
+    register_block_pattern_category(
+        'campaignpress',
+        array('label' => __('CampaignPress', 'campaign-office'))
+    );
+}
+add_action('init', 'campaignpress_register_block_pattern_category');
+
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    function campaignpress_accessibility_debug() {
+        ?>
+        <script>
+        // Log color contrast ratios (development only)
+        console.log('CampaignPress Accessibility Check:');
+        console.log('- WCAG AA requires 4.5:1 for normal text');
+        console.log('- WCAG AA requires 3:1 for large text');
+        console.log('- All theme colors tested and compliant');
+        </script>
+        <?php
+    }
+    add_action('wp_footer', 'campaignpress_accessibility_debug');
+}
 
 /**
  * Register widget areas
@@ -282,38 +367,12 @@ if (file_exists(CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php')) {
 }
 
 /**
- * Color Scheme Customizer (WordPress 6.9)
+ * Add body classes for customizer options
  */
-function campaignpress_customize_color_scheme($wp_customize) {
-    // Add setting
-    $wp_customize->add_setting('campaignpress_color_scheme', array(
-        'default' => 'democrat-blue',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport' => 'refresh',
-    ));
-
-    // Add control
-    $wp_customize->add_control('campaignpress_color_scheme', array(
-        'label' => __('Party Color Scheme', 'campaignpress'),
-        'description' => __('Choose a color scheme that matches your political affiliation.', 'campaignpress'),
-        'section' => 'colors',
-        'type' => 'select',
-        'choices' => array(
-            'democrat-blue' => __('Democrat Blue', 'campaignpress'),
-            'republican-red' => __('Republican Red', 'campaignpress'),
-            'independent-purple' => __('Independent Purple', 'campaignpress'),
-            'green-party' => __('Green Party', 'campaignpress'),
-        ),
-    ));
-}
-add_action('customize_register', 'campaignpress_customize_color_scheme');
-
-/**
- * Apply Color Scheme as Body Class
- */
-function campaignpress_color_scheme_body_class($classes) {
-    $color_scheme = get_theme_mod('campaignpress_color_scheme', 'democrat-blue');
-    $classes[] = 'color-scheme-' . sanitize_html_class($color_scheme);
+function campaignpress_body_classes($classes) {
+    // Add class for color scheme
+    $color_scheme = get_theme_mod('campaignpress_color_scheme', 'neutral');
+    $classes[] = 'color-scheme-' . esc_attr($color_scheme);
 
     // Add class for layout
     $layout = get_theme_mod('campaignpress_layout', 'default');
@@ -328,103 +387,7 @@ function campaignpress_color_scheme_body_class($classes) {
 
     return $classes;
 }
-add_filter('body_class', 'campaignpress_color_scheme_body_class');
-
-/**
- * Register Custom Block Patterns
- */
-function campaignpress_register_block_patterns() {
-    // Hero Section Pattern
-    register_block_pattern(
-        'campaignpress/hero-section',
-        array(
-            'title'       => __('Campaign Hero Section', 'campaignpress'),
-            'description' => __('Full-width hero with heading, tagline, and CTA buttons', 'campaignpress'),
-            'categories'  => array('campaignpress'),
-            'content'     => '<!-- wp:cover {"url":"' . get_template_directory_uri() . '/assets/images/hero-placeholder.jpg","dimRatio":50,"overlayColor":"primary-900","className":"is-style-campaign-hero"} -->
-                <div class="wp-block-cover is-style-campaign-hero">
-                    <span aria-hidden="true" class="wp-block-cover__background has-primary-900-background-color has-background-dim"></span>
-                    <div class="wp-block-cover__inner-container">
-                        <!-- wp:heading {"level":1,"fontSize":"4-xl"} -->
-                        <h1 class="wp-block-heading has-4-xl-font-size">Fighting for Our Future</h1>
-                        <!-- /wp:heading -->
-
-                        <!-- wp:paragraph {"fontSize":"2-xl"} -->
-                        <p class="has-2-xl-font-size">Together, we can build a better tomorrow</p>
-                        <!-- /wp:paragraph -->
-
-                        <!-- wp:buttons -->
-                        <div class="wp-block-buttons">
-                            <!-- wp:button {"className":"is-style-fill"} -->
-                            <div class="wp-block-button is-style-fill"><a class="wp-block-button__link">Donate Now</a></div>
-                            <!-- /wp:button -->
-
-                            <!-- wp:button {"className":"is-style-outline"} -->
-                            <div class="wp-block-button is-style-outline"><a class="wp-block-button__link">Get Involved</a></div>
-                            <!-- /wp:button -->
-                        </div>
-                        <!-- /wp:buttons -->
-                    </div>
-                </div>
-                <!-- /wp:cover -->',
-        )
-    );
-
-    // Issue Card Pattern
-    register_block_pattern(
-        'campaignpress/issue-card',
-        array(
-            'title'       => __('Issue Position Card', 'campaignpress'),
-            'description' => __('Highlight a policy position with icon and description', 'campaignpress'),
-            'categories'  => array('campaignpress'),
-            'content'     => '<!-- wp:group {"className":"is-style-issue-card"} -->
-                <div class="wp-block-group is-style-issue-card">
-                    <!-- wp:paragraph {"fontSize":"4-xl"} -->
-                    <p class="has-4-xl-font-size">📚</p>
-                    <!-- /wp:paragraph -->
-
-                    <!-- wp:heading {"level":3} -->
-                    <h3>Education Reform</h3>
-                    <!-- /wp:heading -->
-
-                    <!-- wp:paragraph -->
-                    <p>Every child deserves access to quality education. We will invest in teachers, modernize classrooms, and make college affordable for all.</p>
-                    <!-- /wp:paragraph -->
-                </div>
-                <!-- /wp:group -->',
-        )
-    );
-}
-add_action('init', 'campaignpress_register_block_patterns');
-
-/**
- * Register Block Pattern Category
- */
-function campaignpress_register_block_pattern_category() {
-    register_block_pattern_category(
-        'campaignpress',
-        array('label' => __('CampaignPress', 'campaignpress'))
-    );
-}
-add_action('init', 'campaignpress_register_block_pattern_category');
-
-/**
- * Add Accessibility Debug Info (Development Only)
- */
-if (defined('WP_DEBUG') && WP_DEBUG) {
-    function campaignpress_accessibility_debug() {
-        ?>
-        <script>
-        // Log color contrast ratios (development only)
-        console.log('CampaignPress Accessibility Check:');
-        console.log('- WCAG AA requires 4.5:1 for normal text');
-        console.log('- WCAG AA requires 3:1 for large text');
-        console.log('- All theme colors tested and compliant');
-        </script>
-        <?php
-    }
-    add_action('wp_footer', 'campaignpress_accessibility_debug');
-}
+add_filter('body_class', 'campaignpress_body_classes');
 
 /**
  * Custom template loader for organized folder structure
@@ -500,3 +463,27 @@ function campaignpress_theme_deactivation() {
     flush_rewrite_rules();
 }
 add_action('switch_theme', 'campaignpress_theme_deactivation');
+
+function campaignpress_customize_color_scheme($wp_customize) {
+    // Add setting
+    $wp_customize->add_setting('campaignpress_color_scheme', array(
+        'default' => 'democrat-blue',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport' => 'refresh',
+    ));
+
+    // Add control
+    $wp_customize->add_control('campaignpress_color_scheme', array(
+        'label' => __('Party Color Scheme', 'campaign-office'),
+        'description' => __('Choose a color scheme that matches your political affiliation.', 'campaign-office'),
+        'section' => 'colors',
+        'type' => 'select',
+        'choices' => array(
+            'democrat-blue' => __('Democrat Blue', 'campaign-office'),
+            'republican-red' => __('Republican Red', 'campaign-office'),
+            'independent-purple' => __('Independent Purple', 'campaign-office'),
+            'green-party' => __('Green Party', 'campaign-office'),
+        ),
+    ));
+}
+add_action('customize_register', 'campaignpress_customize_color_scheme');

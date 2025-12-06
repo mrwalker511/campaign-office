@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(CLAUDE.md)",
+      "Bash(cat:*)",
+      "Skill(superpowers:brainstorming)",
+      "Bash(php -l:*)",
+      "Bash(test:*)",
+      "Bash(del \"\\?\\%CD%\\NUL\")",
+      "Bash(powershell -Command \"Remove-Item -LiteralPath ''\\?$PWD\\NUL'' -Force\")",
+      "Bash(powershell -Command \"Get-ChildItem -Force | Where-Object { $_Name -eq ''NUL'' }\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

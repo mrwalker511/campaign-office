@@ -62,12 +62,111 @@ tail -f wp-content/debug.log
 
 ---
 
+## DESIGN SYSTEM (WordPress 6.9+)
+
+**Status:** Production Ready | **Version:** 2.0.0 | **WordPress Required:** 6.9+
+
+### Design System Architecture
+
+CampaignPress uses a **WordPress 6.9-native design system** with centralized design tokens:
+
+- **`theme.json`** - Central configuration for all design tokens (colors, typography, spacing)
+- **`assets/css/design-system-wp69.css`** - Enhanced CSS using WordPress design tokens
+- **Block Editor Integration** - Full Gutenberg compatibility with visual design controls
+
+### Design Documentation
+
+📚 **Complete documentation available:**
+- **`DESIGN_README.md`** - Master index (start here)
+- **`WP69_SUMMARY.md`** - Quick 5-minute overview
+- **`WP69_IMPLEMENTATION.md`** - Complete implementation guide
+- **`DESIGN_SYSTEM.md`** - Design philosophy and guidelines
+- **`DESIGN_BEFORE_AFTER.md`** - Visual transformation examples
+
+### Design Tokens (theme.json)
+
+All design tokens are managed in `theme.json` and automatically available in:
+- Block editor (visual controls)
+- CSS (via `--wp--preset--` variables)
+- PHP (via WordPress functions)
+
+**Color Palettes (33 colors):**
+- Primary shades: `--wp--preset--color--primary-50` → `--wp--preset--color--primary-900`
+- Accent shades: `--wp--preset--color--accent-50` → `--wp--preset--color--accent-900`
+- Neutral shades: `--wp--preset--color--neutral-50` → `--wp--preset--color--neutral-900`
+- Semantic: `--wp--preset--color--success`, `warning`, `error`, `info`
+
+**Typography (3 font families):**
+- Display: `--wp--preset--font-family--display` (Bricolage Grotesque - Headlines)
+- Body: `--wp--preset--font-family--body` (Plus Jakarta Sans - Paragraphs)
+- Mono: `--wp--preset--font-family--mono` (JetBrains Mono - Numbers/Stats)
+
+**Font Sizes (8 fluid sizes):**
+- `--wp--preset--font-size--xs` → `--wp--preset--font-size--4-xl`
+- Uses CSS clamp() for automatic mobile-to-desktop scaling
+
+**Spacing (12 preset sizes):**
+- `--wp--preset--spacing--1` (4px) → `--wp--preset--spacing--24` (96px)
+- Based on 8px grid system
+
+**Shadows (6 presets):**
+- `--wp--preset--shadow--sm` → `--wp--preset--shadow--2-xl`
+
+### Party Color Schemes
+
+Four political party themes available (switch via Customizer):
+
+1. **Democrat Blue** (default)
+   - Primary: #0053c3, Accent: #ff8800
+2. **Republican Red**
+   - Primary: #e81b23, Accent: #ffd700
+3. **Independent Purple**
+   - Primary: #6b3fa0, Accent: #00d9ff
+4. **Green Party**
+   - Primary: #17aa5c, Accent: #ffeb3b
+
+Apply via body class: `color-scheme-{party}`
+
+### Using Design Tokens in Code
+
+**In CSS:**
+```css
+.my-component {
+  color: var(--wp--preset--color--primary);
+  font-family: var(--wp--preset--font-family--display);
+  font-size: var(--wp--preset--font-size--2-xl);
+  padding: var(--wp--preset--spacing--8);
+  box-shadow: var(--wp--preset--shadow--lg);
+}
+```
+
+**In Block Editor:**
+Users select from visual dropdowns (no coding required)
+
+**In PHP:**
+```php
+// Get theme color
+$primary = wp_get_global_settings()['color']['palette']['theme'][5]['color'];
+```
+
+### Design Principles
+
+✅ **Distinctive Typography** - Avoid generic fonts (Inter, Roboto, Arial)
+✅ **9-Shade Palettes** - Granular color control for hover states, backgrounds
+✅ **Sophisticated Animations** - Staggered reveals, pulse effects, hover lifts
+✅ **Accessibility First** - WCAG 2.1 AA compliant, reduced motion support
+✅ **Performance Optimized** - WordPress handles font loading, GPU-accelerated CSS
+✅ **Block Native** - Full integration with WordPress block editor
+
+---
+
 ## 1. HIGH-LEVEL ARCHITECTURE
 
 ### 1.1 Core Philosophy
 
 The theme follows a **layered modular architecture**:
 - **WordPress Root Level** - Standard templates (header, footer, etc.)
+- **Design System Layer** - theme.json + design-system-wp69.css (WordPress 6.9+)
 - **Free Module Layer** - 18 modules always loaded (custom post types, blocks, widgets)
 - **Premium Feature Layer** - 9 optional modules (license-gated CRM, field ops, compliance)
 - **Integration Layer** - Third-party plugin support (Elementor, WPML, Mailchimp)

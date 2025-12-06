@@ -774,24 +774,101 @@ CampaignPress is a **modular, license-gated WordPress theme** designed to transf
 **Theme Slug:** campaign-office
 **Last Updated:** December 6, 2025
 
-DISTILLED_AESTHETICS_PROMPT = """
-<frontend_aesthetics>
-You tend to converge toward generic, "on distribution" outputs. In frontend design, this creates what users call the "AI slop" aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight. Focus on:
+---
 
-Typography: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics.
+## DESIGN AESTHETICS & PHILOSOPHY
 
-Color & Theme: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes. Draw from IDE themes and cultural aesthetics for inspiration.
+**CampaignPress Design System Example:**
 
-Motion: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions.
+This theme implements the design philosophy outlined below. When making design decisions or adding features, follow these patterns established in the design system (see `DESIGN_SYSTEM.md` for complete details).
 
-Backgrounds: Create atmosphere and depth rather than defaulting to solid colors. Layer CSS gradients, use geometric patterns, or add contextual effects that match the overall aesthetic.
+### Typography Pattern (Already Implemented)
+✅ **Distinctive Font Choices:**
+- **Bricolage Grotesque** (headlines) - Bold, geometric, authoritative
+- **Plus Jakarta Sans** (body) - Modern, warm, readable
+- **JetBrains Mono** (data/stats) - Clean, precise, technical
 
-Avoid generic AI-generated aesthetics:
-- Overused font families (Inter, Roboto, Arial, system fonts)
-- Clichéd color schemes (particularly purple gradients on white backgrounds)
-- Predictable layouts and component patterns
-- Cookie-cutter design that lacks context-specific character
+❌ **Avoid:** Inter, Roboto, Arial, Space Grotesk, system fonts
 
-Interpret creatively and make unexpected choices that feel genuinely designed for the context. Vary between light and dark themes, different fonts, different aesthetics. You still tend to converge on common choices (Space Grotesk, for example) across generations. Avoid this: it is critical that you think outside the box!
-</frontend_aesthetics>
-"""
+### Color Pattern (Already Implemented)
+✅ **9-Shade Palettes:**
+- Primary: 50 → 900 (lightest to darkest)
+- Accent: 50 → 900 (complementary energy)
+- Neutral: 50 → 900 (grays for structure)
+- Dominant colors with sharp accents
+
+❌ **Avoid:** Flat single colors, purple gradients on white, timid palettes
+
+### Motion Pattern (Already Implemented)
+✅ **High-Impact Orchestrated Animations:**
+- **Staggered hero reveals** (0.2s delays: title → subtitle → tagline → CTA)
+- **Button pulse** (2s breathing animation)
+- **Card hover lifts** (translateY + scale transforms)
+- **Progress bar shine** (animated shimmer effect)
+
+❌ **Avoid:** Scattered micro-interactions, simultaneous animations
+
+### Background Pattern (Already Implemented)
+✅ **Layered Atmospheric Depth:**
+- **5 visual layers** on hero (image, gradient overlay, radial gradients, patterns, content)
+- **Animated gradient meshes** (20s subtle shift)
+- **Geometric patterns** (diagonal lines for texture)
+
+❌ **Avoid:** Solid flat colors, single gradients
+
+### WordPress 6.9 Design Token System
+When adding new components or features:
+
+1. **Use existing design tokens** from theme.json:
+   ```css
+   color: var(--wp--preset--color--primary);
+   font-family: var(--wp--preset--font-family--display);
+   font-size: var(--wp--preset--font-size--2-xl);
+   padding: var(--wp--preset--spacing--8);
+   box-shadow: var(--wp--preset--shadow--lg);
+   ```
+
+2. **Maintain consistency** with established patterns:
+   - Headings use Display font (Bricolage Grotesque)
+   - Body text uses Body font (Plus Jakarta Sans)
+   - Numbers/stats use Mono font (JetBrains Mono)
+   - Colors follow 9-shade system
+   - Spacing uses 8px grid (1-24)
+
+3. **Enhance, don't replace** existing design:
+   - Add new gradients to theme.json gradients array
+   - Add new colors as shades (50-900 pattern)
+   - Follow animation timing (fast: 150ms, base: 250ms, slow: 350ms)
+
+### General Design Principles
+
+**Do:**
+- Choose distinctive, contextual fonts (avoid generic choices)
+- Use CSS variables for consistency (WordPress `--wp--preset--*` pattern)
+- Create cohesive color palettes with dominant + accent pattern
+- Orchestrate animations with purpose and timing
+- Layer backgrounds for atmospheric depth
+- Think outside the box - make unexpected, delightful choices
+
+**Don't:**
+- Use overused fonts (Inter, Roboto, Arial, system fonts, Space Grotesk)
+- Default to clichéd color schemes (purple gradients on white)
+- Create predictable, cookie-cutter layouts
+- Add scattered animations without purpose
+- Use flat, solid color backgrounds
+
+**Context-Specific Design:**
+CampaignPress is a **political campaign theme** - designs should convey:
+- **Trust & Authority** (bold typography, professional colors)
+- **Energy & Momentum** (animations, gradients, dynamic effects)
+- **Accessibility** (WCAG AA, reduced motion support)
+- **Professionalism** (consistent design system, polished details)
+
+---
+
+**When working with CampaignPress frontend code, always:**
+1. Reference the design system documentation (`DESIGN_SYSTEM.md`)
+2. Use WordPress 6.9 design tokens (`theme.json`)
+3. Maintain the distinctive aesthetic (avoid generic AI design patterns)
+4. Test accessibility and performance
+5. Follow the established patterns for typography, color, motion, and backgrounds

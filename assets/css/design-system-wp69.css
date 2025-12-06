@@ -1,0 +1,126 @@
+/**
+ * CampaignPress Design System - WordPress 6.9 Implementation
+ *
+ * Fully integrated with theme.json design tokens
+ */
+
+/* ==========================================================================
+   Variables & Tokens (Extending WordPress Core)
+   ========================================================================== */
+
+:root {
+  /* Animation Timing */
+  --cp-transition-base: 0.3s ease;
+  --cp-transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ==========================================================================
+   Block Styles
+   ========================================================================== */
+
+/* Campaign Hero (Cover Block Style) */
+.wp-block-cover.is-style-campaign-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.wp-block-cover.is-style-campaign-hero .wp-block-cover__inner-container {
+  z-index: 2;
+}
+
+.wp-block-cover.is-style-campaign-hero h1 {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cp-slide-up 0.8s var(--cp-transition-smooth) forwards;
+}
+
+.wp-block-cover.is-style-campaign-hero p {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cp-slide-up 0.8s var(--cp-transition-smooth) 0.2s forwards;
+}
+
+.wp-block-cover.is-style-campaign-hero .wp-block-buttons {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cp-slide-up 0.8s var(--cp-transition-smooth) 0.4s forwards;
+}
+
+/* Issue Card (Group Block Style) */
+.wp-block-group.is-style-issue-card {
+  padding: var(--wp--preset--spacing--6);
+  background-color: var(--wp--preset--color--white, #fff);
+  border-radius: 8px;
+  border-left: 4px solid var(--wp--preset--color--primary);
+  box-shadow: var(--wp--preset--shadow--sm);
+  transition: transform var(--cp-transition-base), box-shadow var(--cp-transition-base);
+}
+
+.wp-block-group.is-style-issue-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--wp--preset--shadow--lg);
+}
+
+.wp-block-group.is-style-issue-card h3 {
+  color: var(--wp--preset--color--primary-800);
+  margin-top: var(--wp--preset--spacing--4);
+}
+
+/* Progress Meter (Group Block Style) */
+.wp-block-group.is-style-progress-meter {
+  padding: var(--wp--preset--spacing--6);
+  background-color: var(--wp--preset--color--neutral-light);
+  border-radius: 8px;
+}
+
+/* Buttons */
+.wp-block-button__link {
+  transition: all var(--cp-transition-base);
+}
+
+.wp-block-button__link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--wp--preset--shadow--md);
+}
+
+.is-style-fill .wp-block-button__link {
+  background: linear-gradient(135deg, var(--wp--preset--color--primary) 0%, var(--wp--preset--color--primary-600) 100%);
+}
+
+.is-style-fill .wp-block-button__link:hover {
+  background: linear-gradient(135deg, var(--wp--preset--color--primary-600) 0%, var(--wp--preset--color--primary-800) 100%);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes cp-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--wp--preset--color--accent);
+  outline-offset: 2px;
+}

@@ -701,14 +701,25 @@ campaign-office/
 ## 11. DEVELOPER QUICK START
 
 ### Setup
-1. Install WordPress 6.4+
+1. Install WordPress 6.9+
 2. Activate theme in admin
+3. Verify `theme.json` and `design-system-wp69.css` are present
+
+### Design System Development
+- **Read:** `DESIGN_README.md` (master index)
+- **Quick Start:** `WP69_SUMMARY.md` (5 minutes)
+- **Implementation:** `WP69_IMPLEMENTATION.md` (complete guide)
+- **Edit Design Tokens:** Modify `theme.json` for global changes
+- **Custom CSS:** Use WordPress CSS variables (`--wp--preset--*`)
+- **Block Patterns:** Create reusable layouts for campaigns
+- **Color Schemes:** Add/modify party themes in theme.json
 
 ### Free Module Development
 - Modify `includes/free/*.php` directly
 - Test Gutenberg blocks in block editor
 - Test Elementor widgets with Elementor active
 - Customize via Theme Customizer
+- **Use design tokens** from theme.json in all new CSS
 
 ### Premium Module Development
 1. Add `includes/premium/premium-init.php` (if missing)
@@ -716,10 +727,13 @@ campaign-office/
 3. Add feature definition to premium-init.php features array
 4. Create module in `includes/premium/{module}/`
 5. Test via admin: CampaignPress Pro → Features → Toggle feature
+6. **Use design system** for consistent UI styling
 
 ### Debugging
 - Enable WP_DEBUG in wp-config.php
 - Check `/wp-content/debug.log`
+- **Design Tokens:** Use browser DevTools to inspect CSS variables
+- **Block Editor:** Check if design tokens appear in color/typography pickers
 - Use Developer Console (if premium):
   - Database inspector with query builder
   - System health checks
@@ -733,16 +747,29 @@ campaign-office/
 CampaignPress is a **modular, license-gated WordPress theme** designed to transform political campaign websites into comprehensive operations platforms. The architecture maintains a clear free/premium boundary while enabling sophisticated features like CRM, field operations, compliance tracking, and analytics for premium users.
 
 **Architectural Strengths:**
+- **WordPress 6.9-Native Design System** with theme.json and centralized design tokens
+- **Distinctive Professional Design** with Bricolage Grotesque, Plus Jakarta Sans, JetBrains Mono
+- **Block Editor Integration** - Full Gutenberg compatibility with visual design controls
+- **9-Shade Color Palettes** - 33 total colors for granular control
+- **4 Party Color Schemes** - Democrat Blue, Republican Red, Independent Purple, Green Party
+- **Accessibility Compliant** - WCAG 2.1 AA with reduced motion support
 - Clear module separation with single responsibility principle
 - Singleton pattern for major system components
 - Hook-based extensibility throughout the codebase
 - Built-in security (sanitization, escaping, nonces, prepared statements)
 - Comprehensive database schema (11 custom CRM tables, optimized indexes)
 - Developer tools (console, API tester, database inspector, data exporter)
-- Backward compatible with WordPress 6.4+
 - Freemium license system with multiple tiers (Basic, Professional, Enterprise)
 
+**Design System Features:**
+- Fluid typography (automatic mobile-to-desktop scaling)
+- Sophisticated animations (staggered reveals, pulse effects, hover lifts)
+- Atmospheric backgrounds (layered gradients, animated effects)
+- Performance optimized (WordPress-managed fonts, GPU-accelerated CSS)
+- User-friendly (point-and-click design in block editor)
+
 **Version:** 2.0.0
+**WordPress Required:** 6.9+
 **License:** GPLv3 or later
 **Theme Slug:** campaign-office
 **Last Updated:** December 6, 2025

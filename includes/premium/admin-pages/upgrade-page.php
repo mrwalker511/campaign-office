@@ -240,10 +240,10 @@ $feature_comparison = array(
                         <?php foreach ($category['features'] as $feature): ?>
                             <tr>
                                 <td><?php echo esc_html($feature['name']); ?></td>
-                                <td><?php echo $this->render_feature_check($feature['free']); ?></td>
-                                <td><?php echo $this->render_feature_check($feature['basic']); ?></td>
-                                <td class="cp-highlight-col"><?php echo $this->render_feature_check($feature['professional']); ?></td>
-                                <td><?php echo $this->render_feature_check($feature['enterprise']); ?></td>
+                                <td><?php echo render_feature_check($feature['free']); ?></td>
+                                <td><?php echo render_feature_check($feature['basic']); ?></td>
+                                <td class="cp-highlight-col"><?php echo render_feature_check($feature['professional']); ?></td>
+                                <td><?php echo render_feature_check($feature['enterprise']); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endforeach; ?>

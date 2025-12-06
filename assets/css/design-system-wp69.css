@@ -1,0 +1,809 @@
+/**
+ * CampaignPress Enhanced Design System - WordPress 6.9 Compatible
+ *
+ * A professional, distinctive design system for political campaigns
+ * Fully integrated with WordPress 6.9 theme.json and block editor
+ *
+ * @package CampaignPress
+ * @version 2.0.0
+ * @requires WordPress 6.9+
+ */
+
+/* ============================================
+   WordPress 6.9 Integration
+   ============================================ */
+
+/*
+ * This CSS extends theme.json design tokens with:
+ * - Advanced animations and micro-interactions
+ * - Atmospheric backgrounds and effects
+ * - Component-specific enhancements
+ * - Block editor compatibility
+ *
+ * Color, typography, and spacing tokens are defined in theme.json
+ * and automatically available as CSS custom properties with --wp--preset-- prefix
+ */
+
+/* ============================================
+   Enhanced Root Variables (Complementing theme.json)
+   ============================================ */
+:root {
+  /* Transitions (custom timings) */
+  --cp-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Z-index Scale */
+  --cp-z-base: 0;
+  --cp-z-dropdown: 1000;
+  --cp-z-sticky: 1020;
+  --cp-z-fixed: 1030;
+  --cp-z-modal-backdrop: 1040;
+  --cp-z-modal: 1050;
+  --cp-z-popover: 1060;
+  --cp-z-tooltip: 1070;
+  --cp-z-notification: 1080;
+
+  /* Border Radius (from theme.json custom settings) */
+  --cp-radius-sm: 0.25rem;
+  --cp-radius-md: 0.5rem;
+  --cp-radius-lg: 0.75rem;
+  --cp-radius-xl: 1rem;
+  --cp-radius-2xl: 1.5rem;
+  --cp-radius-full: 9999px;
+}
+
+/* ============================================
+   Party Color Scheme Variations
+   ============================================ */
+
+/* Republican Red Theme */
+body.color-scheme-republican-red {
+  --wp--preset--color--primary: #e81b23;
+  --wp--preset--color--primary-600: #c41119;
+  --wp--preset--color--primary-700: #9e0e14;
+  --wp--preset--color--primary-400: #ed4349;
+  --wp--preset--color--primary-300: #f26b70;
+  --wp--preset--color--accent: #ffd700;
+  --wp--preset--color--accent-600: #e6c200;
+  --wp--preset--color--accent-700: #cca700;
+}
+
+/* Independent Purple Theme */
+body.color-scheme-independent-purple {
+  --wp--preset--color--primary: #6b3fa0;
+  --wp--preset--color--primary-600: #563285;
+  --wp--preset--color--primary-700: #41266a;
+  --wp--preset--color--primary-400: #8556bc;
+  --wp--preset--color--primary-300: #9f6dd8;
+  --wp--preset--color--accent: #00d9ff;
+  --wp--preset--color--accent-600: #00b8d9;
+  --wp--preset--color--accent-700: #0097b3;
+}
+
+/* Green Party Theme */
+body.color-scheme-green-party {
+  --wp--preset--color--primary: #17aa5c;
+  --wp--preset--color--primary-600: #13884a;
+  --wp--preset--color--primary-700: #0f6638;
+  --wp--preset--color--primary-400: #2bbf73;
+  --wp--preset--color--primary-300: #3fd48a;
+  --wp--preset--color--accent: #ffeb3b;
+  --wp--preset--color--accent-600: #fdd835;
+  --wp--preset--color--accent-700: #fbc02d;
+}
+
+/* ============================================
+   Enhanced Typography (WordPress 6.9)
+   ============================================ */
+
+/* Font smoothing for better rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Monospace number formatting */
+.cp-mono,
+.has-mono-font-family {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Enhanced heading styles */
+h1, h2, h3, h4, h5, h6,
+.wp-block-heading {
+  text-wrap: balance; /* WordPress 6.9+ feature */
+}
+
+/* ============================================
+   Enhanced Site Header
+   ============================================ */
+.site-header {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    var(--wp--preset--color--white) 0%,
+    var(--wp--preset--color--neutral-50) 100%
+  );
+  box-shadow: var(--wp--preset--shadow--md);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--wp--preset--color--neutral-300);
+  z-index: var(--cp-z-sticky);
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 50%, var(--wp--preset--color--primary-50) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--wp--preset--color--accent-50) 0%, transparent 50%);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.site-header .navbar {
+  position: relative;
+  z-index: 1;
+  padding: var(--wp--preset--spacing--4) 0;
+}
+
+/* Site branding with gradient text */
+.site-branding .site-title,
+.wp-block-site-title {
+  font-family: var(--wp--preset--font-family--display);
+  font-size: var(--wp--preset--font-size--2-xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.site-branding .site-title a,
+.wp-block-site-title a {
+  background: linear-gradient(135deg, var(--wp--preset--color--primary) 0%, var(--wp--preset--color--primary-700) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  transition: all var(--cp-transition-base);
+  position: relative;
+}
+
+.site-branding .site-title a::after,
+.wp-block-site-title a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--wp--preset--color--primary), var(--wp--preset--color--accent));
+  transition: width var(--cp-transition-slow);
+}
+
+.site-branding .site-title a:hover::after,
+.wp-block-site-title a:hover::after {
+  width: 100%;
+}
+
+/* ============================================
+   Enhanced Navigation (WordPress 6.9 Navigation Block)
+   ============================================ */
+
+/* WordPress Navigation Block */
+.wp-block-navigation {
+  gap: var(--wp--preset--spacing--2);
+}
+
+.wp-block-navigation .wp-block-navigation-item a,
+.navbar-nav .nav-link {
+  position: relative;
+  color: var(--wp--preset--color--neutral-700);
+  font-family: var(--wp--preset--font-family--display);
+  font-weight: 600;
+  font-size: var(--wp--preset--font-size--sm);
+  padding: var(--wp--preset--spacing--3) var(--wp--preset--spacing--5);
+  border-radius: var(--cp-radius-lg);
+  transition: all var(--cp-transition-base);
+  overflow: hidden;
+  letter-spacing: 0.01em;
+}
+
+.wp-block-navigation .wp-block-navigation-item a::before,
+.navbar-nav .nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--wp--preset--color--primary-50) 0%,
+    var(--wp--preset--color--accent-50) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--cp-transition-base);
+  z-index: -1;
+}
+
+.wp-block-navigation .wp-block-navigation-item a::after,
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--wp--preset--color--primary), var(--wp--preset--color--accent));
+  transition: width var(--cp-transition-slow);
+}
+
+.wp-block-navigation .wp-block-navigation-item a:hover,
+.wp-block-navigation .wp-block-navigation-item a:focus,
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  color: var(--wp--preset--color--primary);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.wp-block-navigation .wp-block-navigation-item a:hover::before,
+.wp-block-navigation .wp-block-navigation-item a:focus::before,
+.navbar-nav .nav-link:hover::before,
+.navbar-nav .nav-link:focus::before {
+  opacity: 1;
+}
+
+.wp-block-navigation .wp-block-navigation-item a:hover::after,
+.wp-block-navigation .wp-block-navigation-item a:focus::after,
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link:focus::after {
+  width: 80%;
+}
+
+.wp-block-navigation .wp-block-navigation-item.current-menu-item a,
+.navbar-nav .nav-link.active {
+  color: var(--wp--preset--color--primary);
+  background: linear-gradient(
+    135deg,
+    var(--wp--preset--color--primary-50) 0%,
+    var(--wp--preset--color--accent-50) 100%
+  );
+  box-shadow: var(--wp--preset--shadow--sm);
+}
+
+/* ============================================
+   Hero Section (WordPress Cover Block Enhanced)
+   ============================================ */
+
+/* Campaign Hero - Can be used with Cover block */
+.campaign-hero,
+.wp-block-cover.is-style-campaign-hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0;
+  margin-bottom: var(--wp--preset--spacing--20);
+}
+
+/* Atmospheric layered background */
+.hero-background,
+.wp-block-cover__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-background::before,
+.wp-block-cover.is-style-campaign-hero .wp-block-cover__background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(135deg, var(--wp--preset--color--primary-900) 0%, var(--wp--preset--color--primary-700) 50%, var(--wp--preset--color--accent-700) 100%);
+  opacity: 0.95;
+  z-index: 2;
+}
+
+/* Animated gradient mesh */
+.hero-background::after,
+.wp-block-cover.is-style-campaign-hero .wp-block-cover__background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 30%, var(--wp--preset--color--accent) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, var(--wp--preset--color--primary) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, var(--wp--preset--color--accent-600) 0%, transparent 45%);
+  opacity: 0.3;
+  z-index: 3;
+  animation: heroGradientShift 20s ease-in-out infinite;
+}
+
+@keyframes heroGradientShift {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+/* Hero content styling */
+.hero-content,
+.wp-block-cover__inner-container {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: var(--wp--preset--color--white);
+  padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--6);
+  max-width: 900px;
+}
+
+/* Staggered reveal animations */
+.hero-title,
+.wp-block-cover.is-style-campaign-hero .wp-block-heading {
+  font-family: var(--wp--preset--font-family--display);
+  font-size: var(--wp--preset--font-size--4-xl);
+  font-weight: 800;
+  margin: 0 0 var(--wp--preset--spacing--6);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  animation: heroFadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.hero-subtitle {
+  font-family: var(--wp--preset--font-family--display);
+  font-size: var(--wp--preset--font-size--2-xl);
+  font-weight: 600;
+  margin: 0 0 var(--wp--preset--spacing--6);
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  animation: heroFadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s backwards;
+}
+
+.hero-tagline {
+  font-size: var(--wp--preset--font-size--lg);
+  font-weight: 400;
+  margin: 0 0 var(--wp--preset--spacing--10);
+  opacity: 0.95;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: heroFadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s backwards;
+}
+
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-cta,
+.wp-block-buttons {
+  display: flex;
+  gap: var(--wp--preset--spacing--4);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: heroFadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.6s backwards;
+}
+
+/* ============================================
+   Enhanced Button System (WordPress Buttons Block)
+   ============================================ */
+
+.wp-block-button__link,
+.wp-element-button,
+.cp-button,
+.cp-donation-button,
+.hero-cta .button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--wp--preset--spacing--2);
+  padding: var(--wp--preset--spacing--4) var(--wp--preset--spacing--8);
+  font-family: var(--wp--preset--font-family--display);
+  font-size: var(--wp--preset--font-size--base);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: var(--cp-radius-lg);
+  cursor: pointer;
+  transition: all var(--cp-transition-base);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  box-shadow: var(--wp--preset--shadow--md);
+}
+
+.wp-block-button__link::before,
+.wp-element-button::before,
+.cp-button::before,
+.cp-donation-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--cp-transition-base);
+}
+
+.wp-block-button__link:hover::before,
+.wp-element-button:hover::before,
+.cp-button:hover::before,
+.cp-donation-button:hover::before {
+  opacity: 1;
+}
+
+/* Primary button with pulse animation */
+.wp-block-button.is-style-fill .wp-block-button__link,
+.cp-button-primary,
+.cp-donation-button,
+.hero-cta .button-primary {
+  background: linear-gradient(135deg, var(--wp--preset--color--primary) 0%, var(--wp--preset--color--primary-700) 100%);
+  color: var(--wp--preset--color--white);
+  box-shadow:
+    var(--wp--preset--shadow--lg),
+    0 0 0 0 rgba(0, 83, 195, 0.5);
+  animation: buttonPulse 2s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+  0%, 100% {
+    box-shadow:
+      var(--wp--preset--shadow--lg),
+      0 0 0 0 rgba(0, 83, 195, 0.5);
+  }
+  50% {
+    box-shadow:
+      var(--wp--preset--shadow--lg),
+      0 0 0 8px rgba(0, 83, 195, 0);
+  }
+}
+
+.wp-block-button.is-style-fill .wp-block-button__link:hover,
+.cp-button-primary:hover,
+.cp-donation-button:hover,
+.hero-cta .button-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--wp--preset--shadow--xl);
+  animation: none;
+}
+
+/* Outline button with glass morphism */
+.wp-block-button.is-style-outline .wp-block-button__link,
+.cp-button-secondary,
+.hero-cta .button-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--wp--preset--color--white);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link:hover,
+.cp-button-secondary:hover,
+.hero-cta .button-secondary:hover {
+  background: rgba(255, 255, 255, 1);
+  color: var(--wp--preset--color--primary);
+  border-color: rgba(255, 255, 255, 1);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--wp--preset--shadow--xl);
+}
+
+/* Large button variant */
+.wp-block-button.is-large .wp-block-button__link,
+.cp-button-large {
+  padding: var(--wp--preset--spacing--6) var(--wp--preset--spacing--12);
+  font-size: var(--wp--preset--font-size--lg);
+}
+
+/* ============================================
+   Enhanced Components
+   ============================================ */
+
+/* Progress Meter with Animated Fill */
+.cp-campaign-progress,
+.wp-block-group.is-style-progress-meter {
+  background: linear-gradient(135deg, var(--wp--preset--color--white) 0%, var(--wp--preset--color--neutral-50) 100%);
+  padding: var(--wp--preset--spacing--8);
+  border-radius: var(--cp-radius-2xl);
+  margin-bottom: var(--wp--preset--spacing--10);
+  box-shadow: var(--wp--preset--shadow--lg);
+  border: 1px solid var(--wp--preset--color--neutral-300);
+  position: relative;
+  overflow: hidden;
+}
+
+.cp-campaign-progress::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.cp-progress-raised {
+  font-family: var(--wp--preset--font-family--mono);
+  font-size: var(--wp--preset--font-size--3-xl);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--wp--preset--color--primary), var(--wp--preset--color--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-variant-numeric: tabular-nums;
+}
+
+.cp-progress-bar-container {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  background: var(--wp--preset--color--neutral-200);
+  border-radius: var(--cp-radius-full);
+  overflow: hidden;
+  box-shadow: var(--wp--preset--shadow--inner);
+}
+
+.cp-progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--wp--preset--color--primary) 0%,
+    var(--wp--preset--color--accent) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--wp--preset--spacing--6);
+  transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cp-progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Issue Cards with Sophisticated Hover Effects */
+.cp-issue-card,
+.wp-block-group.is-style-issue-card {
+  position: relative;
+  background: var(--wp--preset--color--white);
+  border: 1px solid var(--wp--preset--color--neutral-300);
+  border-radius: var(--cp-radius-xl);
+  padding: var(--wp--preset--spacing--8);
+  margin-bottom: var(--wp--preset--spacing--6);
+  transition: all var(--cp-transition-slow);
+  overflow: hidden;
+}
+
+.cp-issue-card::before,
+.wp-block-group.is-style-issue-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--wp--preset--color--primary-50), var(--wp--preset--color--accent-50));
+  opacity: 0;
+  transition: opacity var(--cp-transition-slow);
+  z-index: 0;
+}
+
+.cp-issue-card::after,
+.wp-block-group.is-style-issue-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(180deg, var(--wp--preset--color--primary), var(--wp--preset--color--accent));
+  transition: height var(--cp-transition-slow);
+}
+
+.cp-issue-card:hover,
+.wp-block-group.is-style-issue-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: var(--wp--preset--shadow--2-xl);
+  border-color: var(--wp--preset--color--primary-200);
+}
+
+.cp-issue-card:hover::before,
+.wp-block-group.is-style-issue-card:hover::before {
+  opacity: 1;
+}
+
+.cp-issue-card:hover::after,
+.wp-block-group.is-style-issue-card:hover::after {
+  height: 100%;
+}
+
+.cp-issue-card > *,
+.wp-block-group.is-style-issue-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   Block Editor Specific Styles
+   ============================================ */
+
+/* Enhanced Quote Block */
+.wp-block-quote {
+  border-left: 4px solid var(--wp--preset--color--primary);
+  padding-left: var(--wp--preset--spacing--6);
+  font-style: italic;
+  font-size: var(--wp--preset--font-size--lg);
+}
+
+.wp-block-quote cite {
+  color: var(--wp--preset--color--neutral-600);
+  font-style: normal;
+  font-size: var(--wp--preset--font-size--sm);
+}
+
+/* Enhanced Pullquote */
+.wp-block-pullquote {
+  border-top: 4px solid var(--wp--preset--color--primary);
+  border-bottom: 4px solid var(--wp--preset--color--primary);
+  padding: var(--wp--preset--spacing--8) var(--wp--preset--spacing--4);
+  text-align: center;
+}
+
+.wp-block-pullquote blockquote {
+  font-size: var(--wp--preset--font-size--2-xl);
+  font-weight: 600;
+  font-family: var(--wp--preset--font-family--display);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .campaign-hero,
+  .wp-block-cover.is-style-campaign-hero {
+    min-height: 70vh;
+  }
+
+  .hero-content,
+  .wp-block-cover__inner-container {
+    padding: var(--wp--preset--spacing--12) var(--wp--preset--spacing--4);
+  }
+
+  .hero-cta,
+  .wp-block-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta .button,
+  .wp-block-button {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Accessibility Enhancements (WordPress 6.9)
+   ============================================ */
+
+/* Focus-visible for keyboard navigation */
+.wp-block-button__link:focus-visible,
+.wp-element-button:focus-visible,
+.cp-button:focus-visible,
+.cp-donation-button:focus-visible {
+  outline: 3px solid var(--wp--preset--color--accent);
+  outline-offset: 3px;
+  box-shadow:
+    var(--wp--preset--shadow--xl),
+    0 0 0 3px rgba(255, 136, 0, 0.3);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   Dark Mode Support (WordPress 6.9 prefers-color-scheme)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wp--preset--color--white: var(--wp--preset--color--neutral-900);
+    --wp--preset--color--neutral-50: var(--wp--preset--color--neutral-800);
+    --wp--preset--color--neutral-900: var(--wp--preset--color--neutral-50);
+    --wp--preset--color--neutral-300: var(--wp--preset--color--neutral-700);
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .campaign-hero,
+  .wp-block-cover {
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cp-button,
+  .wp-block-button {
+    border: 2px solid var(--wp--preset--color--primary);
+  }
+}

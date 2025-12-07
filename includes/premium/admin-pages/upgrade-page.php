@@ -240,10 +240,10 @@ $feature_comparison = array(
                         <?php foreach ($category['features'] as $feature): ?>
                             <tr>
                                 <td><?php echo esc_html($feature['name']); ?></td>
-                                <td><?php echo render_feature_check($feature['free']); ?></td>
-                                <td><?php echo render_feature_check($feature['basic']); ?></td>
-                                <td class="cp-highlight-col"><?php echo render_feature_check($feature['professional']); ?></td>
-                                <td><?php echo render_feature_check($feature['enterprise']); ?></td>
+                                <td><?php echo cp_render_feature_check($feature['free']); ?></td>
+                                <td><?php echo cp_render_feature_check($feature['basic']); ?></td>
+                                <td class="cp-highlight-col"><?php echo cp_render_feature_check($feature['professional']); ?></td>
+                                <td><?php echo cp_render_feature_check($feature['enterprise']); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endforeach; ?>
@@ -304,16 +304,7 @@ $feature_comparison = array(
 </div>
 
 <?php
-// Helper function to render feature checks
-function render_feature_check($value) {
-    if ($value === true) {
-        return '<span class="cp-check-yes"><span class="dashicons dashicons-yes-alt"></span></span>';
-    } elseif ($value === false) {
-        return '<span class="cp-check-no"><span class="dashicons dashicons-minus"></span></span>';
-    } else {
-        return '<span class="cp-check-text">' . esc_html($value) . '</span>';
-    }
-}
+
 ?>
 
 <style>

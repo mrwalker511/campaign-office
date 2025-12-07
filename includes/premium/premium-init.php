@@ -1379,3 +1379,19 @@ function cp_premium_only_notice($feature = '') {
 function cp_get_premium_features() {
     return CampaignPress_Premium::get_instance()->get_premium_features();
 }
+
+/**
+ * Render feature check icon/text
+ *
+ * @param bool|string $value Feature value
+ * @return string HTML output
+ */
+function cp_render_feature_check($value) {
+    if ($value === true) {
+        return '<span class="cp-check-yes"><span class="dashicons dashicons-yes-alt"></span></span>';
+    } elseif ($value === false) {
+        return '<span class="cp-check-no"><span class="dashicons dashicons-minus"></span></span>';
+    } else {
+        return '<span class="cp-check-text">' . esc_html($value) . '</span>';
+    }
+}

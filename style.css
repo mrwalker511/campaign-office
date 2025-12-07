@@ -1,310 +1,292 @@
-/*
-Theme Name: CampaignPress
-Theme URI: https://campaignpress.org
-Author: CampaignPress Team
-Author URI: https://campaignpress.org
-Description: A freemium political WordPress theme that transforms into a complete campaign operations platform. Version 2.0.0 adds enhanced volunteer management, event RSVPs, multi-language support, accessibility compliance, Elementor integration, and premium features including political CRM, field operations, GOTV tools, FEC compliance, and campaign automation.
-Version: 2.0.0
-Requires at least: 6.4
-Tested up to: 6.7
-Requires PHP: 8.1
-License: GNU General Public License v3 or later
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Text Domain: campaignpress
-Tags: politics, campaign, political, election, candidate, government, nonprofit, activism, accessibility-ready
-*/
+/**
+ * CampaignPress Add-on Styles
+ * Contains complex layouts, hero sections, and specialized widgets.
+ * Requires style.css to be loaded first.
+ */
 
-/*--------------------------------------------------------------
->>> TABLE OF CONTENTS:
-----------------------------------------------------------------
-0.0 - Variables & Theming (Added)
-1.0 - Normalize & Reset
-2.0 - Typography
-3.0 - Elements
-4.0 - Forms
-5.0 - Navigation
-6.0 - Accessibility
-7.0 - Widgets
-8.0 - Content & Layout
-9.0 - Media
-10.0 - Political Components
---------------------------------------------------------------*/
-
-/*--------------------------------------------------------------
-0.0 - Variables & Theming
---------------------------------------------------------------*/
-:root {
-  /* Color Schemes */
-  --cp-primary: #0066cc;
-  --cp-secondary: #333333;
-  --cp-accent: #ff9800;
-  --cp-text: #333333;
-  --cp-text-light: #666666;
-  --cp-text-muted: #6c757d;
-  --cp-background: #ffffff;
-  --cp-background-alt: #f5f5f5;
-  --cp-border: #e0e0e0;
-
-  /* Typography */
-  --cp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  --cp-font-size-base: 16px;
-  --cp-line-height: 1.6;
-
-  /* Spacing */
-  --cp-spacing-xs: 0.5rem;
-  --cp-spacing-sm: 1rem;
-  --cp-spacing-md: 1.5rem;
-  --cp-spacing-lg: 2rem;
-  --cp-spacing-xl: 3rem;
-
-  /* Border Radius */
-  --cp-border-radius: 4px;
-  --cp-border-radius-lg: 8px;
-
-  /* Transitions */
-  --cp-transition: all 0.3s ease;
+/* ============================================
+   Campaign Hero Section (Full Width Video/Image)
+   ============================================ */
+.campaign-hero {
+  position: relative;
+  width: 100%;        /* Fills the #main container naturally */
+  max-width: 100%;    /* Ensures no overflow */
+  padding: 0;
+  margin: 0;
+  display: block;
+  overflow: hidden;
+  background-color: #000; /* Fallback for video/image load time */
 }
 
-/* Color Scheme Overrides */
-body.color-scheme-democrat-blue { --cp-primary: #0015BC; --cp-secondary: #1a4d99; }
-body.color-scheme-republican-red { --cp-primary: #E81B23; --cp-secondary: #b71419; }
-body.color-scheme-independent-purple { --cp-primary: #6B3FA0; --cp-secondary: #4a2b70; }
-body.color-scheme-green-party { --cp-primary: #17aa5c; --cp-secondary: #0d7a41; }
-
-/*--------------------------------------------------------------
-1.0 - Normalize & Reset
---------------------------------------------------------------*/
-*, *::before, *::after { box-sizing: border-box; }
-
-html {
-  font-family: var(--cp-font-family);
-  line-height: var(--cp-line-height);
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
+/* The background wrapper sits in the flow to dictate height */
+.hero-background {
+  position: relative;
+  width: 100%;
+  height: auto;
   margin: 0;
   padding: 0;
-  font-size: var(--cp-font-size-base);
-  color: var(--cp-text);
-  background-color: var(--cp-background);
+  line-height: 0;     /* Removes tiny white line under video */
+  z-index: 1;
 }
 
-/*--------------------------------------------------------------
-2.0 - Typography
---------------------------------------------------------------*/
-h1, h2, h3, h4, h5, h6 {
-  clear: both;
-  font-weight: 700;
-  line-height: 1.3;
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: var(--cp-secondary);
-}
-
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1rem; }
-
-p { margin-top: 0; margin-bottom: 1.5rem; }
-
-/*--------------------------------------------------------------
-3.0 - Elements
---------------------------------------------------------------*/
-img {
-  max-width: 100%;
-  height: auto;
-  vertical-align: middle;
-}
-
-/* Utility Classes */
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.mb-0 { margin-bottom: 0; }
-.mb-3 { margin-bottom: var(--cp-spacing-md); }
-.mt-3 { margin-top: var(--cp-spacing-md); }
-
-/*--------------------------------------------------------------
-4.0 - Forms
---------------------------------------------------------------*/
-button, input, select, textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-button { cursor: pointer; }
-
-/*--------------------------------------------------------------
-5.0 - Navigation
---------------------------------------------------------------*/
-.site-header {
-  background-color: var(--cp-background);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.site-header .navbar { padding: 0.75rem 0; }
-
-.navbar-nav { gap: 0.5rem; display: flex; list-style: none; margin: 0; padding: 0; }
-
-.navbar-nav .nav-link {
-  color: var(--cp-secondary);
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: var(--cp-border-radius);
-  transition: var(--cp-transition);
-  text-decoration: none;
-  display: block;
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link:focus,
-.navbar-nav .nav-link.active {
-  color: var(--cp-primary);
-  background-color: var(--cp-background-alt);
-}
-
-/* Mobile Menu Fix */
-@media (max-width: 991.98px) {
-  .navbar-nav { flex-direction: column; }
-}
-
-/*--------------------------------------------------------------
-6.0 - Accessibility
---------------------------------------------------------------*/
-.screen-reader-text {
-  border: 0; clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%);
-  height: 1px; margin: -1px; overflow: hidden; padding: 0;
-  position: absolute; width: 1px; word-wrap: normal;
-}
-
-.screen-reader-text:focus {
-  background-color: #f1f1f1; border-radius: 3px;
-  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
-  clip: auto; clip-path: none; color: var(--cp-primary);
-  display: block; font-size: 0.875rem; font-weight: 700;
-  height: auto; left: 5px; line-height: normal;
-  padding: 15px 23px 14px; text-decoration: none;
-  top: 5px; width: auto; z-index: 100000;
-}
-
-/*--------------------------------------------------------------
-7.0 - Widgets
---------------------------------------------------------------*/
-.widget { margin: 0 0 1.5rem; }
-.widget select { max-width: 100%; }
-
-/*--------------------------------------------------------------
-8.0 - Content & Layout
---------------------------------------------------------------*/
-.site-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--cp-spacing-md);
-}
-
-.site-main { padding: var(--cp-spacing-xl) 0; }
-
-.site-footer {
-  background-color: var(--cp-secondary);
-  color: #ffffff;
-  padding: var(--cp-spacing-xl) 0 var(--cp-spacing-md);
-  margin-top: var(--cp-spacing-xl);
-}
-
-/* Full Width Handling */
-.front-page.content-area,
-.home.content-area,
-body.full-width .content-area {
+/* Force video to fill width and ignore global constraints */
+.hero-background video,
+.hero-background img {
   width: 100% !important;
-  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
   margin: 0 !important;
+  max-width: none !important;
+  object-fit: cover;
 }
 
-/*--------------------------------------------------------------
-9.0 - Media
---------------------------------------------------------------*/
-embed, iframe, object { max-width: 100%; }
-.alignleft { float: left; margin-right: 1.5em; margin-bottom: 1.5em; }
-.alignright { float: right; margin-left: 1.5em; margin-bottom: 1.5em; }
-.aligncenter { clear: both; display: block; margin-left: auto; margin-right: auto; margin-bottom: 1.5em; }
+/* Video Overlay Gradient */
+.hero-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+  z-index: 2;
+  pointer-events: none;
+}
 
-/*--------------------------------------------------------------
-10.0 - Political Components
---------------------------------------------------------------*/
-/* Buttons */
-.cp-button,
-.cp-donation-button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 700;
+/* * The Content 
+ * Floating absolutely on top of the video with centered text
+ */
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Perfect Center */
+  z-index: 3;
+  width: 100%;
+  max-width: 800px; /* Constrained width for text readability */
+  padding: 0 var(--cp-spacing-md);
   text-align: center;
+  color: #ffffff;
+}
+
+/* Typography and Staggered Animations */
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0 0 var(--cp-spacing-sm);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease 0.2s backwards;
+}
+
+.hero-subtitle {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 0 0 var(--cp-spacing-md);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease 0.4s backwards;
+}
+
+.hero-tagline {
+  font-size: 1.25rem;
+  margin: 0 0 var(--cp-spacing-lg);
+  opacity: 0.95;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease 0.6s backwards;
+}
+
+/* CTA Buttons Specific to Hero */
+.hero-cta {
+  display: flex;
+  gap: var(--cp-spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease 0.8s backwards;
+}
+
+.hero-cta .button {
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
   text-decoration: none;
-  border: none;
   border-radius: var(--cp-border-radius);
-  cursor: pointer;
   transition: var(--cp-transition);
-  line-height: 1.5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-cta .button-primary {
   background-color: var(--cp-primary);
   color: #ffffff;
+  border: 2px solid var(--cp-primary);
 }
 
-.cp-button:hover,
-.cp-donation-button:hover {
+.hero-cta .button-primary:hover {
   background-color: var(--cp-secondary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-color: var(--cp-secondary);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.hero-cta .button-secondary {
+  background-color: transparent;
   color: #ffffff;
+  border: 2px solid #ffffff;
 }
 
-/* Progress Bar */
-.cp-campaign-progress {
-  background-color: var(--cp-background-alt);
-  padding: var(--cp-spacing-md);
-  border-radius: var(--cp-border-radius-lg);
+.hero-cta .button-secondary:hover {
+  background-color: #ffffff;
+  color: var(--cp-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta .button {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Front Page Sections (Must be outside .site-container in front-page.php)
+   ============================================ */
+.front-page-section {
+  padding: var(--cp-spacing-xl) var(--cp-spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.front-page-section .section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
   margin-bottom: var(--cp-spacing-lg);
+  color: var(--cp-text);
 }
 
-.cp-progress-bar-container {
+.front-page-section .section-footer {
+  text-align: center;
+  margin-top: var(--cp-spacing-lg);
+}
+
+/* Issues Grid */
+.issues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--cp-spacing-lg);
+}
+
+.issue-card {
+  background-color: var(--cp-background);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-border-radius-lg);
+  overflow: hidden;
+  transition: var(--cp-transition);
+}
+
+.issue-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+.issue-thumbnail {
   width: 100%;
-  height: 40px;
-  background-color: var(--cp-border);
-  border-radius: var(--cp-border-radius);
+  height: 200px;
   overflow: hidden;
 }
 
-.cp-progress-bar {
+.issue-thumbnail img {
+  width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, var(--cp-primary), var(--cp-secondary));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.issue-card:hover .issue-thumbnail img {
+  transform: scale(1.05);
+}
+
+.issue-content {
+  padding: var(--cp-spacing-md);
+}
+
+.issue-title {
+  font-size: 1.25rem;
   font-weight: 700;
-  transition: width 0.6s ease;
+  margin: 0 0 var(--cp-spacing-sm);
 }
 
-/* Cards & Grids */
-.cp-endorsement-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+.issue-title a {
+  color: var(--cp-text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.issue-title a:hover {
+  color: var(--cp-primary);
+}
+
+/* Events List */
+.events-list {
+  display: flex;
+  flex-direction: column;
   gap: var(--cp-spacing-md);
-  margin-bottom: var(--cp-spacing-lg);
 }
 
-.cp-issue-card {
+.event-card {
   background-color: var(--cp-background);
   border: 1px solid var(--cp-border);
   border-radius: var(--cp-border-radius-lg);
   padding: var(--cp-spacing-md);
-  margin-bottom: var(--cp-spacing-md);
   transition: var(--cp-transition);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--cp-spacing-md);
+  align-items: center;
 }
 
-.cp-issue-card:hover {
+.event-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
+  border-color: var(--cp-primary);
+}
+
+.event-date {
+  color: var(--cp-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: var(--cp-spacing-xs);
+}
+
+/* Read More Link */
+.read-more {
+  color: var(--cp-primary);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
 }

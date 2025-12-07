@@ -6,7 +6,7 @@
  * @since 2.0.0
  */
 
-(function($) {
+(function ($) {
     'use strict';
 
     /**
@@ -17,7 +17,7 @@
         /**
          * Initialize
          */
-        init: function() {
+        init: function () {
             this.bindEvents();
             this.initTooltips();
             this.checkLicenseStatus();
@@ -26,14 +26,14 @@
         /**
          * Bind DOM events
          */
-        bindEvents: function() {
+        bindEvents: function () {
             // Auto-dismiss notices
-            $(document).on('click', '.notice.is-dismissible .notice-dismiss', function() {
+            $(document).on('click', '.notice.is-dismissible .notice-dismiss', function () {
                 $(this).closest('.notice').fadeOut();
             });
 
             // Confirm destructive actions
-            $(document).on('click', '[data-confirm]', function(e) {
+            $(document).on('click', '[data-confirm]', function (e) {
                 var message = $(this).data('confirm');
                 if (!confirm(message)) {
                     e.preventDefault();
@@ -42,13 +42,13 @@
             });
 
             // Toggle feature details
-            $(document).on('click', '.cp-feature-details-toggle', function(e) {
+            $(document).on('click', '.cp-feature-details-toggle', function (e) {
                 e.preventDefault();
                 $(this).closest('.cp-feature-card').find('.cp-feature-details').slideToggle();
             });
 
             // Copy to clipboard
-            $(document).on('click', '[data-copy]', function(e) {
+            $(document).on('click', '[data-copy]', function (e) {
                 e.preventDefault();
                 var text = $(this).data('copy');
                 CPPremiumAdmin.copyToClipboard(text);
@@ -56,7 +56,7 @@
             });
 
             // Form validation
-            $(document).on('submit', '.cp-validate-form', function(e) {
+            $(document).on('submit', '.cp-validate-form', function (e) {
                 if (!CPPremiumAdmin.validateForm($(this))) {
                     e.preventDefault();
                     return false;
@@ -67,7 +67,7 @@
         /**
          * Initialize tooltips
          */
-        initTooltips: function() {
+        initTooltips: function () {
             if (typeof $.fn.tooltip !== 'undefined') {
                 $('.cp-tooltip').tooltip({
                     position: {
@@ -81,11 +81,11 @@
         /**
          * Check license status on page load
          */
-        checkLicenseStatus: function() {
+        checkLicenseStatus: function () {
             var $statusIndicator = $('.cp-license-status-indicator');
             if ($statusIndicator.length && $statusIndicator.data('auto-check')) {
                 // Check status every 5 minutes
-                setInterval(function() {
+                setInterval(function () {
                     CPPremiumAdmin.refreshLicenseStatus();
                 }, 5 * 60 * 1000);
             }
@@ -94,7 +94,7 @@
         /**
          * Refresh license status
          */
-        refreshLicenseStatus: function() {
+        refreshLicenseStatus: function () {
             $.ajax({
                 url: cpPremium.ajax_url,
                 type: 'POST',
@@ -102,7 +102,7 @@
                     action: 'cp_check_license_status',
                     nonce: cpPremium.nonce
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success && response.data.status_changed) {
                         // Reload page if status changed
                         location.reload();
@@ -114,12 +114,12 @@
         /**
          * Validate form
          */
-        validateForm: function($form) {
+        validateForm: function ($form) {
             var isValid = true;
             var errors = [];
 
             // Check required fields
-            $form.find('[required]').each(function() {
+            $form.find('[required]').each(function () {
                 var $field = $(this);
                 var value = $field.val().trim();
 
@@ -162,7 +162,7 @@
         /**
          * Validate email
          */
-        isValidEmail: function(email) {
+        isValidEmail: function (email) {
             var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email);
         },
@@ -170,7 +170,7 @@
         /**
          * Copy text to clipboard
          */
-        copyToClipboard: function(text) {
+        copyToClipboard: function (text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text);
             } else {
@@ -186,12 +186,12 @@
         /**
          * Show notice
          */
-        showNotice: function(message, type) {
+        showNotice: function (message, type) {
             type = type || 'info';
             var $notice = $('<div class="notice notice-' + type + ' is-dismissible"><p>' + message + '</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button></div>');
 
             // Remove existing notices
-            $('.wrap > .notice').fadeOut(function() {
+            $('.wrap > .notice').fadeOut(function () {
                 $(this).remove();
             });
 
@@ -199,8 +199,8 @@
             $('.wrap h1').first().after($notice);
 
             // Auto-dismiss after 5 seconds
-            setTimeout(function() {
-                $notice.fadeOut(function() {
+            setTimeout(function () {
+                $notice.fadeOut(function () {
                     $(this).remove();
                 });
             }, 5000);
@@ -214,7 +214,7 @@
         /**
          * Show loading overlay
          */
-        showLoading: function($element) {
+        showLoading: function ($element) {
             $element = $element || $('.wrap');
             $element.addClass('cp-loading');
         },
@@ -222,7 +222,7 @@
         /**
          * Hide loading overlay
          */
-        hideLoading: function($element) {
+        hideLoading: function ($element) {
             $element = $element || $('.wrap');
             $element.removeClass('cp-loading');
         },
@@ -230,7 +230,7 @@
         /**
          * Format date
          */
-        formatDate: function(dateString) {
+        formatDate: function (dateString) {
             var date = new Date(dateString);
             var options = { year: 'numeric', month: 'long', day: 'numeric' };
             return date.toLocaleDateString(undefined, options);
@@ -239,20 +239,20 @@
         /**
          * Format number
          */
-        formatNumber: function(number) {
+        formatNumber: function (number) {
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         },
 
         /**
          * Debounce function
          */
-        debounce: function(func, wait) {
+        debounce: function (func, wait) {
             var timeout;
-            return function() {
+            return function () {
                 var context = this;
                 var args = arguments;
                 clearTimeout(timeout);
-                timeout = setTimeout(function() {
+                timeout = setTimeout(function () {
                     func.apply(context, args);
                 }, wait);
             };
@@ -261,7 +261,7 @@
         /**
          * Get query parameter
          */
-        getQueryParam: function(param) {
+        getQueryParam: function (param) {
             var urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         },
@@ -269,7 +269,7 @@
         /**
          * Update query parameter
          */
-        updateQueryParam: function(param, value) {
+        updateQueryParam: function (param, value) {
             var url = new URL(window.location);
             url.searchParams.set(param, value);
             window.history.pushState({}, '', url);
@@ -284,14 +284,14 @@
         /**
          * Initialize
          */
-        init: function() {
+        init: function () {
             this.bindEvents();
         },
 
         /**
          * Bind events
          */
-        bindEvents: function() {
+        bindEvents: function () {
             // License key formatting
             $(document).on('input', '#license_key', this.formatLicenseKey);
 
@@ -302,9 +302,16 @@
         /**
          * Format license key as user types
          */
-        formatLicenseKey: function() {
+        formatLicenseKey: function () {
             var $input = $(this);
-            var value = $input.val().replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+            var val = $input.val();
+
+            // Allow TEST keys to bypass formatting
+            if (val.toUpperCase().indexOf('TEST-') === 0) {
+                return;
+            }
+
+            var value = val.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
             var formatted = value.match(/.{1,4}/g);
 
             if (formatted) {
@@ -315,7 +322,7 @@
         /**
          * Quick license check
          */
-        quickCheck: function(e) {
+        quickCheck: function (e) {
             e.preventDefault();
             var $btn = $(this);
             var originalText = $btn.text();
@@ -329,7 +336,7 @@
                     action: 'cp_quick_license_check',
                     nonce: cpPremium.nonce
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         CPPremiumAdmin.showNotice(response.data.message, 'success');
                     } else {
@@ -337,7 +344,7 @@
                     }
                     $btn.prop('disabled', false).text(originalText);
                 },
-                error: function() {
+                error: function () {
                     CPPremiumAdmin.showNotice('Connection error. Please try again.', 'error');
                     $btn.prop('disabled', false).text(originalText);
                 }
@@ -353,7 +360,7 @@
         /**
          * Initialize
          */
-        init: function() {
+        init: function () {
             this.bindEvents();
             this.updateFeatureCount();
         },
@@ -361,7 +368,7 @@
         /**
          * Bind events
          */
-        bindEvents: function() {
+        bindEvents: function () {
             // Feature search
             $(document).on('input', '#cp-feature-search', CPPremiumAdmin.debounce(this.searchFeatures, 300));
 
@@ -376,10 +383,10 @@
         /**
          * Search features
          */
-        searchFeatures: function() {
+        searchFeatures: function () {
             var query = $(this).val().toLowerCase();
 
-            $('.cp-feature-card').each(function() {
+            $('.cp-feature-card').each(function () {
                 var $card = $(this);
                 var title = $card.find('h3').text().toLowerCase();
                 var description = $card.find('.cp-feature-description').text().toLowerCase();
@@ -395,10 +402,10 @@
         /**
          * Filter features
          */
-        filterFeatures: function() {
+        filterFeatures: function () {
             var filter = $(this).val();
 
-            $('.cp-feature-card').each(function() {
+            $('.cp-feature-card').each(function () {
                 var $card = $(this);
 
                 if (filter === 'all') {
@@ -422,7 +429,7 @@
         /**
          * Update feature count
          */
-        updateFeatureCount: function() {
+        updateFeatureCount: function () {
             var total = $('.cp-feature-card').length;
             var enabled = $('.cp-feature-toggle:checked').length;
 
@@ -432,14 +439,14 @@
         /**
          * Bulk enable features
          */
-        bulkEnable: function(e) {
+        bulkEnable: function (e) {
             e.preventDefault();
 
             if (!confirm('Enable all available features?')) {
                 return;
             }
 
-            $('.cp-feature-toggle:not(:checked):not(:disabled)').each(function() {
+            $('.cp-feature-toggle:not(:checked):not(:disabled)').each(function () {
                 $(this).prop('checked', true).trigger('change');
             });
         },
@@ -447,14 +454,14 @@
         /**
          * Bulk disable features
          */
-        bulkDisable: function(e) {
+        bulkDisable: function (e) {
             e.preventDefault();
 
             if (!confirm('Disable all features?')) {
                 return;
             }
 
-            $('.cp-feature-toggle:checked:not(:disabled)').each(function() {
+            $('.cp-feature-toggle:checked:not(:disabled)').each(function () {
                 $(this).prop('checked', false).trigger('change');
             });
         }
@@ -468,7 +475,7 @@
         /**
          * Initialize
          */
-        init: function() {
+        init: function () {
             this.bindEvents();
             this.initCharts();
         },
@@ -476,7 +483,7 @@
         /**
          * Bind events
          */
-        bindEvents: function() {
+        bindEvents: function () {
             // Refresh status
             $(document).on('click', '.cp-refresh-status', this.refreshStatus);
 
@@ -487,7 +494,7 @@
         /**
          * Initialize charts
          */
-        initCharts: function() {
+        initCharts: function () {
             // If Chart.js is available, initialize charts
             if (typeof Chart !== 'undefined') {
                 // Implementation for charts would go here
@@ -497,7 +504,7 @@
         /**
          * Refresh status
          */
-        refreshStatus: function(e) {
+        refreshStatus: function (e) {
             e.preventDefault();
             location.reload();
         },
@@ -505,7 +512,7 @@
         /**
          * Export report
          */
-        exportReport: function(e) {
+        exportReport: function (e) {
             e.preventDefault();
             // Implementation handled in system-status-page.php
         }
@@ -521,7 +528,7 @@
     /**
      * Document ready
      */
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Initialize all modules
         CPPremiumAdmin.init();
         CPLicenseManager.init();
@@ -529,12 +536,12 @@
         CPSystemStatus.init();
 
         // Update feature count when toggles change
-        $(document).on('change', '.cp-feature-toggle', function() {
+        $(document).on('change', '.cp-feature-toggle', function () {
             CPFeatureManager.updateFeatureCount();
         });
 
         // Smooth scroll for anchor links
-        $(document).on('click', 'a[href^="#"]', function(e) {
+        $(document).on('click', 'a[href^="#"]', function (e) {
             var target = $(this.hash);
             if (target.length) {
                 e.preventDefault();

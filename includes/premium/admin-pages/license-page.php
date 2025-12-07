@@ -42,7 +42,8 @@ $tabs = array(
     <nav class="nav-tab-wrapper wp-clearfix">
         <?php foreach ($tabs as $tab_key => $tab_label): ?>
             <a href="<?php echo esc_url(add_query_arg('tab', $tab_key, admin_url('admin.php?page=campaignpress-premium'))); ?>"
-               class="nav-tab <?php echo $current_tab === $tab_key ? 'nav-tab-active' : ''; ?>">
+               class="nav-tab <?php echo $current_tab === $tab_key ? 'nav-tab-active' : ''; ?>"
+               data-tab="<?php echo esc_attr($tab_key); ?>">
                 <?php echo esc_html($tab_label); ?>
             </a>
         <?php endforeach; ?>

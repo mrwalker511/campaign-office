@@ -222,7 +222,4 @@ get_header();
 </div>
 
 <?php
-if ( campaignpress_show_sidebar() ) {
-    get_sidebar();
-}
 get_footer();

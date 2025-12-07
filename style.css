@@ -211,6 +211,23 @@ button {
   }
 }
 
+/* Force Homepage Full Width & Remove Sidebar */
+.front-page.content-area,
+.home.content-area,
+.front-page #primary,
+.home #primary {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  float: none !important;
+  margin: 0 !important;
+}
+
+.home #secondary,
+.front-page #secondary {
+  display: none !important;
+}
+
 .entry-content,
 .entry-summary {
   margin: 1.5em 0 0;

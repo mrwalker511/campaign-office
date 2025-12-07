@@ -5,6 +5,25 @@
  */
 
 /* ============================================
+   CSS Variable Mappings (WordPress 6.9 Compatibility)
+   ============================================ */
+:root {
+  /* Map legacy --cp-* variables to WordPress 6.9 --wp--preset--* variables */
+  --cp-primary: var(--wp--preset--color--primary);
+  --cp-secondary: var(--wp--preset--color--accent);
+  --cp-spacing-sm: var(--wp--preset--spacing--4);
+  --cp-spacing-md: var(--wp--preset--spacing--6);
+  --cp-spacing-lg: var(--wp--preset--spacing--10);
+  --cp-spacing-xl: var(--wp--preset--spacing--16);
+  --cp-border-radius: var(--cp-radius-md);
+  --cp-border-radius-lg: var(--cp-radius-lg);
+  --cp-transition: var(--cp-transition-base);
+  --cp-background: var(--wp--preset--color--neutral-50);
+  --cp-border: var(--wp--preset--color--neutral-200);
+  --cp-text: var(--wp--preset--color--neutral-900);
+}
+
+/* ============================================
    Campaign Hero Section (Full Width Video/Image)
    ============================================ */
 .campaign-hero {

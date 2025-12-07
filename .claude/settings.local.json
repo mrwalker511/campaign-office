@@ -8,7 +8,9 @@
       "Bash(test:*)",
       "Bash(del \"\\?\\%CD%\\NUL\")",
       "Bash(powershell -Command \"Remove-Item -LiteralPath ''\\?$PWD\\NUL'' -Force\")",
-      "Bash(powershell -Command \"Get-ChildItem -Force | Where-Object { $_Name -eq ''NUL'' }\")"
+      "Bash(powershell -Command \"Get-ChildItem -Force | Where-Object { $_Name -eq ''NUL'' }\")",
+      "Skill(superpowers:systematic-debugging)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []

@@ -72,8 +72,7 @@ campaign-office/
 ├── theme.json                              ← WordPress 6.9 design tokens
 ├── assets/
 │   └── css/
-│       ├── design-system-wp69.css          ← WordPress 6.9 compatible CSS
-│       └── design-system-enhanced.css      ← Original CSS (legacy)
+│       └── design-system-wp69.css          ← WordPress 6.9 compatible CSS
 │
 ├── Documentation/
 │   ├── DESIGN_README.md                    ← This file (master index)

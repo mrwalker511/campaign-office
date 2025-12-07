@@ -328,6 +328,7 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-widgets.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/donation-enhancements.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/tgmpa-config.php';
 
 // Check if Elementor is active
 if (did_action('elementor/loaded')) {

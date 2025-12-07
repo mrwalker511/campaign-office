@@ -1,14 +1,20 @@
 # CampaignPress Design System - Implementation Summary
 
+> **Note:** This document describes the original design system implementation.
+> For the current WordPress 6.9+ implementation, see **`WP69_IMPLEMENTATION.md`** which uses
+> `design-system-wp69.css` with full theme.json integration.
+
 ## 🎉 What I've Created
 
 I've designed a **professional, distinctive design system** for CampaignPress that transforms it from a generic Bootstrap theme into a premium political campaign platform.
 
-### Files Created
+### Current Files (WordPress 6.9+)
 
-1. **`assets/css/design-system-enhanced.css`** (Main design system CSS - 1,000+ lines)
-2. **`DESIGN_SYSTEM.md`** (Comprehensive design guide and documentation)
-3. **`DESIGN_IMPLEMENTATION.md`** (This file - quick start guide)
+1. **`assets/css/design-system-wp69.css`** (Current design system CSS - WordPress 6.9+ compatible)
+2. **`theme.json`** (WordPress 6.9 design tokens - colors, typography, spacing)
+3. **`DESIGN_SYSTEM.md`** (Comprehensive design guide and documentation)
+4. **`WP69_IMPLEMENTATION.md`** (Current implementation guide)
+5. **`WP69_SUMMARY.md`** (Quick 5-minute overview)
 
 ---
 

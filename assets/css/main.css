@@ -409,6 +409,65 @@ body.color-scheme-green-party {
   padding: var(--cp-spacing-xl) 0;
 }
 
+/* Full Width / No Sidebar Layouts */
+body.no-sidebar .site-content,
+body.full-width .site-content,
+body.no-sidebar #content,
+body.full-width #content {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body.no-sidebar .content-area,
+body.full-width .content-area,
+body.no-sidebar #primary,
+body.full-width #primary {
+  width: 100%;
+  max-width: 100%;
+  float: none;
+  margin: 0;
+}
+
+body.no-sidebar .site-main,
+body.full-width .site-main {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Front Page - Full Width, No Sidebar */
+.home .site-content,
+.front-page .site-content,
+body.home #content,
+body.page-template-default.home #content {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.home .content-area,
+.front-page .content-area,
+.home #primary,
+.front-page #primary {
+  width: 100%;
+  max-width: 100%;
+  float: none;
+  margin: 0;
+}
+
+.home .site-main,
+.front-page .site-main {
+  padding: 0;
+}
+
+/* Ensure front page article content uses full width within its container */
+.front-page .entry-content,
+.home .entry-content {
+  max-width: 100%;
+}
+
 .site-footer {
   background-color: var(--cp-secondary);
   color: #ffffff;

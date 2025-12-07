@@ -48,7 +48,7 @@ $tabs = array(
         <?php endforeach; ?>
     </nav>
 
-    <div class="cp-tab-content">
+    <div class="cp-tab-content" data-tab="<?php echo esc_attr($current_tab); ?>">
         <?php if ($current_tab === 'license'): ?>
             <!-- License Management Tab -->
             <div class="cp-license-section">

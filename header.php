@@ -72,4 +72,4 @@
         </nav>
     </header><!-- #masthead -->
 
-    <div id="content" class="site-content site-container" role="main">
+    <div id="content" class="site-content <?php echo is_front_page() ? '' : 'site-container'; ?>" role="main">

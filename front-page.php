@@ -91,6 +91,7 @@ get_header();
                 </section>
             <?php endif; ?>
 
+            <div class="site-container">
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                 <div class="entry-content">
                     <?php
@@ -101,8 +102,9 @@ get_header();
                         'after'  => '</div>',
                     ) );
                     ?>
-                </div>
-            </article>
+                </div><!-- .entry-content -->
+            </article><!-- #post-<?php the_ID(); ?> -->
+            </div><!-- .site-container -->
 
         <?php endwhile; ?>
 

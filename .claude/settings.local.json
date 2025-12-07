@@ -10,7 +10,11 @@
       "Bash(powershell -Command \"Remove-Item -LiteralPath ''\\?$PWD\\NUL'' -Force\")",
       "Bash(powershell -Command \"Get-ChildItem -Force | Where-Object { $_Name -eq ''NUL'' }\")",
       "Skill(superpowers:systematic-debugging)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(git -C \"C:\\Users\\Matt Walker\\Desktop\\wp\\campaign-office\" status)",
+      "Bash(git -C \"C:\\Users\\Matt Walker\\Desktop\\wp\\campaign-office\" diff style.css)",
+      "Bash(git -C \"C:\\Users\\Matt Walker\\Desktop\\wp\\campaign-office\" log --oneline -1 style.css)",
+      "Bash(git -C \"C:\\Users\\Matt Walker\\Desktop\\wp\\campaign-office\" show HEAD:style.css)"
     ],
     "deny": [],
     "ask": []

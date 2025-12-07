@@ -15,9 +15,9 @@
   --cp-spacing-md: var(--wp--preset--spacing--6);
   --cp-spacing-lg: var(--wp--preset--spacing--10);
   --cp-spacing-xl: var(--wp--preset--spacing--16);
-  --cp-border-radius: var(--cp-radius-md);
-  --cp-border-radius-lg: var(--cp-radius-lg);
-  --cp-transition: var(--cp-transition-base);
+  --cp-border-radius: 0.5rem;
+  --cp-border-radius-lg: 0.75rem;
+  --cp-transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --cp-background: var(--wp--preset--color--neutral-50);
   --cp-border: var(--wp--preset--color--neutral-200);
   --cp-text: var(--wp--preset--color--neutral-900);

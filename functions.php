@@ -12,6 +12,15 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Enable Premium Features in Development
+ * This enables all premium features without requiring a license key.
+ * Remove this line in production and use a valid license instead.
+ */
+if (!defined('CAMPAIGNPRESS_DEV_MODE')) {
+    define('CAMPAIGNPRESS_DEV_MODE', true);
+}
+
+/**
  * Define Constants
  */
 define('CAMPAIGNPRESS_VERSION', '2.0.0');

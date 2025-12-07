@@ -289,13 +289,16 @@ The hero uses **5 visual layers** for depth:
 
 ### Step 1: Load Enhanced CSS
 
+> **Note:** The current WordPress 6.9+ implementation uses `design-system-wp69.css`
+> which is already enqueued in `functions.php`. See `WP69_IMPLEMENTATION.md` for details.
+
 In your `functions.php`, enqueue the enhanced design system:
 
 ```php
 function campaignpress_enqueue_enhanced_styles() {
     wp_enqueue_style(
         'campaignpress-design-system',
-        get_template_directory_uri() . '/assets/css/design-system-enhanced.css',
+        get_template_directory_uri() . '/assets/css/design-system-wp69.css',
         array('campaignpress-main'),
         '2.0.0'
     );

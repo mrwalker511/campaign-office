@@ -20,8 +20,13 @@ function campaignpress_body_class_additions($classes) {
         $classes[] = 'hfeed';
     }
 
+    // Front page always gets no-sidebar and full-width
+    if (is_front_page()) {
+        $classes[] = 'no-sidebar';
+        $classes[] = 'full-width';
+    }
     // Adds a class of no-sidebar when there is no sidebar present
-    if (!is_active_sidebar('sidebar-1')) {
+    elseif (!is_active_sidebar('sidebar-1')) {
         $classes[] = 'no-sidebar';
     }
 

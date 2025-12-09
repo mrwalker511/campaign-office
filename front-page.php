@@ -52,7 +52,7 @@ get_header();
                                 <?php else : ?>
                                     <source src="<?php echo esc_url( $hero_video_url ); ?>" type="video/mp4">
                                 <?php endif; ?>
-                                <?php esc_html_e( 'Your browser does not support the video tag.', 'campaignpress' ); ?>
+                                <?php esc_html_e( 'Your browser does not support the video tag.', 'campaign-office' ); ?>
                             </video>
                         </div>
                     <?php elseif ( has_post_thumbnail() ) : ?>
@@ -77,13 +77,13 @@ get_header();
                         <div class="hero-cta">
                             <?php if ( $donation_url ) : ?>
                                 <a href="<?php echo esc_url( $donation_url ); ?>" class="button button-primary button-large" target="_blank" rel="noopener">
-                                    <?php esc_html_e( 'Donate', 'campaignpress' ); ?>
+                                    <?php esc_html_e( 'Donate', 'campaign-office' ); ?>
                                 </a>
                             <?php endif; ?>
 
                             <?php if ( $volunteer_url ) : ?>
                                 <a href="<?php echo esc_url( $volunteer_url ); ?>" class="button button-secondary button-large" target="_blank" rel="noopener">
-                                    <?php esc_html_e( 'Volunteer', 'campaignpress' ); ?>
+                                    <?php esc_html_e( 'Volunteer', 'campaign-office' ); ?>
                                 </a>
                             <?php endif; ?>
                         </div>
@@ -98,7 +98,7 @@ get_header();
                     the_content();
 
                     wp_link_pages( array(
-                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaignpress' ),
+                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaign-office' ),
                         'after'  => '</div>',
                     ) );
                     ?>
@@ -120,7 +120,7 @@ get_header();
         if ( $issues->have_posts() ) :
             ?>
             <section class="front-page-section issues-section">
-                <h2 class="section-title"><?php esc_html_e( 'Key Issues', 'campaignpress' ); ?></h2>
+                <h2 class="section-title"><?php esc_html_e( 'Key Issues', 'campaign-office' ); ?></h2>
                 <div class="issues-grid">
                     <?php
                     while ( $issues->have_posts() ) :
@@ -139,14 +139,14 @@ get_header();
                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                 </h3>
                                 <div class="issue-excerpt"><?php the_excerpt(); ?></div>
-                                <a href="<?php the_permalink(); ?>" class="read-more"><?php esc_html_e( 'Read More', 'campaignpress' ); ?></a>
+                                <a href="<?php the_permalink(); ?>" class="read-more"><?php esc_html_e( 'Read More', 'campaign-office' ); ?></a>
                             </div>
                         </article>
                     <?php endwhile; ?>
                 </div>
                 <div class="section-footer">
                     <a href="<?php echo esc_url( get_post_type_archive_link( 'cp_issue' ) ); ?>" class="button button-secondary">
-                        <?php esc_html_e( 'View All Issues', 'campaignpress' ); ?>
+                        <?php esc_html_e( 'View All Issues', 'campaign-office' ); ?>
                     </a>
                 </div>
             </section>
@@ -174,7 +174,7 @@ get_header();
         if ( $events->have_posts() ) :
             ?>
             <section class="front-page-section events-section">
-                <h2 class="section-title"><?php esc_html_e( 'Upcoming Events', 'campaignpress' ); ?></h2>
+                <h2 class="section-title"><?php esc_html_e( 'Upcoming Events', 'campaign-office' ); ?></h2>
                 <div class="events-list">
                     <?php
                     while ( $events->have_posts() ) :
@@ -189,7 +189,7 @@ get_header();
                                     <time datetime="<?php echo esc_attr( $datetime['datetime'] ); ?>">
                                         <?php echo esc_html( $datetime['date'] ); ?>
                                         <?php if ( $datetime['time'] ) : ?>
-                                            <?php esc_html_e( 'at', 'campaignpress' ); ?> <?php echo esc_html( $datetime['time'] ); ?>
+                                            <?php esc_html_e( 'at', 'campaign-office' ); ?> <?php echo esc_html( $datetime['time'] ); ?>
                                         <?php endif; ?>
                                     </time>
                                 <?php endif; ?>
@@ -203,13 +203,13 @@ get_header();
                                     <?php echo esc_html( $location['city'] ); ?><?php echo $location['state'] ? ', ' . esc_html( $location['state'] ) : ''; ?>
                                 </div>
                             <?php endif; ?>
-                            <a href="<?php the_permalink(); ?>" class="read-more"><?php esc_html_e( 'Event Details', 'campaignpress' ); ?></a>
+                            <a href="<?php the_permalink(); ?>" class="read-more"><?php esc_html_e( 'Event Details', 'campaign-office' ); ?></a>
                         </article>
                     <?php endwhile; ?>
                 </div>
                 <div class="section-footer">
                     <a href="<?php echo esc_url( get_post_type_archive_link( 'cp_event' ) ); ?>" class="button button-secondary">
-                        <?php esc_html_e( 'View All Events', 'campaignpress' ); ?>
+                        <?php esc_html_e( 'View All Events', 'campaign-office' ); ?>
                     </a>
                 </div>
             </section>

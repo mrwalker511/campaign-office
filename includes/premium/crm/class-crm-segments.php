@@ -91,7 +91,7 @@ class CampaignPress_CRM_Segments {
 	public function create_segment( $data ) {
 		// Validate required fields
 		if ( empty( $data['name'] ) ) {
-			return new WP_Error( 'missing_name', __( 'Segment name is required.', 'campaignpress' ) );
+			return new WP_Error( 'missing_name', __( 'Segment name is required.', 'campaign-office' ) );
 		}
 
 		// Sanitize data
@@ -112,7 +112,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to create segment.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to create segment.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		$segment_id = $this->wpdb->insert_id;
@@ -140,7 +140,7 @@ class CampaignPress_CRM_Segments {
 		// Verify segment exists
 		$segment = $this->get_segment( $segment_id );
 		if ( ! $segment ) {
-			return new WP_Error( 'not_found', __( 'Segment not found.', 'campaignpress' ) );
+			return new WP_Error( 'not_found', __( 'Segment not found.', 'campaign-office' ) );
 		}
 
 		// Sanitize data
@@ -172,7 +172,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to update segment.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to update segment.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Recalculate if criteria changed
@@ -197,7 +197,7 @@ class CampaignPress_CRM_Segments {
 		// Verify segment exists
 		$segment = $this->get_segment( $segment_id );
 		if ( ! $segment ) {
-			return new WP_Error( 'not_found', __( 'Segment not found.', 'campaignpress' ) );
+			return new WP_Error( 'not_found', __( 'Segment not found.', 'campaign-office' ) );
 		}
 
 		// Delete segment contacts
@@ -215,7 +215,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to delete segment.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to delete segment.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Log action
@@ -308,11 +308,11 @@ class CampaignPress_CRM_Segments {
 	public function recalculate_segment( $segment_id ) {
 		$segment = $this->get_segment( $segment_id );
 		if ( ! $segment ) {
-			return new WP_Error( 'not_found', __( 'Segment not found.', 'campaignpress' ) );
+			return new WP_Error( 'not_found', __( 'Segment not found.', 'campaign-office' ) );
 		}
 
 		if ( $segment->segment_type !== 'dynamic' ) {
-			return new WP_Error( 'invalid_type', __( 'Can only recalculate dynamic segments.', 'campaignpress' ) );
+			return new WP_Error( 'invalid_type', __( 'Can only recalculate dynamic segments.', 'campaign-office' ) );
 		}
 
 		// Clear existing segment contacts
@@ -461,11 +461,11 @@ class CampaignPress_CRM_Segments {
 	public function add_contact_to_segment( $segment_id, $contact_id ) {
 		$segment = $this->get_segment( $segment_id );
 		if ( ! $segment ) {
-			return new WP_Error( 'segment_not_found', __( 'Segment not found.', 'campaignpress' ) );
+			return new WP_Error( 'segment_not_found', __( 'Segment not found.', 'campaign-office' ) );
 		}
 
 		if ( $segment->segment_type === 'dynamic' ) {
-			return new WP_Error( 'invalid_type', __( 'Cannot manually add contacts to dynamic segments.', 'campaignpress' ) );
+			return new WP_Error( 'invalid_type', __( 'Cannot manually add contacts to dynamic segments.', 'campaign-office' ) );
 		}
 
 		// Check if already in segment
@@ -479,7 +479,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( $exists ) {
-			return new WP_Error( 'already_exists', __( 'Contact already in segment.', 'campaignpress' ) );
+			return new WP_Error( 'already_exists', __( 'Contact already in segment.', 'campaign-office' ) );
 		}
 
 		// Add to segment
@@ -493,7 +493,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to add contact to segment.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to add contact to segment.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Update segment contact count
@@ -513,11 +513,11 @@ class CampaignPress_CRM_Segments {
 	public function remove_contact_from_segment( $segment_id, $contact_id ) {
 		$segment = $this->get_segment( $segment_id );
 		if ( ! $segment ) {
-			return new WP_Error( 'segment_not_found', __( 'Segment not found.', 'campaignpress' ) );
+			return new WP_Error( 'segment_not_found', __( 'Segment not found.', 'campaign-office' ) );
 		}
 
 		if ( $segment->segment_type === 'dynamic' ) {
-			return new WP_Error( 'invalid_type', __( 'Cannot manually remove contacts from dynamic segments.', 'campaignpress' ) );
+			return new WP_Error( 'invalid_type', __( 'Cannot manually remove contacts from dynamic segments.', 'campaign-office' ) );
 		}
 
 		$result = $this->wpdb->delete(
@@ -530,7 +530,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to remove contact from segment.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to remove contact from segment.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Update segment contact count
@@ -634,7 +634,7 @@ class CampaignPress_CRM_Segments {
 	public function create_tag( $data ) {
 		// Validate required fields
 		if ( empty( $data['name'] ) ) {
-			return new WP_Error( 'missing_name', __( 'Tag name is required.', 'campaignpress' ) );
+			return new WP_Error( 'missing_name', __( 'Tag name is required.', 'campaign-office' ) );
 		}
 
 		// Generate slug
@@ -649,7 +649,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( $exists ) {
-			return new WP_Error( 'duplicate_slug', __( 'A tag with this slug already exists.', 'campaignpress' ) );
+			return new WP_Error( 'duplicate_slug', __( 'A tag with this slug already exists.', 'campaign-office' ) );
 		}
 
 		// Sanitize data
@@ -673,7 +673,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to create tag.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to create tag.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		$tag_id = $this->wpdb->insert_id;
@@ -696,12 +696,12 @@ class CampaignPress_CRM_Segments {
 		// Verify tag exists
 		$tag = $this->get_tag( $tag_id );
 		if ( ! $tag ) {
-			return new WP_Error( 'not_found', __( 'Tag not found.', 'campaignpress' ) );
+			return new WP_Error( 'not_found', __( 'Tag not found.', 'campaign-office' ) );
 		}
 
 		// Prevent editing system tags
 		if ( $tag->is_system ) {
-			return new WP_Error( 'system_tag', __( 'Cannot edit system tags.', 'campaignpress' ) );
+			return new WP_Error( 'system_tag', __( 'Cannot edit system tags.', 'campaign-office' ) );
 		}
 
 		// Sanitize data
@@ -739,7 +739,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to update tag.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to update tag.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Log action
@@ -759,12 +759,12 @@ class CampaignPress_CRM_Segments {
 		// Verify tag exists
 		$tag = $this->get_tag( $tag_id );
 		if ( ! $tag ) {
-			return new WP_Error( 'not_found', __( 'Tag not found.', 'campaignpress' ) );
+			return new WP_Error( 'not_found', __( 'Tag not found.', 'campaign-office' ) );
 		}
 
 		// Prevent deleting system tags
 		if ( $tag->is_system ) {
-			return new WP_Error( 'system_tag', __( 'Cannot delete system tags.', 'campaignpress' ) );
+			return new WP_Error( 'system_tag', __( 'Cannot delete system tags.', 'campaign-office' ) );
 		}
 
 		// Delete contact tags
@@ -782,7 +782,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to delete tag.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to delete tag.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Log action
@@ -861,7 +861,7 @@ class CampaignPress_CRM_Segments {
 		// Verify tag exists
 		$tag = $this->get_tag( $tag_id );
 		if ( ! $tag ) {
-			return new WP_Error( 'tag_not_found', __( 'Tag not found.', 'campaignpress' ) );
+			return new WP_Error( 'tag_not_found', __( 'Tag not found.', 'campaign-office' ) );
 		}
 
 		// Check if already tagged
@@ -875,7 +875,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( $exists ) {
-			return new WP_Error( 'already_exists', __( 'Contact already has this tag.', 'campaignpress' ) );
+			return new WP_Error( 'already_exists', __( 'Contact already has this tag.', 'campaign-office' ) );
 		}
 
 		// Add tag
@@ -890,7 +890,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to add tag to contact.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to add tag to contact.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Log action
@@ -918,7 +918,7 @@ class CampaignPress_CRM_Segments {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to remove tag from contact.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to remove tag from contact.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Log action
@@ -958,7 +958,7 @@ class CampaignPress_CRM_Segments {
 	 */
 	public function bulk_add_tag( $contact_ids, $tag_id ) {
 		if ( empty( $contact_ids ) || ! is_array( $contact_ids ) ) {
-			return new WP_Error( 'invalid_ids', __( 'Invalid contact IDs.', 'campaignpress' ) );
+			return new WP_Error( 'invalid_ids', __( 'Invalid contact IDs.', 'campaign-office' ) );
 		}
 
 		$tagged = 0;
@@ -985,7 +985,7 @@ class CampaignPress_CRM_Segments {
 	 */
 	public function bulk_remove_tag( $contact_ids, $tag_id ) {
 		if ( empty( $contact_ids ) || ! is_array( $contact_ids ) ) {
-			return new WP_Error( 'invalid_ids', __( 'Invalid contact IDs.', 'campaignpress' ) );
+			return new WP_Error( 'invalid_ids', __( 'Invalid contact IDs.', 'campaign-office' ) );
 		}
 
 		$untagged = 0;

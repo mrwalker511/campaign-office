@@ -66,14 +66,14 @@ class CampaignPress_CRM_Contacts {
 	public function create_contact( $data ) {
 		// Validate required data
 		if ( empty( $data['first_name'] ) && empty( $data['last_name'] ) && empty( $data['email'] ) ) {
-			return new WP_Error( 'missing_data', __( 'At least one of first name, last name, or email is required.', 'campaignpress' ) );
+			return new WP_Error( 'missing_data', __( 'At least one of first name, last name, or email is required.', 'campaign-office' ) );
 		}
 
 		// Check for duplicate email
 		if ( ! empty( $data['email'] ) ) {
 			$existing = $this->get_contact_by_email( $data['email'] );
 			if ( $existing ) {
-				return new WP_Error( 'duplicate_email', __( 'A contact with this email already exists.', 'campaignpress' ) );
+				return new WP_Error( 'duplicate_email', __( 'A contact with this email already exists.', 'campaign-office' ) );
 			}
 		}
 
@@ -98,7 +98,7 @@ class CampaignPress_CRM_Contacts {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to create contact.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to create contact.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		$contact_id = $this->wpdb->insert_id;
@@ -129,14 +129,14 @@ class CampaignPress_CRM_Contacts {
 		// Verify contact exists
 		$contact = $this->get_contact( $contact_id );
 		if ( ! $contact ) {
-			return new WP_Error( 'not_found', __( 'Contact not found.', 'campaignpress' ) );
+			return new WP_Error( 'not_found', __( 'Contact not found.', 'campaign-office' ) );
 		}
 
 		// Check email uniqueness if being updated
 		if ( ! empty( $data['email'] ) && $data['email'] !== $contact->email ) {
 			$existing = $this->get_contact_by_email( $data['email'] );
 			if ( $existing && $existing->id !== $contact_id ) {
-				return new WP_Error( 'duplicate_email', __( 'A contact with this email already exists.', 'campaignpress' ) );
+				return new WP_Error( 'duplicate_email', __( 'A contact with this email already exists.', 'campaign-office' ) );
 			}
 		}
 
@@ -158,7 +158,7 @@ class CampaignPress_CRM_Contacts {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to update contact.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to update contact.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Recheck duplicates if key fields changed
@@ -188,7 +188,7 @@ class CampaignPress_CRM_Contacts {
 		// Verify contact exists
 		$contact = $this->get_contact( $contact_id );
 		if ( ! $contact ) {
-			return new WP_Error( 'not_found', __( 'Contact not found.', 'campaignpress' ) );
+			return new WP_Error( 'not_found', __( 'Contact not found.', 'campaign-office' ) );
 		}
 
 		// Delete related data
@@ -202,7 +202,7 @@ class CampaignPress_CRM_Contacts {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to delete contact.', 'campaignpress' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to delete contact.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
 		// Log action
@@ -494,7 +494,7 @@ class CampaignPress_CRM_Contacts {
 	 */
 	public function bulk_update( $contact_ids, $data ) {
 		if ( empty( $contact_ids ) || ! is_array( $contact_ids ) ) {
-			return new WP_Error( 'invalid_ids', __( 'Invalid contact IDs.', 'campaignpress' ) );
+			return new WP_Error( 'invalid_ids', __( 'Invalid contact IDs.', 'campaign-office' ) );
 		}
 
 		// Sanitize data
@@ -523,7 +523,7 @@ class CampaignPress_CRM_Contacts {
 	 */
 	public function bulk_delete( $contact_ids ) {
 		if ( empty( $contact_ids ) || ! is_array( $contact_ids ) ) {
-			return new WP_Error( 'invalid_ids', __( 'Invalid contact IDs.', 'campaignpress' ) );
+			return new WP_Error( 'invalid_ids', __( 'Invalid contact IDs.', 'campaign-office' ) );
 		}
 
 		$deleted = 0;
@@ -554,7 +554,7 @@ class CampaignPress_CRM_Contacts {
 		$duplicate = $this->get_contact( $duplicate_id );
 
 		if ( ! $primary || ! $duplicate ) {
-			return new WP_Error( 'not_found', __( 'One or both contacts not found.', 'campaignpress' ) );
+			return new WP_Error( 'not_found', __( 'One or both contacts not found.', 'campaign-office' ) );
 		}
 
 		// Merge data - keep primary, fill in missing fields from duplicate

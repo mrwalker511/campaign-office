@@ -22,83 +22,83 @@ $current_license = $license_data ? $license_data['license_type'] : 'free';
 // Pricing plans
 $plans = array(
     'free' => array(
-        'name' => __('Free', 'campaignpress'),
-        'price' => __('$0', 'campaignpress'),
+        'name' => __('Free', 'campaign-office'),
+        'price' => __('$0', 'campaign-office'),
         'period' => '',
-        'description' => __('Perfect for small local campaigns', 'campaignpress'),
+        'description' => __('Perfect for small local campaigns', 'campaign-office'),
         'features' => array(
-            __('Responsive Campaign Theme', 'campaignpress'),
-            __('Basic Donation Forms', 'campaignpress'),
-            __('Event Management', 'campaignpress'),
-            __('Volunteer Sign-up Forms', 'campaignpress'),
-            __('Social Media Integration', 'campaignpress'),
-            __('Email Newsletter Integration', 'campaignpress'),
-            __('Mobile Responsive Design', 'campaignpress'),
-            __('SEO Optimized', 'campaignpress'),
-            __('Translation Ready', 'campaignpress'),
-            __('Community Support', 'campaignpress'),
+            __('Responsive Campaign Theme', 'campaign-office'),
+            __('Basic Donation Forms', 'campaign-office'),
+            __('Event Management', 'campaign-office'),
+            __('Volunteer Sign-up Forms', 'campaign-office'),
+            __('Social Media Integration', 'campaign-office'),
+            __('Email Newsletter Integration', 'campaign-office'),
+            __('Mobile Responsive Design', 'campaign-office'),
+            __('SEO Optimized', 'campaign-office'),
+            __('Translation Ready', 'campaign-office'),
+            __('Community Support', 'campaign-office'),
         ),
-        'button' => __('Current Plan', 'campaignpress'),
+        'button' => __('Current Plan', 'campaign-office'),
         'button_url' => '#',
         'highlight' => false,
     ),
     'basic' => array(
-        'name' => __('Basic', 'campaignpress'),
-        'price' => __('$99', 'campaignpress'),
-        'period' => __('per year', 'campaignpress'),
-        'description' => __('Essential tools for growing campaigns', 'campaignpress'),
+        'name' => __('Basic', 'campaign-office'),
+        'price' => __('$99', 'campaign-office'),
+        'period' => __('per year', 'campaign-office'),
+        'description' => __('Essential tools for growing campaigns', 'campaign-office'),
         'features' => array(
-            __('Everything in Free, plus:', 'campaignpress'),
-            __('Priority Email Support', 'campaignpress'),
-            __('Automatic Theme Updates', 'campaignpress'),
-            __('Remove CampaignPress Branding', 'campaignpress'),
-            __('Advanced Customization Options', 'campaignpress'),
-            __('Google Analytics Integration', 'campaignpress'),
-            __('Enhanced Security Features', 'campaignpress'),
-            __('1 Site License', 'campaignpress'),
+            __('Everything in Free, plus:', 'campaign-office'),
+            __('Priority Email Support', 'campaign-office'),
+            __('Automatic Theme Updates', 'campaign-office'),
+            __('Remove CampaignPress Branding', 'campaign-office'),
+            __('Advanced Customization Options', 'campaign-office'),
+            __('Google Analytics Integration', 'campaign-office'),
+            __('Enhanced Security Features', 'campaign-office'),
+            __('1 Site License', 'campaign-office'),
         ),
-        'button' => __('Upgrade to Basic', 'campaignpress'),
+        'button' => __('Upgrade to Basic', 'campaign-office'),
         'button_url' => 'https://campaignpress.com/pricing/?plan=basic',
         'highlight' => false,
     ),
     'professional' => array(
-        'name' => __('Professional', 'campaignpress'),
-        'price' => __('$299', 'campaignpress'),
-        'period' => __('per year', 'campaignpress'),
-        'description' => __('Complete solution for serious campaigns', 'campaignpress'),
+        'name' => __('Professional', 'campaign-office'),
+        'price' => __('$299', 'campaign-office'),
+        'period' => __('per year', 'campaign-office'),
+        'description' => __('Complete solution for serious campaigns', 'campaign-office'),
         'features' => array(
-            __('Everything in Basic, plus:', 'campaignpress'),
-            __('Advanced CRM System', 'campaignpress'),
-            __('Field Operations Management', 'campaignpress'),
-            __('Canvassing & Phone Banking Tools', 'campaignpress'),
-            __('Advanced Analytics Dashboard', 'campaignpress'),
-            __('Donor Management System', 'campaignpress'),
-            __('Volunteer Management Portal', 'campaignpress'),
-            __('Priority Phone & Chat Support', 'campaignpress'),
-            __('Up to 5 Site Licenses', 'campaignpress'),
+            __('Everything in Basic, plus:', 'campaign-office'),
+            __('Advanced CRM System', 'campaign-office'),
+            __('Field Operations Management', 'campaign-office'),
+            __('Canvassing & Phone Banking Tools', 'campaign-office'),
+            __('Advanced Analytics Dashboard', 'campaign-office'),
+            __('Donor Management System', 'campaign-office'),
+            __('Volunteer Management Portal', 'campaign-office'),
+            __('Priority Phone & Chat Support', 'campaign-office'),
+            __('Up to 5 Site Licenses', 'campaign-office'),
         ),
-        'button' => __('Upgrade to Professional', 'campaignpress'),
+        'button' => __('Upgrade to Professional', 'campaign-office'),
         'button_url' => 'https://campaignpress.com/pricing/?plan=professional',
         'highlight' => true,
     ),
     'enterprise' => array(
-        'name' => __('Enterprise', 'campaignpress'),
-        'price' => __('$799', 'campaignpress'),
-        'period' => __('per year', 'campaignpress'),
-        'description' => __('Enterprise-grade for large campaigns', 'campaignpress'),
+        'name' => __('Enterprise', 'campaign-office'),
+        'price' => __('$799', 'campaign-office'),
+        'period' => __('per year', 'campaign-office'),
+        'description' => __('Enterprise-grade for large campaigns', 'campaign-office'),
         'features' => array(
-            __('Everything in Professional, plus:', 'campaignpress'),
-            __('FEC Compliance Tools', 'campaignpress'),
-            __('REST API Access', 'campaignpress'),
-            __('Multi-site Support', 'campaignpress'),
-            __('Custom Integrations', 'campaignpress'),
-            __('White Label Options', 'campaignpress'),
-            __('Dedicated Account Manager', 'campaignpress'),
-            __('24/7 Priority Support', 'campaignpress'),
-            __('Unlimited Site Licenses', 'campaignpress'),
-            __('Custom Development Available', 'campaignpress'),
+            __('Everything in Professional, plus:', 'campaign-office'),
+            __('FEC Compliance Tools', 'campaign-office'),
+            __('REST API Access', 'campaign-office'),
+            __('Multi-site Support', 'campaign-office'),
+            __('Custom Integrations', 'campaign-office'),
+            __('White Label Options', 'campaign-office'),
+            __('Dedicated Account Manager', 'campaign-office'),
+            __('24/7 Priority Support', 'campaign-office'),
+            __('Unlimited Site Licenses', 'campaign-office'),
+            __('Custom Development Available', 'campaign-office'),
         ),
-        'button' => __('Upgrade to Enterprise', 'campaignpress'),
+        'button' => __('Upgrade to Enterprise', 'campaign-office'),
         'button_url' => 'https://campaignpress.com/pricing/?plan=enterprise',
         'highlight' => false,
     ),
@@ -107,60 +107,60 @@ $plans = array(
 // Feature comparison
 $feature_comparison = array(
     array(
-        'category' => __('Core Features', 'campaignpress'),
+        'category' => __('Core Features', 'campaign-office'),
         'features' => array(
-            array('name' => __('Responsive Campaign Theme', 'campaignpress'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
-            array('name' => __('Donation Forms', 'campaignpress'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
-            array('name' => __('Event Management', 'campaignpress'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
-            array('name' => __('Volunteer Sign-ups', 'campaignpress'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
-            array('name' => __('Social Media Integration', 'campaignpress'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Responsive Campaign Theme', 'campaign-office'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Donation Forms', 'campaign-office'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Event Management', 'campaign-office'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Volunteer Sign-ups', 'campaign-office'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Social Media Integration', 'campaign-office'), 'free' => true, 'basic' => true, 'professional' => true, 'enterprise' => true),
         ),
     ),
     array(
-        'category' => __('Support & Updates', 'campaignpress'),
+        'category' => __('Support & Updates', 'campaign-office'),
         'features' => array(
-            array('name' => __('Community Support', 'campaignpress'), 'free' => true, 'basic' => false, 'professional' => false, 'enterprise' => false),
-            array('name' => __('Email Support', 'campaignpress'), 'free' => false, 'basic' => true, 'professional' => true, 'enterprise' => true),
-            array('name' => __('Priority Support', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => true, 'enterprise' => true),
-            array('name' => __('24/7 Support', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
-            array('name' => __('Automatic Updates', 'campaignpress'), 'free' => false, 'basic' => true, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Community Support', 'campaign-office'), 'free' => true, 'basic' => false, 'professional' => false, 'enterprise' => false),
+            array('name' => __('Email Support', 'campaign-office'), 'free' => false, 'basic' => true, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Priority Support', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => true, 'enterprise' => true),
+            array('name' => __('24/7 Support', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
+            array('name' => __('Automatic Updates', 'campaign-office'), 'free' => false, 'basic' => true, 'professional' => true, 'enterprise' => true),
         ),
     ),
     array(
-        'category' => __('Advanced Features', 'campaignpress'),
+        'category' => __('Advanced Features', 'campaign-office'),
         'features' => array(
-            array('name' => __('CRM System', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => true, 'enterprise' => true),
-            array('name' => __('Field Operations', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => true, 'enterprise' => true),
-            array('name' => __('Advanced Analytics', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => true, 'enterprise' => true),
-            array('name' => __('FEC Compliance Tools', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
-            array('name' => __('REST API Access', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
-            array('name' => __('White Label', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
+            array('name' => __('CRM System', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Field Operations', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => true, 'enterprise' => true),
+            array('name' => __('Advanced Analytics', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => true, 'enterprise' => true),
+            array('name' => __('FEC Compliance Tools', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
+            array('name' => __('REST API Access', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
+            array('name' => __('White Label', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
         ),
     ),
     array(
-        'category' => __('Licenses & Sites', 'campaignpress'),
+        'category' => __('Licenses & Sites', 'campaign-office'),
         'features' => array(
-            array('name' => __('Number of Sites', 'campaignpress'), 'free' => '∞', 'basic' => '1', 'professional' => '5', 'enterprise' => '∞'),
-            array('name' => __('Multisite Support', 'campaignpress'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
+            array('name' => __('Number of Sites', 'campaign-office'), 'free' => '∞', 'basic' => '1', 'professional' => '5', 'enterprise' => '∞'),
+            array('name' => __('Multisite Support', 'campaign-office'), 'free' => false, 'basic' => false, 'professional' => false, 'enterprise' => true),
         ),
     ),
 );
 ?>
 
 <div class="wrap campaignpress-upgrade-page">
-    <h1><?php _e('Upgrade CampaignPress', 'campaignpress'); ?></h1>
+    <h1><?php _e('Upgrade CampaignPress', 'campaign-office'); ?></h1>
     <p class="description">
-        <?php _e('Choose the plan that best fits your campaign needs.', 'campaignpress'); ?>
+        <?php _e('Choose the plan that best fits your campaign needs.', 'campaign-office'); ?>
     </p>
 
     <?php if ($license_data): ?>
         <div class="cp-current-license-banner">
             <span class="dashicons dashicons-info"></span>
             <div>
-                <strong><?php _e('Current License:', 'campaignpress'); ?></strong>
+                <strong><?php _e('Current License:', 'campaign-office'); ?></strong>
                 <?php echo esc_html(ucfirst($current_license)); ?>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-premium')); ?>" class="button button-small">
-                    <?php _e('Manage License', 'campaignpress'); ?>
+                    <?php _e('Manage License', 'campaign-office'); ?>
                 </a>
             </div>
         </div>
@@ -168,16 +168,16 @@ $feature_comparison = array(
 
     <!-- Pricing Cards -->
     <div class="cp-pricing-section">
-        <h2><?php _e('Choose Your Plan', 'campaignpress'); ?></h2>
+        <h2><?php _e('Choose Your Plan', 'campaign-office'); ?></h2>
         <div class="cp-pricing-grid">
             <?php foreach ($plans as $plan_key => $plan): ?>
                 <div class="cp-pricing-card <?php echo $plan['highlight'] ? 'cp-pricing-highlight' : ''; ?> <?php echo $plan_key === $current_license ? 'cp-pricing-current' : ''; ?>">
                     <?php if ($plan['highlight']): ?>
-                        <div class="cp-pricing-badge"><?php _e('Most Popular', 'campaignpress'); ?></div>
+                        <div class="cp-pricing-badge"><?php _e('Most Popular', 'campaign-office'); ?></div>
                     <?php endif; ?>
 
                     <?php if ($plan_key === $current_license): ?>
-                        <div class="cp-pricing-badge cp-current-badge"><?php _e('Current Plan', 'campaignpress'); ?></div>
+                        <div class="cp-pricing-badge cp-current-badge"><?php _e('Current Plan', 'campaign-office'); ?></div>
                     <?php endif; ?>
 
                     <h3><?php echo esc_html($plan['name']); ?></h3>
@@ -201,7 +201,7 @@ $feature_comparison = array(
                     <div class="cp-pricing-action">
                         <?php if ($plan_key === $current_license): ?>
                             <button class="button button-secondary button-large" disabled>
-                                <?php _e('Current Plan', 'campaignpress'); ?>
+                                <?php _e('Current Plan', 'campaign-office'); ?>
                             </button>
                         <?php elseif ($plan_key === 'free'): ?>
                             <button class="button button-secondary button-large" disabled>
@@ -220,16 +220,16 @@ $feature_comparison = array(
 
     <!-- Feature Comparison Table -->
     <div class="cp-comparison-section">
-        <h2><?php _e('Detailed Feature Comparison', 'campaignpress'); ?></h2>
+        <h2><?php _e('Detailed Feature Comparison', 'campaign-office'); ?></h2>
         <div class="cp-comparison-table-wrapper">
             <table class="cp-comparison-table">
                 <thead>
                     <tr>
-                        <th><?php _e('Features', 'campaignpress'); ?></th>
-                        <th><?php _e('Free', 'campaignpress'); ?></th>
-                        <th><?php _e('Basic', 'campaignpress'); ?></th>
-                        <th class="cp-highlight-col"><?php _e('Professional', 'campaignpress'); ?></th>
-                        <th><?php _e('Enterprise', 'campaignpress'); ?></th>
+                        <th><?php _e('Features', 'campaign-office'); ?></th>
+                        <th><?php _e('Free', 'campaign-office'); ?></th>
+                        <th><?php _e('Basic', 'campaign-office'); ?></th>
+                        <th class="cp-highlight-col"><?php _e('Professional', 'campaign-office'); ?></th>
+                        <th><?php _e('Enterprise', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -254,50 +254,50 @@ $feature_comparison = array(
 
     <!-- FAQ Section -->
     <div class="cp-faq-section">
-        <h2><?php _e('Frequently Asked Questions', 'campaignpress'); ?></h2>
+        <h2><?php _e('Frequently Asked Questions', 'campaign-office'); ?></h2>
         <div class="cp-faq-grid">
             <div class="cp-faq-item">
-                <h3><?php _e('Can I upgrade or downgrade my plan?', 'campaignpress'); ?></h3>
-                <p><?php _e('Yes! You can upgrade or downgrade your plan at any time. When you upgrade, you\'ll only pay the prorated difference. Downgrades take effect at the end of your current billing period.', 'campaignpress'); ?></p>
+                <h3><?php _e('Can I upgrade or downgrade my plan?', 'campaign-office'); ?></h3>
+                <p><?php _e('Yes! You can upgrade or downgrade your plan at any time. When you upgrade, you\'ll only pay the prorated difference. Downgrades take effect at the end of your current billing period.', 'campaign-office'); ?></p>
             </div>
 
             <div class="cp-faq-item">
-                <h3><?php _e('What payment methods do you accept?', 'campaignpress'); ?></h3>
-                <p><?php _e('We accept all major credit cards (Visa, MasterCard, American Express, Discover) and PayPal. Enterprise customers can also pay via invoice.', 'campaignpress'); ?></p>
+                <h3><?php _e('What payment methods do you accept?', 'campaign-office'); ?></h3>
+                <p><?php _e('We accept all major credit cards (Visa, MasterCard, American Express, Discover) and PayPal. Enterprise customers can also pay via invoice.', 'campaign-office'); ?></p>
             </div>
 
             <div class="cp-faq-item">
-                <h3><?php _e('Is there a money-back guarantee?', 'campaignpress'); ?></h3>
-                <p><?php _e('Absolutely! We offer a 30-day money-back guarantee. If you\'re not satisfied with CampaignPress Premium, contact us within 30 days for a full refund.', 'campaignpress'); ?></p>
+                <h3><?php _e('Is there a money-back guarantee?', 'campaign-office'); ?></h3>
+                <p><?php _e('Absolutely! We offer a 30-day money-back guarantee. If you\'re not satisfied with CampaignPress Premium, contact us within 30 days for a full refund.', 'campaign-office'); ?></p>
             </div>
 
             <div class="cp-faq-item">
-                <h3><?php _e('Can I use my license on multiple sites?', 'campaignpress'); ?></h3>
-                <p><?php _e('It depends on your plan. Basic includes 1 site, Professional includes 5 sites, and Enterprise includes unlimited sites. Each site requires license activation.', 'campaignpress'); ?></p>
+                <h3><?php _e('Can I use my license on multiple sites?', 'campaign-office'); ?></h3>
+                <p><?php _e('It depends on your plan. Basic includes 1 site, Professional includes 5 sites, and Enterprise includes unlimited sites. Each site requires license activation.', 'campaign-office'); ?></p>
             </div>
 
             <div class="cp-faq-item">
-                <h3><?php _e('What happens when my license expires?', 'campaignpress'); ?></h3>
-                <p><?php _e('You have a 7-day grace period after expiration. Premium features will continue to work, but you won\'t receive updates. After the grace period, premium features will be disabled.', 'campaignpress'); ?></p>
+                <h3><?php _e('What happens when my license expires?', 'campaign-office'); ?></h3>
+                <p><?php _e('You have a 7-day grace period after expiration. Premium features will continue to work, but you won\'t receive updates. After the grace period, premium features will be disabled.', 'campaign-office'); ?></p>
             </div>
 
             <div class="cp-faq-item">
-                <h3><?php _e('Do you offer discounts for nonprofits?', 'campaignpress'); ?></h3>
-                <p><?php _e('Yes! We offer special pricing for registered 501(c)(3) organizations and political campaigns. Contact our sales team for more information.', 'campaignpress'); ?></p>
+                <h3><?php _e('Do you offer discounts for nonprofits?', 'campaign-office'); ?></h3>
+                <p><?php _e('Yes! We offer special pricing for registered 501(c)(3) organizations and political campaigns. Contact our sales team for more information.', 'campaign-office'); ?></p>
             </div>
         </div>
     </div>
 
     <!-- CTA Section -->
     <div class="cp-cta-section">
-        <h2><?php _e('Ready to Upgrade Your Campaign?', 'campaignpress'); ?></h2>
-        <p><?php _e('Join thousands of campaigns using CampaignPress Premium to win elections.', 'campaignpress'); ?></p>
+        <h2><?php _e('Ready to Upgrade Your Campaign?', 'campaign-office'); ?></h2>
+        <p><?php _e('Join thousands of campaigns using CampaignPress Premium to win elections.', 'campaign-office'); ?></p>
         <div class="cp-cta-buttons">
             <a href="https://campaignpress.com/pricing/" class="button button-primary button-hero" target="_blank">
-                <?php _e('View All Plans', 'campaignpress'); ?>
+                <?php _e('View All Plans', 'campaign-office'); ?>
             </a>
             <a href="https://campaignpress.com/contact/" class="button button-secondary button-hero" target="_blank">
-                <?php _e('Contact Sales', 'campaignpress'); ?>
+                <?php _e('Contact Sales', 'campaign-office'); ?>
             </a>
         </div>
     </div>

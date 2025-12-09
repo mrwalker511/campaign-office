@@ -40,7 +40,7 @@ get_header();
                     the_content();
 
                     wp_link_pages( array(
-                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaignpress' ),
+                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaign-office' ),
                         'after'  => '</div>',
                     ) );
                     ?>
@@ -56,7 +56,7 @@ get_header();
                     if ( $twitter || $linkedin || $email ) :
                         ?>
                         <div class="team-social">
-                            <h3><?php esc_html_e( 'Connect', 'campaignpress' ); ?></h3>
+                            <h3><?php esc_html_e( 'Connect', 'campaign-office' ); ?></h3>
                             <div class="social-links">
                                 <?php if ( $twitter ) : ?>
                                     <a href="<?php echo esc_url( $twitter ); ?>" target="_blank" rel="noopener" class="social-twitter">
@@ -80,8 +80,8 @@ get_header();
                     <div class="post-navigation">
                         <?php
                         the_post_navigation( array(
-                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Team Member:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Team Member:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Team Member:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Team Member:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
                         ) );
                         ?>
                     </div>

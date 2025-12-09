@@ -58,14 +58,14 @@ function campaignpress_demo_content_notice() {
 
     ?>
     <div class="notice notice-info is-dismissible campaignpress-demo-notice">
-        <h3><?php esc_html_e('Welcome to CampaignPress!', 'campaignpress'); ?></h3>
-        <p><?php esc_html_e('Want to see CampaignPress in action? Import demo content to explore all the theme features with sample campaign data.', 'campaignpress'); ?></p>
+        <h3><?php esc_html_e('Welcome to CampaignPress!', 'campaign-office'); ?></h3>
+        <p><?php esc_html_e('Want to see CampaignPress in action? Import demo content to explore all the theme features with sample campaign data.', 'campaign-office'); ?></p>
         <p>
             <a href="<?php echo esc_url(admin_url('themes.php?page=campaignpress-demo')); ?>" class="button button-primary">
-                <?php esc_html_e('Import Demo Content', 'campaignpress'); ?>
+                <?php esc_html_e('Import Demo Content', 'campaign-office'); ?>
             </a>
             <a href="#" class="button button-secondary campaignpress-dismiss-demo-notice">
-                <?php esc_html_e('Maybe Later', 'campaignpress'); ?>
+                <?php esc_html_e('Maybe Later', 'campaign-office'); ?>
             </a>
         </p>
     </div>
@@ -83,7 +83,7 @@ function campaignpress_dismiss_demo_notice_handler() {
         update_user_meta(get_current_user_id(), 'campaignpress_demo_notice_dismissed', true);
         wp_send_json_success();
     } else {
-        wp_send_json_error(array('message' => __('Insufficient permissions', 'campaignpress')));
+        wp_send_json_error(array('message' => __('Insufficient permissions', 'campaign-office')));
     }
 }
 add_action('wp_ajax_campaignpress_dismiss_demo_notice', 'campaignpress_dismiss_demo_notice_handler');
@@ -105,20 +105,20 @@ function campaignpress_activation_notice() {
 
     ?>
     <div class="notice notice-success is-dismissible">
-        <h3><?php esc_html_e('CampaignPress Theme Activated!', 'campaignpress'); ?></h3>
-        <p><?php esc_html_e('Thank you for choosing CampaignPress. Here are some quick steps to get started:', 'campaignpress'); ?></p>
+        <h3><?php esc_html_e('CampaignPress Theme Activated!', 'campaign-office'); ?></h3>
+        <p><?php esc_html_e('Thank you for choosing CampaignPress. Here are some quick steps to get started:', 'campaign-office'); ?></p>
         <ol style="list-style: decimal; margin-left: 20px;">
-            <li><a href="<?php echo esc_url(admin_url('customize.php')); ?>"><?php esc_html_e('Customize your theme settings', 'campaignpress'); ?></a> <?php esc_html_e('(colors, campaign info, social media)', 'campaignpress'); ?></li>
-            <li><a href="<?php echo esc_url(admin_url('themes.php?page=campaignpress-demo')); ?>"><?php esc_html_e('Import demo content', 'campaignpress'); ?></a> <?php esc_html_e('to see all features in action', 'campaignpress'); ?></li>
-            <li><?php esc_html_e('Create your homepage using CampaignPress blocks', 'campaignpress'); ?></li>
-            <li><?php esc_html_e('Add your campaign Issues, Events, and Team Members', 'campaignpress'); ?></li>
+            <li><a href="<?php echo esc_url(admin_url('customize.php')); ?>"><?php esc_html_e('Customize your theme settings', 'campaign-office'); ?></a> <?php esc_html_e('(colors, campaign info, social media)', 'campaign-office'); ?></li>
+            <li><a href="<?php echo esc_url(admin_url('themes.php?page=campaignpress-demo')); ?>"><?php esc_html_e('Import demo content', 'campaign-office'); ?></a> <?php esc_html_e('to see all features in action', 'campaign-office'); ?></li>
+            <li><?php esc_html_e('Create your homepage using CampaignPress blocks', 'campaign-office'); ?></li>
+            <li><?php esc_html_e('Add your campaign Issues, Events, and Team Members', 'campaign-office'); ?></li>
         </ol>
         <p>
             <a href="<?php echo esc_url(admin_url('customize.php')); ?>" class="button button-primary">
-                <?php esc_html_e('Start Customizing', 'campaignpress'); ?>
+                <?php esc_html_e('Start Customizing', 'campaign-office'); ?>
             </a>
             <a href="<?php echo esc_url(admin_url('themes.php?page=campaignpress-demo')); ?>" class="button button-secondary">
-                <?php esc_html_e('Import Demo Content', 'campaignpress'); ?>
+                <?php esc_html_e('Import Demo Content', 'campaign-office'); ?>
             </a>
         </p>
     </div>
@@ -154,14 +154,14 @@ function campaignpress_donation_url_notice() {
 
     ?>
     <div class="notice notice-warning is-dismissible campaignpress-donation-notice">
-        <h3><?php esc_html_e('Set Up Your Donation Link', 'campaignpress'); ?></h3>
-        <p><?php esc_html_e('Don\'t forget to add your ActBlue, WinRed, or other donation processor URL so your donation buttons work properly.', 'campaignpress'); ?></p>
+        <h3><?php esc_html_e('Set Up Your Donation Link', 'campaign-office'); ?></h3>
+        <p><?php esc_html_e('Don\'t forget to add your ActBlue, WinRed, or other donation processor URL so your donation buttons work properly.', 'campaign-office'); ?></p>
         <p>
             <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=campaignpress_campaign_info')); ?>" class="button button-primary">
-                <?php esc_html_e('Add Donation URL', 'campaignpress'); ?>
+                <?php esc_html_e('Add Donation URL', 'campaign-office'); ?>
             </a>
             <button type="button" class="button button-secondary campaignpress-dismiss-donation-notice">
-                <?php esc_html_e('Dismiss', 'campaignpress'); ?>
+                <?php esc_html_e('Dismiss', 'campaign-office'); ?>
             </button>
         </p>
     </div>
@@ -179,7 +179,7 @@ function campaignpress_dismiss_donation_notice_handler() {
         update_user_meta(get_current_user_id(), 'campaignpress_donation_notice_dismissed', true);
         wp_send_json_success();
     } else {
-        wp_send_json_error(array('message' => __('Insufficient permissions', 'campaignpress')));
+        wp_send_json_error(array('message' => __('Insufficient permissions', 'campaign-office')));
     }
 }
 add_action('wp_ajax_campaignpress_dismiss_donation_notice', 'campaignpress_dismiss_donation_notice_handler');

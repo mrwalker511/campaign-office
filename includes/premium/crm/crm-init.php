@@ -194,7 +194,7 @@ class CampaignPress_CRM_Init {
 		}
 
 		// Load text domain for translations
-		load_plugin_textdomain( 'campaignpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'campaign-office', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		// Allow customization after initialization
 		do_action( 'cp_crm_init', $this );
@@ -455,14 +455,14 @@ class CampaignPress_CRM_Init {
 
 		// Check capabilities
 		if ( ! current_user_can( 'edit_posts' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaign-office' ) ) );
 		}
 
 		$query = isset( $_GET['q'] ) ? sanitize_text_field( $_GET['q'] ) : '';
 		$limit = isset( $_GET['limit'] ) ? absint( $_GET['limit'] ) : 20;
 
 		if ( empty( $query ) ) {
-			wp_send_json_error( array( 'message' => __( 'Search query required.', 'campaignpress' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Search query required.', 'campaign-office' ) ) );
 		}
 
 		$contacts = $this->contacts->search_contacts( $query, $limit );
@@ -481,12 +481,12 @@ class CampaignPress_CRM_Init {
 
 		// Check capabilities
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaign-office' ) ) );
 		}
 
 		// Handle file upload
 		if ( empty( $_FILES['file'] ) ) {
-			wp_send_json_error( array( 'message' => __( 'No file uploaded.', 'campaignpress' ) ) );
+			wp_send_json_error( array( 'message' => __( 'No file uploaded.', 'campaign-office' ) ) );
 		}
 
 		$file = $_FILES['file'];
@@ -525,7 +525,7 @@ class CampaignPress_CRM_Init {
 
 		// Check capabilities
 		if ( ! current_user_can( 'edit_posts' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaign-office' ) ) );
 		}
 
 		// Get export parameters
@@ -655,7 +655,7 @@ class CampaignPress_CRM_Init {
 		$contact = $this->contacts->get_contact( $request['id'] );
 
 		if ( ! $contact ) {
-			return new WP_Error( 'not_found', __( 'Contact not found.', 'campaignpress' ), array( 'status' => 404 ) );
+			return new WP_Error( 'not_found', __( 'Contact not found.', 'campaign-office' ), array( 'status' => 404 ) );
 		}
 
 		return new WP_REST_Response( $contact, 200 );

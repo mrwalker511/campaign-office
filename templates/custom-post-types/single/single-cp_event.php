@@ -50,7 +50,7 @@ get_header();
                     the_content();
 
                     wp_link_pages( array(
-                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaignpress' ),
+                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaign-office' ),
                         'after'  => '</div>',
                     ) );
                     ?>
@@ -62,9 +62,9 @@ get_header();
                     if ( $rsvp_link ) :
                         ?>
                         <div class="event-rsvp-footer">
-                            <h3><?php esc_html_e( 'Join Us at This Event', 'campaignpress' ); ?></h3>
+                            <h3><?php esc_html_e( 'Join Us at This Event', 'campaign-office' ); ?></h3>
                             <a href="<?php echo esc_url( $rsvp_link ); ?>" class="button button-primary button-large" target="_blank" rel="noopener">
-                                <?php esc_html_e( 'RSVP Now', 'campaignpress' ); ?>
+                                <?php esc_html_e( 'RSVP Now', 'campaign-office' ); ?>
                             </a>
                         </div>
                     <?php endif; ?>
@@ -72,8 +72,8 @@ get_header();
                     <div class="post-navigation">
                         <?php
                         the_post_navigation( array(
-                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Event:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Event:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Event:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Event:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
                         ) );
                         ?>
                     </div>

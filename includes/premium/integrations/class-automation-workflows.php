@@ -137,99 +137,99 @@ class CampaignPress_Automation_Workflows {
     private function define_triggers() {
         $this->triggers = array(
             'user_registered' => array(
-                'name' => __('User Registered', 'campaignpress'),
-                'description' => __('Triggered when a new user registers', 'campaignpress'),
+                'name' => __('User Registered', 'campaign-office'),
+                'description' => __('Triggered when a new user registers', 'campaign-office'),
                 'category' => 'user',
                 'data_fields' => array('user_id', 'email', 'name'),
                 'icon' => 'dashicons-admin-users'
             ),
             'donation_completed' => array(
-                'name' => __('Donation Completed', 'campaignpress'),
-                'description' => __('Triggered when a donation is completed', 'campaignpress'),
+                'name' => __('Donation Completed', 'campaign-office'),
+                'description' => __('Triggered when a donation is completed', 'campaign-office'),
                 'category' => 'donation',
                 'data_fields' => array('donation_id', 'amount', 'donor_email', 'donor_name'),
                 'icon' => 'dashicons-heart'
             ),
             'volunteer_signup' => array(
-                'name' => __('Volunteer Signup', 'campaignpress'),
-                'description' => __('Triggered when someone signs up as a volunteer', 'campaignpress'),
+                'name' => __('Volunteer Signup', 'campaign-office'),
+                'description' => __('Triggered when someone signs up as a volunteer', 'campaign-office'),
                 'category' => 'volunteer',
                 'data_fields' => array('volunteer_id', 'email', 'name', 'interests'),
                 'icon' => 'dashicons-groups'
             ),
             'event_registration' => array(
-                'name' => __('Event Registration', 'campaignpress'),
-                'description' => __('Triggered when someone registers for an event', 'campaignpress'),
+                'name' => __('Event Registration', 'campaign-office'),
+                'description' => __('Triggered when someone registers for an event', 'campaign-office'),
                 'category' => 'event',
                 'data_fields' => array('event_id', 'registration_id', 'attendee_email', 'event_date'),
                 'icon' => 'dashicons-calendar-alt'
             ),
             'contact_added' => array(
-                'name' => __('Contact Added', 'campaignpress'),
-                'description' => __('Triggered when a new contact is added to CRM', 'campaignpress'),
+                'name' => __('Contact Added', 'campaign-office'),
+                'description' => __('Triggered when a new contact is added to CRM', 'campaign-office'),
                 'category' => 'contact',
                 'data_fields' => array('contact_id', 'email', 'name', 'source'),
                 'icon' => 'dashicons-id'
             ),
             'tag_added' => array(
-                'name' => __('Tag Added', 'campaignpress'),
-                'description' => __('Triggered when a tag is added to a contact', 'campaignpress'),
+                'name' => __('Tag Added', 'campaign-office'),
+                'description' => __('Triggered when a tag is added to a contact', 'campaign-office'),
                 'category' => 'contact',
                 'data_fields' => array('contact_id', 'tag_id', 'tag_name'),
                 'icon' => 'dashicons-tag'
             ),
             'tag_removed' => array(
-                'name' => __('Tag Removed', 'campaignpress'),
-                'description' => __('Triggered when a tag is removed from a contact', 'campaignpress'),
+                'name' => __('Tag Removed', 'campaign-office'),
+                'description' => __('Triggered when a tag is removed from a contact', 'campaign-office'),
                 'category' => 'contact',
                 'data_fields' => array('contact_id', 'tag_id', 'tag_name'),
                 'icon' => 'dashicons-tag'
             ),
             'segment_changed' => array(
-                'name' => __('Segment Changed', 'campaignpress'),
-                'description' => __('Triggered when a contact moves to a different segment', 'campaignpress'),
+                'name' => __('Segment Changed', 'campaign-office'),
+                'description' => __('Triggered when a contact moves to a different segment', 'campaign-office'),
                 'category' => 'contact',
                 'data_fields' => array('contact_id', 'old_segment', 'new_segment'),
                 'icon' => 'dashicons-networking'
             ),
             'birthday' => array(
-                'name' => __('Birthday', 'campaignpress'),
-                'description' => __('Triggered on contact\'s birthday', 'campaignpress'),
+                'name' => __('Birthday', 'campaign-office'),
+                'description' => __('Triggered on contact\'s birthday', 'campaign-office'),
                 'category' => 'date',
                 'data_fields' => array('contact_id', 'email', 'name', 'birthdate'),
                 'icon' => 'dashicons-smiley'
             ),
             'anniversary' => array(
-                'name' => __('Anniversary', 'campaignpress'),
-                'description' => __('Triggered on contact\'s anniversary (e.g., signup date)', 'campaignpress'),
+                'name' => __('Anniversary', 'campaign-office'),
+                'description' => __('Triggered on contact\'s anniversary (e.g., signup date)', 'campaign-office'),
                 'category' => 'date',
                 'data_fields' => array('contact_id', 'email', 'name', 'anniversary_date', 'years'),
                 'icon' => 'dashicons-awards'
             ),
             'inactivity' => array(
-                'name' => __('Inactivity Period', 'campaignpress'),
-                'description' => __('Triggered after a period of contact inactivity', 'campaignpress'),
+                'name' => __('Inactivity Period', 'campaign-office'),
+                'description' => __('Triggered after a period of contact inactivity', 'campaign-office'),
                 'category' => 'engagement',
                 'data_fields' => array('contact_id', 'email', 'days_inactive'),
                 'icon' => 'dashicons-clock'
             ),
             'email_opened' => array(
-                'name' => __('Email Opened', 'campaignpress'),
-                'description' => __('Triggered when a contact opens an email', 'campaignpress'),
+                'name' => __('Email Opened', 'campaign-office'),
+                'description' => __('Triggered when a contact opens an email', 'campaign-office'),
                 'category' => 'engagement',
                 'data_fields' => array('contact_id', 'email_id', 'campaign_id'),
                 'icon' => 'dashicons-email-alt'
             ),
             'email_clicked' => array(
-                'name' => __('Email Link Clicked', 'campaignpress'),
-                'description' => __('Triggered when a contact clicks a link in an email', 'campaignpress'),
+                'name' => __('Email Link Clicked', 'campaign-office'),
+                'description' => __('Triggered when a contact clicks a link in an email', 'campaign-office'),
                 'category' => 'engagement',
                 'data_fields' => array('contact_id', 'email_id', 'campaign_id', 'url'),
                 'icon' => 'dashicons-external'
             ),
             'sms_replied' => array(
-                'name' => __('SMS Reply Received', 'campaignpress'),
-                'description' => __('Triggered when a contact replies to an SMS', 'campaignpress'),
+                'name' => __('SMS Reply Received', 'campaign-office'),
+                'description' => __('Triggered when a contact replies to an SMS', 'campaign-office'),
                 'category' => 'engagement',
                 'data_fields' => array('contact_id', 'phone', 'message'),
                 'icon' => 'dashicons-smartphone'
@@ -248,33 +248,33 @@ class CampaignPress_Automation_Workflows {
     private function define_actions() {
         $this->actions = array(
             'send_email' => array(
-                'name' => __('Send Email', 'campaignpress'),
-                'description' => __('Send an email to the contact', 'campaignpress'),
+                'name' => __('Send Email', 'campaign-office'),
+                'description' => __('Send an email to the contact', 'campaign-office'),
                 'category' => 'communication',
                 'settings' => array(
                     'integration_id' => array(
-                        'label' => __('Email Integration', 'campaignpress'),
+                        'label' => __('Email Integration', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     ),
                     'template_id' => array(
-                        'label' => __('Email Template', 'campaignpress'),
+                        'label' => __('Email Template', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     ),
                     'subject' => array(
-                        'label' => __('Subject', 'campaignpress'),
+                        'label' => __('Subject', 'campaign-office'),
                         'type' => 'text',
                         'required' => true,
                         'supports_merge_tags' => true
                     ),
                     'from_name' => array(
-                        'label' => __('From Name', 'campaignpress'),
+                        'label' => __('From Name', 'campaign-office'),
                         'type' => 'text',
                         'required' => false
                     ),
                     'from_email' => array(
-                        'label' => __('From Email', 'campaignpress'),
+                        'label' => __('From Email', 'campaign-office'),
                         'type' => 'email',
                         'required' => false
                     )
@@ -282,17 +282,17 @@ class CampaignPress_Automation_Workflows {
                 'icon' => 'dashicons-email'
             ),
             'send_sms' => array(
-                'name' => __('Send SMS', 'campaignpress'),
-                'description' => __('Send an SMS message to the contact', 'campaignpress'),
+                'name' => __('Send SMS', 'campaign-office'),
+                'description' => __('Send an SMS message to the contact', 'campaign-office'),
                 'category' => 'communication',
                 'settings' => array(
                     'integration_id' => array(
-                        'label' => __('SMS Integration', 'campaignpress'),
+                        'label' => __('SMS Integration', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     ),
                     'message' => array(
-                        'label' => __('Message', 'campaignpress'),
+                        'label' => __('Message', 'campaign-office'),
                         'type' => 'textarea',
                         'required' => true,
                         'supports_merge_tags' => true,
@@ -302,12 +302,12 @@ class CampaignPress_Automation_Workflows {
                 'icon' => 'dashicons-smartphone'
             ),
             'add_tag' => array(
-                'name' => __('Add Tag', 'campaignpress'),
-                'description' => __('Add a tag to the contact', 'campaignpress'),
+                'name' => __('Add Tag', 'campaign-office'),
+                'description' => __('Add a tag to the contact', 'campaign-office'),
                 'category' => 'contact',
                 'settings' => array(
                     'tag_id' => array(
-                        'label' => __('Tag', 'campaignpress'),
+                        'label' => __('Tag', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     )
@@ -315,12 +315,12 @@ class CampaignPress_Automation_Workflows {
                 'icon' => 'dashicons-tag'
             ),
             'remove_tag' => array(
-                'name' => __('Remove Tag', 'campaignpress'),
-                'description' => __('Remove a tag from the contact', 'campaignpress'),
+                'name' => __('Remove Tag', 'campaign-office'),
+                'description' => __('Remove a tag from the contact', 'campaign-office'),
                 'category' => 'contact',
                 'settings' => array(
                     'tag_id' => array(
-                        'label' => __('Tag', 'campaignpress'),
+                        'label' => __('Tag', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     )
@@ -328,12 +328,12 @@ class CampaignPress_Automation_Workflows {
                 'icon' => 'dashicons-tag'
             ),
             'change_segment' => array(
-                'name' => __('Change Segment', 'campaignpress'),
-                'description' => __('Move contact to a different segment', 'campaignpress'),
+                'name' => __('Change Segment', 'campaign-office'),
+                'description' => __('Move contact to a different segment', 'campaign-office'),
                 'category' => 'contact',
                 'settings' => array(
                     'segment_id' => array(
-                        'label' => __('Segment', 'campaignpress'),
+                        'label' => __('Segment', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     )
@@ -341,17 +341,17 @@ class CampaignPress_Automation_Workflows {
                 'icon' => 'dashicons-networking'
             ),
             'update_field' => array(
-                'name' => __('Update Custom Field', 'campaignpress'),
-                'description' => __('Update a custom field value', 'campaignpress'),
+                'name' => __('Update Custom Field', 'campaign-office'),
+                'description' => __('Update a custom field value', 'campaign-office'),
                 'category' => 'contact',
                 'settings' => array(
                     'field_name' => array(
-                        'label' => __('Field Name', 'campaignpress'),
+                        'label' => __('Field Name', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     ),
                     'field_value' => array(
-                        'label' => __('Field Value', 'campaignpress'),
+                        'label' => __('Field Value', 'campaign-office'),
                         'type' => 'text',
                         'required' => true,
                         'supports_merge_tags' => true
@@ -360,29 +360,29 @@ class CampaignPress_Automation_Workflows {
                 'icon' => 'dashicons-edit'
             ),
             'create_task' => array(
-                'name' => __('Create Task', 'campaignpress'),
-                'description' => __('Create a task for a team member', 'campaignpress'),
+                'name' => __('Create Task', 'campaign-office'),
+                'description' => __('Create a task for a team member', 'campaign-office'),
                 'category' => 'workflow',
                 'settings' => array(
                     'task_title' => array(
-                        'label' => __('Task Title', 'campaignpress'),
+                        'label' => __('Task Title', 'campaign-office'),
                         'type' => 'text',
                         'required' => true,
                         'supports_merge_tags' => true
                     ),
                     'task_description' => array(
-                        'label' => __('Description', 'campaignpress'),
+                        'label' => __('Description', 'campaign-office'),
                         'type' => 'textarea',
                         'required' => false,
                         'supports_merge_tags' => true
                     ),
                     'assigned_to' => array(
-                        'label' => __('Assign To', 'campaignpress'),
+                        'label' => __('Assign To', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     ),
                     'due_date' => array(
-                        'label' => __('Due Date', 'campaignpress'),
+                        'label' => __('Due Date', 'campaign-office'),
                         'type' => 'date',
                         'required' => false
                     )
@@ -390,23 +390,23 @@ class CampaignPress_Automation_Workflows {
                 'icon' => 'dashicons-yes'
             ),
             'send_webhook' => array(
-                'name' => __('Send Webhook', 'campaignpress'),
-                'description' => __('Send data to an external URL', 'campaignpress'),
+                'name' => __('Send Webhook', 'campaign-office'),
+                'description' => __('Send data to an external URL', 'campaign-office'),
                 'category' => 'integration',
                 'settings' => array(
                     'webhook_url' => array(
-                        'label' => __('Webhook URL', 'campaignpress'),
+                        'label' => __('Webhook URL', 'campaign-office'),
                         'type' => 'url',
                         'required' => true
                     ),
                     'method' => array(
-                        'label' => __('HTTP Method', 'campaignpress'),
+                        'label' => __('HTTP Method', 'campaign-office'),
                         'type' => 'select',
                         'required' => true,
                         'options' => array('POST' => 'POST', 'GET' => 'GET', 'PUT' => 'PUT')
                     ),
                     'payload' => array(
-                        'label' => __('Payload (JSON)', 'campaignpress'),
+                        'label' => __('Payload (JSON)', 'campaign-office'),
                         'type' => 'textarea',
                         'required' => false,
                         'supports_merge_tags' => true
@@ -415,24 +415,24 @@ class CampaignPress_Automation_Workflows {
                 'icon' => 'dashicons-rest-api'
             ),
             'wait' => array(
-                'name' => __('Wait/Delay', 'campaignpress'),
-                'description' => __('Wait for a specified time before continuing', 'campaignpress'),
+                'name' => __('Wait/Delay', 'campaign-office'),
+                'description' => __('Wait for a specified time before continuing', 'campaign-office'),
                 'category' => 'workflow',
                 'settings' => array(
                     'delay_value' => array(
-                        'label' => __('Delay Amount', 'campaignpress'),
+                        'label' => __('Delay Amount', 'campaign-office'),
                         'type' => 'number',
                         'required' => true
                     ),
                     'delay_unit' => array(
-                        'label' => __('Delay Unit', 'campaignpress'),
+                        'label' => __('Delay Unit', 'campaign-office'),
                         'type' => 'select',
                         'required' => true,
                         'options' => array(
-                            'minutes' => __('Minutes', 'campaignpress'),
-                            'hours' => __('Hours', 'campaignpress'),
-                            'days' => __('Days', 'campaignpress'),
-                            'weeks' => __('Weeks', 'campaignpress')
+                            'minutes' => __('Minutes', 'campaign-office'),
+                            'hours' => __('Hours', 'campaign-office'),
+                            'days' => __('Days', 'campaign-office'),
+                            'weeks' => __('Weeks', 'campaign-office')
                         )
                     )
                 ),
@@ -452,76 +452,76 @@ class CampaignPress_Automation_Workflows {
     private function define_conditions() {
         $this->conditions = array(
             'has_tag' => array(
-                'name' => __('Has Tag', 'campaignpress'),
-                'description' => __('Contact has a specific tag', 'campaignpress'),
+                'name' => __('Has Tag', 'campaign-office'),
+                'description' => __('Contact has a specific tag', 'campaign-office'),
                 'settings' => array(
                     'tag_id' => array(
-                        'label' => __('Tag', 'campaignpress'),
+                        'label' => __('Tag', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     )
                 )
             ),
             'in_segment' => array(
-                'name' => __('In Segment', 'campaignpress'),
-                'description' => __('Contact is in a specific segment', 'campaignpress'),
+                'name' => __('In Segment', 'campaign-office'),
+                'description' => __('Contact is in a specific segment', 'campaign-office'),
                 'settings' => array(
                     'segment_id' => array(
-                        'label' => __('Segment', 'campaignpress'),
+                        'label' => __('Segment', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     )
                 )
             ),
             'field_equals' => array(
-                'name' => __('Field Equals', 'campaignpress'),
-                'description' => __('Custom field equals a value', 'campaignpress'),
+                'name' => __('Field Equals', 'campaign-office'),
+                'description' => __('Custom field equals a value', 'campaign-office'),
                 'settings' => array(
                     'field_name' => array(
-                        'label' => __('Field Name', 'campaignpress'),
+                        'label' => __('Field Name', 'campaign-office'),
                         'type' => 'select',
                         'required' => true
                     ),
                     'field_value' => array(
-                        'label' => __('Value', 'campaignpress'),
+                        'label' => __('Value', 'campaign-office'),
                         'type' => 'text',
                         'required' => true
                     )
                 )
             ),
             'donation_amount' => array(
-                'name' => __('Donation Amount', 'campaignpress'),
-                'description' => __('Donation amount meets criteria', 'campaignpress'),
+                'name' => __('Donation Amount', 'campaign-office'),
+                'description' => __('Donation amount meets criteria', 'campaign-office'),
                 'settings' => array(
                     'operator' => array(
-                        'label' => __('Operator', 'campaignpress'),
+                        'label' => __('Operator', 'campaign-office'),
                         'type' => 'select',
                         'required' => true,
                         'options' => array(
-                            'greater_than' => __('Greater Than', 'campaignpress'),
-                            'less_than' => __('Less Than', 'campaignpress'),
-                            'equals' => __('Equals', 'campaignpress')
+                            'greater_than' => __('Greater Than', 'campaign-office'),
+                            'less_than' => __('Less Than', 'campaign-office'),
+                            'equals' => __('Equals', 'campaign-office')
                         )
                     ),
                     'amount' => array(
-                        'label' => __('Amount', 'campaignpress'),
+                        'label' => __('Amount', 'campaign-office'),
                         'type' => 'number',
                         'required' => true
                     )
                 )
             ),
             'email_status' => array(
-                'name' => __('Email Status', 'campaignpress'),
-                'description' => __('Email subscription status', 'campaignpress'),
+                'name' => __('Email Status', 'campaign-office'),
+                'description' => __('Email subscription status', 'campaign-office'),
                 'settings' => array(
                     'status' => array(
-                        'label' => __('Status', 'campaignpress'),
+                        'label' => __('Status', 'campaign-office'),
                         'type' => 'select',
                         'required' => true,
                         'options' => array(
-                            'subscribed' => __('Subscribed', 'campaignpress'),
-                            'unsubscribed' => __('Unsubscribed', 'campaignpress'),
-                            'bounced' => __('Bounced', 'campaignpress')
+                            'subscribed' => __('Subscribed', 'campaign-office'),
+                            'unsubscribed' => __('Unsubscribed', 'campaign-office'),
+                            'bounced' => __('Bounced', 'campaign-office')
                         )
                     )
                 )

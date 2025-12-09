@@ -102,21 +102,21 @@ class CampaignPress_Email_Integrations {
         $this->platforms = array(
             'mailchimp' => array(
                 'name' => 'Mailchimp',
-                'description' => __('Connect to Mailchimp for list management and email campaigns', 'campaignpress'),
+                'description' => __('Connect to Mailchimp for list management and email campaigns', 'campaign-office'),
                 'icon' => 'dashicons-email',
                 'auth_type' => 'api_key',
                 'credentials' => array(
                     'api_key' => array(
-                        'label' => __('API Key', 'campaignpress'),
+                        'label' => __('API Key', 'campaign-office'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your Mailchimp API key', 'campaignpress')
+                        'help' => __('Your Mailchimp API key', 'campaign-office')
                     ),
                     'server_prefix' => array(
-                        'label' => __('Server Prefix', 'campaignpress'),
+                        'label' => __('Server Prefix', 'campaign-office'),
                         'type' => 'text',
                         'required' => true,
-                        'help' => __('The server prefix from your API key (e.g., us1)', 'campaignpress')
+                        'help' => __('The server prefix from your API key (e.g., us1)', 'campaign-office')
                     )
                 ),
                 'features' => array('lists', 'campaigns', 'automation', 'tags', 'webhooks'),
@@ -125,15 +125,15 @@ class CampaignPress_Email_Integrations {
             ),
             'action_network' => array(
                 'name' => 'Action Network',
-                'description' => __('Connect to Action Network for activist management and email blasts', 'campaignpress'),
+                'description' => __('Connect to Action Network for activist management and email blasts', 'campaign-office'),
                 'icon' => 'dashicons-megaphone',
                 'auth_type' => 'api_key',
                 'credentials' => array(
                     'api_key' => array(
-                        'label' => __('API Key', 'campaignpress'),
+                        'label' => __('API Key', 'campaign-office'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your Action Network API key', 'campaignpress')
+                        'help' => __('Your Action Network API key', 'campaign-office')
                     )
                 ),
                 'features' => array('people', 'emails', 'petitions', 'events', 'tags', 'webhooks'),
@@ -142,21 +142,21 @@ class CampaignPress_Email_Integrations {
             ),
             'constant_contact' => array(
                 'name' => 'Constant Contact',
-                'description' => __('Connect to Constant Contact for email marketing', 'campaignpress'),
+                'description' => __('Connect to Constant Contact for email marketing', 'campaign-office'),
                 'icon' => 'dashicons-email-alt',
                 'auth_type' => 'oauth2',
                 'credentials' => array(
                     'api_key' => array(
-                        'label' => __('API Key', 'campaignpress'),
+                        'label' => __('API Key', 'campaign-office'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your Constant Contact API key', 'campaignpress')
+                        'help' => __('Your Constant Contact API key', 'campaign-office')
                     ),
                     'access_token' => array(
-                        'label' => __('Access Token', 'campaignpress'),
+                        'label' => __('Access Token', 'campaign-office'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('OAuth2 access token', 'campaignpress')
+                        'help' => __('OAuth2 access token', 'campaign-office')
                     )
                 ),
                 'features' => array('contacts', 'lists', 'campaigns', 'webhooks'),
@@ -165,15 +165,15 @@ class CampaignPress_Email_Integrations {
             ),
             'sendgrid' => array(
                 'name' => 'SendGrid',
-                'description' => __('Connect to SendGrid for transactional and marketing emails', 'campaignpress'),
+                'description' => __('Connect to SendGrid for transactional and marketing emails', 'campaign-office'),
                 'icon' => 'dashicons-email-alt2',
                 'auth_type' => 'api_key',
                 'credentials' => array(
                     'api_key' => array(
-                        'label' => __('API Key', 'campaignpress'),
+                        'label' => __('API Key', 'campaign-office'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your SendGrid API key with full access', 'campaignpress')
+                        'help' => __('Your SendGrid API key with full access', 'campaign-office')
                     )
                 ),
                 'features' => array('contacts', 'lists', 'campaigns', 'templates', 'webhooks', 'transactional'),
@@ -182,15 +182,15 @@ class CampaignPress_Email_Integrations {
             ),
             'mailerlite' => array(
                 'name' => 'MailerLite',
-                'description' => __('Connect to MailerLite for email automation', 'campaignpress'),
+                'description' => __('Connect to MailerLite for email automation', 'campaign-office'),
                 'icon' => 'dashicons-email',
                 'auth_type' => 'api_key',
                 'credentials' => array(
                     'api_key' => array(
-                        'label' => __('API Key', 'campaignpress'),
+                        'label' => __('API Key', 'campaign-office'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your MailerLite API key', 'campaignpress')
+                        'help' => __('Your MailerLite API key', 'campaign-office')
                     )
                 ),
                 'features' => array('subscribers', 'groups', 'campaigns', 'automation', 'webhooks'),
@@ -199,42 +199,42 @@ class CampaignPress_Email_Integrations {
             ),
             'smtp' => array(
                 'name' => 'Generic SMTP',
-                'description' => __('Connect to any SMTP server for sending emails', 'campaignpress'),
+                'description' => __('Connect to any SMTP server for sending emails', 'campaign-office'),
                 'icon' => 'dashicons-admin-generic',
                 'auth_type' => 'smtp',
                 'credentials' => array(
                     'host' => array(
-                        'label' => __('SMTP Host', 'campaignpress'),
+                        'label' => __('SMTP Host', 'campaign-office'),
                         'type' => 'text',
                         'required' => true,
-                        'help' => __('SMTP server hostname', 'campaignpress')
+                        'help' => __('SMTP server hostname', 'campaign-office')
                     ),
                     'port' => array(
-                        'label' => __('SMTP Port', 'campaignpress'),
+                        'label' => __('SMTP Port', 'campaign-office'),
                         'type' => 'number',
                         'required' => true,
                         'default' => 587,
-                        'help' => __('SMTP server port (usually 587 or 465)', 'campaignpress')
+                        'help' => __('SMTP server port (usually 587 or 465)', 'campaign-office')
                     ),
                     'username' => array(
-                        'label' => __('Username', 'campaignpress'),
+                        'label' => __('Username', 'campaign-office'),
                         'type' => 'text',
                         'required' => true,
-                        'help' => __('SMTP authentication username', 'campaignpress')
+                        'help' => __('SMTP authentication username', 'campaign-office')
                     ),
                     'password' => array(
-                        'label' => __('Password', 'campaignpress'),
+                        'label' => __('Password', 'campaign-office'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('SMTP authentication password', 'campaignpress')
+                        'help' => __('SMTP authentication password', 'campaign-office')
                     ),
                     'encryption' => array(
-                        'label' => __('Encryption', 'campaignpress'),
+                        'label' => __('Encryption', 'campaign-office'),
                         'type' => 'select',
                         'required' => true,
                         'options' => array('tls' => 'TLS', 'ssl' => 'SSL', 'none' => 'None'),
                         'default' => 'tls',
-                        'help' => __('Encryption method', 'campaignpress')
+                        'help' => __('Encryption method', 'campaign-office')
                     )
                 ),
                 'features' => array('send'),

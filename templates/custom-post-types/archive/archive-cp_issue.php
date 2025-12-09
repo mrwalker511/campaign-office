@@ -14,7 +14,7 @@ get_header();
 
         <header class="page-header">
             <h1 class="page-title">
-                <?php esc_html_e( 'Our Issues & Positions', 'campaignpress' ); ?>
+                <?php esc_html_e( 'Our Issues & Positions', 'campaign-office' ); ?>
             </h1>
             <?php
             $archive_description = get_the_archive_description();
@@ -66,8 +66,8 @@ get_header();
 
                             <footer class="entry-footer">
                                 <a href="<?php the_permalink(); ?>" class="read-more">
-                                    <?php esc_html_e( 'Read Full Position', 'campaignpress' ); ?>
-                                    <span class="screen-reader-text"> <?php esc_html_e( 'on', 'campaignpress' ); ?> <?php the_title(); ?></span>
+                                    <?php esc_html_e( 'Read Full Position', 'campaign-office' ); ?>
+                                    <span class="screen-reader-text"> <?php esc_html_e( 'on', 'campaign-office' ); ?> <?php the_title(); ?></span>
                                 </a>
                             </footer>
                         </div>
@@ -77,8 +77,8 @@ get_header();
 
             <?php
             the_posts_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
             ) );
             ?>
 
@@ -86,11 +86,11 @@ get_header();
 
             <div class="no-results not-found">
                 <header class="page-header">
-                    <h1 class="page-title"><?php esc_html_e( 'No Issues Found', 'campaignpress' ); ?></h1>
+                    <h1 class="page-title"><?php esc_html_e( 'No Issues Found', 'campaign-office' ); ?></h1>
                 </header>
 
                 <div class="page-content">
-                    <p><?php esc_html_e( 'No campaign issues have been published yet. Check back soon!', 'campaignpress' ); ?></p>
+                    <p><?php esc_html_e( 'No campaign issues have been published yet. Check back soon!', 'campaign-office' ); ?></p>
                 </div>
             </div>
 

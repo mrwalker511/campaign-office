@@ -29,8 +29,8 @@ class CampaignPress_Demo_Content {
      */
     public function add_admin_menu() {
         add_theme_page(
-            __('CampaignPress Demo Content', 'campaignpress'),
-            __('Demo Content', 'campaignpress'),
+            __('CampaignPress Demo Content', 'campaign-office'),
+            __('Demo Content', 'campaign-office'),
             'manage_options',
             'campaignpress-demo',
             array($this, 'render_admin_page')
@@ -44,35 +44,35 @@ class CampaignPress_Demo_Content {
         $demo_exists = get_option('campaignpress_demo_imported', false);
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('CampaignPress Demo Content', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('CampaignPress Demo Content', 'campaign-office'); ?></h1>
 
             <?php if (!empty($_GET['imported']) && sanitize_key($_GET['imported']) === '1') : ?>
                 <div class="notice notice-success is-dismissible">
-                    <p><?php esc_html_e('Demo content imported successfully!', 'campaignpress'); ?></p>
+                    <p><?php esc_html_e('Demo content imported successfully!', 'campaign-office'); ?></p>
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($_GET['deleted']) && sanitize_key($_GET['deleted']) === '1') : ?>
                 <div class="notice notice-success is-dismissible">
-                    <p><?php esc_html_e('Demo content deleted successfully!', 'campaignpress'); ?></p>
+                    <p><?php esc_html_e('Demo content deleted successfully!', 'campaign-office'); ?></p>
                 </div>
             <?php endif; ?>
 
             <div class="card" style="max-width: 800px;">
-                <h2><?php esc_html_e('Sample Campaign Content', 'campaignpress'); ?></h2>
-                <p><?php esc_html_e('This will create sample content to help you see how CampaignPress works. Perfect for testing and demonstrations.', 'campaignpress'); ?></p>
+                <h2><?php esc_html_e('Sample Campaign Content', 'campaign-office'); ?></h2>
+                <p><?php esc_html_e('This will create sample content to help you see how CampaignPress works. Perfect for testing and demonstrations.', 'campaign-office'); ?></p>
 
-                <h3><?php esc_html_e('Content to be created:', 'campaignpress'); ?></h3>
+                <h3><?php esc_html_e('Content to be created:', 'campaign-office'); ?></h3>
                 <ul style="list-style: disc; margin-left: 20px;">
-                    <li><?php esc_html_e('6 Policy Issues (Healthcare, Education, Environment, Economy, Justice, Infrastructure)', 'campaignpress'); ?></li>
-                    <li><?php esc_html_e('4 Campaign Events (Town Hall, Fundraiser, Rally, Debate)', 'campaignpress'); ?></li>
-                    <li><?php esc_html_e('8 Endorsements (Officials, Organizations, Community Leaders)', 'campaignpress'); ?></li>
-                    <li><?php esc_html_e('5 Team Members (Campaign Manager, Finance Director, etc.)', 'campaignpress'); ?></li>
-                    <li><?php esc_html_e('4 Volunteer Opportunities (Canvassing, Phone Banking, etc.)', 'campaignpress'); ?></li>
-                    <li><?php esc_html_e('Sample homepage with CampaignPress blocks', 'campaignpress'); ?></li>
-                    <li><?php esc_html_e('About page with candidate bio', 'campaignpress'); ?></li>
-                    <li><?php esc_html_e('3 Navigation Menus (Primary, Footer, Social)', 'campaignpress'); ?></li>
-                    <li><?php esc_html_e('Complete Theme Options populated with sample campaign data', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('6 Policy Issues (Healthcare, Education, Environment, Economy, Justice, Infrastructure)', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('4 Campaign Events (Town Hall, Fundraiser, Rally, Debate)', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('8 Endorsements (Officials, Organizations, Community Leaders)', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('5 Team Members (Campaign Manager, Finance Director, etc.)', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('4 Volunteer Opportunities (Canvassing, Phone Banking, etc.)', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('Sample homepage with CampaignPress blocks', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('About page with candidate bio', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('3 Navigation Menus (Primary, Footer, Social)', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('Complete Theme Options populated with sample campaign data', 'campaign-office'); ?></li>
                 </ul>
 
                 <?php if (!$demo_exists) : ?>
@@ -81,29 +81,29 @@ class CampaignPress_Demo_Content {
                         <?php wp_nonce_field('cp_import_demo', 'cp_demo_nonce'); ?>
                         <p>
                             <button type="submit" class="button button-primary button-hero">
-                                <?php esc_html_e('Import Demo Content', 'campaignpress'); ?>
+                                <?php esc_html_e('Import Demo Content', 'campaign-office'); ?>
                             </button>
                         </p>
                         <p class="description">
-                            <?php esc_html_e('This creates sample content. You can delete it anytime.', 'campaignpress'); ?>
+                            <?php esc_html_e('This creates sample content. You can delete it anytime.', 'campaign-office'); ?>
                         </p>
                     </form>
                 <?php else : ?>
                     <div class="notice notice-info inline">
-                        <p><?php esc_html_e('Demo content is currently installed.', 'campaignpress'); ?></p>
+                        <p><?php esc_html_e('Demo content is currently installed.', 'campaign-office'); ?></p>
                     </div>
                     <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-delete-demo-form">
                         <input type="hidden" name="action" value="cp_delete_demo">
                         <?php wp_nonce_field('cp_delete_demo', 'cp_demo_nonce'); ?>
                         <p>
                             <button type="submit" class="button button-secondary">
-                                <?php esc_html_e('Delete Demo Content', 'campaignpress'); ?>
+                                <?php esc_html_e('Delete Demo Content', 'campaign-office'); ?>
                             </button>
                         </p>
                     </form>
                     <script>
                     document.getElementById('cp-delete-demo-form').addEventListener('submit', function(e) {
-                        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete all demo content? This cannot be undone.', 'campaignpress')); ?>')) {
+                        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete all demo content? This cannot be undone.', 'campaign-office')); ?>')) {
                             e.preventDefault();
                         }
                     });
@@ -120,12 +120,12 @@ class CampaignPress_Demo_Content {
     public function handle_import() {
         // Check nonce
         if (!isset($_POST['cp_demo_nonce']) || !wp_verify_nonce($_POST['cp_demo_nonce'], 'cp_import_demo')) {
-            wp_die(__('Security check failed', 'campaignpress'));
+            wp_die(__('Security check failed', 'campaign-office'));
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('Insufficient permissions', 'campaignpress'));
+            wp_die(__('Insufficient permissions', 'campaign-office'));
         }
 
         // Import content
@@ -170,12 +170,12 @@ class CampaignPress_Demo_Content {
     public function handle_delete() {
         // Check nonce
         if (!isset($_POST['cp_demo_nonce']) || !wp_verify_nonce($_POST['cp_demo_nonce'], 'cp_delete_demo')) {
-            wp_die(__('Security check failed', 'campaignpress'));
+            wp_die(__('Security check failed', 'campaign-office'));
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('Insufficient permissions', 'campaignpress'));
+            wp_die(__('Insufficient permissions', 'campaign-office'));
         }
 
         // Get demo post IDs

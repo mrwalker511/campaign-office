@@ -93,7 +93,7 @@ class CampaignPress_FEC_Reports {
         $valid_types = array('quarterly', 'pre_election', 'post_general', '48hour', 'independent_expenditure');
 
         if (!in_array($report_type, $valid_types)) {
-            return new WP_Error('invalid_report_type', __('Invalid report type.', 'campaignpress'));
+            return new WP_Error('invalid_report_type', __('Invalid report type.', 'campaign-office'));
         }
 
         // Get date range for report
@@ -129,7 +129,7 @@ class CampaignPress_FEC_Reports {
                 break;
 
             default:
-                return new WP_Error('unknown_report_type', __('Unknown report type.', 'campaignpress'));
+                return new WP_Error('unknown_report_type', __('Unknown report type.', 'campaign-office'));
         }
 
         if (is_wp_error($report_data)) {
@@ -538,7 +538,7 @@ class CampaignPress_FEC_Reports {
         ));
 
         if (!$report) {
-            return new WP_Error('report_not_found', __('Report not found.', 'campaignpress'));
+            return new WP_Error('report_not_found', __('Report not found.', 'campaign-office'));
         }
 
         $report_data = json_decode($report->report_data, true);
@@ -559,7 +559,7 @@ class CampaignPress_FEC_Reports {
         $file = fopen($filepath, 'w');
 
         if ($file === false) {
-            return new WP_Error('file_error', __('Failed to create export file.', 'campaignpress'));
+            return new WP_Error('file_error', __('Failed to create export file.', 'campaign-office'));
         }
 
         // FEC Form 3 Format Header
@@ -686,7 +686,7 @@ class CampaignPress_FEC_Reports {
         switch ($report_type) {
             case 'quarterly':
                 if (!isset($this->quarterly_periods[$report_period])) {
-                    return new WP_Error('invalid_period', __('Invalid quarterly period.', 'campaignpress'));
+                    return new WP_Error('invalid_period', __('Invalid quarterly period.', 'campaign-office'));
                 }
 
                 $period = $this->quarterly_periods[$report_period];
@@ -702,7 +702,7 @@ class CampaignPress_FEC_Reports {
             case '48hour':
                 // For these reports, period should be in format 'YYYY-MM-DD:YYYY-MM-DD'
                 if (strpos($report_period, ':') === false) {
-                    return new WP_Error('invalid_period', __('Period must be in format YYYY-MM-DD:YYYY-MM-DD', 'campaignpress'));
+                    return new WP_Error('invalid_period', __('Period must be in format YYYY-MM-DD:YYYY-MM-DD', 'campaign-office'));
                 }
 
                 list($start, $end) = explode(':', $report_period);
@@ -713,7 +713,7 @@ class CampaignPress_FEC_Reports {
                 );
 
             default:
-                return new WP_Error('unknown_report_type', __('Unknown report type.', 'campaignpress'));
+                return new WP_Error('unknown_report_type', __('Unknown report type.', 'campaign-office'));
         }
     }
 
@@ -751,7 +751,7 @@ class CampaignPress_FEC_Reports {
         $result = $wpdb->insert($reports_table, $insert_data);
 
         if ($result === false) {
-            return new WP_Error('db_error', __('Failed to save report.', 'campaignpress'));
+            return new WP_Error('db_error', __('Failed to save report.', 'campaign-office'));
         }
 
         return $wpdb->insert_id;

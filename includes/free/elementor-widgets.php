@@ -43,9 +43,9 @@ class CP_Elementor_Widgets {
      */
     public function register_widget_category($elements_manager) {
         $elements_manager->add_category(
-            'campaignpress',
+            'campaign-office',
             array(
-                'title' => __('CampaignPress', 'campaignpress'),
+                'title' => __('CampaignPress', 'campaign-office'),
                 'icon'  => 'fa fa-flag',
             )
         );
@@ -102,7 +102,7 @@ abstract class CP_Elementor_Widget_Base extends \Elementor\Widget_Base {
      * @return array
      */
     public function get_categories() {
-        return array('campaignpress');
+        return array('campaign-office');
     }
 
     /**
@@ -113,14 +113,14 @@ abstract class CP_Elementor_Widget_Base extends \Elementor\Widget_Base {
     protected function get_common_style_controls() {
         return array(
             'background_color' => array(
-                'label'     => __('Background Color', 'campaignpress'),
+                'label'     => __('Background Color', 'campaign-office'),
                 'type'      => \Elementor\Controls_Manager::COLOR,
                 'selectors' => array(
                     '{{WRAPPER}}' => 'background-color: {{VALUE}};',
                 ),
             ),
             'padding' => array(
-                'label'      => __('Padding', 'campaignpress'),
+                'label'      => __('Padding', 'campaign-office'),
                 'type'       => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => array('px', 'em', '%'),
                 'selectors'  => array(
@@ -128,7 +128,7 @@ abstract class CP_Elementor_Widget_Base extends \Elementor\Widget_Base {
                 ),
             ),
             'margin' => array(
-                'label'      => __('Margin', 'campaignpress'),
+                'label'      => __('Margin', 'campaign-office'),
                 'type'       => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => array('px', 'em', '%'),
                 'selectors'  => array(
@@ -136,7 +136,7 @@ abstract class CP_Elementor_Widget_Base extends \Elementor\Widget_Base {
                 ),
             ),
             'border_radius' => array(
-                'label'      => __('Border Radius', 'campaignpress'),
+                'label'      => __('Border Radius', 'campaign-office'),
                 'type'       => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => array('px', '%'),
                 'selectors'  => array(
@@ -161,7 +161,7 @@ class CP_Elementor_Donation_Button extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Donation Button', 'campaignpress');
+        return __('Donation Button', 'campaign-office');
     }
 
     public function get_icon() {
@@ -173,7 +173,7 @@ class CP_Elementor_Donation_Button extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -181,16 +181,16 @@ class CP_Elementor_Donation_Button extends CP_Elementor_Widget_Base {
         $this->add_control(
             'processor',
             array(
-                'label'   => __('Payment Processor', 'campaignpress'),
+                'label'   => __('Payment Processor', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::SELECT,
                 'default' => 'actblue',
                 'options' => array(
-                    'actblue'  => __('ActBlue', 'campaignpress'),
-                    'winred'   => __('WinRed', 'campaignpress'),
-                    'paypal'   => __('PayPal', 'campaignpress'),
-                    'stripe'   => __('Stripe', 'campaignpress'),
-                    'square'   => __('Square', 'campaignpress'),
-                    'donorbox' => __('Donorbox', 'campaignpress'),
+                    'actblue'  => __('ActBlue', 'campaign-office'),
+                    'winred'   => __('WinRed', 'campaign-office'),
+                    'paypal'   => __('PayPal', 'campaign-office'),
+                    'stripe'   => __('Stripe', 'campaign-office'),
+                    'square'   => __('Square', 'campaign-office'),
+                    'donorbox' => __('Donorbox', 'campaign-office'),
                 ),
             )
         );
@@ -198,29 +198,29 @@ class CP_Elementor_Donation_Button extends CP_Elementor_Widget_Base {
         $this->add_control(
             'button_text',
             array(
-                'label'   => __('Button Text', 'campaignpress'),
+                'label'   => __('Button Text', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Donate Now', 'campaignpress'),
+                'default' => __('Donate Now', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'amounts',
             array(
-                'label'       => __('Quick Amounts', 'campaignpress'),
+                'label'       => __('Quick Amounts', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::TEXT,
                 'default'     => '25,50,100,250,500',
-                'description' => __('Comma-separated amounts', 'campaignpress'),
+                'description' => __('Comma-separated amounts', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'show_recurring',
             array(
-                'label'        => __('Show Recurring Options', 'campaignpress'),
+                'label'        => __('Show Recurring Options', 'campaign-office'),
                 'type'         => \Elementor\Controls_Manager::SWITCHER,
-                'label_on'     => __('Yes', 'campaignpress'),
-                'label_off'    => __('No', 'campaignpress'),
+                'label_on'     => __('Yes', 'campaign-office'),
+                'label_off'    => __('No', 'campaign-office'),
                 'return_value' => 'yes',
                 'default'      => 'yes',
             )
@@ -232,7 +232,7 @@ class CP_Elementor_Donation_Button extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'style_section',
             array(
-                'label' => __('Style', 'campaignpress'),
+                'label' => __('Style', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
             )
         );
@@ -240,7 +240,7 @@ class CP_Elementor_Donation_Button extends CP_Elementor_Widget_Base {
         $this->add_control(
             'button_color',
             array(
-                'label'     => __('Button Color', 'campaignpress'),
+                'label'     => __('Button Color', 'campaign-office'),
                 'type'      => \Elementor\Controls_Manager::COLOR,
                 'default'   => '#0073aa',
                 'selectors' => array(
@@ -288,7 +288,7 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Progress Meter', 'campaignpress');
+        return __('Progress Meter', 'campaign-office');
     }
 
     public function get_icon() {
@@ -299,7 +299,7 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -307,16 +307,16 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
         $this->add_control(
             'title',
             array(
-                'label'   => __('Title', 'campaignpress'),
+                'label'   => __('Title', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Fundraising Progress', 'campaignpress'),
+                'default' => __('Fundraising Progress', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'goal',
             array(
-                'label'   => __('Goal Amount', 'campaignpress'),
+                'label'   => __('Goal Amount', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::NUMBER,
                 'default' => 100000,
             )
@@ -325,7 +325,7 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
         $this->add_control(
             'current',
             array(
-                'label'   => __('Current Amount', 'campaignpress'),
+                'label'   => __('Current Amount', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::NUMBER,
                 'default' => 67500,
             )
@@ -334,7 +334,7 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
         $this->add_control(
             'prefix',
             array(
-                'label'   => __('Currency Symbol', 'campaignpress'),
+                'label'   => __('Currency Symbol', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
                 'default' => '$',
             )
@@ -346,7 +346,7 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'style_section',
             array(
-                'label' => __('Style', 'campaignpress'),
+                'label' => __('Style', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
             )
         );
@@ -354,7 +354,7 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
         $this->add_control(
             'bar_color',
             array(
-                'label'     => __('Progress Bar Color', 'campaignpress'),
+                'label'     => __('Progress Bar Color', 'campaign-office'),
                 'type'      => \Elementor\Controls_Manager::COLOR,
                 'default'   => '#0073aa',
                 'selectors' => array(
@@ -366,7 +366,7 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
         $this->add_control(
             'bar_height',
             array(
-                'label'      => __('Bar Height', 'campaignpress'),
+                'label'      => __('Bar Height', 'campaign-office'),
                 'type'       => \Elementor\Controls_Manager::SLIDER,
                 'size_units' => array('px'),
                 'range'      => array(
@@ -402,15 +402,15 @@ class CP_Elementor_Progress_Meter extends CP_Elementor_Widget_Base {
 
             <div class="cp-progress-stats">
                 <div class="cp-stat">
-                    <span class="cp-stat-label"><?php esc_html_e('Goal', 'campaignpress'); ?></span>
+                    <span class="cp-stat-label"><?php esc_html_e('Goal', 'campaign-office'); ?></span>
                     <span class="cp-stat-value"><?php echo esc_html($settings['prefix'] . number_format($settings['goal'])); ?></span>
                 </div>
                 <div class="cp-stat">
-                    <span class="cp-stat-label"><?php esc_html_e('Raised', 'campaignpress'); ?></span>
+                    <span class="cp-stat-label"><?php esc_html_e('Raised', 'campaign-office'); ?></span>
                     <span class="cp-stat-value"><?php echo esc_html($settings['prefix'] . number_format($settings['current'])); ?></span>
                 </div>
                 <div class="cp-stat">
-                    <span class="cp-stat-label"><?php esc_html_e('Remaining', 'campaignpress'); ?></span>
+                    <span class="cp-stat-label"><?php esc_html_e('Remaining', 'campaign-office'); ?></span>
                     <span class="cp-stat-value"><?php echo esc_html($settings['prefix'] . number_format($remaining)); ?></span>
                 </div>
             </div>
@@ -439,7 +439,7 @@ class CP_Elementor_Issue_Card extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Issue Card', 'campaignpress');
+        return __('Issue Card', 'campaign-office');
     }
 
     public function get_icon() {
@@ -450,7 +450,7 @@ class CP_Elementor_Issue_Card extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -458,7 +458,7 @@ class CP_Elementor_Issue_Card extends CP_Elementor_Widget_Base {
         $this->add_control(
             'icon',
             array(
-                'label'   => __('Icon', 'campaignpress'),
+                'label'   => __('Icon', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::ICONS,
                 'default' => array(
                     'value'   => 'fas fa-graduation-cap',
@@ -470,27 +470,27 @@ class CP_Elementor_Issue_Card extends CP_Elementor_Widget_Base {
         $this->add_control(
             'title',
             array(
-                'label'   => __('Title', 'campaignpress'),
+                'label'   => __('Title', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Education', 'campaignpress'),
+                'default' => __('Education', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'description',
             array(
-                'label'   => __('Description', 'campaignpress'),
+                'label'   => __('Description', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => __('Investing in our schools and ensuring every child has access to quality education.', 'campaignpress'),
+                'default' => __('Investing in our schools and ensuring every child has access to quality education.', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'link_url',
             array(
-                'label'       => __('Link URL', 'campaignpress'),
+                'label'       => __('Link URL', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::URL,
-                'placeholder' => __('https://your-link.com', 'campaignpress'),
+                'placeholder' => __('https://your-link.com', 'campaign-office'),
             )
         );
 
@@ -500,7 +500,7 @@ class CP_Elementor_Issue_Card extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'style_section',
             array(
-                'label' => __('Style', 'campaignpress'),
+                'label' => __('Style', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
             )
         );
@@ -508,7 +508,7 @@ class CP_Elementor_Issue_Card extends CP_Elementor_Widget_Base {
         $this->add_control(
             'icon_color',
             array(
-                'label'     => __('Icon Color', 'campaignpress'),
+                'label'     => __('Icon Color', 'campaign-office'),
                 'type'      => \Elementor\Controls_Manager::COLOR,
                 'default'   => '#0073aa',
                 'selectors' => array(
@@ -547,7 +547,7 @@ class CP_Elementor_Issue_Card extends CP_Elementor_Widget_Base {
                    class="cp-issue-link"
                    <?php echo !empty($settings['link_url']['is_external']) ? 'target="_blank"' : ''; ?>
                    <?php echo !empty($settings['link_url']['nofollow']) ? 'rel="nofollow"' : ''; ?>>
-                    <?php esc_html_e('Learn More', 'campaignpress'); ?>
+                    <?php esc_html_e('Learn More', 'campaign-office'); ?>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             <?php endif; ?>
@@ -570,7 +570,7 @@ class CP_Elementor_Endorsement_Grid extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Endorsement Grid', 'campaignpress');
+        return __('Endorsement Grid', 'campaign-office');
     }
 
     public function get_icon() {
@@ -581,7 +581,7 @@ class CP_Elementor_Endorsement_Grid extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -589,7 +589,7 @@ class CP_Elementor_Endorsement_Grid extends CP_Elementor_Widget_Base {
         $this->add_control(
             'posts_per_page',
             array(
-                'label'   => __('Number of Endorsements', 'campaignpress'),
+                'label'   => __('Number of Endorsements', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::NUMBER,
                 'default' => 6,
             )
@@ -598,13 +598,13 @@ class CP_Elementor_Endorsement_Grid extends CP_Elementor_Widget_Base {
         $this->add_control(
             'columns',
             array(
-                'label'   => __('Columns', 'campaignpress'),
+                'label'   => __('Columns', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::SELECT,
                 'default' => '3',
                 'options' => array(
-                    '2' => __('2 Columns', 'campaignpress'),
-                    '3' => __('3 Columns', 'campaignpress'),
-                    '4' => __('4 Columns', 'campaignpress'),
+                    '2' => __('2 Columns', 'campaign-office'),
+                    '3' => __('3 Columns', 'campaign-office'),
+                    '4' => __('4 Columns', 'campaign-office'),
                 ),
             )
         );
@@ -647,7 +647,7 @@ class CP_Elementor_Endorsement_Grid extends CP_Elementor_Widget_Base {
             <?php
             wp_reset_postdata();
         else :
-            echo '<p>' . esc_html__('No endorsements found.', 'campaignpress') . '</p>';
+            echo '<p>' . esc_html__('No endorsements found.', 'campaign-office') . '</p>';
         endif;
     }
 }
@@ -666,7 +666,7 @@ class CP_Elementor_Event_Countdown extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Event Countdown', 'campaignpress');
+        return __('Event Countdown', 'campaign-office');
     }
 
     public function get_icon() {
@@ -677,7 +677,7 @@ class CP_Elementor_Event_Countdown extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -685,19 +685,19 @@ class CP_Elementor_Event_Countdown extends CP_Elementor_Widget_Base {
         $this->add_control(
             'event_date',
             array(
-                'label'       => __('Event Date', 'campaignpress'),
+                'label'       => __('Event Date', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::DATE_TIME,
                 'default'     => date('Y-m-d H:i', strtotime('+30 days')),
-                'description' => __('Select the event date and time', 'campaignpress'),
+                'description' => __('Select the event date and time', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'event_title',
             array(
-                'label'   => __('Event Title', 'campaignpress'),
+                'label'   => __('Event Title', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Election Day', 'campaignpress'),
+                'default' => __('Election Day', 'campaign-office'),
             )
         );
 
@@ -707,7 +707,7 @@ class CP_Elementor_Event_Countdown extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'style_section',
             array(
-                'label' => __('Style', 'campaignpress'),
+                'label' => __('Style', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
             )
         );
@@ -715,7 +715,7 @@ class CP_Elementor_Event_Countdown extends CP_Elementor_Widget_Base {
         $this->add_control(
             'number_color',
             array(
-                'label'     => __('Number Color', 'campaignpress'),
+                'label'     => __('Number Color', 'campaign-office'),
                 'type'      => \Elementor\Controls_Manager::COLOR,
                 'default'   => '#0073aa',
                 'selectors' => array(
@@ -748,19 +748,19 @@ class CP_Elementor_Event_Countdown extends CP_Elementor_Widget_Base {
             <div class="cp-countdown-timer">
                 <div class="cp-countdown-item">
                     <span class="cp-countdown-number"><?php echo esc_html($days); ?></span>
-                    <span class="cp-countdown-label"><?php esc_html_e('Days', 'campaignpress'); ?></span>
+                    <span class="cp-countdown-label"><?php esc_html_e('Days', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-countdown-item">
                     <span class="cp-countdown-number"><?php echo esc_html($hours); ?></span>
-                    <span class="cp-countdown-label"><?php esc_html_e('Hours', 'campaignpress'); ?></span>
+                    <span class="cp-countdown-label"><?php esc_html_e('Hours', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-countdown-item">
                     <span class="cp-countdown-number"><?php echo esc_html($minutes); ?></span>
-                    <span class="cp-countdown-label"><?php esc_html_e('Minutes', 'campaignpress'); ?></span>
+                    <span class="cp-countdown-label"><?php esc_html_e('Minutes', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-countdown-item">
                     <span class="cp-countdown-number"><?php echo esc_html($seconds); ?></span>
-                    <span class="cp-countdown-label"><?php esc_html_e('Seconds', 'campaignpress'); ?></span>
+                    <span class="cp-countdown-label"><?php esc_html_e('Seconds', 'campaign-office'); ?></span>
                 </div>
             </div>
         </div>
@@ -782,7 +782,7 @@ class CP_Elementor_Volunteer_CTA extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Volunteer CTA', 'campaignpress');
+        return __('Volunteer CTA', 'campaign-office');
     }
 
     public function get_icon() {
@@ -793,7 +793,7 @@ class CP_Elementor_Volunteer_CTA extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -801,36 +801,36 @@ class CP_Elementor_Volunteer_CTA extends CP_Elementor_Widget_Base {
         $this->add_control(
             'heading',
             array(
-                'label'   => __('Heading', 'campaignpress'),
+                'label'   => __('Heading', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Join Our Team', 'campaignpress'),
+                'default' => __('Join Our Team', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'description',
             array(
-                'label'   => __('Description', 'campaignpress'),
+                'label'   => __('Description', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => __('Make a difference in your community. Sign up to volunteer today!', 'campaignpress'),
+                'default' => __('Make a difference in your community. Sign up to volunteer today!', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'button_text',
             array(
-                'label'   => __('Button Text', 'campaignpress'),
+                'label'   => __('Button Text', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Sign Up Now', 'campaignpress'),
+                'default' => __('Sign Up Now', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'button_link',
             array(
-                'label'       => __('Button Link', 'campaignpress'),
+                'label'       => __('Button Link', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::URL,
-                'placeholder' => __('https://your-link.com', 'campaignpress'),
+                'placeholder' => __('https://your-link.com', 'campaign-office'),
             )
         );
 
@@ -840,7 +840,7 @@ class CP_Elementor_Volunteer_CTA extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'style_section',
             array(
-                'label' => __('Style', 'campaignpress'),
+                'label' => __('Style', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
             )
         );
@@ -848,7 +848,7 @@ class CP_Elementor_Volunteer_CTA extends CP_Elementor_Widget_Base {
         $this->add_control(
             'bg_color',
             array(
-                'label'     => __('Background Color', 'campaignpress'),
+                'label'     => __('Background Color', 'campaign-office'),
                 'type'      => \Elementor\Controls_Manager::COLOR,
                 'default'   => '#f8f9fa',
                 'selectors' => array(
@@ -904,7 +904,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Social Follow Buttons', 'campaignpress');
+        return __('Social Follow Buttons', 'campaign-office');
     }
 
     public function get_icon() {
@@ -915,7 +915,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Social Networks', 'campaignpress'),
+                'label' => __('Social Networks', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -923,7 +923,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
         $this->add_control(
             'facebook_url',
             array(
-                'label'       => __('Facebook URL', 'campaignpress'),
+                'label'       => __('Facebook URL', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::TEXT,
                 'placeholder' => 'https://facebook.com/...',
             )
@@ -932,7 +932,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
         $this->add_control(
             'twitter_url',
             array(
-                'label'       => __('Twitter/X URL', 'campaignpress'),
+                'label'       => __('Twitter/X URL', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::TEXT,
                 'placeholder' => 'https://twitter.com/...',
             )
@@ -941,7 +941,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
         $this->add_control(
             'instagram_url',
             array(
-                'label'       => __('Instagram URL', 'campaignpress'),
+                'label'       => __('Instagram URL', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::TEXT,
                 'placeholder' => 'https://instagram.com/...',
             )
@@ -950,7 +950,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
         $this->add_control(
             'youtube_url',
             array(
-                'label'       => __('YouTube URL', 'campaignpress'),
+                'label'       => __('YouTube URL', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::TEXT,
                 'placeholder' => 'https://youtube.com/...',
             )
@@ -959,7 +959,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
         $this->add_control(
             'tiktok_url',
             array(
-                'label'       => __('TikTok URL', 'campaignpress'),
+                'label'       => __('TikTok URL', 'campaign-office'),
                 'type'        => \Elementor\Controls_Manager::TEXT,
                 'placeholder' => 'https://tiktok.com/...',
             )
@@ -971,7 +971,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'style_section',
             array(
-                'label' => __('Style', 'campaignpress'),
+                'label' => __('Style', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
             )
         );
@@ -979,7 +979,7 @@ class CP_Elementor_Social_Follow extends CP_Elementor_Widget_Base {
         $this->add_control(
             'button_size',
             array(
-                'label'      => __('Button Size', 'campaignpress'),
+                'label'      => __('Button Size', 'campaign-office'),
                 'type'       => \Elementor\Controls_Manager::SLIDER,
                 'size_units' => array('px'),
                 'range'      => array(
@@ -1045,7 +1045,7 @@ class CP_Elementor_Team_Member extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Team Member Card', 'campaignpress');
+        return __('Team Member Card', 'campaign-office');
     }
 
     public function get_icon() {
@@ -1056,7 +1056,7 @@ class CP_Elementor_Team_Member extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -1064,7 +1064,7 @@ class CP_Elementor_Team_Member extends CP_Elementor_Widget_Base {
         $this->add_control(
             'image',
             array(
-                'label'   => __('Image', 'campaignpress'),
+                'label'   => __('Image', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::MEDIA,
                 'default' => array(
                     'url' => \Elementor\Utils::get_placeholder_image_src(),
@@ -1075,27 +1075,27 @@ class CP_Elementor_Team_Member extends CP_Elementor_Widget_Base {
         $this->add_control(
             'name',
             array(
-                'label'   => __('Name', 'campaignpress'),
+                'label'   => __('Name', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Jane Doe', 'campaignpress'),
+                'default' => __('Jane Doe', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'position',
             array(
-                'label'   => __('Position', 'campaignpress'),
+                'label'   => __('Position', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Campaign Manager', 'campaignpress'),
+                'default' => __('Campaign Manager', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'bio',
             array(
-                'label'   => __('Bio', 'campaignpress'),
+                'label'   => __('Bio', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => __('Brief bio about the team member.', 'campaignpress'),
+                'default' => __('Brief bio about the team member.', 'campaign-office'),
             )
         );
 
@@ -1140,7 +1140,7 @@ class CP_Elementor_Event_RSVP extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Event RSVP Form', 'campaignpress');
+        return __('Event RSVP Form', 'campaign-office');
     }
 
     public function get_icon() {
@@ -1151,7 +1151,7 @@ class CP_Elementor_Event_RSVP extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -1159,18 +1159,18 @@ class CP_Elementor_Event_RSVP extends CP_Elementor_Widget_Base {
         $this->add_control(
             'form_title',
             array(
-                'label'   => __('Form Title', 'campaignpress'),
+                'label'   => __('Form Title', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('RSVP for this Event', 'campaignpress'),
+                'default' => __('RSVP for this Event', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'submit_text',
             array(
-                'label'   => __('Submit Button Text', 'campaignpress'),
+                'label'   => __('Submit Button Text', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Submit RSVP', 'campaignpress'),
+                'default' => __('Submit RSVP', 'campaign-office'),
             )
         );
 
@@ -1190,22 +1190,22 @@ class CP_Elementor_Event_RSVP extends CP_Elementor_Widget_Base {
                 <?php wp_nonce_field('cp_rsvp_form', 'cp_rsvp_nonce'); ?>
 
                 <div class="cp-form-field">
-                    <label for="cp-rsvp-name"><?php esc_html_e('Name', 'campaignpress'); ?> *</label>
+                    <label for="cp-rsvp-name"><?php esc_html_e('Name', 'campaign-office'); ?> *</label>
                     <input type="text" id="cp-rsvp-name" name="rsvp_name" required>
                 </div>
 
                 <div class="cp-form-field">
-                    <label for="cp-rsvp-email"><?php esc_html_e('Email', 'campaignpress'); ?> *</label>
+                    <label for="cp-rsvp-email"><?php esc_html_e('Email', 'campaign-office'); ?> *</label>
                     <input type="email" id="cp-rsvp-email" name="rsvp_email" required>
                 </div>
 
                 <div class="cp-form-field">
-                    <label for="cp-rsvp-phone"><?php esc_html_e('Phone', 'campaignpress'); ?></label>
+                    <label for="cp-rsvp-phone"><?php esc_html_e('Phone', 'campaign-office'); ?></label>
                     <input type="tel" id="cp-rsvp-phone" name="rsvp_phone">
                 </div>
 
                 <div class="cp-form-field">
-                    <label for="cp-rsvp-guests"><?php esc_html_e('Number of Guests', 'campaignpress'); ?></label>
+                    <label for="cp-rsvp-guests"><?php esc_html_e('Number of Guests', 'campaign-office'); ?></label>
                     <input type="number" id="cp-rsvp-guests" name="rsvp_guests" min="1" max="10" value="1">
                 </div>
 
@@ -1232,7 +1232,7 @@ class CP_Elementor_Testimonial extends CP_Elementor_Widget_Base {
     }
 
     public function get_title() {
-        return __('Testimonial/Quote', 'campaignpress');
+        return __('Testimonial/Quote', 'campaign-office');
     }
 
     public function get_icon() {
@@ -1243,7 +1243,7 @@ class CP_Elementor_Testimonial extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'content_section',
             array(
-                'label' => __('Content', 'campaignpress'),
+                'label' => __('Content', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
             )
         );
@@ -1251,34 +1251,34 @@ class CP_Elementor_Testimonial extends CP_Elementor_Widget_Base {
         $this->add_control(
             'quote',
             array(
-                'label'   => __('Quote', 'campaignpress'),
+                'label'   => __('Quote', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => __('This candidate truly cares about our community and will fight for what matters most.', 'campaignpress'),
+                'default' => __('This candidate truly cares about our community and will fight for what matters most.', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'author_name',
             array(
-                'label'   => __('Author Name', 'campaignpress'),
+                'label'   => __('Author Name', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('John Smith', 'campaignpress'),
+                'default' => __('John Smith', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'author_title',
             array(
-                'label'   => __('Author Title/Location', 'campaignpress'),
+                'label'   => __('Author Title/Location', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Small Business Owner, Springfield', 'campaignpress'),
+                'default' => __('Small Business Owner, Springfield', 'campaign-office'),
             )
         );
 
         $this->add_control(
             'author_image',
             array(
-                'label'   => __('Author Image', 'campaignpress'),
+                'label'   => __('Author Image', 'campaign-office'),
                 'type'    => \Elementor\Controls_Manager::MEDIA,
             )
         );
@@ -1289,7 +1289,7 @@ class CP_Elementor_Testimonial extends CP_Elementor_Widget_Base {
         $this->start_controls_section(
             'style_section',
             array(
-                'label' => __('Style', 'campaignpress'),
+                'label' => __('Style', 'campaign-office'),
                 'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
             )
         );
@@ -1297,7 +1297,7 @@ class CP_Elementor_Testimonial extends CP_Elementor_Widget_Base {
         $this->add_control(
             'quote_color',
             array(
-                'label'     => __('Quote Color', 'campaignpress'),
+                'label'     => __('Quote Color', 'campaign-office'),
                 'type'      => \Elementor\Controls_Manager::COLOR,
                 'default'   => '#333333',
                 'selectors' => array(

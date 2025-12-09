@@ -18,7 +18,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'campaignpress'); ?></a>
+<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'campaign-office'); ?></a>
 
 <div id="page" class="site">
     <header id="masthead" class="site-header" role="banner">
@@ -43,7 +43,7 @@
                     <?php endif; ?>
                 </div><!-- .site-branding -->
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="<?php esc_attr_e('Toggle navigation', 'campaignpress'); ?>">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="<?php esc_attr_e('Toggle navigation', 'campaign-office'); ?>">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 

@@ -14,7 +14,7 @@ get_header();
 
         <header class="page-header">
             <h1 class="page-title">
-                <?php esc_html_e( 'Meet Our Team', 'campaignpress' ); ?>
+                <?php esc_html_e( 'Meet Our Team', 'campaign-office' ); ?>
             </h1>
             <?php
             $archive_description = get_the_archive_description();
@@ -61,8 +61,8 @@ get_header();
 
                             <footer class="entry-footer">
                                 <a href="<?php the_permalink(); ?>" class="read-more">
-                                    <?php esc_html_e( 'Read Bio', 'campaignpress' ); ?>
-                                    <span class="screen-reader-text"> <?php esc_html_e( 'of', 'campaignpress' ); ?> <?php the_title(); ?></span>
+                                    <?php esc_html_e( 'Read Bio', 'campaign-office' ); ?>
+                                    <span class="screen-reader-text"> <?php esc_html_e( 'of', 'campaign-office' ); ?> <?php the_title(); ?></span>
                                 </a>
                             </footer>
                         </div>
@@ -72,8 +72,8 @@ get_header();
 
             <?php
             the_posts_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
             ) );
             ?>
 
@@ -81,11 +81,11 @@ get_header();
 
             <div class="no-results not-found">
                 <header class="page-header">
-                    <h1 class="page-title"><?php esc_html_e( 'No Team Members Found', 'campaignpress' ); ?></h1>
+                    <h1 class="page-title"><?php esc_html_e( 'No Team Members Found', 'campaign-office' ); ?></h1>
                 </header>
 
                 <div class="page-content">
-                    <p><?php esc_html_e( 'No team members have been added yet.', 'campaignpress' ); ?></p>
+                    <p><?php esc_html_e( 'No team members have been added yet.', 'campaign-office' ); ?></p>
                 </div>
             </div>
 

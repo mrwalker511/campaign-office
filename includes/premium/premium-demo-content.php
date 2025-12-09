@@ -155,8 +155,8 @@ class CampaignPress_Premium_Demo_Content {
 
         add_submenu_page(
             'campaignpress-pro',
-            __('Premium Demo Content', 'campaignpress'),
-            __('Demo Content', 'campaignpress'),
+            __('Premium Demo Content', 'campaign-office'),
+            __('Demo Content', 'campaign-office'),
             'manage_options',
             'cp-premium-demo',
             array($this, 'render_admin_page')
@@ -173,81 +173,81 @@ class CampaignPress_Premium_Demo_Content {
         $compliance_active = class_exists('CampaignPress_Compliance_Init');
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('CampaignPress Premium Demo Content', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('CampaignPress Premium Demo Content', 'campaign-office'); ?></h1>
 
             <?php if (!empty($_GET['imported']) && sanitize_key($_GET['imported']) === '1') : ?>
                 <div class="notice notice-success is-dismissible">
-                    <p><?php esc_html_e('Premium demo content imported successfully!', 'campaignpress'); ?></p>
+                    <p><?php esc_html_e('Premium demo content imported successfully!', 'campaign-office'); ?></p>
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($_GET['deleted']) && sanitize_key($_GET['deleted']) === '1') : ?>
                 <div class="notice notice-success is-dismissible">
-                    <p><?php esc_html_e('Premium demo content deleted successfully!', 'campaignpress'); ?></p>
+                    <p><?php esc_html_e('Premium demo content deleted successfully!', 'campaign-office'); ?></p>
                 </div>
             <?php endif; ?>
 
             <div class="card" style="max-width: 900px;">
-                <h2><?php esc_html_e('Premium Feature Demo Data', 'campaignpress'); ?></h2>
-                <p><?php esc_html_e('Generate realistic sample data to test and demonstrate CampaignPress Premium features.', 'campaignpress'); ?></p>
+                <h2><?php esc_html_e('Premium Feature Demo Data', 'campaign-office'); ?></h2>
+                <p><?php esc_html_e('Generate realistic sample data to test and demonstrate CampaignPress Premium features.', 'campaign-office'); ?></p>
 
-                <h3><?php esc_html_e('Content to be created:', 'campaignpress'); ?></h3>
+                <h3><?php esc_html_e('Content to be created:', 'campaign-office'); ?></h3>
 
                 <table class="widefat" style="margin: 15px 0;">
                     <thead>
                         <tr>
-                            <th><?php esc_html_e('Module', 'campaignpress'); ?></th>
-                            <th><?php esc_html_e('Demo Data', 'campaignpress'); ?></th>
-                            <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
+                            <th><?php esc_html_e('Module', 'campaign-office'); ?></th>
+                            <th><?php esc_html_e('Demo Data', 'campaign-office'); ?></th>
+                            <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong><?php esc_html_e('CRM', 'campaignpress'); ?></strong></td>
+                            <td><strong><?php esc_html_e('CRM', 'campaign-office'); ?></strong></td>
                             <td>
-                                <?php esc_html_e('500 sample contacts with voter data', 'campaignpress'); ?><br>
-                                <?php esc_html_e('1,000+ interaction records', 'campaignpress'); ?><br>
-                                <?php esc_html_e('15 tags (voter issues, demographics)', 'campaignpress'); ?><br>
-                                <?php esc_html_e('5 smart segments', 'campaignpress'); ?><br>
-                                <?php esc_html_e('Engagement scores calculated', 'campaignpress'); ?>
+                                <?php esc_html_e('500 sample contacts with voter data', 'campaign-office'); ?><br>
+                                <?php esc_html_e('1,000+ interaction records', 'campaign-office'); ?><br>
+                                <?php esc_html_e('15 tags (voter issues, demographics)', 'campaign-office'); ?><br>
+                                <?php esc_html_e('5 smart segments', 'campaign-office'); ?><br>
+                                <?php esc_html_e('Engagement scores calculated', 'campaign-office'); ?>
                             </td>
                             <td>
                                 <?php if ($crm_active) : ?>
-                                    <span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span> <?php esc_html_e('Active', 'campaignpress'); ?>
+                                    <span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span> <?php esc_html_e('Active', 'campaign-office'); ?>
                                 <?php else : ?>
-                                    <span class="dashicons dashicons-warning" style="color: #ffb900;"></span> <?php esc_html_e('Module not active', 'campaignpress'); ?>
+                                    <span class="dashicons dashicons-warning" style="color: #ffb900;"></span> <?php esc_html_e('Module not active', 'campaign-office'); ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <td><strong><?php esc_html_e('Field Operations', 'campaignpress'); ?></strong></td>
+                            <td><strong><?php esc_html_e('Field Operations', 'campaign-office'); ?></strong></td>
                             <td>
-                                <?php esc_html_e('10 canvassing turfs with boundaries', 'campaignpress'); ?><br>
-                                <?php esc_html_e('5 phone banking campaigns', 'campaignpress'); ?><br>
-                                <?php esc_html_e('3 GOTV target lists', 'campaignpress'); ?><br>
-                                <?php esc_html_e('50 volunteer shift assignments', 'campaignpress'); ?>
+                                <?php esc_html_e('10 canvassing turfs with boundaries', 'campaign-office'); ?><br>
+                                <?php esc_html_e('5 phone banking campaigns', 'campaign-office'); ?><br>
+                                <?php esc_html_e('3 GOTV target lists', 'campaign-office'); ?><br>
+                                <?php esc_html_e('50 volunteer shift assignments', 'campaign-office'); ?>
                             </td>
                             <td>
                                 <?php if ($field_ops_active) : ?>
-                                    <span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span> <?php esc_html_e('Active', 'campaignpress'); ?>
+                                    <span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span> <?php esc_html_e('Active', 'campaign-office'); ?>
                                 <?php else : ?>
-                                    <span class="dashicons dashicons-warning" style="color: #ffb900;"></span> <?php esc_html_e('Module not active', 'campaignpress'); ?>
+                                    <span class="dashicons dashicons-warning" style="color: #ffb900;"></span> <?php esc_html_e('Module not active', 'campaign-office'); ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <td><strong><?php esc_html_e('FEC Compliance', 'campaignpress'); ?></strong></td>
+                            <td><strong><?php esc_html_e('FEC Compliance', 'campaign-office'); ?></strong></td>
                             <td>
-                                <?php esc_html_e('100 sample contributions ($25 - $2,900)', 'campaignpress'); ?><br>
-                                <?php esc_html_e('75 unique donors with employer data', 'campaignpress'); ?><br>
-                                <?php esc_html_e('Quarterly report data', 'campaignpress'); ?><br>
-                                <?php esc_html_e('Audit trail entries', 'campaignpress'); ?>
+                                <?php esc_html_e('100 sample contributions ($25 - $2,900)', 'campaign-office'); ?><br>
+                                <?php esc_html_e('75 unique donors with employer data', 'campaign-office'); ?><br>
+                                <?php esc_html_e('Quarterly report data', 'campaign-office'); ?><br>
+                                <?php esc_html_e('Audit trail entries', 'campaign-office'); ?>
                             </td>
                             <td>
                                 <?php if ($compliance_active) : ?>
-                                    <span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span> <?php esc_html_e('Active', 'campaignpress'); ?>
+                                    <span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span> <?php esc_html_e('Active', 'campaign-office'); ?>
                                 <?php else : ?>
-                                    <span class="dashicons dashicons-warning" style="color: #ffb900;"></span> <?php esc_html_e('Module not active', 'campaignpress'); ?>
+                                    <span class="dashicons dashicons-warning" style="color: #ffb900;"></span> <?php esc_html_e('Module not active', 'campaign-office'); ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -255,7 +255,7 @@ class CampaignPress_Premium_Demo_Content {
                 </table>
 
                 <div class="notice notice-info inline" style="margin: 15px 0;">
-                    <p><strong><?php esc_html_e('Note:', 'campaignpress'); ?></strong> <?php esc_html_e('Only active modules will receive demo data. Enable modules in Features settings first.', 'campaignpress'); ?></p>
+                    <p><strong><?php esc_html_e('Note:', 'campaign-office'); ?></strong> <?php esc_html_e('Only active modules will receive demo data. Enable modules in Features settings first.', 'campaign-office'); ?></p>
                 </div>
 
                 <?php if (!$demo_exists) : ?>
@@ -264,29 +264,29 @@ class CampaignPress_Premium_Demo_Content {
                         <?php wp_nonce_field('cp_import_premium_demo', 'cp_premium_demo_nonce'); ?>
                         <p>
                             <button type="submit" class="button button-primary button-hero">
-                                <?php esc_html_e('Generate Premium Demo Data', 'campaignpress'); ?>
+                                <?php esc_html_e('Generate Premium Demo Data', 'campaign-office'); ?>
                             </button>
                         </p>
                         <p class="description">
-                            <?php esc_html_e('This creates sample data in premium module tables. You can delete it anytime.', 'campaignpress'); ?>
+                            <?php esc_html_e('This creates sample data in premium module tables. You can delete it anytime.', 'campaign-office'); ?>
                         </p>
                     </form>
                 <?php else : ?>
                     <div class="notice notice-success inline" style="margin: 15px 0;">
-                        <p><?php esc_html_e('Premium demo data is currently installed.', 'campaignpress'); ?></p>
+                        <p><?php esc_html_e('Premium demo data is currently installed.', 'campaign-office'); ?></p>
                     </div>
                     <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-delete-premium-demo-form">
                         <input type="hidden" name="action" value="cp_delete_premium_demo">
                         <?php wp_nonce_field('cp_delete_premium_demo', 'cp_premium_demo_nonce'); ?>
                         <p>
                             <button type="submit" class="button button-secondary">
-                                <?php esc_html_e('Delete Premium Demo Data', 'campaignpress'); ?>
+                                <?php esc_html_e('Delete Premium Demo Data', 'campaign-office'); ?>
                             </button>
                         </p>
                     </form>
                     <script>
                     document.getElementById('cp-delete-premium-demo-form').addEventListener('submit', function(e) {
-                        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete all premium demo data? This cannot be undone.', 'campaignpress')); ?>')) {
+                        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete all premium demo data? This cannot be undone.', 'campaign-office')); ?>')) {
                             e.preventDefault();
                         }
                     });
@@ -303,12 +303,12 @@ class CampaignPress_Premium_Demo_Content {
     public function handle_import() {
         // Check nonce
         if (!isset($_POST['cp_premium_demo_nonce']) || !wp_verify_nonce($_POST['cp_premium_demo_nonce'], 'cp_import_premium_demo')) {
-            wp_die(__('Security check failed', 'campaignpress'));
+            wp_die(__('Security check failed', 'campaign-office'));
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('Insufficient permissions', 'campaignpress'));
+            wp_die(__('Insufficient permissions', 'campaign-office'));
         }
 
         $demo_ids = array();
@@ -343,12 +343,12 @@ class CampaignPress_Premium_Demo_Content {
     public function handle_delete() {
         // Check nonce
         if (!isset($_POST['cp_premium_demo_nonce']) || !wp_verify_nonce($_POST['cp_premium_demo_nonce'], 'cp_delete_premium_demo')) {
-            wp_die(__('Security check failed', 'campaignpress'));
+            wp_die(__('Security check failed', 'campaign-office'));
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('Insufficient permissions', 'campaignpress'));
+            wp_die(__('Insufficient permissions', 'campaign-office'));
         }
 
         global $wpdb;

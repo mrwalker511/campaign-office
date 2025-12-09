@@ -31,13 +31,13 @@ if ( post_password_required() ) {
             if ( '1' === $comment_count ) {
                 printf(
                     /* translators: 1: title. */
-                    esc_html__( 'One comment on &ldquo;%1$s&rdquo;', 'campaignpress' ),
+                    esc_html__( 'One comment on &ldquo;%1$s&rdquo;', 'campaign-office' ),
                     '<span>' . wp_kses_post( get_the_title() ) . '</span>'
                 );
             } else {
                 printf(
                     /* translators: 1: comment count number, 2: title. */
-                    esc_html( _nx( '%1$s comment on &ldquo;%2$s&rdquo;', '%1$s comments on &ldquo;%2$s&rdquo;', $comment_count, 'comments title', 'campaignpress' ) ),
+                    esc_html( _nx( '%1$s comment on &ldquo;%2$s&rdquo;', '%1$s comments on &ldquo;%2$s&rdquo;', $comment_count, 'comments title', 'campaign-office' ) ),
                     number_format_i18n( $comment_count ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     '<span>' . wp_kses_post( get_the_title() ) . '</span>'
                 );
@@ -65,7 +65,7 @@ if ( post_password_required() ) {
         // If comments are closed and there are comments, let's leave a little note, shall we?
         if ( ! comments_open() ) :
             ?>
-            <p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'campaignpress' ); ?></p>
+            <p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'campaign-office' ); ?></p>
             <?php
         endif;
 

@@ -28,7 +28,7 @@ get_header();
 
                         printf(
                             ' <span class="byline">%s <span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span></span>',
-                            esc_html__( 'by', 'campaignpress' )
+                            esc_html__( 'by', 'campaign-office' )
                         );
                         ?>
                     </div>
@@ -52,7 +52,7 @@ get_header();
                     <?php
                     the_content( sprintf(
                         wp_kses(
-                            __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'campaignpress' ),
+                            __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'campaign-office' ),
                             array(
                                 'span' => array(
                                     'class' => array(),
@@ -63,7 +63,7 @@ get_header();
                     ) );
 
                     wp_link_pages( array(
-                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaignpress' ),
+                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaign-office' ),
                         'after'  => '</div>',
                     ) );
                     ?>
@@ -72,15 +72,15 @@ get_header();
                 <footer class="entry-footer">
                     <?php if ( has_tag() ) : ?>
                         <div class="post-tags">
-                            <?php the_tags( '<strong>' . esc_html__( 'Tags:', 'campaignpress' ) . '</strong> ', ', ', '' ); ?>
+                            <?php the_tags( '<strong>' . esc_html__( 'Tags:', 'campaign-office' ) . '</strong> ', ', ', '' ); ?>
                         </div>
                     <?php endif; ?>
 
                     <div class="post-navigation">
                         <?php
                         the_post_navigation( array(
-                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
                         ) );
                         ?>
                     </div>

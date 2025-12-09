@@ -14,7 +14,7 @@ get_header();
 
         <header class="page-header">
             <h1 class="page-title">
-                <?php esc_html_e( 'Volunteer Opportunities', 'campaignpress' ); ?>
+                <?php esc_html_e( 'Volunteer Opportunities', 'campaign-office' ); ?>
             </h1>
             <?php
             $archive_description = get_the_archive_description();
@@ -56,14 +56,14 @@ get_header();
                             <footer class="entry-footer">
                                 <div class="volunteer-actions">
                                     <a href="<?php the_permalink(); ?>" class="button button-secondary">
-                                        <?php esc_html_e( 'Learn More', 'campaignpress' ); ?>
+                                        <?php esc_html_e( 'Learn More', 'campaign-office' ); ?>
                                     </a>
                                     <?php
                                     $volunteer_url = get_option( 'campaignpress_volunteer_url' );
                                     if ( $volunteer_url ) :
                                         ?>
                                         <a href="<?php echo esc_url( $volunteer_url ); ?>" class="button button-primary" target="_blank" rel="noopener">
-                                            <?php esc_html_e( 'Sign Up to Volunteer', 'campaignpress' ); ?>
+                                            <?php esc_html_e( 'Sign Up to Volunteer', 'campaign-office' ); ?>
                                         </a>
                                     <?php endif; ?>
                                 </div>
@@ -75,8 +75,8 @@ get_header();
 
             <?php
             the_posts_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
             ) );
             ?>
 
@@ -84,11 +84,11 @@ get_header();
 
             <div class="no-results not-found">
                 <header class="page-header">
-                    <h1 class="page-title"><?php esc_html_e( 'No Volunteer Opportunities Found', 'campaignpress' ); ?></h1>
+                    <h1 class="page-title"><?php esc_html_e( 'No Volunteer Opportunities Found', 'campaign-office' ); ?></h1>
                 </header>
 
                 <div class="page-content">
-                    <p><?php esc_html_e( 'No volunteer opportunities are currently available. Check back soon!', 'campaignpress' ); ?></p>
+                    <p><?php esc_html_e( 'No volunteer opportunities are currently available. Check back soon!', 'campaign-office' ); ?></p>
                 </div>
             </div>
 

@@ -217,8 +217,8 @@ class CP_Phone_Banking {
     public function add_admin_menu() {
         add_submenu_page(
             'cp-field-operations',
-            __('Phone Banking', 'campaignpress'),
-            __('Phone Banking', 'campaignpress'),
+            __('Phone Banking', 'campaign-office'),
+            __('Phone Banking', 'campaign-office'),
             'edit_posts',
             'cp-phone-banking',
             array($this, 'render_admin_page')
@@ -226,8 +226,8 @@ class CP_Phone_Banking {
 
         add_submenu_page(
             'cp-phone-banking',
-            __('Call Lists', 'campaignpress'),
-            __('Call Lists', 'campaignpress'),
+            __('Call Lists', 'campaign-office'),
+            __('Call Lists', 'campaign-office'),
             'edit_posts',
             'cp-call-lists',
             array($this, 'render_call_lists_page')
@@ -235,8 +235,8 @@ class CP_Phone_Banking {
 
         add_submenu_page(
             'cp-phone-banking',
-            __('Scripts', 'campaignpress'),
-            __('Scripts', 'campaignpress'),
+            __('Scripts', 'campaign-office'),
+            __('Scripts', 'campaign-office'),
             'edit_posts',
             'cp-call-scripts',
             array($this, 'render_scripts_page')
@@ -244,8 +244,8 @@ class CP_Phone_Banking {
 
         add_submenu_page(
             'cp-phone-banking',
-            __('Shift Scheduling', 'campaignpress'),
-            __('Shifts', 'campaignpress'),
+            __('Shift Scheduling', 'campaign-office'),
+            __('Shifts', 'campaign-office'),
             'edit_posts',
             'cp-pb-shifts',
             array($this, 'render_shifts_page')
@@ -253,8 +253,8 @@ class CP_Phone_Banking {
 
         add_submenu_page(
             'cp-phone-banking',
-            __('Callbacks', 'campaignpress'),
-            __('Callbacks', 'campaignpress'),
+            __('Callbacks', 'campaign-office'),
+            __('Callbacks', 'campaign-office'),
             'edit_posts',
             'cp-callbacks',
             array($this, 'render_callbacks_page')
@@ -299,37 +299,37 @@ class CP_Phone_Banking {
 
         ?>
         <div class="wrap cp-phone-banking-dashboard">
-            <h1><?php esc_html_e('Phone Banking Dashboard', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Phone Banking Dashboard', 'campaign-office'); ?></h1>
 
             <!-- Stats Cards -->
             <div class="cp-stats-grid">
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Calls Today', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Calls Today', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['calls_today'])); ?></div>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Conversations', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Conversations', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['conversations'])); ?></div>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Active Callers', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Active Callers', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['active_callers'])); ?></div>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Avg Call Time', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Avg Call Time', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html($this->format_duration($stats['avg_duration'])); ?></div>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Contact Rate', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Contact Rate', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['contact_rate'], 1)); ?>%</div>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Pending Callbacks', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Pending Callbacks', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['pending_callbacks'])); ?></div>
                 </div>
             </div>
@@ -337,28 +337,28 @@ class CP_Phone_Banking {
             <!-- Quick Actions -->
             <div class="cp-quick-actions">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-lists&action=new')); ?>" class="button button-primary">
-                    <?php esc_html_e('Create Call List', 'campaignpress'); ?>
+                    <?php esc_html_e('Create Call List', 'campaign-office'); ?>
                 </a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-scripts&action=new')); ?>" class="button">
-                    <?php esc_html_e('Create Script', 'campaignpress'); ?>
+                    <?php esc_html_e('Create Script', 'campaign-office'); ?>
                 </a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-pb-shifts&action=new')); ?>" class="button">
-                    <?php esc_html_e('Schedule Shift', 'campaignpress'); ?>
+                    <?php esc_html_e('Schedule Shift', 'campaign-office'); ?>
                 </a>
                 <a href="#" class="button cp-export-data" data-type="phone-banking">
-                    <?php esc_html_e('Export Data', 'campaignpress'); ?>
+                    <?php esc_html_e('Export Data', 'campaign-office'); ?>
                 </a>
             </div>
 
             <!-- Call Disposition Breakdown -->
             <div class="cp-disposition-chart">
-                <h2><?php esc_html_e('Today\'s Call Results', 'campaignpress'); ?></h2>
+                <h2><?php esc_html_e('Today\'s Call Results', 'campaign-office'); ?></h2>
                 <?php $this->render_disposition_chart(); ?>
             </div>
 
             <!-- Leaderboard -->
             <div class="cp-leaderboard">
-                <h2><?php esc_html_e('Top Callers This Week', 'campaignpress'); ?></h2>
+                <h2><?php esc_html_e('Top Callers This Week', 'campaign-office'); ?></h2>
                 <?php $this->render_leaderboard(); ?>
             </div>
         </div>
@@ -422,9 +422,9 @@ class CP_Phone_Banking {
 
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e('Call Lists', 'campaignpress'); ?></h1>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Call Lists', 'campaign-office'); ?></h1>
             <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-lists&action=new')); ?>" class="page-title-action">
-                <?php esc_html_e('Create Call List', 'campaignpress'); ?>
+                <?php esc_html_e('Create Call List', 'campaign-office'); ?>
             </a>
 
             <hr class="wp-header-end">
@@ -432,20 +432,20 @@ class CP_Phone_Banking {
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Name', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Script', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Total Contacts', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Completed', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Progress', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Priority', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Name', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Script', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Total Contacts', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Completed', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Progress', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Priority', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($call_lists)) : ?>
                         <tr>
-                            <td colspan="8"><?php esc_html_e('No call lists found. Create your first call list!', 'campaignpress'); ?></td>
+                            <td colspan="8"><?php esc_html_e('No call lists found. Create your first call list!', 'campaign-office'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($call_lists as $list) : ?>
@@ -467,10 +467,10 @@ class CP_Phone_Banking {
                                 <td><span class="cp-status-badge cp-status-<?php echo esc_attr($list->status); ?>"><?php echo esc_html(ucfirst($list->status)); ?></span></td>
                                 <td>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-lists&action=view&id=' . $list->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('View', 'campaignpress'); ?>
+                                        <?php esc_html_e('View', 'campaign-office'); ?>
                                     </a>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-lists&action=export&id=' . $list->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('Export', 'campaignpress'); ?>
+                                        <?php esc_html_e('Export', 'campaign-office'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -509,53 +509,53 @@ class CP_Phone_Banking {
     private function render_new_call_list_form() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Create Call List', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Create Call List', 'campaign-office'); ?></h1>
 
             <form id="cp-new-call-list-form">
                 <?php wp_nonce_field('cp_create_call_list', 'cp_call_list_nonce'); ?>
 
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><label for="call_list_name"><?php esc_html_e('Call List Name', 'campaignpress'); ?></label></th>
+                        <th scope="row"><label for="call_list_name"><?php esc_html_e('Call List Name', 'campaign-office'); ?></label></th>
                         <td><input type="text" id="call_list_name" name="name" class="regular-text" required></td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="call_list_description"><?php esc_html_e('Description', 'campaignpress'); ?></label></th>
+                        <th scope="row"><label for="call_list_description"><?php esc_html_e('Description', 'campaign-office'); ?></label></th>
                         <td><textarea id="call_list_description" name="description" rows="3" class="large-text"></textarea></td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="script_id"><?php esc_html_e('Call Script', 'campaignpress'); ?></label></th>
+                        <th scope="row"><label for="script_id"><?php esc_html_e('Call Script', 'campaign-office'); ?></label></th>
                         <td>
                             <select id="script_id" name="script_id">
-                                <option value=""><?php esc_html_e('No script', 'campaignpress'); ?></option>
+                                <option value=""><?php esc_html_e('No script', 'campaign-office'); ?></option>
                                 <?php echo $this->get_scripts_dropdown(); ?>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="priority"><?php esc_html_e('Priority', 'campaignpress'); ?></label></th>
+                        <th scope="row"><label for="priority"><?php esc_html_e('Priority', 'campaign-office'); ?></label></th>
                         <td>
                             <select id="priority" name="priority">
-                                <option value="1"><?php esc_html_e('Very Low', 'campaignpress'); ?></option>
-                                <option value="3"><?php esc_html_e('Low', 'campaignpress'); ?></option>
-                                <option value="5" selected><?php esc_html_e('Medium', 'campaignpress'); ?></option>
-                                <option value="7"><?php esc_html_e('High', 'campaignpress'); ?></option>
-                                <option value="10"><?php esc_html_e('Critical', 'campaignpress'); ?></option>
+                                <option value="1"><?php esc_html_e('Very Low', 'campaign-office'); ?></option>
+                                <option value="3"><?php esc_html_e('Low', 'campaign-office'); ?></option>
+                                <option value="5" selected><?php esc_html_e('Medium', 'campaign-office'); ?></option>
+                                <option value="7"><?php esc_html_e('High', 'campaign-office'); ?></option>
+                                <option value="10"><?php esc_html_e('Critical', 'campaign-office'); ?></option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="upload_csv"><?php esc_html_e('Upload Contacts (CSV)', 'campaignpress'); ?></label></th>
+                        <th scope="row"><label for="upload_csv"><?php esc_html_e('Upload Contacts (CSV)', 'campaign-office'); ?></label></th>
                         <td>
                             <input type="file" id="upload_csv" name="contacts_csv" accept=".csv">
-                            <p class="description"><?php esc_html_e('CSV should include: name, phone, email (optional)', 'campaignpress'); ?></p>
+                            <p class="description"><?php esc_html_e('CSV should include: name, phone, email (optional)', 'campaign-office'); ?></p>
                         </td>
                     </tr>
                 </table>
 
                 <p class="submit">
-                    <button type="submit" class="button button-primary"><?php esc_html_e('Create Call List', 'campaignpress'); ?></button>
-                    <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-lists')); ?>" class="button"><?php esc_html_e('Cancel', 'campaignpress'); ?></a>
+                    <button type="submit" class="button button-primary"><?php esc_html_e('Create Call List', 'campaign-office'); ?></button>
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-lists')); ?>" class="button"><?php esc_html_e('Cancel', 'campaign-office'); ?></a>
                 </p>
             </form>
         </div>
@@ -604,29 +604,29 @@ class CP_Phone_Banking {
 
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e('Call Scripts', 'campaignpress'); ?></h1>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Call Scripts', 'campaign-office'); ?></h1>
             <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-scripts&action=new')); ?>" class="page-title-action">
-                <?php esc_html_e('Create Script', 'campaignpress'); ?>
+                <?php esc_html_e('Create Script', 'campaign-office'); ?>
             </a>
 
             <hr class="wp-header-end">
 
-            <p><?php esc_html_e('Create call scripts with branching logic to guide phone bank conversations.', 'campaignpress'); ?></p>
+            <p><?php esc_html_e('Create call scripts with branching logic to guide phone bank conversations.', 'campaign-office'); ?></p>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Script Name', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Questions', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Usage', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Script Name', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Questions', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Usage', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($scripts)) : ?>
                         <tr>
-                            <td colspan="5"><?php esc_html_e('No scripts created yet.', 'campaignpress'); ?></td>
+                            <td colspan="5"><?php esc_html_e('No scripts created yet.', 'campaign-office'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($scripts as $script) : ?>
@@ -642,13 +642,13 @@ class CP_Phone_Banking {
                                 <td><strong><?php echo esc_html($script->name); ?></strong></td>
                                 <td><?php echo esc_html($question_count); ?></td>
                                 <td><span class="cp-status-badge cp-status-<?php echo esc_attr($script->status); ?>"><?php echo esc_html(ucfirst($script->status)); ?></span></td>
-                                <td><?php echo esc_html(number_format($usage_count)); ?> <?php esc_html_e('call lists', 'campaignpress'); ?></td>
+                                <td><?php echo esc_html(number_format($usage_count)); ?> <?php esc_html_e('call lists', 'campaign-office'); ?></td>
                                 <td>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-scripts&action=edit&id=' . $script->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('Edit', 'campaignpress'); ?>
+                                        <?php esc_html_e('Edit', 'campaign-office'); ?>
                                     </a>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-scripts&action=duplicate&id=' . $script->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('Duplicate', 'campaignpress'); ?>
+                                        <?php esc_html_e('Duplicate', 'campaign-office'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -666,7 +666,7 @@ class CP_Phone_Banking {
     private function render_script_builder() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Script Builder', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Script Builder', 'campaign-office'); ?></h1>
 
             <div class="cp-script-builder">
                 <form id="cp-script-builder-form">
@@ -674,24 +674,24 @@ class CP_Phone_Banking {
 
                     <table class="form-table">
                         <tr>
-                            <th scope="row"><label for="script_name"><?php esc_html_e('Script Name', 'campaignpress'); ?></label></th>
+                            <th scope="row"><label for="script_name"><?php esc_html_e('Script Name', 'campaign-office'); ?></label></th>
                             <td><input type="text" id="script_name" name="name" class="regular-text" required></td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="script_description"><?php esc_html_e('Description', 'campaignpress'); ?></label></th>
+                            <th scope="row"><label for="script_description"><?php esc_html_e('Description', 'campaign-office'); ?></label></th>
                             <td><textarea id="script_description" name="description" rows="2" class="large-text"></textarea></td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="script_content"><?php esc_html_e('Script Content', 'campaignpress'); ?></label></th>
+                            <th scope="row"><label for="script_content"><?php esc_html_e('Script Content', 'campaign-office'); ?></label></th>
                             <td>
-                                <textarea id="script_content" name="script_content" rows="10" class="large-text code" placeholder="<?php esc_attr_e('Enter your call script here...', 'campaignpress'); ?>"></textarea>
-                                <p class="description"><?php esc_html_e('This is what callers will read. Use {name} for personalization.', 'campaignpress'); ?></p>
+                                <textarea id="script_content" name="script_content" rows="10" class="large-text code" placeholder="<?php esc_attr_e('Enter your call script here...', 'campaign-office'); ?>"></textarea>
+                                <p class="description"><?php esc_html_e('This is what callers will read. Use {name} for personalization.', 'campaign-office'); ?></p>
                             </td>
                         </tr>
                     </table>
 
-                    <h2><?php esc_html_e('Survey Questions', 'campaignpress'); ?></h2>
-                    <p class="description"><?php esc_html_e('Add questions to collect data during calls.', 'campaignpress'); ?></p>
+                    <h2><?php esc_html_e('Survey Questions', 'campaign-office'); ?></h2>
+                    <p class="description"><?php esc_html_e('Add questions to collect data during calls.', 'campaign-office'); ?></p>
 
                     <div id="cp-script-questions">
                         <!-- Questions will be added here dynamically -->
@@ -699,12 +699,12 @@ class CP_Phone_Banking {
 
                     <button type="button" class="button" id="cp-add-question">
                         <span class="dashicons dashicons-plus"></span>
-                        <?php esc_html_e('Add Question', 'campaignpress'); ?>
+                        <?php esc_html_e('Add Question', 'campaign-office'); ?>
                     </button>
 
                     <p class="submit">
-                        <button type="submit" class="button button-primary"><?php esc_html_e('Save Script', 'campaignpress'); ?></button>
-                        <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-scripts')); ?>" class="button"><?php esc_html_e('Cancel', 'campaignpress'); ?></a>
+                        <button type="submit" class="button button-primary"><?php esc_html_e('Save Script', 'campaign-office'); ?></button>
+                        <a href="<?php echo esc_url(admin_url('admin.php?page=cp-call-scripts')); ?>" class="button"><?php esc_html_e('Cancel', 'campaign-office'); ?></a>
                     </p>
                 </form>
             </div>
@@ -717,25 +717,25 @@ class CP_Phone_Banking {
             $('#cp-add-question').on('click', function() {
                 var questionHtml = `
                     <div class="cp-question-block" data-index="${questionIndex}">
-                        <h4><?php esc_html_e('Question', 'campaignpress'); ?> ${questionIndex + 1}</h4>
+                        <h4><?php esc_html_e('Question', 'campaign-office'); ?> ${questionIndex + 1}</h4>
                         <table class="form-table">
                             <tr>
-                                <th><label><?php esc_html_e('Question Text', 'campaignpress'); ?></label></th>
+                                <th><label><?php esc_html_e('Question Text', 'campaign-office'); ?></label></th>
                                 <td><input type="text" name="questions[${questionIndex}][text]" class="regular-text" required></td>
                             </tr>
                             <tr>
-                                <th><label><?php esc_html_e('Type', 'campaignpress'); ?></label></th>
+                                <th><label><?php esc_html_e('Type', 'campaign-office'); ?></label></th>
                                 <td>
                                     <select name="questions[${questionIndex}][type]">
-                                        <option value="yes_no"><?php esc_html_e('Yes/No', 'campaignpress'); ?></option>
-                                        <option value="text"><?php esc_html_e('Text', 'campaignpress'); ?></option>
-                                        <option value="multiple_choice"><?php esc_html_e('Multiple Choice', 'campaignpress'); ?></option>
-                                        <option value="scale"><?php esc_html_e('Scale (1-10)', 'campaignpress'); ?></option>
+                                        <option value="yes_no"><?php esc_html_e('Yes/No', 'campaign-office'); ?></option>
+                                        <option value="text"><?php esc_html_e('Text', 'campaign-office'); ?></option>
+                                        <option value="multiple_choice"><?php esc_html_e('Multiple Choice', 'campaign-office'); ?></option>
+                                        <option value="scale"><?php esc_html_e('Scale (1-10)', 'campaign-office'); ?></option>
                                     </select>
                                 </td>
                             </tr>
                         </table>
-                        <button type="button" class="button cp-remove-question"><?php esc_html_e('Remove Question', 'campaignpress'); ?></button>
+                        <button type="button" class="button cp-remove-question"><?php esc_html_e('Remove Question', 'campaign-office'); ?></button>
                         <hr>
                     </div>
                 `;
@@ -802,9 +802,9 @@ class CP_Phone_Banking {
 
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e('Phone Banking Shifts', 'campaignpress'); ?></h1>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Phone Banking Shifts', 'campaign-office'); ?></h1>
             <a href="<?php echo esc_url(admin_url('admin.php?page=cp-pb-shifts&action=new')); ?>" class="page-title-action">
-                <?php esc_html_e('Schedule Shift', 'campaignpress'); ?>
+                <?php esc_html_e('Schedule Shift', 'campaign-office'); ?>
             </a>
 
             <hr class="wp-header-end">
@@ -812,20 +812,20 @@ class CP_Phone_Banking {
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Shift Name', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Date', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Time', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Call List', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Volunteers', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Location', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Shift Name', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Date', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Time', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Call List', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Volunteers', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Location', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($shifts)) : ?>
                         <tr>
-                            <td colspan="8"><?php esc_html_e('No upcoming shifts scheduled.', 'campaignpress'); ?></td>
+                            <td colspan="8"><?php esc_html_e('No upcoming shifts scheduled.', 'campaign-office'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($shifts as $shift) : ?>
@@ -843,7 +843,7 @@ class CP_Phone_Banking {
                                 <td><span class="cp-status-badge cp-status-<?php echo esc_attr($shift->status); ?>"><?php echo esc_html(ucfirst($shift->status)); ?></span></td>
                                 <td>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-pb-shifts&action=edit&id=' . $shift->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('Edit', 'campaignpress'); ?>
+                                        <?php esc_html_e('Edit', 'campaign-office'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -867,23 +867,23 @@ class CP_Phone_Banking {
 
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Scheduled Callbacks', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Scheduled Callbacks', 'campaign-office'); ?></h1>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Contact', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Phone', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Scheduled For', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Assigned To', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Notes', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Contact', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Phone', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Scheduled For', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Assigned To', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Notes', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($callbacks)) : ?>
                         <tr>
-                            <td colspan="6"><?php esc_html_e('No pending callbacks.', 'campaignpress'); ?></td>
+                            <td colspan="6"><?php esc_html_e('No pending callbacks.', 'campaign-office'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($callbacks as $callback) : ?>
@@ -895,7 +895,7 @@ class CP_Phone_Banking {
                                 <td><?php echo esc_html(wp_trim_words($callback->notes, 10)); ?></td>
                                 <td>
                                     <a href="#" class="button button-small cp-call-now" data-phone="<?php echo esc_attr($callback->contact_phone); ?>">
-                                        <?php esc_html_e('Call Now', 'campaignpress'); ?>
+                                        <?php esc_html_e('Call Now', 'campaign-office'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -916,7 +916,7 @@ class CP_Phone_Banking {
         ), $atts);
 
         if (!is_user_logged_in()) {
-            return '<p>' . esc_html__('You must be logged in to access phone banking.', 'campaignpress') . '</p>';
+            return '<p>' . esc_html__('You must be logged in to access phone banking.', 'campaign-office') . '</p>';
         }
 
         ob_start();
@@ -925,13 +925,13 @@ class CP_Phone_Banking {
             <!-- Connection Status -->
             <div class="cp-connection-status">
                 <span class="cp-status-indicator cp-online"></span>
-                <span class="cp-status-text"><?php esc_html_e('Connected', 'campaignpress'); ?></span>
+                <span class="cp-status-text"><?php esc_html_e('Connected', 'campaign-office'); ?></span>
             </div>
 
             <!-- Current Contact Card -->
             <div class="cp-contact-card">
                 <div class="cp-contact-header">
-                    <h2 id="cp-contact-name"><?php esc_html_e('Loading...', 'campaignpress'); ?></h2>
+                    <h2 id="cp-contact-name"><?php esc_html_e('Loading...', 'campaign-office'); ?></h2>
                     <div class="cp-contact-phone" id="cp-contact-phone"></div>
                 </div>
 
@@ -939,7 +939,7 @@ class CP_Phone_Banking {
                 <div class="cp-call-action">
                     <button class="cp-call-btn" id="cp-click-to-call">
                         <span class="dashicons dashicons-phone"></span>
-                        <?php esc_html_e('Click to Call', 'campaignpress'); ?>
+                        <?php esc_html_e('Click to Call', 'campaign-office'); ?>
                     </button>
                     <div class="cp-call-timer" id="cp-call-timer" style="display: none;">
                         <span class="dashicons dashicons-clock"></span>
@@ -950,57 +950,57 @@ class CP_Phone_Banking {
 
             <!-- Call Script -->
             <div class="cp-call-script">
-                <h3><?php esc_html_e('Script', 'campaignpress'); ?></h3>
+                <h3><?php esc_html_e('Script', 'campaign-office'); ?></h3>
                 <div class="cp-script-content" id="cp-script-content">
-                    <?php esc_html_e('Loading script...', 'campaignpress'); ?>
+                    <?php esc_html_e('Loading script...', 'campaign-office'); ?>
                 </div>
             </div>
 
             <!-- Call Disposition -->
             <div class="cp-disposition-section">
-                <h3><?php esc_html_e('Call Result', 'campaignpress'); ?></h3>
+                <h3><?php esc_html_e('Call Result', 'campaign-office'); ?></h3>
                 <div class="cp-disposition-buttons">
                     <button class="cp-disp-btn" data-disposition="answered">
                         <span class="dashicons dashicons-yes"></span>
-                        <?php esc_html_e('Answered', 'campaignpress'); ?>
+                        <?php esc_html_e('Answered', 'campaign-office'); ?>
                     </button>
                     <button class="cp-disp-btn" data-disposition="voicemail">
                         <span class="dashicons dashicons-microphone"></span>
-                        <?php esc_html_e('Voicemail', 'campaignpress'); ?>
+                        <?php esc_html_e('Voicemail', 'campaign-office'); ?>
                     </button>
                     <button class="cp-disp-btn" data-disposition="no_answer">
                         <span class="dashicons dashicons-minus"></span>
-                        <?php esc_html_e('No Answer', 'campaignpress'); ?>
+                        <?php esc_html_e('No Answer', 'campaign-office'); ?>
                     </button>
                     <button class="cp-disp-btn" data-disposition="busy">
                         <span class="dashicons dashicons-dismiss"></span>
-                        <?php esc_html_e('Busy', 'campaignpress'); ?>
+                        <?php esc_html_e('Busy', 'campaign-office'); ?>
                     </button>
                     <button class="cp-disp-btn" data-disposition="wrong_number">
                         <span class="dashicons dashicons-warning"></span>
-                        <?php esc_html_e('Wrong Number', 'campaignpress'); ?>
+                        <?php esc_html_e('Wrong Number', 'campaign-office'); ?>
                     </button>
                     <button class="cp-disp-btn" data-disposition="do_not_call">
                         <span class="dashicons dashicons-no"></span>
-                        <?php esc_html_e('Do Not Call', 'campaignpress'); ?>
+                        <?php esc_html_e('Do Not Call', 'campaign-office'); ?>
                     </button>
                 </div>
             </div>
 
             <!-- Response Form (shown when "Answered") -->
             <div class="cp-response-form" id="cp-response-form" style="display: none;">
-                <h3><?php esc_html_e('Survey Responses', 'campaignpress'); ?></h3>
+                <h3><?php esc_html_e('Survey Responses', 'campaign-office'); ?></h3>
                 <div id="cp-survey-questions"></div>
 
                 <div class="cp-form-group">
-                    <label for="cp-call-notes"><?php esc_html_e('Notes', 'campaignpress'); ?></label>
+                    <label for="cp-call-notes"><?php esc_html_e('Notes', 'campaign-office'); ?></label>
                     <textarea id="cp-call-notes" rows="4" class="cp-form-control"></textarea>
                 </div>
 
                 <div class="cp-form-group">
                     <label>
                         <input type="checkbox" id="cp-schedule-callback">
-                        <?php esc_html_e('Schedule a callback', 'campaignpress'); ?>
+                        <?php esc_html_e('Schedule a callback', 'campaign-office'); ?>
                     </label>
                     <input type="datetime-local" id="cp-callback-time" style="display: none;">
                 </div>
@@ -1009,10 +1009,10 @@ class CP_Phone_Banking {
             <!-- Save & Next -->
             <div class="cp-actions">
                 <button class="cp-save-btn" id="cp-save-call">
-                    <?php esc_html_e('Save & Next Call', 'campaignpress'); ?>
+                    <?php esc_html_e('Save & Next Call', 'campaign-office'); ?>
                 </button>
                 <button class="cp-skip-btn" id="cp-skip-call">
-                    <?php esc_html_e('Skip Contact', 'campaignpress'); ?>
+                    <?php esc_html_e('Skip Contact', 'campaign-office'); ?>
                 </button>
             </div>
 
@@ -1023,7 +1023,7 @@ class CP_Phone_Banking {
                 </div>
                 <p class="cp-progress-text">
                     <span id="cp-completed-count">0</span> / <span id="cp-total-count">0</span>
-                    <?php esc_html_e('calls completed', 'campaignpress'); ?>
+                    <?php esc_html_e('calls completed', 'campaign-office'); ?>
                 </p>
             </div>
         </div>
@@ -1315,7 +1315,7 @@ class CP_Phone_Banking {
         ));
 
         if (empty($dispositions)) {
-            echo '<p>' . esc_html__('No calls made today yet.', 'campaignpress') . '</p>';
+            echo '<p>' . esc_html__('No calls made today yet.', 'campaign-office') . '</p>';
             return;
         }
 
@@ -1351,16 +1351,16 @@ class CP_Phone_Banking {
         ));
 
         if (empty($leaderboard)) {
-            echo '<p>' . esc_html__('No calls made this week yet.', 'campaignpress') . '</p>';
+            echo '<p>' . esc_html__('No calls made this week yet.', 'campaign-office') . '</p>';
             return;
         }
 
         echo '<table class="wp-list-table widefat fixed striped"><thead><tr>';
-        echo '<th>' . esc_html__('Rank', 'campaignpress') . '</th>';
-        echo '<th>' . esc_html__('Caller', 'campaignpress') . '</th>';
-        echo '<th>' . esc_html__('Calls', 'campaignpress') . '</th>';
-        echo '<th>' . esc_html__('Conversations', 'campaignpress') . '</th>';
-        echo '<th>' . esc_html__('Talk Time', 'campaignpress') . '</th>';
+        echo '<th>' . esc_html__('Rank', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Caller', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Calls', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Conversations', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Talk Time', 'campaign-office') . '</th>';
         echo '</tr></thead><tbody>';
 
         $rank = 1;
@@ -1471,11 +1471,11 @@ class CP_Phone_Banking {
      */
     private function get_user_display_name($user_id) {
         if (!$user_id) {
-            return __('Unassigned', 'campaignpress');
+            return __('Unassigned', 'campaign-office');
         }
 
         $user = get_user_by('id', $user_id);
-        return $user ? $user->display_name : __('Unknown', 'campaignpress');
+        return $user ? $user->display_name : __('Unknown', 'campaign-office');
     }
 
     /**
@@ -1512,13 +1512,13 @@ class CP_Phone_Banking {
     public function ajax_create_call_list() {
         check_ajax_referer('cp_create_call_list', 'cp_call_list_nonce');
         // Implementation
-        wp_send_json_success(array('message' => __('Call list created!', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Call list created!', 'campaign-office')));
     }
 
     public function ajax_save_call() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
         // Implementation
-        wp_send_json_success(array('message' => __('Call saved!', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Call saved!', 'campaign-office')));
     }
 
     public function ajax_get_next_call() {
@@ -1530,13 +1530,13 @@ class CP_Phone_Banking {
     public function ajax_schedule_callback() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
         // Implementation
-        wp_send_json_success(array('message' => __('Callback scheduled!', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Callback scheduled!', 'campaign-office')));
     }
 
     public function ajax_save_script() {
         check_ajax_referer('cp_save_script', 'cp_script_nonce');
         // Implementation
-        wp_send_json_success(array('message' => __('Script saved!', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Script saved!', 'campaign-office')));
     }
 
     /**

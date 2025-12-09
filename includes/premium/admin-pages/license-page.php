@@ -24,18 +24,18 @@ $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'licens
 
 // Available tabs
 $tabs = array(
-    'license' => __('License Management', 'campaignpress'),
-    'system' => __('System Information', 'campaignpress'),
+    'license' => __('License Management', 'campaign-office'),
+    'system' => __('System Information', 'campaign-office'),
 );
 ?>
 
 <div class="wrap campaignpress-premium-page">
     <h1>
-        <?php _e('CampaignPress Premium', 'campaignpress'); ?>
+        <?php _e('CampaignPress Premium', 'campaign-office'); ?>
         <?php if ($is_active): ?>
-            <span class="cp-badge cp-badge-success"><?php _e('Active', 'campaignpress'); ?></span>
+            <span class="cp-badge cp-badge-success"><?php _e('Active', 'campaign-office'); ?></span>
         <?php else: ?>
-            <span class="cp-badge cp-badge-inactive"><?php _e('Inactive', 'campaignpress'); ?></span>
+            <span class="cp-badge cp-badge-inactive"><?php _e('Inactive', 'campaign-office'); ?></span>
         <?php endif; ?>
     </h1>
 
@@ -58,43 +58,43 @@ $tabs = array(
                     <div class="cp-license-active-card">
                         <div class="cp-license-header">
                             <span class="dashicons dashicons-yes-alt"></span>
-                            <h2><?php _e('Your License is Active', 'campaignpress'); ?></h2>
+                            <h2><?php _e('Your License is Active', 'campaign-office'); ?></h2>
                         </div>
 
                         <table class="cp-license-details">
                             <tr>
-                                <th><?php _e('License Key:', 'campaignpress'); ?></th>
+                                <th><?php _e('License Key:', 'campaign-office'); ?></th>
                                 <td>
                                     <code><?php echo esc_html(substr($license_data['license_key'], 0, 20) . '...' . substr($license_data['license_key'], -8)); ?></code>
                                 </td>
                             </tr>
                             <tr>
-                                <th><?php _e('Email:', 'campaignpress'); ?></th>
+                                <th><?php _e('Email:', 'campaign-office'); ?></th>
                                 <td><?php echo esc_html($license_data['license_email']); ?></td>
                             </tr>
                             <tr>
-                                <th><?php _e('License Type:', 'campaignpress'); ?></th>
+                                <th><?php _e('License Type:', 'campaign-office'); ?></th>
                                 <td>
                                     <strong><?php echo esc_html(ucfirst($license_data['license_type'])); ?></strong>
                                     <?php if ($license_data['license_type'] === 'basic'): ?>
                                         <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-upgrade')); ?>" class="button button-small">
-                                            <?php _e('Upgrade', 'campaignpress'); ?>
+                                            <?php _e('Upgrade', 'campaign-office'); ?>
                                         </a>
                                     <?php endif; ?>
                                 </td>
                             </tr>
                             <tr>
-                                <th><?php _e('Status:', 'campaignpress'); ?></th>
+                                <th><?php _e('Status:', 'campaign-office'); ?></th>
                                 <td>
                                     <?php if ($premium->is_license_expired()): ?>
-                                        <span class="cp-status-badge cp-status-warning"><?php _e('Expired (Grace Period)', 'campaignpress'); ?></span>
+                                        <span class="cp-status-badge cp-status-warning"><?php _e('Expired (Grace Period)', 'campaign-office'); ?></span>
                                     <?php else: ?>
-                                        <span class="cp-status-badge cp-status-active"><?php _e('Active', 'campaignpress'); ?></span>
+                                        <span class="cp-status-badge cp-status-active"><?php _e('Active', 'campaign-office'); ?></span>
                                     <?php endif; ?>
                                 </td>
                             </tr>
                             <tr>
-                                <th><?php _e('Expires:', 'campaignpress'); ?></th>
+                                <th><?php _e('Expires:', 'campaign-office'); ?></th>
                                 <td>
                                     <?php
                                     $expiry = $license_data['expiry_date'];
@@ -104,19 +104,19 @@ $tabs = array(
                                     echo esc_html(date_i18n(get_option('date_format'), $expiry_timestamp));
 
                                     if ($days_until_expiry > 0 && $days_until_expiry <= 30) {
-                                        echo ' <span class="cp-expires-soon">(' . sprintf(__('%d days remaining', 'campaignpress'), $days_until_expiry) . ')</span>';
+                                        echo ' <span class="cp-expires-soon">(' . sprintf(__('%d days remaining', 'campaign-office'), $days_until_expiry) . ')</span>';
                                     } elseif ($days_until_expiry <= 0) {
-                                        echo ' <span class="cp-expired">(' . __('Expired', 'campaignpress') . ')</span>';
+                                        echo ' <span class="cp-expired">(' . __('Expired', 'campaign-office') . ')</span>';
                                     }
                                     ?>
                                 </td>
                             </tr>
                             <tr>
-                                <th><?php _e('Activated:', 'campaignpress'); ?></th>
+                                <th><?php _e('Activated:', 'campaign-office'); ?></th>
                                 <td><?php echo esc_html(date_i18n(get_option('date_format'), strtotime($license_data['activated_date']))); ?></td>
                             </tr>
                             <tr>
-                                <th><?php _e('Domain:', 'campaignpress'); ?></th>
+                                <th><?php _e('Domain:', 'campaign-office'); ?></th>
                                 <td><?php echo esc_html(home_url()); ?></td>
                             </tr>
                         </table>
@@ -124,12 +124,12 @@ $tabs = array(
                         <div class="cp-license-actions">
                             <button type="button" class="button" id="cp-check-license-btn">
                                 <span class="dashicons dashicons-update"></span>
-                                <?php _e('Check License Status', 'campaignpress'); ?>
+                                <?php _e('Check License Status', 'campaign-office'); ?>
                             </button>
 
                             <button type="button" class="button button-link-delete" id="cp-deactivate-license-btn">
                                 <span class="dashicons dashicons-dismiss"></span>
-                                <?php _e('Deactivate License', 'campaignpress'); ?>
+                                <?php _e('Deactivate License', 'campaign-office'); ?>
                             </button>
                         </div>
                     </div>
@@ -137,14 +137,14 @@ $tabs = array(
                 <?php else: ?>
                     <!-- License Activation Form -->
                     <div class="cp-license-form-card">
-                        <h2><?php _e('Activate Your License', 'campaignpress'); ?></h2>
-                        <p><?php _e('Enter your license key to unlock premium features.', 'campaignpress'); ?></p>
+                        <h2><?php _e('Activate Your License', 'campaign-office'); ?></h2>
+                        <p><?php _e('Enter your license key to unlock premium features.', 'campaign-office'); ?></p>
 
                         <form id="cp-license-activation-form" class="cp-license-form">
                             <table class="form-table">
                                 <tr>
                                     <th scope="row">
-                                        <label for="license_key"><?php _e('License Key', 'campaignpress'); ?></label>
+                                        <label for="license_key"><?php _e('License Key', 'campaign-office'); ?></label>
                                     </th>
                                     <td>
                                         <input type="text"
@@ -155,13 +155,13 @@ $tabs = array(
                                                value="<?php echo esc_attr(get_option('campaignpress_license_key')); ?>"
                                                required>
                                         <p class="description">
-                                            <?php _e('Enter your CampaignPress Premium license key.', 'campaignpress'); ?>
+                                            <?php _e('Enter your CampaignPress Premium license key.', 'campaign-office'); ?>
                                         </p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <label for="license_email"><?php _e('License Email', 'campaignpress'); ?></label>
+                                        <label for="license_email"><?php _e('License Email', 'campaign-office'); ?></label>
                                     </th>
                                     <td>
                                         <input type="email"
@@ -172,7 +172,7 @@ $tabs = array(
                                                value="<?php echo esc_attr(get_option('campaignpress_license_email', get_option('admin_email'))); ?>"
                                                required>
                                         <p class="description">
-                                            <?php _e('The email address associated with your purchase.', 'campaignpress'); ?>
+                                            <?php _e('The email address associated with your purchase.', 'campaign-office'); ?>
                                         </p>
                                     </td>
                                 </tr>
@@ -181,7 +181,7 @@ $tabs = array(
                             <p class="submit">
                                 <button type="submit" class="button button-primary button-large" id="cp-activate-license-btn">
                                     <span class="dashicons dashicons-admin-network"></span>
-                                    <?php _e('Activate License', 'campaignpress'); ?>
+                                    <?php _e('Activate License', 'campaign-office'); ?>
                                 </button>
                             </p>
 
@@ -189,19 +189,19 @@ $tabs = array(
                         </form>
 
                         <div class="cp-license-help">
-                            <h3><?php _e('Need a License?', 'campaignpress'); ?></h3>
+                            <h3><?php _e('Need a License?', 'campaign-office'); ?></h3>
                             <p>
-                                <?php _e("Don't have a license key yet?", 'campaignpress'); ?>
+                                <?php _e("Don't have a license key yet?", 'campaign-office'); ?>
                                 <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-upgrade')); ?>" class="button button-secondary">
-                                    <?php _e('View Pricing', 'campaignpress'); ?>
+                                    <?php _e('View Pricing', 'campaign-office'); ?>
                                 </a>
                             </p>
 
-                            <h3><?php _e('Lost Your License?', 'campaignpress'); ?></h3>
+                            <h3><?php _e('Lost Your License?', 'campaign-office'); ?></h3>
                             <p>
-                                <?php _e('Check your purchase confirmation email or', 'campaignpress'); ?>
+                                <?php _e('Check your purchase confirmation email or', 'campaign-office'); ?>
                                 <a href="https://campaignpress.com/my-account/" target="_blank">
-                                    <?php _e('retrieve it from your account', 'campaignpress'); ?>
+                                    <?php _e('retrieve it from your account', 'campaign-office'); ?>
                                 </a>.
                             </p>
                         </div>
@@ -212,41 +212,41 @@ $tabs = array(
         <?php elseif ($current_tab === 'system'): ?>
             <!-- System Information Tab -->
             <div class="cp-system-info">
-                <h2><?php _e('System Information', 'campaignpress'); ?></h2>
-                <p><?php _e('Use this information when contacting support.', 'campaignpress'); ?></p>
+                <h2><?php _e('System Information', 'campaign-office'); ?></h2>
+                <p><?php _e('Use this information when contacting support.', 'campaign-office'); ?></p>
 
                 <div class="cp-system-info-sections">
                     <!-- WordPress Environment -->
                     <div class="cp-info-section">
-                        <h3><?php _e('WordPress Environment', 'campaignpress'); ?></h3>
+                        <h3><?php _e('WordPress Environment', 'campaign-office'); ?></h3>
                         <table class="widefat">
                             <tbody>
                                 <tr>
-                                    <td><?php _e('WordPress Version:', 'campaignpress'); ?></td>
+                                    <td><?php _e('WordPress Version:', 'campaign-office'); ?></td>
                                     <td><strong><?php echo esc_html(get_bloginfo('version')); ?></strong></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Site URL:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Site URL:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(site_url()); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Home URL:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Home URL:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(home_url()); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Multisite:', 'campaignpress'); ?></td>
-                                    <td><?php echo is_multisite() ? __('Yes', 'campaignpress') : __('No', 'campaignpress'); ?></td>
+                                    <td><?php _e('Multisite:', 'campaign-office'); ?></td>
+                                    <td><?php echo is_multisite() ? __('Yes', 'campaign-office') : __('No', 'campaign-office'); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Debug Mode:', 'campaignpress'); ?></td>
-                                    <td><?php echo WP_DEBUG ? __('Yes', 'campaignpress') : __('No', 'campaignpress'); ?></td>
+                                    <td><?php _e('Debug Mode:', 'campaign-office'); ?></td>
+                                    <td><?php echo WP_DEBUG ? __('Yes', 'campaign-office') : __('No', 'campaign-office'); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Memory Limit:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Memory Limit:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(WP_MEMORY_LIMIT); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Language:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Language:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(get_locale()); ?></td>
                                 </tr>
                             </tbody>
@@ -255,34 +255,34 @@ $tabs = array(
 
                     <!-- Theme Information -->
                     <div class="cp-info-section">
-                        <h3><?php _e('Theme Information', 'campaignpress'); ?></h3>
+                        <h3><?php _e('Theme Information', 'campaign-office'); ?></h3>
                         <table class="widefat">
                             <tbody>
                                 <tr>
-                                    <td><?php _e('Theme Name:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Theme Name:', 'campaign-office'); ?></td>
                                     <td><strong><?php echo esc_html(wp_get_theme()->get('Name')); ?></strong></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Theme Version:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Theme Version:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(defined('CAMPAIGNPRESS_VERSION') ? CAMPAIGNPRESS_VERSION : 'Unknown'); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Premium Version:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Premium Version:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(CampaignPress_Premium::VERSION); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Premium Status:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Premium Status:', 'campaign-office'); ?></td>
                                     <td>
                                         <?php if ($is_active): ?>
-                                            <span class="cp-status-badge cp-status-active"><?php _e('Active', 'campaignpress'); ?></span>
+                                            <span class="cp-status-badge cp-status-active"><?php _e('Active', 'campaign-office'); ?></span>
                                         <?php else: ?>
-                                            <span class="cp-status-badge cp-status-inactive"><?php _e('Inactive', 'campaignpress'); ?></span>
+                                            <span class="cp-status-badge cp-status-inactive"><?php _e('Inactive', 'campaign-office'); ?></span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Child Theme:', 'campaignpress'); ?></td>
-                                    <td><?php echo is_child_theme() ? __('Yes', 'campaignpress') : __('No', 'campaignpress'); ?></td>
+                                    <td><?php _e('Child Theme:', 'campaign-office'); ?></td>
+                                    <td><?php echo is_child_theme() ? __('Yes', 'campaign-office') : __('No', 'campaign-office'); ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -290,31 +290,31 @@ $tabs = array(
 
                     <!-- Server Environment -->
                     <div class="cp-info-section">
-                        <h3><?php _e('Server Environment', 'campaignpress'); ?></h3>
+                        <h3><?php _e('Server Environment', 'campaign-office'); ?></h3>
                         <table class="widefat">
                             <tbody>
                                 <tr>
-                                    <td><?php _e('PHP Version:', 'campaignpress'); ?></td>
+                                    <td><?php _e('PHP Version:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(phpversion()); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Server Software:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Server Software:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html($_SERVER['SERVER_SOFTWARE']); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('MySQL Version:', 'campaignpress'); ?></td>
+                                    <td><?php _e('MySQL Version:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html($GLOBALS['wpdb']->db_version()); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Max Upload Size:', 'campaignpress'); ?></td>
+                                    <td><?php _e('Max Upload Size:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(size_format(wp_max_upload_size())); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('PHP Post Max Size:', 'campaignpress'); ?></td>
+                                    <td><?php _e('PHP Post Max Size:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(ini_get('post_max_size')); ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('PHP Time Limit:', 'campaignpress'); ?></td>
+                                    <td><?php _e('PHP Time Limit:', 'campaign-office'); ?></td>
                                     <td><?php echo esc_html(ini_get('max_execution_time')); ?></td>
                                 </tr>
                             </tbody>
@@ -323,12 +323,12 @@ $tabs = array(
 
                     <!-- Active Plugins -->
                     <div class="cp-info-section">
-                        <h3><?php _e('Active Plugins', 'campaignpress'); ?></h3>
+                        <h3><?php _e('Active Plugins', 'campaign-office'); ?></h3>
                         <table class="widefat">
                             <thead>
                                 <tr>
-                                    <th><?php _e('Plugin', 'campaignpress'); ?></th>
-                                    <th><?php _e('Version', 'campaignpress'); ?></th>
+                                    <th><?php _e('Plugin', 'campaign-office'); ?></th>
+                                    <th><?php _e('Version', 'campaign-office'); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -352,12 +352,12 @@ $tabs = array(
                 <div class="cp-system-actions">
                     <button type="button" class="button button-secondary" id="cp-copy-system-info">
                         <span class="dashicons dashicons-clipboard"></span>
-                        <?php _e('Copy System Info', 'campaignpress'); ?>
+                        <?php _e('Copy System Info', 'campaign-office'); ?>
                     </button>
 
                     <button type="button" class="button button-secondary" id="cp-download-system-info">
                         <span class="dashicons dashicons-download"></span>
-                        <?php _e('Download as Text', 'campaignpress'); ?>
+                        <?php _e('Download as Text', 'campaign-office'); ?>
                     </button>
                 </div>
             </div>

@@ -27,22 +27,22 @@ $current_license_level = isset($license_hierarchy[$current_license]) ? $license_
 ?>
 
 <div class="wrap campaignpress-features-page">
-    <h1><?php _e('Premium Features Management', 'campaignpress'); ?></h1>
+    <h1><?php _e('Premium Features Management', 'campaign-office'); ?></h1>
     <p class="description">
-        <?php _e('Enable or disable premium features. Changes take effect immediately.', 'campaignpress'); ?>
+        <?php _e('Enable or disable premium features. Changes take effect immediately.', 'campaign-office'); ?>
     </p>
 
     <?php if ($license_data): ?>
         <div class="cp-license-info-banner">
             <div class="cp-license-type">
-                <strong><?php _e('Your License:', 'campaignpress'); ?></strong>
+                <strong><?php _e('Your License:', 'campaign-office'); ?></strong>
                 <span class="cp-license-badge cp-license-<?php echo esc_attr($current_license); ?>">
                     <?php echo esc_html(ucfirst($current_license)); ?>
                 </span>
             </div>
             <?php if ($current_license !== 'enterprise'): ?>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-upgrade')); ?>" class="button button-primary">
-                    <?php _e('Upgrade License', 'campaignpress'); ?>
+                    <?php _e('Upgrade License', 'campaign-office'); ?>
                 </a>
             <?php endif; ?>
         </div>
@@ -79,7 +79,7 @@ $current_license_level = isset($license_hierarchy[$current_license]) ? $license_
                         <span class="cp-feature-license-required">
                             <?php
                             printf(
-                                __('Requires: %s', 'campaignpress'),
+                                __('Requires: %s', 'campaign-office'),
                                 '<strong>' . esc_html(ucfirst($required_license)) . '</strong>'
                             );
                             ?>
@@ -97,11 +97,11 @@ $current_license_level = isset($license_hierarchy[$current_license]) ? $license_
                             <span class="cp-toggle-slider"></span>
                         </label>
                         <span class="cp-feature-status">
-                            <?php echo $is_enabled ? __('Enabled', 'campaignpress') : __('Disabled', 'campaignpress'); ?>
+                            <?php echo $is_enabled ? __('Enabled', 'campaign-office') : __('Disabled', 'campaign-office'); ?>
                         </span>
                     <?php else: ?>
                         <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-upgrade')); ?>" class="button button-secondary">
-                            <?php _e('Upgrade to Unlock', 'campaignpress'); ?>
+                            <?php _e('Upgrade to Unlock', 'campaign-office'); ?>
                         </a>
                     <?php endif; ?>
                 </div>
@@ -110,28 +110,28 @@ $current_license_level = isset($license_hierarchy[$current_license]) ? $license_
     </div>
 
     <div class="cp-features-help">
-        <h2><?php _e('Feature Management Help', 'campaignpress'); ?></h2>
+        <h2><?php _e('Feature Management Help', 'campaign-office'); ?></h2>
         <div class="cp-help-grid">
             <div class="cp-help-item">
-                <h3><span class="dashicons dashicons-info"></span> <?php _e('Toggling Features', 'campaignpress'); ?></h3>
-                <p><?php _e('Use the toggle switches to enable or disable features. Changes take effect immediately without requiring a page reload.', 'campaignpress'); ?></p>
+                <h3><span class="dashicons dashicons-info"></span> <?php _e('Toggling Features', 'campaign-office'); ?></h3>
+                <p><?php _e('Use the toggle switches to enable or disable features. Changes take effect immediately without requiring a page reload.', 'campaign-office'); ?></p>
             </div>
 
             <div class="cp-help-item">
-                <h3><span class="dashicons dashicons-shield-alt"></span> <?php _e('License Requirements', 'campaignpress'); ?></h3>
-                <p><?php _e('Some features require a specific license level. Upgrade your license to unlock additional features.', 'campaignpress'); ?></p>
+                <h3><span class="dashicons dashicons-shield-alt"></span> <?php _e('License Requirements', 'campaign-office'); ?></h3>
+                <p><?php _e('Some features require a specific license level. Upgrade your license to unlock additional features.', 'campaign-office'); ?></p>
             </div>
 
             <div class="cp-help-item">
-                <h3><span class="dashicons dashicons-performance"></span> <?php _e('Performance', 'campaignpress'); ?></h3>
-                <p><?php _e('Disable features you don\'t use to improve site performance and reduce resource usage.', 'campaignpress'); ?></p>
+                <h3><span class="dashicons dashicons-performance"></span> <?php _e('Performance', 'campaign-office'); ?></h3>
+                <p><?php _e('Disable features you don\'t use to improve site performance and reduce resource usage.', 'campaign-office'); ?></p>
             </div>
 
             <div class="cp-help-item">
-                <h3><span class="dashicons dashicons-sos"></span> <?php _e('Need Help?', 'campaignpress'); ?></h3>
+                <h3><span class="dashicons dashicons-sos"></span> <?php _e('Need Help?', 'campaign-office'); ?></h3>
                 <p>
-                    <?php _e('Contact our support team for assistance:', 'campaignpress'); ?>
-                    <a href="https://campaignpress.com/support/" target="_blank"><?php _e('Get Support', 'campaignpress'); ?></a>
+                    <?php _e('Contact our support team for assistance:', 'campaign-office'); ?>
+                    <a href="https://campaignpress.com/support/" target="_blank"><?php _e('Get Support', 'campaign-office'); ?></a>
                 </p>
             </div>
         </div>
@@ -387,7 +387,7 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 if (response.success) {
                     // Update status text
-                    $status.text(enabled ? '<?php echo esc_js(__('Enabled', 'campaignpress')); ?>' : '<?php echo esc_js(__('Disabled', 'campaignpress')); ?>');
+                    $status.text(enabled ? '<?php echo esc_js(__('Enabled', 'campaign-office')); ?>' : '<?php echo esc_js(__('Disabled', 'campaign-office')); ?>');
 
                     // Show success notification
                     showNotification(response.data.message, 'success');
@@ -401,7 +401,7 @@ jQuery(document).ready(function($) {
             error: function() {
                 // Revert toggle on error
                 $toggle.prop('checked', !enabled);
-                showNotification('<?php echo esc_js(__('Failed to update feature. Please try again.', 'campaignpress')); ?>', 'error');
+                showNotification('<?php echo esc_js(__('Failed to update feature. Please try again.', 'campaign-office')); ?>', 'error');
                 $toggle.prop('disabled', false);
             }
         });

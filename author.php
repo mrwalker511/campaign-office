@@ -24,7 +24,7 @@ get_header();
                             <?php
                             printf(
                                 /* translators: %s: author name */
-                                esc_html__( 'Posts by %s', 'campaignpress' ),
+                                esc_html__( 'Posts by %s', 'campaign-office' ),
                                 '<span class="vcard">' . esc_html( get_the_author() ) . '</span>'
                             );
                             ?>
@@ -50,8 +50,8 @@ get_header();
 
             <?php
             the_posts_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous', 'campaignpress' ) . '</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next', 'campaignpress' ) . '</span>',
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous', 'campaign-office' ) . '</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next', 'campaign-office' ) . '</span>',
             ) );
 
         else :

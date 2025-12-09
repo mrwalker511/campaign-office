@@ -56,8 +56,8 @@ add_action( 'init', 'campaignpress_analytics_init', 5 );
 function campaignpress_analytics_admin_menu() {
 	// Main analytics dashboard
 	add_menu_page(
-		__( 'Analytics', 'campaignpress' ),
-		__( 'Analytics', 'campaignpress' ),
+		__( 'Analytics', 'campaign-office' ),
+		__( 'Analytics', 'campaign-office' ),
 		'manage_options',
 		'campaignpress-analytics',
 		'campaignpress_analytics_dashboard_page',
@@ -68,8 +68,8 @@ function campaignpress_analytics_admin_menu() {
 	// Campaign Analytics submenu
 	add_submenu_page(
 		'campaignpress-analytics',
-		__( 'Campaign Analytics', 'campaignpress' ),
-		__( 'Campaign Analytics', 'campaignpress' ),
+		__( 'Campaign Analytics', 'campaign-office' ),
+		__( 'Campaign Analytics', 'campaign-office' ),
 		'manage_options',
 		'campaignpress-analytics',
 		'campaignpress_analytics_dashboard_page'
@@ -78,8 +78,8 @@ function campaignpress_analytics_admin_menu() {
 	// Performance Metrics submenu
 	add_submenu_page(
 		'campaignpress-analytics',
-		__( 'Performance Metrics', 'campaignpress' ),
-		__( 'Performance Metrics', 'campaignpress' ),
+		__( 'Performance Metrics', 'campaign-office' ),
+		__( 'Performance Metrics', 'campaign-office' ),
 		'manage_options',
 		'campaignpress-metrics',
 		'campaignpress_metrics_dashboard_page'
@@ -88,8 +88,8 @@ function campaignpress_analytics_admin_menu() {
 	// Reports submenu
 	add_submenu_page(
 		'campaignpress-analytics',
-		__( 'Reports', 'campaignpress' ),
-		__( 'Reports', 'campaignpress' ),
+		__( 'Reports', 'campaign-office' ),
+		__( 'Reports', 'campaign-office' ),
 		'manage_options',
 		'campaignpress-reports',
 		'campaignpress_reports_page'
@@ -160,10 +160,10 @@ function campaignpress_analytics_enqueue_assets( $hook ) {
 			'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
 			'nonce'      => wp_create_nonce( 'campaignpress_analytics_nonce' ),
 			'i18n'       => array(
-				'loading'       => __( 'Loading analytics...', 'campaignpress' ),
-				'error'         => __( 'Error loading data', 'campaignpress' ),
-				'exportSuccess' => __( 'Export completed successfully', 'campaignpress' ),
-				'exportError'   => __( 'Export failed', 'campaignpress' ),
+				'loading'       => __( 'Loading analytics...', 'campaign-office' ),
+				'error'         => __( 'Error loading data', 'campaign-office' ),
+				'exportSuccess' => __( 'Export completed successfully', 'campaign-office' ),
+				'exportError'   => __( 'Export failed', 'campaign-office' ),
 			),
 		)
 	);
@@ -176,7 +176,7 @@ function campaignpress_analytics_enqueue_assets( $hook ) {
  */
 function campaignpress_analytics_dashboard_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaignpress' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaign-office' ) );
 	}
 
 	$analytics = $GLOBALS['campaignpress_analytics'];
@@ -186,22 +186,22 @@ function campaignpress_analytics_dashboard_page() {
 
 		<div class="campaignpress-analytics-header">
 			<div class="date-range-selector">
-				<label for="analytics-date-range"><?php esc_html_e( 'Date Range:', 'campaignpress' ); ?></label>
+				<label for="analytics-date-range"><?php esc_html_e( 'Date Range:', 'campaign-office' ); ?></label>
 				<select id="analytics-date-range" name="date_range">
-					<option value="7"><?php esc_html_e( 'Last 7 Days', 'campaignpress' ); ?></option>
-					<option value="30" selected><?php esc_html_e( 'Last 30 Days', 'campaignpress' ); ?></option>
-					<option value="90"><?php esc_html_e( 'Last 90 Days', 'campaignpress' ); ?></option>
-					<option value="365"><?php esc_html_e( 'Last Year', 'campaignpress' ); ?></option>
-					<option value="custom"><?php esc_html_e( 'Custom Range', 'campaignpress' ); ?></option>
+					<option value="7"><?php esc_html_e( 'Last 7 Days', 'campaign-office' ); ?></option>
+					<option value="30" selected><?php esc_html_e( 'Last 30 Days', 'campaign-office' ); ?></option>
+					<option value="90"><?php esc_html_e( 'Last 90 Days', 'campaign-office' ); ?></option>
+					<option value="365"><?php esc_html_e( 'Last Year', 'campaign-office' ); ?></option>
+					<option value="custom"><?php esc_html_e( 'Custom Range', 'campaign-office' ); ?></option>
 				</select>
 			</div>
 
 			<div class="export-buttons">
 				<button class="button button-secondary" id="export-csv">
-					<?php esc_html_e( 'Export CSV', 'campaignpress' ); ?>
+					<?php esc_html_e( 'Export CSV', 'campaign-office' ); ?>
 				</button>
 				<button class="button button-secondary" id="export-pdf">
-					<?php esc_html_e( 'Export PDF', 'campaignpress' ); ?>
+					<?php esc_html_e( 'Export PDF', 'campaign-office' ); ?>
 				</button>
 			</div>
 		</div>
@@ -210,7 +210,7 @@ function campaignpress_analytics_dashboard_page() {
 			<!-- Content loaded via JavaScript -->
 			<div class="loading-spinner">
 				<span class="spinner is-active"></span>
-				<p><?php esc_html_e( 'Loading analytics...', 'campaignpress' ); ?></p>
+				<p><?php esc_html_e( 'Loading analytics...', 'campaign-office' ); ?></p>
 			</div>
 		</div>
 	</div>
@@ -224,7 +224,7 @@ function campaignpress_analytics_dashboard_page() {
  */
 function campaignpress_metrics_dashboard_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaignpress' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaign-office' ) );
 	}
 
 	$metrics = $GLOBALS['campaignpress_metrics'];
@@ -234,10 +234,10 @@ function campaignpress_metrics_dashboard_page() {
 
 		<div class="metrics-actions">
 			<button class="button button-primary" id="add-new-metric">
-				<?php esc_html_e( 'Add New Metric', 'campaignpress' ); ?>
+				<?php esc_html_e( 'Add New Metric', 'campaign-office' ); ?>
 			</button>
 			<button class="button button-secondary" id="set-goals">
-				<?php esc_html_e( 'Set Goals', 'campaignpress' ); ?>
+				<?php esc_html_e( 'Set Goals', 'campaign-office' ); ?>
 			</button>
 		</div>
 
@@ -245,7 +245,7 @@ function campaignpress_metrics_dashboard_page() {
 			<!-- Content loaded via JavaScript -->
 			<div class="loading-spinner">
 				<span class="spinner is-active"></span>
-				<p><?php esc_html_e( 'Loading metrics...', 'campaignpress' ); ?></p>
+				<p><?php esc_html_e( 'Loading metrics...', 'campaign-office' ); ?></p>
 			</div>
 		</div>
 	</div>
@@ -259,21 +259,21 @@ function campaignpress_metrics_dashboard_page() {
  */
 function campaignpress_reports_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaignpress' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaign-office' ) );
 	}
 	?>
 	<div class="wrap campaignpress-reports">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
 		<div class="report-templates">
-			<h2><?php esc_html_e( 'Available Reports', 'campaignpress' ); ?></h2>
+			<h2><?php esc_html_e( 'Available Reports', 'campaign-office' ); ?></h2>
 			<ul class="report-list">
-				<li><a href="#" class="report-link" data-report="fundraising"><?php esc_html_e( 'Fundraising Report', 'campaignpress' ); ?></a></li>
-				<li><a href="#" class="report-link" data-report="volunteer"><?php esc_html_e( 'Volunteer Report', 'campaignpress' ); ?></a></li>
-				<li><a href="#" class="report-link" data-report="event"><?php esc_html_e( 'Event Report', 'campaignpress' ); ?></a></li>
-				<li><a href="#" class="report-link" data-report="engagement"><?php esc_html_e( 'Engagement Report', 'campaignpress' ); ?></a></li>
-				<li><a href="#" class="report-link" data-report="geographic"><?php esc_html_e( 'Geographic Report', 'campaignpress' ); ?></a></li>
-				<li><a href="#" class="report-link" data-report="comprehensive"><?php esc_html_e( 'Comprehensive Report', 'campaignpress' ); ?></a></li>
+				<li><a href="#" class="report-link" data-report="fundraising"><?php esc_html_e( 'Fundraising Report', 'campaign-office' ); ?></a></li>
+				<li><a href="#" class="report-link" data-report="volunteer"><?php esc_html_e( 'Volunteer Report', 'campaign-office' ); ?></a></li>
+				<li><a href="#" class="report-link" data-report="event"><?php esc_html_e( 'Event Report', 'campaign-office' ); ?></a></li>
+				<li><a href="#" class="report-link" data-report="engagement"><?php esc_html_e( 'Engagement Report', 'campaign-office' ); ?></a></li>
+				<li><a href="#" class="report-link" data-report="geographic"><?php esc_html_e( 'Geographic Report', 'campaign-office' ); ?></a></li>
+				<li><a href="#" class="report-link" data-report="comprehensive"><?php esc_html_e( 'Comprehensive Report', 'campaign-office' ); ?></a></li>
 			</ul>
 		</div>
 
@@ -293,7 +293,7 @@ function campaignpress_ajax_get_analytics_data() {
 	check_ajax_referer( 'campaignpress_analytics_nonce', 'nonce' );
 
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaignpress' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaign-office' ) ) );
 	}
 
 	$analytics = $GLOBALS['campaignpress_analytics'];
@@ -335,7 +335,7 @@ function campaignpress_ajax_export_analytics() {
 	check_ajax_referer( 'campaignpress_analytics_nonce', 'nonce' );
 
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaignpress' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaign-office' ) ) );
 	}
 
 	$analytics = $GLOBALS['campaignpress_analytics'];
@@ -351,7 +351,7 @@ function campaignpress_ajax_export_analytics() {
 	if ( ! empty( $file_url ) ) {
 		wp_send_json_success( array( 'file_url' => $file_url ) );
 	} else {
-		wp_send_json_error( array( 'message' => __( 'Export failed', 'campaignpress' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Export failed', 'campaign-office' ) ) );
 	}
 }
 
@@ -364,7 +364,7 @@ function campaignpress_ajax_update_metric() {
 	check_ajax_referer( 'campaignpress_analytics_nonce', 'nonce' );
 
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaignpress' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaign-office' ) ) );
 	}
 
 	$metrics = $GLOBALS['campaignpress_metrics'];
@@ -374,8 +374,8 @@ function campaignpress_ajax_update_metric() {
 	$result = $metrics->update_metric( $metric_id, $metric_data );
 
 	if ( $result ) {
-		wp_send_json_success( array( 'message' => __( 'Metric updated successfully', 'campaignpress' ) ) );
+		wp_send_json_success( array( 'message' => __( 'Metric updated successfully', 'campaign-office' ) ) );
 	} else {
-		wp_send_json_error( array( 'message' => __( 'Failed to update metric', 'campaignpress' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Failed to update metric', 'campaign-office' ) ) );
 	}
 }

@@ -59,49 +59,49 @@ class CP_Campaign_Widgets {
         // Fundraising Progress Widget
         wp_add_dashboard_widget(
             'cp_fundraising_widget',
-            __('Campaign Fundraising', 'campaignpress'),
+            __('Campaign Fundraising', 'campaign-office'),
             array($this, 'render_fundraising_widget')
         );
 
         // Volunteer Count Widget
         wp_add_dashboard_widget(
             'cp_volunteer_widget',
-            __('Volunteer Engagement', 'campaignpress'),
+            __('Volunteer Engagement', 'campaign-office'),
             array($this, 'render_volunteer_widget')
         );
 
         // Event Attendance Widget
         wp_add_dashboard_widget(
             'cp_event_widget',
-            __('Event Attendance', 'campaignpress'),
+            __('Event Attendance', 'campaign-office'),
             array($this, 'render_event_widget')
         );
 
         // Endorsement Count Widget
         wp_add_dashboard_widget(
             'cp_endorsement_widget',
-            __('Endorsements', 'campaignpress'),
+            __('Endorsements', 'campaign-office'),
             array($this, 'render_endorsement_widget')
         );
 
         // Social Media Reach Widget
         wp_add_dashboard_widget(
             'cp_social_widget',
-            __('Social Media Reach', 'campaignpress'),
+            __('Social Media Reach', 'campaign-office'),
             array($this, 'render_social_widget')
         );
 
         // Election Countdown Widget
         wp_add_dashboard_widget(
             'cp_countdown_widget',
-            __('Days Until Election', 'campaignpress'),
+            __('Days Until Election', 'campaign-office'),
             array($this, 'render_countdown_widget')
         );
 
         // Campaign Statistics Dashboard
         wp_add_dashboard_widget(
             'cp_statistics_widget',
-            __('Campaign Statistics', 'campaignpress'),
+            __('Campaign Statistics', 'campaign-office'),
             array($this, 'render_statistics_widget')
         );
     }
@@ -125,15 +125,15 @@ class CP_Campaign_Widgets {
         <div class="cp-widget cp-fundraising-widget">
             <div class="cp-widget-stats">
                 <div class="cp-stat-item">
-                    <span class="cp-stat-label"><?php esc_html_e('Goal', 'campaignpress'); ?></span>
+                    <span class="cp-stat-label"><?php esc_html_e('Goal', 'campaign-office'); ?></span>
                     <span class="cp-stat-value">$<?php echo esc_html(number_format($goal)); ?></span>
                 </div>
                 <div class="cp-stat-item">
-                    <span class="cp-stat-label"><?php esc_html_e('Raised', 'campaignpress'); ?></span>
+                    <span class="cp-stat-label"><?php esc_html_e('Raised', 'campaign-office'); ?></span>
                     <span class="cp-stat-value cp-primary">$<?php echo esc_html(number_format($raised)); ?></span>
                 </div>
                 <div class="cp-stat-item">
-                    <span class="cp-stat-label"><?php esc_html_e('Remaining', 'campaignpress'); ?></span>
+                    <span class="cp-stat-label"><?php esc_html_e('Remaining', 'campaign-office'); ?></span>
                     <span class="cp-stat-value">$<?php echo esc_html(number_format($remaining)); ?></span>
                 </div>
             </div>
@@ -146,17 +146,17 @@ class CP_Campaign_Widgets {
 
             <div class="cp-widget-meta">
                 <p>
-                    <strong><?php echo esc_html(number_format($donors)); ?></strong> <?php esc_html_e('donors', 'campaignpress'); ?>
+                    <strong><?php echo esc_html(number_format($donors)); ?></strong> <?php esc_html_e('donors', 'campaign-office'); ?>
                     <span class="separator">•</span>
-                    <?php esc_html_e('Avg donation:', 'campaignpress'); ?> <strong>$<?php echo esc_html(number_format($avg_donation, 2)); ?></strong>
+                    <?php esc_html_e('Avg donation:', 'campaign-office'); ?> <strong>$<?php echo esc_html(number_format($avg_donation, 2)); ?></strong>
                 </p>
             </div>
 
             <div class="cp-widget-actions">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-widget-settings')); ?>" class="button button-small">
-                    <?php esc_html_e('Update Data', 'campaignpress'); ?>
+                    <?php esc_html_e('Update Data', 'campaign-office'); ?>
                 </a>
-                <span class="cp-demo-badge"><?php esc_html_e('Demo Data', 'campaignpress'); ?></span>
+                <span class="cp-demo-badge"><?php esc_html_e('Demo Data', 'campaign-office'); ?></span>
             </div>
         </div>
         <?php
@@ -189,27 +189,27 @@ class CP_Campaign_Widgets {
                 <div class="cp-big-number">
                     <?php echo esc_html(number_format($total_volunteers)); ?>
                 </div>
-                <div class="cp-big-label"><?php esc_html_e('Total Volunteers', 'campaignpress'); ?></div>
+                <div class="cp-big-label"><?php esc_html_e('Total Volunteers', 'campaign-office'); ?></div>
             </div>
 
             <div class="cp-widget-grid">
                 <div class="cp-grid-item">
                     <span class="cp-grid-number"><?php echo esc_html(number_format($active_this_week)); ?></span>
-                    <span class="cp-grid-label"><?php esc_html_e('Active This Week', 'campaignpress'); ?></span>
+                    <span class="cp-grid-label"><?php esc_html_e('Active This Week', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-grid-item">
                     <span class="cp-grid-number cp-success"><?php echo esc_html(number_format($new_this_month)); ?></span>
-                    <span class="cp-grid-label"><?php esc_html_e('New This Month', 'campaignpress'); ?></span>
+                    <span class="cp-grid-label"><?php esc_html_e('New This Month', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-grid-item">
                     <span class="cp-grid-number"><?php echo esc_html(number_format($volunteer_hours)); ?></span>
-                    <span class="cp-grid-label"><?php esc_html_e('Hours Logged', 'campaignpress'); ?></span>
+                    <span class="cp-grid-label"><?php esc_html_e('Hours Logged', 'campaign-office'); ?></span>
                 </div>
             </div>
 
             <div class="cp-widget-actions">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-volunteers')); ?>" class="button button-primary button-small">
-                    <?php esc_html_e('Manage Volunteers', 'campaignpress'); ?>
+                    <?php esc_html_e('Manage Volunteers', 'campaign-office'); ?>
                 </a>
             </div>
         </div>
@@ -252,28 +252,28 @@ class CP_Campaign_Widgets {
             <div class="cp-widget-grid">
                 <div class="cp-grid-item cp-featured">
                     <span class="cp-grid-number cp-primary"><?php echo esc_html(number_format($upcoming_events)); ?></span>
-                    <span class="cp-grid-label"><?php esc_html_e('Upcoming Events', 'campaignpress'); ?></span>
+                    <span class="cp-grid-label"><?php esc_html_e('Upcoming Events', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-grid-item">
                     <span class="cp-grid-number"><?php echo esc_html(number_format($total_attendees)); ?></span>
-                    <span class="cp-grid-label"><?php esc_html_e('Total Attendees', 'campaignpress'); ?></span>
+                    <span class="cp-grid-label"><?php esc_html_e('Total Attendees', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-grid-item">
                     <span class="cp-grid-number"><?php echo esc_html(number_format($avg_attendance)); ?></span>
-                    <span class="cp-grid-label"><?php esc_html_e('Avg per Event', 'campaignpress'); ?></span>
+                    <span class="cp-grid-label"><?php esc_html_e('Avg per Event', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-grid-item">
                     <span class="cp-grid-number cp-success"><?php echo esc_html($rsvp_rate); ?>%</span>
-                    <span class="cp-grid-label"><?php esc_html_e('RSVP Rate', 'campaignpress'); ?></span>
+                    <span class="cp-grid-label"><?php esc_html_e('RSVP Rate', 'campaign-office'); ?></span>
                 </div>
             </div>
 
             <div class="cp-widget-actions">
                 <a href="<?php echo esc_url(admin_url('edit.php?post_type=cp_event')); ?>" class="button button-small">
-                    <?php esc_html_e('View Events', 'campaignpress'); ?>
+                    <?php esc_html_e('View Events', 'campaign-office'); ?>
                 </a>
                 <a href="<?php echo esc_url(admin_url('post-new.php?post_type=cp_event')); ?>" class="button button-primary button-small">
-                    <?php esc_html_e('Add Event', 'campaignpress'); ?>
+                    <?php esc_html_e('Add Event', 'campaign-office'); ?>
                 </a>
             </div>
         </div>
@@ -314,18 +314,18 @@ class CP_Campaign_Widgets {
                 <div class="cp-big-number cp-primary">
                     <?php echo esc_html(number_format($total_endorsements)); ?>
                 </div>
-                <div class="cp-big-label"><?php esc_html_e('Total Endorsements', 'campaignpress'); ?></div>
+                <div class="cp-big-label"><?php esc_html_e('Total Endorsements', 'campaign-office'); ?></div>
             </div>
 
             <div class="cp-widget-meta">
                 <p class="cp-highlight">
                     <span class="cp-badge cp-badge-success">+<?php echo esc_html($recent_endorsements); ?></span>
-                    <?php esc_html_e('new in the last 30 days', 'campaignpress'); ?>
+                    <?php esc_html_e('new in the last 30 days', 'campaign-office'); ?>
                 </p>
             </div>
 
             <div class="cp-endorsement-breakdown">
-                <h4><?php esc_html_e('By Category:', 'campaignpress'); ?></h4>
+                <h4><?php esc_html_e('By Category:', 'campaign-office'); ?></h4>
                 <?php foreach ($categories as $category => $count) : ?>
                     <div class="cp-breakdown-item">
                         <span class="cp-breakdown-label"><?php echo esc_html($category); ?></span>
@@ -336,7 +336,7 @@ class CP_Campaign_Widgets {
 
             <div class="cp-widget-actions">
                 <a href="<?php echo esc_url(admin_url('edit.php?post_type=cp_endorsement')); ?>" class="button button-primary button-small">
-                    <?php esc_html_e('Manage Endorsements', 'campaignpress'); ?>
+                    <?php esc_html_e('Manage Endorsements', 'campaign-office'); ?>
                 </a>
             </div>
         </div>
@@ -365,17 +365,17 @@ class CP_Campaign_Widgets {
                 <div class="cp-big-number">
                     <?php echo esc_html(number_format($total_followers)); ?>
                 </div>
-                <div class="cp-big-label"><?php esc_html_e('Total Followers', 'campaignpress'); ?></div>
+                <div class="cp-big-label"><?php esc_html_e('Total Followers', 'campaign-office'); ?></div>
             </div>
 
             <div class="cp-widget-stats">
                 <div class="cp-stat-item">
                     <span class="cp-stat-value cp-success">+<?php echo esc_html(number_format($weekly_growth)); ?></span>
-                    <span class="cp-stat-label"><?php esc_html_e('This Week', 'campaignpress'); ?></span>
+                    <span class="cp-stat-label"><?php esc_html_e('This Week', 'campaign-office'); ?></span>
                 </div>
                 <div class="cp-stat-item">
                     <span class="cp-stat-value"><?php echo esc_html($engagement_rate); ?>%</span>
-                    <span class="cp-stat-label"><?php esc_html_e('Engagement Rate', 'campaignpress'); ?></span>
+                    <span class="cp-stat-label"><?php esc_html_e('Engagement Rate', 'campaign-office'); ?></span>
                 </div>
             </div>
 
@@ -393,9 +393,9 @@ class CP_Campaign_Widgets {
 
             <div class="cp-widget-actions">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-widget-settings#social')); ?>" class="button button-small">
-                    <?php esc_html_e('Update Social Data', 'campaignpress'); ?>
+                    <?php esc_html_e('Update Social Data', 'campaign-office'); ?>
                 </a>
-                <span class="cp-demo-badge"><?php esc_html_e('Demo Data', 'campaignpress'); ?></span>
+                <span class="cp-demo-badge"><?php esc_html_e('Demo Data', 'campaign-office'); ?></span>
             </div>
         </div>
         <?php
@@ -426,22 +426,22 @@ class CP_Campaign_Widgets {
                 <div class="cp-countdown-number">
                     <?php echo esc_html(number_format($days_remaining)); ?>
                 </div>
-                <div class="cp-countdown-label"><?php esc_html_e('Days Until Election', 'campaignpress'); ?></div>
+                <div class="cp-countdown-label"><?php esc_html_e('Days Until Election', 'campaign-office'); ?></div>
                 <div class="cp-countdown-date"><?php echo esc_html(date_i18n(get_option('date_format'), $election_timestamp)); ?></div>
             </div>
 
             <div class="cp-milestones">
-                <h4><?php esc_html_e('Key Milestones:', 'campaignpress'); ?></h4>
+                <h4><?php esc_html_e('Key Milestones:', 'campaign-office'); ?></h4>
 
                 <?php if ($days_to_registration > 0) : ?>
                     <div class="cp-milestone-item">
                         <span class="cp-milestone-icon">📋</span>
                         <div class="cp-milestone-details">
-                            <strong><?php esc_html_e('Voter Registration Deadline', 'campaignpress'); ?></strong>
+                            <strong><?php esc_html_e('Voter Registration Deadline', 'campaign-office'); ?></strong>
                             <span class="cp-milestone-countdown">
                                 <?php
                                 printf(
-                                    esc_html(_n('%s day', '%s days', $days_to_registration, 'campaignpress')),
+                                    esc_html(_n('%s day', '%s days', $days_to_registration, 'campaign-office')),
                                     esc_html(number_format($days_to_registration))
                                 );
                                 ?>
@@ -454,11 +454,11 @@ class CP_Campaign_Widgets {
                     <div class="cp-milestone-item">
                         <span class="cp-milestone-icon">🗳️</span>
                         <div class="cp-milestone-details">
-                            <strong><?php esc_html_e('Early Voting Begins', 'campaignpress'); ?></strong>
+                            <strong><?php esc_html_e('Early Voting Begins', 'campaign-office'); ?></strong>
                             <span class="cp-milestone-countdown">
                                 <?php
                                 printf(
-                                    esc_html(_n('%s day', '%s days', $days_to_early_voting, 'campaignpress')),
+                                    esc_html(_n('%s day', '%s days', $days_to_early_voting, 'campaign-office')),
                                     esc_html(number_format($days_to_early_voting))
                                 );
                                 ?>
@@ -470,11 +470,11 @@ class CP_Campaign_Widgets {
                 <div class="cp-milestone-item">
                     <span class="cp-milestone-icon">📅</span>
                     <div class="cp-milestone-details">
-                        <strong><?php esc_html_e('Election Day', 'campaignpress'); ?></strong>
+                        <strong><?php esc_html_e('Election Day', 'campaign-office'); ?></strong>
                         <span class="cp-milestone-countdown">
                             <?php
                             printf(
-                                esc_html(_n('%s day', '%s days', $days_remaining, 'campaignpress')),
+                                esc_html(_n('%s day', '%s days', $days_remaining, 'campaign-office')),
                                 esc_html(number_format($days_remaining))
                             );
                             ?>
@@ -485,7 +485,7 @@ class CP_Campaign_Widgets {
 
             <div class="cp-widget-actions">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-widget-settings#election')); ?>" class="button button-small">
-                    <?php esc_html_e('Update Dates', 'campaignpress'); ?>
+                    <?php esc_html_e('Update Dates', 'campaign-office'); ?>
                 </a>
             </div>
         </div>
@@ -520,14 +520,14 @@ class CP_Campaign_Widgets {
 
         ?>
         <div class="cp-widget cp-statistics-widget">
-            <h3><?php esc_html_e('Campaign Overview', 'campaignpress'); ?></h3>
+            <h3><?php esc_html_e('Campaign Overview', 'campaign-office'); ?></h3>
 
             <div class="cp-stats-grid">
                 <div class="cp-stat-box">
                     <div class="cp-stat-icon">💰</div>
                     <div class="cp-stat-content">
                         <div class="cp-stat-number">$<?php echo esc_html(number_format(get_option('cp_fundraising_raised', 67500))); ?></div>
-                        <div class="cp-stat-title"><?php esc_html_e('Raised', 'campaignpress'); ?></div>
+                        <div class="cp-stat-title"><?php esc_html_e('Raised', 'campaign-office'); ?></div>
                     </div>
                 </div>
 
@@ -535,7 +535,7 @@ class CP_Campaign_Widgets {
                     <div class="cp-stat-icon">👥</div>
                     <div class="cp-stat-content">
                         <div class="cp-stat-number"><?php echo esc_html(number_format($total_volunteers)); ?></div>
-                        <div class="cp-stat-title"><?php esc_html_e('Volunteers', 'campaignpress'); ?></div>
+                        <div class="cp-stat-title"><?php esc_html_e('Volunteers', 'campaign-office'); ?></div>
                     </div>
                 </div>
 
@@ -543,7 +543,7 @@ class CP_Campaign_Widgets {
                     <div class="cp-stat-icon">📱</div>
                     <div class="cp-stat-content">
                         <div class="cp-stat-number"><?php echo esc_html(number_format(get_option('cp_social_total_followers', 24567))); ?></div>
-                        <div class="cp-stat-title"><?php esc_html_e('Followers', 'campaignpress'); ?></div>
+                        <div class="cp-stat-title"><?php esc_html_e('Followers', 'campaign-office'); ?></div>
                     </div>
                 </div>
 
@@ -551,32 +551,32 @@ class CP_Campaign_Widgets {
                     <div class="cp-stat-icon">✅</div>
                     <div class="cp-stat-content">
                         <div class="cp-stat-number"><?php echo esc_html(number_format(get_option('cp_endorsement_count', 87))); ?></div>
-                        <div class="cp-stat-title"><?php esc_html_e('Endorsements', 'campaignpress'); ?></div>
+                        <div class="cp-stat-title"><?php esc_html_e('Endorsements', 'campaign-office'); ?></div>
                     </div>
                 </div>
             </div>
 
             <div class="cp-content-stats">
-                <h4><?php esc_html_e('Content Statistics:', 'campaignpress'); ?></h4>
+                <h4><?php esc_html_e('Content Statistics:', 'campaign-office'); ?></h4>
                 <table class="cp-stats-table">
                     <tr>
-                        <td><?php esc_html_e('Blog Posts', 'campaignpress'); ?></td>
+                        <td><?php esc_html_e('Blog Posts', 'campaign-office'); ?></td>
                         <td><strong><?php echo esc_html(number_format($blog_posts)); ?></strong></td>
                     </tr>
                     <tr>
-                        <td><?php esc_html_e('Press Releases', 'campaignpress'); ?></td>
+                        <td><?php esc_html_e('Press Releases', 'campaign-office'); ?></td>
                         <td><strong><?php echo esc_html(number_format($press_releases)); ?></strong></td>
                     </tr>
                     <tr>
-                        <td><?php esc_html_e('Team Members', 'campaignpress'); ?></td>
+                        <td><?php esc_html_e('Team Members', 'campaign-office'); ?></td>
                         <td><strong><?php echo esc_html(number_format($team_members)); ?></strong></td>
                     </tr>
                     <tr>
-                        <td><?php esc_html_e('Total Pages', 'campaignpress'); ?></td>
+                        <td><?php esc_html_e('Total Pages', 'campaign-office'); ?></td>
                         <td><strong><?php echo esc_html(number_format($total_pages)); ?></strong></td>
                     </tr>
                     <tr>
-                        <td><?php esc_html_e('Registered Users', 'campaignpress'); ?></td>
+                        <td><?php esc_html_e('Registered Users', 'campaign-office'); ?></td>
                         <td><strong><?php echo esc_html(number_format($total_users['total_users'])); ?></strong></td>
                     </tr>
                 </table>
@@ -1042,9 +1042,9 @@ class CP_Campaign_Widgets {
      */
     public function register_widget_areas() {
         register_sidebar(array(
-            'name'          => esc_html__('Campaign Dashboard', 'campaignpress'),
+            'name'          => esc_html__('Campaign Dashboard', 'campaign-office'),
             'id'            => 'campaign-dashboard',
-            'description'   => esc_html__('Campaign performance widgets for frontend display', 'campaignpress'),
+            'description'   => esc_html__('Campaign performance widgets for frontend display', 'campaign-office'),
             'before_widget' => '<div id="%1$s" class="campaign-widget %2$s">',
             'after_widget'  => '</div>',
             'before_title'  => '<h3 class="campaign-widget-title">',
@@ -1069,7 +1069,7 @@ class CP_Campaign_Widgets {
 
         // Verify permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Insufficient permissions', 'campaign-office')));
         }
 
         // Get and sanitize data
@@ -1094,7 +1094,7 @@ class CP_Campaign_Widgets {
             // Add more cases as needed
         }
 
-        wp_send_json_success(array('message' => __('Widget data updated successfully', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Widget data updated successfully', 'campaign-office')));
     }
 
     /**
@@ -1102,8 +1102,8 @@ class CP_Campaign_Widgets {
      */
     public function add_widget_settings_page() {
         add_theme_page(
-            __('Campaign Widgets', 'campaignpress'),
-            __('Campaign Widgets', 'campaignpress'),
+            __('Campaign Widgets', 'campaign-office'),
+            __('Campaign Widgets', 'campaign-office'),
             'manage_options',
             'cp-widget-settings',
             array($this, 'render_widget_settings_page')
@@ -1134,7 +1134,7 @@ class CP_Campaign_Widgets {
                 update_option('cp_fundraising_donors', absint($_POST['fundraising_donors']));
             }
 
-            echo '<div class="notice notice-success"><p>' . esc_html__('Settings saved successfully.', 'campaignpress') . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . esc_html__('Settings saved successfully.', 'campaign-office') . '</p></div>';
         }
 
         // Get current values
@@ -1147,29 +1147,29 @@ class CP_Campaign_Widgets {
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
-            <p><?php esc_html_e('Configure your campaign dashboard widgets. These widgets display campaign performance metrics in your WordPress admin dashboard.', 'campaignpress'); ?></p>
+            <p><?php esc_html_e('Configure your campaign dashboard widgets. These widgets display campaign performance metrics in your WordPress admin dashboard.', 'campaign-office'); ?></p>
 
             <form method="post" action="">
                 <?php wp_nonce_field('cp_widget_settings', 'cp_widget_settings_nonce'); ?>
 
-                <h2 id="election"><?php esc_html_e('Election Settings', 'campaignpress'); ?></h2>
+                <h2 id="election"><?php esc_html_e('Election Settings', 'campaign-office'); ?></h2>
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="election_date"><?php esc_html_e('Election Date', 'campaignpress'); ?></label>
+                            <label for="election_date"><?php esc_html_e('Election Date', 'campaign-office'); ?></label>
                         </th>
                         <td>
                             <input type="date" name="election_date" id="election_date" value="<?php echo esc_attr($election_date); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e('Set the election date for countdown widget.', 'campaignpress'); ?></p>
+                            <p class="description"><?php esc_html_e('Set the election date for countdown widget.', 'campaign-office'); ?></p>
                         </td>
                     </tr>
                 </table>
 
-                <h2><?php esc_html_e('Fundraising Data', 'campaignpress'); ?></h2>
+                <h2><?php esc_html_e('Fundraising Data', 'campaign-office'); ?></h2>
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="fundraising_goal"><?php esc_html_e('Fundraising Goal', 'campaignpress'); ?></label>
+                            <label for="fundraising_goal"><?php esc_html_e('Fundraising Goal', 'campaign-office'); ?></label>
                         </th>
                         <td>
                             <input type="number" name="fundraising_goal" id="fundraising_goal" value="<?php echo esc_attr($fundraising_goal); ?>" class="regular-text">
@@ -1177,7 +1177,7 @@ class CP_Campaign_Widgets {
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="fundraising_raised"><?php esc_html_e('Amount Raised', 'campaignpress'); ?></label>
+                            <label for="fundraising_raised"><?php esc_html_e('Amount Raised', 'campaign-office'); ?></label>
                         </th>
                         <td>
                             <input type="number" name="fundraising_raised" id="fundraising_raised" value="<?php echo esc_attr($fundraising_raised); ?>" class="regular-text">
@@ -1185,7 +1185,7 @@ class CP_Campaign_Widgets {
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="fundraising_donors"><?php esc_html_e('Number of Donors', 'campaignpress'); ?></label>
+                            <label for="fundraising_donors"><?php esc_html_e('Number of Donors', 'campaign-office'); ?></label>
                         </th>
                         <td>
                             <input type="number" name="fundraising_donors" id="fundraising_donors" value="<?php echo esc_attr($fundraising_donors); ?>" class="regular-text">
@@ -1193,20 +1193,20 @@ class CP_Campaign_Widgets {
                     </tr>
                 </table>
 
-                <?php submit_button(__('Save Settings', 'campaignpress')); ?>
+                <?php submit_button(__('Save Settings', 'campaign-office')); ?>
             </form>
 
             <div class="card">
-                <h2><?php esc_html_e('Available Widgets', 'campaignpress'); ?></h2>
-                <p><?php esc_html_e('The following widgets are available on your dashboard:', 'campaignpress'); ?></p>
+                <h2><?php esc_html_e('Available Widgets', 'campaign-office'); ?></h2>
+                <p><?php esc_html_e('The following widgets are available on your dashboard:', 'campaign-office'); ?></p>
                 <ul style="list-style: disc; margin-left: 2em;">
-                    <li><strong><?php esc_html_e('Campaign Fundraising', 'campaignpress'); ?></strong> - <?php esc_html_e('Track fundraising progress and donations', 'campaignpress'); ?></li>
-                    <li><strong><?php esc_html_e('Volunteer Engagement', 'campaignpress'); ?></strong> - <?php esc_html_e('Monitor volunteer signups and activity', 'campaignpress'); ?></li>
-                    <li><strong><?php esc_html_e('Event Attendance', 'campaignpress'); ?></strong> - <?php esc_html_e('View upcoming events and attendance stats', 'campaignpress'); ?></li>
-                    <li><strong><?php esc_html_e('Endorsements', 'campaignpress'); ?></strong> - <?php esc_html_e('Track endorsements by category', 'campaignpress'); ?></li>
-                    <li><strong><?php esc_html_e('Social Media Reach', 'campaignpress'); ?></strong> - <?php esc_html_e('Monitor social media followers and growth', 'campaignpress'); ?></li>
-                    <li><strong><?php esc_html_e('Days Until Election', 'campaignpress'); ?></strong> - <?php esc_html_e('Countdown to election day with key milestones', 'campaignpress'); ?></li>
-                    <li><strong><?php esc_html_e('Campaign Statistics', 'campaignpress'); ?></strong> - <?php esc_html_e('Comprehensive campaign overview', 'campaignpress'); ?></li>
+                    <li><strong><?php esc_html_e('Campaign Fundraising', 'campaign-office'); ?></strong> - <?php esc_html_e('Track fundraising progress and donations', 'campaign-office'); ?></li>
+                    <li><strong><?php esc_html_e('Volunteer Engagement', 'campaign-office'); ?></strong> - <?php esc_html_e('Monitor volunteer signups and activity', 'campaign-office'); ?></li>
+                    <li><strong><?php esc_html_e('Event Attendance', 'campaign-office'); ?></strong> - <?php esc_html_e('View upcoming events and attendance stats', 'campaign-office'); ?></li>
+                    <li><strong><?php esc_html_e('Endorsements', 'campaign-office'); ?></strong> - <?php esc_html_e('Track endorsements by category', 'campaign-office'); ?></li>
+                    <li><strong><?php esc_html_e('Social Media Reach', 'campaign-office'); ?></strong> - <?php esc_html_e('Monitor social media followers and growth', 'campaign-office'); ?></li>
+                    <li><strong><?php esc_html_e('Days Until Election', 'campaign-office'); ?></strong> - <?php esc_html_e('Countdown to election day with key milestones', 'campaign-office'); ?></li>
+                    <li><strong><?php esc_html_e('Campaign Statistics', 'campaign-office'); ?></strong> - <?php esc_html_e('Comprehensive campaign overview', 'campaign-office'); ?></li>
                 </ul>
             </div>
         </div>

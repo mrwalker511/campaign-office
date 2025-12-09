@@ -162,7 +162,7 @@ class CampaignPress_FEC_Contributions {
         // Verify donor exists
         $donor = $this->donors->get_donor($donor_id);
         if (!$donor) {
-            return new WP_Error('donor_not_found', __('Donor not found.', 'campaignpress'));
+            return new WP_Error('donor_not_found', __('Donor not found.', 'campaign-office'));
         }
 
         // Check if donor is prohibited source
@@ -241,7 +241,7 @@ class CampaignPress_FEC_Contributions {
         $result = $wpdb->insert($this->table_name, $insert_data);
 
         if ($result === false) {
-            return new WP_Error('db_error', __('Failed to record contribution.', 'campaignpress'));
+            return new WP_Error('db_error', __('Failed to record contribution.', 'campaign-office'));
         }
 
         $contribution_id = $wpdb->insert_id;
@@ -304,7 +304,7 @@ class CampaignPress_FEC_Contributions {
         // Get donor information
         $donor = $this->donors->get_donor($donor_id);
         if (!$donor) {
-            return new WP_Error('donor_not_found', __('Donor not found.', 'campaignpress'));
+            return new WP_Error('donor_not_found', __('Donor not found.', 'campaign-office'));
         }
 
         // Get committee type
@@ -328,7 +328,7 @@ class CampaignPress_FEC_Contributions {
             return new WP_Error(
                 'contribution_limit_exceeded',
                 sprintf(
-                    __('Contribution exceeds FEC limits. Limit: %s, Current aggregate: %s, Remaining: %s, Attempted: %s', 'campaignpress'),
+                    __('Contribution exceeds FEC limits. Limit: %s, Current aggregate: %s, Remaining: %s, Attempted: %s', 'campaign-office'),
                     cp_fec_format_amount($limit),
                     cp_fec_format_amount($current_aggregate),
                     cp_fec_format_amount($remaining),
@@ -509,8 +509,8 @@ class CampaignPress_FEC_Contributions {
             $alert_email = get_option('cp_fec_alert_email', get_option('admin_email'));
 
             if ($alert_email) {
-                $subject = sprintf(__('[FEC Alert] %d Unfiled 48-Hour Notices', 'campaignpress'), count($unfiled));
-                $message = sprintf(__('You have %d contributions requiring 48-hour notice that have not been filed with the FEC.', 'campaignpress'), count($unfiled));
+                $subject = sprintf(__('[FEC Alert] %d Unfiled 48-Hour Notices', 'campaign-office'), count($unfiled));
+                $message = sprintf(__('You have %d contributions requiring 48-hour notice that have not been filed with the FEC.', 'campaign-office'), count($unfiled));
                 $message .= "\n\n" . admin_url('admin.php?page=cp-fec-contributions&filter=48hour-unfiled');
 
                 wp_mail($alert_email, $subject, $message);
@@ -540,9 +540,9 @@ class CampaignPress_FEC_Contributions {
         $alert_email = get_option('cp_fec_alert_email', get_option('admin_email'));
 
         if ($alert_email) {
-            $subject = __('[FEC Alert] 48-Hour Notice Required', 'campaignpress');
+            $subject = __('[FEC Alert] 48-Hour Notice Required', 'campaign-office');
             $message = sprintf(
-                __('A contribution requiring 48-hour notice has been received:\n\nDonor: %s %s\nAmount: %s\nDate: %s\n\nFile 48-hour notice at: %s', 'campaignpress'),
+                __('A contribution requiring 48-hour notice has been received:\n\nDonor: %s %s\nAmount: %s\nDate: %s\n\nFile 48-hour notice at: %s', 'campaign-office'),
                 $donor->first_name,
                 $donor->last_name,
                 cp_fec_format_amount($contribution->amount),
@@ -606,12 +606,12 @@ class CampaignPress_FEC_Contributions {
         // Get original contribution
         $contribution = $this->get_contribution($contribution_id);
         if (!$contribution) {
-            return new WP_Error('contribution_not_found', __('Contribution not found.', 'campaignpress'));
+            return new WP_Error('contribution_not_found', __('Contribution not found.', 'campaign-office'));
         }
 
         // Validate refund amount
         if ($refund_amount > $contribution->amount) {
-            return new WP_Error('invalid_refund', __('Refund amount cannot exceed contribution amount.', 'campaignpress'));
+            return new WP_Error('invalid_refund', __('Refund amount cannot exceed contribution amount.', 'campaign-office'));
         }
 
         // Update contribution record with refund information
@@ -630,7 +630,7 @@ class CampaignPress_FEC_Contributions {
         );
 
         if ($result === false) {
-            return new WP_Error('db_error', __('Failed to process refund.', 'campaignpress'));
+            return new WP_Error('db_error', __('Failed to process refund.', 'campaign-office'));
         }
 
         // Update donor aggregate totals
@@ -858,11 +858,11 @@ class CampaignPress_FEC_Contributions {
         $errors = array();
 
         if (empty($data['donor_id'])) {
-            $errors[] = __('Donor ID is required.', 'campaignpress');
+            $errors[] = __('Donor ID is required.', 'campaign-office');
         }
 
         if (empty($data['amount']) || floatval($data['amount']) <= 0) {
-            $errors[] = __('Valid contribution amount is required.', 'campaignpress');
+            $errors[] = __('Valid contribution amount is required.', 'campaign-office');
         }
 
         if (!empty($errors)) {

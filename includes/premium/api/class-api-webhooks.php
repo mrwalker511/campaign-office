@@ -249,7 +249,7 @@ class CampaignPress_API_Webhooks {
 		if ( ! $webhook ) {
 			return new WP_Error(
 				'webhook_not_found',
-				__( 'Webhook not found.', 'campaignpress' ),
+				__( 'Webhook not found.', 'campaign-office' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -275,7 +275,7 @@ class CampaignPress_API_Webhooks {
 		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
 			return new WP_Error(
 				'invalid_url',
-				__( 'Invalid webhook URL.', 'campaignpress' ),
+				__( 'Invalid webhook URL.', 'campaign-office' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -297,7 +297,7 @@ class CampaignPress_API_Webhooks {
 		if ( ! $inserted ) {
 			return new WP_Error(
 				'webhook_creation_failed',
-				__( 'Failed to create webhook.', 'campaignpress' ),
+				__( 'Failed to create webhook.', 'campaign-office' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -329,7 +329,7 @@ class CampaignPress_API_Webhooks {
 		if ( ! $webhook ) {
 			return new WP_Error(
 				'webhook_not_found',
-				__( 'Webhook not found.', 'campaignpress' ),
+				__( 'Webhook not found.', 'campaign-office' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -345,7 +345,7 @@ class CampaignPress_API_Webhooks {
 			if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
 				return new WP_Error(
 					'invalid_url',
-					__( 'Invalid webhook URL.', 'campaignpress' ),
+					__( 'Invalid webhook URL.', 'campaign-office' ),
 					array( 'status' => 400 )
 				);
 			}
@@ -363,7 +363,7 @@ class CampaignPress_API_Webhooks {
 		if ( empty( $data ) ) {
 			return new WP_Error(
 				'no_data',
-				__( 'No data to update.', 'campaignpress' ),
+				__( 'No data to update.', 'campaign-office' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -377,7 +377,7 @@ class CampaignPress_API_Webhooks {
 		if ( $updated === false ) {
 			return new WP_Error(
 				'webhook_update_failed',
-				__( 'Failed to update webhook.', 'campaignpress' ),
+				__( 'Failed to update webhook.', 'campaign-office' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -408,7 +408,7 @@ class CampaignPress_API_Webhooks {
 		if ( ! $webhook ) {
 			return new WP_Error(
 				'webhook_not_found',
-				__( 'Webhook not found.', 'campaignpress' ),
+				__( 'Webhook not found.', 'campaign-office' ),
 				array( 'status' => 404 )
 			);
 		}
@@ -430,7 +430,7 @@ class CampaignPress_API_Webhooks {
 		if ( ! $deleted ) {
 			return new WP_Error(
 				'webhook_deletion_failed',
-				__( 'Failed to delete webhook.', 'campaignpress' ),
+				__( 'Failed to delete webhook.', 'campaign-office' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -483,7 +483,7 @@ class CampaignPress_API_Webhooks {
 		if ( ! $webhook ) {
 			return new WP_Error(
 				'webhook_not_found',
-				__( 'Webhook not found.', 'campaignpress' ),
+				__( 'Webhook not found.', 'campaign-office' ),
 				array( 'status' => 404 )
 			);
 		}

@@ -14,7 +14,7 @@ get_header();
 
         <header class="page-header">
             <h1 class="page-title">
-                <?php esc_html_e( 'Campaign Events', 'campaignpress' ); ?>
+                <?php esc_html_e( 'Campaign Events', 'campaign-office' ); ?>
             </h1>
             <?php
             $archive_description = get_the_archive_description();
@@ -50,7 +50,7 @@ get_header();
                                     <time datetime="<?php echo esc_attr( $datetime['datetime'] ); ?>">
                                         <?php echo esc_html( $datetime['date'] ); ?>
                                         <?php if ( $datetime['time'] ) : ?>
-                                            <?php esc_html_e( 'at', 'campaignpress' ); ?> <?php echo esc_html( $datetime['time'] ); ?>
+                                            <?php esc_html_e( 'at', 'campaign-office' ); ?> <?php echo esc_html( $datetime['time'] ); ?>
                                         <?php endif; ?>
                                     </time>
                                 </div>
@@ -102,11 +102,11 @@ get_header();
                             <footer class="entry-footer">
                                 <div class="event-actions">
                                     <a href="<?php the_permalink(); ?>" class="button button-secondary">
-                                        <?php esc_html_e( 'Event Details', 'campaignpress' ); ?>
+                                        <?php esc_html_e( 'Event Details', 'campaign-office' ); ?>
                                     </a>
                                     <?php if ( $rsvp_link ) : ?>
                                         <a href="<?php echo esc_url( $rsvp_link ); ?>" class="button button-primary" target="_blank" rel="noopener">
-                                            <?php esc_html_e( 'RSVP', 'campaignpress' ); ?>
+                                            <?php esc_html_e( 'RSVP', 'campaign-office' ); ?>
                                         </a>
                                     <?php endif; ?>
                                 </div>
@@ -118,8 +118,8 @@ get_header();
 
             <?php
             the_posts_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
             ) );
             ?>
 
@@ -127,11 +127,11 @@ get_header();
 
             <div class="no-results not-found">
                 <header class="page-header">
-                    <h1 class="page-title"><?php esc_html_e( 'No Events Found', 'campaignpress' ); ?></h1>
+                    <h1 class="page-title"><?php esc_html_e( 'No Events Found', 'campaign-office' ); ?></h1>
                 </header>
 
                 <div class="page-content">
-                    <p><?php esc_html_e( 'No campaign events have been scheduled yet. Check back soon!', 'campaignpress' ); ?></p>
+                    <p><?php esc_html_e( 'No campaign events have been scheduled yet. Check back soon!', 'campaign-office' ); ?></p>
                 </div>
             </div>
 

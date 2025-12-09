@@ -62,7 +62,7 @@ function campaignpress_mailchimp_integration_notice() {
                 <?php
                 echo wp_kses_post(
                     sprintf(
-                        __('<strong>CampaignPress Tip:</strong> Install the %s plugin to add email signup forms to your campaign website.', 'campaignpress'),
+                        __('<strong>CampaignPress Tip:</strong> Install the %s plugin to add email signup forms to your campaign website.', 'campaign-office'),
                         '<a href="' . admin_url('plugin-install.php?s=mailchimp+for+wordpress&tab=search&type=term') . '">MailChimp for WordPress</a>'
                     )
                 );
@@ -98,7 +98,7 @@ function campaignpress_get_donation_url() {
  */
 function campaignpress_donation_button($args = array()) {
     $defaults = array(
-        'text'  => __('Donate Now', 'campaignpress'),
+        'text'  => __('Donate Now', 'campaign-office'),
         'class' => 'cp-donation-button',
         'url'   => campaignpress_get_donation_url(),
     );
@@ -146,8 +146,8 @@ function campaignpress_recommended_plugins_notice() {
 
     ?>
     <div class="notice notice-info is-dismissible">
-        <h3><?php esc_html_e('Recommended Plugins for CampaignPress', 'campaignpress'); ?></h3>
-        <p><?php esc_html_e('To get the most out of CampaignPress, we recommend installing these free plugins:', 'campaignpress'); ?></p>
+        <h3><?php esc_html_e('Recommended Plugins for CampaignPress', 'campaign-office'); ?></h3>
+        <p><?php esc_html_e('To get the most out of CampaignPress, we recommend installing these free plugins:', 'campaign-office'); ?></p>
         <ul style="list-style: disc; margin-left: 20px;">
             <?php foreach ($recommended_plugins as $plugin) : ?>
                 <li><?php echo esc_html($plugin); ?></li>
@@ -155,7 +155,7 @@ function campaignpress_recommended_plugins_notice() {
         </ul>
         <p>
             <a href="<?php echo esc_url(admin_url('plugin-install.php')); ?>" class="button button-primary">
-                <?php esc_html_e('Install Plugins', 'campaignpress'); ?>
+                <?php esc_html_e('Install Plugins', 'campaign-office'); ?>
             </a>
         </p>
     </div>

@@ -16,7 +16,7 @@ get_header();
             <h1 class="page-title">
                 <?php
                 printf(
-                    esc_html__( 'Search Results for: %s', 'campaignpress' ),
+                    esc_html__( 'Search Results for: %s', 'campaign-office' ),
                     '<span>' . get_search_query() . '</span>'
                 );
                 ?>
@@ -72,8 +72,8 @@ get_header();
 
                         <footer class="entry-footer">
                             <a href="<?php the_permalink(); ?>" class="read-more">
-                                <?php esc_html_e( 'Read More', 'campaignpress' ); ?>
-                                <span class="screen-reader-text"> <?php esc_html_e( 'about', 'campaignpress' ); ?> <?php the_title(); ?></span>
+                                <?php esc_html_e( 'Read More', 'campaign-office' ); ?>
+                                <span class="screen-reader-text"> <?php esc_html_e( 'about', 'campaign-office' ); ?> <?php the_title(); ?></span>
                             </a>
                         </footer>
                     </article>
@@ -83,8 +83,8 @@ get_header();
 
             <?php
             the_posts_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Results', 'campaignpress' ) . '</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'More Results', 'campaignpress' ) . '</span>',
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Results', 'campaign-office' ) . '</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'More Results', 'campaign-office' ) . '</span>',
             ) );
             ?>
 
@@ -92,24 +92,24 @@ get_header();
 
             <div class="no-results not-found">
                 <header class="page-header">
-                    <h2 class="page-title"><?php esc_html_e( 'Nothing Found', 'campaignpress' ); ?></h2>
+                    <h2 class="page-title"><?php esc_html_e( 'Nothing Found', 'campaign-office' ); ?></h2>
                 </header>
 
                 <div class="page-content">
-                    <p><?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with different keywords.', 'campaignpress' ); ?></p>
+                    <p><?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with different keywords.', 'campaign-office' ); ?></p>
 
                     <div class="search-form-wrapper">
                         <?php get_search_form(); ?>
                     </div>
 
                     <div class="search-suggestions">
-                        <h3><?php esc_html_e( 'Browse by Category', 'campaignpress' ); ?></h3>
+                        <h3><?php esc_html_e( 'Browse by Category', 'campaign-office' ); ?></h3>
                         <ul>
-                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_issue' ) ); ?>"><?php esc_html_e( 'Issues', 'campaignpress' ); ?></a></li>
-                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_event' ) ); ?>"><?php esc_html_e( 'Events', 'campaignpress' ); ?></a></li>
-                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_endorsement' ) ); ?>"><?php esc_html_e( 'Endorsements', 'campaignpress' ); ?></a></li>
-                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_team' ) ); ?>"><?php esc_html_e( 'Team', 'campaignpress' ); ?></a></li>
-                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_volunteer' ) ); ?>"><?php esc_html_e( 'Volunteer Opportunities', 'campaignpress' ); ?></a></li>
+                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_issue' ) ); ?>"><?php esc_html_e( 'Issues', 'campaign-office' ); ?></a></li>
+                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_event' ) ); ?>"><?php esc_html_e( 'Events', 'campaign-office' ); ?></a></li>
+                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_endorsement' ) ); ?>"><?php esc_html_e( 'Endorsements', 'campaign-office' ); ?></a></li>
+                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_team' ) ); ?>"><?php esc_html_e( 'Team', 'campaign-office' ); ?></a></li>
+                            <li><a href="<?php echo esc_url( get_post_type_archive_link( 'cp_volunteer' ) ); ?>"><?php esc_html_e( 'Volunteer Opportunities', 'campaign-office' ); ?></a></li>
                         </ul>
                     </div>
                 </div>

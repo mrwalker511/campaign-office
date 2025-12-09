@@ -42,7 +42,7 @@ get_header();
                     the_content();
 
                     wp_link_pages( array(
-                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaignpress' ),
+                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaign-office' ),
                         'after'  => '</div>',
                     ) );
                     ?>
@@ -50,7 +50,7 @@ get_header();
 
                 <footer class="entry-footer">
                     <div class="endorsement-share">
-                        <h3><?php esc_html_e( 'Share This Endorsement', 'campaignpress' ); ?></h3>
+                        <h3><?php esc_html_e( 'Share This Endorsement', 'campaign-office' ); ?></h3>
                         <div class="share-buttons">
                             <?php
                             $title = get_the_title();
@@ -70,8 +70,8 @@ get_header();
                     <div class="post-navigation">
                         <?php
                         the_post_navigation( array(
-                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Endorsement:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Endorsement:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Endorsement:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Endorsement:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
                         ) );
                         ?>
                     </div>

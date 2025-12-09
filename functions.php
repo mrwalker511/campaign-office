@@ -188,7 +188,7 @@ function campaignpress_register_block_patterns() {
         array(
             'title'       => __('Campaign Hero Section', 'campaign-office'),
             'description' => __('Full-width hero with heading, tagline, and CTA buttons', 'campaign-office'),
-            'categories'  => array('campaignpress'),
+            'categories'  => array('campaign-office'),
             'content'     => '<!-- wp:cover {"url":"' . get_template_directory_uri() . '/assets/images/hero-placeholder.jpg","dimRatio":50,"overlayColor":"primary-900","className":"is-style-campaign-hero"} -->
                 <div class="wp-block-cover is-style-campaign-hero">
                     <span aria-hidden="true" class="wp-block-cover__background has-primary-900-background-color has-background-dim"></span>
@@ -224,7 +224,7 @@ function campaignpress_register_block_patterns() {
         array(
             'title'       => __('Issue Position Card', 'campaign-office'),
             'description' => __('Highlight a policy position with icon and description', 'campaign-office'),
-            'categories'  => array('campaignpress'),
+            'categories'  => array('campaign-office'),
             'content'     => '<!-- wp:group {"className":"is-style-issue-card"} -->
                 <div class="wp-block-group is-style-issue-card">
                     <!-- wp:paragraph {"fontSize":"4-xl"} -->
@@ -250,7 +250,7 @@ add_action('init', 'campaignpress_register_block_patterns');
  */
 function campaignpress_register_block_pattern_category() {
     register_block_pattern_category(
-        'campaignpress',
+        'campaign-office',
         array('label' => __('CampaignPress', 'campaign-office'))
     );
 }
@@ -276,9 +276,9 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
  */
 function campaignpress_widgets_init() {
     register_sidebar(array(
-        'name'          => esc_html__('Sidebar', 'campaignpress'),
+        'name'          => esc_html__('Sidebar', 'campaign-office'),
         'id'            => 'sidebar-1',
-        'description'   => esc_html__('Add widgets here.', 'campaignpress'),
+        'description'   => esc_html__('Add widgets here.', 'campaign-office'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h2 class="widget-title">',
@@ -286,9 +286,9 @@ function campaignpress_widgets_init() {
     ));
 
     register_sidebar(array(
-        'name'          => esc_html__('Footer Widget Area 1', 'campaignpress'),
+        'name'          => esc_html__('Footer Widget Area 1', 'campaign-office'),
         'id'            => 'footer-1',
-        'description'   => esc_html__('Footer widget area 1', 'campaignpress'),
+        'description'   => esc_html__('Footer widget area 1', 'campaign-office'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h3 class="widget-title">',
@@ -296,9 +296,9 @@ function campaignpress_widgets_init() {
     ));
 
     register_sidebar(array(
-        'name'          => esc_html__('Footer Widget Area 2', 'campaignpress'),
+        'name'          => esc_html__('Footer Widget Area 2', 'campaign-office'),
         'id'            => 'footer-2',
-        'description'   => esc_html__('Footer widget area 2', 'campaignpress'),
+        'description'   => esc_html__('Footer widget area 2', 'campaign-office'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h3 class="widget-title">',
@@ -306,9 +306,9 @@ function campaignpress_widgets_init() {
     ));
 
     register_sidebar(array(
-        'name'          => esc_html__('Footer Widget Area 3', 'campaignpress'),
+        'name'          => esc_html__('Footer Widget Area 3', 'campaign-office'),
         'id'            => 'footer-3',
-        'description'   => esc_html__('Footer widget area 3', 'campaignpress'),
+        'description'   => esc_html__('Footer widget area 3', 'campaign-office'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h3 class="widget-title">',

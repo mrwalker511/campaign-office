@@ -11,7 +11,7 @@
 
     <footer id="colophon" class="site-footer" role="contentinfo">
         <div class="site-container">
-            <div class="footer-widgets" role="complementary" aria-label="<?php esc_attr_e( 'Footer Widgets', 'campaignpress' ); ?>">
+            <div class="footer-widgets" role="complementary" aria-label="<?php esc_attr_e( 'Footer Widgets', 'campaign-office' ); ?>">
                 <div class="footer-widget-area">
                     <?php if (is_active_sidebar('footer-1')) : ?>
                         <div class="footer-widget-column">
@@ -42,23 +42,23 @@
                     if ($candidate_name && $office_seeking) {
                         printf(
                             /* translators: 1: candidate name, 2: office seeking */
-                            esc_html__('%1$s for %2$s', 'campaignpress'),
+                            esc_html__('%1$s for %2$s', 'campaign-office'),
                             '<strong>' . esc_html($candidate_name) . '</strong>',
                             esc_html($office_seeking)
                         );
                         echo ' | ';
                     }
                     ?>
-                    <a href="<?php echo esc_url(__('https://wordpress.org/', 'campaignpress')); ?>">
+                    <a href="<?php echo esc_url(__('https://wordpress.org/', 'campaign-office')); ?>">
                         <?php
                         /* translators: %s: WordPress */
-                        printf(esc_html__('Powered by %s', 'campaignpress'), 'WordPress');
+                        printf(esc_html__('Powered by %s', 'campaign-office'), 'WordPress');
                         ?>
                     </a>
                     <span class="sep"> | </span>
                     <?php
                     /* translators: 1: Theme name */
-                    printf(esc_html__('Theme: %s', 'campaignpress'), 'CampaignPress');
+                    printf(esc_html__('Theme: %s', 'campaign-office'), 'CampaignPress');
                     ?>
                 </div><!-- .site-info -->
 
@@ -67,7 +67,7 @@
                 <?php
                 if (has_nav_menu('footer')) :
                     ?>
-                    <nav class="footer-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Footer Navigation', 'campaignpress' ); ?>">
+                    <nav class="footer-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Footer Navigation', 'campaign-office' ); ?>">
                         <?php
                         wp_nav_menu(
                             array(

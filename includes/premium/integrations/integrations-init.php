@@ -211,18 +211,18 @@ class CampaignPress_Integrations {
      */
     public function add_admin_menu() {
         add_submenu_page(
-            'campaignpress',
-            __('Integrations', 'campaignpress'),
-            __('Integrations', 'campaignpress'),
+            'campaign-office',
+            __('Integrations', 'campaign-office'),
+            __('Integrations', 'campaign-office'),
             'manage_options',
             'campaignpress-integrations',
             array($this, 'render_integrations_page')
         );
 
         add_submenu_page(
-            'campaignpress',
-            __('Automation Workflows', 'campaignpress'),
-            __('Automation', 'campaignpress'),
+            'campaign-office',
+            __('Automation Workflows', 'campaign-office'),
+            __('Automation', 'campaign-office'),
             'manage_options',
             'campaignpress-automation',
             array($this, 'render_automation_page')
@@ -265,13 +265,13 @@ class CampaignPress_Integrations {
             'webhookUrl' => admin_url('admin-ajax.php'),
             'testingMode' => $this->testing_mode,
             'strings' => array(
-                'testSuccess' => __('Connection successful!', 'campaignpress'),
-                'testFailed' => __('Connection failed. Please check your credentials.', 'campaignpress'),
-                'saveSuccess' => __('Integration saved successfully.', 'campaignpress'),
-                'saveFailed' => __('Failed to save integration.', 'campaignpress'),
-                'deleteConfirm' => __('Are you sure you want to delete this integration?', 'campaignpress'),
-                'syncStarted' => __('Synchronization started...', 'campaignpress'),
-                'syncComplete' => __('Synchronization complete!', 'campaignpress'),
+                'testSuccess' => __('Connection successful!', 'campaign-office'),
+                'testFailed' => __('Connection failed. Please check your credentials.', 'campaign-office'),
+                'saveSuccess' => __('Integration saved successfully.', 'campaign-office'),
+                'saveFailed' => __('Failed to save integration.', 'campaign-office'),
+                'deleteConfirm' => __('Are you sure you want to delete this integration?', 'campaign-office'),
+                'syncStarted' => __('Synchronization started...', 'campaign-office'),
+                'syncComplete' => __('Synchronization complete!', 'campaign-office'),
             )
         ));
     }
@@ -284,7 +284,7 @@ class CampaignPress_Integrations {
     public function render_integrations_page() {
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions to access this page.', 'campaignpress'));
+            wp_die(__('You do not have sufficient permissions to access this page.', 'campaign-office'));
         }
 
         // Get active integrations
@@ -306,7 +306,7 @@ class CampaignPress_Integrations {
     public function render_automation_page() {
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions to access this page.', 'campaignpress'));
+            wp_die(__('You do not have sufficient permissions to access this page.', 'campaign-office'));
         }
 
         // Get workflows
@@ -326,7 +326,7 @@ class CampaignPress_Integrations {
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
         }
 
         // Get parameters
@@ -346,9 +346,9 @@ class CampaignPress_Integrations {
         }
 
         if ($result) {
-            wp_send_json_success(array('message' => __('Connection successful!', 'campaignpress')));
+            wp_send_json_success(array('message' => __('Connection successful!', 'campaign-office')));
         } else {
-            wp_send_json_error(array('message' => __('Connection failed.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Connection failed.', 'campaign-office')));
         }
     }
 
@@ -363,7 +363,7 @@ class CampaignPress_Integrations {
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
         }
 
         // Get parameters
@@ -387,9 +387,9 @@ class CampaignPress_Integrations {
         }
 
         if ($result) {
-            wp_send_json_success(array('message' => __('Integration saved successfully.', 'campaignpress')));
+            wp_send_json_success(array('message' => __('Integration saved successfully.', 'campaign-office')));
         } else {
-            wp_send_json_error(array('message' => __('Failed to save integration.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Failed to save integration.', 'campaign-office')));
         }
     }
 
@@ -404,7 +404,7 @@ class CampaignPress_Integrations {
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
         }
 
         // Get parameters
@@ -420,9 +420,9 @@ class CampaignPress_Integrations {
         }
 
         if ($result) {
-            wp_send_json_success(array('message' => __('Integration deleted successfully.', 'campaignpress')));
+            wp_send_json_success(array('message' => __('Integration deleted successfully.', 'campaign-office')));
         } else {
-            wp_send_json_error(array('message' => __('Failed to delete integration.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Failed to delete integration.', 'campaign-office')));
         }
     }
 
@@ -437,7 +437,7 @@ class CampaignPress_Integrations {
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
         }
 
         // Get parameters
@@ -453,9 +453,9 @@ class CampaignPress_Integrations {
         }
 
         if ($result) {
-            wp_send_json_success(array('message' => __('Synchronization complete.', 'campaignpress')));
+            wp_send_json_success(array('message' => __('Synchronization complete.', 'campaign-office')));
         } else {
-            wp_send_json_error(array('message' => __('Synchronization failed.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Synchronization failed.', 'campaign-office')));
         }
     }
 

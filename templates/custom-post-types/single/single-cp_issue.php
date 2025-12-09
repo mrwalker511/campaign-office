@@ -55,7 +55,7 @@ get_header();
                     the_content();
 
                     wp_link_pages( array(
-                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaignpress' ),
+                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaign-office' ),
                         'after'  => '</div>',
                     ) );
                     ?>
@@ -67,14 +67,14 @@ get_header();
                     if ( $candidate_name ) :
                         ?>
                         <div class="issue-support-cta">
-                            <h3><?php echo sprintf( esc_html__( 'Support %s on this Issue', 'campaignpress' ), esc_html( $candidate_name ) ); ?></h3>
+                            <h3><?php echo sprintf( esc_html__( 'Support %s on this Issue', 'campaign-office' ), esc_html( $candidate_name ) ); ?></h3>
                             <div class="cta-buttons">
                                 <?php
                                 $donation_url = get_option( 'campaignpress_donation_url' );
                                 if ( $donation_url ) :
                                     ?>
                                     <a href="<?php echo esc_url( $donation_url ); ?>" class="button button-primary" target="_blank" rel="noopener">
-                                        <?php esc_html_e( 'Donate', 'campaignpress' ); ?>
+                                        <?php esc_html_e( 'Donate', 'campaign-office' ); ?>
                                     </a>
                                 <?php endif; ?>
 
@@ -83,7 +83,7 @@ get_header();
                                 if ( $volunteer_url ) :
                                     ?>
                                     <a href="<?php echo esc_url( $volunteer_url ); ?>" class="button button-secondary" target="_blank" rel="noopener">
-                                        <?php esc_html_e( 'Volunteer', 'campaignpress' ); ?>
+                                        <?php esc_html_e( 'Volunteer', 'campaign-office' ); ?>
                                     </a>
                                 <?php endif; ?>
                             </div>
@@ -93,8 +93,8 @@ get_header();
                     <div class="post-navigation">
                         <?php
                         the_post_navigation( array(
-                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Issue:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Issue:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Issue:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Issue:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
                         ) );
                         ?>
                     </div>

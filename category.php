@@ -19,7 +19,7 @@ get_header();
                     <?php
                     printf(
                         /* translators: %s: category name */
-                        esc_html__( 'Category: %s', 'campaignpress' ),
+                        esc_html__( 'Category: %s', 'campaign-office' ),
                         '<span>' . single_cat_title( '', false ) . '</span>'
                     );
                     ?>
@@ -44,8 +44,8 @@ get_header();
 
             <?php
             the_posts_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous', 'campaignpress' ) . '</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next', 'campaignpress' ) . '</span>',
+                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous', 'campaign-office' ) . '</span>',
+                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next', 'campaign-office' ) . '</span>',
             ) );
 
         else :

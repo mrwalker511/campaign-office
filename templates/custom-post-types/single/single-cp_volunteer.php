@@ -42,7 +42,7 @@ get_header();
                     the_content();
 
                     wp_link_pages( array(
-                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaignpress' ),
+                        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campaign-office' ),
                         'after'  => '</div>',
                     ) );
                     ?>
@@ -50,15 +50,15 @@ get_header();
 
                 <footer class="entry-footer">
                     <div class="volunteer-cta">
-                        <h3><?php esc_html_e( 'Ready to Make a Difference?', 'campaignpress' ); ?></h3>
-                        <p><?php esc_html_e( 'Join our team of dedicated volunteers and help us build a better future.', 'campaignpress' ); ?></p>
+                        <h3><?php esc_html_e( 'Ready to Make a Difference?', 'campaign-office' ); ?></h3>
+                        <p><?php esc_html_e( 'Join our team of dedicated volunteers and help us build a better future.', 'campaign-office' ); ?></p>
 
                         <?php
                         $volunteer_url = get_option( 'campaignpress_volunteer_url' );
                         if ( $volunteer_url ) :
                             ?>
                             <a href="<?php echo esc_url( $volunteer_url ); ?>" class="button button-primary button-large" target="_blank" rel="noopener">
-                                <?php esc_html_e( 'Sign Up to Volunteer', 'campaignpress' ); ?>
+                                <?php esc_html_e( 'Sign Up to Volunteer', 'campaign-office' ); ?>
                             </a>
                         <?php endif; ?>
                     </div>
@@ -66,8 +66,8 @@ get_header();
                     <div class="post-navigation">
                         <?php
                         the_post_navigation( array(
-                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Opportunity:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
-                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Opportunity:', 'campaignpress' ) . '</span> <span class="nav-title">%title</span>',
+                            'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous Opportunity:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
+                            'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next Opportunity:', 'campaign-office' ) . '</span> <span class="nav-title">%title</span>',
                         ) );
                         ?>
                     </div>

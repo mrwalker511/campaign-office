@@ -139,8 +139,8 @@ class CP_Field_Operations_Init {
     public function add_admin_menu() {
         // Main field operations menu
         add_menu_page(
-            __('Field Operations', 'campaignpress'),
-            __('Field Ops', 'campaignpress'),
+            __('Field Operations', 'campaign-office'),
+            __('Field Ops', 'campaign-office'),
             'edit_posts',
             'cp-field-operations',
             array($this, 'render_dashboard'),
@@ -151,8 +151,8 @@ class CP_Field_Operations_Init {
         // Dashboard submenu
         add_submenu_page(
             'cp-field-operations',
-            __('Field Ops Dashboard', 'campaignpress'),
-            __('Dashboard', 'campaignpress'),
+            __('Field Ops Dashboard', 'campaign-office'),
+            __('Dashboard', 'campaign-office'),
             'edit_posts',
             'cp-field-operations',
             array($this, 'render_dashboard')
@@ -161,8 +161,8 @@ class CP_Field_Operations_Init {
         // Reports submenu
         add_submenu_page(
             'cp-field-operations',
-            __('Field Ops Reports', 'campaignpress'),
-            __('Reports', 'campaignpress'),
+            __('Field Ops Reports', 'campaign-office'),
+            __('Reports', 'campaign-office'),
             'edit_posts',
             'cp-field-ops-reports',
             array($this, 'render_reports')
@@ -171,8 +171,8 @@ class CP_Field_Operations_Init {
         // Settings submenu
         add_submenu_page(
             'cp-field-operations',
-            __('Field Ops Settings', 'campaignpress'),
-            __('Settings', 'campaignpress'),
+            __('Field Ops Settings', 'campaign-office'),
+            __('Settings', 'campaign-office'),
             'manage_options',
             'cp-field-ops-settings',
             array($this, 'render_settings')
@@ -217,10 +217,10 @@ class CP_Field_Operations_Init {
             'restUrl' => rest_url('campaignpress/v1/'),
             'nonce' => wp_create_nonce('cp_field_ops_nonce'),
             'strings' => array(
-                'confirmDelete' => __('Are you sure you want to delete this item?', 'campaignpress'),
-                'savingChanges' => __('Saving changes...', 'campaignpress'),
-                'changesSaved' => __('Changes saved successfully!', 'campaignpress'),
-                'errorOccurred' => __('An error occurred. Please try again.', 'campaignpress'),
+                'confirmDelete' => __('Are you sure you want to delete this item?', 'campaign-office'),
+                'savingChanges' => __('Saving changes...', 'campaign-office'),
+                'changesSaved' => __('Changes saved successfully!', 'campaign-office'),
+                'errorOccurred' => __('An error occurred. Please try again.', 'campaign-office'),
             ),
         ));
     }
@@ -270,10 +270,10 @@ class CP_Field_Operations_Init {
             'offlineMode' => true,
             'syncInterval' => 30000, // 30 seconds
             'strings' => array(
-                'offline' => __('You are currently offline. Data will sync when connection is restored.', 'campaignpress'),
-                'online' => __('Connection restored. Syncing data...', 'campaignpress'),
-                'syncComplete' => __('Data synced successfully!', 'campaignpress'),
-                'syncError' => __('Sync failed. Will retry automatically.', 'campaignpress'),
+                'offline' => __('You are currently offline. Data will sync when connection is restored.', 'campaign-office'),
+                'online' => __('Connection restored. Syncing data...', 'campaign-office'),
+                'syncComplete' => __('Data synced successfully!', 'campaign-office'),
+                'syncError' => __('Sync failed. Will retry automatically.', 'campaign-office'),
             ),
         ));
     }
@@ -335,13 +335,13 @@ class CP_Field_Operations_Init {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
 
         if (!current_user_can('edit_posts')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
         }
 
         $sync_data = isset($_POST['sync_data']) ? json_decode(stripslashes($_POST['sync_data']), true) : array();
 
         if (empty($sync_data)) {
-            wp_send_json_error(array('message' => __('No data to sync.', 'campaignpress')));
+            wp_send_json_error(array('message' => __('No data to sync.', 'campaign-office')));
         }
 
         $results = array(
@@ -388,7 +388,7 @@ class CP_Field_Operations_Init {
         }
 
         wp_send_json_success(array(
-            'message' => __('Data synced successfully!', 'campaignpress'),
+            'message' => __('Data synced successfully!', 'campaign-office'),
             'results' => $results,
         ));
     }
@@ -437,61 +437,61 @@ class CP_Field_Operations_Init {
     public function render_dashboard() {
         ?>
         <div class="wrap cp-field-ops-dashboard">
-            <h1><?php esc_html_e('Field Operations Dashboard', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Field Operations Dashboard', 'campaign-office'); ?></h1>
 
             <div class="cp-dashboard-grid">
                 <!-- Canvassing Stats -->
                 <div class="cp-dashboard-card">
-                    <h2><?php esc_html_e('Canvassing', 'campaignpress'); ?></h2>
+                    <h2><?php esc_html_e('Canvassing', 'campaign-office'); ?></h2>
                     <div class="cp-stat-large">
                         <?php echo esc_html(number_format($this->canvassing->get_total_doors_knocked())); ?>
                     </div>
-                    <p class="cp-stat-label"><?php esc_html_e('Doors Knocked Today', 'campaignpress'); ?></p>
+                    <p class="cp-stat-label"><?php esc_html_e('Doors Knocked Today', 'campaign-office'); ?></p>
                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-canvassing')); ?>" class="button">
-                        <?php esc_html_e('Manage Canvassing', 'campaignpress'); ?>
+                        <?php esc_html_e('Manage Canvassing', 'campaign-office'); ?>
                     </a>
                 </div>
 
                 <!-- Phone Banking Stats -->
                 <div class="cp-dashboard-card">
-                    <h2><?php esc_html_e('Phone Banking', 'campaignpress'); ?></h2>
+                    <h2><?php esc_html_e('Phone Banking', 'campaign-office'); ?></h2>
                     <div class="cp-stat-large">
                         <?php echo esc_html(number_format($this->phone_banking->get_total_calls_today())); ?>
                     </div>
-                    <p class="cp-stat-label"><?php esc_html_e('Calls Made Today', 'campaignpress'); ?></p>
+                    <p class="cp-stat-label"><?php esc_html_e('Calls Made Today', 'campaign-office'); ?></p>
                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-phone-banking')); ?>" class="button">
-                        <?php esc_html_e('Manage Phone Banking', 'campaignpress'); ?>
+                        <?php esc_html_e('Manage Phone Banking', 'campaign-office'); ?>
                     </a>
                 </div>
 
                 <!-- GOTV Stats -->
                 <div class="cp-dashboard-card">
-                    <h2><?php esc_html_e('Get Out The Vote', 'campaignpress'); ?></h2>
+                    <h2><?php esc_html_e('Get Out The Vote', 'campaign-office'); ?></h2>
                     <div class="cp-stat-large">
                         <?php echo esc_html(number_format($this->gotv->get_turnout_percentage(), 1)); ?>%
                     </div>
-                    <p class="cp-stat-label"><?php esc_html_e('Voter Turnout', 'campaignpress'); ?></p>
+                    <p class="cp-stat-label"><?php esc_html_e('Voter Turnout', 'campaign-office'); ?></p>
                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-gotv')); ?>" class="button">
-                        <?php esc_html_e('Manage GOTV', 'campaignpress'); ?>
+                        <?php esc_html_e('Manage GOTV', 'campaign-office'); ?>
                     </a>
                 </div>
 
                 <!-- Volunteer Stats -->
                 <div class="cp-dashboard-card">
-                    <h2><?php esc_html_e('Volunteers', 'campaignpress'); ?></h2>
+                    <h2><?php esc_html_e('Volunteers', 'campaign-office'); ?></h2>
                     <div class="cp-stat-large">
                         <?php echo esc_html(number_format($this->volunteer_scheduling->get_active_volunteers_today())); ?>
                     </div>
-                    <p class="cp-stat-label"><?php esc_html_e('Active Volunteers Today', 'campaignpress'); ?></p>
+                    <p class="cp-stat-label"><?php esc_html_e('Active Volunteers Today', 'campaign-office'); ?></p>
                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-volunteer-scheduling')); ?>" class="button">
-                        <?php esc_html_e('Manage Scheduling', 'campaignpress'); ?>
+                        <?php esc_html_e('Manage Scheduling', 'campaign-office'); ?>
                     </a>
                 </div>
             </div>
 
             <!-- Recent Activity -->
             <div class="cp-recent-activity">
-                <h2><?php esc_html_e('Recent Activity', 'campaignpress'); ?></h2>
+                <h2><?php esc_html_e('Recent Activity', 'campaign-office'); ?></h2>
                 <div id="cp-activity-feed"></div>
             </div>
         </div>
@@ -543,8 +543,8 @@ class CP_Field_Operations_Init {
     public function render_reports() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Field Operations Reports', 'campaignpress'); ?></h1>
-            <p><?php esc_html_e('Comprehensive reporting across all field operations activities.', 'campaignpress'); ?></p>
+            <h1><?php esc_html_e('Field Operations Reports', 'campaign-office'); ?></h1>
+            <p><?php esc_html_e('Comprehensive reporting across all field operations activities.', 'campaign-office'); ?></p>
 
             <!-- Report filters and export options will be added here -->
         </div>
@@ -557,51 +557,51 @@ class CP_Field_Operations_Init {
     public function render_settings() {
         if (isset($_POST['cp_field_ops_settings']) && check_admin_referer('cp_field_ops_settings_nonce')) {
             $this->save_settings();
-            echo '<div class="notice notice-success"><p>' . esc_html__('Settings saved successfully!', 'campaignpress') . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . esc_html__('Settings saved successfully!', 'campaign-office') . '</p></div>';
         }
 
         $settings = $this->get_settings();
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Field Operations Settings', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Field Operations Settings', 'campaign-office'); ?></h1>
 
             <form method="post" action="">
                 <?php wp_nonce_field('cp_field_ops_settings_nonce'); ?>
 
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php esc_html_e('Enable Offline Mode', 'campaignpress'); ?></th>
+                        <th scope="row"><?php esc_html_e('Enable Offline Mode', 'campaign-office'); ?></th>
                         <td>
                             <label>
                                 <input type="checkbox" name="offline_mode" value="1" <?php checked($settings['offline_mode'], 1); ?>>
-                                <?php esc_html_e('Allow canvassers and phone bankers to work offline', 'campaignpress'); ?>
+                                <?php esc_html_e('Allow canvassers and phone bankers to work offline', 'campaign-office'); ?>
                             </label>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php esc_html_e('GPS Tracking', 'campaignpress'); ?></th>
+                        <th scope="row"><?php esc_html_e('GPS Tracking', 'campaign-office'); ?></th>
                         <td>
                             <label>
                                 <input type="checkbox" name="gps_tracking" value="1" <?php checked($settings['gps_tracking'], 1); ?>>
-                                <?php esc_html_e('Enable GPS tracking for canvassers', 'campaignpress'); ?>
+                                <?php esc_html_e('Enable GPS tracking for canvassers', 'campaign-office'); ?>
                             </label>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php esc_html_e('Auto-sync Interval', 'campaignpress'); ?></th>
+                        <th scope="row"><?php esc_html_e('Auto-sync Interval', 'campaign-office'); ?></th>
                         <td>
                             <select name="sync_interval">
-                                <option value="15000" <?php selected($settings['sync_interval'], 15000); ?>>15 <?php esc_html_e('seconds', 'campaignpress'); ?></option>
-                                <option value="30000" <?php selected($settings['sync_interval'], 30000); ?>>30 <?php esc_html_e('seconds', 'campaignpress'); ?></option>
-                                <option value="60000" <?php selected($settings['sync_interval'], 60000); ?>>1 <?php esc_html_e('minute', 'campaignpress'); ?></option>
-                                <option value="300000" <?php selected($settings['sync_interval'], 300000); ?>>5 <?php esc_html_e('minutes', 'campaignpress'); ?></option>
+                                <option value="15000" <?php selected($settings['sync_interval'], 15000); ?>>15 <?php esc_html_e('seconds', 'campaign-office'); ?></option>
+                                <option value="30000" <?php selected($settings['sync_interval'], 30000); ?>>30 <?php esc_html_e('seconds', 'campaign-office'); ?></option>
+                                <option value="60000" <?php selected($settings['sync_interval'], 60000); ?>>1 <?php esc_html_e('minute', 'campaign-office'); ?></option>
+                                <option value="300000" <?php selected($settings['sync_interval'], 300000); ?>>5 <?php esc_html_e('minutes', 'campaign-office'); ?></option>
                             </select>
                         </td>
                     </tr>
                 </table>
 
                 <p class="submit">
-                    <input type="submit" name="cp_field_ops_settings" class="button-primary" value="<?php esc_attr_e('Save Settings', 'campaignpress'); ?>">
+                    <input type="submit" name="cp_field_ops_settings" class="button-primary" value="<?php esc_attr_e('Save Settings', 'campaign-office'); ?>">
                 </p>
             </form>
         </div>
@@ -650,7 +650,7 @@ class CP_Field_Operations_Init {
 
         // Send email (simplified version)
         // In production, use a proper email template
-        $subject = sprintf(__('[%s] Daily Field Operations Report', 'campaignpress'), get_bloginfo('name'));
+        $subject = sprintf(__('[%s] Daily Field Operations Report', 'campaign-office'), get_bloginfo('name'));
         $message = $this->format_daily_digest($stats);
 
         wp_mail($admin_email, $subject, $message);

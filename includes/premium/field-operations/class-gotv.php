@@ -250,8 +250,8 @@ class CP_GOTV {
     public function add_admin_menu() {
         add_submenu_page(
             'cp-field-operations',
-            __('Get Out The Vote', 'campaignpress'),
-            __('GOTV', 'campaignpress'),
+            __('Get Out The Vote', 'campaign-office'),
+            __('GOTV', 'campaign-office'),
             'edit_posts',
             'cp-gotv',
             array($this, 'render_admin_page')
@@ -259,8 +259,8 @@ class CP_GOTV {
 
         add_submenu_page(
             'cp-gotv',
-            __('Voter Universe', 'campaignpress'),
-            __('Voter Universe', 'campaignpress'),
+            __('Voter Universe', 'campaign-office'),
+            __('Voter Universe', 'campaign-office'),
             'edit_posts',
             'cp-gotv-universe',
             array($this, 'render_universe_page')
@@ -268,8 +268,8 @@ class CP_GOTV {
 
         add_submenu_page(
             'cp-gotv',
-            __('Early Vote Tracking', 'campaignpress'),
-            __('Early Vote', 'campaignpress'),
+            __('Early Vote Tracking', 'campaign-office'),
+            __('Early Vote', 'campaign-office'),
             'edit_posts',
             'cp-gotv-early-vote',
             array($this, 'render_early_vote_page')
@@ -277,8 +277,8 @@ class CP_GOTV {
 
         add_submenu_page(
             'cp-gotv',
-            __('Ride Requests', 'campaignpress'),
-            __('Ride Requests', 'campaignpress'),
+            __('Ride Requests', 'campaign-office'),
+            __('Ride Requests', 'campaign-office'),
             'edit_posts',
             'cp-gotv-rides',
             array($this, 'render_rides_page')
@@ -286,8 +286,8 @@ class CP_GOTV {
 
         add_submenu_page(
             'cp-gotv',
-            __('Turnout Goals', 'campaignpress'),
-            __('Turnout Goals', 'campaignpress'),
+            __('Turnout Goals', 'campaign-office'),
+            __('Turnout Goals', 'campaign-office'),
             'edit_posts',
             'cp-gotv-goals',
             array($this, 'render_goals_page')
@@ -332,16 +332,16 @@ class CP_GOTV {
 
         ?>
         <div class="wrap cp-gotv-dashboard">
-            <h1><?php esc_html_e('Get Out The Vote Dashboard', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Get Out The Vote Dashboard', 'campaign-office'); ?></h1>
 
             <!-- Real-Time Turnout Stats -->
             <div class="cp-stats-grid">
                 <div class="cp-stat-card cp-stat-large">
-                    <h3><?php esc_html_e('Voter Turnout', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Voter Turnout', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number cp-stat-huge"><?php echo esc_html(number_format($stats['turnout_percentage'], 1)); ?>%</div>
                     <p class="cp-stat-meta">
                         <?php echo esc_html(number_format($stats['votes_cast'])); ?> / <?php echo esc_html(number_format($stats['total_universe'])); ?>
-                        <?php esc_html_e('voters', 'campaignpress'); ?>
+                        <?php esc_html_e('voters', 'campaign-office'); ?>
                     </p>
                     <div class="cp-progress-bar">
                         <div class="cp-progress-fill" style="width: <?php echo esc_attr($stats['turnout_percentage']); ?>%"></div>
@@ -349,61 +349,61 @@ class CP_GOTV {
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Early Votes', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Early Votes', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['early_votes'])); ?></div>
-                    <p class="cp-stat-meta"><?php echo esc_html(number_format($stats['early_vote_percentage'], 1)); ?>% <?php esc_html_e('of total', 'campaignpress'); ?></p>
+                    <p class="cp-stat-meta"><?php echo esc_html(number_format($stats['early_vote_percentage'], 1)); ?>% <?php esc_html_e('of total', 'campaign-office'); ?></p>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Pledges', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Pledges', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['total_pledges'])); ?></div>
-                    <p class="cp-stat-meta"><?php echo esc_html(number_format($stats['fulfilled_pledges'])); ?> <?php esc_html_e('fulfilled', 'campaignpress'); ?></p>
+                    <p class="cp-stat-meta"><?php echo esc_html(number_format($stats['fulfilled_pledges'])); ?> <?php esc_html_e('fulfilled', 'campaign-office'); ?></p>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('High Priority Voters', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('High Priority Voters', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['high_priority_remaining'])); ?></div>
-                    <p class="cp-stat-meta"><?php esc_html_e('still need to vote', 'campaignpress'); ?></p>
+                    <p class="cp-stat-meta"><?php esc_html_e('still need to vote', 'campaign-office'); ?></p>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Ride Requests', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Ride Requests', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['pending_rides'])); ?></div>
-                    <p class="cp-stat-meta"><?php esc_html_e('pending', 'campaignpress'); ?></p>
+                    <p class="cp-stat-meta"><?php esc_html_e('pending', 'campaign-office'); ?></p>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Contacts Today', 'campaignpress'); ?></h3>
+                    <h3><?php esc_html_e('Contacts Today', 'campaign-office'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['contacts_today'])); ?></div>
-                    <p class="cp-stat-meta"><?php echo esc_html(number_format($stats['votes_confirmed_today'])); ?> <?php esc_html_e('votes confirmed', 'campaignpress'); ?></p>
+                    <p class="cp-stat-meta"><?php echo esc_html(number_format($stats['votes_confirmed_today'])); ?> <?php esc_html_e('votes confirmed', 'campaign-office'); ?></p>
                 </div>
             </div>
 
             <!-- Quick Actions -->
             <div class="cp-quick-actions">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-gotv-universe')); ?>" class="button button-primary">
-                    <?php esc_html_e('Manage Voter Universe', 'campaignpress'); ?>
+                    <?php esc_html_e('Manage Voter Universe', 'campaign-office'); ?>
                 </a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-gotv-early-vote')); ?>" class="button">
-                    <?php esc_html_e('Track Early Votes', 'campaignpress'); ?>
+                    <?php esc_html_e('Track Early Votes', 'campaign-office'); ?>
                 </a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-gotv-rides')); ?>" class="button">
-                    <?php esc_html_e('Manage Rides', 'campaignpress'); ?>
+                    <?php esc_html_e('Manage Rides', 'campaign-office'); ?>
                 </a>
                 <a href="#" class="button cp-export-data" data-type="gotv">
-                    <?php esc_html_e('Export Data', 'campaignpress'); ?>
+                    <?php esc_html_e('Export Data', 'campaign-office'); ?>
                 </a>
             </div>
 
             <!-- Turnout by Precinct -->
             <div class="cp-precinct-breakdown">
-                <h2><?php esc_html_e('Turnout by Precinct', 'campaignpress'); ?></h2>
+                <h2><?php esc_html_e('Turnout by Precinct', 'campaign-office'); ?></h2>
                 <?php $this->render_precinct_turnout(); ?>
             </div>
 
             <!-- Live Feed -->
             <div class="cp-live-feed">
-                <h2><?php esc_html_e('Recent Activity', 'campaignpress'); ?></h2>
+                <h2><?php esc_html_e('Recent Activity', 'campaign-office'); ?></h2>
                 <?php $this->render_recent_activity(); ?>
             </div>
         </div>
@@ -499,43 +499,43 @@ class CP_GOTV {
 
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Voter Universe', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Voter Universe', 'campaign-office'); ?></h1>
 
             <!-- Filters -->
             <form method="get" class="cp-filters">
                 <input type="hidden" name="page" value="cp-gotv-universe">
 
                 <select name="voted">
-                    <option value=""><?php esc_html_e('All Voters', 'campaignpress'); ?></option>
-                    <option value="no" <?php selected($voted_filter, 'no'); ?>><?php esc_html_e('Not Voted', 'campaignpress'); ?></option>
-                    <option value="yes" <?php selected($voted_filter, 'yes'); ?>><?php esc_html_e('Already Voted', 'campaignpress'); ?></option>
+                    <option value=""><?php esc_html_e('All Voters', 'campaign-office'); ?></option>
+                    <option value="no" <?php selected($voted_filter, 'no'); ?>><?php esc_html_e('Not Voted', 'campaign-office'); ?></option>
+                    <option value="yes" <?php selected($voted_filter, 'yes'); ?>><?php esc_html_e('Already Voted', 'campaign-office'); ?></option>
                 </select>
 
                 <select name="priority">
-                    <option value="0"><?php esc_html_e('All Priorities', 'campaignpress'); ?></option>
-                    <option value="7" <?php selected($priority_filter, 7); ?>><?php esc_html_e('High Priority (7+)', 'campaignpress'); ?></option>
-                    <option value="5" <?php selected($priority_filter, 5); ?>><?php esc_html_e('Medium Priority (5+)', 'campaignpress'); ?></option>
+                    <option value="0"><?php esc_html_e('All Priorities', 'campaign-office'); ?></option>
+                    <option value="7" <?php selected($priority_filter, 7); ?>><?php esc_html_e('High Priority (7+)', 'campaign-office'); ?></option>
+                    <option value="5" <?php selected($priority_filter, 5); ?>><?php esc_html_e('Medium Priority (5+)', 'campaign-office'); ?></option>
                 </select>
 
-                <input type="submit" class="button" value="<?php esc_attr_e('Filter', 'campaignpress'); ?>">
+                <input type="submit" class="button" value="<?php esc_attr_e('Filter', 'campaign-office'); ?>">
             </form>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Voter', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Contact Info', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Location', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Precinct', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Priority', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Voted', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Voter', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Contact Info', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Location', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Precinct', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Priority', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Voted', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($voters)) : ?>
                         <tr>
-                            <td colspan="7"><?php esc_html_e('No voters found.', 'campaignpress'); ?></td>
+                            <td colspan="7"><?php esc_html_e('No voters found.', 'campaign-office'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($voters as $voter) : ?>
@@ -564,13 +564,13 @@ class CP_GOTV {
                                         </span>
                                     <?php else : ?>
                                         <button class="button button-small cp-mark-voted" data-voter-id="<?php echo esc_attr($voter->id); ?>">
-                                            <?php esc_html_e('Mark Voted', 'campaignpress'); ?>
+                                            <?php esc_html_e('Mark Voted', 'campaign-office'); ?>
                                         </button>
                                     <?php endif; ?>
                                 </td>
                                 <td>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-gotv-universe&action=view&id=' . $voter->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('View', 'campaignpress'); ?>
+                                        <?php esc_html_e('View', 'campaign-office'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -636,26 +636,26 @@ class CP_GOTV {
 
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Early Vote & Absentee Tracking', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Early Vote & Absentee Tracking', 'campaign-office'); ?></h1>
 
-            <p><?php esc_html_e('Track mail-in, absentee, and early in-person voting.', 'campaignpress'); ?></p>
+            <p><?php esc_html_e('Track mail-in, absentee, and early in-person voting.', 'campaign-office'); ?></p>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Voter', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Type', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Ballot Requested', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Ballot Sent', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Ballot Received', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Voter', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Type', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Ballot Requested', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Ballot Sent', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Ballot Received', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($early_votes)) : ?>
                         <tr>
-                            <td colspan="7"><?php esc_html_e('No early votes tracked yet.', 'campaignpress'); ?></td>
+                            <td colspan="7"><?php esc_html_e('No early votes tracked yet.', 'campaign-office'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($early_votes as $ev) : ?>
@@ -669,19 +669,19 @@ class CP_GOTV {
                                     <?php if ($ev->ballot_accepted) : ?>
                                         <span class="cp-status-badge cp-status-accepted">
                                             <span class="dashicons dashicons-yes"></span>
-                                            <?php esc_html_e('Accepted', 'campaignpress'); ?>
+                                            <?php esc_html_e('Accepted', 'campaign-office'); ?>
                                         </span>
                                     <?php elseif ($ev->ballot_received_date) : ?>
-                                        <span class="cp-status-badge cp-status-processing"><?php esc_html_e('Processing', 'campaignpress'); ?></span>
+                                        <span class="cp-status-badge cp-status-processing"><?php esc_html_e('Processing', 'campaign-office'); ?></span>
                                     <?php elseif ($ev->ballot_sent_date) : ?>
-                                        <span class="cp-status-badge cp-status-sent"><?php esc_html_e('Sent', 'campaignpress'); ?></span>
+                                        <span class="cp-status-badge cp-status-sent"><?php esc_html_e('Sent', 'campaign-office'); ?></span>
                                     <?php else : ?>
-                                        <span class="cp-status-badge cp-status-requested"><?php esc_html_e('Requested', 'campaignpress'); ?></span>
+                                        <span class="cp-status-badge cp-status-requested"><?php esc_html_e('Requested', 'campaign-office'); ?></span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
                                     <button class="button button-small cp-update-ballot" data-id="<?php echo esc_attr($ev->id); ?>">
-                                        <?php esc_html_e('Update', 'campaignpress'); ?>
+                                        <?php esc_html_e('Update', 'campaign-office'); ?>
                                     </button>
                                 </td>
                             </tr>
@@ -721,27 +721,27 @@ class CP_GOTV {
 
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Voter Transportation / Ride Requests', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Voter Transportation / Ride Requests', 'campaign-office'); ?></h1>
 
-            <p><?php esc_html_e('Coordinate rides to polling places on election day.', 'campaignpress'); ?></p>
+            <p><?php esc_html_e('Coordinate rides to polling places on election day.', 'campaign-office'); ?></p>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Requester', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Contact', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Pickup Address', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Requested Time', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Passengers', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Driver', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Requester', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Contact', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Pickup Address', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Requested Time', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Passengers', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Driver', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($rides)) : ?>
                         <tr>
-                            <td colspan="8"><?php esc_html_e('No pending ride requests.', 'campaignpress'); ?></td>
+                            <td colspan="8"><?php esc_html_e('No pending ride requests.', 'campaign-office'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($rides as $ride) : ?>
@@ -758,11 +758,11 @@ class CP_GOTV {
                                 <td>
                                     <?php if ($ride->status === 'pending') : ?>
                                         <button class="button button-small button-primary cp-assign-driver" data-ride-id="<?php echo esc_attr($ride->id); ?>">
-                                            <?php esc_html_e('Assign Driver', 'campaignpress'); ?>
+                                            <?php esc_html_e('Assign Driver', 'campaign-office'); ?>
                                         </button>
                                     <?php else : ?>
                                         <button class="button button-small cp-complete-ride" data-ride-id="<?php echo esc_attr($ride->id); ?>">
-                                            <?php esc_html_e('Mark Complete', 'campaignpress'); ?>
+                                            <?php esc_html_e('Mark Complete', 'campaign-office'); ?>
                                         </button>
                                     <?php endif; ?>
                                 </td>
@@ -785,23 +785,23 @@ class CP_GOTV {
 
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Turnout Goals & Progress', 'campaignpress'); ?></h1>
+            <h1><?php esc_html_e('Turnout Goals & Progress', 'campaign-office'); ?></h1>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Region/Precinct', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Type', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Total Universe', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Target Turnout', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Actual Turnout', 'campaignpress'); ?></th>
-                        <th><?php esc_html_e('Progress', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Region/Precinct', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Type', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Total Universe', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Target Turnout', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Actual Turnout', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Progress', 'campaign-office'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($goals)) : ?>
                         <tr>
-                            <td colspan="6"><?php esc_html_e('No turnout goals set yet.', 'campaignpress'); ?></td>
+                            <td colspan="6"><?php esc_html_e('No turnout goals set yet.', 'campaign-office'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($goals as $goal) : ?>
@@ -848,7 +848,7 @@ class CP_GOTV {
      */
     public function render_gotv_dashboard($atts) {
         if (!is_user_logged_in()) {
-            return '<p>' . esc_html__('You must be logged in to view GOTV data.', 'campaignpress') . '</p>';
+            return '<p>' . esc_html__('You must be logged in to view GOTV data.', 'campaign-office') . '</p>';
         }
 
         $stats = $this->get_stats();
@@ -856,7 +856,7 @@ class CP_GOTV {
         ob_start();
         ?>
         <div class="cp-gotv-public-dashboard">
-            <h2><?php esc_html_e('Live Turnout Tracker', 'campaignpress'); ?></h2>
+            <h2><?php esc_html_e('Live Turnout Tracker', 'campaign-office'); ?></h2>
 
             <div class="cp-turnout-meter">
                 <div class="cp-turnout-circle">
@@ -868,7 +868,7 @@ class CP_GOTV {
                     </svg>
                     <div class="cp-turnout-text">
                         <div class="cp-turnout-percentage"><?php echo esc_html(number_format($stats['turnout_percentage'], 1)); ?>%</div>
-                        <div class="cp-turnout-label"><?php esc_html_e('Turnout', 'campaignpress'); ?></div>
+                        <div class="cp-turnout-label"><?php esc_html_e('Turnout', 'campaign-office'); ?></div>
                     </div>
                 </div>
             </div>
@@ -876,11 +876,11 @@ class CP_GOTV {
             <div class="cp-turnout-stats">
                 <div class="cp-stat-item">
                     <div class="cp-stat-value"><?php echo esc_html(number_format($stats['votes_cast'])); ?></div>
-                    <div class="cp-stat-label"><?php esc_html_e('Votes Cast', 'campaignpress'); ?></div>
+                    <div class="cp-stat-label"><?php esc_html_e('Votes Cast', 'campaign-office'); ?></div>
                 </div>
                 <div class="cp-stat-item">
                     <div class="cp-stat-value"><?php echo esc_html(number_format($stats['early_votes'])); ?></div>
-                    <div class="cp-stat-label"><?php esc_html_e('Early Votes', 'campaignpress'); ?></div>
+                    <div class="cp-stat-label"><?php esc_html_e('Early Votes', 'campaign-office'); ?></div>
                 </div>
             </div>
         </div>
@@ -953,32 +953,32 @@ class CP_GOTV {
         ob_start();
         ?>
         <div class="cp-ride-request-form">
-            <h3><?php esc_html_e('Request a Ride to Vote', 'campaignpress'); ?></h3>
+            <h3><?php esc_html_e('Request a Ride to Vote', 'campaign-office'); ?></h3>
             <form id="cp-ride-request-form">
                 <?php wp_nonce_field('cp_request_ride', 'cp_ride_nonce'); ?>
 
                 <div class="cp-form-group">
-                    <label for="requester_name"><?php esc_html_e('Your Name', 'campaignpress'); ?></label>
+                    <label for="requester_name"><?php esc_html_e('Your Name', 'campaign-office'); ?></label>
                     <input type="text" id="requester_name" name="requester_name" required>
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="requester_phone"><?php esc_html_e('Phone Number', 'campaignpress'); ?></label>
+                    <label for="requester_phone"><?php esc_html_e('Phone Number', 'campaign-office'); ?></label>
                     <input type="tel" id="requester_phone" name="requester_phone" required>
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="pickup_address"><?php esc_html_e('Pickup Address', 'campaignpress'); ?></label>
+                    <label for="pickup_address"><?php esc_html_e('Pickup Address', 'campaign-office'); ?></label>
                     <input type="text" id="pickup_address" name="pickup_address" required>
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="requested_time"><?php esc_html_e('Preferred Time', 'campaignpress'); ?></label>
+                    <label for="requested_time"><?php esc_html_e('Preferred Time', 'campaign-office'); ?></label>
                     <input type="datetime-local" id="requested_time" name="requested_time" required>
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="num_passengers"><?php esc_html_e('Number of Passengers', 'campaignpress'); ?></label>
+                    <label for="num_passengers"><?php esc_html_e('Number of Passengers', 'campaign-office'); ?></label>
                     <select id="num_passengers" name="num_passengers">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -989,7 +989,7 @@ class CP_GOTV {
 
                 <div class="cp-form-message"></div>
 
-                <button type="submit" class="cp-submit-btn"><?php esc_html_e('Request Ride', 'campaignpress'); ?></button>
+                <button type="submit" class="cp-submit-btn"><?php esc_html_e('Request Ride', 'campaign-office'); ?></button>
             </form>
         </div>
 
@@ -1080,10 +1080,10 @@ class CP_GOTV {
         ob_start();
         ?>
         <div class="cp-poll-finder">
-            <h3><?php esc_html_e('Find Your Polling Place', 'campaignpress'); ?></h3>
+            <h3><?php esc_html_e('Find Your Polling Place', 'campaign-office'); ?></h3>
             <form id="cp-poll-finder-form">
-                <input type="text" id="voter_address" name="address" placeholder="<?php esc_attr_e('Enter your address...', 'campaignpress'); ?>" required>
-                <button type="submit"><?php esc_html_e('Find', 'campaignpress'); ?></button>
+                <input type="text" id="voter_address" name="address" placeholder="<?php esc_attr_e('Enter your address...', 'campaign-office'); ?>" required>
+                <button type="submit"><?php esc_html_e('Find', 'campaign-office'); ?></button>
             </form>
             <div id="cp-poll-result"></div>
         </div>
@@ -1231,15 +1231,15 @@ class CP_GOTV {
         );
 
         if (empty($precinct_stats)) {
-            echo '<p>' . esc_html__('No precinct data available.', 'campaignpress') . '</p>';
+            echo '<p>' . esc_html__('No precinct data available.', 'campaign-office') . '</p>';
             return;
         }
 
         echo '<table class="wp-list-table widefat fixed striped"><thead><tr>';
-        echo '<th>' . esc_html__('Precinct', 'campaignpress') . '</th>';
-        echo '<th>' . esc_html__('Total Voters', 'campaignpress') . '</th>';
-        echo '<th>' . esc_html__('Voted', 'campaignpress') . '</th>';
-        echo '<th>' . esc_html__('Turnout %', 'campaignpress') . '</th>';
+        echo '<th>' . esc_html__('Precinct', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Total Voters', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Voted', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Turnout %', 'campaign-office') . '</th>';
         echo '</tr></thead><tbody>';
 
         foreach ($precinct_stats as $precinct) {
@@ -1271,7 +1271,7 @@ class CP_GOTV {
         );
 
         if (empty($recent)) {
-            echo '<p>' . esc_html__('No recent activity.', 'campaignpress') . '</p>';
+            echo '<p>' . esc_html__('No recent activity.', 'campaign-office') . '</p>';
             return;
         }
 
@@ -1280,10 +1280,10 @@ class CP_GOTV {
             echo '<li>';
             echo '<strong>' . esc_html($activity->first_name . ' ' . $activity->last_name) . '</strong> ';
             if ($activity->voted_confirmed) {
-                echo '<span class="cp-activity-badge cp-voted">' . esc_html__('voted', 'campaignpress') . '</span> ';
+                echo '<span class="cp-activity-badge cp-voted">' . esc_html__('voted', 'campaign-office') . '</span> ';
             }
-            echo esc_html__('contacted by', 'campaignpress') . ' ' . esc_html($activity->display_name);
-            echo ' <span class="cp-time">' . esc_html(human_time_diff(strtotime($activity->contact_date), current_time('timestamp'))) . ' ' . esc_html__('ago', 'campaignpress') . '</span>';
+            echo esc_html__('contacted by', 'campaign-office') . ' ' . esc_html($activity->display_name);
+            echo ' <span class="cp-time">' . esc_html(human_time_diff(strtotime($activity->contact_date), current_time('timestamp'))) . ' ' . esc_html__('ago', 'campaign-office') . '</span>';
             echo '</li>';
         }
         echo '</ul>';
@@ -1297,11 +1297,11 @@ class CP_GOTV {
      */
     private function get_user_display_name($user_id) {
         if (!$user_id) {
-            return __('Unassigned', 'campaignpress');
+            return __('Unassigned', 'campaign-office');
         }
 
         $user = get_user_by('id', $user_id);
-        return $user ? $user->display_name : __('Unknown', 'campaignpress');
+        return $user ? $user->display_name : __('Unknown', 'campaign-office');
     }
 
     /**
@@ -1316,22 +1316,22 @@ class CP_GOTV {
      */
     public function ajax_record_pledge() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Pledge recorded!', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Pledge recorded!', 'campaign-office')));
     }
 
     public function ajax_record_turnout() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Turnout recorded!', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Turnout recorded!', 'campaign-office')));
     }
 
     public function ajax_request_ride() {
         check_ajax_referer('cp_request_ride', 'cp_ride_nonce');
-        wp_send_json_success(array('message' => __('Ride request received!', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Ride request received!', 'campaign-office')));
     }
 
     public function ajax_update_early_vote() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Early vote updated!', 'campaignpress')));
+        wp_send_json_success(array('message' => __('Early vote updated!', 'campaign-office')));
     }
 
     /**

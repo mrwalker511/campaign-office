@@ -114,19 +114,20 @@ add_action('after_setup_theme', 'campaignpress_content_width', 0);
  * Enqueue scripts and styles
  */
 function campaignpress_scripts() {
-    // Bootstrap 5.3 CSS (bundled locally)
-    wp_enqueue_style(
-        'bootstrap',
-        get_template_directory_uri() . '/assets/vendor/bootstrap/css/bootstrap.min.css',
-        array(),
-        '5.3.3'
-    );
+    // Bootstrap 5.3 CSS (bundled locally) - MOVED TO unused-files/vendor-bloat/
+    // Using WordPress native styles and theme.json instead
+    // wp_enqueue_style(
+    //     'bootstrap',
+    //     get_template_directory_uri() . '/assets/vendor/bootstrap/css/bootstrap.min.css',
+    //     array(),
+    //     '5.3.3'
+    // );
 
     // Theme stylesheet (minimal, theme.json handles most styling)
     wp_enqueue_style(
         'campaignpress-style',
         get_stylesheet_uri(),
-        array('bootstrap'),
+        array(), // Removed bootstrap dependency
         CAMPAIGNPRESS_VERSION
     );
 
@@ -139,20 +140,21 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Bootstrap 5.3 JS Bundle (includes Popper, bundled locally)
-    wp_enqueue_script(
-        'bootstrap',
-        get_template_directory_uri() . '/assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
-        array(),
-        '5.3.3',
-        true
-    );
+    // Bootstrap 5.3 JS Bundle (includes Popper, bundled locally) - MOVED TO unused-files/vendor-bloat/
+    // Using WordPress native components instead
+    // wp_enqueue_script(
+    //     'bootstrap',
+    //     get_template_directory_uri() . '/assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
+    //     array(),
+    //     '5.3.3',
+    //     true
+    // );
 
     // Main theme JS
     wp_enqueue_script(
         'campaignpress-main',
         get_template_directory_uri() . '/assets/js/main.js',
-        array('jquery', 'bootstrap'),
+        array('jquery'), // Removed bootstrap dependency
         CAMPAIGNPRESS_VERSION,
         true
     );
@@ -330,16 +332,16 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-functions.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/integrations.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php';
+// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php'; // Moved to unused-files/demo-content/
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-notices.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-theme-options.php';
+// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-theme-options.php'; // Moved to unused-files/duplicate-systems/
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-widgets.php';
+// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-widgets.php'; // Moved to unused-files/duplicate-systems/
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/donation-enhancements.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/tgmpa-config.php';
+// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/tgmpa-config.php'; // Moved to unused-files/duplicate-systems/
 
 // Check if Elementor is active
 if (did_action('elementor/loaded')) {

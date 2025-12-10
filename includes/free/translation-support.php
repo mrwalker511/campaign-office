@@ -292,7 +292,7 @@ class CP_Translation_Support {
         <div class="cp-language-switcher cp-wpml-switcher">
             <ul class="cp-language-list">
                 <?php foreach ($languages as $lang) : ?>
-                    <li class="<?php echo $lang['active'] ? 'active' : ''; ?>">
+                    <li class="<?php echo esc_attr($lang['active'] ? 'active' : ''); ?>">
                         <a href="<?php echo esc_url($lang['url']); ?>" hreflang="<?php echo esc_attr($lang['language_code']); ?>">
                             <?php if ($atts['show_flags'] === 'yes') : ?>
                                 <img src="<?php echo esc_url($lang['country_flag_url']); ?>" alt="<?php echo esc_attr($lang['native_name']); ?>" height="12">

@@ -338,7 +338,7 @@ class CP_Field_Operations_Init {
             wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
         }
 
-        $sync_data = isset($_POST['sync_data']) ? json_decode(stripslashes($_POST['sync_data']), true) : array();
+        $sync_data = isset($_POST['sync_data']) ? json_decode(wp_unslash($_POST['sync_data']), true) : array();
 
         if (empty($sync_data)) {
             wp_send_json_error(array('message' => __('No data to sync.', 'campaign-office')));

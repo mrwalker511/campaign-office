@@ -567,7 +567,7 @@ class CP_Donation_Enhancements {
                     <div class="cp-frequency-buttons">
                         <?php foreach ($this->frequencies as $key => $label) : ?>
                             <button type="button"
-                                    class="cp-frequency-btn <?php echo $atts['frequency'] === $key ? 'active' : ''; ?>"
+                                    class="cp-frequency-btn <?php echo esc_attr($atts['frequency'] === $key ? 'active' : ''); ?>"
                                     data-frequency="<?php echo esc_attr($key); ?>">
                                 <?php echo esc_html($label); ?>
                             </button>

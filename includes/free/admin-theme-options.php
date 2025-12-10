@@ -144,27 +144,27 @@ function campaignpress_render_theme_options_page() {
         </div>
 
         <nav class="nav-tab-wrapper campaignpress-nav-tab-wrapper">
-            <a href="?page=campaignpress-options&tab=general" class="nav-tab <?php echo $active_tab === 'general' ? 'nav-tab-active' : ''; ?>">
+            <a href="?page=campaignpress-options&tab=general" class="nav-tab <?php echo esc_attr($active_tab === 'general' ? 'nav-tab-active' : ''); ?>">
                 <span class="dashicons dashicons-admin-generic"></span>
                 <?php esc_html_e( 'General', 'campaign-office' ); ?>
             </a>
-            <a href="?page=campaignpress-options&tab=design" class="nav-tab <?php echo $active_tab === 'design' ? 'nav-tab-active' : ''; ?>">
+            <a href="?page=campaignpress-options&tab=design" class="nav-tab <?php echo esc_attr($active_tab === 'design' ? 'nav-tab-active' : ''); ?>">
                 <span class="dashicons dashicons-art"></span>
                 <?php esc_html_e( 'Design', 'campaign-office' ); ?>
             </a>
-            <a href="?page=campaignpress-options&tab=typography" class="nav-tab <?php echo $active_tab === 'typography' ? 'nav-tab-active' : ''; ?>">
+            <a href="?page=campaignpress-options&tab=typography" class="nav-tab <?php echo esc_attr($active_tab === 'typography' ? 'nav-tab-active' : ''); ?>">
                 <span class="dashicons dashicons-editor-textcolor"></span>
                 <?php esc_html_e( 'Typography', 'campaign-office' ); ?>
             </a>
-            <a href="?page=campaignpress-options&tab=social" class="nav-tab <?php echo $active_tab === 'social' ? 'nav-tab-active' : ''; ?>">
+            <a href="?page=campaignpress-options&tab=social" class="nav-tab <?php echo esc_attr($active_tab === 'social' ? 'nav-tab-active' : ''); ?>">
                 <span class="dashicons dashicons-share"></span>
                 <?php esc_html_e( 'Social Media', 'campaign-office' ); ?>
             </a>
-            <a href="?page=campaignpress-options&tab=footer" class="nav-tab <?php echo $active_tab === 'footer' ? 'nav-tab-active' : ''; ?>">
+            <a href="?page=campaignpress-options&tab=footer" class="nav-tab <?php echo esc_attr($active_tab === 'footer' ? 'nav-tab-active' : ''); ?>">
                 <span class="dashicons dashicons-editor-insertmore"></span>
                 <?php esc_html_e( 'Footer', 'campaign-office' ); ?>
             </a>
-            <a href="?page=campaignpress-options&tab=advanced" class="nav-tab <?php echo $active_tab === 'advanced' ? 'nav-tab-active' : ''; ?>">
+            <a href="?page=campaignpress-options&tab=advanced" class="nav-tab <?php echo esc_attr($active_tab === 'advanced' ? 'nav-tab-active' : ''); ?>">
                 <span class="dashicons dashicons-admin-tools"></span>
                 <?php esc_html_e( 'Advanced', 'campaign-office' ); ?>
             </a>

@@ -59,7 +59,7 @@ $current_license_level = isset($license_hierarchy[$current_license]) ? $license_
             $icon = isset($feature['icon']) ? $feature['icon'] : 'dashicons-admin-generic';
             ?>
 
-            <div class="cp-feature-card <?php echo $is_available ? '' : 'cp-feature-locked'; ?>">
+            <div class="cp-feature-card <?php echo esc_attr($is_available ? '' : 'cp-feature-locked'); ?>">
                 <div class="cp-feature-header">
                     <span class="<?php echo esc_attr($icon); ?> cp-feature-icon"></span>
                     <h3><?php echo esc_html($feature['name']); ?></h3>

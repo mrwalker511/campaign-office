@@ -12,13 +12,15 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Enable Premium Features in Development
- * This enables all premium features without requiring a license key.
- * Remove this line in production and use a valid license instead.
+ * Development Mode (Optional)
+ *
+ * To enable premium features during development without a license key,
+ * add this to your wp-config.php:
+ *
+ *   define('CAMPAIGNPRESS_DEV_MODE', true);
+ *
+ * NEVER set this to true in production or distributed versions.
  */
-if (!defined('CAMPAIGNPRESS_DEV_MODE')) {
-    define('CAMPAIGNPRESS_DEV_MODE', true);
-}
 
 /**
  * Define Constants
@@ -112,10 +114,10 @@ add_action('after_setup_theme', 'campaignpress_content_width', 0);
  * Enqueue scripts and styles
  */
 function campaignpress_scripts() {
-    // Bootstrap 5.3 CSS (from CDN)
+    // Bootstrap 5.3 CSS (bundled locally)
     wp_enqueue_style(
         'bootstrap',
-        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
+        get_template_directory_uri() . '/assets/vendor/bootstrap/css/bootstrap.min.css',
         array(),
         '5.3.3'
     );
@@ -137,10 +139,10 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Bootstrap 5.3 JS Bundle (includes Popper)
+    // Bootstrap 5.3 JS Bundle (includes Popper, bundled locally)
     wp_enqueue_script(
         'bootstrap',
-        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+        get_template_directory_uri() . '/assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
         array(),
         '5.3.3',
         true

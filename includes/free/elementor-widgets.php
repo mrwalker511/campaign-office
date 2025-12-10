@@ -545,8 +545,8 @@ class CP_Elementor_Issue_Card extends CP_Elementor_Widget_Base {
             <?php if (!empty($settings['link_url']['url'])) : ?>
                 <a href="<?php echo esc_url($settings['link_url']['url']); ?>"
                    class="cp-issue-link"
-                   <?php echo !empty($settings['link_url']['is_external']) ? 'target="_blank"' : ''; ?>
-                   <?php echo !empty($settings['link_url']['nofollow']) ? 'rel="nofollow"' : ''; ?>>
+                   <?php echo esc_attr(!empty($settings['link_url']['is_external']) ? 'target="_blank"' : ''); ?>
+                   <?php echo esc_attr(!empty($settings['link_url']['nofollow']) ? 'rel="nofollow"' : ''); ?>>
                     <?php esc_html_e('Learn More', 'campaign-office'); ?>
                     <i class="fas fa-arrow-right"></i>
                 </a>
@@ -880,8 +880,8 @@ class CP_Elementor_Volunteer_CTA extends CP_Elementor_Widget_Base {
             <?php if (!empty($settings['button_link']['url'])) : ?>
                 <a href="<?php echo esc_url($settings['button_link']['url']); ?>"
                    class="cp-volunteer-button"
-                   <?php echo !empty($settings['button_link']['is_external']) ? 'target="_blank"' : ''; ?>
-                   <?php echo !empty($settings['button_link']['nofollow']) ? 'rel="nofollow"' : ''; ?>>
+                   <?php echo esc_attr(!empty($settings['button_link']['is_external']) ? 'target="_blank"' : ''); ?>
+                   <?php echo esc_attr(!empty($settings['button_link']['nofollow']) ? 'rel="nofollow"' : ''); ?>>
                     <?php echo esc_html($settings['button_text']); ?>
                 </a>
             <?php endif; ?>

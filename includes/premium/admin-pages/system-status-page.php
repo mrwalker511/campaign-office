@@ -78,7 +78,7 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
     <div class="cp-status-overview">
         <div class="cp-status-card">
             <div class="cp-status-icon">
-                <span class="dashicons dashicons-<?php echo $premium->is_premium_active() ? 'yes-alt' : 'dismiss'; ?>"></span>
+                <span class="dashicons dashicons-<?php echo esc_attr($premium->is_premium_active() ? 'yes-alt' : 'dismiss'); ?>"></span>
             </div>
             <div class="cp-status-content">
                 <h3><?php _e('Premium Status', 'campaign-office'); ?></h3>
@@ -100,7 +100,7 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
 
         <div class="cp-status-card">
             <div class="cp-status-icon">
-                <span class="dashicons dashicons-<?php echo $all_requirements_met ? 'yes-alt' : 'warning'; ?>"></span>
+                <span class="dashicons dashicons-<?php echo esc_attr($all_requirements_met ? 'yes-alt' : 'warning'); ?>"></span>
             </div>
             <div class="cp-status-content">
                 <h3><?php _e('Requirements', 'campaign-office'); ?></h3>

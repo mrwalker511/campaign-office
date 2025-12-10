@@ -1,10 +1,10 @@
 === CampaignPress ===
 Contributors: campaignpress
 Tags: blog, politics, campaign, two-columns, left-sidebar, right-sidebar, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, flexible-header, footer-widgets, full-width-template, theme-options, threaded-comments, translation-ready
-Requires at least: 6.4
-Tested up to: 6.5
+Requires at least: 6.9
+Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,6 +133,15 @@ Yes! Each page and post has a "Layout Options" meta box in the editor where you 
 8. Demo content importer
 
 == Changelog ==
+
+= 2.0.0 - 2025-12-10 =
+* Major update: WordPress 6.9+ design system integration
+* Added comprehensive theme.json with 33 colors, fluid typography, and spacing system
+* Introduced distinctive typography (Bricolage Grotesque, Plus Jakarta Sans, JetBrains Mono)
+* Enhanced accessibility compliance (WCAG 2.1 AA)
+* Added 4 party color schemes (Democrat Blue, Republican Red, Independent Purple, Green Party)
+* Improved block editor integration with custom patterns
+* Performance optimizations and security enhancements
 
 = 1.0.0 - 2025-01-15 =
 * Initial release

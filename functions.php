@@ -185,69 +185,10 @@ function campaignpress_block_editor_assets() {
 }
 add_action('enqueue_block_editor_assets', 'campaignpress_block_editor_assets');
 
-function campaignpress_register_block_patterns() {
-    // Hero Section Pattern
-    register_block_pattern(
-        'campaignpress/hero-section',
-        array(
-            'title'       => __('Campaign Hero Section', 'campaign-office'),
-            'description' => __('Full-width hero with heading, tagline, and CTA buttons', 'campaign-office'),
-            'categories'  => array('campaign-office'),
-            'content'     => '<!-- wp:cover {"url":"' . get_template_directory_uri() . '/assets/images/hero-placeholder.jpg","dimRatio":50,"overlayColor":"primary-900","className":"is-style-campaign-hero"} -->
-                <div class="wp-block-cover is-style-campaign-hero">
-                    <span aria-hidden="true" class="wp-block-cover__background has-primary-900-background-color has-background-dim"></span>
-                    <div class="wp-block-cover__inner-container">
-                        <!-- wp:heading {"level":1,"fontSize":"4-xl"} -->
-                        <h1 class="wp-block-heading has-4-xl-font-size">Fighting for Our Future</h1>
-                        <!-- /wp:heading -->
-
-                        <!-- wp:paragraph {"fontSize":"2-xl"} -->
-                        <p class="has-2-xl-font-size">Together, we can build a better tomorrow</p>
-                        <!-- /wp:paragraph -->
-
-                        <!-- wp:buttons -->
-                        <div class="wp-block-buttons">
-                            <!-- wp:button {"className":"is-style-fill"} -->
-                            <div class="wp-block-button is-style-fill"><a class="wp-block-button__link">Donate Now</a></div>
-                            <!-- /wp:button -->
-
-                            <!-- wp:button {"className":"is-style-outline"} -->
-                            <div class="wp-block-button is-style-outline"><a class="wp-block-button__link">Get Involved</a></div>
-                            <!-- /wp:button -->
-                        </div>
-                        <!-- /wp:buttons -->
-                    </div>
-                </div>
-                <!-- /wp:cover -->',
-        )
-    );
-
-    // Issue Card Pattern
-    register_block_pattern(
-        'campaignpress/issue-card',
-        array(
-            'title'       => __('Issue Position Card', 'campaign-office'),
-            'description' => __('Highlight a policy position with icon and description', 'campaign-office'),
-            'categories'  => array('campaign-office'),
-            'content'     => '<!-- wp:group {"className":"is-style-issue-card"} -->
-                <div class="wp-block-group is-style-issue-card">
-                    <!-- wp:paragraph {"fontSize":"4-xl"} -->
-                    <p class="has-4-xl-font-size">📚</p>
-                    <!-- /wp:paragraph -->
-
-                    <!-- wp:heading {"level":3} -->
-                    <h3>Education Reform</h3>
-                    <!-- /wp:heading -->
-
-                    <!-- wp:paragraph -->
-                    <p>Every child deserves access to quality education. We will invest in teachers, modernize classrooms, and make college affordable for all.</p>
-                    <!-- /wp:paragraph -->
-                </div>
-                <!-- /wp:group -->',
-        )
-    );
-}
-add_action('init', 'campaignpress_register_block_patterns');
+/**
+ * Register Block Patterns
+ */
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/block-patterns.php';
 
 /**
  * Register Block Pattern Category

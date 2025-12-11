@@ -332,7 +332,7 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-functions.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/integrations.php';
-// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php'; // Moved to unused-files/demo-content/
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-notices.php';
 // require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-theme-options.php'; // Moved to unused-files/duplicate-systems/
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';

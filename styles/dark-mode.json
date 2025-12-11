@@ -1,0 +1,49 @@
+{
+  "version": 3,
+  "title": "Dark Mode",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "color": "#3b82f6",
+          "name": "Primary Blue"
+        },
+        {
+          "slug": "white",
+          "color": "#111827",
+          "name": "Dark Background"
+        },
+        {
+          "slug": "neutral-50",
+          "color": "#1f2937",
+          "name": "Dark Surface"
+        },
+        {
+          "slug": "neutral-900",
+          "color": "#f9fafb",
+          "name": "Light Text"
+        },
+        {
+          "slug": "accent",
+          "color": "#f59e0b",
+          "name": "Accent Amber"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--white)",
+      "text": "var(--wp--preset--color--neutral-900)"
+    },
+    "elements": {
+      "button": {
+        "color": {
+          "text": "#ffffff",
+          "background": "var(--wp--preset--color--primary)"
+        }
+      }
+    }
+  }
+}

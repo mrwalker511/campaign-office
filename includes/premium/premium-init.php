@@ -1299,7 +1299,7 @@ class CampaignPress_Premium {
 CampaignPress_Premium::get_instance();
 
 // Load premium demo content generator
-// require_once dirname(__FILE__) . '/premium-demo-content.php'; // Moved to unused-files/demo-content/
+require_once dirname(__FILE__) . '/premium-demo-content.php';
 
 /**
  * Helper Functions

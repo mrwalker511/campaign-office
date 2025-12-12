@@ -188,7 +188,7 @@ add_action('enqueue_block_editor_assets', 'campaignpress_block_editor_assets');
 /**
  * Register Block Patterns
  */
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/block-patterns.php';
+require_once get_template_directory() . '/includes/block-patterns.php';
 
 /**
  * Register Block Pattern Category

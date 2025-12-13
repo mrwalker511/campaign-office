@@ -543,6 +543,133 @@ h6,
 }
 
 /* ============================================
+   Button States (Loading, Disabled, Focus)
+   ============================================ */
+
+/* Disabled State */
+.wp-block-button__link:disabled,
+.wp-element-button:disabled,
+.cp-button:disabled,
+.cp-donation-button:disabled,
+.wp-block-button__link.is-disabled,
+.wp-element-button.is-disabled,
+.cp-button.is-disabled,
+.cp-donation-button.is-disabled,
+button[disabled],
+input[type="submit"][disabled],
+input[type="button"][disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.3);
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+.wp-block-button__link:disabled::before,
+.wp-element-button:disabled::before,
+.cp-button:disabled::before,
+.cp-donation-button:disabled::before {
+  opacity: 0 !important;
+}
+
+/* Loading State */
+.wp-block-button__link.is-loading,
+.wp-element-button.is-loading,
+.cp-button.is-loading,
+.cp-donation-button.is-loading,
+.wp-block-button__link[data-loading="true"],
+.wp-element-button[data-loading="true"],
+.cp-button[data-loading="true"],
+.cp-donation-button[data-loading="true"] {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* Loading Spinner */
+.wp-block-button__link.is-loading::after,
+.wp-element-button.is-loading::after,
+.cp-button.is-loading::after,
+.cp-donation-button.is-loading::after,
+.wp-block-button__link[data-loading="true"]::after,
+.wp-element-button[data-loading="true"]::after,
+.cp-button[data-loading="true"]::after,
+.cp-donation-button[data-loading="true"]::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: buttonSpinner 0.8s linear infinite;
+  z-index: 10;
+}
+
+@keyframes buttonSpinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced Focus States for All Button Variants */
+
+/* Primary Button Focus */
+.wp-block-button.is-style-fill .wp-block-button__link:focus-visible,
+.cp-button-primary:focus-visible,
+.cp-donation-button:focus-visible,
+.hero-cta .button-primary:focus-visible {
+  outline: 3px solid var(--wp--preset--color--accent);
+  outline-offset: 4px;
+  box-shadow:
+    var(--wp--preset--shadow--xl),
+    0 0 0 4px rgba(255, 136, 0, 0.2),
+    0 0 0 8px rgba(0, 83, 195, 0.1);
+  animation: none;
+}
+
+/* Secondary Button Focus */
+.wp-block-button.is-style-outline .wp-block-button__link:focus-visible,
+.cp-button-secondary:focus-visible,
+.hero-cta .button-secondary:focus-visible {
+  outline: 3px solid var(--wp--preset--color--accent);
+  outline-offset: 4px;
+  box-shadow:
+    var(--wp--preset--shadow--xl),
+    0 0 0 4px rgba(255, 136, 0, 0.2);
+  border-color: var(--wp--preset--color--accent);
+}
+
+/* Large Button Focus */
+.wp-block-button.is-large .wp-block-button__link:focus-visible,
+.cp-button-large:focus-visible {
+  outline: 4px solid var(--wp--preset--color--accent);
+  outline-offset: 5px;
+  box-shadow:
+    var(--wp--preset--shadow--2-xl),
+    0 0 0 5px rgba(255, 136, 0, 0.2);
+}
+
+/* Active (Pressed) State */
+.wp-block-button__link:active:not(:disabled):not(.is-disabled):not(.is-loading),
+.wp-element-button:active:not(:disabled):not(.is-disabled):not(.is-loading),
+.cp-button:active:not(:disabled):not(.is-disabled):not(.is-loading),
+.cp-donation-button:active:not(:disabled):not(.is-disabled):not(.is-loading) {
+  transform: translateY(-1px) scale(0.98) !important;
+  box-shadow: var(--wp--preset--shadow--md) !important;
+  transition-duration: 50ms;
+}
+
+/* ============================================
    Enhanced Components
    ============================================ */
 

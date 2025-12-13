@@ -189,6 +189,16 @@
           "slug": "info",
           "color": "#17a2b8",
           "name": "Info"
+        },
+        {
+          "slug": "primary-text",
+          "color": "#003d91",
+          "name": "Primary Text (High Contrast)"
+        },
+        {
+          "slug": "accent-text",
+          "color": "#cc6d00",
+          "name": "Accent Text (High Contrast)"
         }
       ],
       "gradients": [
@@ -500,7 +510,7 @@
     "typography": {
       "fontFamily": "var(--wp--preset--font-family--body)",
       "fontSize": "var(--wp--preset--font-size--base)",
-      "lineHeight": "1.6",
+      "lineHeight": "1.75",
       "fontWeight": "400"
     },
     "spacing": {
@@ -544,14 +554,14 @@
         "typography": {
           "fontSize": "var(--wp--preset--font-size--4-xl)",
           "fontWeight": "800",
-          "letterSpacing": "-0.04em"
+          "letterSpacing": "-0.02em"
         }
       },
       "h2": {
         "typography": {
           "fontSize": "var(--wp--preset--font-size--3-xl)",
           "fontWeight": "700",
-          "letterSpacing": "-0.03em"
+          "letterSpacing": "-0.015em"
         }
       },
       "h3": {

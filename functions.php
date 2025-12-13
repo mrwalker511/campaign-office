@@ -173,6 +173,21 @@ function campaignpress_scripts() {
 add_action('wp_enqueue_scripts', 'campaignpress_scripts');
 
 /**
+ * Add preconnect hints for Google Fonts optimization
+ * Improves font loading performance by establishing early connections
+ */
+function campaignpress_font_preconnect() {
+    // Preconnect to Google Fonts domain
+    echo '<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>' . "\n";
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+
+    // DNS prefetch as fallback for browsers that don't support preconnect
+    echo '<link rel="dns-prefetch" href="https://fonts.googleapis.com">' . "\n";
+    echo '<link rel="dns-prefetch" href="https://fonts.gstatic.com">' . "\n";
+}
+add_action('wp_head', 'campaignpress_font_preconnect', 1);
+
+/**
  * Enqueue block editor assets
  */
 function campaignpress_block_editor_assets() {

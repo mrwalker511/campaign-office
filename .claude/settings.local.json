@@ -16,7 +16,11 @@
       "Bash(git -C \"C:\\Users\\Matt Walker\\Desktop\\wp\\campaign-office\" log --oneline -1 style.css)",
       "Bash(git -C \"C:\\Users\\Matt Walker\\Desktop\\wp\\campaign-office\" show HEAD:style.css)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(tree:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

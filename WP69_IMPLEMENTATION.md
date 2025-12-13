@@ -714,8 +714,7 @@ After implementing WordPress 6.9 design system:
 
 ### CampaignPress Docs
 - `DESIGN_SYSTEM.md` - Complete design philosophy
-- `DESIGN_IMPLEMENTATION.md` - Classic CSS implementation
-- `DESIGN_BEFORE_AFTER.md` - Visual transformation examples
+- `unused-files/design-docs/` - Historical design documentation (archived)
 
 ---
 

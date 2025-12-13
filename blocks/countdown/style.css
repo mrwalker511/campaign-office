@@ -1,0 +1,49 @@
+.campaignpress-countdown {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--wp--preset--color--primary);
+    color: #fff;
+    border-radius: var(--wp--preset--custom--border-radius--lg);
+}
+
+.wp-block-campaignpress-countdown__title {
+    margin-bottom: 1.5rem;
+    color: inherit;
+}
+
+.campaignpress-countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.campaignpress-countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.campaignpress-countdown-number {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--wp--preset--color--accent);
+}
+
+.campaignpress-countdown-label {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+    .campaignpress-countdown-timer {
+        gap: 1rem;
+    }
+
+    .campaignpress-countdown-number {
+        font-size: 2rem;
+    }
+}

@@ -679,6 +679,20 @@
       "postTypes": [
         "page"
       ]
+    },
+    {
+      "name": "landing-page",
+      "title": "Political Landing Page (Canvas)",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "home-block",
+      "title": "Political Home (Block)",
+      "postTypes": [
+        "page"
+      ]
     }
   ]
 }

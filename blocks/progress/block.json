@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/progress",
+    "version": "1.0.0",
+    "title": "Campaign Progress Bar",
+    "category": "campaign-office",
+    "icon": "chart-bar",
+    "description": "A dynamic progress bar for fundraising goals.",
+    "supports": {
+        "html": false,
+        "align": true
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Campaign Goal"
+        },
+        "goalAmount": {
+            "type": "number",
+            "default": 10000
+        },
+        "raisedAmount": {
+            "type": "number",
+            "default": 5000
+        },
+        "showPercentage": {
+            "type": "boolean",
+            "default": true
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js",
+    "viewScript": "file:./view.js",
+    "render": "file:./render.php",
+    "style": "file:./style.css"
+}

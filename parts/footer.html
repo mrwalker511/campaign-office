@@ -1,0 +1,62 @@
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|8"}}},"backgroundColor":"neutral-900","textColor":"white","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-white-color has-neutral-900-background-color has-text-color has-background"
+    style="padding-top:var(--wp--preset--spacing--12);padding-bottom:var(--wp--preset--spacing--8)">
+    <!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":"2rem"}}} -->
+    <div class="wp-block-columns alignwide">
+        <!-- wp:column {"width":"40%"} -->
+        <div class="wp-block-column" style="flex-basis:40%">
+            <!-- wp:site-title {"level":3} /-->
+            <!-- wp:paragraph {"style":{"typography":{"fontSize":"small"},"color":{"text":"var:preset|color|neutral-400"}}} -->
+            <p class="has-text-color has-small-font-size" style="color:var(--wp--preset--color--neutral-400)">
+                <?php esc_html_e( 'Paid for by Friends of the Candidate', 'campaign-office' ); ?>
+            </p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:column -->
+
+        <!-- wp:column {"width":"20%"} -->
+        <div class="wp-block-column" style="flex-basis:20%">
+            <!-- wp:heading {"level":4,"fontSize":"base"} -->
+            <h4 class="wp-block-heading has-base-font-size">
+                <?php esc_html_e( 'Quick Links', 'campaign-office' ); ?>
+            </h4>
+            <!-- /wp:heading -->
+            <!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"}} /-->
+        </div>
+        <!-- /wp:column -->
+
+        <!-- wp:column {"width":"20%"} -->
+        <div class="wp-block-column" style="flex-basis:20%">
+            <!-- wp:heading {"level":4,"fontSize":"base"} -->
+            <h4 class="wp-block-heading has-base-font-size">
+                <?php esc_html_e( 'Connect', 'campaign-office' ); ?>
+            </h4>
+            <!-- /wp:heading -->
+            <!-- wp:social-links {"iconColor":"white","iconColorValue":"#ffffff","openInNewTab":true,"size":"has-small-icon-size","className":"is-style-default"} -->
+            <ul class="wp-block-social-links has-small-icon-size is-style-default has-icon-color">
+                <!-- wp:social-link {"url":"#","service":"twitter"} /-->
+                <!-- wp:social-link {"url":"#","service":"facebook"} /-->
+                <!-- wp:social-link {"url":"#","service":"instagram"} /-->
+            </ul>
+            <!-- /wp:social-links -->
+        </div>
+        <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+
+    <!-- wp:separator {"className":"is-style-wide"} -->
+    <hr class="wp-block-separator has-alpha-channel-opacity is-style-wide" />
+    <!-- /wp:separator -->
+
+    <!-- wp:group {"layout":{"type":"flex","justifyContent":"center"}} -->
+    <div class="wp-block-group">
+        <!-- wp:paragraph {"fontSize":"xs","style":{"color":{"text":"var:preset|color|neutral-500"}}} -->
+        <p class="has-text-color has-xs-font-size" style="color:var(--wp--preset--color--neutral-500)">&copy;
+            <?php echo date('Y'); ?>
+            <?php esc_html_e( 'All Rights Reserved.', 'campaign-office' ); ?>
+        </p>
+        <!-- /wp:paragraph -->
+    </div>
+    <!-- /wp:group -->
+</div>
+<!-- /wp:group -->

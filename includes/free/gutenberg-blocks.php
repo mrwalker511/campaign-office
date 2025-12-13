@@ -86,32 +86,6 @@ function campaignpress_register_blocks() {
         ),
     ));
 
-    // Register Campaign Progress Block
-    register_block_type('campaignpress/campaign-progress', array(
-        'editor_script'   => 'campaignpress-blocks-js',
-        'editor_style'    => 'campaignpress-blocks-editor-css',
-        'style'           => 'campaignpress-blocks-css',
-        'render_callback' => 'campaignpress_render_campaign_progress_block',
-        'attributes'      => array(
-            'goalAmount' => array(
-                'type'    => 'number',
-                'default' => 10000,
-            ),
-            'raisedAmount' => array(
-                'type'    => 'number',
-                'default' => 0,
-            ),
-            'title' => array(
-                'type'    => 'string',
-                'default' => __('Campaign Progress', 'campaign-office'),
-            ),
-            'showPercentage' => array(
-                'type'    => 'boolean',
-                'default' => true,
-            ),
-        ),
-    ));
-
     // Register Issue Card Block
     register_block_type('campaignpress/issue-card', array(
         'editor_script'   => 'campaignpress-blocks-js',
@@ -130,24 +104,6 @@ function campaignpress_register_blocks() {
             'iconName' => array(
                 'type'    => 'string',
                 'default' => 'megaphone',
-            ),
-        ),
-    ));
-
-    // Register Event Countdown Block
-    register_block_type('campaignpress/event-countdown', array(
-        'editor_script'   => 'campaignpress-blocks-js',
-        'editor_style'    => 'campaignpress-blocks-editor-css',
-        'style'           => 'campaignpress-blocks-css',
-        'render_callback' => 'campaignpress_render_event_countdown_block',
-        'attributes'      => array(
-            'eventDate' => array(
-                'type'    => 'string',
-                'default' => '',
-            ),
-            'eventTitle' => array(
-                'type'    => 'string',
-                'default' => __('Election Day', 'campaign-office'),
             ),
         ),
     ));
@@ -177,7 +133,10 @@ function campaignpress_register_blocks() {
             ),
         ),
     ));
-}
+
+    // Register Modern Interactive Blocks
+    register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/countdown' );
+    register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/progress' );}
 add_action('init', 'campaignpress_register_blocks');
 
 /**

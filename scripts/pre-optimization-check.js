@@ -1,10 +1,9 @@
 /**
  * Pre-Optimization Checklist
- * Verifies theme is ready for speed optimization
+ * ESM version for Node.js compatibility
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
 
 console.log('🔍 Pre-Optimization Checklist\n');
 console.log('═'.repeat(60) + '\n');
@@ -19,42 +18,70 @@ const requiredDirs = [
     'blocks'
 ];
 
-requiredDirs.forEach(dir => {
-    const exists = fs.existsSync(dir);
-    checks.push({
-        name: `Directory exists: ${dir}`,
-        passed: exists
-    });
-});
+for (const dir of requiredDirs) {
+    try {
+        await fs.access(dir);
+        checks.push({
+            name: `Directory exists: ${dir}`,
+            passed: true
+        });
+    } catch {
+        checks.push({
+            name: `Directory exists: ${dir}`,
+            passed: false
+        });
+    }
+}
 
 // Check 2: package.json has required dependencies
-const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-const requiredDeps = ['gulp', 'critical', 'lighthouse'];
+try {
+    const packageJson = JSON.parse(await fs.readFile('package.json', 'utf8'));
+    const requiredDeps = ['sharp', 'critical', 'lighthouse'];
 
-requiredDeps.forEach(dep => {
-    const exists = packageJson.devDependencies && packageJson.devDependencies[dep];
+    for (const dep of requiredDeps) {
+        const exists = packageJson.devDependencies && packageJson.devDependencies[dep];
+        checks.push({
+            name: `Dependency installed: ${dep}`,
+            passed: !!exists
+        });
+    }
+} catch (error) {
     checks.push({
-        name: `Dependency installed: ${dep}`,
-        passed: !!exists
+        name: 'package.json readable',
+        passed: false
     });
-});
+}
 
 // Check 3: functions.php exists
-checks.push({
-    name: 'functions.php exists',
-    passed: fs.existsSync('functions.php')
-});
+try {
+    await fs.access('functions.php');
+    checks.push({
+        name: 'functions.php exists',
+        passed: true
+    });
+} catch {
+    checks.push({
+        name: 'functions.php exists',
+        passed: false
+    });
+}
 
-// Check 4: No syntax errors in key files
+// Check 4: Key files accessible
 const keyFiles = ['functions.php', 'header.php', 'footer.php'];
-keyFiles.forEach(file => {
-    if (fs.existsSync(file)) {
+for (const file of keyFiles) {
+    try {
+        await fs.access(file);
         checks.push({
             name: `File accessible: ${file}`,
             passed: true
         });
+    } catch {
+        checks.push({
+            name: `File accessible: ${file}`,
+            passed: false
+        });
     }
-});
+}
 
 // Display results
 checks.forEach(check => {

@@ -1,10 +1,9 @@
 /**
  * Post-Optimization Verification
- * Confirms optimization was successful
+ * ESM version for Node.js compatibility
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs/promises';
 
 console.log('✅ Post-Optimization Verification\n');
 console.log('═'.repeat(60) + '\n');
@@ -13,8 +12,8 @@ const checks = [];
 
 // Check 1: Optimized images exist
 const optimizedImagesDir = 'assets/images/optimized';
-if (fs.existsSync(optimizedImagesDir)) {
-    const files = fs.readdirSync(optimizedImagesDir);
+try {
+    const files = await fs.readdir(optimizedImagesDir);
     const avifFiles = files.filter(f => f.endsWith('.avif'));
     const webpFiles = files.filter(f => f.endsWith('.webp'));
 
@@ -27,35 +26,55 @@ if (fs.existsSync(optimizedImagesDir)) {
         name: `WebP images generated: ${webpFiles.length}`,
         passed: webpFiles.length > 0
     });
+} catch {
+    checks.push({
+        name: 'Optimized images directory exists',
+        passed: false
+    });
 }
 
 // Check 2: Minified CSS exists
 const minCSSDir = 'assets/css/min';
-if (fs.existsSync(minCSSDir)) {
-    const files = fs.readdirSync(minCSSDir);
+try {
+    const files = await fs.readdir(minCSSDir);
     checks.push({
         name: `Minified CSS files: ${files.length}`,
         passed: files.length > 0
+    });
+} catch {
+    checks.push({
+        name: 'Minified CSS directory exists',
+        passed: false
     });
 }
 
 // Check 3: Minified JS exists
 const minJSDir = 'assets/js/min';
-if (fs.existsSync(minJSDir)) {
-    const files = fs.readdirSync(minJSDir);
+try {
+    const files = await fs.readdir(minJSDir);
     checks.push({
         name: `Minified JS files: ${files.length}`,
         passed: files.length > 0
+    });
+} catch {
+    checks.push({
+        name: 'Minified JS directory exists',
+        passed: false
     });
 }
 
 // Check 4: Critical CSS generated
 const criticalCSSDir = 'assets/css/critical';
-if (fs.existsSync(criticalCSSDir)) {
-    const files = fs.readdirSync(criticalCSSDir);
+try {
+    const files = await fs.readdir(criticalCSSDir);
     checks.push({
         name: `Critical CSS files: ${files.length}`,
         passed: files.length >= 4 // Should have 4 pages
+    });
+} catch {
+    checks.push({
+        name: 'Critical CSS directory exists',
+        passed: false
     });
 }
 

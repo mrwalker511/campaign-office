@@ -322,6 +322,11 @@ if ( file_exists( CAMPAIGNPRESS_INCLUDES_DIR . '/performance-patches.php' ) ) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/performance-patches.php';
 }
 
+// Load Homepage-Specific Performance Optimizations
+if ( file_exists( CAMPAIGNPRESS_INCLUDES_DIR . '/homepage-performance.php' ) ) {
+    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/homepage-performance.php';
+}
+
 // Check if Elementor is active
 if (did_action('elementor/loaded')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/elementor-widgets.php';

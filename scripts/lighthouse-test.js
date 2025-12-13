@@ -1,29 +1,30 @@
 /**
  * Lighthouse Performance Testing for Political Theme
  * Tests all key pages and generates reports
+ * ESM version for Node.js compatibility
  */
 
-const lighthouse = require('lighthouse');
-const chromeLauncher = require('chrome-launcher');
-const fs = require('fs');
-const path = require('path');
+import lighthouse from 'lighthouse';
+import * as chromeLauncher from 'chrome-launcher';
+import fs from 'fs/promises';
+import path from 'path';
 
 // Test pages
 const testPages = [
     {
-        url: 'http://localhost:8080/',
+        url: 'http://localhost:8881/',
         name: 'Homepage'
     },
     {
-        url: 'http://localhost:8080/events/',
+        url: 'http://localhost:8881/events/',
         name: 'Events'
     },
     {
-        url: 'http://localhost:8080/donate/',
+        url: 'http://localhost:8881/donate/',
         name: 'Donate'
     },
     {
-        url: 'http://localhost:8080/volunteer/',
+        url: 'http://localhost:8881/volunteer/',
         name: 'Volunteer'
     }
 ];
@@ -129,13 +130,11 @@ async function runTests() {
 
         // Save results
         const reportDir = 'lighthouse-reports';
-        if (!fs.existsSync(reportDir)) {
-            fs.mkdirSync(reportDir, { recursive: true });
-        }
+        await fs.mkdir(reportDir, { recursive: true });
 
         const timestamp = new Date().toISOString().replace(/:/g, '-').split('.')[0];
         const reportPath = path.join(reportDir, `report-${timestamp}.json`);
-        fs.writeFileSync(reportPath, JSON.stringify(results, null, 2));
+        await fs.writeFile(reportPath, JSON.stringify(results, null, 2));
 
         console.log(`📝 Report saved: ${reportPath}\n`);
 

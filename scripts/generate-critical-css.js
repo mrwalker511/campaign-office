@@ -1,31 +1,32 @@
 /**
  * Critical CSS Generator for Political Theme
  * Generates above-the-fold CSS for key pages
+ * ESM version for Node.js compatibility
  */
 
-const critical = require('critical');
-const fs = require('fs');
-const path = require('path');
+import { generate } from 'critical';
+import fs from 'fs/promises';
+import path from 'path';
 
 // Pages to generate critical CSS for
 const pages = [
     {
-        url: 'http://localhost:8080/',
+        url: 'http://localhost:8881/',
         output: 'assets/css/critical/home.css',
         name: 'Homepage (Hero + Countdown)'
     },
     {
-        url: 'http://localhost:8080/events/',
+        url: 'http://localhost:8881/events/',
         output: 'assets/css/critical/events.css',
         name: 'Events (Calendar + RSVP)'
     },
     {
-        url: 'http://localhost:8080/donate/',
+        url: 'http://localhost:8881/donate/',
         output: 'assets/css/critical/donate.css',
         name: 'Donate (Blockchain Form)'
     },
     {
-        url: 'http://localhost:8080/volunteer/',
+        url: 'http://localhost:8881/volunteer/',
         output: 'assets/css/critical/volunteer.css',
         name: 'Volunteer (Skill Matcher)'
     }
@@ -71,16 +72,14 @@ async function generateCriticalCSS() {
 
     // Create output directory
     const outputDir = path.dirname(pages[0].output);
-    if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-    }
+    await fs.mkdir(outputDir, { recursive: true });
 
     for (const page of pages) {
         try {
             console.log(`📄 Processing: ${page.name}`);
             console.log(`   URL: ${page.url}`);
 
-            const { css } = await critical.generate({
+            const { css } = await generate({
                 ...criticalConfig,
                 src: page.url,
                 target: {

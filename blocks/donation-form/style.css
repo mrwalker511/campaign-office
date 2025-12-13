@@ -1,0 +1,105 @@
+.cp-donation-form {
+    background: #fff;
+    border: 1px solid var(--wp--preset--color--neutral-200);
+    border-radius: var(--wp--preset--custom--border-radius--lg);
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.cp-donation-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--wp--preset--color--primary);
+}
+
+.cp-donation-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cp-donation-tier-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid var(--wp--preset--color--neutral-200);
+    background: transparent;
+    border-radius: var(--wp--preset--custom--border-radius--md);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cp-donation-tier-btn.selected,
+.cp-donation-tier-btn:hover {
+    border-color: var(--wp--preset--color--primary);
+    background: var(--wp--preset--color--neutral-50);
+}
+
+.cp-tier-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.cp-tier-label {
+    font-size: 0.875rem;
+    color: var(--wp--preset--color--neutral-600);
+}
+
+.cp-custom-amount-input {
+    margin-bottom: 1.5rem;
+    position: relative;
+    text-align: center;
+}
+
+.cp-custom-amount-input input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2rem;
+    font-size: 1.25rem;
+    border: 1px solid var(--wp--preset--color--neutral-300);
+    border-radius: var(--wp--preset--custom--border-radius--md);
+}
+
+.cp-donate-submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--wp--preset--color--primary);
+    color: white;
+    border: none;
+    border-radius: var(--wp--preset--custom--border-radius--md);
+    font-size: 1.125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cp-donate-submit-btn:hover {
+    background: var(--wp--preset--color--primary-dark);
+}
+
+.cp-crypto-toggle {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.cp-crypto-btn {
+    background: none;
+    border: none;
+    color: var(--wp--preset--color--neutral-600);
+    cursor: pointer;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cp-crypto-address {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--wp--preset--color--neutral-100);
+    border-radius: var(--wp--preset--custom--border-radius--md);
+    font-size: 0.875rem;
+    word-break: break-all;
+    text-align: center;
+}

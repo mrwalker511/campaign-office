@@ -1,0 +1,111 @@
+.cp-volunteer-matcher {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: var(--wp--preset--custom--border-radius--lg);
+}
+
+.cp-matcher-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.cp-matcher-filters {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.cp-skill-selector select {
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    border-radius: var(--wp--preset--custom--border-radius--md);
+    border: 1px solid var(--wp--preset--color--neutral-300);
+    font-size: 1rem;
+}
+
+.cp-radius-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cp-roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.cp-role-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: var(--wp--preset--custom--border-radius--md);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.cp-role-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cp-role-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+}
+
+.cp-role-tags {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.cp-skill-tag {
+    background: var(--wp--preset--color--neutral-200);
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    text-transform: capitalize;
+}
+
+.cp-role-capacity {
+    margin-top: auto;
+    margin-bottom: 1rem;
+}
+
+.cp-capacity-bar {
+    height: 6px;
+    background: var(--wp--preset--color--neutral-200);
+    border-radius: 999px;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+}
+
+.cp-capacity-fill {
+    height: 100%;
+    background: var(--wp--preset--color--primary);
+}
+
+.cp-capacity-text {
+    font-size: 0.75rem;
+    color: var(--wp--preset--color--neutral-600);
+}
+
+.cp-apply-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: transparent;
+    border: 1px solid var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--primary);
+    border-radius: var(--wp--preset--custom--border-radius--md);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cp-apply-btn:hover {
+    background: var(--wp--preset--color--primary);
+    color: #fff;
+}

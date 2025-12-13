@@ -1,0 +1,41 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/policy-platform",
+    "version": "1.0.0",
+    "title": "Policy Platform",
+    "category": "campaign-office",
+    "icon": "book-alt",
+    "description": "Interactive accordions for policy details with vote tracking.",
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "attributes": {
+        "policies": {
+            "type": "array",
+            "default": [
+                {
+                    "title": "Education Reform",
+                    "summary": "Better schools for our kids.",
+                    "content": "Full plan details...",
+                    "votes": 1240
+                },
+                {
+                    "title": "Green Energy",
+                    "summary": "Sustainable future now.",
+                    "content": "Full plan details...",
+                    "votes": 980
+                }
+            ]
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js",
+    "viewScript": "file:./view.js",
+    "render": "file:./render.php",
+    "style": "file:./style.css"
+}

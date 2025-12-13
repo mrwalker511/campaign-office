@@ -1,0 +1,40 @@
+.cp-section-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Responsive Behaviors (Mocking Grid System) */
+.cp-break-sm>* {
+    flex: 1 1 100%;
+}
+
+@media (min-width: 600px) {
+    .cp-break-sm>* {
+        flex: 1;
+    }
+}
+
+.cp-break-md>* {
+    flex: 1 1 100%;
+}
+
+@media (min-width: 768px) {
+    .cp-break-md>* {
+        flex: 1;
+    }
+}
+
+.cp-break-lg>* {
+    flex: 1 1 100%;
+}
+
+@media (min-width: 1024px) {
+    .cp-break-lg>* {
+        flex: 1;
+    }
+}

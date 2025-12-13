@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/section-wrapper",
+    "version": "1.0.0",
+    "title": "Responsive Section",
+    "category": "campaign-office",
+    "icon": "layout",
+    "description": "Drag-and-drop container with breakpoint controls.",
+    "supports": {
+        "html": false,
+        "align": [
+            "full",
+            "wide"
+        ]
+    },
+    "attributes": {
+        "breakpoint": {
+            "type": "string",
+            "default": "md"
+        },
+        "maxWidth": {
+            "type": "string",
+            "default": "1200px"
+        },
+        "gap": {
+            "type": "string",
+            "default": "1rem"
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "file:./style.css"
+}

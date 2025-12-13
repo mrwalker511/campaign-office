@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/volunteer-matcher",
+    "version": "1.0.0",
+    "title": "Volunteer Matcher",
+    "category": "campaign-office",
+    "icon": "groups",
+    "description": "Matches volunteers to roles based on skills and location.",
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "attributes": {
+        "roles": {
+            "type": "array",
+            "default": [
+                {
+                    "title": "Phone Banker",
+                    "skills": [
+                        "communication",
+                        "persuasion"
+                    ],
+                    "capacity": 50,
+                    "filled": 12
+                },
+                {
+                    "title": "Door Knocker",
+                    "skills": [
+                        "fitness",
+                        "communication"
+                    ],
+                    "capacity": 40,
+                    "filled": 25
+                },
+                {
+                    "title": "Data Entry",
+                    "skills": [
+                        "typing",
+                        "organization"
+                    ],
+                    "capacity": 10,
+                    "filled": 2
+                }
+            ]
+        },
+        "showRadius": {
+            "type": "boolean",
+            "default": true
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js",
+    "viewScript": "file:./view.js",
+    "render": "file:./render.php",
+    "style": "file:./style.css"
+}

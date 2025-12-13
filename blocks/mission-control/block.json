@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/mission-control",
+    "version": "1.0.0",
+    "title": "Mission Control Center",
+    "category": "campaign-office",
+    "icon": "dashboard",
+    "description": "Central dashboard with election countdown, weather, and momentum.",
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "attributes": {
+        "electionDate": {
+            "type": "string",
+            "default": ""
+        },
+        "locationCity": {
+            "type": "string",
+            "default": "Washington DC"
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js",
+    "viewScript": "file:./view.js",
+    "render": "file:./render.php",
+    "style": "file:./style.css"
+}

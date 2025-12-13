@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/donation-form",
+    "version": "1.0.0",
+    "title": "Campaign Donation Form",
+    "category": "campaign-office",
+    "icon": "money-alt",
+    "description": "Drag-and-drop tiers with Crypto support.",
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "attributes": {
+        "tiers": {
+            "type": "array",
+            "default": [
+                {
+                    "amount": 25,
+                    "label": "Supporter"
+                },
+                {
+                    "amount": 50,
+                    "label": "Friend"
+                },
+                {
+                    "amount": 100,
+                    "label": "Backer"
+                }
+            ]
+        },
+        "currency": {
+            "type": "string",
+            "default": "USD"
+        },
+        "enableCrypto": {
+            "type": "boolean",
+            "default": true
+        },
+        "btcAddress": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js",
+    "viewScript": "file:./view.js",
+    "render": "file:./render.php",
+    "style": "file:./style.css"
+}

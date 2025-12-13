@@ -1,0 +1,86 @@
+.cp-policy-platform {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cp-policy-item {
+    background: #fff;
+    border: 1px solid var(--wp--preset--color--neutral-200);
+    border-radius: var(--wp--preset--custom--border-radius--md);
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.cp-policy-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: left;
+    color: var(--wp--preset--color--primary-dark);
+    transition: background 0.2s;
+}
+
+.cp-policy-header:hover {
+    background: var(--wp--preset--color--neutral-50);
+}
+
+.cp-policy-header[aria-expanded="true"] .dashicons {
+    transform: rotate(180deg);
+}
+
+.cp-policy-header .dashicons {
+    transition: transform 0.3s;
+}
+
+.cp-policy-content {
+    border-top: 1px solid var(--wp--preset--color--neutral-200);
+    background: var(--wp--preset--color--neutral-50);
+}
+
+.cp-policy-body {
+    padding: 1.5rem;
+}
+
+.cp-policy-summary {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.cp-policy-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--wp--preset--color--neutral-200);
+    padding-top: 1.5rem;
+}
+
+.cp-vote-btn,
+.cp-download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--wp--preset--color--neutral-300);
+    background: #fff;
+    border-radius: var(--wp--preset--custom--border-radius--md);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cp-vote-btn:hover {
+    border-color: var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--primary);
+}
+
+.cp-download-btn:hover {
+    border-color: var(--wp--preset--color--secondary);
+    color: var(--wp--preset--color--secondary);
+}

@@ -1,0 +1,107 @@
+/* 
+ * CampaignPress Editor Overrides
+ * "Elementor-like" Visual Styling for Gutenberg
+ */
+
+/* 1. Toolbar Redesign: Compact & Visual */
+.block-editor-block-toolbar {
+    background: #1e1e1e;
+    /* Dark mode toolbar */
+    border-radius: 8px;
+    border: 1px solid #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.block-editor-block-toolbar .components-button {
+    color: #e0e0e0;
+}
+
+.block-editor-block-toolbar .components-button:hover,
+.block-editor-block-toolbar .components-button.is-pressed {
+    color: var(--wp--preset--color--primary, #0053c3);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Hide text labels in toolbar for a cleaner look (icon-only) */
+.block-editor-block-toolbar .components-button.has-text span.components-button__label {
+    display: none;
+    /* Force icon-only */
+}
+
+/* 2. Style Popover */
+.cp-style-popover {
+    min-width: 250px;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.cp-style-control-group {
+    margin-bottom: 1rem;
+}
+
+.cp-style-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #666;
+}
+
+/* 3. Template Library Modal */
+.cp-template-library-modal .components-modal__content {
+    background: #f0f0f1;
+    padding: 0;
+}
+
+.cp-template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 24px;
+}
+
+.cp-template-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #ddd;
+}
+
+.cp-template-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--wp--preset--color--primary, #0053c3);
+}
+
+.cp-template-preview {
+    height: 120px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #999;
+}
+
+.cp-template-name {
+    padding: 12px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+/* 4. Canvas Tweaks */
+.interface-interface-skeleton__content {
+    background-color: #f0f0f1;
+    /* Darker canvas bg to make content pop */
+}
+
+/* 5. Responsive Preview Toggle (Simulated visual tweaks) */
+.cp-device-toggle {
+    margin-right: 12px;
+}

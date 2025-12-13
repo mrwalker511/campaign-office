@@ -173,29 +173,37 @@ function campaignpress_scripts() {
 add_action('wp_enqueue_scripts', 'campaignpress_scripts');
 
 /**
- * Add preconnect hints for Google Fonts optimization
- * Improves font loading performance by establishing early connections
+ * Font loading is handled via theme.json
+ * For privacy compliance (GDPR), fonts should be self-hosted
+ * See PATCHES.md for instructions on localizing Google Fonts
  */
-function campaignpress_font_preconnect() {
-    // Preconnect to Google Fonts domain
-    echo '<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>' . "\n";
-    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
-
-    // DNS prefetch as fallback for browsers that don't support preconnect
-    echo '<link rel="dns-prefetch" href="https://fonts.googleapis.com">' . "\n";
-    echo '<link rel="dns-prefetch" href="https://fonts.gstatic.com">' . "\n";
-}
-add_action('wp_head', 'campaignpress_font_preconnect', 1);
 
 /**
  * Enqueue block editor assets
  */
 function campaignpress_block_editor_assets() {
+    // Standard Editor Styles
     wp_enqueue_style(
         'campaignpress-block-editor',
         CAMPAIGNPRESS_ASSETS_URI . '/css/block-editor.css',
         array('wp-edit-blocks'),
         CAMPAIGNPRESS_VERSION
+    );
+
+    // Political Studio UX Overrides (Elementor-like)
+    wp_enqueue_style(
+        'campaignpress-editor-ux',
+        CAMPAIGNPRESS_ASSETS_URI . '/css/editor-overrides.css',
+        array('wp-edit-blocks'),
+        CAMPAIGNPRESS_VERSION
+    );
+
+    wp_enqueue_script(
+        'campaignpress-editor-ux',
+        CAMPAIGNPRESS_ASSETS_URI . '/js/editor-overrides.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-plugins', 'wp-edit-post'),
+        CAMPAIGNPRESS_VERSION,
+        true
     );
 }
 add_action('enqueue_block_editor_assets', 'campaignpress_block_editor_assets');
@@ -298,6 +306,16 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/donation-enhancements.php';
 // require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/tgmpa-config.php'; // Moved to unused-files/duplicate-systems/
+
+// Load Advanced React Blocks
+if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/registration.php' ) ) {
+    require_once CAMPAIGNPRESS_THEME_DIR . '/blocks/registration.php';
+}
+
+// Load Block View Scripts
+if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/block-view-loader.php' ) ) {
+    require_once CAMPAIGNPRESS_THEME_DIR . '/blocks/block-view-loader.php';
+}
 
 // Check if Elementor is active
 if (did_action('elementor/loaded')) {

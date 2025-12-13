@@ -1,0 +1,34 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/style-panel",
+    "version": "1.0.0",
+    "title": "Inline Style Panel",
+    "category": "campaign-office",
+    "icon": "art",
+    "description": "A wrapper block that adds Elementor-like style controls to any content.",
+    "supports": {
+        "html": false,
+        "align": [
+            "full",
+            "wide"
+        ]
+    },
+    "attributes": {
+        "padding": {
+            "type": "string",
+            "default": "2rem"
+        },
+        "bgColor": {
+            "type": "string",
+            "default": ""
+        },
+        "borderRadius": {
+            "type": "string",
+            "default": "0px"
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php"
+}

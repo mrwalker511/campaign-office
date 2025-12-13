@@ -34,6 +34,15 @@
             </div><!-- .footer-widgets -->
 
             <div class="footer-bottom">
+                <div class="site-disclaimer" style="text-align:center; padding: 1rem; border: 1px solid var(--wp--preset--color--neutral-300); margin-bottom: 1rem; font-size: 0.8em; font-weight: bold;">
+                    <?php
+                    $disclaimer = get_theme_mod('campaignpress_disclaimer_text');
+                    if ($disclaimer) {
+                        echo esc_html($disclaimer);
+                    }
+                    ?>
+                </div>
+
                 <div class="site-info">
                     <?php
                     $candidate_name = get_theme_mod('campaignpress_candidate_name', '');

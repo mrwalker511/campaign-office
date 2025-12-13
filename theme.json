@@ -16,104 +16,54 @@
       "defaultPalette": false,
       "palette": [
         {
-          "slug": "primary-50",
-          "color": "#e6eef9",
-          "name": "Primary 50"
-        },
-        {
-          "slug": "primary-100",
-          "color": "#ccddf3",
-          "name": "Primary 100"
-        },
-        {
-          "slug": "primary-200",
-          "color": "#99bae7",
-          "name": "Primary 200"
-        },
-        {
-          "slug": "primary-300",
-          "color": "#6698db",
-          "name": "Primary 300"
-        },
-        {
-          "slug": "primary-400",
-          "color": "#3375cf",
-          "name": "Primary 400"
-        },
-        {
           "slug": "primary",
           "color": "#0053c3",
-          "name": "Primary"
+          "name": "Democratic Blue (Primary)"
         },
         {
-          "slug": "primary-600",
-          "color": "#00429c",
-          "name": "Primary 600"
-        },
-        {
-          "slug": "primary-700",
+          "slug": "primary-dark",
           "color": "#003275",
-          "name": "Primary 700"
+          "name": "Democratic Dark"
         },
         {
-          "slug": "primary-800",
-          "color": "#00214e",
-          "name": "Primary 800"
+          "slug": "republican-red",
+          "color": "#e81b23",
+          "name": "Republican Red"
         },
         {
-          "slug": "primary-900",
-          "color": "#001127",
-          "name": "Primary 900"
+          "slug": "republican-dark",
+          "color": "#9e0e14",
+          "name": "Republican Dark"
         },
         {
-          "slug": "accent-50",
-          "color": "#fff3e6",
-          "name": "Accent 50"
+          "slug": "independent-teal",
+          "color": "#00b8d9",
+          "name": "Independent Teal"
         },
         {
-          "slug": "accent-100",
-          "color": "#ffe7cc",
-          "name": "Accent 100"
-        },
-        {
-          "slug": "accent-200",
-          "color": "#ffcf99",
-          "name": "Accent 200"
-        },
-        {
-          "slug": "accent-300",
-          "color": "#ffb866",
-          "name": "Accent 300"
-        },
-        {
-          "slug": "accent-400",
-          "color": "#ffa033",
-          "name": "Accent 400"
+          "slug": "independent-purple",
+          "color": "#6554c0",
+          "name": "Independent Purple"
         },
         {
           "slug": "accent",
           "color": "#ff8800",
-          "name": "Accent"
+          "name": "Accent (Orange)"
         },
         {
-          "slug": "accent-600",
-          "color": "#cc6d00",
-          "name": "Accent 600"
+          "slug": "gold",
+          "color": "#ffd700",
+          "name": "Gold (Winner)"
         },
         {
-          "slug": "accent-700",
-          "color": "#995200",
-          "name": "Accent 700"
+          "slug": "white",
+          "color": "#ffffff",
+          "name": "White"
         },
         {
-          "slug": "accent-800",
-          "color": "#663600",
-          "name": "Accent 800"
-        },
-        {
-          "slug": "accent-900",
-          "color": "#331b00",
-          "name": "Accent 900"
+          "slug": "black",
+          "color": "#000000",
+          "name": "Black"
         },
         {
           "slug": "neutral-50",
@@ -164,80 +114,46 @@
           "slug": "neutral-900",
           "color": "#212529",
           "name": "Neutral 900"
-        },
-        {
-          "slug": "white",
-          "color": "#ffffff",
-          "name": "White"
-        },
-        {
-          "slug": "success",
-          "color": "#28a745",
-          "name": "Success"
-        },
-        {
-          "slug": "warning",
-          "color": "#ffc107",
-          "name": "Warning"
-        },
-        {
-          "slug": "error",
-          "color": "#dc3545",
-          "name": "Error"
-        },
-        {
-          "slug": "info",
-          "color": "#17a2b8",
-          "name": "Info"
-        },
-        {
-          "slug": "primary-text",
-          "color": "#003d91",
-          "name": "Primary Text (High Contrast)"
-        },
-        {
-          "slug": "accent-text",
-          "color": "#cc6d00",
-          "name": "Accent Text (High Contrast)"
         }
       ],
       "gradients": [
         {
-          "slug": "primary-gradient",
-          "gradient": "linear-gradient(135deg, var(--wp--preset--color--primary) 0%, var(--wp--preset--color--primary-700) 100%)",
-          "name": "Primary Gradient"
+          "slug": "democrat-gradient",
+          "gradient": "linear-gradient(135deg, #0053c3 0%, #003275 100%)",
+          "name": "Democratic Gradient"
         },
         {
-          "slug": "accent-gradient",
-          "gradient": "linear-gradient(135deg, var(--wp--preset--color--accent) 0%, var(--wp--preset--color--accent-700) 100%)",
-          "name": "Accent Gradient"
+          "slug": "republican-gradient",
+          "gradient": "linear-gradient(135deg, #e81b23 0%, #9e0e14 100%)",
+          "name": "Republican Gradient"
         },
         {
-          "slug": "primary-accent-gradient",
-          "gradient": "linear-gradient(135deg, var(--wp--preset--color--primary) 0%, var(--wp--preset--color--accent) 100%)",
-          "name": "Primary to Accent"
+          "slug": "independent-gradient",
+          "gradient": "linear-gradient(135deg, #6554c0 0%, #00b8d9 100%)",
+          "name": "Independent Gradient"
         },
         {
           "slug": "hero-gradient",
-          "gradient": "linear-gradient(135deg, var(--wp--preset--color--primary-900) 0%, var(--wp--preset--color--primary-700) 50%, var(--wp--preset--color--accent-700) 100%)",
+          "gradient": "linear-gradient(135deg, var(--wp--preset--color--primary-dark) 0%, var(--wp--preset--color--primary) 100%)",
           "name": "Hero Gradient"
-        },
-        {
-          "slug": "subtle-gradient",
-          "gradient": "linear-gradient(135deg, var(--wp--preset--color--white) 0%, var(--wp--preset--color--neutral-50) 100%)",
-          "name": "Subtle Background"
         }
       ],
       "duotone": [
         {
-          "colors": ["#0053c3", "#ff8800"],
-          "slug": "primary-accent",
-          "name": "Primary and Accent"
+          "colors": [
+            "#000000",
+            "#ffffff"
+          ],
+          "slug": "grayscale",
+          "name": "Grayscale"
         },
         {
-          "colors": ["#001127", "#0053c3"],
-          "slug": "primary-dark",
-          "name": "Primary Dark"
+          "colors": [
+            "#003275",
+            "#e81b23"
+          ],
+          "slug": "bipartisan",
+          "name": "Bipartisan (Blue/Red)"
         }
       ]
     },
@@ -262,7 +178,9 @@
               "fontWeight": "400 800",
               "fontStyle": "normal",
               "fontStretch": "normal",
-              "src": ["https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap"]
+              "src": [
+                "file:./assets/fonts/BricolageGrotesque-Variable.woff2"
+              ]
             }
           ]
         },
@@ -276,7 +194,9 @@
               "fontWeight": "300 800",
               "fontStyle": "normal",
               "fontStretch": "normal",
-              "src": ["https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"]
+              "src": [
+                "file:./assets/fonts/PlusJakartaSans-Variable.woff2"
+              ]
             }
           ]
         },
@@ -290,7 +210,9 @@
               "fontWeight": "400 700",
               "fontStyle": "normal",
               "fontStretch": "normal",
-              "src": ["https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"]
+              "src": [
+                "file:./assets/fonts/JetBrainsMono-Variable.woff2"
+              ]
             }
           ]
         }
@@ -374,7 +296,14 @@
       "padding": true,
       "margin": true,
       "blockGap": true,
-      "units": ["px", "em", "rem", "vh", "vw", "%"],
+      "units": [
+        "px",
+        "em",
+        "rem",
+        "vh",
+        "vw",
+        "%"
+      ],
       "spacingScale": {
         "steps": 0
       },
@@ -740,12 +669,16 @@
     {
       "name": "blank",
       "title": "Blank",
-      "postTypes": ["page"]
+      "postTypes": [
+        "page"
+      ]
     },
     {
       "name": "page-hero",
       "title": "Page with Hero",
-      "postTypes": ["page"]
+      "postTypes": [
+        "page"
+      ]
     }
   ]
 }

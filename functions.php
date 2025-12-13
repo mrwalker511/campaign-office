@@ -428,3 +428,19 @@ function campaignpress_inline_critical_css() {
     wp_add_inline_style('campaignpress-style', $critical_css);
 }
 add_action('wp_enqueue_scripts', 'campaignpress_inline_critical_css');
+
+function campaignpress_customize_disclaimer($wp_customize) {
+    $wp_customize->add_setting('campaignpress_disclaimer_text', array(
+        'default' => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control('campaignpress_disclaimer_text', array(
+        'label' => __('"Paid for by" Disclaimer', 'campaign-office'),
+        'description' => __('e.g. Paid for by Friends of Candidate', 'campaign-office'),
+        'section' => 'title_tagline',
+        'type' => 'text',
+    ));
+}
+add_action('customize_register', 'campaignpress_customize_disclaimer');

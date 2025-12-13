@@ -139,7 +139,7 @@ get_header();
                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                 </h3>
                                 <div class="issue-excerpt"><?php the_excerpt(); ?></div>
-                                <a href="<?php the_permalink(); ?>" class="read-more"><?php esc_html_e( 'Read More', 'campaign-office' ); ?></a>
+                                <a href="<?php the_permalink(); ?>" class="read-more" aria-label="<?php echo esc_attr( sprintf( __( 'Read more about %s', 'campaign-office' ), get_the_title() ) ); ?>"><?php esc_html_e( 'Read More', 'campaign-office' ); ?></a>
                             </div>
                         </article>
                     <?php endwhile; ?>
@@ -203,7 +203,7 @@ get_header();
                                     <?php echo esc_html( $location['city'] ); ?><?php echo $location['state'] ? ', ' . esc_html( $location['state'] ) : ''; ?>
                                 </div>
                             <?php endif; ?>
-                            <a href="<?php the_permalink(); ?>" class="read-more"><?php esc_html_e( 'Event Details', 'campaign-office' ); ?></a>
+                            <a href="<?php the_permalink(); ?>" class="read-more" aria-label="<?php echo esc_attr( sprintf( __( 'Event details for %s', 'campaign-office' ), get_the_title() ) ); ?>"><?php esc_html_e( 'Event Details', 'campaign-office' ); ?></a>
                         </article>
                     <?php endwhile; ?>
                 </div>

@@ -1,0 +1,6 @@
+- WordPress core + Gutenberg/FSE focus
+- PHP/JS/React for block development  
+- Existing theme: [classic/block/FSE status]
+- No heavy builders (Elementor-free goal)
+- Performance: Core Web Vitals 90+ target
+- Security: Your cybersecurity background → hardened blocks

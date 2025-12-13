@@ -317,6 +317,11 @@ if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/block-view-loader.php' ) ) 
     require_once CAMPAIGNPRESS_THEME_DIR . '/blocks/block-view-loader.php';
 }
 
+// Load Performance Optimization Patches
+if ( file_exists( CAMPAIGNPRESS_INCLUDES_DIR . '/performance-patches.php' ) ) {
+    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/performance-patches.php';
+}
+
 // Check if Elementor is active
 if (did_action('elementor/loaded')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/elementor-widgets.php';

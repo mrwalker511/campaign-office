@@ -1,41 +1,47 @@
 {
   "name": "campaignpress",
-  "version": "1.0.0",
-  "description": "A freemium political WordPress theme that transforms into a complete campaign operations platform",
+  "version": "2.0.0",
+  "description": "Political WordPress Theme with Advanced Blocks",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "watch": "vite build --watch",
-    "lint": "eslint assets/react --ext .js,.jsx",
-    "format": "prettier --write \"assets/**/*.{js,jsx,css}\""
+    "speed-optimize": "npm run optimize:images && npm run optimize:css && npm run optimize:js && npm run critical-css && npm run lighthouse",
+    "optimize:images": "gulp optimizeImages",
+    "optimize:css": "gulp optimizeCSS",
+    "optimize:js": "gulp optimizeJS",
+    "critical-css": "node scripts/generate-critical-css.js",
+    "lighthouse": "node scripts/lighthouse-test.js",
+    "pre-optimize": "node scripts/pre-optimization-check.js",
+    "post-optimize": "node scripts/post-optimization-check.js",
+    "clean": "gulp clean"
   },
   "keywords": [
     "wordpress",
     "theme",
     "political",
-    "campaign",
-    "crm"
+    "campaign"
   ],
   "author": "CampaignPress Team",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
-    "@wordpress/scripts": "^27.3.0",
-    "@wordpress/server-side-render": "^6.12.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.33.2",
-    "prettier": "^3.2.4",
-    "vite": "^5.0.12"
+    "vite": "^5.0.8",
+    "gulp": "^4.0.2",
+    "gulp-imagemin": "^8.0.0",
+    "imagemin-avif": "^0.1.6",
+    "imagemin-webp": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-terser": "^2.1.0",
+    "gulp-purgecss": "^5.0.0",
+    "critical": "^6.0.0",
+    "lighthouse": "^11.4.0",
+    "chrome-launcher": "^1.1.0",
+    "uncss": "^0.17.3",
+    "del": "^7.1.0"
   },
   "dependencies": {
-    "@wordpress/block-editor": "^12.20.0",
-    "@wordpress/blocks": "^12.29.0",
-    "@wordpress/components": "^27.0.0",
-    "@wordpress/element": "^5.29.0",
-    "@wordpress/i18n": "^4.52.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

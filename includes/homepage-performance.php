@@ -23,10 +23,12 @@ function campaignpress_homepage_resource_hints() {
         }
     }
     
-    // Preload critical CSS for homepage
-    $critical_css = get_template_directory() . '/assets/css/critical/home.css';
-    if (file_exists($critical_css)) {
-        echo '<link rel="preload" as="style" href="' . get_template_directory_uri() . '/assets/css/critical/home.css">' . "\n";
+    // Load critical homepage CSS only when it's not already being inlined.
+    if (!has_action('wp_head', 'campaignpress_critical_css')) {
+        $critical_css = get_template_directory() . '/assets/css/critical/home.css';
+        if (file_exists($critical_css)) {
+            echo '<link rel="stylesheet" href="' . get_template_directory_uri() . '/assets/css/critical/home.css">' . "\n";
+        }
     }
 }
 add_action('wp_head', 'campaignpress_homepage_resource_hints', 1);

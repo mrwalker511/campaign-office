@@ -4,7 +4,9 @@
 
 If the Developer Console is not working after importing demo content, follow these steps:
 
-### Option 1: Automatic Fix (Recommended)
+### Option 1: Automatic Fix
+
+The CampaignPress theme now automatically attempts to re-initialize the Developer Console after demo content import. However, if you are still experiencing issues, you can manually trigger the fix.
 
 Add this code to your `functions.php` temporarily, then visit any admin page:
 

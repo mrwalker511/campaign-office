@@ -63,24 +63,25 @@ function cp_move_cpts_to_campaign_data() {
     global $menu, $submenu;
 
     // Define CPTs to move with their display names and icons
+    // Note: CPT slugs have prefix 'cp_' as defined in custom-post-types.php
     $cpts_to_move = array(
-        'issue' => array(
+        'cp_issue' => array(
             'name' => __('Issues', 'campaignpress'),
             'icon' => 'dashicons-flag'
         ),
-        'event' => array(
+        'cp_event' => array(
             'name' => __('Events', 'campaignpress'),
             'icon' => 'dashicons-calendar-alt'
         ),
-        'endorsement' => array(
+        'cp_endorsement' => array(
             'name' => __('Endorsements', 'campaignpress'),
             'icon' => 'dashicons-thumbs-up'
         ),
-        'team' => array(
+        'cp_team' => array(
             'name' => __('Team', 'campaignpress'),
             'icon' => 'dashicons-groups'
         ),
-        'volunteer' => array(
+        'cp_volunteer' => array(
             'name' => __('Volunteers', 'campaignpress'),
             'icon' => 'dashicons-heart'
         )
@@ -117,11 +118,11 @@ function cp_enforce_campaign_data_submenu_order() {
     // Define the desired order
     $desired_order = array(
         'campaign-data-main',                    // Campaign Data (main page)
-        'edit.php?post_type=issue',             // Issues
-        'edit.php?post_type=event',             // Events
-        'edit.php?post_type=endorsement',       // Endorsements
-        'edit.php?post_type=team',              // Team
-        'edit.php?post_type=volunteer'          // Volunteers
+        'edit.php?post_type=cp_issue',             // Issues
+        'edit.php?post_type=cp_event',             // Events
+        'edit.php?post_type=cp_endorsement',       // Endorsements
+        'edit.php?post_type=cp_team',              // Team
+        'edit.php?post_type=cp_volunteer'          // Volunteers
     );
 
     // Create a new ordered submenu array
@@ -156,35 +157,35 @@ function cp_add_submenu_icons_css() {
     ?>
     <style>
         /* Campaign Data submenu icons */
-        #adminmenu .wp-submenu a[href*="post_type=issue"]::before {
+        #adminmenu .wp-submenu a[href*="post_type=cp_issue"]::before {
             content: "\f227";
             font-family: dashicons;
             margin-right: 8px;
             opacity: 0.7;
         }
 
-        #adminmenu .wp-submenu a[href*="post_type=event"]::before {
+        #adminmenu .wp-submenu a[href*="post_type=cp_event"]::before {
             content: "\f145";
             font-family: dashicons;
             margin-right: 8px;
             opacity: 0.7;
         }
 
-        #adminmenu .wp-submenu a[href*="post_type=endorsement"]::before {
+        #adminmenu .wp-submenu a[href*="post_type=cp_endorsement"]::before {
             content: "\f529";
             font-family: dashicons;
             margin-right: 8px;
             opacity: 0.7;
         }
 
-        #adminmenu .wp-submenu a[href*="post_type=team"]::before {
+        #adminmenu .wp-submenu a[href*="post_type=cp_team"]::before {
             content: "\f307";
             font-family: dashicons;
             margin-right: 8px;
             opacity: 0.7;
         }
 
-        #adminmenu .wp-submenu a[href*="post_type=volunteer"]::before {
+        #adminmenu .wp-submenu a[href*="post_type=cp_volunteer"]::before {
             content: "\f487";
             font-family: dashicons;
             margin-right: 8px;

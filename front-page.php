@@ -119,9 +119,10 @@ get_header();
 
         if ( $issues->have_posts() ) :
             ?>
-            <section class="front-page-section issues-section">
-                <h2 class="section-title"><?php esc_html_e( 'Key Issues', 'campaign-office' ); ?></h2>
-                <div class="issues-grid">
+            <section class="section-spacing">
+                <div class="content-container">
+                    <h2 class="text-3xl font-bold text-center mb-18"><?php esc_html_e( 'Key Issues', 'campaign-office' ); ?></h2>
+                    <div class="card-grid">
                     <?php
                     while ( $issues->have_posts() ) :
                         $issues->the_post();
@@ -143,11 +144,12 @@ get_header();
                             </div>
                         </article>
                     <?php endwhile; ?>
-                </div>
-                <div class="section-footer">
-                    <a href="<?php echo esc_url( get_post_type_archive_link( 'cp_issue' ) ); ?>" class="button button-secondary">
-                        <?php esc_html_e( 'View All Issues', 'campaign-office' ); ?>
-                    </a>
+                    </div>
+                    <div class="text-center mt-18">
+                        <a href="<?php echo esc_url( get_post_type_archive_link( 'cp_issue' ) ); ?>" class="button button-secondary">
+                            <?php esc_html_e( 'View All Issues', 'campaign-office' ); ?>
+                        </a>
+                    </div>
                 </div>
             </section>
             <?php
@@ -173,9 +175,10 @@ get_header();
 
         if ( $events->have_posts() ) :
             ?>
-            <section class="front-page-section events-section">
-                <h2 class="section-title"><?php esc_html_e( 'Upcoming Events', 'campaign-office' ); ?></h2>
-                <div class="events-list">
+            <section class="section-spacing bg-neutral-50">
+                <div class="content-container">
+                    <h2 class="text-3xl font-bold text-center mb-18"><?php esc_html_e( 'Upcoming Events', 'campaign-office' ); ?></h2>
+                    <div class="content-gap">
                     <?php
                     while ( $events->have_posts() ) :
                         $events->the_post();
@@ -206,11 +209,12 @@ get_header();
                             <a href="<?php the_permalink(); ?>" class="read-more" aria-label="<?php echo esc_attr( sprintf( __( 'Event details for %s', 'campaign-office' ), get_the_title() ) ); ?>"><?php esc_html_e( 'Event Details', 'campaign-office' ); ?></a>
                         </article>
                     <?php endwhile; ?>
-                </div>
-                <div class="section-footer">
-                    <a href="<?php echo esc_url( get_post_type_archive_link( 'cp_event' ) ); ?>" class="button button-secondary">
-                        <?php esc_html_e( 'View All Events', 'campaign-office' ); ?>
-                    </a>
+                    </div>
+                    <div class="text-center mt-18">
+                        <a href="<?php echo esc_url( get_post_type_archive_link( 'cp_event' ) ); ?>" class="button button-secondary">
+                            <?php esc_html_e( 'View All Events', 'campaign-office' ); ?>
+                        </a>
+                    </div>
                 </div>
             </section>
             <?php

@@ -145,6 +145,14 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
+    // Tailwind CSS with custom spacing scale
+    wp_enqueue_style(
+        'campaignpress-tailwind',
+        get_template_directory_uri() . '/assets/css/dist/tailwind.css',
+        array('campaignpress-design-wp69'),
+        CAMPAIGNPRESS_VERSION
+    );
+
     // Bootstrap 5.3 JS Bundle (includes Popper, bundled locally) - MOVED TO unused-files/vendor-bloat/
     // Using WordPress native components instead
     // wp_enqueue_script(

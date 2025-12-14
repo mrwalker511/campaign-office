@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System Style Guide - Campaign Office</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@400;700;900&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                            950: '#042f2e',
+                        },
+                        accent: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            900: '#881337',
+                        },
+                        neutral: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .component-section { scroll-margin-top: 100px; }
+        .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; }
+        .code-block code { font-family: 'Courier New', monospace; font-size: 0.875rem; }
+    </style>
+</head>
+<body class="bg-neutral-50">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-neutral-200 sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="font-serif text-2xl font-bold text-brand-900">Design System Style Guide</h1>
+                <div class="flex gap-4 text-sm">
+                    <a href="#buttons" class="text-neutral-600 hover:text-brand-600 transition-colors">Buttons</a>
+                    <a href="#heroes" class="text-neutral-600 hover:text-brand-600 transition-colors">Heroes</a>
+                    <a href="#grids" class="text-neutral-600 hover:text-brand-600 transition-colors">Feature Grids</a>
+                    <a href="#content" class="text-neutral-600 hover:text-brand-600 transition-colors">Content</a>
+                    <a href="#colors" class="text-neutral-600 hover:text-brand-600 transition-colors">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Introduction -->
+    <section class="py-16 bg-white border-b border-neutral-200">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="font-serif text-4xl font-bold text-brand-900 mb-6">Campaign Office Design System</h2>
+            <p class="text-lg text-neutral-600 leading-relaxed mb-4">
+                This style guide showcases all components built with Tailwind CSS. All components use Design System tokens—no arbitrary values.
+            </p>
+            <div class="bg-brand-50 border-l-4 border-brand-500 p-6 rounded-r-lg">
+                <p class="text-brand-800"><strong>Usage:</strong> Copy the HTML/PHP code from each section and paste into your WordPress templates.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUTTONS -->
+    <section id="buttons" class="component-section py-16 border-b border-neutral-200">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h2 class="font-serif text-3xl font-bold text-brand-900 mb-8">Buttons</h2>
+            
+            <!-- Primary Button -->
+            <div class="mb-12">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">Primary Button</h3>
+                <div class="bg-white p-8 rounded-lg border border-neutral-200 mb-4">
+                    <a href="#" class="inline-flex items-center justify-center py-4 px-8 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition-all transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-500/50">
+                        Primary Action
+                    </a>
+                </div>
+                <div class="code-block">
+                    <code>&lt;a href="#" class="inline-flex items-center justify-center py-4 px-8 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition-all transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-500/50"&gt;
+    Primary Action
+&lt;/a&gt;</code>
+                </div>
+            </div>
+
+            <!-- Secondary Button -->
+            <div class="mb-12">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">Secondary Button</h3>
+                <div class="bg-white p-8 rounded-lg border border-neutral-200 mb-4">
+                    <a href="#" class="inline-flex items-center justify-center py-4 px-8 bg-transparent border-2 border-brand-600 hover:bg-brand-50 text-brand-600 font-bold rounded-lg transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/30">
+                        Secondary Action
+                    </a>
+                </div>
+                <div class="code-block">
+                    <code>&lt;a href="#" class="inline-flex items-center justify-center py-4 px-8 bg-transparent border-2 border-brand-600 hover:bg-brand-50 text-brand-600 font-bold rounded-lg transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/30"&gt;
+    Secondary Action
+&lt;/a&gt;</code>
+                </div>
+            </div>
+
+            <!-- Accent Button -->
+            <div class="mb-12">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">Accent Button (CTA)</h3>
+                <div class="bg-white p-8 rounded-lg border border-neutral-200 mb-4">
+                    <a href="#" class="inline-flex items-center justify-center py-5 px-10 bg-accent-600 hover:bg-accent-700 text-white text-lg font-bold rounded-lg transition-all transform hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-accent-500/50">
+                        Join the Movement
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="code-block">
+                    <code>&lt;a href="#" class="inline-flex items-center justify-center py-5 px-10 bg-accent-600 hover:bg-accent-700 text-white text-lg font-bold rounded-lg transition-all transform hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-accent-500/50"&gt;
+    Join the Movement
+    &lt;svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+        &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"&gt;&lt;/path&gt;
+    &lt;/svg&gt;
+&lt;/a&gt;</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEROES -->
+    <section id="heroes" class="component-section py-16 bg-white border-b border-neutral-200">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h2 class="font-serif text-3xl font-bold text-brand-900 mb-8">Hero Sections</h2>
+            
+            <!-- Hero Center -->
+            <div class="mb-16">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">1. Center-Aligned Hero</h3>
+                <p class="text-neutral-600 mb-6">Full-screen centered content with background image overlay.</p>
+                <div class="bg-neutral-100 p-4 rounded-lg mb-4">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Crect fill='%23134e4a' width='1200' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='48' fill='%23fff'%3ECenter-Aligned Hero%3C/text%3E%3C/svg%3E" alt="Center Hero Preview" class="w-full rounded">
+                </div>
+                <details class="bg-neutral-900 text-neutral-100 p-4 rounded-lg">
+                    <summary class="cursor-pointer font-bold mb-2">View Code</summary>
+                    <pre class="text-sm overflow-x-auto"><code>&lt;?php get_template_part('parts/organisms/hero-center'); ?&gt;
+
+&lt;!-- Or copy full HTML from: parts/organisms/hero-center.php --&gt;</code></pre>
+                </details>
+            </div>
+
+            <!-- Hero Split -->
+            <div class="mb-16">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">2. Split-Screen Hero</h3>
+                <p class="text-neutral-600 mb-6">50/50 text/image split, stacks vertically on mobile.</p>
+                <div class="bg-neutral-100 p-4 rounded-lg mb-4">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Crect fill='%23fff' width='600' height='600'/%3E%3Crect fill='%230d9488' x='600' width='600' height='600'/%3E%3Ctext x='25%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='32' fill='%23134e4a'%3EText Content%3C/text%3E%3Ctext x='75%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='32' fill='%23fff'%3EImage%3C/text%3E%3C/svg%3E" alt="Split Hero Preview" class="w-full rounded">
+                </div>
+                <details class="bg-neutral-900 text-neutral-100 p-4 rounded-lg">
+                    <summary class="cursor-pointer font-bold mb-2">View Code</summary>
+                    <pre class="text-sm overflow-x-auto"><code>&lt;?php get_template_part('parts/organisms/hero-split'); ?&gt;
+
+&lt;!-- Or copy full HTML from: parts/organisms/hero-split.php --&gt;</code></pre>
+                </details>
+            </div>
+
+            <!-- Hero Immersive -->
+            <div class="mb-16">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">3. Immersive Hero (Video Background)</h3>
+                <p class="text-neutral-600 mb-6">Full-screen video with glassmorphism card.</p>
+                <div class="bg-neutral-100 p-4 rounded-lg mb-4">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23134e4a;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230d9488;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='1200' height='600'/%3E%3Crect fill='rgba(255,255,255,0.1)' x='50' y='400' width='400' height='150' rx='10'/%3E%3Ctext x='250' y='475' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EGlass Card%3C/text%3E%3C/svg%3E" alt="Immersive Hero Preview" class="w-full rounded">
+                </div>
+                <details class="bg-neutral-900 text-neutral-100 p-4 rounded-lg">
+                    <summary class="cursor-pointer font-bold mb-2">View Code</summary>
+                    <pre class="text-sm overflow-x-auto"><code>&lt;?php get_template_part('parts/organisms/hero-immersive'); ?&gt;
+
+&lt;!-- Or copy full HTML from: parts/organisms/hero-immersive.php --&gt;</code></pre>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE GRIDS -->
+    <section id="grids" class="component-section py-16 border-b border-neutral-200">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h2 class="font-serif text-3xl font-bold text-brand-900 mb-8">Feature Grids</h2>
+            
+            <!-- Base Grid -->
+            <div class="mb-16">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">1. Base Feature Grid</h3>
+                <p class="text-neutral-600 mb-6">3-column responsive grid with card molecules.</p>
+                <div class="bg-white p-8 rounded-lg border border-neutral-200 mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Sample Card -->
+                        <article class="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+                            <div class="w-14 h-14 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-900 mb-3">Feature Title</h3>
+                            <p class="text-neutral-600 leading-relaxed mb-4">Description of the feature or policy point.</p>
+                            <a href="#" class="inline-flex items-center text-accent-600 font-semibold hover:text-accent-700">
+                                Learn More
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </article>
+                        <article class="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+                            <div class="w-14 h-14 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-900 mb-3">Feature Title</h3>
+                            <p class="text-neutral-600 leading-relaxed mb-4">Description of the feature or policy point.</p>
+                            <a href="#" class="inline-flex items-center text-accent-600 font-semibold hover:text-accent-700">Learn More →</a>
+                        </article>
+                        <article class="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+                            <div class="w-14 h-14 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-900 mb-3">Feature Title</h3>
+                            <p class="text-neutral-600 leading-relaxed mb-4">Description of the feature or policy point.</p>
+                            <a href="#" class="inline-flex items-center text-accent-600 font-semibold hover:text-accent-700">Learn More →</a>
+                        </article>
+                    </div>
+                </div>
+                <details class="bg-neutral-900 text-neutral-100 p-4 rounded-lg">
+                    <summary class="cursor-pointer font-bold mb-2">View Code</summary>
+                    <pre class="text-sm overflow-x-auto"><code>&lt;?php get_template_part('parts/organisms/feature-grid-base'); ?&gt;
+
+&lt;!-- Or copy full HTML from: parts/organisms/feature-grid-base.php --&gt;</code></pre>
+                </details>
+            </div>
+
+            <!-- Hover Grid -->
+            <div class="mb-16">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">2. Hover-Enhanced Feature Grid</h3>
+                <p class="text-neutral-600 mb-6">Same as base, with lift effect and shadow on hover.</p>
+                <div class="bg-white p-8 rounded-lg border border-neutral-200 mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <article class="group bg-white p-6 rounded-xl border border-neutral-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                            <div class="w-14 h-14 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all duration-300">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-brand-900 mb-3">Hover Me</h3>
+                            <p class="text-neutral-600 leading-relaxed mb-4">Hover to see lift effect and shadow.</p>
+                            <a href="#" class="inline-flex items-center text-accent-600 font-semibold">Learn More →</a>
+                        </article>
+                    </div>
+                </div>
+                <details class="bg-neutral-900 text-neutral-100 p-4 rounded-lg">
+                    <summary class="cursor-pointer font-bold mb-2">View Code</summary>
+                    <pre class="text-sm overflow-x-auto"><code>&lt;?php get_template_part('parts/organisms/feature-grid-hover'); ?&gt;
+
+&lt;!-- Or copy full HTML from: parts/organisms/feature-grid-hover.php --&gt;</code></pre>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT MODULES -->
+    <section id="content" class="component-section py-16 bg-white border-b border-neutral-200">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h2 class="font-serif text-3xl font-bold text-brand-900 mb-8">Content Modules</h2>
+            
+            <!-- Long-Form Content -->
+            <div class="mb-16">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">Long-Form Content</h3>
+                <p class="text-neutral-600 mb-6">Optimized typography for articles and policy briefs.</p>
+                <div class="bg-neutral-50 p-8 rounded-lg border border-neutral-200 mb-4">
+                    <div class="max-w-3xl mx-auto">
+                        <p class="text-lg text-neutral-700 leading-relaxed mb-6">
+                            This is optimized body text with <code>text-lg</code>, <code>leading-relaxed</code> (1.625 line-height), and <code>mb-6</code> spacing between paragraphs.
+                        </p>
+                        <blockquote class="my-8 pl-6 border-l-4 border-accent-500 italic text-xl text-neutral-800 leading-relaxed">
+                            "Blockquotes are styled with a left accent border and italic text for emphasis."
+                        </blockquote>
+                        
+                        <!-- Callout Box -->
+                        <aside class="my-8 p-6 bg-accent-50 border-l-4 border-accent-500 rounded-r-xl">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 bg-accent-500 text-white rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-accent-900 mb-2">Callout Box</h4>
+                                    <p class="text-base text-accent-800 leading-relaxed">
+                                        Use callout boxes to highlight important information within long-form content.
+                                    </p>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+                <details class="bg-neutral-900 text-neutral-100 p-4 rounded-lg">
+                    <summary class="cursor-pointer font-bold mb-2">View Code</summary>
+                    <pre class="text-sm overflow-x-auto"><code>&lt;?php get_template_part('parts/organisms/content-longform'); ?&gt;
+
+&lt;!-- Or copy full HTML from: parts/organisms/content-longform.php --&gt;</code></pre>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- COLOR PALETTE -->
+    <section id="colors" class="component-section py-16">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h2 class="font-serif text-3xl font-bold text-brand-900 mb-8">Color Palette</h2>
+            
+            <!-- Brand Colors -->
+            <div class="mb-12">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">Brand Colors (Teal)</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="text-center">
+                        <div class="h-20 bg-brand-50 rounded-lg mb-2 border border-neutral-200"></div>
+                        <code class="text-sm">brand-50</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-brand-100 rounded-lg mb-2"></div>
+                        <code class="text-sm">brand-100</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-brand-500 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">brand-500</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-brand-700 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">brand-700</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-brand-900 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">brand-900</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accent Colors -->
+            <div class="mb-12">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">Accent Colors (Rose)</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="text-center">
+                        <div class="h-20 bg-accent-50 rounded-lg mb-2 border border-neutral-200"></div>
+                        <code class="text-sm">accent-50</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-accent-100 rounded-lg mb-2"></div>
+                        <code class="text-sm">accent-100</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-accent-500 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">accent-500</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-accent-600 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">accent-600</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-accent-900 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">accent-900</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Neutral Colors -->
+            <div class="mb-12">
+                <h3 class="text-xl font-bold text-brand-900 mb-4">Neutral Colors (Slate)</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="text-center">
+                        <div class="h-20 bg-neutral-50 rounded-lg mb-2 border border-neutral-200"></div>
+                        <code class="text-sm">neutral-50</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-neutral-200 rounded-lg mb-2"></div>
+                        <code class="text-sm">neutral-200</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-neutral-500 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">neutral-500</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-neutral-700 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">neutral-700</code>
+                    </div>
+                    <div class="text-center">
+                        <div class="h-20 bg-neutral-900 rounded-lg mb-2"></div>
+                        <code class="text-sm text-white">neutral-900</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-brand-900 text-white text-center">
+        <p class="text-brand-200">Campaign Office Design System • Built with Tailwind CSS</p>
+    </footer>
+
+</body>
+</html>

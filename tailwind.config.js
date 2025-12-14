@@ -53,9 +53,17 @@ export default {
                 display: ['Outfit', 'sans-serif'],
             },
             spacing: {
-                '18': '4.5rem',
-                '112': '28rem',
-                '128': '32rem',
+                // Small gaps - useful for card spacing
+                '18': '4.5rem',   // 72px
+
+                // Medium gaps - for section spacing
+                '88': '22rem',    // 352px
+                '100': '25rem',   // 400px
+
+                // Large gaps - for hero sections and containers
+                '112': '28rem',   // 448px
+                '128': '32rem',   // 512px
+                '144': '36rem',   // 576px - max content width
             },
             container: {
                 center: true,

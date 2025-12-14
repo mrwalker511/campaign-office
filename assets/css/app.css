@@ -1,5 +1,54 @@
 @import "tailwindcss";
 
 @layer components {
-  /* Custom Component Classes */
+
+  /* Section Spacing - uses new spacing tokens (88, 100, 112) */
+  .section-spacing {
+    @apply py-88 md:py-100;
+  }
+
+  .section-spacing-lg {
+    @apply py-100 md:py-112;
+  }
+
+  /* Container Widths - uses new max-width tokens (128, 144) */
+  .content-container {
+    @apply max-w-128 mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .content-container-lg {
+    @apply max-w-144 mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Card Spacing - uses new gap token (18 = 72px) */
+  .card-grid {
+    @apply grid gap-18 md:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .card-grid-2 {
+    @apply grid gap-18 md:grid-cols-2;
+  }
+
+  /* Hero Section - uses large spacing tokens (112, 128) */
+  .hero-section {
+    @apply py-112 md:py-128;
+  }
+
+  /* WordPress Block Editor Compatibility */
+  .alignwide {
+    @apply max-w-144 mx-auto;
+  }
+
+  .alignfull {
+    @apply w-full max-w-none;
+  }
+
+  /* Spacing Utilities for Common Patterns */
+  .section-gap {
+    @apply space-y-88;
+  }
+
+  .content-gap {
+    @apply space-y-18;
+  }
 }

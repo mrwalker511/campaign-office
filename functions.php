@@ -114,20 +114,25 @@ add_action('after_setup_theme', 'campaignpress_content_width', 0);
  * Enqueue scripts and styles
  */
 function campaignpress_scripts() {
-    // Bootstrap 5.3 CSS (bundled locally) - MOVED TO unused-files/vendor-bloat/
-    // Using WordPress native styles and theme.json instead
-    // wp_enqueue_style(
-    //     'bootstrap',
-    //     get_template_directory_uri() . '/assets/vendor/bootstrap/css/bootstrap.min.css',
-    //     array(),
-    //     '5.3.3'
-    // );
-
+    // Preconnect to Google Fonts for performance
+    add_action('wp_head', function() {
+        echo '\u003clink rel="preconnect" href="https://fonts.googleapis.com"\u003e';
+        echo '\u003clink rel="preconnect" href="https://fonts.gstatic.com" crossorigin\u003e';
+    }, 1);
+    
+    // Load Google Fonts
+    wp_enqueue_style(
+        'campaignpress-fonts',
+        'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap',
+        array(),
+        null
+    );
+    
     // Theme stylesheet (minimal, theme.json handles most styling)
     wp_enqueue_style(
         'campaignpress-style',
         get_stylesheet_uri(),
-        array(), // Removed bootstrap dependency
+        array('campaignpress-fonts'), // Load after fonts
         CAMPAIGNPRESS_VERSION
     );
 
@@ -150,11 +155,14 @@ function campaignpress_scripts() {
     //     true
     // );
 
+    // Ensure jQuery is loaded (WordPress core)
+    wp_enqueue_script('jquery');
+    
     // Main theme JS
     wp_enqueue_script(
         'campaignpress-main',
         get_template_directory_uri() . '/assets/js/main.js',
-        array('jquery'), // Removed bootstrap dependency
+        array('jquery'), // Depends on jQuery
         CAMPAIGNPRESS_VERSION,
         true
     );

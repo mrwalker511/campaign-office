@@ -1,3 +1,5 @@
+import '../css/app.css';
+
 /**
  * CampaignPress Main JavaScript
  *
@@ -5,13 +7,13 @@
  * @since 1.0.0
  */
 
-(function($) {
+(function ($) {
   'use strict';
 
   /**
    * Initialize on document ready
    */
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Mobile menu toggle
     initMobileMenu();
 
@@ -32,7 +34,7 @@
     const $menuToggle = $('.menu-toggle');
     const $mobileMenu = $('.mobile-menu');
 
-    $menuToggle.on('click', function(e) {
+    $menuToggle.on('click', function (e) {
       e.preventDefault();
       $(this).toggleClass('active');
       $mobileMenu.toggleClass('active');
@@ -40,7 +42,7 @@
     });
 
     // Close menu when clicking outside
-    $(document).on('click', function(e) {
+    $(document).on('click', function (e) {
       if (!$(e.target).closest('.mobile-menu, .menu-toggle').length) {
         $menuToggle.removeClass('active');
         $mobileMenu.removeClass('active');
@@ -53,9 +55,9 @@
    * Initialize smooth scrolling for anchor links
    */
   function initSmoothScroll() {
-    $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').on('click', function(e) {
+    $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').on('click', function (e) {
       if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') &&
-          location.hostname === this.hostname) {
+        location.hostname === this.hostname) {
 
         let target = $(this.hash);
         target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
@@ -82,15 +84,15 @@
 
     // Intersection Observer for scroll animations
     if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             const $bar = $(entry.target);
             const width = $bar.attr('style').match(/width:\s*(\d+(?:\.\d+)?%)/);
 
             if (width) {
               $bar.css('width', '0%');
-              setTimeout(function() {
+              setTimeout(function () {
                 $bar.css('width', width[1]);
               }, 100);
             }
@@ -100,7 +102,7 @@
         });
       }, { threshold: 0.5 });
 
-      $progressBars.each(function() {
+      $progressBars.each(function () {
         observer.observe(this);
       });
     }
@@ -116,14 +118,14 @@
       return;
     }
 
-    $countdowns.each(function() {
+    $countdowns.each(function () {
       const $countdown = $(this);
       const targetDate = new Date($countdown.data('date')).getTime();
 
       updateCountdown($countdown, targetDate);
 
       // Update every hour
-      setInterval(function() {
+      setInterval(function () {
         updateCountdown($countdown, targetDate);
       }, 3600000);
     });
@@ -155,17 +157,17 @@
    */
   window.campaignpress = window.campaignpress || {};
 
-  window.campaignpress.ajaxSubmit = function(formData, callback) {
+  window.campaignpress.ajaxSubmit = function (formData, callback) {
     $.ajax({
       url: campaignpress_vars.ajax_url,
       type: 'POST',
       data: formData,
-      success: function(response) {
+      success: function (response) {
         if (typeof callback === 'function') {
           callback(response);
         }
       },
-      error: function(xhr, status, error) {
+      error: function (xhr, status, error) {
         console.error('AJAX Error:', error);
         if (typeof callback === 'function') {
           callback({ success: false, message: 'An error occurred.' });

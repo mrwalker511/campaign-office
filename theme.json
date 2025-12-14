@@ -171,50 +171,17 @@
         {
           "fontFamily": "'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif",
           "slug": "display",
-          "name": "Display (Bricolage Grotesque)",
-          "fontFace": [
-            {
-              "fontFamily": "Bricolage Grotesque",
-              "fontWeight": "400 800",
-              "fontStyle": "normal",
-              "fontStretch": "normal",
-              "src": [
-                "file:./assets/fonts/BricolageGrotesque-Variable.woff2"
-              ]
-            }
-          ]
+          "name": "Display (Bricolage Grotesque)"
         },
         {
           "fontFamily": "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
           "slug": "body",
-          "name": "Body (Plus Jakarta Sans)",
-          "fontFace": [
-            {
-              "fontFamily": "Plus Jakarta Sans",
-              "fontWeight": "300 800",
-              "fontStyle": "normal",
-              "fontStretch": "normal",
-              "src": [
-                "file:./assets/fonts/PlusJakartaSans-Variable.woff2"
-              ]
-            }
-          ]
+          "name": "Body (Plus Jakarta Sans)"
         },
         {
           "fontFamily": "'JetBrains Mono', 'Courier New', monospace",
           "slug": "mono",
-          "name": "Monospace (JetBrains Mono)",
-          "fontFace": [
-            {
-              "fontFamily": "JetBrains Mono",
-              "fontWeight": "400 700",
-              "fontStyle": "normal",
-              "fontStretch": "normal",
-              "src": [
-                "file:./assets/fonts/JetBrainsMono-Variable.woff2"
-              ]
-            }
-          ]
+          "name": "Monospace (JetBrains Mono)"
         }
       ],
       "fontSizes": [

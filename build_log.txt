@@ -1,0 +1,66 @@
+﻿
+> campaignpress@2.0.0 build
+> vite build
+
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 11 modules transformed.
+node.exe : [31mx[39m Build 
+failed in 453ms
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Users\Matt 
+Walker\AppData\Ro ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo           
+   : NotSpecified: ([31mx  
+  [39m Build failed in 453   
+ ms:String) [], RemoteExc    
+eption
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+[31merror during build:
+[31m[vite:css] [postcss] It 
+looks like you're trying to 
+use `tailwindcss` directly 
+as a PostCSS plugin. The 
+PostCSS plugin has moved to 
+a separate package, so to 
+continue using Tailwind CSS 
+with PostCSS you'll need to 
+install 
+`@tailwindcss/postcss` and 
+update your PostCSS 
+configuration.[31m
+file: [36mC:/Users/Matt Walk
+er/Desktop/wp/campaign-office
+/assets/css/app.css:undefined
+:NaN[31m
+    at lt (C:\Users\Matt Walk
+er\Desktop\wp\campaign-office
+\node_modules\tailwindcss\dis
+t\lib.js:38:1643)
+    at LazyResult.runOnRoot 
+(C:\Users\Matt Walker\Desktop
+\wp\campaign-office\node_modu
+les\postcss\lib\lazy-result.j
+s:361:16)
+    at LazyResult.runAsync 
+(C:\Users\Matt Walker\Desktop
+\wp\campaign-office\node_modu
+les\postcss\lib\lazy-result.j
+s:290:26)
+    at LazyResult.async 
+(C:\Users\Matt Walker\Desktop
+\wp\campaign-office\node_modu
+les\postcss\lib\lazy-result.j
+s:192:30)
+    at LazyResult.then 
+(C:\Users\Matt Walker\Desktop
+\wp\campaign-office\node_modu
+les\postcss\lib\lazy-result.j
+s:436:17)[39m

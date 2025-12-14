@@ -24,10 +24,10 @@
  *   define('CAMPAIGNPRESS_DEV_MODE', true);
  *
  * This will:
- * - Unlock all premium features (Enterprise tier)
+ * - Unlock all premium features (Professional tier)
  * - Bypass license validation
  * - Enable all modules with init files
- * - Show fake enterprise license in admin (expires in 10 years)
+ * - Show fake professional license in admin (expires in 10 years)
  *
  * @author CampaignPress Team
  * @license GPL-2.0+
@@ -167,7 +167,7 @@ class CampaignPress_Premium {
                 'description' => __('Federal and state campaign finance compliance tools', 'campaign-office'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/compliance/compliance-init.php',
-                'required_license' => 'enterprise',
+                'required_license' => 'professional',
                 'icon' => 'dashicons-shield-alt',
             ),
             'analytics' => array(
@@ -183,15 +183,15 @@ class CampaignPress_Premium {
                 'description' => __('Connect external tools via REST API', 'campaign-office'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/api/api-init.php',
-                'required_license' => 'enterprise',
+                'required_license' => 'professional',
                 'icon' => 'dashicons-rest-api',
             ),
             'white_label' => array(
                 'name' => __('White Label', 'campaign-office'),
                 'description' => __('Remove CampaignPress branding', 'campaign-office'),
-                'enabled' => false,
+                'enabled' => true,
                 'init_file' => null,
-                'required_license' => 'enterprise',
+                'required_license' => 'professional',
                 'icon' => 'dashicons-admin-appearance',
             ),
             'priority_support' => array(
@@ -207,7 +207,7 @@ class CampaignPress_Premium {
                 'description' => __('Automatic premium theme updates', 'campaign-office'),
                 'enabled' => true,
                 'init_file' => null,
-                'required_license' => 'basic',
+                'required_license' => 'professional',
                 'icon' => 'dashicons-update',
             ),
             'developer_console' => array(
@@ -215,7 +215,7 @@ class CampaignPress_Premium {
                 'description' => __('Advanced developer tools and system management console', 'campaign-office'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/developer-console/developer-console-init.php',
-                'required_license' => 'basic',
+                'required_license' => 'professional',
                 'icon' => 'dashicons-code-standards',
             ),
         ));
@@ -751,9 +751,9 @@ class CampaignPress_Premium {
                 'success' => true,
                 'message' => __('Development mode - license validation bypassed', 'campaign-office'),
                 'data' => array(
-                    'license_type' => 'enterprise',
+                    'license_type' => 'professional',
                     'expiry_date' => date('Y-m-d', strtotime('+1 year')),
-                    'site_limit' => 999,
+                    'site_limit' => 5,
                 ),
             );
         }
@@ -1000,7 +1000,7 @@ class CampaignPress_Premium {
 
             // Check license type requirement
             if (isset($feature_data['required_license'])) {
-                $current_license = get_option('campaignpress_license_type', 'basic');
+                $current_license = get_option('campaignpress_license_type', 'free');
                 if (!$this->license_meets_requirement($current_license, $feature_data['required_license'])) {
                     continue;
                 }
@@ -1018,7 +1018,7 @@ class CampaignPress_Premium {
      * @return bool True if license meets requirement
      */
     private function license_meets_requirement($current_license, $required_license) {
-        $hierarchy = array('basic' => 1, 'professional' => 2, 'enterprise' => 3);
+        $hierarchy = array('free' => 0, 'professional' => 1);
 
         $current_level = isset($hierarchy[$current_license]) ? $hierarchy[$current_license] : 0;
         $required_level = isset($hierarchy[$required_license]) ? $hierarchy[$required_license] : 0;
@@ -1213,13 +1213,13 @@ class CampaignPress_Premium {
      * @return array|false License data or false
      */
     public function get_license_data() {
-        // Developer mode bypass - return fake enterprise license
+        // Developer mode bypass - return fake professional license
         if ($this->dev_mode) {
             return array(
                 'license_key' => 'DEV-MODE-' . wp_generate_password(12, false),
                 'license_email' => get_option('admin_email'),
                 'license_status' => 'active',
-                'license_type' => 'enterprise',
+                'license_type' => 'professional',
                 'expiry_date' => date('Y-m-d', strtotime('+10 years')),
                 'activated_date' => date('Y-m-d'),
             );
@@ -1363,7 +1363,7 @@ function cp_license_meets_requirement($required_license) {
         return false;
     }
 
-    $hierarchy = array('basic' => 1, 'professional' => 2, 'enterprise' => 3);
+    $hierarchy = array('free' => 0, 'professional' => 1);
     $current_level = isset($hierarchy[$current]) ? $hierarchy[$current] : 0;
     $required_level = isset($hierarchy[$required_license]) ? $hierarchy[$required_license] : 0;
 

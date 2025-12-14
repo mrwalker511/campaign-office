@@ -11,27 +11,25 @@
 get_header();
 ?>
 
-<div id="primary" class="content-area front-page">
-    <main id="main" class="site-main">
-
-        <?php
-        while ( have_posts() ) :
-            the_post();
-            ?>
-
-            <?php
-            // Check if we should display the campaign hero section
-            $show_hero = get_post_meta( get_the_ID(), '_campaignpress_show_hero', true );
-            if ( $show_hero !== '0' ) :
-                $candidate_name = get_option( 'campaignpress_candidate_name', 'Your Name' );
-                $office_seeking = get_option( 'campaignpress_office_seeking', 'for Office' );
-                $tagline = get_option( 'campaignpress_campaign_tagline', 'Building a Better Future Together' );
-                $donation_url = get_option( 'campaignpress_donation_url', '#donate' );
-                $volunteer_url = get_option( 'campaignpress_volunteer_url', '#volunteer' );
-                ?>
-
-                <!-- Enhanced Hero Section -->
-                <section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-brand-900">
+<?php
+while ( have_posts() ) :
+    the_post();
+    
+    // Check if we should display the campaign hero section
+    $show_hero = get_post_meta( get_the_ID(), '_campaignpress_show_hero', true );
+    if ( $show_hero !== '0' ) :
+        $candidate_name = get_option( 'campaignpress_candidate_name', 'Your Name' );
+        $office_seeking = get_option( 'campaignpress_office_seeking', 'for Office' );
+        $tagline = get_option( 'campaignpress_campaign_tagline', 'Building a Better Future Together' );
+        $donation_url = get_option( 'campaignpress_donation_url', '#donate' );
+        $volunteer_url = get_option( 'campaignpress_volunteer_url', '#volunteer' );
+        
+        // Close the #content wrapper to allow full-width hero
+        ?>
+        </div><!-- Close #content from header.php -->
+        
+        <!-- Enhanced Hero Section -->
+        <section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-brand-900">
                     <?php
                     // Check for video overlay option
                     $hero_video_url = get_post_meta( get_the_ID(), '_campaignpress_hero_video_url', true );

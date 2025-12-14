@@ -731,4 +731,4 @@ function campaignpress_create_api_tables() {
 	dbDelta( $sql_keys );
 	dbDelta( $sql_logs );
 }
-register_activation_hook( __FILE__, 'campaignpress_create_api_tables' );
+add_action( 'after_switch_theme', 'campaignpress_create_api_tables' );

@@ -210,11 +210,11 @@ class CampaignPress_FEC_Compliance {
      */
     private function init_hooks() {
         // Activation/Installation hooks
-        register_activation_hook(__FILE__, array($this, 'activate'));
-        register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+        add_action('after_switch_theme', array($this, 'activate'));
+        add_action('switch_theme', array($this, 'deactivate'));
 
-        // Initialize on plugins loaded
-        add_action('plugins_loaded', array($this, 'init'));
+        // Initialize on theme setup
+        add_action('after_setup_theme', array($this, 'init'));
 
         // Admin initialization
         add_action('admin_init', array($this, 'admin_init'));

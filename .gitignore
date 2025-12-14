@@ -1,1 +1,188 @@
-node_modules
+# ===========================
+# Node.js & NPM
+# ===========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+package-lock.json.bak
+.npm
+.yarn-integrity
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# ===========================
+# Build & Distribution
+# ===========================
+dist/
+build/
+*.min.js
+*.min.css
+*.map
+.cache/
+.parcel-cache/
+.vite/
+
+# ===========================
+# WordPress Specific
+# ===========================
+# WordPress core files (if theme is in a full WP install)
+/wp-admin/
+/wp-includes/
+/wp-content/plugins/
+/wp-content/themes/*/
+!/wp-content/themes/campaign-office/
+
+# WordPress config
+wp-config.php
+wp-config-local.php
+.htaccess
+
+# WordPress uploads & cache
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/backup-db/
+/wp-content/backups/
+/wp-content/upgrade/
+/wp-content/w3tc-config/
+
+# WordPress debug & error logs
+debug.log
+error_log
+php_error.log
+*.log
+
+# ===========================
+# IDE & Editor Files
+# ===========================
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains (PhpStorm, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# Vim
+*.swp
+*.swo
+*~
+.*.sw[a-z]
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ===========================
+# Operating System Files
+# ===========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+
+# ===========================
+# Environment & Secrets
+# ===========================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+*.cert
+secrets.json
+
+# ===========================
+# Testing & Coverage
+# ===========================
+coverage/
+.nyc_output/
+*.lcov
+.jest/
+phpunit.xml
+.phpunit.result.cache
+tests/_output/
+tests/_support/_generated/
+
+# ===========================
+# Temporary & Cache Files
+# ===========================
+*.tmp
+*.temp
+*.cache
+.sass-cache/
+.eslintcache
+.stylelintcache
+*.pid
+*.seed
+*.pid.lock
+
+# ===========================
+# Composer (PHP Dependencies)
+# ===========================
+vendor/
+composer.lock.bak
+composer.phar
+
+# ===========================
+# Gulp & Grunt
+# ===========================
+.grunt/
+gulpfile.js.bak
+
+# ===========================
+# Documentation & Reports
+# ===========================
+# Lighthouse reports (optional - uncomment if you don't want to track)
+# lighthouse-reports/
+
+# AI/Agent brain files (optional - uncomment if you don't want to track)
+# .gemini/
+# .claude/
+
+# ===========================
+# Misc
+# ===========================
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.diff
+*.patch
+.project
+.settings/
+nbproject/

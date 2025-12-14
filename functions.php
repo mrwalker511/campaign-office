@@ -337,6 +337,8 @@ if (file_exists(CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php';
 }
 
+require_once get_template_directory() . '/includes/admin-menu-reorganization.php';
+
 /**
  * Add body classes for customizer options
  */

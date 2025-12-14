@@ -20,8 +20,13 @@ class CampaignPress_Demo_Content {
      */
     public function __construct() {
         add_action('admin_menu', array($this, 'add_admin_menu'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
+
         add_action('admin_post_cp_import_demo', array($this, 'handle_import'));
         add_action('admin_post_cp_delete_demo', array($this, 'handle_delete'));
+
+        add_action('wp_ajax_cp_demo_import_start', array($this, 'ajax_import_start'));
+        add_action('wp_ajax_cp_demo_import_step', array($this, 'ajax_import_step'));
     }
 
     /**
@@ -37,11 +42,225 @@ class CampaignPress_Demo_Content {
         );
     }
 
+    public function enqueue_admin_assets($hook) {
+        if ($hook !== 'appearance_page_campaignpress-demo') {
+            return;
+        }
+
+        wp_enqueue_script(
+            'campaignpress-demo-import',
+            CAMPAIGNPRESS_ASSETS_URI . '/js/demo-import.js',
+            array('jquery'),
+            CAMPAIGNPRESS_VERSION,
+            true
+        );
+
+        wp_localize_script('campaignpress-demo-import', 'campaignpressDemoImport', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('cp_demo_import_ajax'),
+            'redirect_url' => admin_url('themes.php?page=campaignpress-demo'),
+            'strings' => array(
+                'starting' => __('Starting demo import…', 'campaign-office'),
+                'working' => __('Importing demo content…', 'campaign-office'),
+                'complete' => __('Import complete. Redirecting…', 'campaign-office'),
+                'error' => __('Demo import failed.', 'campaign-office'),
+            ),
+        ));
+    }
+
+    private function get_import_state_key() {
+        return 'campaignpress_demo_import_state_' . get_current_user_id();
+    }
+
+    private function get_demo_pages_data() {
+        return array(
+            array(
+                'title' => 'Home',
+                'slug' => 'home',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Fighting for Our Community\'s Future</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Join our grassroots movement to bring real change to our community. Together, we can build a future that works for everyone.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#">Our Issues</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline"} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#">Get Involved</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->',
+                'is_front_page' => true,
+            ),
+            array(
+                'title' => 'About',
+                'slug' => 'about',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Meet the Candidate</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I was born and raised in Springfield, attending public schools and learning the value of hard work from my parents. After earning my degree from State University, I came home to teach in the same public schools I attended.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For the past 15 years, I\'ve worked with students, parents, and educators to improve our schools and expand opportunities for all children. As a community organizer, I\'ve fought for affordable housing, quality healthcare, and good-paying jobs.</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Contact',
+                'slug' => 'contact',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Get in Touch</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We\'d love to hear from you! Whether you have questions, want to volunteer, or just want to share your thoughts, please reach out.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Email:</strong> info@campaignexample.com<br><strong>Phone:</strong> (555) 123-4567</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Privacy Policy',
+                'slug' => 'privacy-policy',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Privacy Policy</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p><em>Last Updated: ' . date('F j, Y') . '</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This is sample placeholder policy text for demo purposes.</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Press & Media',
+                'slug' => 'press',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Press & Media</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Welcome to our press and media center. For media inquiries, please contact press@campaignexample.com.</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Get Involved',
+                'slug' => 'get-involved',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Get Involved</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Volunteer, attend an event, or help spread the word. <a href="' . esc_url(home_url('/contact/')) . '">Contact us</a> to get started.</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Events',
+                'slug' => 'events',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Upcoming Events</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Join us at one of our upcoming campaign events.</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Endorsements',
+                'slug' => 'endorsements',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Endorsements</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>We\'re honored to have the support of leaders and organizations across our community.</p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
+                'title' => 'Volunteer Opportunities',
+                'slug' => 'volunteer-opportunities',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Volunteer Opportunities</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Whether you have an hour a week or can commit to more, there are many ways to help. <a href="' . esc_url(home_url('/contact/')) . '">Sign up to volunteer</a>.</p>
+<!-- /wp:paragraph -->',
+            ),
+        );
+    }
+
+    private function import_pages_fast() {
+        $pages = $this->get_demo_pages_data();
+
+        $post_ids = array();
+        $front_page_id = null;
+
+        foreach ($pages as $page_data) {
+            $page_id = wp_insert_post(array(
+                'post_title' => $page_data['title'],
+                'post_content' => $page_data['content'],
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_author' => get_current_user_id(),
+                'post_name' => $page_data['slug'],
+            ));
+
+            if (is_wp_error($page_id)) {
+                error_log('CampaignPress demo content error: ' . $page_id->get_error_message());
+                continue;
+            }
+
+            if (!$page_id) {
+                error_log('CampaignPress: Failed to create demo page - ' . ($page_data['title'] ?? ''));
+                continue;
+            }
+
+            if (!empty($page_data['is_front_page'])) {
+                $front_page_id = $page_id;
+            }
+
+            $post_ids[$page_data['slug']] = $page_id;
+        }
+
+        if ($front_page_id) {
+            update_option('show_on_front', 'page');
+            update_option('page_on_front', $front_page_id);
+
+            $blog_page_id = wp_insert_post(array(
+                'post_title' => 'News & Updates',
+                'post_content' => '<!-- wp:paragraph --><p>Stay up to date with the latest campaign news and announcements.</p><!-- /wp:paragraph -->',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_author' => get_current_user_id(),
+                'post_name' => 'news',
+            ));
+
+            if ($blog_page_id && !is_wp_error($blog_page_id)) {
+                update_option('page_for_posts', $blog_page_id);
+                $post_ids['news'] = $blog_page_id;
+            }
+        }
+
+        return $post_ids;
+    }
+
     /**
      * Render admin page
      */
     public function render_admin_page() {
-        $demo_exists = get_option('campaignpress_demo_imported', false);
+        $demo_ids = get_option('campaignpress_demo_post_ids', array());
+        $demo_in_progress = (bool) get_option('campaignpress_demo_import_in_progress', false);
+        $demo_exists = (bool) get_option('campaignpress_demo_imported', false) || $demo_in_progress || !empty($demo_ids);
         ?>
         <div class="wrap">
             <h1><?php esc_html_e('CampaignPress Demo Content', 'campaign-office'); ?></h1>
@@ -82,11 +301,11 @@ class CampaignPress_Demo_Content {
                 </ul>
 
                 <?php if (!$demo_exists) : ?>
-                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-import-demo-form">
                         <input type="hidden" name="action" value="cp_import_demo">
                         <?php wp_nonce_field('cp_import_demo', 'cp_demo_nonce'); ?>
                         <p>
-                            <button type="submit" class="button button-primary button-hero">
+                            <button type="submit" class="button button-primary button-hero" id="cp-import-demo-button">
                                 <?php esc_html_e('Import Demo Content', 'campaign-office'); ?>
                             </button>
                         </p>
@@ -94,6 +313,13 @@ class CampaignPress_Demo_Content {
                             <?php esc_html_e('This creates sample content. You can delete it anytime.', 'campaign-office'); ?>
                         </p>
                     </form>
+
+                    <div id="cp-demo-import-progress" style="display:none; margin-top: 16px;">
+                        <p class="description" id="cp-demo-import-status"></p>
+                        <div style="background: #e5e5e5; border-radius: 4px; height: 10px; overflow: hidden;">
+                            <div id="cp-demo-import-progress-bar" style="background: #2271b1; width: 0%; height: 10px;"></div>
+                        </div>
+                    </div>
                 <?php else : ?>
                     <div class="notice notice-info inline">
                         <p><?php esc_html_e('Demo content is currently installed.', 'campaign-office'); ?></p>
@@ -120,6 +346,220 @@ class CampaignPress_Demo_Content {
         <?php
     }
 
+    public function ajax_import_start() {
+        check_ajax_referer('cp_demo_import_ajax', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Insufficient permissions', 'campaign-office')));
+        }
+
+        if (get_option('campaignpress_demo_imported', false)) {
+            wp_send_json_error(array('message' => __('Demo content is already installed. Delete it first to re-import.', 'campaign-office')));
+        }
+
+        $existing_ids = get_option('campaignpress_demo_post_ids', array());
+        if (!empty($existing_ids)) {
+            wp_send_json_error(array('message' => __('Demo content already exists. Delete it first to re-import.', 'campaign-office')));
+        }
+
+        $pages = $this->get_demo_pages_data();
+        $total_steps = count($pages) + 9;
+
+        $state = array(
+            'step' => 'precreate_taxonomies',
+            'completed_steps' => 0,
+            'total_steps' => $total_steps,
+            'pages_index' => 0,
+            'front_page_id' => 0,
+            'demo_post_ids' => array(
+                'issues' => array(),
+                'events' => array(),
+                'endorsements' => array(),
+                'team' => array(),
+                'volunteers' => array(),
+                'pages' => array(),
+                'menus' => array(),
+            ),
+        );
+
+        update_option('campaignpress_demo_import_in_progress', true, false);
+        update_option('campaignpress_demo_post_ids', array(), false);
+
+        set_transient($this->get_import_state_key(), $state, 20 * MINUTE_IN_SECONDS);
+
+        wp_send_json_success(array(
+            'completed_steps' => 0,
+            'total_steps' => $total_steps,
+            'message' => __('Starting demo import…', 'campaign-office'),
+        ));
+    }
+
+    public function ajax_import_step() {
+        check_ajax_referer('cp_demo_import_ajax', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Insufficient permissions', 'campaign-office')));
+        }
+
+        $state_key = $this->get_import_state_key();
+        $state = get_transient($state_key);
+
+        if (!is_array($state) || empty($state['step'])) {
+            wp_send_json_error(array('message' => __('Demo import session expired. Please try again.', 'campaign-office')));
+        }
+
+        @set_time_limit(60);
+        @ini_set('memory_limit', '256M');
+        ignore_user_abort(true);
+
+        $message = '';
+        $done = false;
+
+        try {
+            switch ($state['step']) {
+                case 'precreate_taxonomies':
+                    $this->precreate_taxonomies();
+                    $state['step'] = 'issues';
+                    $message = __('Preparing taxonomies…', 'campaign-office');
+                    break;
+
+                case 'issues':
+                    $state['demo_post_ids']['issues'] = $this->import_issues();
+                    $state['step'] = 'events';
+                    $message = __('Importing issues…', 'campaign-office');
+                    break;
+
+                case 'events':
+                    $state['demo_post_ids']['events'] = $this->import_events();
+                    $state['step'] = 'endorsements';
+                    $message = __('Importing events…', 'campaign-office');
+                    break;
+
+                case 'endorsements':
+                    $state['demo_post_ids']['endorsements'] = $this->import_endorsements();
+                    $state['step'] = 'team';
+                    $message = __('Importing endorsements…', 'campaign-office');
+                    break;
+
+                case 'team':
+                    $state['demo_post_ids']['team'] = $this->import_team();
+                    $state['step'] = 'volunteers';
+                    $message = __('Importing team members…', 'campaign-office');
+                    break;
+
+                case 'volunteers':
+                    $state['demo_post_ids']['volunteers'] = $this->import_volunteers();
+                    $state['step'] = 'pages';
+                    $message = __('Importing volunteer opportunities…', 'campaign-office');
+                    break;
+
+                case 'pages':
+                    $pages = $this->get_demo_pages_data();
+                    $index = absint($state['pages_index']);
+
+                    if (!isset($pages[$index])) {
+                        if (!empty($state['front_page_id'])) {
+                            update_option('show_on_front', 'page');
+                            update_option('page_on_front', absint($state['front_page_id']));
+
+                            $blog_page_id = wp_insert_post(array(
+                                'post_title' => 'News & Updates',
+                                'post_content' => '<!-- wp:paragraph --><p>Stay up to date with the latest campaign news and announcements.</p><!-- /wp:paragraph -->',
+                                'post_status' => 'publish',
+                                'post_type' => 'page',
+                                'post_author' => get_current_user_id(),
+                                'post_name' => 'news',
+                            ));
+
+                            if ($blog_page_id && !is_wp_error($blog_page_id)) {
+                                update_option('page_for_posts', $blog_page_id);
+                                $state['demo_post_ids']['pages']['news'] = $blog_page_id;
+                            }
+                        }
+
+                        $state['step'] = 'menus';
+                        $message = __('Configuring homepage…', 'campaign-office');
+                        break;
+                    }
+
+                    $page_data = $pages[$index];
+                    $page_id = wp_insert_post(array(
+                        'post_title' => $page_data['title'],
+                        'post_content' => $page_data['content'],
+                        'post_status' => 'publish',
+                        'post_type' => 'page',
+                        'post_author' => get_current_user_id(),
+                        'post_name' => $page_data['slug'],
+                    ));
+
+                    if (is_wp_error($page_id) || !$page_id) {
+                        throw new Exception('Failed to create demo page: ' . ($page_data['title'] ?? 'Unknown'));
+                    }
+
+                    if (!empty($page_data['is_front_page'])) {
+                        $state['front_page_id'] = $page_id;
+                    }
+
+                    $state['demo_post_ids']['pages'][$page_data['slug']] = $page_id;
+                    $state['pages_index'] = $index + 1;
+                    $message = sprintf(
+                        __('Importing pages… (%d/%d)', 'campaign-office'),
+                        min($state['pages_index'], count($pages)),
+                        count($pages)
+                    );
+                    break;
+
+                case 'menus':
+                    $state['demo_post_ids']['menus'] = $this->import_menus($state['demo_post_ids']['pages']);
+                    $state['step'] = 'theme_options';
+                    $message = __('Creating menus…', 'campaign-office');
+                    break;
+
+                case 'theme_options':
+                    $this->populate_theme_options();
+                    $state['step'] = 'finalize';
+                    $message = __('Applying theme settings…', 'campaign-office');
+                    break;
+
+                case 'finalize':
+                    update_option('campaignpress_demo_post_ids', $state['demo_post_ids'], false);
+                    update_option('campaignpress_demo_imported', true);
+                    delete_option('campaignpress_demo_import_in_progress');
+                    delete_transient($state_key);
+                    $done = true;
+                    $message = __('Import complete.', 'campaign-office');
+                    break;
+
+                default:
+                    throw new Exception('Unknown demo import step: ' . $state['step']);
+            }
+        } catch (Throwable $e) {
+            error_log('CampaignPress demo import failed (AJAX): ' . $e->getMessage());
+            delete_transient($state_key);
+            delete_option('campaignpress_demo_import_in_progress');
+            wp_send_json_error(array('message' => __('Demo import failed. Please check server logs and try again.', 'campaign-office')));
+        }
+
+        if (!$done) {
+            $state['completed_steps'] = absint($state['completed_steps']) + 1;
+            update_option('campaignpress_demo_post_ids', $state['demo_post_ids'], false);
+            set_transient($state_key, $state, 20 * MINUTE_IN_SECONDS);
+        }
+
+        $completed = $done ? $state['total_steps'] : $state['completed_steps'];
+        $total = max(1, absint($state['total_steps']));
+        $percent = min(100, (int) floor(($completed / $total) * 100));
+
+        wp_send_json_success(array(
+            'done' => $done,
+            'progress' => $percent,
+            'completed_steps' => $completed,
+            'total_steps' => $total,
+            'message' => $message,
+            'redirect_url' => $done ? add_query_arg('imported', '1', admin_url('themes.php?page=campaignpress-demo')) : null,
+        ));
+    }
+
     /**
      * Handle import
      */
@@ -136,14 +576,15 @@ class CampaignPress_Demo_Content {
             wp_die(__('Insufficient permissions', 'campaign-office'));
         }
 
+        if (get_option('campaignpress_demo_imported', false) || !empty(get_option('campaignpress_demo_post_ids', array()))) {
+            wp_redirect(add_query_arg('import_error', '1', wp_get_referer()));
+            exit;
+        }
+
         // OPTIMIZATION: Increase PHP limits to prevent timeout
         @set_time_limit(300); // 5 minutes
         @ini_set('memory_limit', '256M');
         ignore_user_abort(true);
-
-        // OPTIMIZATION: Suspend cache to improve performance
-        wp_suspend_cache_addition(true);
-        wp_suspend_cache_invalidation(true);
 
         // OPTIMIZATION: Start database transaction for data integrity
         $wpdb->query('START TRANSACTION');
@@ -186,12 +627,14 @@ class CampaignPress_Demo_Content {
             // OPTIMIZATION: Commit transaction - all operations successful
             $wpdb->query('COMMIT');
 
-            // Resume cache operations
-            wp_suspend_cache_addition(false);
-            wp_suspend_cache_invalidation(false);
-
-            // Clear all caches to ensure fresh data
-            wp_cache_flush();
+            // Re-initialize Developer Console if available
+            // This ensures tables and settings are correct after import
+            if (class_exists('CampaignPress_Developer_Console')) {
+                $console = CampaignPress_Developer_Console::get_instance();
+                if (method_exists($console, 'manual_reinit')) {
+                    $console->manual_reinit();
+                }
+            }
 
             // Redirect back
             wp_redirect(add_query_arg('imported', '1', wp_get_referer()));
@@ -200,10 +643,6 @@ class CampaignPress_Demo_Content {
         } catch (Exception $e) {
             // OPTIMIZATION: Rollback transaction on error
             $wpdb->query('ROLLBACK');
-
-            // Resume cache operations
-            wp_suspend_cache_addition(false);
-            wp_suspend_cache_invalidation(false);
 
             // Log the error
             error_log('CampaignPress demo import failed: ' . $e->getMessage());
@@ -251,6 +690,8 @@ class CampaignPress_Demo_Content {
         // Clean up options
         delete_option('campaignpress_demo_post_ids');
         delete_option('campaignpress_demo_imported');
+        delete_option('campaignpress_demo_import_in_progress');
+        delete_transient($this->get_import_state_key());
 
         // Redirect back
         wp_redirect(add_query_arg('deleted', '1', wp_get_referer()));
@@ -777,6 +1218,8 @@ class CampaignPress_Demo_Content {
      * Import sample pages
      */
     private function import_pages() {
+        return $this->import_pages_fast();
+
         $pages = array(
             array(
                 'title' => 'Home',
@@ -1341,7 +1784,8 @@ class CampaignPress_Demo_Content {
         $menu_ids = array();
 
         // Create Primary Menu
-        $primary_menu_id = wp_create_nav_menu('Demo Primary Menu');
+        $primary_menu = wp_get_nav_menu_object('Demo Primary Menu');
+        $primary_menu_id = $primary_menu ? (int) $primary_menu->term_id : wp_create_nav_menu('Demo Primary Menu');
         if (!is_wp_error($primary_menu_id)) {
             $menu_ids['primary'] = $primary_menu_id;
 
@@ -1430,18 +1874,11 @@ class CampaignPress_Demo_Content {
                     'menu-item-position' => $menu_position++,
                 ));
             }
-
-            // Assign to primary location
-            $locations = get_theme_mod('nav_menu_locations');
-            if (!is_array($locations)) {
-                $locations = array();
-            }
-            $locations['primary'] = $primary_menu_id;
-            set_theme_mod('nav_menu_locations', $locations);
         }
 
         // Create Footer Menu
-        $footer_menu_id = wp_create_nav_menu('Demo Footer Menu');
+        $footer_menu = wp_get_nav_menu_object('Demo Footer Menu');
+        $footer_menu_id = $footer_menu ? (int) $footer_menu->term_id : wp_create_nav_menu('Demo Footer Menu');
         if (!is_wp_error($footer_menu_id)) {
             $menu_ids['footer'] = $footer_menu_id;
 
@@ -1482,18 +1919,11 @@ class CampaignPress_Demo_Content {
                     'menu-item-position' => $menu_position++,
                 ));
             }
-
-            // Assign to footer location
-            $locations = get_theme_mod('nav_menu_locations');
-            if (!is_array($locations)) {
-                $locations = array();
-            }
-            $locations['footer'] = $footer_menu_id;
-            set_theme_mod('nav_menu_locations', $locations);
         }
 
         // Create Social Menu
-        $social_menu_id = wp_create_nav_menu('Demo Social Menu');
+        $social_menu = wp_get_nav_menu_object('Demo Social Menu');
+        $social_menu_id = $social_menu ? (int) $social_menu->term_id : wp_create_nav_menu('Demo Social Menu');
         if (!is_wp_error($social_menu_id)) {
             $menu_ids['social'] = $social_menu_id;
 
@@ -1521,15 +1951,27 @@ class CampaignPress_Demo_Content {
                 'menu-item-position' => 3,
                 'menu-item-attr-title' => 'Follow us on Instagram',
             ));
-
-            // Assign to social location
-            $locations = get_theme_mod('nav_menu_locations');
-            if (!is_array($locations)) {
-                $locations = array();
-            }
-            $locations['social'] = $social_menu_id;
-            set_theme_mod('nav_menu_locations', $locations);
         }
+
+        // Assign locations (all at once to prevent overwrites)
+        $locations = get_theme_mod('nav_menu_locations');
+        if (!is_array($locations)) {
+            $locations = array();
+        }
+
+        if (isset($menu_ids['primary']) && !is_wp_error($menu_ids['primary'])) {
+            $locations['primary'] = $menu_ids['primary'];
+        }
+
+        if (isset($menu_ids['footer']) && !is_wp_error($menu_ids['footer'])) {
+            $locations['footer'] = $menu_ids['footer'];
+        }
+
+        if (isset($menu_ids['social']) && !is_wp_error($menu_ids['social'])) {
+            $locations['social'] = $menu_ids['social'];
+        }
+
+        set_theme_mod('nav_menu_locations', $locations);
 
         return $menu_ids;
     }

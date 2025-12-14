@@ -1,6 +1,6 @@
 /**
- * CampaignPress Editor Overrides
- * Implements "Elementor-like" behavior: Template Library, Style Inline Panel.
+ * CampaignPress Designer - Editor Overrides
+ * Implements "CampaignPress Designer" behavior: Template Library, Style Inline Panel.
  */
 (function (wp) {
     var registerPlugin = wp.plugins.registerPlugin;
@@ -11,6 +11,7 @@
     var Button = wp.components.Button;
     var Modal = wp.components.Modal;
     var RangeControl = wp.components.RangeControl;
+    var ColorPalette = wp.components.ColorPalette;
     var Popover = wp.components.Popover;
     var ToolbarGroup = wp.components.ToolbarGroup;
     var ToolbarButton = wp.components.ToolbarButton;
@@ -28,16 +29,17 @@
         var dispatch = wp.data.dispatch('core/block-editor');
 
         var patterns = [
-            { name: 'Hero (Political)', slug: 'campaignpress/hero-political', icon: 'superhero' },
-            { name: 'Donation Tiers', slug: 'campaignpress/donation-tiers', icon: 'money' },
-            { name: 'Event Teaser', slug: 'campaignpress/event-teaser', icon: 'calendar' },
-            { name: 'Policy Grid', slug: 'campaignpress/policy-grid', icon: 'grid-view' },
-            { name: 'Volunteer Form', slug: 'campaignpress/volunteer-form', icon: 'groups' }
+            { name: 'Campaign Hero', slug: 'campaignpress/hero-section', icon: 'superhero' },
+            { name: 'Donation CTA', slug: 'campaignpress/donation-cta', icon: 'money' },
+            { name: 'Event Highlight', slug: 'campaignpress/event-highlight', icon: 'calendar' },
+            { name: 'Issue Card', slug: 'campaignpress/issue-card', icon: 'info' },
+            { name: 'Team Grid', slug: 'campaignpress/team-grid', icon: 'groups' },
+            { name: 'Newsletter Signup', slug: 'campaignpress/newsletter-signup', icon: 'email' },
+            { name: 'Testimonial', slug: 'campaignpress/testimonial-card', icon: 'format-quote' }
         ];
 
         var insertPattern = function (slug) {
-            // In a real app, this would fetch the pattern content.
-            // For now, we simulate inserting a block representation.
+            // Insert the pattern block
             var block = createBlock('core/pattern', { slug: slug });
             dispatch.insertBlocks(block);
             setIsOpen(false);
@@ -47,9 +49,9 @@
             el(PluginSidebarMoreMenuItem, {
                 icon: 'layout',
                 onClick: function () { setIsOpen(true); }
-            }, 'Political Studio Templates'),
+            }, 'CampaignPress Designer'),
             isOpen && el(Modal, {
-                title: 'Political Studio Library',
+                title: 'CampaignPress Designer Library',
                 onRequestClose: function () { setIsOpen(false); },
                 className: 'cp-template-library-modal'
             },
@@ -81,12 +83,62 @@
     var withStylePanel = wp.compose.createHigherOrderComponent(function (BlockEdit) {
         return function (props) {
             var [isVisible, setIsVisible] = wp.element.useState(false);
-            var [padding, setPadding] = wp.element.useState(0);
 
-            // Only show on specific blocks (e.g., Groups) to avoid clutter
-            if (props.name !== 'core/group' && props.name !== 'core/columns') {
+            // State for controls
+            var attributes = props.attributes || {};
+            var style = attributes.style || {};
+            var spacing = style.spacing || {};
+            var border = style.border || {};
+
+            // Padding
+            var initialPadding = 0;
+            if (spacing.padding && spacing.padding.top) {
+                initialPadding = parseInt(spacing.padding.top);
+            }
+            var [padding, setPadding] = wp.element.useState(initialPadding);
+
+            // Margin
+            var initialMargin = 0;
+            if (spacing.margin && spacing.margin.top) {
+                initialMargin = parseInt(spacing.margin.top);
+            }
+            var [margin, setMargin] = wp.element.useState(initialMargin);
+
+            // Radius
+            var initialRadius = 0;
+            if (border.radius) {
+                initialRadius = parseInt(border.radius);
+            }
+            var [radius, setRadius] = wp.element.useState(initialRadius);
+
+            // Background
+            var initialBg = props.attributes.backgroundColor ? ('var(--wp--preset--color--' + props.attributes.backgroundColor + ')') : (style.color ? style.color.background : '');
+            var [bgColor, setBgColor] = wp.element.useState(initialBg);
+
+
+            // Only show on container-like blocks to act as "Sections"
+            if (props.name !== 'core/group' && props.name !== 'core/columns' && props.name !== 'core/column' && props.name !== 'core/cover') {
                 return el(BlockEdit, props);
             }
+
+            var updateStyle = function(newStyle) {
+                // Deep merge helper would be better, but we'll do simple merge for now
+                var currentStyle = props.attributes.style || {};
+                var mergedStyle = {
+                    ...currentStyle,
+                    ...newStyle,
+                    spacing: { ...currentStyle.spacing, ...newStyle.spacing },
+                    border: { ...currentStyle.border, ...newStyle.border },
+                    color: { ...currentStyle.color, ...newStyle.color }
+                };
+
+                // Cleanup empty objects
+                if (Object.keys(newStyle.spacing || {}).length > 0) mergedStyle.spacing = { ...currentStyle.spacing, ...newStyle.spacing };
+                if (Object.keys(newStyle.border || {}).length > 0) mergedStyle.border = { ...currentStyle.border, ...newStyle.border };
+                 if (Object.keys(newStyle.color || {}).length > 0) mergedStyle.color = { ...currentStyle.color, ...newStyle.color };
+
+                props.setAttributes({ style: mergedStyle });
+            };
 
             return el(Fragment, {},
                 el(BlockEdit, props),
@@ -94,7 +146,7 @@
                     el(ToolbarGroup, {},
                         el(ToolbarButton, {
                             icon: 'art', // Paintbrush icon
-                            label: 'Quick Style',
+                            label: 'Designer Controls',
                             onClick: function () { setIsVisible(!isVisible); },
                             isActive: isVisible
                         })
@@ -102,19 +154,68 @@
                 ),
                 isVisible && el(Popover, {
                     className: 'cp-style-popover',
-                    onClose: function () { setIsVisible(false); }
+                    onClose: function () { setIsVisible(false); },
+                    position: 'bottom center'
                 },
+                    el('div', { className: 'cp-style-panel-header' }, 'Designer Controls'),
+
+                    // Padding Control
                     el('div', { className: 'cp-style-control-group' },
                         el('span', { className: 'cp-style-label' }, 'Padding (px)'),
                         el(RangeControl, {
                             value: padding,
                             onChange: function (val) {
                                 setPadding(val);
-                                // Apply to block attributes (simulated)
-                                props.setAttributes({ style: { spacing: { padding: { top: val + 'px', bottom: val + 'px', left: val + 'px', right: val + 'px' } } } });
+                                var valStr = val + 'px';
+                                updateStyle({ spacing: { padding: { top: valStr, bottom: valStr, left: valStr, right: valStr } } });
                             },
                             min: 0,
                             max: 100
+                        })
+                    ),
+
+                    // Margin Control
+                    el('div', { className: 'cp-style-control-group' },
+                        el('span', { className: 'cp-style-label' }, 'Margin (Vertical px)'),
+                        el(RangeControl, {
+                            value: margin,
+                            onChange: function (val) {
+                                setMargin(val);
+                                var valStr = val + 'px';
+                                updateStyle({ spacing: { margin: { top: valStr, bottom: valStr } } });
+                            },
+                            min: 0,
+                            max: 100
+                        })
+                    ),
+
+                    // Border Radius
+                     el('div', { className: 'cp-style-control-group' },
+                        el('span', { className: 'cp-style-label' }, 'Corner Radius (px)'),
+                        el(RangeControl, {
+                            value: radius,
+                            onChange: function (val) {
+                                setRadius(val);
+                                updateStyle({ border: { radius: val + 'px' } });
+                            },
+                            min: 0,
+                            max: 50
+                        })
+                    ),
+
+                    // Background Color (Custom)
+                    el('div', { className: 'cp-style-control-group' },
+                        el('span', { className: 'cp-style-label' }, 'Custom Background'),
+                        el(ColorPalette, {
+                            value: bgColor,
+                            onChange: function (val) {
+                                setBgColor(val);
+                                updateStyle({ color: { background: val } });
+                                // Clear preset if custom is set
+                                if (val) {
+                                    props.setAttributes({ backgroundColor: undefined });
+                                }
+                            }
                         })
                     )
                 )

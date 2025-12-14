@@ -94,6 +94,11 @@ while ( have_posts() ) :
                     </div>
                 </section>
             <?php endif; ?>
+            
+            <!-- Reopen #content wrapper for remaining content -->
+            <div id="content" class="site-content" role="main">
+            <div id="primary" class="content-area front-page">
+                <main id="main" class="site-main">
 
             <!-- Page Content (if any) -->
             <?php if ( get_the_content() ) : ?>
@@ -286,8 +291,9 @@ while ( have_posts() ) :
         endif;
         ?>
 
-    </main>
-</div>
+                </main>
+            </div>
+            </div><!-- Close #content wrapper -->
 
 <style>
 @keyframes fade-in-up {

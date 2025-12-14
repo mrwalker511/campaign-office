@@ -141,10 +141,6 @@ class CampaignPress_Demo_Content {
         @ini_set('memory_limit', '256M');
         ignore_user_abort(true);
 
-        // OPTIMIZATION: Suspend cache to improve performance
-        wp_suspend_cache_addition(true);
-        wp_suspend_cache_invalidation(true);
-
         // OPTIMIZATION: Start database transaction for data integrity
         $wpdb->query('START TRANSACTION');
 
@@ -186,9 +182,14 @@ class CampaignPress_Demo_Content {
             // OPTIMIZATION: Commit transaction - all operations successful
             $wpdb->query('COMMIT');
 
-            // Resume cache operations
-            wp_suspend_cache_addition(false);
-            wp_suspend_cache_invalidation(false);
+            // Re-initialize Developer Console if available
+            // This ensures tables and settings are correct after import
+            if (class_exists('CampaignPress_Developer_Console')) {
+                $console = CampaignPress_Developer_Console::get_instance();
+                if (method_exists($console, 'manual_reinit')) {
+                    $console->manual_reinit();
+                }
+            }
 
             // Clear all caches to ensure fresh data
             wp_cache_flush();
@@ -200,10 +201,6 @@ class CampaignPress_Demo_Content {
         } catch (Exception $e) {
             // OPTIMIZATION: Rollback transaction on error
             $wpdb->query('ROLLBACK');
-
-            // Resume cache operations
-            wp_suspend_cache_addition(false);
-            wp_suspend_cache_invalidation(false);
 
             // Log the error
             error_log('CampaignPress demo import failed: ' . $e->getMessage());
@@ -1430,14 +1427,6 @@ class CampaignPress_Demo_Content {
                     'menu-item-position' => $menu_position++,
                 ));
             }
-
-            // Assign to primary location
-            $locations = get_theme_mod('nav_menu_locations');
-            if (!is_array($locations)) {
-                $locations = array();
-            }
-            $locations['primary'] = $primary_menu_id;
-            set_theme_mod('nav_menu_locations', $locations);
         }
 
         // Create Footer Menu
@@ -1482,14 +1471,6 @@ class CampaignPress_Demo_Content {
                     'menu-item-position' => $menu_position++,
                 ));
             }
-
-            // Assign to footer location
-            $locations = get_theme_mod('nav_menu_locations');
-            if (!is_array($locations)) {
-                $locations = array();
-            }
-            $locations['footer'] = $footer_menu_id;
-            set_theme_mod('nav_menu_locations', $locations);
         }
 
         // Create Social Menu
@@ -1521,15 +1502,27 @@ class CampaignPress_Demo_Content {
                 'menu-item-position' => 3,
                 'menu-item-attr-title' => 'Follow us on Instagram',
             ));
-
-            // Assign to social location
-            $locations = get_theme_mod('nav_menu_locations');
-            if (!is_array($locations)) {
-                $locations = array();
-            }
-            $locations['social'] = $social_menu_id;
-            set_theme_mod('nav_menu_locations', $locations);
         }
+
+        // Assign locations (all at once to prevent overwrites)
+        $locations = get_theme_mod('nav_menu_locations');
+        if (!is_array($locations)) {
+            $locations = array();
+        }
+
+        if (isset($menu_ids['primary']) && !is_wp_error($menu_ids['primary'])) {
+            $locations['primary'] = $menu_ids['primary'];
+        }
+
+        if (isset($menu_ids['footer']) && !is_wp_error($menu_ids['footer'])) {
+            $locations['footer'] = $menu_ids['footer'];
+        }
+
+        if (isset($menu_ids['social']) && !is_wp_error($menu_ids['social'])) {
+            $locations['social'] = $menu_ids['social'];
+        }
+
+        set_theme_mod('nav_menu_locations', $locations);
 
         return $menu_ids;
     }

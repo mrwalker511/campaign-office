@@ -1,3 +1,4 @@
+<?php
 /**
  * Preconnect to Google Fonts for performance
  * Loaded early in <head> for optimal performance

@@ -9,9 +9,8 @@ assets/dist/
 *.map
 
 # WordPress
-wp-config.php
-.htaccess
-sitemap.xml
+
+
 sitemap.xml.gz
 
 # IDE
@@ -23,19 +22,16 @@ sitemap.xml.gz
 Thumbs.db
 
 # Logs
-*.log
-logs/
+
 
 # Environment files
-.env
-.env.local
-.env.*.local
+
 
 # Package manager
 package-lock.json
 yarn.lock
 composer.lock
-vendor/
+
 
 # Temporary files
 *.tmp

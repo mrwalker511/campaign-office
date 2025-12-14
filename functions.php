@@ -114,11 +114,6 @@ add_action('after_setup_theme', 'campaignpress_content_width', 0);
  * Enqueue scripts and styles
  */
 function campaignpress_scripts() {
-    // Preconnect to Google Fonts for performance
-    add_action('wp_head', function() {
-        echo '\u003clink rel="preconnect" href="https://fonts.googleapis.com"\u003e';
-        echo '\u003clink rel="preconnect" href="https://fonts.gstatic.com" crossorigin\u003e';
-    }, 1);
     
     // Load Google Fonts
     wp_enqueue_style(
@@ -240,20 +235,7 @@ function campaignpress_register_block_pattern_category() {
 }
 add_action('init', 'campaignpress_register_block_pattern_category');
 
-if (defined('WP_DEBUG') && WP_DEBUG) {
-    function campaignpress_accessibility_debug() {
-        ?>
-        <script>
-        // Log color contrast ratios (development only)
-        console.log('CampaignPress Accessibility Check:');
-        console.log('- WCAG AA requires 4.5:1 for normal text');
-        console.log('- WCAG AA requires 3:1 for large text');
-        console.log('- All theme colors tested and compliant');
-        </script>
-        <?php
-    }
-    add_action('wp_footer', 'campaignpress_accessibility_debug');
-}
+
 
 /**
  * Register widget areas
@@ -306,6 +288,7 @@ add_action('widgets_init', 'campaignpress_widgets_init');
  */
 
 // Free version features
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/font-preconnect.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-bootstrap-navwalker.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
@@ -459,16 +442,7 @@ function campaignpress_customize_color_scheme($wp_customize) {
 }
 add_action('customize_register', 'campaignpress_customize_color_scheme');
 
-function campaignpress_inline_critical_css() {
-    // Get critical CSS for above-the-fold content
-    $critical_css = '
-        body { font-family: var(--wp--preset--font-family--body); }
-        h1, h2, h3 { font-family: var(--wp--preset--font-family--display); }
-    ';
 
-    wp_add_inline_style('campaignpress-style', $critical_css);
-}
-add_action('wp_enqueue_scripts', 'campaignpress_inline_critical_css');
 
 function campaignpress_customize_disclaimer($wp_customize) {
     $wp_customize->add_setting('campaignpress_disclaimer_text', array(

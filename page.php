@@ -9,6 +9,7 @@
 get_header();
 ?>
 
+<div class="site-container">
 <div id="primary" class="content-area">
     <main id="main" class="site-main">
 
@@ -51,6 +52,7 @@ get_header();
 
     </main>
 </div>
+</div><!-- .site-container -->
 
 <?php
 if ( campaignpress_show_sidebar() ) {

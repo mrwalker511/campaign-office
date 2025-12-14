@@ -58,6 +58,12 @@ class CampaignPress_Demo_Content {
                 </div>
             <?php endif; ?>
 
+            <?php if (!empty($_GET['import_error']) && sanitize_key($_GET['import_error']) === '1') : ?>
+                <div class="notice notice-error is-dismissible">
+                    <p><?php esc_html_e('Demo content import failed. Please check error logs or try again.', 'campaign-office'); ?></p>
+                </div>
+            <?php endif; ?>
+
             <div class="card" style="max-width: 800px;">
                 <h2><?php esc_html_e('Sample Campaign Content', 'campaign-office'); ?></h2>
                 <p><?php esc_html_e('This will create sample content to help you see how CampaignPress works. Perfect for testing and demonstrations.', 'campaign-office'); ?></p>
@@ -118,6 +124,8 @@ class CampaignPress_Demo_Content {
      * Handle import
      */
     public function handle_import() {
+        global $wpdb;
+
         // Check nonce
         if (!isset($_POST['cp_demo_nonce']) || !wp_verify_nonce($_POST['cp_demo_nonce'], 'cp_import_demo')) {
             wp_die(__('Security check failed', 'campaign-office'));
@@ -133,43 +141,77 @@ class CampaignPress_Demo_Content {
         @ini_set('memory_limit', '256M');
         ignore_user_abort(true);
 
-        // OPTIMIZATION: Pre-create all taxonomies before importing posts
-        $this->precreate_taxonomies();
+        // OPTIMIZATION: Suspend cache to improve performance
+        wp_suspend_cache_addition(true);
+        wp_suspend_cache_invalidation(true);
 
-        // Import content
-        $demo_post_ids = array();
+        // OPTIMIZATION: Start database transaction for data integrity
+        $wpdb->query('START TRANSACTION');
 
-        // Import Issues
-        $demo_post_ids['issues'] = $this->import_issues();
+        try {
+            // OPTIMIZATION: Pre-create all taxonomies before importing posts
+            $this->precreate_taxonomies();
 
-        // Import Events
-        $demo_post_ids['events'] = $this->import_events();
+            // Import content
+            $demo_post_ids = array();
 
-        // Import Endorsements
-        $demo_post_ids['endorsements'] = $this->import_endorsements();
+            // Import Issues
+            $demo_post_ids['issues'] = $this->import_issues();
 
-        // Import Team Members
-        $demo_post_ids['team'] = $this->import_team();
+            // Import Events
+            $demo_post_ids['events'] = $this->import_events();
 
-        // Import Volunteer Opportunities
-        $demo_post_ids['volunteers'] = $this->import_volunteers();
+            // Import Endorsements
+            $demo_post_ids['endorsements'] = $this->import_endorsements();
 
-        // Import Sample Pages (must be before menus)
-        $demo_post_ids['pages'] = $this->import_pages();
+            // Import Team Members
+            $demo_post_ids['team'] = $this->import_team();
 
-        // Import Navigation Menus (uses page IDs)
-        $demo_post_ids['menus'] = $this->import_menus($demo_post_ids['pages']);
+            // Import Volunteer Opportunities
+            $demo_post_ids['volunteers'] = $this->import_volunteers();
 
-        // Populate Theme Options
-        $this->populate_theme_options();
+            // Import Sample Pages (must be before menus)
+            $demo_post_ids['pages'] = $this->import_pages();
 
-        // Save demo post IDs for later deletion
-        update_option('campaignpress_demo_post_ids', $demo_post_ids);
-        update_option('campaignpress_demo_imported', true);
+            // Import Navigation Menus (uses page IDs)
+            $demo_post_ids['menus'] = $this->import_menus($demo_post_ids['pages']);
 
-        // Redirect back
-        wp_redirect(add_query_arg('imported', '1', wp_get_referer()));
-        exit;
+            // Populate Theme Options
+            $this->populate_theme_options();
+
+            // Save demo post IDs for later deletion
+            update_option('campaignpress_demo_post_ids', $demo_post_ids);
+            update_option('campaignpress_demo_imported', true);
+
+            // OPTIMIZATION: Commit transaction - all operations successful
+            $wpdb->query('COMMIT');
+
+            // Resume cache operations
+            wp_suspend_cache_addition(false);
+            wp_suspend_cache_invalidation(false);
+
+            // Clear all caches to ensure fresh data
+            wp_cache_flush();
+
+            // Redirect back
+            wp_redirect(add_query_arg('imported', '1', wp_get_referer()));
+            exit;
+
+        } catch (Exception $e) {
+            // OPTIMIZATION: Rollback transaction on error
+            $wpdb->query('ROLLBACK');
+
+            // Resume cache operations
+            wp_suspend_cache_addition(false);
+            wp_suspend_cache_invalidation(false);
+
+            // Log the error
+            error_log('CampaignPress demo import failed: ' . $e->getMessage());
+
+            // Redirect with error
+            wp_redirect(add_query_arg('import_error', '1', wp_get_referer()));
+            exit;
+        }
     }
 
     /**
@@ -1484,48 +1526,56 @@ class CampaignPress_Demo_Content {
      * Populate theme options with demo data
      */
     private function populate_theme_options() {
-        // General Options
-        update_option('campaignpress_candidate_name', 'Alex Thompson');
-        update_option('campaignpress_office_seeking', 'State Senate - District 12');
-        update_option('campaignpress_campaign_tagline', 'Fighting for Our Community\'s Future');
-        update_option('campaignpress_campaign_year', date('Y'));
-        update_option('campaignpress_election_date', date('Y-m-d', strtotime('+90 days')));
-        update_option('campaignpress_donation_url', 'https://secure.actblue.com/donate/example');
-        update_option('campaignpress_volunteer_url', 'https://example.com/volunteer');
+        // OPTIMIZATION: Batch all options together for faster processing
+        $options = array(
+            // General Options
+            'campaignpress_candidate_name' => 'Alex Thompson',
+            'campaignpress_office_seeking' => 'State Senate - District 12',
+            'campaignpress_campaign_tagline' => 'Fighting for Our Community\'s Future',
+            'campaignpress_campaign_year' => date('Y'),
+            'campaignpress_election_date' => date('Y-m-d', strtotime('+90 days')),
+            'campaignpress_donation_url' => 'https://secure.actblue.com/donate/example',
+            'campaignpress_volunteer_url' => 'https://example.com/volunteer',
 
-        // Design Options
-        update_option('campaignpress_color_scheme', 'democrat-blue');
-        update_option('campaignpress_primary_color', '#0066cc');
-        update_option('campaignpress_secondary_color', '#333333');
-        update_option('campaignpress_accent_color', '#ff6b35');
-        update_option('campaignpress_homepage_layout', 'classic-candidate');
-        update_option('campaignpress_layout', 'sidebar-right');
-        update_option('campaignpress_logo_width', 200);
-        update_option('campaignpress_enable_sticky_header', 1);
+            // Design Options
+            'campaignpress_color_scheme' => 'democrat-blue',
+            'campaignpress_primary_color' => '#0066cc',
+            'campaignpress_secondary_color' => '#333333',
+            'campaignpress_accent_color' => '#ff6b35',
+            'campaignpress_homepage_layout' => 'classic-candidate',
+            'campaignpress_layout' => 'sidebar-right',
+            'campaignpress_logo_width' => 200,
+            'campaignpress_enable_sticky_header' => 1,
 
-        // Typography Options
-        update_option('campaignpress_heading_font', 'system-ui');
-        update_option('campaignpress_body_font', 'system-ui');
-        update_option('campaignpress_font_size_base', 16);
+            // Typography Options
+            'campaignpress_heading_font' => 'system-ui',
+            'campaignpress_body_font' => 'system-ui',
+            'campaignpress_font_size_base' => 16,
 
-        // Social Media Options
-        update_option('campaignpress_facebook_url', 'https://facebook.com/campaignpress');
-        update_option('campaignpress_twitter_url', 'https://twitter.com/campaignpress');
-        update_option('campaignpress_instagram_url', 'https://instagram.com/campaignpress');
-        update_option('campaignpress_youtube_url', 'https://youtube.com/@campaignpress');
-        update_option('campaignpress_linkedin_url', '');
-        update_option('campaignpress_tiktok_url', '');
+            // Social Media Options
+            'campaignpress_facebook_url' => 'https://facebook.com/campaignpress',
+            'campaignpress_twitter_url' => 'https://twitter.com/campaignpress',
+            'campaignpress_instagram_url' => 'https://instagram.com/campaignpress',
+            'campaignpress_youtube_url' => 'https://youtube.com/@campaignpress',
+            'campaignpress_linkedin_url' => '',
+            'campaignpress_tiktok_url' => '',
 
-        // Footer Options
-        update_option('campaignpress_show_footer_widgets', 1);
-        update_option('campaignpress_footer_text', '<p><strong>Alex Thompson for State Senate</strong><br>Building a better future for our community.</p>');
-        update_option('campaignpress_disclaimer_text', '<p><small>Paid for by Friends of Alex Thompson. Not authorized by any candidate or candidate\'s committee.</small></p>');
+            // Footer Options
+            'campaignpress_show_footer_widgets' => 1,
+            'campaignpress_footer_text' => '<p><strong>Alex Thompson for State Senate</strong><br>Building a better future for our community.</p>',
+            'campaignpress_disclaimer_text' => '<p><small>Paid for by Friends of Alex Thompson. Not authorized by any candidate or candidate\'s committee.</small></p>',
 
-        // Advanced Options (leave blank for security)
-        update_option('campaignpress_custom_css', '/* Add your custom CSS here */');
-        update_option('campaignpress_google_analytics_id', '');
-        update_option('campaignpress_facebook_pixel_id', '');
-        update_option('campaignpress_enable_maintenance_mode', 0);
+            // Advanced Options (leave blank for security)
+            'campaignpress_custom_css' => '/* Add your custom CSS here */',
+            'campaignpress_google_analytics_id' => '',
+            'campaignpress_facebook_pixel_id' => '',
+            'campaignpress_enable_maintenance_mode' => 0,
+        );
+
+        // OPTIMIZATION: Batch update all options with autoload disabled for better performance
+        foreach ($options as $option_name => $option_value) {
+            update_option($option_name, $option_value, false); // false = no autoload
+        }
 
         // OPTIMIZATION: Removed duplicate set_theme_mod() calls
         // All settings are now stored via update_option() only

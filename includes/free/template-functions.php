@@ -383,7 +383,18 @@ function campaignpress_get_event_datetime($post_id = null) {
     }
 
     if ($time) {
-        $formatted['time'] = date_i18n(get_option('time_format'), strtotime($time));
+        $time_obj = false;
+
+        // Try strict parsing first for HH:MM format (standard HTML5 time input)
+        if (preg_match('/^\d{2}:\d{2}$/', $time)) {
+            $time_obj = DateTime::createFromFormat('H:i', $time);
+        }
+
+        if ($time_obj) {
+            $formatted['time'] = $time_obj->format(get_option('time_format'));
+        } else {
+            $formatted['time'] = date_i18n(get_option('time_format'), strtotime($time));
+        }
     }
 
     return $formatted;

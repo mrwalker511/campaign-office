@@ -54,10 +54,17 @@ function campaignpress_event_details() {
                 }
 
                 // Display time using DateTime for proper HH:MM parsing
-                if ($event_time && preg_match('/^\d{2}:\d{2}$/', $event_time)) {
-                    $time_obj = DateTime::createFromFormat('H:i', $event_time);
+                if ($event_time) {
+                    $time_obj = false;
+                    if (preg_match('/^\d{2}:\d{2}$/', $event_time)) {
+                        $time_obj = DateTime::createFromFormat('H:i', $event_time);
+                    }
+
                     if ($time_obj) {
                         echo ' ' . esc_html__('at', 'campaign-office') . ' ' . esc_html($time_obj->format(get_option('time_format')));
+                    } else {
+                        // Fallback for other formats
+                        echo ' ' . esc_html__('at', 'campaign-office') . ' ' . esc_html(date_i18n(get_option('time_format'), strtotime($event_time)));
                     }
                 }
                 ?>

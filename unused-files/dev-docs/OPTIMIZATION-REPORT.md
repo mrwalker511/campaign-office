@@ -154,22 +154,26 @@ function campaignpress_theme_deactivation() {
 add_action('switch_theme', 'campaignpress_theme_deactivation');
 ```
 
-### 7. ⚠️ Incorrect Time Handling - strtotime() with Time-Only Input
-- **File:** `template-tags.php:45`
+### 7. ✅ Incorrect Time Handling - strtotime() with Time-Only Input
+- **File:** `template-tags.php:45` and `template-functions.php:385`
 - **Severity:** HIGH
 - **Issue:** `strtotime()` unreliable for HH:MM format without date
-- **Current Status:** IDENTIFIED - NOT YET FIXED
-- **Recommended Fix:**
+- **Current Status:** FIXED
+- **Fix Applied:**
 ```php
 // BEFORE:
-echo esc_html(date_i18n(get_option('time_format'), strtotime($event_time)));
+$formatted['time'] = date_i18n(get_option('time_format'), strtotime($time));
 
 // AFTER:
-if ($event_time) {
-    $time_obj = DateTime::createFromFormat('H:i', $event_time);
-    if ($time_obj) {
-        echo esc_html($time_obj->format(get_option('time_format')));
-    }
+$time_obj = false;
+if (preg_match('/^\d{2}:\d{2}$/', $time)) {
+    $time_obj = DateTime::createFromFormat('H:i', $time);
+}
+
+if ($time_obj) {
+    $formatted['time'] = $time_obj->format(get_option('time_format'));
+} else {
+    $formatted['time'] = date_i18n(get_option('time_format'), strtotime($time));
 }
 ```
 

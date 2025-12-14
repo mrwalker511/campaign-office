@@ -1061,7 +1061,10 @@ class CP_Donation_Enhancements {
         });
         ";
 
-        wp_add_inline_script('campaignpress-main', $js);
+        // Ensure script is enqueued before adding inline script
+        if (wp_script_is('campaignpress-main', 'enqueued') || wp_script_is('campaignpress-main', 'registered')) {
+            wp_add_inline_script('campaignpress-main', $js, 'after');
+        }
     }
 
     /**

@@ -24,6 +24,7 @@ function campaignpress_analytics_init() {
 	// Require analytics classes
 	require_once dirname( __FILE__ ) . '/class-campaign-analytics.php';
 	require_once dirname( __FILE__ ) . '/class-performance-metrics.php';
+	require_once dirname( __FILE__ ) . '/analytics-dummy-data.php';
 
 	// Initialize campaign analytics
 	if ( class_exists( 'CampaignPress_Campaign_Analytics' ) ) {

@@ -155,6 +155,11 @@ class CampaignPress_Demo_Content {
         // Populate Theme Options
         $this->populate_theme_options();
 
+        // Re-initialize Developer Console if available (Premium feature)
+        if (class_exists('CampaignPress_Developer_Console')) {
+            CampaignPress_Developer_Console::get_instance()->manual_reinit();
+        }
+
         // Save demo post IDs for later deletion
         update_option('campaignpress_demo_post_ids', $demo_post_ids);
         update_option('campaignpress_demo_imported', true);

@@ -19,10 +19,10 @@ $premium = CampaignPress_Premium::get_instance();
 $premium_features = $premium->get_premium_features();
 $enabled_features = $premium->get_enabled_features();
 $license_data = $premium->get_license_data();
-$current_license = $license_data ? $license_data['license_type'] : 'basic';
+$current_license = $license_data ? $license_data['license_type'] : 'free';
 
 // License hierarchy
-$license_hierarchy = array('basic' => 1, 'professional' => 2, 'enterprise' => 3);
+$license_hierarchy = array('free' => 0, 'professional' => 1);
 $current_license_level = isset($license_hierarchy[$current_license]) ? $license_hierarchy[$current_license] : 0;
 ?>
 
@@ -40,7 +40,7 @@ $current_license_level = isset($license_hierarchy[$current_license]) ? $license_
                     <?php echo esc_html(ucfirst($current_license)); ?>
                 </span>
             </div>
-            <?php if ($current_license !== 'enterprise'): ?>
+            <?php if ($current_license !== 'professional'): ?>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-upgrade')); ?>" class="button button-primary">
                     <?php _e('Upgrade License', 'campaign-office'); ?>
                 </a>
@@ -52,7 +52,7 @@ $current_license_level = isset($license_hierarchy[$current_license]) ? $license_
         <?php foreach ($premium_features as $feature_key => $feature): ?>
             <?php
             // Check if feature is available for current license
-            $required_license = isset($feature['required_license']) ? $feature['required_license'] : 'basic';
+            $required_license = isset($feature['required_license']) ? $feature['required_license'] : 'free';
             $required_level = isset($license_hierarchy[$required_license]) ? $license_hierarchy[$required_license] : 0;
             $is_available = $current_license_level >= $required_level;
             $is_enabled = $premium->is_feature_enabled($feature_key);
@@ -164,19 +164,14 @@ $current_license_level = isset($license_hierarchy[$current_license]) ? $license_
     margin-left: 10px;
 }
 
-.cp-license-basic {
-    background: #0969da;
+.cp-license-free {
+    background: #666;
     color: #fff;
 }
 
 .cp-license-professional {
     background: #8250df;
     color: #fff;
-}
-
-.cp-license-enterprise {
-    background: #d4a72c;
-    color: #000;
 }
 
 .cp-features-grid {

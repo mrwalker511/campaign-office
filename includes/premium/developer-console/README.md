@@ -137,7 +137,7 @@ Available Endpoints:
 
 ## Installation
 
-The Developer Console is automatically available when CampaignPress Premium is activated. It requires at minimum a "basic" license level.
+The Developer Console is automatically available when CampaignPress Premium is activated. It requires a "professional" license level.
 
 ### Automatic Setup
 

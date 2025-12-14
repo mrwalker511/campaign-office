@@ -76,7 +76,7 @@ $tabs = array(
                                 <th><?php _e('License Type:', 'campaign-office'); ?></th>
                                 <td>
                                     <strong><?php echo esc_html(ucfirst($license_data['license_type'])); ?></strong>
-                                    <?php if ($license_data['license_type'] === 'basic'): ?>
+                                    <?php if ($license_data['license_type'] === 'free'): ?>
                                         <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-upgrade')); ?>" class="button button-small">
                                             <?php _e('Upgrade', 'campaign-office'); ?>
                                         </a>

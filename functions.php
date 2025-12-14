@@ -327,11 +327,6 @@ if ( file_exists( CAMPAIGNPRESS_INCLUDES_DIR . '/homepage-performance.php' ) ) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/homepage-performance.php';
 }
 
-// Check if Elementor is active
-if (did_action('elementor/loaded')) {
-    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/elementor-widgets.php';
-}
-
 // Premium activation system (load if exists)
 if (file_exists(CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php';

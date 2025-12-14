@@ -176,8 +176,8 @@ class CampaignPress_Demo_Content {
             // Import Navigation Menus (uses page IDs)
             $demo_post_ids['menus'] = $this->import_menus($demo_post_ids['pages']);
 
-            // Populate Theme Options
-            $this->populate_theme_options();
+        // Populate Theme Options
+        $this->populate_theme_options();
 
             // Save demo post IDs for later deletion
             update_option('campaignpress_demo_post_ids', $demo_post_ids);
@@ -404,7 +404,13 @@ class CampaignPress_Demo_Content {
 
             // Add to category (term already pre-created)
             $term = term_exists($issue['category'], 'issue_category');
-            if ($term && !is_wp_error($term)) {
+            if (!$term) {
+                $term = wp_insert_term($issue['category'], 'issue_category');
+            }
+
+            if (is_wp_error($term)) {
+                error_log('CampaignPress: Failed to create issue category - ' . $issue['category'] . ': ' . $term->get_error_message());
+            } elseif ($term) {
                 wp_set_object_terms($post_id, $term['term_id'], 'issue_category');
             }
 
@@ -522,7 +528,13 @@ class CampaignPress_Demo_Content {
 
             // Add event type (term already pre-created)
             $term = term_exists($event['type'], 'event_type');
-            if ($term && !is_wp_error($term)) {
+            if (!$term) {
+                $term = wp_insert_term($event['type'], 'event_type');
+            }
+
+            if (is_wp_error($term)) {
+                error_log('CampaignPress: Failed to create event type - ' . $event['type'] . ': ' . $term->get_error_message());
+            } elseif ($term) {
                 wp_set_object_terms($post_id, $term['term_id'], 'event_type');
             }
 

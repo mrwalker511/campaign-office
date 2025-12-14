@@ -141,11 +141,18 @@ function campaignpress_preload_resources() {
 }
 add_action('wp_head', 'campaignpress_preload_resources', 1);
 
+add_filter('script_loader_tag', 'campaignpress_defer_scripts', 10, 2);
+
 /**
  * BONUS PATCH 6: Defer JavaScript Loading
  * Adds defer attribute to all scripts
  */
 function campaignpress_defer_scripts($tag, $handle) {
+    // Only run on frontend
+    if (is_admin()) {
+        return $tag;
+    }
+
     // Don't defer jQuery (some plugins may need it synchronously)
     if ($handle === 'jquery') {
         return $tag;
@@ -158,7 +165,6 @@ function campaignpress_defer_scripts($tag, $handle) {
     
     return $tag;
 }
-add_filter('script_loader_tag', 'campaignpress_defer_scripts', 10, 2);
 
 /**
  * BONUS PATCH 7: Lazy Load Images

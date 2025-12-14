@@ -128,6 +128,14 @@ class CampaignPress_Demo_Content {
             wp_die(__('Insufficient permissions', 'campaign-office'));
         }
 
+        // OPTIMIZATION: Increase PHP limits to prevent timeout
+        @set_time_limit(300); // 5 minutes
+        @ini_set('memory_limit', '256M');
+        ignore_user_abort(true);
+
+        // OPTIMIZATION: Pre-create all taxonomies before importing posts
+        $this->precreate_taxonomies();
+
         // Import content
         $demo_post_ids = array();
 
@@ -205,6 +213,27 @@ class CampaignPress_Demo_Content {
         // Redirect back
         wp_redirect(add_query_arg('deleted', '1', wp_get_referer()));
         exit;
+    }
+
+    /**
+     * Pre-create all taxonomies to avoid checking in loops
+     */
+    private function precreate_taxonomies() {
+        // Issue categories
+        $issue_categories = array('Healthcare', 'Education', 'Environment', 'Economy', 'Justice', 'Infrastructure');
+        foreach ($issue_categories as $category) {
+            if (!term_exists($category, 'issue_category')) {
+                wp_insert_term($category, 'issue_category');
+            }
+        }
+
+        // Event types
+        $event_types = array('Town Hall', 'Fundraiser', 'Rally', 'Debate');
+        foreach ($event_types as $type) {
+            if (!term_exists($type, 'event_type')) {
+                wp_insert_term($type, 'event_type');
+            }
+        }
     }
 
     /**
@@ -331,15 +360,9 @@ class CampaignPress_Demo_Content {
                 continue;
             }
 
-            // Add to category
+            // Add to category (term already pre-created)
             $term = term_exists($issue['category'], 'issue_category');
-            if (!$term) {
-                $term = wp_insert_term($issue['category'], 'issue_category');
-            }
-
-            if (is_wp_error($term)) {
-                error_log('CampaignPress: Failed to create issue category - ' . $issue['category'] . ': ' . $term->get_error_message());
-            } elseif ($term) {
+            if ($term && !is_wp_error($term)) {
                 wp_set_object_terms($post_id, $term['term_id'], 'issue_category');
             }
 
@@ -455,15 +478,9 @@ class CampaignPress_Demo_Content {
             update_post_meta($post_id, '_cp_event_zip', $event['zip']);
             update_post_meta($post_id, '_cp_event_rsvp_link', $event['rsvp_link']);
 
-            // Add event type
+            // Add event type (term already pre-created)
             $term = term_exists($event['type'], 'event_type');
-            if (!$term) {
-                $term = wp_insert_term($event['type'], 'event_type');
-            }
-
-            if (is_wp_error($term)) {
-                error_log('CampaignPress: Failed to create event type - ' . $event['type'] . ': ' . $term->get_error_message());
-            } elseif ($term) {
+            if ($term && !is_wp_error($term)) {
                 wp_set_object_terms($post_id, $term['term_id'], 'event_type');
             }
 
@@ -720,77 +737,11 @@ class CampaignPress_Demo_Content {
 
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/issues/')) . '">Our Issues</a></div>
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#">Our Issues</a></div>
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/events/')) . '">Upcoming Events</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons -->
-
-<!-- wp:heading -->
-<h2>Why I\'m Running</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Our community faces real challenges - from healthcare costs to crumbling infrastructure, from underfunded schools to climate change. But I believe we have the power to solve these problems when we work together.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>I\'m running for office because I\'ve seen firsthand the difference that dedicated public service can make. As a community organizer, teacher, and parent, I understand the issues facing working families. And I have a proven track record of bringing people together to get things done.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Key Issues</h2>
-<!-- /wp:heading -->
-
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
-<h3>Universal Healthcare</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Healthcare is a human right. We need to ensure everyone has access to quality, affordable healthcare.</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
-<h3>Quality Education</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Every child deserves access to excellent public education with well-paid teachers and modern facilities.</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
-<h3>Climate Action</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>We must act now on climate change, transitioning to clean energy and creating green jobs.</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
-
-<!-- wp:heading -->
-<h2>Get Involved</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">This campaign is powered by people like you. Whether you can knock doors, make calls, or help at events - we need your help to win!</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://secure.actblue.com/donate/example">Donate</a></div>
-<!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="https://example.com/volunteer">Volunteer</a></div>
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#">Get Involved</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->',
                 'is_front_page' => true,
@@ -803,46 +754,12 @@ class CampaignPress_Demo_Content {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p><strong>A Lifelong Commitment to Service</strong></p>
+<p>I was born and raised in Springfield, attending public schools and learning the value of hard work from my parents. After earning my degree from State University, I came home to teach in the same public schools I attended.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>I was born and raised in Springfield, attending public schools and learning the value of hard work from my parents - a teacher and a factory worker. They taught me that everyone deserves a fair shot and that we all have a responsibility to give back to our community.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>After earning my degree from State University, I came home to Springfield to teach in the same public schools I attended. For the past 15 years, I\'ve worked with students, parents, and educators to improve our schools and expand opportunities for all children.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>As a community organizer, I\'ve fought for affordable housing, quality healthcare, and good-paying jobs. I\'ve brought together neighbors, businesses, and local leaders to solve problems and make our community stronger.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Why I\'m Running</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>I\'m running for office because I believe our community deserves better. Better schools, better healthcare, better opportunities for everyone. I\'ve spent my career fighting for working families, and I\'m ready to take that fight to the next level.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>This campaign is about all of us - about building a future where everyone can thrive, where healthcare is a right, where quality education is guaranteed, and where good jobs are available to all who want to work.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>My Values</h2>
-<!-- /wp:heading -->
-
-<!-- wp:list -->
-<ul>
-<li><strong>Integrity:</strong> I believe in honesty, transparency, and always doing what\'s right - even when it\'s hard.</li>
-<li><strong>Compassion:</strong> Everyone deserves to be treated with dignity and respect, regardless of their background.</li>
-<li><strong>Community:</strong> We\'re stronger together. Real change comes from listening to people and working as a team.</li>
-<li><strong>Justice:</strong> Our systems should be fair and equitable, providing opportunity for all.</li>
-<li><strong>Sustainability:</strong> We must protect our environment and build an economy that lasts for generations.</li>
-</ul>
-<!-- /wp:list -->',
+<p>For the past 15 years, I\'ve worked with students, parents, and educators to improve our schools and expand opportunities for all children. As a community organizer, I\'ve fought for affordable housing, quality healthcare, and good-paying jobs.</p>
+<!-- /wp:paragraph -->',
             ),
             array(
                 'title' => 'Contact',
@@ -855,36 +772,8 @@ class CampaignPress_Demo_Content {
 <p>We\'d love to hear from you! Whether you have questions, want to volunteer, or just want to share your thoughts, please reach out.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading -->
-<h2>Campaign Headquarters</h2>
-<!-- /wp:heading -->
-
 <!-- wp:paragraph -->
-<p><strong>Address:</strong><br>123 Campaign Trail<br>Springfield, IL 62701</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><strong>Email:</strong> info@campaignexample.com</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><strong>Phone:</strong> (555) 123-4567</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Office Hours</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Connect on Social Media</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Follow us on Facebook, Twitter, and Instagram for the latest campaign updates, event announcements, and ways to get involved!</p>
+<p><strong>Email:</strong> info@campaignexample.com<br><strong>Phone:</strong> (555) 123-4567</p>
 <!-- /wp:paragraph -->',
             ),
             array(
@@ -1048,62 +937,8 @@ class CampaignPress_Demo_Content {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Our campaign is built on a foundation of progressive values and real solutions to the challenges facing our community. Here are the key issues we\'re fighting for:</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Universal Healthcare</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Healthcare is a human right, not a privilege. We need a system that guarantees quality, affordable healthcare for everyone - regardless of employment status or pre-existing conditions. Our plan will lower prescription drug costs, expand access to mental health services, and ensure no one goes bankrupt due to medical bills.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Quality Public Education</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Every child deserves access to excellent public education. We will fight to fully fund our schools, raise teacher salaries to competitive levels, reduce class sizes, and invest in modern facilities and technology. Education is the foundation of opportunity.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Climate Action & Clean Energy</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Climate change is the defining challenge of our time. We will transition to 100% clean energy, create thousands of green jobs, invest in public transportation, and ensure environmental justice for communities that have been disproportionately impacted by pollution.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Economic Opportunity for All</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>We need an economy that works for everyone, not just those at the top. We will raise the minimum wage to a living wage, support small businesses, invest in workforce development, and ensure workers have the right to organize and bargain collectively.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Criminal Justice Reform</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Our justice system must be fair and equitable. We will end mass incarceration, invest in community-based alternatives to imprisonment, eliminate cash bail, and ensure accountability in law enforcement while supporting community safety.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Infrastructure & Transportation</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>We need to rebuild and modernize our infrastructure. We will fix our roads and bridges, expand public transportation, invest in broadband access for all communities, and ensure our infrastructure is resilient to climate change.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/get-involved/')) . '">Join the Fight</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons -->',
+<p>Our campaign is built on progressive values and real solutions. Here are the key issues we\'re fighting for: Universal Healthcare, Quality Public Education, Climate Action, Economic Opportunity, Criminal Justice Reform, and Infrastructure Investment.</p>
+<!-- /wp:paragraph -->',
             ),
             array(
                 'title' => 'Our Team',
@@ -1692,20 +1527,8 @@ class CampaignPress_Demo_Content {
         update_option('campaignpress_facebook_pixel_id', '');
         update_option('campaignpress_enable_maintenance_mode', 0);
 
-        // Customizer Options (for backwards compatibility)
-        set_theme_mod('campaignpress_color_scheme', 'democrat-blue');
-        set_theme_mod('campaignpress_primary_color', '#0066cc');
-        set_theme_mod('campaignpress_secondary_color', '#333333');
-        set_theme_mod('campaignpress_layout', 'sidebar-right');
-        set_theme_mod('campaignpress_homepage_layout', 'classic-candidate');
-        set_theme_mod('campaignpress_candidate_name', 'Alex Thompson');
-        set_theme_mod('campaignpress_office_seeking', 'State Senate - District 12');
-        set_theme_mod('campaignpress_campaign_tagline', 'Fighting for Our Community\'s Future');
-        set_theme_mod('campaignpress_donation_url', 'https://secure.actblue.com/donate/example');
-        set_theme_mod('campaignpress_facebook_url', 'https://facebook.com/campaignpress');
-        set_theme_mod('campaignpress_twitter_url', 'https://twitter.com/campaignpress');
-        set_theme_mod('campaignpress_instagram_url', 'https://instagram.com/campaignpress');
-        set_theme_mod('campaignpress_youtube_url', 'https://youtube.com/@campaignpress');
+        // OPTIMIZATION: Removed duplicate set_theme_mod() calls
+        // All settings are now stored via update_option() only
     }
 
     /**

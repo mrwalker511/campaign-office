@@ -340,7 +340,11 @@ class CampaignPress_Demo_Content {
             if (is_wp_error($term)) {
                 error_log('CampaignPress: Failed to create issue category - ' . $issue['category'] . ': ' . $term->get_error_message());
             } elseif ($term) {
-                wp_set_object_terms($post_id, $term['term_id'], 'issue_category');
+                $term_id = is_array($term) ? $term['term_id'] : $term;
+                if (is_object($term) && isset($term->term_id)) {
+                    $term_id = $term->term_id;
+                }
+                wp_set_object_terms($post_id, (int) $term_id, 'issue_category');
             }
 
             $post_ids[] = $post_id;
@@ -464,7 +468,11 @@ class CampaignPress_Demo_Content {
             if (is_wp_error($term)) {
                 error_log('CampaignPress: Failed to create event type - ' . $event['type'] . ': ' . $term->get_error_message());
             } elseif ($term) {
-                wp_set_object_terms($post_id, $term['term_id'], 'event_type');
+                $term_id = is_array($term) ? $term['term_id'] : $term;
+                if (is_object($term) && isset($term->term_id)) {
+                    $term_id = $term->term_id;
+                }
+                wp_set_object_terms($post_id, (int) $term_id, 'event_type');
             }
 
             $post_ids[] = $post_id;

@@ -11,6 +11,7 @@ export default defineConfig({
         blocks: resolve(__dirname, 'assets/react/blocks/index.jsx'),
         crm: resolve(__dirname, 'assets/react/crm/index.jsx'),
         main: resolve(__dirname, 'assets/js/main.js'),
+        tailwind: resolve(__dirname, 'assets/css/app.css'),
       },
       output: {
         entryFileNames: 'js/[name].js',

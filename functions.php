@@ -145,10 +145,10 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Tailwind CSS with custom spacing scale
+    // Tailwind CSS (built by Vite from assets/css/app.css)
     wp_enqueue_style(
         'campaignpress-tailwind',
-        get_template_directory_uri() . '/assets/css/dist/tailwind.css',
+        get_template_directory_uri() . '/assets/dist/css/tailwind.css',
         array('campaignpress-design-wp69'),
         CAMPAIGNPRESS_VERSION
     );

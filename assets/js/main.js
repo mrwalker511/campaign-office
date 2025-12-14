@@ -1,5 +1,3 @@
-import '../css/app.css';
-
 /**
  * CampaignPress Main JavaScript
  *

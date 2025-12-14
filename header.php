@@ -23,7 +23,7 @@
 <div id="page" class="site">
     <header id="masthead" class="site-header" role="banner">
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
-            <div class="container-fluid site-container">
+            <div class="site-container">
                 <div class="site-branding navbar-brand">
                     <?php
                     the_custom_logo();

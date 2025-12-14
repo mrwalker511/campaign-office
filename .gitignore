@@ -34,12 +34,10 @@ build/
 /wp-admin/
 /wp-includes/
 /wp-content/plugins/
-/wp-content/themes/*/
-!/wp-content/themes/campaign-office/
+
 
 # WordPress config
-wp-config.php
-wp-config-local.php
+
 .htaccess
 
 # WordPress uploads & cache

@@ -37,19 +37,208 @@ add_action('admin_menu', 'cp_register_campaign_data_menu', 9);
  * Callback for the Campaign Data main page
  */
 function cp_campaign_data_main_page() {
+    global $wpdb;
+    
+    // Get counts for dashboard stats
+    $issues_count = wp_count_posts('cp_issue')->publish ?? 0;
+    $events_count = wp_count_posts('cp_event')->publish ?? 0;
+    $endorsements_count = wp_count_posts('cp_endorsement')->publish ?? 0;
+    $team_count = wp_count_posts('cp_team')->publish ?? 0;
+    $volunteers_count = wp_count_posts('cp_volunteer')->publish ?? 0;
+    
+    // Get donation stats if table exists
+    $donations_table = $wpdb->prefix . 'campaignpress_donations';
+    $total_donations = 0;
+    $donation_count = 0;
+    if ($wpdb->get_var("SHOW TABLES LIKE '{$donations_table}'") == $donations_table) {
+        $total_donations = $wpdb->get_var("SELECT SUM(amount) FROM {$donations_table} WHERE status = 'completed'") ?? 0;
+        $donation_count = $wpdb->get_var("SELECT COUNT(*) FROM {$donations_table} WHERE status = 'completed'") ?? 0;
+    }
+    
     ?>
-    <div class="wrap">
+    <div class="wrap campaignpress-dashboard">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-        <p><?php _e('Manage all your campaign data from this central hub.', 'campaignpress'); ?></p>
-        <div class="card">
-            <h2><?php _e('Quick Links', 'campaignpress'); ?></h2>
-            <ul>
-                <li><a href="<?php echo admin_url('edit.php?post_type=issue'); ?>"><?php _e('Issues', 'campaignpress'); ?></a></li>
-                <li><a href="<?php echo admin_url('edit.php?post_type=event'); ?>"><?php _e('Events', 'campaignpress'); ?></a></li>
-                <li><a href="<?php echo admin_url('edit.php?post_type=endorsement'); ?>"><?php _e('Endorsements', 'campaignpress'); ?></a></li>
-                <li><a href="<?php echo admin_url('edit.php?post_type=team'); ?>"><?php _e('Team', 'campaignpress'); ?></a></li>
-                <li><a href="<?php echo admin_url('edit.php?post_type=volunteer'); ?>"><?php _e('Volunteers', 'campaignpress'); ?></a></li>
-            </ul>
+        <p class="description"><?php _e('Manage all your campaign data from this central hub.', 'campaignpress'); ?></p>
+        
+        <!-- Stats Overview -->
+        <div class="campaignpress-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+            
+            <!-- Issues Stat -->
+            <div class="stat-card" style="background: #fff; padding: 20px; border-left: 4px solid #2271b1; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold; color: #2271b1;"><?php echo number_format($issues_count); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Issues', 'campaignpress'); ?></div>
+                    </div>
+                    <span class="dashicons dashicons-flag" style="font-size: 48px; color: #2271b1; opacity: 0.3;"></span>
+                </div>
+            </div>
+            
+            <!-- Events Stat -->
+            <div class="stat-card" style="background: #fff; padding: 20px; border-left: 4px solid #00a32a; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold; color: #00a32a;"><?php echo number_format($events_count); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Events', 'campaignpress'); ?></div>
+                    </div>
+                    <span class="dashicons dashicons-calendar-alt" style="font-size: 48px; color: #00a32a; opacity: 0.3;"></span>
+                </div>
+            </div>
+            
+            <!-- Endorsements Stat -->
+            <div class="stat-card" style="background: #fff; padding: 20px; border-left: 4px solid #d63638; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold; color: #d63638;"><?php echo number_format($endorsements_count); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Endorsements', 'campaignpress'); ?></div>
+                    </div>
+                    <span class="dashicons dashicons-thumbs-up" style="font-size: 48px; color: #d63638; opacity: 0.3;"></span>
+                </div>
+            </div>
+            
+            <!-- Team Stat -->
+            <div class="stat-card" style="background: #fff; padding: 20px; border-left: 4px solid #9b51e0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold; color: #9b51e0;"><?php echo number_format($team_count); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Team Members', 'campaignpress'); ?></div>
+                    </div>
+                    <span class="dashicons dashicons-groups" style="font-size: 48px; color: #9b51e0; opacity: 0.3;"></span>
+                </div>
+            </div>
+            
+            <!-- Volunteers Stat -->
+            <div class="stat-card" style="background: #fff; padding: 20px; border-left: 4px solid #f0b849; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold; color: #f0b849;"><?php echo number_format($volunteers_count); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Volunteers', 'campaignpress'); ?></div>
+                    </div>
+                    <span class="dashicons dashicons-heart" style="font-size: 48px; color: #f0b849; opacity: 0.3;"></span>
+                </div>
+            </div>
+            
+            <!-- Donations Stat -->
+            <div class="stat-card" style="background: #fff; padding: 20px; border-left: 4px solid #00ba37; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold; color: #00ba37;">$<?php echo number_format($total_donations, 0); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php echo number_format($donation_count); ?> <?php _e('Donations', 'campaignpress'); ?></div>
+                    </div>
+                    <span class="dashicons dashicons-money-alt" style="font-size: 48px; color: #00ba37; opacity: 0.3;"></span>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Quick Actions Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+            
+            <!-- Campaign Content -->
+            <div class="card">
+                <h2><?php _e('Campaign Content', 'campaignpress'); ?></h2>
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('edit.php?post_type=cp_issue'); ?>" class="row-title">
+                            <span class="dashicons dashicons-flag" style="color: #2271b1;"></span>
+                            <?php _e('Manage Issues', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('edit.php?post_type=cp_event'); ?>" class="row-title">
+                            <span class="dashicons dashicons-calendar-alt" style="color: #00a32a;"></span>
+                            <?php _e('Manage Events', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('edit.php?post_type=cp_endorsement'); ?>" class="row-title">
+                            <span class="dashicons dashicons-thumbs-up" style="color: #d63638;"></span>
+                            <?php _e('Manage Endorsements', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('edit.php?post_type=cp_team'); ?>" class="row-title">
+                            <span class="dashicons dashicons-groups" style="color: #9b51e0;"></span>
+                            <?php _e('Manage Team', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('edit.php?post_type=cp_volunteer'); ?>" class="row-title">
+                            <span class="dashicons dashicons-heart" style="color: #f0b849;"></span>
+                            <?php _e('Manage Volunteers', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Analytics & Reports -->
+            <div class="card">
+                <h2><?php _e('Analytics & Reports', 'campaignpress'); ?></h2>
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('admin.php?page=campaignpress-analytics'); ?>" class="row-title">
+                            <span class="dashicons dashicons-chart-area" style="color: #2271b1;"></span>
+                            <?php _e('Campaign Analytics', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('admin.php?page=campaignpress-metrics'); ?>" class="row-title">
+                            <span class="dashicons dashicons-dashboard" style="color: #00a32a;"></span>
+                            <?php _e('Performance Metrics', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('admin.php?page=campaignpress-reports'); ?>" class="row-title">
+                            <span class="dashicons dashicons-media-document" style="color: #d63638;"></span>
+                            <?php _e('Reports', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('admin.php?page=campaignpress-test-data'); ?>" class="row-title">
+                            <span class="dashicons dashicons-database" style="color: #f0b849;"></span>
+                            <?php _e('Generate Test Data', 'campaignpress'); ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="card">
+                <h2><?php _e('Quick Actions', 'campaignpress'); ?></h2>
+                <p style="margin-bottom: 15px;">
+                    <a href="<?php echo admin_url('post-new.php?post_type=cp_issue'); ?>" class="button button-primary button-large" style="width: 100%; text-align: center;">
+                        <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
+                        <?php _e('Add New Issue', 'campaignpress'); ?>
+                    </a>
+                </p>
+                <p style="margin-bottom: 15px;">
+                    <a href="<?php echo admin_url('post-new.php?post_type=cp_event'); ?>" class="button button-secondary button-large" style="width: 100%; text-align: center;">
+                        <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
+                        <?php _e('Add New Event', 'campaignpress'); ?>
+                    </a>
+                </p>
+                <p style="margin-bottom: 15px;">
+                    <a href="<?php echo admin_url('post-new.php?post_type=cp_endorsement'); ?>" class="button button-secondary button-large" style="width: 100%; text-align: center;">
+                        <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
+                        <?php _e('Add New Endorsement', 'campaignpress'); ?>
+                    </a>
+                </p>
+            </div>
+            
+        </div>
+        
+        <!-- Help Section -->
+        <div class="card" style="margin-top: 20px;">
+            <h2><?php _e('Getting Started', 'campaignpress'); ?></h2>
+            <p><?php _e('Welcome to the Campaign Data hub! Here you can manage all aspects of your political campaign:', 'campaignpress'); ?></p>
+            <ol style="padding-left: 20px;">
+                <li><?php _e('<strong>Issues</strong> - Define your campaign platform and policy positions', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Events</strong> - Schedule and manage campaign events, rallies, and town halls', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Endorsements</strong> - Showcase support from organizations and community leaders', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Team</strong> - Introduce your campaign staff and leadership', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Volunteers</strong> - Manage volunteer recruitment and activities', 'campaignpress'); ?></li>
+            </ol>
+            <p><?php _e('Use the Analytics section to track campaign performance, donations, and engagement metrics.', 'campaignpress'); ?></p>
         </div>
     </div>
     <?php

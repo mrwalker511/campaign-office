@@ -105,8 +105,8 @@ class CampaignPress_Developer_Console {
             // Register AJAX handlers
             $this->register_ajax_handlers();
 
-            // Add security headers
-            add_action('admin_head', array($this, 'add_security_headers'));
+            // Add security headers early, before any output
+            add_action('admin_init', array($this, 'add_security_headers'));
         }
     }
 
@@ -634,6 +634,11 @@ class CampaignPress_Developer_Console {
     public function add_security_headers() {
         // Only on developer console page
         if (!isset($_GET['page']) || $_GET['page'] !== 'campaignpress-developer-console') {
+            return;
+        }
+
+        // Check if headers have already been sent
+        if (headers_sent()) {
             return;
         }
 

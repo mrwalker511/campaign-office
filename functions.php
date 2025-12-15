@@ -148,15 +148,6 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Bootstrap 5.3 JS Bundle (includes Popper, bundled locally) - MOVED TO unused-files/vendor-bloat/
-    // Using WordPress native components instead
-    // wp_enqueue_script(
-    //     'bootstrap',
-    //     get_template_directory_uri() . '/assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
-    //     array(),
-    //     '5.3.3',
-    //     true
-    // );
 
     // Ensure jQuery is loaded (WordPress core)
     wp_enqueue_script('jquery');
@@ -284,54 +275,9 @@ function campaignpress_widgets_init() {
 add_action('widgets_init', 'campaignpress_widgets_init');
 
 /**
- * Load required files
+ * Load Core System
  */
-
-// Free version features
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/font-preconnect.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-bootstrap-navwalker.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-functions.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/integrations.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-notices.php';
-// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-theme-options.php'; // Moved to unused-files/duplicate-systems/
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
-// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-widgets.php'; // Moved to unused-files/duplicate-systems/
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/donation-enhancements.php';
-// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/tgmpa-config.php'; // Moved to unused-files/duplicate-systems/
-
-// Load Advanced React Blocks
-if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/registration.php' ) ) {
-    require_once CAMPAIGNPRESS_THEME_DIR . '/blocks/registration.php';
-}
-
-// Load Block View Scripts
-if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/block-view-loader.php' ) ) {
-    require_once CAMPAIGNPRESS_THEME_DIR . '/blocks/block-view-loader.php';
-}
-
-// Load Performance Optimization Patches
-if ( file_exists( CAMPAIGNPRESS_INCLUDES_DIR . '/performance-patches.php' ) ) {
-    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/performance-patches.php';
-}
-
-// Load Homepage-Specific Performance Optimizations
-if ( file_exists( CAMPAIGNPRESS_INCLUDES_DIR . '/homepage-performance.php' ) ) {
-    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/homepage-performance.php';
-}
-
-// Premium activation system (load if exists)
-if (file_exists(CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php')) {
-    require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php';
-}
-
-require_once get_template_directory() . '/includes/admin-menu-reorganization.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/loader.php';
 
 /**
  * Add body classes for customizer options
@@ -343,15 +289,18 @@ function campaignpress_color_scheme_body_class($classes) {
 }
 add_filter('body_class', 'campaignpress_color_scheme_body_class');
 
+// Template loader for CPTs is now handled/supplemented by Core\Template_Loader
+// However, the specific logic for CPT subfolders in `templates/custom-post-types` might need to be preserved if not strictly standard.
+// The new Template_Loader handles general templates. We can leave this specific CPT loader or merge it.
+// For safety, we will leave this specific filter here as it targets specific subfolders that Core\Template_Loader might not check by default (it checks templates/ and templates/legacy/).
+// Actually, let's keep it to ensure backward compatibility for CPTs until fully refactored.
+
 /**
- * Custom template loader for organized folder structure
- * Allows template files to be located in subdirectories
+ * Custom template loader for CPTs (Legacy Support)
  */
-function campaignpress_template_loader($template) {
-    // Get the template file name
+function campaignpress_cpt_template_loader($template) {
     $template_name = basename($template);
 
-    // Check if it's a custom post type template
     if (strpos($template_name, 'single-cp_') === 0) {
         $custom_template = CAMPAIGNPRESS_THEME_DIR . '/templates/custom-post-types/single/' . $template_name;
         if (file_exists($custom_template)) {
@@ -363,11 +312,10 @@ function campaignpress_template_loader($template) {
             return $custom_template;
         }
     }
-
     return $template;
 }
-add_filter('single_template', 'campaignpress_template_loader');
-add_filter('archive_template', 'campaignpress_template_loader');
+add_filter('single_template', 'campaignpress_cpt_template_loader');
+add_filter('archive_template', 'campaignpress_cpt_template_loader');
 
 /**
  * Custom template tags for this theme

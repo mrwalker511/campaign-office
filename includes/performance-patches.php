@@ -127,15 +127,17 @@ add_action('init', 'campaignpress_remove_bloat');
  * Preloads fonts and establishes early connections
  */
 function campaignpress_preload_resources() {
-    // Preload critical fonts (if using local fonts)
+    // Preload critical fonts (only when actually using local fonts).
     $font_path = get_template_directory() . '/assets/fonts/PlusJakartaSans-Variable.woff2';
-    if (file_exists($font_path)) {
+    $using_google_fonts = wp_style_is('campaignpress-fonts', 'enqueued') || wp_style_is('campaignpress-fonts', 'registered');
+
+    if (!$using_google_fonts && file_exists($font_path)) {
         echo '<link rel="preload" href="' . get_template_directory_uri() . '/assets/fonts/PlusJakartaSans-Variable.woff2" as="font" type="font/woff2" crossorigin>' . "\n";
     }
-    
+
     // DNS prefetch for external resources
     echo '<link rel="dns-prefetch" href="//maps.googleapis.com">' . "\n";
-    
+
     // Preconnect to critical origins (only if using external fonts)
     // echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
 }
@@ -151,16 +153,16 @@ if (!is_admin()) {
  * Adds defer attribute to all scripts
  */
 function campaignpress_defer_scripts($tag, $handle) {
-    // Don't defer jQuery (some plugins may need it synchronously)
-    if ($handle === 'jquery') {
+    // Don't defer jQuery (and its core/migrate dependencies).
+    if (in_array($handle, array('jquery', 'jquery-core', 'jquery-migrate'), true)) {
         return $tag;
     }
-    
+
     // Add defer to all other scripts
     if (strpos($tag, 'defer') === false) {
         $tag = str_replace(' src', ' defer src', $tag);
     }
-    
+
     return $tag;
 }
 

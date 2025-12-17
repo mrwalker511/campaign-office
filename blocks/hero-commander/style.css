@@ -1,77 +1,360 @@
-.cp-hero-commander {
+/**
+ * Hero Commander Block - Frontend Styles
+ *
+ * @package CampaignPress
+ */
+
+/* ==========================================================================
+   Main Hero Container
+   ========================================================================== */
+
+.hero-commander {
     position: relative;
-    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    /* Parallax effect */
-    color: #fff;
-    text-align: center;
     overflow: hidden;
+    isolation: isolate;
 }
 
-.cp-hero-overlay {
+.hero-commander.alignfull {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+/* ==========================================================================
+   Background Layer
+   ========================================================================== */
+
+.hero-commander__background {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+    width: 100%;
+    height: 100%;
     z-index: 1;
 }
 
-.cp-hero-content {
-    position: relative;
+.hero-commander__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-commander__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 2;
-    padding: 2rem;
-    max-width: 800px;
+    pointer-events: none;
 }
 
-.cp-hero-headline {
-    font-size: 3.5rem;
+/* Parallax Effect */
+.hero-commander.has-parallax .hero-commander__background {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* ==========================================================================
+   Content Layer
+   ========================================================================== */
+
+.hero-commander__content {
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    width: 100%;
+}
+
+.hero-commander__inner {
+    max-width: 100%;
+}
+
+.hero-commander__headline {
+    font-family: var(--wp--preset--font-family--display, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
     font-weight: 800;
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     line-height: 1.1;
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.03em;
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.cp-typewriter-container {
-    font-size: 2rem;
-    margin-bottom: 3rem;
-    font-weight: 300;
+.hero-commander__subheadline {
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0 0 2rem;
+    opacity: 0.95;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.cp-typewriter-dynamic {
+/* ==========================================================================
+   Typewriter Effect
+   ========================================================================== */
+
+.hero-commander__typewriter {
     font-weight: 700;
-    color: var(--wp--preset--color--accent);
+    line-height: 1.2;
+    margin: 0 0 2rem;
+    min-height: 1.5em;
 }
 
-.cp-cursor {
-    animation: blink 1s infinite;
+.typewriter-text {
+    display: inline-block;
+}
+
+.typewriter-cursor {
+    display: inline-block;
+    margin-left: 0.1em;
+    animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
     50% {
         opacity: 0;
     }
 }
 
+/* ==========================================================================
+   Call to Action Buttons
+   ========================================================================== */
+
+.hero-commander__cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.hero-commander__cta-primary,
+.hero-commander__cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 200px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.hero-commander__cta-primary {
+    background-color: var(--wp--preset--color--accent, #ff8800);
+    color: #ffffff;
+    border: 2px solid transparent;
+    box-shadow:
+        0 4px 12px rgba(255, 136, 0, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero-commander__cta-primary:hover,
+.hero-commander__cta-primary:focus {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 20px rgba(255, 136, 0, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--wp--preset--color--accent-700, #e67700);
+}
+
+.hero-commander__cta-secondary {
+    background-color: transparent;
+    color: inherit;
+    border: 2px solid currentColor;
+    backdrop-filter: blur(4px);
+}
+
+.hero-commander__cta-secondary:hover,
+.hero-commander__cta-secondary:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   Scroll Indicator
+   ========================================================================== */
+
+.hero-commander__scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    color: inherit;
+    opacity: 0.6;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.hero-commander__scroll-indicator svg {
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+/* Fade Up */
+.hero-commander.animation-fade-up .hero-commander__inner > * {
+    animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.hero-commander.animation-fade-up .hero-commander__headline {
+    animation-delay: 0.1s;
+}
+
+.hero-commander.animation-fade-up .hero-commander__typewriter {
+    animation-delay: 0.3s;
+}
+
+.hero-commander.animation-fade-up .hero-commander__subheadline {
+    animation-delay: 0.5s;
+}
+
+.hero-commander.animation-fade-up .hero-commander__cta {
+    animation-delay: 0.7s;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade In */
+.hero-commander.animation-fade-in .hero-commander__inner {
+    animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide Up */
+.hero-commander.animation-slide-up .hero-commander__inner {
+    animation: slideUp 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Zoom In */
+.hero-commander.animation-zoom-in .hero-commander__inner {
+    animation: zoomIn 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
 @media (max-width: 768px) {
-    .cp-hero-commander {
-        background-attachment: scroll;
-        /* Disable parallax on mobile for performance */
+    .hero-commander__content {
+        padding: 3rem 1.5rem;
     }
 
-    .cp-hero-headline {
-        font-size: 2.5rem;
+    .hero-commander__cta {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-commander__cta-primary,
+    .hero-commander__cta-secondary {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .hero-commander__scroll-indicator {
+        bottom: 1rem;
+    }
+
+    /* Disable parallax on mobile for performance */
+    .hero-commander.has-parallax .hero-commander__background {
+        background-attachment: scroll !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-commander__content {
+        padding: 2rem 1rem;
+    }
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-commander *,
+    .hero-commander *::before,
+    .hero-commander *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .hero-commander__video {
+        display: none !important;
+    }
+
+    .hero-commander.has-parallax .hero-commander__background {
+        background-attachment: scroll !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .hero-commander__cta-primary,
+    .hero-commander__cta-secondary {
+        border-width: 3px;
     }
 }

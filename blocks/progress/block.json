@@ -2,36 +2,24 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "campaignpress/progress",
-    "version": "1.0.0",
-    "title": "Campaign Progress Bar",
+    "version": "2.0.0",
+    "title": "Progress Tracker",
     "category": "campaign-office",
     "icon": "chart-bar",
-    "description": "A dynamic progress bar for fundraising goals.",
-    "supports": {
-        "html": false,
-        "align": true
-    },
+    "description": "Visual progress bar for goals and fundraising.",
+    "supports": { "html": false, "align": ["wide", "full"] },
     "attributes": {
-        "title": {
-            "type": "string",
-            "default": "Campaign Goal"
-        },
-        "goalAmount": {
-            "type": "number",
-            "default": 10000
-        },
-        "raisedAmount": {
-            "type": "number",
-            "default": 5000
-        },
-        "showPercentage": {
-            "type": "boolean",
-            "default": true
-        }
+        "title": { "type": "string", "default": "Fundraising Progress" },
+        "goalAmount": { "type": "number", "default": 100000 },
+        "currentAmount": { "type": "number", "default": 45000 },
+        "currencySymbol": { "type": "string", "default": "$" },
+        "showPercentage": { "type": "boolean", "default": true },
+        "barColor": { "type": "string", "default": "#ff8800" },
+        "backgroundColor": { "type": "string", "default": "#e0e0e0" },
+        "height": { "type": "number", "default": 24 }
     },
     "textdomain": "campaign-office",
     "editorScript": "file:./index.js",
-    "viewScript": "file:./view.js",
     "render": "file:./render.php",
     "style": "file:./style.css"
 }

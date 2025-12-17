@@ -2,51 +2,179 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "campaignpress/donation-form",
-    "version": "1.0.0",
-    "title": "Campaign Donation Form",
+    "version": "2.0.0",
+    "title": "Donation Form",
     "category": "campaign-office",
     "icon": "money-alt",
-    "description": "Drag-and-drop tiers with Crypto support.",
+    "description": "Professional donation form with preset tiers, custom amounts, and payment integration.",
+    "keywords": ["donation", "fundraising", "contribute", "donate", "payment"],
     "supports": {
         "html": false,
-        "align": [
-            "wide",
-            "full"
-        ]
+        "align": ["wide", "full"],
+        "anchor": true,
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
     },
     "attributes": {
+        "heading": {
+            "type": "string",
+            "default": "Support Our Campaign"
+        },
+        "description": {
+            "type": "string",
+            "default": "Your contribution helps us build a better future together."
+        },
         "tiers": {
             "type": "array",
             "default": [
                 {
                     "amount": 25,
-                    "label": "Supporter"
+                    "label": "Supporter",
+                    "description": "Help us spread the word",
+                    "featured": false
                 },
                 {
                     "amount": 50,
-                    "label": "Friend"
+                    "label": "Friend",
+                    "description": "Make a real impact",
+                    "featured": false
                 },
                 {
                     "amount": 100,
-                    "label": "Backer"
+                    "label": "Champion",
+                    "description": "Lead the change",
+                    "featured": true
+                },
+                {
+                    "amount": 250,
+                    "label": "Leader",
+                    "description": "Drive our mission forward",
+                    "featured": false
                 }
             ]
+        },
+        "allowCustomAmount": {
+            "type": "boolean",
+            "default": true
+        },
+        "minCustomAmount": {
+            "type": "number",
+            "default": 5
+        },
+        "maxCustomAmount": {
+            "type": "number",
+            "default": 5000
         },
         "currency": {
             "type": "string",
             "default": "USD"
         },
-        "enableCrypto": {
+        "currencySymbol": {
+            "type": "string",
+            "default": "$"
+        },
+        "allowRecurring": {
             "type": "boolean",
             "default": true
+        },
+        "recurringOptions": {
+            "type": "array",
+            "default": ["one-time", "monthly", "quarterly", "annually"]
+        },
+        "defaultRecurring": {
+            "type": "string",
+            "default": "monthly"
+        },
+        "paymentProcessor": {
+            "type": "string",
+            "default": "actblue",
+            "enum": ["actblue", "stripe", "paypal", "custom"]
+        },
+        "actblueUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "stripeKey": {
+            "type": "string",
+            "default": ""
+        },
+        "paypalEmail": {
+            "type": "string",
+            "default": ""
+        },
+        "customFormUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "enableCrypto": {
+            "type": "boolean",
+            "default": false
         },
         "btcAddress": {
             "type": "string",
             "default": ""
+        },
+        "ethAddress": {
+            "type": "string",
+            "default": ""
+        },
+        "showGoal": {
+            "type": "boolean",
+            "default": false
+        },
+        "goalAmount": {
+            "type": "number",
+            "default": 10000
+        },
+        "currentAmount": {
+            "type": "number",
+            "default": 0
+        },
+        "primaryColor": {
+            "type": "string",
+            "default": "#ff8800"
+        },
+        "textColor": {
+            "type": "string",
+            "default": "#333333"
+        },
+        "backgroundColor": {
+            "type": "string",
+            "default": "#ffffff"
+        },
+        "buttonText": {
+            "type": "string",
+            "default": "Donate Now"
+        },
+        "successMessage": {
+            "type": "string",
+            "default": "Thank you for your generous contribution!"
+        },
+        "requireFields": {
+            "type": "object",
+            "default": {
+                "name": true,
+                "email": true,
+                "phone": false,
+                "address": false,
+                "employer": false,
+                "occupation": false
+            }
+        },
+        "showDisclaimer": {
+            "type": "boolean",
+            "default": true
+        },
+        "disclaimerText": {
+            "type": "string",
+            "default": "Contributions are not tax-deductible. Federal law requires us to collect your name, address, occupation, and employer."
         }
     },
     "textdomain": "campaign-office",
     "editorScript": "file:./index.js",
+    "editorStyle": "file:./editor.css",
     "viewScript": "file:./view.js",
     "render": "file:./render.php",
     "style": "file:./style.css"

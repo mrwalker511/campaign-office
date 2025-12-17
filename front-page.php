@@ -9,12 +9,15 @@
  */
 
 get_header();
+
+// Close the #content wrapper from header.php to allow full-width sections on front page
 ?>
+</div><!-- Close #content from header.php -->
 
 <?php
 while ( have_posts() ) :
     the_post();
-    
+
     // Check if we should display the campaign hero section
     $show_hero = get_post_meta( get_the_ID(), '_campaignpress_show_hero', true );
     if ( $show_hero !== '0' ) :
@@ -23,10 +26,7 @@ while ( have_posts() ) :
         $tagline = get_option( 'campaignpress_campaign_tagline', 'Building a Better Future Together' );
         $donation_url = get_option( 'campaignpress_donation_url', '#donate' );
         $volunteer_url = get_option( 'campaignpress_volunteer_url', '#volunteer' );
-        
-        // Close the #content wrapper to allow full-width hero
         ?>
-        </div><!-- Close #content from header.php -->
         
         <!-- Enhanced Hero Section -->
         <section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-brand-900">
@@ -292,8 +292,7 @@ while ( have_posts() ) :
         ?>
 
                 </main>
-            </div>
-            </div><!-- Close #content wrapper -->
+            </div><!-- #primary -->
 
 <style>
 @keyframes fade-in-up {

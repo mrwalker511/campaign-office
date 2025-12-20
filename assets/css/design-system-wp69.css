@@ -1082,9 +1082,9 @@ input[type="button"][disabled] {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.hero-cta-primary .dashicons,
-.hero-cta-secondary .dashicons {
+.button-icon-left {
   margin-right: var(--wp--preset--spacing--2);
+  flex-shrink: 0;
 }
 
 .hero-scroll-indicator {
@@ -1317,8 +1317,9 @@ input[type="button"][disabled] {
   justify-content: center;
 }
 
-.event-date-icon .dashicons {
-  font-size: 1.5rem;
+.event-date-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .event-date {
@@ -1357,8 +1358,9 @@ input[type="button"][disabled] {
   margin-bottom: var(--wp--preset--spacing--6);
 }
 
-.event-location .dashicons {
+.event-location svg {
   color: var(--wp--preset--color--accent-600);
+  flex-shrink: 0;
 }
 
 .event-link {

@@ -136,18 +136,18 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Bootstrap 5 CSS (for header navigation)
+    // Bootstrap 5 CSS (self-hosted for performance and reliability)
     wp_enqueue_style(
         'bootstrap',
-        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
+        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css',
         array(),
         '5.3.0'
     );
 
-    // Bootstrap 5 JS Bundle (includes Popper)
+    // Bootstrap 5 JS Bundle (self-hosted, includes Popper)
     wp_enqueue_script(
         'bootstrap-bundle',
-        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
+        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js',
         array(),
         '5.3.0',
         true
@@ -177,6 +177,37 @@ function campaignpress_scripts() {
     ));
 }
 add_action('wp_enqueue_scripts', 'campaignpress_scripts');
+
+/**
+ * Disable Dashicons on frontend for non-admin users
+ * Saves 45KB on every page load
+ */
+function campaignpress_disable_dashicons() {
+    if (!is_admin() && !is_user_logged_in()) {
+        wp_deregister_style('dashicons');
+    }
+}
+add_action('wp_enqueue_scripts', 'campaignpress_disable_dashicons');
+
+/**
+ * Clear homepage transients when issues or events are updated
+ */
+function campaignpress_clear_homepage_cache($post_id) {
+    $post_type = get_post_type($post_id);
+
+    if ('cp_issue' === $post_type) {
+        delete_transient('campaignpress_homepage_issues');
+    }
+
+    if ('cp_event' === $post_type) {
+        // Clear all event transients (one per day)
+        global $wpdb;
+        $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_campaignpress_homepage_events_%'");
+        $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_timeout_campaignpress_homepage_events_%'");
+    }
+}
+add_action('save_post', 'campaignpress_clear_homepage_cache');
+add_action('delete_post', 'campaignpress_clear_homepage_cache');
 
 /**
  * Font loading is handled via theme.json

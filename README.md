@@ -239,16 +239,21 @@ npm run build
 
 ```
 campaignpress/
-├── theme.json              # Design system configuration
+├── assets/                 # Client-side assets (CSS, JS, Fonts)
+├── bin/                    # Executable tools and binaries (wp-cli)
+├── blocks/                 # Custom Gutenberg blocks (React/PHP)
+├── build/                  # Build configurations and scripts
+├── docs/                   # Project documentation and guides
+├── includes/               # Core theme logic and class includes
+├── parts/                  # Template parts (block-based)
+├── patterns/               # Block patterns
+├── templates/              # Page templates
+├── tests/                  # Test suites and test configuration
+├── theme.json              # FSE design system configuration
 ├── functions.php           # Theme bootstrap
-├── blocks/                 # Custom Gutenberg blocks (React)
-├── includes/
-│   ├── free/              # GPL features
-│   └── premium/           # Licensed features (CRM, Field Ops, etc.)
-├── assets/
-│   ├── css/               # Stylesheets
-│   └── js/                # JavaScript
-└── templates/             # Page templates
+├── index.php               # Fallback template
+├── style.css               # Theme metadata and global styles
+└── package.json            # Tooling and dependencies
 ```
 
 ---

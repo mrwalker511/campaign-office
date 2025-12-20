@@ -19,7 +19,7 @@ package-lock.json.bak
 # Build & Distribution
 # ===========================
 dist/
-# build/
+build/
 *.min.js
 *.min.css
 *.map

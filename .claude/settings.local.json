@@ -21,7 +21,8 @@
       "Bash(mkdir:*)",
       "Bash(mv:*)",
       "Bash(ls:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File build-testing.ps1)"
     ],
     "deny": [],
     "ask": []

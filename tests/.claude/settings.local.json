@@ -7,7 +7,16 @@
       "Bash(if [ -d \"vendor\" ])",
       "Bash(then echo \"vendor exists\")",
       "Bash(else echo \"vendor missing\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(echo:*)",
+      "Bash(composer --version:*)",
+      "Bash(cmd.exe /c \"where composer\")",
+      "Bash(cmd.exe /c \"composer --version\")",
+      "Bash(cmd.exe /c \"echo %PATH%\")",
+      "Bash(tr:*)",
+      "Bash(\"/c/Users/Matt Walker/composer/composer\" --version)",
+      "Bash(~/.bashrc)",
+      "Bash(source ~/.bashrc)"
     ]
   }
 }

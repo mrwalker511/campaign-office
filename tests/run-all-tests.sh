@@ -52,14 +52,14 @@ run_test() {
 # Check dependencies
 echo -e "${BLUE}Checking dependencies...${NC}\n"
 
-if [ ! -d "vendor" ] && [ "$RUN_PHP_TESTS" = true ]; then
+if [ ! -d "../vendor" ] && [ "$RUN_PHP_TESTS" = true ]; then
     echo -e "${YELLOW}Installing PHP dependencies...${NC}"
-    composer install --no-interaction
+    (cd .. && composer install --no-interaction)
 fi
 
-if [ ! -d "node_modules" ] && [ "$RUN_JS_TESTS" = true ]; then
+if [ ! -d "../node_modules" ] && [ "$RUN_JS_TESTS" = true ]; then
     echo -e "${YELLOW}Installing Node dependencies...${NC}"
-    npm install
+    (cd .. && npm install)
 fi
 
 # Track overall status

@@ -23,6 +23,12 @@
 
     // Event countdown updates
     initCountdownTimers();
+
+    // Scroll reveal animations
+    initScrollReveal();
+
+    // Donation thermometer animations
+    initDonationThermometer();
   });
 
   /**
@@ -148,6 +154,78 @@
 
     $element.find('.cp-countdown-number').text(days);
     $element.find('.cp-countdown-label').text(days === 1 ? 'Day' : 'Days');
+  }
+
+  /**
+   * Initialize donation thermometer animations
+   */
+  function initDonationThermometer() {
+    const $thermometer = $('.thermometer-fill');
+
+    if ($thermometer.length === 0) {
+      return;
+    }
+
+    // Check if IntersectionObserver is supported
+    if ('IntersectionObserver' in window) {
+      const thermometerObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            const $fill = $(entry.target);
+            const percentage = $fill.data('percentage') || 0;
+
+            setTimeout(function () {
+              $fill.css('height', percentage + '%');
+            }, 300);
+
+            thermometerObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.3
+      });
+
+      $thermometer.each(function () {
+        thermometerObserver.observe(this);
+      });
+    } else {
+      // Fallback for browsers without IntersectionObserver
+      $thermometer.each(function () {
+        const percentage = $(this).data('percentage') || 0;
+        $(this).css('height', percentage + '%');
+      });
+    }
+  }
+
+  /**
+   * Initialize scroll reveal animations
+   */
+  function initScrollReveal() {
+    // Add scroll-reveal class to cards
+    $('.issue-card, .event-card, .section-header').addClass('scroll-reveal');
+
+    // Check if IntersectionObserver is supported
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            $(entry.target).addClass('revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      // Observe all scroll-reveal elements
+      $('.scroll-reveal').each(function () {
+        revealObserver.observe(this);
+      });
+    } else {
+      // Fallback for browsers without IntersectionObserver
+      $('.scroll-reveal').addClass('revealed');
+    }
   }
 
   /**

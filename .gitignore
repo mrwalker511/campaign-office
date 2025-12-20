@@ -176,6 +176,17 @@ gulpfile.js.bak
 # .gemini/
 # .claude/
 
+# Local settings and temporary project artifacts
+.claude/
+tests/.claude/
+
+# Placeholder or accidental files on Windows
+nul
+
+# Ensure node modules and vendor folders are ignored (if not already)
+node_modules/
+vendor/
+
 # ===========================
 # Misc
 # ===========================

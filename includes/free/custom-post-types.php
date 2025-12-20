@@ -374,6 +374,66 @@ function campaignpress_register_volunteer_post_type() {
 add_action('init', 'campaignpress_register_volunteer_post_type', 0);
 
 /**
+ * Register Press Releases Custom Post Type
+ */
+function campaignpress_register_press_release_post_type() {
+    $labels = array(
+        'name'                  => _x('Press Releases', 'Post Type General Name', 'campaign-office'),
+        'singular_name'         => _x('Press Release', 'Post Type Singular Name', 'campaign-office'),
+        'menu_name'             => __('Press Releases', 'campaign-office'),
+        'name_admin_bar'        => __('Press Release', 'campaign-office'),
+        'archives'              => __('Press Release Archives', 'campaign-office'),
+        'attributes'            => __('Press Release Attributes', 'campaign-office'),
+        'parent_item_colon'     => __('Parent Press Release:', 'campaign-office'),
+        'all_items'             => __('All Press Releases', 'campaign-office'),
+        'add_new_item'          => __('Add New Press Release', 'campaign-office'),
+        'add_new'               => __('Add New', 'campaign-office'),
+        'new_item'              => __('New Press Release', 'campaign-office'),
+        'edit_item'             => __('Edit Press Release', 'campaign-office'),
+        'update_item'           => __('Update Press Release', 'campaign-office'),
+        'view_item'             => __('View Press Release', 'campaign-office'),
+        'view_items'            => __('View Press Releases', 'campaign-office'),
+        'search_items'          => __('Search Press Release', 'campaign-office'),
+        'not_found'             => __('Not found', 'campaign-office'),
+        'not_found_in_trash'    => __('Not found in Trash', 'campaign-office'),
+        'featured_image'        => __('Featured Image', 'campaign-office'),
+        'set_featured_image'    => __('Set featured image', 'campaign-office'),
+        'remove_featured_image' => __('Remove featured image', 'campaign-office'),
+        'use_featured_image'    => __('Use as featured image', 'campaign-office'),
+        'insert_into_item'      => __('Insert into press release', 'campaign-office'),
+        'uploaded_to_this_item' => __('Uploaded to this press release', 'campaign-office'),
+        'items_list'            => __('Press releases list', 'campaign-office'),
+        'items_list_navigation' => __('Press releases list navigation', 'campaign-office'),
+        'filter_items_list'     => __('Filter press releases list', 'campaign-office'),
+    );
+
+    $args = array(
+        'label'                 => __('Press Release', 'campaign-office'),
+        'description'           => __('Campaign press releases and statements', 'campaign-office'),
+        'labels'                => $labels,
+        'supports'              => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'author'),
+        'hierarchical'          => false,
+        'public'                => true,
+        'show_ui'               => true,
+        'show_in_menu'          => true,
+        'menu_position'         => 25,
+        'menu_icon'             => 'dashicons-media-document',
+        'show_in_admin_bar'     => true,
+        'show_in_nav_menus'     => true,
+        'can_export'            => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => false,
+        'publicly_queryable'    => true,
+        'capability_type'       => 'post',
+        'show_in_rest'          => true,
+        'rest_base'             => 'press-releases',
+    );
+
+    register_post_type('cp_press_release', $args);
+}
+add_action('init', 'campaignpress_register_press_release_post_type', 0);
+
+/**
  * Add custom meta boxes for event details
  */
 function campaignpress_add_event_meta_boxes() {

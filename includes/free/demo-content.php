@@ -213,7 +213,7 @@ class CampaignPress_Demo_Content {
                 'post_type' => 'page',
                 'post_author' => get_current_user_id(),
                 'post_name' => $page_data['slug'],
-            ));
+            ), true);
 
             if (is_wp_error($page_id)) {
                 error_log('CampaignPress demo content error: ' . $page_id->get_error_message());
@@ -243,7 +243,7 @@ class CampaignPress_Demo_Content {
                 'post_type' => 'page',
                 'post_author' => get_current_user_id(),
                 'post_name' => 'news',
-            ));
+            ), true);
 
             if ($blog_page_id && !is_wp_error($blog_page_id)) {
                 update_option('page_for_posts', $blog_page_id);
@@ -294,6 +294,7 @@ class CampaignPress_Demo_Content {
                     <li><?php esc_html_e('8 Endorsements (Officials, Organizations, Community Leaders)', 'campaign-office'); ?></li>
                     <li><?php esc_html_e('5 Team Members (Campaign Manager, Finance Director, etc.)', 'campaign-office'); ?></li>
                     <li><?php esc_html_e('4 Volunteer Opportunities (Canvassing, Phone Banking, etc.)', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('5 Press Releases (Campaign Launch, Policy Announcements)', 'campaign-office'); ?></li>
                     <li><?php esc_html_e('Sample homepage with CampaignPress blocks', 'campaign-office'); ?></li>
                     <li><?php esc_html_e('About page with candidate bio', 'campaign-office'); ?></li>
                     <li><?php esc_html_e('3 Navigation Menus (Primary, Footer, Social)', 'campaign-office'); ?></li>
@@ -377,6 +378,8 @@ class CampaignPress_Demo_Content {
                 'endorsements' => array(),
                 'team' => array(),
                 'volunteers' => array(),
+                'press_releases' => array(),
+                'blog_posts' => array(),
                 'pages' => array(),
                 'menus' => array(),
             ),
@@ -449,8 +452,20 @@ class CampaignPress_Demo_Content {
 
                 case 'volunteers':
                     $state['demo_post_ids']['volunteers'] = $this->import_volunteers();
-                    $state['step'] = 'pages';
+                    $state['step'] = 'press_releases';
                     $message = __('Importing volunteer opportunities…', 'campaign-office');
+                    break;
+
+                case 'press_releases':
+                    $state['demo_post_ids']['press_releases'] = $this->import_press_releases();
+                    $state['step'] = 'blog_posts';
+                    $message = __('Importing press releases…', 'campaign-office');
+                    break;
+
+                case 'blog_posts':
+                    $state['demo_post_ids']['blog_posts'] = $this->import_blog_posts();
+                    $state['step'] = 'pages';
+                    $message = __('Importing blog posts…', 'campaign-office');
                     break;
 
                 case 'pages':
@@ -469,7 +484,7 @@ class CampaignPress_Demo_Content {
                                 'post_type' => 'page',
                                 'post_author' => get_current_user_id(),
                                 'post_name' => 'news',
-                            ));
+                            ), true);
 
                             if ($blog_page_id && !is_wp_error($blog_page_id)) {
                                 update_option('page_for_posts', $blog_page_id);
@@ -490,7 +505,7 @@ class CampaignPress_Demo_Content {
                         'post_type' => 'page',
                         'post_author' => get_current_user_id(),
                         'post_name' => $page_data['slug'],
-                    ));
+                    ), true);
 
                     if (is_wp_error($page_id) || !$page_id) {
                         throw new Exception('Failed to create demo page: ' . ($page_data['title'] ?? 'Unknown'));
@@ -610,6 +625,12 @@ class CampaignPress_Demo_Content {
 
             // Import Volunteer Opportunities
             $demo_post_ids['volunteers'] = $this->import_volunteers();
+
+            // Import Press Releases
+            $demo_post_ids['press_releases'] = $this->import_press_releases();
+
+            // Import Blog Posts
+            $demo_post_ids['blog_posts'] = $this->import_blog_posts();
 
             // Import Sample Pages (must be before menus)
             $demo_post_ids['pages'] = $this->import_pages();
@@ -1215,6 +1236,161 @@ class CampaignPress_Demo_Content {
     }
 
     /**
+     * Import sample press releases
+     */
+    private function import_press_releases() {
+        $releases = array(
+            array(
+                'title' => 'Thompson Announces Candidacy for State Senate',
+                'content' => '<p><strong>SPRINGFIELD, IL</strong> – Today, local educator and community organizer Alex Thompson announced his candidacy for State Senate in the 12th District. Launching his campaign with a pledge to fight for working families, Thompson emphasized his commitment to public education, affordable healthcare, and economic opportunity.</p>
+
+<p>"I\'m running because our community needs a voice in the State Senate who understands the challenges we face," said Thompson. "For too long, we\'ve seen our schools underfunded and our healthcare costs rise while special interests get tax breaks. It\'s time for change."</p>
+
+<p>Thompson enters the race with strong support from local leaders and a robust grassroots organization. His campaign will focus on knocking doors and listening to voters in every corner of the district.</p>',
+                'date' => date('Y-m-d H:i:s', strtotime('-30 days')),
+            ),
+            array(
+                'title' => 'Thompson Unveils Comprehensive Healthcare Plan',
+                'content' => '<p><strong>SPRINGFIELD, IL</strong> – State Senate candidate Alex Thompson today unveiled his "Healthy Communities" plan, a comprehensive proposal to lower healthcare costs and expand access for all residents of the 12th District.</p>
+
+<p>The plan includes provisions to:</p>
+<ul>
+<li>Cap out-of-pocket prescription drug costs</li>
+<li>Expand Medicaid eligibility</li>
+<li>Invest in rural health centers</li>
+<li>Increase funding for mental health services</li>
+</ul>
+
+<p>"Healthcare is a human right, not a privilege," Thompson stated at a press conference outside the Community Health Center. "No one in our state should have to choose between filling a prescription and putting food on the table."</p>',
+                'date' => date('Y-m-d H:i:s', strtotime('-15 days')),
+            ),
+            array(
+                'title' => 'Teachers Union Endorses Alex Thompson',
+                'content' => '<p><strong>SPRINGFIELD, IL</strong> – The Springfield Teachers Association (STA), representing over 2,000 educators, today announced their endorsement of Alex Thompson for State Senate.</p>
+
+<p>"Alex Thompson has been a champion for our schools and our students his entire career," said STA President Sarah Miller. "We trust him to fight for the funding and resources our classrooms need."</p>
+
+<p>As a former teacher, Thompson thanked the association for their support. "I know firsthand the challenges our educators face. I\'m honored to have their support and look forward to working together to strengthen our public schools."</p>',
+                'date' => date('Y-m-d H:i:s', strtotime('-10 days')),
+            ),
+            array(
+                'title' => 'Thompson Campaign Raises Record Amount in First Quarter',
+                'content' => '<p><strong>SPRINGFIELD, IL</strong> – The Thompson for Senate campaign announced today that it raised over $150,000 in the first quarter, breaking records for a challenger in the 12th District. The haul came from over 2,500 individual contributions, with an average donation of just $45.</p>
+
+<p>"We are overwhelmed by the outpouring of support," said Campaign Manager Sarah Johnson. "This clearly shows that our message is resonating with voters who are ready for new leadership."</p>
+
+<p>The campaign reported that 90% of contributions came from within the district, highlighting the strong local momentum behind Thompson\'s bid.</p>',
+                'date' => date('Y-m-d H:i:s', strtotime('-5 days')),
+            ),
+            array(
+                'title' => 'Thompson to Host Town Hall on Economic Development',
+                'content' => '<p><strong>SPRINGFIELD, IL</strong> – State Senate candidate Alex Thompson will host a town hall meeting this Saturday to discuss his plans for job creation and economic development in the 12th District.</p>
+
+<p>The event will take place at the downtown library and is open to the public. Thompson will take questions from residents and share his vision for supporting small businesses and attracting new industries to the region.</p>
+
+<p>"I want to hear directly from our small business owners and workers about what they need to succeed," Thompson said. "Together, we can build an economy that works for everyone."</p>',
+                'date' => date('Y-m-d H:i:s', strtotime('-2 days')),
+            ),
+        );
+
+        $post_ids = array();
+
+        foreach ($releases as $release) {
+            $post_id = wp_insert_post(array(
+                'post_title'   => $release['title'],
+                'post_content' => $release['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'cp_press_release',
+                'post_author'  => get_current_user_id(),
+                'post_date'    => $release['date'],
+            ));
+
+            if (is_wp_error($post_id)) {
+                error_log('CampaignPress demo content error: ' . $post_id->get_error_message());
+                continue;
+            }
+
+            if (!$post_id) {
+                error_log('CampaignPress: Failed to create demo press release - ' . $release['title']);
+                continue;
+            }
+
+            // Enable donation CTA for these posts
+            update_post_meta($post_id, '_cp_show_donation_cta', '1');
+
+            $post_ids[] = $post_id;
+        }
+
+        return $post_ids;
+    }
+
+    /**
+     * Import sample blog posts
+     */
+    private function import_blog_posts() {
+        $posts = array(
+            array(
+                'title' => 'Why I\'m Running',
+                'content' => '<!-- wp:paragraph --><p>I was born and raised in this community. It\'s where I went to school, where I met my wife, and where we\'re raising our children. I\'ve seen our neighborhood change over the years - sometimes for the better, sometimes not.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>I\'m running for office because I believe we can do better. We can build a future where every child has access to a quality education, where every family can afford healthcare, and where our economy works for everyone, not just the wealthy few.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>This campaign isn\'t just about me. It\'s about all of us coming together to demand change. Join us.</p><!-- /wp:paragraph -->',
+                'date' => date('Y-m-d H:i:s', strtotime('-60 days')),
+                'category' => 'Campaign News',
+            ),
+            array(
+                'title' => 'Community Cleanup Day Success',
+                'content' => '<!-- wp:paragraph --><p>Thank you to everyone who came out for our Community Cleanup Day! Together, we collected over 50 bags of trash from our local parks and streets.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>This is what our campaign is all about: neighbors helping neighbors. When we work together, there\'s nothing we can\'t accomplish.</p><!-- /wp:paragraph -->
+<!-- wp:image --><figure class="wp-block-image"><img src="https://via.placeholder.com/800x400" alt="Volunteers at cleanup day"/></figure><!-- /wp:image -->',
+                'date' => date('Y-m-d H:i:s', strtotime('-45 days')),
+                'category' => 'Events',
+            ),
+            array(
+                'title' => 'Join Us for the Debate Watch Party',
+                'content' => '<!-- wp:paragraph --><p>Next Tuesday is the first debate of the election season. We\'re hosting a watch party at Campaign HQ!</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Come cheer on Alex, meet fellow supporters, and enjoy some pizza and refreshments. Doors open at 7:00 PM.</p><!-- /wp:paragraph -->
+<!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link" href="#">RSVP Now</a></div><!-- /wp:button -->',
+                'date' => date('Y-m-d H:i:s', strtotime('-20 days')),
+                'category' => 'Events',
+            ),
+        );
+
+        $post_ids = array();
+
+        foreach ($posts as $post) {
+            $post_id = wp_insert_post(array(
+                'post_title'   => $post['title'],
+                'post_content' => $post['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'post',
+                'post_author'  => get_current_user_id(),
+                'post_date'    => $post['date'],
+            ));
+
+            if ($post_id && !is_wp_error($post_id)) {
+                // Set category
+                $category = get_term_by('name', $post['category'], 'category');
+                if (!$category) {
+                    $cat_id = wp_create_term($post['category'], 'category');
+                    if (!is_wp_error($cat_id)) {
+                        $category_id = $cat_id['term_id'];
+                    }
+                } else {
+                    $category_id = $category->term_id;
+                }
+
+                if (isset($category_id)) {
+                    wp_set_post_categories($post_id, array($category_id));
+                }
+
+                $post_ids[] = $post_id;
+            }
+        }
+
+        return $post_ids;
+    }
+
+    /**
      * Import sample pages
      */
     private function import_pages() {
@@ -1327,6 +1503,25 @@ class CampaignPress_Demo_Content {
 <!-- /wp:paragraph -->',
             ),
             array(
+                'title' => 'Donate',
+                'slug' => 'donate',
+                'content' => '<!-- wp:heading {"level":1} -->
+<h1>Donate to Our Campaign</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Your contribution will help us reach more voters, organize more events, and spread our message of positive change. Thank you for your support!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:shortcode -->
+[cp_donation_button processor="actblue" text="Donate via ActBlue" style="primary" size="large"]
+<!-- /wp:shortcode -->
+
+<!-- wp:paragraph -->
+<p><small>Contributions are not tax deductible. Federal law requires us to use our best efforts to collect and report the name, mailing address, occupation and name of employer of individuals whose contributions exceed $200 in an election cycle.</small></p>
+<!-- /wp:paragraph -->',
+            ),
+            array(
                 'title' => 'Press & Media',
                 'slug' => 'press',
                 'content' => '<!-- wp:heading {"level":1} -->
@@ -1352,6 +1547,12 @@ class CampaignPress_Demo_Content {
 <!-- wp:paragraph -->
 <p>Check back soon for our latest press releases and campaign announcements.</p>
 <!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(get_post_type_archive_link('cp_press_release')) . '">View All Press Releases</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
 
 <!-- wp:heading -->
 <h2>Media Kit</h2>
@@ -1406,7 +1607,7 @@ class CampaignPress_Demo_Content {
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://secure.actblue.com/donate/example">Donate Now</a></div>
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="' . esc_url(home_url('/donate/')) . '">Donate Now</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
 
@@ -1874,6 +2075,19 @@ class CampaignPress_Demo_Content {
                     'menu-item-position' => $menu_position++,
                 ));
             }
+
+            // Add Donate button
+            if (isset($page_ids['donate'])) {
+                wp_update_nav_menu_item($primary_menu_id, 0, array(
+                    'menu-item-title' => 'Donate',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['donate'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => 999,
+                    'menu-item-classes' => 'cp-menu-cta',
+                ));
+            }
         }
 
         // Create Footer Menu
@@ -1914,6 +2128,18 @@ class CampaignPress_Demo_Content {
                     'menu-item-title' => 'Press',
                     'menu-item-object' => 'page',
                     'menu-item-object-id' => $page_ids['press'],
+                    'menu-item-type' => 'post_type',
+                    'menu-item-status' => 'publish',
+                    'menu-item-position' => $menu_position++,
+                ));
+            }
+
+            // Add Donate link
+            if (isset($page_ids['donate'])) {
+                wp_update_nav_menu_item($footer_menu_id, 0, array(
+                    'menu-item-title' => 'Donate',
+                    'menu-item-object' => 'page',
+                    'menu-item-object-id' => $page_ids['donate'],
                     'menu-item-type' => 'post_type',
                     'menu-item-status' => 'publish',
                     'menu-item-position' => $menu_position++,
@@ -1988,7 +2214,9 @@ class CampaignPress_Demo_Content {
             'campaignpress_campaign_tagline' => 'Fighting for Our Community\'s Future',
             'campaignpress_campaign_year' => date('Y'),
             'campaignpress_election_date' => date('Y-m-d', strtotime('+90 days')),
-            'campaignpress_donation_url' => 'https://secure.actblue.com/donate/example',
+            'campaignpress_donation_url' => esc_url(home_url('/donate/')),
+            'cp_default_processor' => 'actblue',
+            'cp_actblue_campaign_slug' => 'demo',
             'campaignpress_volunteer_url' => 'https://example.com/volunteer',
 
             // Design Options

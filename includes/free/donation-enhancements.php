@@ -1005,6 +1005,9 @@ class CP_Donation_Enhancements {
 
         wp_add_inline_style('campaignpress-main', $css);
 
+        // Ensure main script is enqueued
+        wp_enqueue_script('campaignpress-main');
+
         // Inline JavaScript for donation widget interaction
         $js = "
         jQuery(document).ready(function($) {

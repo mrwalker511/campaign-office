@@ -16,10 +16,10 @@
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
   },
   "scripts": {
-    "test": "phpunit",
-    "test:coverage": "phpunit --coverage-html coverage",
-    "phpcs": "phpcs --standard=WordPress includes/ blocks/ *.php",
-    "phpcbf": "phpcbf --standard=WordPress includes/ blocks/ *.php",
+    "test": "phpunit --configuration tests/phpunit.xml.dist",
+    "test:coverage": "phpunit --configuration tests/phpunit.xml.dist --coverage-html coverage",
+    "phpcs": "phpcs --standard=build/phpcs.xml.dist includes/ blocks/ *.php",
+    "phpcbf": "phpcbf --standard=build/phpcs.xml.dist includes/ blocks/ *.php",
     "phpcs:theme": "phpcs --standard=WordPress-Theme --runtime-set testVersion 7.4- .",
     "lint": "find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' | xargs -n 1 php -l"
   },

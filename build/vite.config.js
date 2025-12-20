@@ -8,10 +8,10 @@ export default defineConfig({
     outDir: 'assets/dist',
     rollupOptions: {
       input: {
-        blocks: resolve(__dirname, 'assets/react/blocks/index.jsx'),
-        crm: resolve(__dirname, 'assets/react/crm/index.jsx'),
-        main: resolve(__dirname, 'assets/js/main.js'),
-        tailwind: resolve(__dirname, 'assets/css/app.css'),
+        blocks: resolve(__dirname, '..', 'assets/react/blocks/index.jsx'),
+        crm: resolve(__dirname, '..', 'assets/react/crm/index.jsx'),
+        main: resolve(__dirname, '..', 'assets/js/main.js'),
+        tailwind: resolve(__dirname, '..', 'assets/css/app.css'),
       },
       output: {
         entryFileNames: 'js/[name].js',
@@ -22,7 +22,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'assets/react'),
+      '@': resolve(__dirname, '..', 'assets/react'),
     },
   },
 });

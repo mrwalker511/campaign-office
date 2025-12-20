@@ -12,7 +12,7 @@ const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const BLOCKS_DIR = path.join(__dirname, 'blocks');
+const BLOCKS_DIR = path.join(__dirname, '..', 'blocks');
 
 // Blocks to build
 const blocks = [

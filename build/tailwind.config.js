@@ -1,13 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        "./*.php",
-        "./inc/**/*.php",
-        "./includes/**/*.php",
-        "./templates/**/*.php",
-        "./parts/**/*.php",
-        "./blocks/**/*.php",
-        "./assets/react/**/*.{js,jsx,ts,tsx}",
+        "../**/*.php",
+        "../assets/react/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
         extend: {

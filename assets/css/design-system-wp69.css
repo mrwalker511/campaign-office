@@ -102,7 +102,7 @@ body.color-scheme-green-party {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
 }
 
 /* Monospace number formatting */
@@ -128,10 +128,7 @@ body {
 .site-header::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background:
     radial-gradient(circle at 20% 50%, var(--wp--preset--color--primary-50) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, var(--wp--preset--color--accent-50) 0%, transparent 50%);
@@ -159,7 +156,6 @@ body {
 .site-branding .site-title a,
 .wp-block-site-title a {
   background: linear-gradient(135deg, var(--wp--preset--color--primary) 0%, var(--wp--preset--color--primary-700) 100%);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-decoration: none;
@@ -330,7 +326,6 @@ body {
 }
 
 @keyframes heroGradientShift {
-
   0%,
   100% {
     opacity: 0.3;
@@ -363,7 +358,7 @@ body {
   margin: 0 0 var(--wp--preset--spacing--6);
   letter-spacing: -0.04em;
   line-height: 1.1;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 4px 20px rgb(0 0 0 / 50%);
   animation: heroFadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
@@ -373,7 +368,7 @@ body {
   font-weight: 600;
   margin: 0 0 var(--wp--preset--spacing--6);
   letter-spacing: -0.02em;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 10px rgb(0 0 0 / 40%);
   animation: heroFadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s backwards;
 }
 
@@ -386,7 +381,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   line-height: 1.7;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 8px rgb(0 0 0 / 30%);
   animation: heroFadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s backwards;
 }
 
@@ -452,8 +447,8 @@ body {
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.2) 0%,
-      rgba(255, 255, 255, 0) 100%);
+      rgb(255 255 255 / 20%) 0%,
+      rgb(255 255 255 / 0%) 100%);
   opacity: 0;
   transition: opacity var(--cp-transition-base);
 }
@@ -474,23 +469,22 @@ body {
   color: var(--wp--preset--color--white);
   box-shadow:
     var(--wp--preset--shadow--lg),
-    0 0 0 0 rgba(0, 83, 195, 0.5);
+    0 0 0 0 rgb(0 83 195 / 50%);
   animation: buttonPulse 2s ease-in-out infinite;
 }
 
 @keyframes buttonPulse {
-
   0%,
   100% {
     box-shadow:
       var(--wp--preset--shadow--lg),
-      0 0 0 0 rgba(0, 83, 195, 0.5);
+      0 0 0 0 rgb(0 83 195 / 50%);
   }
 
   50% {
     box-shadow:
       var(--wp--preset--shadow--lg),
-      0 0 0 8px rgba(0, 83, 195, 0);
+      0 0 0 8px rgb(0 83 195 / 0%);
   }
 }
 
@@ -507,18 +501,18 @@ body {
 .wp-block-button.is-style-outline .wp-block-button__link,
 .cp-button-secondary,
 .hero-cta .button-secondary {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgb(255 255 255 / 15%);
   color: var(--wp--preset--color--white);
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid rgb(255 255 255 / 50%);
   backdrop-filter: blur(10px);
 }
 
 .wp-block-button.is-style-outline .wp-block-button__link:hover,
 .cp-button-secondary:hover,
 .hero-cta .button-secondary:hover {
-  background: rgba(255, 255, 255, 1);
+  background: rgb(255 255 255 / 100%);
   color: var(--wp--preset--color--primary);
-  border-color: rgba(255, 255, 255, 1);
+  border-color: rgb(255 255 255 / 100%);
   transform: translateY(-3px) scale(1.02);
   box-shadow: var(--wp--preset--shadow--xl);
 }
@@ -593,9 +587,9 @@ input[type="button"][disabled] {
   height: 20px;
   margin-top: -10px;
   margin-left: -10px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  border: 3px solid rgb(255 255 255 / 30%);
   border-radius: 50%;
-  border-top-color: #ffffff;
+  border-top-color: #fff;
   animation: buttonSpinner 0.8s linear infinite;
   z-index: 10;
 }
@@ -621,8 +615,8 @@ input[type="button"][disabled] {
   outline-offset: 4px;
   box-shadow:
     var(--wp--preset--shadow--xl),
-    0 0 0 4px rgba(255, 136, 0, 0.2),
-    0 0 0 8px rgba(0, 83, 195, 0.1);
+    0 0 0 4px rgb(255 136 0 / 20%),
+    0 0 0 8px rgb(0 83 195 / 10%);
   animation: none;
 }
 
@@ -634,7 +628,7 @@ input[type="button"][disabled] {
   outline-offset: 4px;
   box-shadow:
     var(--wp--preset--shadow--xl),
-    0 0 0 4px rgba(255, 136, 0, 0.2);
+    0 0 0 4px rgb(255 136 0 / 20%);
   border-color: var(--wp--preset--color--accent);
 }
 
@@ -645,14 +639,14 @@ input[type="button"][disabled] {
   outline-offset: 5px;
   box-shadow:
     var(--wp--preset--shadow--2-xl),
-    0 0 0 5px rgba(255, 136, 0, 0.2);
+    0 0 0 5px rgb(255 136 0 / 20%);
 }
 
 /* Active (Pressed) State */
-.wp-block-button__link:active:not(:disabled):not(.is-disabled):not(.is-loading),
-.wp-element-button:active:not(:disabled):not(.is-disabled):not(.is-loading),
-.cp-button:active:not(:disabled):not(.is-disabled):not(.is-loading),
-.cp-donation-button:active:not(:disabled):not(.is-disabled):not(.is-loading) {
+.wp-block-button__link:active:not(:disabled, .is-disabled, .is-loading),
+.wp-element-button:active:not(:disabled, .is-disabled, .is-loading),
+.cp-button:active:not(:disabled, .is-disabled, .is-loading),
+.cp-donation-button:active:not(:disabled, .is-disabled, .is-loading) {
   transform: translateY(-1px) scale(0.98) !important;
   box-shadow: var(--wp--preset--shadow--md) !important;
   transition-duration: 50ms;
@@ -684,7 +678,7 @@ input[type="button"][disabled] {
   height: 100%;
   background: linear-gradient(90deg,
       transparent,
-      rgba(255, 255, 255, 0.4),
+      rgb(255 255 255 / 40%),
       transparent);
   animation: shimmer 3s ease-in-out infinite;
 }
@@ -704,7 +698,6 @@ input[type="button"][disabled] {
   font-size: var(--wp--preset--font-size--3-xl);
   font-weight: 700;
   background: linear-gradient(135deg, var(--wp--preset--color--primary), var(--wp--preset--color--accent));
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-variant-numeric: tabular-nums;
@@ -742,9 +735,9 @@ input[type="button"][disabled] {
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.3) 50%,
-      rgba(255, 255, 255, 0) 100%);
+      rgb(255 255 255 / 0%) 0%,
+      rgb(255 255 255 / 30%) 50%,
+      rgb(255 255 255 / 0%) 100%);
   animation: progressShine 2s ease-in-out infinite;
 }
 
@@ -855,8 +848,7 @@ input[type="button"][disabled] {
 /* ============================================
     Responsive Design
     ============================================ */
-@media (max-width: 768px) {
-
+@media (width <= 768px) {
   .campaign-hero,
   .wp-block-cover.is-style-campaign-hero {
     min-height: 55vh;
@@ -892,12 +884,11 @@ input[type="button"][disabled] {
   outline-offset: 3px;
   box-shadow:
     var(--wp--preset--shadow--xl),
-    0 0 0 3px rgba(255, 136, 0, 0.3);
+    0 0 0 3px rgb(255 136 0 / 30%);
 }
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -923,7 +914,6 @@ input[type="button"][disabled] {
    Print Styles
    ============================================ */
 @media print {
-
   .campaign-hero,
   .wp-block-cover {
     page-break-inside: avoid;
@@ -970,9 +960,9 @@ input[type="button"][disabled] {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom,
-      rgba(19, 78, 74, 0.8) 0%,
-      rgba(19, 78, 74, 0.7) 50%,
-      rgba(19, 78, 74, 0.9) 100%);
+      rgb(19 78 74 / 80%) 0%,
+      rgb(19 78 74 / 70%) 50%,
+      rgb(19 78 74 / 90%) 100%);
 }
 
 .hero-background-gradient {
@@ -1012,7 +1002,7 @@ input[type="button"][disabled] {
 
 .hero-tagline {
   font-size: clamp(1.25rem, 3vw, 1.75rem);
-  color: rgba(255, 255, 255, 0.9);
+  color: rgb(255 255 255 / 90%);
   margin-bottom: var(--wp--preset--spacing--10);
   max-width: 48rem;
   margin-left: auto;
@@ -1029,7 +1019,7 @@ input[type="button"][disabled] {
   animation: fadeInUp 1s ease 0.8s backwards;
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
   .hero-cta-buttons {
     flex-direction: row;
   }
@@ -1076,7 +1066,6 @@ input[type="button"][disabled] {
 }
 
 @keyframes gradientRotate {
-
   0%,
   100% {
     background-position: 0% 50%;
@@ -1104,7 +1093,7 @@ input[type="button"][disabled] {
 }
 
 .hero-cta-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(255 255 255 / 10%);
 }
 
 .button-icon-left {
@@ -1124,7 +1113,7 @@ input[type="button"][disabled] {
 .scroll-arrow {
   width: 1.5rem;
   height: 1.5rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(255 255 255 / 60%);
 }
 
 @keyframes fadeInUp {
@@ -1140,7 +1129,6 @@ input[type="button"][disabled] {
 }
 
 @keyframes bounce {
-
   0%,
   20%,
   50%,
@@ -1217,39 +1205,38 @@ input[type="button"][disabled] {
   perspective: 1000px;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .issues-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .issues-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .issue-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgb(255 255 255 / 90%);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--cp-radius-2xl);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgb(255 255 255 / 30%);
   overflow: hidden;
   transition: transform var(--cp-transition-base), background-color var(--cp-transition-base), box-shadow var(--cp-transition-base);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    0 8px 32px rgb(0 0 0 / 10%),
+    inset 0 1px 0 rgb(255 255 255 / 60%);
 }
 
 .issue-card:hover {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgb(255 255 255 / 95%);
   box-shadow:
-    0 16px 48px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 16px 48px rgb(0 0 0 / 15%),
+    inset 0 1px 0 rgb(255 255 255 / 80%);
   transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
   transform-style: preserve-3d;
-  border-color: rgba(14, 184, 166, 0.3);
+  border-color: rgb(14 184 166 / 30%);
 }
 
 .issue-thumbnail {
@@ -1316,39 +1303,38 @@ input[type="button"][disabled] {
   perspective: 1000px;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .events-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .events-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .event-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgb(255 255 255 / 90%);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--cp-radius-2xl);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgb(255 255 255 / 30%);
   padding: var(--wp--preset--spacing--8);
   transition: transform var(--cp-transition-base), background-color var(--cp-transition-base), box-shadow var(--cp-transition-base);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    0 8px 32px rgb(0 0 0 / 10%),
+    inset 0 1px 0 rgb(255 255 255 / 60%);
 }
 
 .event-card:hover {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgb(255 255 255 / 95%);
   box-shadow:
-    0 16px 48px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 16px 48px rgb(0 0 0 / 15%),
+    inset 0 1px 0 rgb(255 255 255 / 80%);
   transform: translateY(-8px) rotateX(-2deg) rotateY(2deg);
   transform-style: preserve-3d;
-  border-color: rgba(14, 184, 166, 0.3);
+  border-color: rgb(14 184 166 / 30%);
 }
 
 .event-date-wrapper {
@@ -1496,7 +1482,7 @@ input[type="button"][disabled] {
 }
 
 /* Responsive Typography Adjustments */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .hero-title {
     font-size: clamp(4rem, 8vw, 6rem);
   }
@@ -1516,15 +1502,14 @@ input[type="button"][disabled] {
   margin: 0 auto;
   padding: var(--wp--preset--spacing--8);
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.85) 100%);
+      rgb(255 255 255 / 95%) 0%,
+      rgb(255 255 255 / 85%) 100%);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--cp-radius-2xl);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgb(255 255 255 / 40%);
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    0 12px 40px rgb(0 0 0 / 12%),
+    inset 0 1px 0 rgb(255 255 255 / 70%);
 }
 
 .thermometer-header {
@@ -1558,7 +1543,6 @@ input[type="button"][disabled] {
   background: linear-gradient(135deg,
       var(--wp--preset--color--accent-600) 0%,
       var(--wp--preset--color--accent-700) 100%);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1.2;
@@ -1596,8 +1580,8 @@ input[type="button"][disabled] {
   border-radius: 30px;
   overflow: hidden;
   box-shadow:
-    inset 0 4px 10px rgba(0, 0, 0, 0.15),
-    0 2px 8px rgba(0, 0, 0, 0.1);
+    inset 0 4px 10px rgb(0 0 0 / 15%),
+    0 2px 8px rgb(0 0 0 / 10%);
 }
 
 .thermometer-fill {
@@ -1612,7 +1596,7 @@ input[type="button"][disabled] {
       var(--wp--preset--color--accent-500) 100%);
   border-radius: 30px;
   transition: height 2s cubic-bezier(0.65, 0, 0.35, 1);
-  box-shadow: 0 -4px 20px rgba(228, 29, 72, 0.4);
+  box-shadow: 0 -4px 20px rgb(228 29 72 / 40%);
 }
 
 .thermometer-fill::before {
@@ -1623,9 +1607,9 @@ input[type="button"][disabled] {
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.3) 50%,
-      rgba(255, 255, 255, 0) 100%);
+      rgb(255 255 255 / 0%) 0%,
+      rgb(255 255 255 / 30%) 50%,
+      rgb(255 255 255 / 0%) 100%);
   animation: thermometerShine 3s ease-in-out infinite;
 }
 
@@ -1648,27 +1632,26 @@ input[type="button"][disabled] {
       var(--wp--preset--color--accent-600) 100%);
   border-radius: 50%;
   box-shadow:
-    0 8px 24px rgba(228, 29, 72, 0.4),
-    inset 0 -4px 10px rgba(0, 0, 0, 0.2),
-    inset 0 4px 10px rgba(255, 255, 255, 0.3);
+    0 8px 24px rgb(228 29 72 / 40%),
+    inset 0 -4px 10px rgb(0 0 0 / 20%),
+    inset 0 4px 10px rgb(255 255 255 / 30%);
   animation: bulbPulse 2s ease-in-out infinite;
 }
 
 @keyframes bulbPulse {
-
   0%,
   100% {
     box-shadow:
-      0 8px 24px rgba(228, 29, 72, 0.4),
-      inset 0 -4px 10px rgba(0, 0, 0, 0.2),
-      inset 0 4px 10px rgba(255, 255, 255, 0.3);
+      0 8px 24px rgb(228 29 72 / 40%),
+      inset 0 -4px 10px rgb(0 0 0 / 20%),
+      inset 0 4px 10px rgb(255 255 255 / 30%);
   }
 
   50% {
     box-shadow:
-      0 8px 32px rgba(228, 29, 72, 0.6),
-      inset 0 -4px 10px rgba(0, 0, 0, 0.2),
-      inset 0 4px 10px rgba(255, 255, 255, 0.3);
+      0 8px 32px rgb(228 29 72 / 60%),
+      inset 0 -4px 10px rgb(0 0 0 / 20%),
+      inset 0 4px 10px rgb(255 255 255 / 30%);
   }
 }
 
@@ -1696,7 +1679,6 @@ input[type="button"][disabled] {
   background: linear-gradient(135deg,
       var(--wp--preset--color--primary) 0%,
       var(--wp--preset--color--accent-600) 100%);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: var(--wp--preset--spacing--6);

@@ -15,7 +15,7 @@
     max-width: 1400px;
     margin: 20px 20px 20px 0;
     background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -25,7 +25,7 @@
    ======================================== */
 
 .campaignpress-header {
-    background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    background: linear-gradient(135deg, #06c 0%, #0052a3 100%);
     color: #fff;
     padding: 30px 40px;
     display: flex;
@@ -54,13 +54,13 @@
 .campaignpress-subtitle {
     margin: 8px 0 0 44px;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgb(255 255 255 / 90%);
     font-weight: 400;
 }
 
 .campaignpress-header-actions .button {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgb(255 255 255 / 15%);
+    border: 1px solid rgb(255 255 255 / 30%);
     color: #fff;
     text-shadow: none;
     box-shadow: none;
@@ -68,8 +68,8 @@
 }
 
 .campaignpress-header-actions .button:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgb(255 255 255 / 25%);
+    border-color: rgb(255 255 255 / 50%);
 }
 
 .campaignpress-header-actions .button .dashicons {
@@ -103,14 +103,14 @@
 }
 
 .campaignpress-nav-tab-wrapper .nav-tab:hover {
-    background: rgba(0, 102, 204, 0.05);
-    color: #0066cc;
+    background: rgb(0 102 204 / 5%);
+    color: #06c;
 }
 
 .campaignpress-nav-tab-wrapper .nav-tab.nav-tab-active {
     background: #fff;
-    border-bottom-color: #0066cc;
-    color: #0066cc;
+    border-bottom-color: #06c;
+    color: #06c;
 }
 
 .campaignpress-nav-tab-wrapper .nav-tab .dashicons {
@@ -138,7 +138,7 @@
     border-radius: 6px;
     padding: 30px;
     margin-bottom: 30px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 5%);
 }
 
 .campaignpress-section:last-child {
@@ -146,8 +146,8 @@
 }
 
 .section-title {
-    margin: 0 0 20px 0;
-    padding: 0 0 15px 0;
+    margin: 0 0 20px;
+    padding: 0 0 15px;
     border-bottom: 2px solid #e2e4e7;
     font-size: 18px;
     font-weight: 600;
@@ -158,14 +158,14 @@
 }
 
 .section-title .dashicons {
-    color: #0066cc;
+    color: #06c;
     font-size: 22px;
     width: 22px;
     height: 22px;
 }
 
 .section-description {
-    margin: -10px 0 20px 0;
+    margin: -10px 0 20px;
     color: #646970;
     font-size: 14px;
 }
@@ -210,7 +210,7 @@
     padding: 8px 12px;
     font-size: 14px;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
 }
 
 .campaignpress-form input[type="text"]:focus,
@@ -220,8 +220,8 @@
 .campaignpress-form input[type="date"]:focus,
 .campaignpress-form select:focus,
 .campaignpress-form textarea:focus {
-    border-color: #0066cc;
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    border-color: #06c;
+    box-shadow: 0 0 0 3px rgb(0 102 204 / 10%);
     outline: none;
 }
 
@@ -235,7 +235,7 @@
 }
 
 .campaignpress-form .description {
-    margin: 8px 0 0 0;
+    margin: 8px 0 0;
     color: #646970;
     font-size: 13px;
     line-height: 1.5;
@@ -255,11 +255,11 @@
 
 .wp-picker-container .wp-color-result {
     border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
     border: 1px solid #d0d5dd;
 }
 
-.wp-picker-container .wp-color-result:after {
+.wp-picker-container .wp-color-result::after {
     border-radius: 3px;
 }
 
@@ -293,14 +293,14 @@
 }
 
 .campaignpress-actions .button-primary {
-    background: #0066cc;
+    background: #06c;
     border-color: #0052a3;
     padding: 12px 32px;
     height: auto;
     font-size: 15px;
     font-weight: 500;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 102, 204, 0.2);
+    box-shadow: 0 2px 4px rgb(0 102 204 / 20%);
     transition: all 0.2s ease;
 }
 
@@ -308,7 +308,7 @@
 .campaignpress-actions .button-primary:focus {
     background: #0052a3;
     border-color: #004080;
-    box-shadow: 0 3px 6px rgba(0, 102, 204, 0.3);
+    box-shadow: 0 3px 6px rgb(0 102 204 / 30%);
     transform: translateY(-1px);
 }
 
@@ -338,7 +338,7 @@
     margin: 20px 40px;
     border-left-width: 4px;
     border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
 }
 
 .campaignpress-options-wrap .notice.notice-success {
@@ -379,7 +379,7 @@
 }
 
 .campaignpress-form .form-table th .dashicons-video-alt3 {
-    color: #ff0000;
+    color: #f00;
 }
 
 .campaignpress-form .form-table th .dashicons-linkedin {
@@ -391,7 +391,7 @@
    ======================================== */
 
 .campaignpress-form textarea.code {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+    font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, monospace;
     font-size: 13px;
     line-height: 1.6;
     background: #f8f9fa;
@@ -404,7 +404,7 @@
    Responsive Design
    ======================================== */
 
-@media screen and (max-width: 1024px) {
+@media screen and (width <= 1024px) {
     .campaignpress-header {
         flex-direction: column;
         align-items: flex-start;
@@ -416,7 +416,7 @@
     }
 }
 
-@media screen and (max-width: 782px) {
+@media screen and (width <= 782px) {
     .campaignpress-options-wrap {
         margin: 10px 10px 10px 0;
     }
@@ -491,7 +491,7 @@
     height: 40px;
     margin: -20px 0 0 -20px;
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #0066cc;
+    border-top: 4px solid #06c;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }

@@ -12,11 +12,29 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+    "wp": "readonly",
+    "jQuery": "readonly",
+    "ajaxurl": "readonly",
+    "cpPremium": "readonly",
+    "campaignpress_vars": "readonly",
+    "campaignpress_admin_notices": "readonly",
+    "campaignpressAnalytics": "readonly",
+    "campaignpressDemoImport": "readonly",
+    "Chart": "readonly"
+  },
   "settings": {
     "react": {
       "version": "detect"
     }
   },
+  "ignorePatterns": [
+    "**/*.min.js",
+    "**/min/**",
+    "**/dist/**",
+    "**/vendor/**",
+    "**/node_modules/**"
+  ],
   "rules": {
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",

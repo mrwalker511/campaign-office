@@ -67,23 +67,23 @@ OVERALL_STATUS=0
 
 # 1. Theme Check
 if [ "$RUN_THEME_CHECK" = true ]; then
-    run_test "Theme Check" "node tests/theme-check.js" || OVERALL_STATUS=1
+    run_test "Theme Check" "(cd .. && node tests/theme-check.js)" || OVERALL_STATUS=1
 fi
 
 # 2. PHP Linting
 if [ "$RUN_LINT" = true ]; then
-    run_test "PHP Syntax Check" "composer lint" || OVERALL_STATUS=1
+    run_test "PHP Syntax Check" "(cd .. && composer lint)" || OVERALL_STATUS=1
 fi
 
 # 3. PHP Code Standards
 if [ "$RUN_LINT" = true ]; then
-    run_test "PHP Code Standards (PHPCS)" "composer phpcs" || OVERALL_STATUS=1
+    run_test "PHP Code Standards (PHPCS)" "(cd .. && composer phpcs)" || OVERALL_STATUS=1
 fi
 
 # 4. PHP Unit Tests
 if [ "$RUN_PHP_TESTS" = true ]; then
-    if [ -d "vendor/phpunit" ] || [ -f "vendor/bin/phpunit" ]; then
-        run_test "PHP Unit Tests" "composer test" || OVERALL_STATUS=1
+    if [ -d "../vendor/phpunit" ] || [ -f "../vendor/bin/phpunit" ]; then
+        run_test "PHP Unit Tests" "(cd .. && composer test)" || OVERALL_STATUS=1
     else
         echo -e "${YELLOW}⊘ Skipping PHP tests - PHPUnit not installed${NC}"
         echo -e "${YELLOW}  Run: composer install${NC}"
@@ -92,32 +92,32 @@ fi
 
 # 5. JavaScript Linting
 if [ "$RUN_LINT" = true ]; then
-    run_test "JavaScript Linting (ESLint)" "npm run lint:js" || OVERALL_STATUS=1
+    run_test "JavaScript Linting (ESLint)" "(cd .. && npm run lint:js)" || OVERALL_STATUS=1
 fi
 
 # 6. CSS Linting
 if [ "$RUN_LINT" = true ]; then
-    run_test "CSS Linting (Stylelint)" "npm run lint:css" || OVERALL_STATUS=1
+    run_test "CSS Linting (Stylelint)" "(cd .. && npm run lint:css)" || OVERALL_STATUS=1
 fi
 
 # 7. JavaScript Unit Tests
 if [ "$RUN_JS_TESTS" = true ]; then
-    run_test "JavaScript Unit Tests (Jest)" "npm run test:js" || OVERALL_STATUS=1
+    run_test "JavaScript Unit Tests (Jest)" "(cd .. && npm run test:js)" || OVERALL_STATUS=1
 fi
 
 # 8. Accessibility Tests (requires running site)
 if [ "$RUN_A11Y" = true ]; then
-    run_test "Accessibility Tests" "npm run test:a11y" || OVERALL_STATUS=1
+    run_test "Accessibility Tests" "(cd .. && npm run test:a11y)" || OVERALL_STATUS=1
 fi
 
 # 9. E2E Tests (requires running site)
 if [ "$RUN_E2E" = true ]; then
-    run_test "E2E Tests (Playwright)" "npm run test:e2e" || OVERALL_STATUS=1
+    run_test "E2E Tests (Playwright)" "(cd .. && npm run test:e2e)" || OVERALL_STATUS=1
 fi
 
 # 10. Performance Tests (requires running site)
 if [ "$RUN_PERFORMANCE" = true ]; then
-    run_test "Performance Tests" "npm run test:performance" || OVERALL_STATUS=1
+    run_test "Performance Tests" "(cd .. && npm run test:performance)" || OVERALL_STATUS=1
 fi
 
 # Summary

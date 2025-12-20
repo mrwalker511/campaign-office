@@ -3,10 +3,10 @@ export default {
   testEnvironment: 'jsdom',
 
   // Setup files
-  setupFilesAfterEnv: ['<rootDir>/tests/javascript/setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/javascript/setup.js'],
 
   // Module paths
-  roots: ['<rootDir>/assets', '<rootDir>/blocks', '<rootDir>/tests'],
+  roots: ['<rootDir>/../assets', '<rootDir>/../blocks', '<rootDir>'],
 
   // Test match patterns
   testMatch: [
@@ -17,32 +17,32 @@ export default {
 
   // Transform files with babel
   transform: {
-    '^.+\\.(js|jsx)$': ['babel-jest', { configFile: './babel.config.cjs' }],
+    '^.+\\.(js|jsx)$': ['babel-jest', { configFile: './build/babel.config.cjs' }],
   },
 
   // Module name mapper for imports
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': '<rootDir>/tests/javascript/mocks/styleMock.js',
-    '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/tests/javascript/mocks/fileMock.js',
-    '^@wordpress/(.*)$': '<rootDir>/node_modules/@wordpress/$1',
+    '\\.(css|less|scss|sass)$': '<rootDir>/javascript/mocks/styleMock.js',
+    '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/javascript/mocks/fileMock.js',
+    '^@wordpress/(.*)$': '<rootDir>/../node_modules/@wordpress/$1',
   },
 
   // Coverage configuration
   collectCoverageFrom: [
-    'assets/js/**/*.{js,jsx}',
-    'assets/react/**/*.{js,jsx}',
-    'blocks/**/*.js',
+    '../assets/js/**/*.{js,jsx}',
+    '../assets/react/**/*.{js,jsx}',
+    '../blocks/**/*.js',
     '!**/node_modules/**',
     '!**/vendor/**',
     '!**/build/**',
     '!**/*.config.js',
   ],
 
-  coverageDirectory: 'coverage',
+  coverageDirectory: '../coverage',
 
   coverageReporters: ['text', 'lcov', 'html'],
 
-  coverageThresholds: {
+  coverageThreshold: {
     global: {
       branches: 50,
       functions: 50,
@@ -52,7 +52,14 @@ export default {
   },
 
   // Ignore patterns
-  testPathIgnorePatterns: ['/node_modules/', '/vendor/', '/build/'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/vendor/',
+    '/build/',
+    '/e2e/',
+    '/performance/',
+    '/accessibility/'
+  ],
 
   // Module file extensions
   moduleFileExtensions: ['js', 'jsx', 'json'],

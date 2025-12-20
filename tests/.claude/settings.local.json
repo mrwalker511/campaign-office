@@ -16,7 +16,12 @@
       "Bash(tr:*)",
       "Bash(\"/c/Users/Matt Walker/composer/composer\" --version)",
       "Bash(~/.bashrc)",
-      "Bash(source ~/.bashrc)"
+      "Bash(source ~/.bashrc)",
+      "Bash(composer config:*)",
+      "Bash(npm run lint:css:fix:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run lint:js:*)",
+      "Bash(npm run test:js:*)"
     ]
   }
 }

@@ -1,7 +1,6 @@
-@import "tailwindcss";
+@import url("tailwindcss");
 
 @layer components {
-
   /* Section Spacing - uses new spacing tokens (88, 100, 112) */
   .section-spacing {
     @apply py-88 md:py-100;

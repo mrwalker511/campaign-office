@@ -52,7 +52,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
 }
 
 .analytics-card h3 {
@@ -97,7 +97,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
 }
 
 .chart-container h3 {
@@ -186,7 +186,7 @@
     color: #fff;
     border-color: #0053c3;
     transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 83, 195, 0.2);
+    box-shadow: 0 2px 8px rgb(0 83 195 / 20%);
 }
 
 #report-content {
@@ -225,7 +225,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .campaignpress-analytics-header {
         flex-direction: column;
         gap: 15px;
@@ -254,7 +254,6 @@
 
 /* Print Styles */
 @media print {
-
     .campaignpress-analytics-header,
     .export-buttons,
     .metrics-actions,

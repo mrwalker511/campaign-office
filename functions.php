@@ -114,20 +114,16 @@ add_action('after_setup_theme', 'campaignpress_content_width', 0);
  * Enqueue scripts and styles
  */
 function campaignpress_scripts() {
-    
-    // Load Google Fonts
-    wp_enqueue_style(
-        'campaignpress-fonts',
-        'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap',
-        array(),
-        null
-    );
-    
+
+    // Self-hosted fonts (GDPR compliant)
+    // Fonts are preloaded in wp_head via includes/free/font-preconnect.php
+    // @font-face declarations are in theme.json
+
     // Theme stylesheet (minimal, theme.json handles most styling)
     wp_enqueue_style(
         'campaignpress-style',
         get_stylesheet_uri(),
-        array('campaignpress-fonts'), // Load after fonts
+        array(),
         CAMPAIGNPRESS_VERSION
     );
 
@@ -140,14 +136,22 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Tailwind CSS (built by Vite from assets/css/app.css)
+    // Bootstrap 5 CSS (for header navigation)
     wp_enqueue_style(
-        'campaignpress-tailwind',
-        get_template_directory_uri() . '/assets/dist/css/tailwind.css',
-        array('campaignpress-design-wp69'),
-        CAMPAIGNPRESS_VERSION
+        'bootstrap',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
+        array(),
+        '5.3.0'
     );
 
+    // Bootstrap 5 JS Bundle (includes Popper)
+    wp_enqueue_script(
+        'bootstrap-bundle',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
+        array(),
+        '5.3.0',
+        true
+    );
 
     // Ensure jQuery is loaded (WordPress core)
     wp_enqueue_script('jquery');

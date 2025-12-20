@@ -51,29 +51,13 @@ class Performance {
 
     /**
      * Load minified assets if they exist.
+     * Note: Minified CSS exists, but minified JS does not.
+     * Regular assets are loaded in functions.php with cache busting via version.
      */
     public static function load_optimized_assets() {
-        $min_css_path = get_template_directory() . '/assets/css/min/design-system-wp69.css';
-        $min_js_path = get_template_directory() . '/assets/js/min/main.js';
-
-        if (file_exists($min_css_path)) {
-            wp_enqueue_style(
-                'campaignpress-style-min',
-                get_template_directory_uri() . '/assets/css/min/design-system-wp69.css',
-                array(),
-                filemtime($min_css_path)
-            );
-        }
-
-        if (file_exists($min_js_path)) {
-            wp_enqueue_script(
-                'campaignpress-main-min',
-                get_template_directory_uri() . '/assets/js/min/main.js',
-                array(),
-                filemtime($min_js_path),
-                true
-            );
-        }
+        // Minified CSS and JS are loaded via functions.php
+        // This method is kept for backwards compatibility
+        // Future: Implement build process to generate minified assets
     }
 
     /**

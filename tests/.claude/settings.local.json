@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(superpowers:systematic-debugging)",
+      "Bash(bash run-all-tests.sh:*)",
+      "Bash(where:*)",
+      "Bash(if [ -d \"vendor\" ])",
+      "Bash(then echo \"vendor exists\")",
+      "Bash(else echo \"vendor missing\")",
+      "Bash(fi)"
+    ]
+  }
+}

@@ -135,6 +135,11 @@ phpunit.xml
 tests/_output/
 tests/_support/_generated/
 
+# Playwright
+tests/e2e/reports/
+playwright-report/
+test-results/
+
 # ===========================
 # Temporary & Cache Files
 # ===========================

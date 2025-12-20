@@ -1,0 +1,80 @@
+# Development Tools & Dependencies
+wp-cli.phar
+package.json
+package-lock.json
+node_modules/
+composer.json
+composer.lock
+vendor/
+
+# Build & Configuration Files
+gulpfile.js
+build-blocks.js
+vite.config.js
+tailwind.config.js
+postcss.config.js
+.eslintrc.json
+build_log.txt
+
+# Git & Version Control
+.git
+.github
+.gitignore
+.gitattributes
+
+# Documentation & Development Files
+AUDIT_WALKTHROUGH.md
+BLOCK_IMPLEMENTATION_GUIDE.md
+CODE_REVIEW_REPORT.md
+DESIGN-ENHANCEMENTS.md
+TESTING-REPORT.md
+implementation_plan.md
+task.md
+test_permissions.txt
+playground-fix-plugin.php
+style-guide.html
+PRODUCTION_SHIPPING_GUIDE.md
+.distignore
+
+# AI/Agent Directories
+.claude/
+lighthouse-reports/
+docs/
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary & Cache Files
+*.tmp
+*.temp
+*.cache
+*.log
+*.bak
+*.backup
+*.old
+
+# Testing
+tests/
+phpunit.xml
+.phpunit.result.cache
+
+# Source Files (keep only minified)
+assets/css/*.css
+!assets/css/min/*.css
+!assets/css/critical/*.css
+assets/js/*.js
+!assets/js/min/*.js
+
+# Development Scripts
+scripts/build*
+scripts/dev*
+scripts/watch*

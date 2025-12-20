@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="tests/bootstrap.php"
+    backupGlobals="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    verbose="true"
+>
+    <testsuites>
+        <testsuite name="Campaign Office Theme Test Suite">
+            <directory>./tests/</directory>
+        </testsuite>
+        <testsuite name="Unit Tests">
+            <directory>./tests/unit/</directory>
+        </testsuite>
+        <testsuite name="Integration Tests">
+            <directory>./tests/integration/</directory>
+        </testsuite>
+        <testsuite name="Premium Features">
+            <directory>./tests/premium/</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./includes</directory>
+            <directory suffix=".php">./blocks</directory>
+        </include>
+        <exclude>
+            <directory>./vendor</directory>
+            <directory>./tests</directory>
+            <directory>./node_modules</directory>
+        </exclude>
+    </coverage>
+
+    <php>
+        <const name="WP_TESTS_PHPUNIT_POLYFILLS_PATH" value="vendor/yoast/phpunit-polyfills" />
+        <env name="WP_PHPUNIT__TESTS_CONFIG" value="tests/wp-config-test.php" />
+    </php>
+</phpunit>

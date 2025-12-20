@@ -6,7 +6,7 @@ Author URI: https://campaignpress.com
 Description: A professional WordPress theme designed specifically for political campaigns, candidates, and advocacy organizations. Features custom post types for issues, events, endorsements, team members, and volunteer opportunities. Includes comprehensive theme options, multiple color scheme presets, and demo content importer.
 Version: 2.0.0
 Requires at least: 6.9
-Tested up to: 6.9
+Requested up to: 6.9
 Requires PHP: 8.1
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -38,22 +38,15 @@ CampaignPress is a comprehensive WordPress theme built specifically for politica
   --cp-primary-text: var(--wp--preset--color--primary-text); /* #003d91 - 10.2:1 ratio on white */
   --cp-accent-text: var(--wp--preset--color--accent-text); /* #cc6d00 - 4.7:1 ratio on white */
 
-  /* Enhanced Line Heights for Readability */
-  --cp-leading-tight: 1.2;
-  --cp-leading-snug: 1.35;
-  --cp-leading-normal: 1.5;
-  --cp-leading-relaxed: 1.75;
-  --cp-leading-loose: 2;
-
   /* Typography Optimization */
-  --cp-max-reading-width: 65ch; /* Optimal line length for readability */
+  --cp-max-reading-width: 65ch;
 }
 
 /* ============================================
    ENHANCED TYPOGRAPHY SYSTEM
    ============================================ */
 
-/* Font Feature Settings for Better Rendering */
+/* Font smoothing and rendering optimization */
 body {
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
   text-rendering: optimizeLegibility;
@@ -61,427 +54,32 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings with Optical Sizing */
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-feature-settings: 'kern' 1, 'liga' 1;
-  font-optical-sizing: auto;
-  text-wrap: balance; /* Prevent orphans and improve balance */
-}
-
-/* Optimal Paragraph Readability */
-p,
+/* Optimal line length for blocks */
 .entry-content p,
 .wp-block-paragraph {
   max-width: var(--cp-max-reading-width);
-  text-wrap: pretty; /* CSS Text Level 4 - Better line breaks */
-}
-
-/* Improved List Spacing */
-.entry-content ul,
-.entry-content ol,
-.wp-block-list {
-  padding-left: var(--wp--preset--spacing--8);
-  margin-bottom: var(--wp--preset--spacing--6);
-}
-
-.entry-content li,
-.wp-block-list li {
-  margin-bottom: var(--wp--preset--spacing--3);
-  line-height: 1.7;
-}
-
-/* Enhanced Blockquote Styling */
-.entry-content blockquote,
-.wp-block-quote {
-  hanging-punctuation: first last;
-  font-style: italic;
-  quotes: "\201C""\201D""\2018""\2019";
-}
-
-.entry-content blockquote::before,
-.wp-block-quote::before {
-  content: open-quote;
-}
-
-.entry-content blockquote::after,
-.wp-block-quote::after {
-  content: close-quote;
-}
-
-/* Strong Emphasis */
-strong,
-b {
-  font-weight: 700;
-  color: var(--wp--preset--color--neutral-900);
-}
-
-/* Italic Emphasis */
-em,
-i {
-  font-style: italic;
-  font-weight: 400;
-}
-
-/* ============================================
-   Campaign Hero Section (Full Width Video/Image)
-   ============================================ */
-.campaign-hero {
-  position: relative;
-  width: 100%;        /* Fills the #main container naturally */
-  max-width: 100%;    /* Ensures no overflow */
-  padding: 0;
-  margin: 0;
-  display: block;
-  overflow: hidden;
-  background-color: #000; /* Fallback for video/image load time */
-}
-
-/* The background wrapper sits in the flow to dictate height */
-.hero-background {
-  position: relative;
-  width: 100%;
-  height: auto;
-  margin: 0;
-  padding: 0;
-  line-height: 0;     /* Removes tiny white line under video */
-  z-index: 1;
-}
-
-/* Force video to fill width and ignore global constraints */
-.hero-background video,
-.hero-background img {
-  width: 100% !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 !important;
-  max-width: none !important;
-  object-fit: cover;
-}
-
-/* Video Overlay Gradient */
-.hero-background::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* * The Content
- * Floating absolutely on top of the video with centered text
- */
-.hero-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Perfect Center */
-  z-index: 3;
-  width: 100%;
-  max-width: 800px; /* Constrained width for text readability */
-  padding: 0 var(--cp-spacing-md);
-  text-align: center;
-  color: #ffffff;
-  /* Enhanced text shadow for WCAG AA contrast on video backgrounds */
-  text-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.8),
-    0 2px 4px rgba(0, 0, 0, 0.6),
-    0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-/* Typography and Staggered Animations */
-.hero-title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin: 0 0 var(--cp-spacing-sm);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  animation: fadeInUp 1s ease 0.2s backwards;
-}
-
-.hero-subtitle {
-  font-size: 1.75rem;
-  font-weight: 500;
-  margin: 0 0 var(--cp-spacing-md);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  animation: fadeInUp 1s ease 0.4s backwards;
-}
-
-.hero-tagline {
-  font-size: 1.25rem;
-  margin: 0 0 var(--cp-spacing-lg);
-  opacity: 0.95;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  animation: fadeInUp 1s ease 0.6s backwards;
-}
-
-/* CTA Buttons Specific to Hero */
-.hero-cta {
-  display: flex;
-  gap: var(--cp-spacing-md);
-  justify-content: center;
-  flex-wrap: wrap;
-  animation: fadeInUp 1s ease 0.8s backwards;
-}
-
-.hero-cta .button {
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
-  font-weight: 700;
-  text-decoration: none;
-  border-radius: var(--cp-border-radius);
-  transition: var(--cp-transition);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.hero-cta .button-primary {
-  background-color: var(--cp-primary);
-  color: #ffffff;
-  border: 2px solid var(--cp-primary);
-}
-
-.hero-cta .button-primary:hover {
-  background-color: var(--cp-secondary);
-  border-color: var(--cp-secondary);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-.hero-cta .button-secondary {
-  background-color: transparent;
-  color: #ffffff;
-  border: 2px solid #ffffff;
-}
-
-.hero-cta .button-secondary:hover {
-  background-color: #ffffff;
-  color: var(--cp-primary);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-/* Keyframes */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.25rem;
-  }
-
-  .hero-cta {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .hero-cta .button {
-    width: 100%;
-  }
-}
-
-/* ============================================
-   Front Page Sections (Must be outside .site-container in front-page.php)
-   ============================================ */
-.front-page-section {
-  padding: var(--cp-spacing-xl) var(--cp-spacing-md);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.front-page-section .section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: var(--cp-spacing-lg);
-  color: var(--cp-text);
-}
-
-.front-page-section .section-footer {
-  text-align: center;
-  margin-top: var(--cp-spacing-lg);
-}
-
-/* Issues Grid */
-.issues-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--cp-spacing-lg);
-}
-
-.issue-card {
-  background-color: var(--cp-background);
-  border: 1px solid var(--cp-border);
-  border-radius: var(--cp-border-radius-lg);
-  overflow: hidden;
-  transition: var(--cp-transition);
-}
-
-.issue-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  transform: translateY(-4px);
-}
-
-.issue-thumbnail {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-}
-
-.issue-thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.issue-card:hover .issue-thumbnail img {
-  transform: scale(1.05);
-}
-
-.issue-content {
-  padding: var(--cp-spacing-md);
-}
-
-.issue-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0 0 var(--cp-spacing-sm);
-}
-
-.issue-title a {
-  color: var(--cp-text);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.issue-title a:hover {
-  color: var(--cp-primary);
-}
-
-/* Events List */
-.events-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--cp-spacing-md);
-}
-
-.event-card {
-  background-color: var(--cp-background);
-  border: 1px solid var(--cp-border);
-  border-radius: var(--cp-border-radius-lg);
-  padding: var(--cp-spacing-md);
-  transition: var(--cp-transition);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: var(--cp-spacing-md);
-  align-items: center;
-}
-
-.event-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: var(--cp-primary);
-}
-
-.event-date {
-  color: var(--cp-primary);
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: var(--cp-spacing-xs);
-}
-
-/* Read More Link */
-.read-more {
-  color: var(--cp-primary);
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
+  text-wrap: pretty;
 }
 
 /* ============================================
    ACCESSIBILITY ENHANCEMENTS (WCAG AA Compliance)
    ============================================ */
 
-/* Minimum Touch Target Size (44x44px WCAG 2.1 AA - Criterion 2.5.5) */
+/* Minimum Touch Target Size */
 button,
 .wp-block-button__link,
 .wp-element-button,
 a.button,
-input[type="submit"],
-input[type="button"],
-input[type="reset"] {
+input[type="submit"] {
   min-height: 44px;
   min-width: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-/* Enhanced Focus Indicators (WCAG 2.1 AA - Criterion 2.4.7) */
-*:focus-visible {
-  outline: 3px solid var(--wp--preset--color--accent);
-  outline-offset: 3px;
-  border-radius: 0.25rem;
-}
-
-/* Remove default focus outline when using focus-visible */
-*:focus:not(:focus-visible) {
-  outline: none;
 }
 
 /* High Contrast Text Colors for Accessibility */
-.has-primary-color,
-.has-primary-color a {
-  color: var(--cp-primary-text) !important;
-}
+.has-primary-color, .has-primary-color a { color: var(--cp-primary-text) !important; }
+.has-accent-color, .has-accent-color a { color: var(--cp-accent-text) !important; }
 
-.has-accent-color,
-.has-accent-color a {
-  color: var(--cp-accent-text) !important;
-}
-
-/* Ensure sufficient contrast on light backgrounds */
-.has-primary-50-background-color,
-.has-primary-100-background-color,
-.has-accent-50-background-color,
-.has-accent-100-background-color,
-.has-neutral-50-background-color,
-.has-neutral-100-background-color {
-  color: var(--wp--preset--color--neutral-900);
-}
-
-/* When primary/accent colors are used as text on light backgrounds */
-.has-primary-50-background-color a,
-.has-primary-100-background-color a,
-.has-neutral-50-background-color a,
-.has-neutral-100-background-color a {
-  color: var(--cp-primary-text);
-}
-
-.has-accent-50-background-color a,
-.has-accent-100-background-color a {
-  color: var(--cp-accent-text);
-}
-
-/* Screen Reader Only Text */
+/* Screening Reader Only Text */
 .sr-only,
 .screen-reader-text {
   position: absolute;
@@ -495,34 +93,8 @@ input[type="reset"] {
   border-width: 0;
 }
 
-.sr-only-focusable:active,
-.sr-only-focusable:focus {
-  position: static;
-  width: auto;
-  height: auto;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-}
-
-/* Reduced Motion Support (WCAG 2.1 AAA - Criterion 2.3.3) */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  /* Disable parallax effects */
-  .has-parallax {
-    background-attachment: scroll !important;
-  }
-
-  /* Simplify gradient animations */
-  .hero-background::after {
-    animation: none !important;
-  }
+/* Support for standard WP search form styling */
+.search-form {
+    display: flex;
+    gap: 0.5rem;
 }

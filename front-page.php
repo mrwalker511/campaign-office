@@ -51,7 +51,11 @@ while ( have_posts() ) :
                         </div>
                     <?php elseif ( has_post_thumbnail() ) : ?>
                         <div class="hero-media-wrapper">
-                            <?php the_post_thumbnail( 'full', array( 'class' => 'hero-image' ) ); ?>
+                            <?php the_post_thumbnail( 'full', array(
+                                'class' => 'hero-image',
+                                'loading' => false, // Hero image - needs to load immediately
+                                'fetchpriority' => 'high' // LCP optimization
+                            ) ); ?>
                             <div class="hero-overlay"></div>
                         </div>
                     <?php else : ?>
@@ -73,12 +77,16 @@ while ( have_posts() ) :
 
                         <div class="hero-cta-buttons">
                             <a href="<?php echo esc_url( $donation_url ); ?>" class="hero-cta-primary">
-                                <span class="dashicons dashicons-heart"></span>
+                                <svg class="button-icon-left" width="20" height="20" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                                </svg>
                                 <?php esc_html_e( 'Donate Now', 'campaign-office' ); ?>
                             </a>
 
                             <a href="<?php echo esc_url( $volunteer_url ); ?>" class="hero-cta-secondary">
-                                <span class="dashicons dashicons-groups"></span>
+                                <svg class="button-icon-left" width="20" height="20" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+                                </svg>
                                 <?php esc_html_e( 'Get Involved', 'campaign-office' ); ?>
                             </a>
                         </div>
@@ -119,12 +127,24 @@ while ( have_posts() ) :
 
         <?php
         // Display recent issues with improved layout
-        $issues = new WP_Query( array(
-            'post_type' => 'cp_issue',
-            'posts_per_page' => 3,
-            'orderby' => 'date',
-            'order' => 'DESC',
-        ) );
+        // Use transient caching to reduce database queries
+        $issues_transient_key = 'campaignpress_homepage_issues';
+        $issues = get_transient( $issues_transient_key );
+
+        if ( false === $issues ) {
+            $issues = new WP_Query( array(
+                'post_type' => 'cp_issue',
+                'posts_per_page' => 3,
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'no_found_rows' => true, // Optimize: skip pagination count
+                'update_post_meta_cache' => false, // Optimize: skip meta cache if not needed
+                'update_post_term_cache' => false, // Optimize: skip term cache if not needed
+            ) );
+
+            // Cache for 12 hours (43200 seconds)
+            set_transient( $issues_transient_key, $issues, 12 * HOUR_IN_SECONDS );
+        }
 
         if ( $issues->have_posts() ) :
             ?>
@@ -148,7 +168,10 @@ while ( have_posts() ) :
                             <?php if ( has_post_thumbnail() ) : ?>
                                 <div class="issue-thumbnail">
                                     <a href="<?php the_permalink(); ?>">
-                                        <?php the_post_thumbnail( 'large', array( 'class' => 'issue-image' ) ); ?>
+                                        <?php the_post_thumbnail( 'large', array(
+                                            'class' => 'issue-image',
+                                            'loading' => 'lazy' // Lazy load below-fold images
+                                        ) ); ?>
                                     </a>
                                 </div>
                             <?php endif; ?>
@@ -192,21 +215,32 @@ while ( have_posts() ) :
         endif;
 
         // Display upcoming events with improved layout
-        $events = new WP_Query( array(
-            'post_type' => 'cp_event',
-            'posts_per_page' => 3,
-            'meta_key' => '_cp_event_date',
-            'orderby' => 'meta_value',
-            'order' => 'ASC',
-            'meta_query' => array(
-                array(
-                    'key' => '_cp_event_date',
-                    'value' => current_time( 'Y-m-d' ),
-                    'compare' => '>=',
-                    'type' => 'DATE',
+        // Use transient caching to reduce database queries
+        $events_transient_key = 'campaignpress_homepage_events_' . current_time( 'Y-m-d' );
+        $events = get_transient( $events_transient_key );
+
+        if ( false === $events ) {
+            $events = new WP_Query( array(
+                'post_type' => 'cp_event',
+                'posts_per_page' => 3,
+                'meta_key' => '_cp_event_date',
+                'orderby' => 'meta_value',
+                'order' => 'ASC',
+                'no_found_rows' => true, // Optimize: skip pagination count
+                'update_post_term_cache' => false, // Optimize: skip term cache if not needed
+                'meta_query' => array(
+                    array(
+                        'key' => '_cp_event_date',
+                        'value' => current_time( 'Y-m-d' ),
+                        'compare' => '>=',
+                        'type' => 'DATE',
+                    ),
                 ),
-            ),
-        ) );
+            ) );
+
+            // Cache for 6 hours (21600 seconds) - shorter cache for time-sensitive events
+            set_transient( $events_transient_key, $events, 6 * HOUR_IN_SECONDS );
+        }
 
         if ( $events->have_posts() ) :
             ?>
@@ -232,7 +266,9 @@ while ( have_posts() ) :
                             <?php if ( $datetime['date'] ) : ?>
                                 <div class="event-date-wrapper">
                                     <div class="event-date-icon">
-                                        <span class="dashicons dashicons-calendar-alt"></span>
+                                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                        </svg>
                                     </div>
                                     <div class="event-date-info">
                                         <time datetime="<?php echo esc_attr( $datetime['datetime'] ); ?>" class="event-date">
@@ -255,7 +291,9 @@ while ( have_posts() ) :
 
                             <?php if ( $location['city'] ) : ?>
                                 <div class="event-location">
-                                    <span class="dashicons dashicons-location"></span>
+                                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                    </svg>
                                     <span><?php echo esc_html( $location['city'] ); ?><?php echo $location['state'] ? ', ' . esc_html( $location['state'] ) : ''; ?></span>
                                 </div>
                             <?php endif; ?>

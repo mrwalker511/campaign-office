@@ -34,9 +34,11 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-notices.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-calendar-enhancements.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/donation-enhancements.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/social-media-feeds.php';
 
 // Load Block Logic
 if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/registration.php' ) ) {

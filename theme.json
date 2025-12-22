@@ -26,6 +26,16 @@
           "name": "Democratic Dark"
         },
         {
+          "slug": "primary-700",
+          "color": "#00408f",
+          "name": "Primary 700"
+        },
+        {
+          "slug": "primary-300",
+          "color": "#4d8fdb",
+          "name": "Primary 300"
+        },
+        {
           "slug": "republican-red",
           "color": "#e81b23",
           "name": "Republican Red"

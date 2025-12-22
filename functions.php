@@ -53,12 +53,8 @@ function campaignpress_setup() {
     add_image_size('campaignpress-endorsement', 150, 150, true);
     add_image_size('campaignpress-event-hero', 1200, 600, true);
 
-    // Register navigation menus
-    register_nav_menus(array(
-        'primary' => esc_html__('Primary Menu', 'campaign-office'),
-        'footer'  => esc_html__('Footer Menu', 'campaign-office'),
-        'social'  => esc_html__('Social Links Menu', 'campaign-office'),
-    ));
+    // Navigation is handled by the Navigation block in block themes
+    // Menus can be created in Appearance > Menus and assigned via the Navigation block
 
     // Switch default core markup to output valid HTML5
     add_theme_support('html5', array(
@@ -72,26 +68,12 @@ function campaignpress_setup() {
         'navigation-widgets',
     ));
 
-    // Add theme support for selective refresh for widgets
-    add_theme_support('customize-selective-refresh-widgets');
-
-    // Add support for core custom logo
-    add_theme_support('custom-logo', array(
-        'height'      => 100,
-        'width'       => 300,
-        'flex-width'  => true,
-        'flex-height' => true,
-    ));
-
-    // WordPress 6.9+ Block Editor Features
+    // WordPress 6.7+ Block Theme Features
+    // Most features are now controlled via theme.json
+    // These supports ensure compatibility with the Site Editor
     add_theme_support('wp-block-styles');
     add_theme_support('align-wide');
     add_theme_support('responsive-embeds');
-    add_theme_support('custom-line-height');
-    add_theme_support('custom-spacing');
-    add_theme_support('custom-units', 'px', 'em', 'rem', 'vh', 'vw', '%');
-    add_theme_support('link-color');
-    add_theme_support('border');
 
     // Editor styles
     add_theme_support('editor-styles');
@@ -264,50 +246,9 @@ add_action('init', 'campaignpress_register_block_pattern_category');
 
 
 /**
- * Register widget areas
+ * Block themes use template parts instead of widget areas
+ * Widgets can be added to template parts using the Site Editor
  */
-function campaignpress_widgets_init() {
-    register_sidebar(array(
-        'name'          => esc_html__('Sidebar', 'campaign-office'),
-        'id'            => 'sidebar-1',
-        'description'   => esc_html__('Add widgets here.', 'campaign-office'),
-        'before_widget' => '<section id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</section>',
-        'before_title'  => '<h2 class="widget-title">',
-        'after_title'   => '</h2>',
-    ));
-
-    register_sidebar(array(
-        'name'          => esc_html__('Footer Widget Area 1', 'campaign-office'),
-        'id'            => 'footer-1',
-        'description'   => esc_html__('Footer widget area 1', 'campaign-office'),
-        'before_widget' => '<section id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</section>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-
-    register_sidebar(array(
-        'name'          => esc_html__('Footer Widget Area 2', 'campaign-office'),
-        'id'            => 'footer-2',
-        'description'   => esc_html__('Footer widget area 2', 'campaign-office'),
-        'before_widget' => '<section id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</section>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-
-    register_sidebar(array(
-        'name'          => esc_html__('Footer Widget Area 3', 'campaign-office'),
-        'id'            => 'footer-3',
-        'description'   => esc_html__('Footer widget area 3', 'campaign-office'),
-        'before_widget' => '<section id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</section>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-}
-add_action('widgets_init', 'campaignpress_widgets_init');
 
 /**
  * Load Core System
@@ -324,33 +265,11 @@ function campaignpress_color_scheme_body_class($classes) {
 }
 add_filter('body_class', 'campaignpress_color_scheme_body_class');
 
-// Template loader for CPTs is now handled/supplemented by Core\Template_Loader
-// However, the specific logic for CPT subfolders in `templates/custom-post-types` might need to be preserved if not strictly standard.
-// The new Template_Loader handles general templates. We can leave this specific CPT loader or merge it.
-// For safety, we will leave this specific filter here as it targets specific subfolders that Core\Template_Loader might not check by default (it checks templates/ and templates/legacy/).
-// Actually, let's keep it to ensure backward compatibility for CPTs until fully refactored.
-
 /**
- * Custom template loader for CPTs (Legacy Support)
+ * Block theme template hierarchy
+ * WordPress automatically loads templates from /templates/ directory
+ * Custom post type templates (single-cp_*.html, archive-cp_*.html) are now in /templates/
  */
-function campaignpress_cpt_template_loader($template) {
-    $template_name = basename($template);
-
-    if (strpos($template_name, 'single-cp_') === 0) {
-        $custom_template = CAMPAIGNPRESS_THEME_DIR . '/templates/custom-post-types/single/' . $template_name;
-        if (file_exists($custom_template)) {
-            return $custom_template;
-        }
-    } elseif (strpos($template_name, 'archive-cp_') === 0) {
-        $custom_template = CAMPAIGNPRESS_THEME_DIR . '/templates/custom-post-types/archive/' . $template_name;
-        if (file_exists($custom_template)) {
-            return $custom_template;
-        }
-    }
-    return $template;
-}
-add_filter('single_template', 'campaignpress_cpt_template_loader');
-add_filter('archive_template', 'campaignpress_cpt_template_loader');
 
 /**
  * Custom template tags for this theme

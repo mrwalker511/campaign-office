@@ -68,7 +68,7 @@ function campaignpress_setup() {
         'navigation-widgets',
     ));
 
-    // WordPress 6.7+ Block Theme Features
+    // WordPress 6.9+ Block Theme Features
     // Most features are now controlled via theme.json
     // These supports ensure compatibility with the Site Editor
     add_theme_support('wp-block-styles');
@@ -109,8 +109,9 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // WordPress 6.9 Enhanced Design System
+    // WordPress 6.9+ Enhanced Design System
     // This CSS uses theme.json variables and adds advanced animations
+    // Future-proof for WordPress 6.9 and beyond
     wp_enqueue_style(
         'campaignpress-design-wp69',
         get_template_directory_uri() . '/assets/css/design-system-wp69.css',

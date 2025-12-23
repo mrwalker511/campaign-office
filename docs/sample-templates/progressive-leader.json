@@ -1,0 +1,493 @@
+{
+  "template_key": "progressive_leader",
+  "template_name": "Progressive Leader",
+  "template_description": "A bold, modern homepage design perfect for progressive Democratic candidates. Features a video hero section, interactive policy tabs, endorsement showcase, and prominent donation call-to-action. Optimized for mobile and conversion.",
+  "category": "homepage",
+  "campaign_type": "democratic",
+  "election_level": "all",
+  "tags": ["progressive", "modern", "video", "policy-focused", "endorsements", "donation"],
+  "is_premium": true,
+  "featured": true,
+  "preview_image": "/assets/templates/previews/progressive-leader.jpg",
+  "difficulty": "beginner",
+  "estimated_setup_time": "5-10 minutes",
+  "best_for": ["State Legislative", "Congressional", "Senate", "Gubernatorial"],
+  "color_scheme": {
+    "primary": "#2271b1",
+    "secondary": "#135e96",
+    "accent": "#00a0d2",
+    "text": "#1e1e1e",
+    "background": "#ffffff"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "video",
+      "order": 1,
+      "settings": {
+        "layout": "centered",
+        "headline": "Fighting for Real Change",
+        "subheadline": "Together, we can build a future that works for everyone—not just the wealthy few.",
+        "video_type": "youtube",
+        "video_url": "https://youtube.com/embed/sample",
+        "video_thumbnail": "/assets/placeholders/candidate-speaking.jpg",
+        "overlay_opacity": 0.4,
+        "overlay_color": "#000000",
+        "text_color": "#ffffff",
+        "height": "80vh",
+        "buttons": [
+          {
+            "text": "Join Our Movement",
+            "style": "primary-large",
+            "action": "scroll-to-section",
+            "target": "donation-section",
+            "icon": "arrow-down"
+          },
+          {
+            "text": "Watch Our Vision",
+            "style": "secondary-outline",
+            "action": "play-video",
+            "icon": "play"
+          }
+        ],
+        "scroll_indicator": true,
+        "animation": "fade-in"
+      }
+    },
+    {
+      "type": "stats",
+      "variant": "counters",
+      "order": 2,
+      "settings": {
+        "background": "#f8f9fa",
+        "padding": "60px-0",
+        "stats": [
+          {
+            "label": "Individual Donors",
+            "value": "12,453",
+            "icon": "👥",
+            "color": "#2271b1",
+            "prefix": "",
+            "suffix": "",
+            "animate": true,
+            "description": "Grassroots supporters"
+          },
+          {
+            "label": "Average Donation",
+            "value": "27",
+            "icon": "💰",
+            "color": "#00a0d2",
+            "prefix": "$",
+            "suffix": "",
+            "animate": true,
+            "description": "Small-dollar fundraising"
+          },
+          {
+            "label": "Volunteers",
+            "value": "3,891",
+            "icon": "✊",
+            "color": "#135e96",
+            "prefix": "",
+            "suffix": "",
+            "animate": true,
+            "description": "Active volunteers"
+          },
+          {
+            "label": "Events Held",
+            "value": "127",
+            "icon": "📅",
+            "color": "#2271b1",
+            "prefix": "",
+            "suffix": "",
+            "animate": true,
+            "description": "Community events"
+          }
+        ],
+        "layout": "4-column-grid",
+        "animation": "count-up",
+        "animation_trigger": "scroll-into-view"
+      }
+    },
+    {
+      "type": "issues",
+      "variant": "tabs",
+      "order": 3,
+      "settings": {
+        "section_headline": "Our Policy Platform",
+        "section_subheadline": "Bold solutions for the challenges facing our community",
+        "layout": "tabbed",
+        "tab_position": "top",
+        "background": "#ffffff",
+        "padding": "80px-0",
+        "issues": [
+          {
+            "title": "Healthcare for All",
+            "icon": "🏥",
+            "summary": "Universal healthcare is a human right, not a privilege.",
+            "details": "<p>We will fight for Medicare for All, ensuring every person has access to quality healthcare without going bankrupt.</p><ul><li>Lower prescription drug costs</li><li>Expand Medicaid</li><li>Protect reproductive rights</li></ul>",
+            "image": "/assets/placeholders/healthcare.jpg",
+            "cta_text": "Read Full Policy",
+            "cta_link": "/issues/healthcare"
+          },
+          {
+            "title": "Climate Action",
+            "icon": "🌍",
+            "summary": "We must act now to address the climate crisis.",
+            "details": "<p>Invest in clean energy, create green jobs, and transition to 100% renewable energy by 2035.</p><ul><li>Green New Deal</li><li>Clean energy jobs</li><li>Environmental justice</li></ul>",
+            "image": "/assets/placeholders/climate.jpg",
+            "cta_text": "Read Full Policy",
+            "cta_link": "/issues/climate"
+          },
+          {
+            "title": "Economic Justice",
+            "icon": "⚖️",
+            "summary": "Build an economy that works for working families.",
+            "details": "<p>Raise the minimum wage, strengthen unions, and make corporations pay their fair share.</p><ul><li>$15 minimum wage</li><li>Tax reform</li><li>Worker protections</li></ul>",
+            "image": "/assets/placeholders/economy.jpg",
+            "cta_text": "Read Full Policy",
+            "cta_link": "/issues/economy"
+          },
+          {
+            "title": "Education",
+            "icon": "🎓",
+            "summary": "Invest in our students and teachers.",
+            "details": "<p>Make college affordable, pay teachers fairly, and fund public schools.</p><ul><li>Free community college</li><li>Student debt relief</li><li>Teacher pay increase</li></ul>",
+            "image": "/assets/placeholders/education.jpg",
+            "cta_text": "Read Full Policy",
+            "cta_link": "/issues/education"
+          },
+          {
+            "title": "Racial Justice",
+            "icon": "✊",
+            "summary": "End systemic racism and build true equality.",
+            "details": "<p>Criminal justice reform, voting rights protection, and addressing systemic inequalities.</p><ul><li>Police reform</li><li>Voting rights</li><li>Economic equity</li></ul>",
+            "image": "/assets/placeholders/justice.jpg",
+            "cta_text": "Read Full Policy",
+            "cta_link": "/issues/justice"
+          }
+        ],
+        "show_all_link": true,
+        "all_issues_url": "/issues",
+        "animation": "slide-in"
+      }
+    },
+    {
+      "type": "testimonials",
+      "variant": "grid",
+      "order": 4,
+      "settings": {
+        "section_headline": "Endorsed by Leaders & Neighbors",
+        "section_subheadline": "Join the growing movement of supporters",
+        "background": "#f8f9fa",
+        "padding": "80px-0",
+        "layout": "3-column-masonry",
+        "testimonials": [
+          {
+            "quote": "Finally, a candidate who understands the struggles of working families. This campaign is about all of us.",
+            "author": "Sarah Martinez",
+            "title": "Teacher & Parent",
+            "location": "Springfield",
+            "image": "/assets/placeholders/testimonial-1.jpg",
+            "type": "supporter"
+          },
+          {
+            "quote": "The bold climate leadership we desperately need. I'm proud to endorse this campaign.",
+            "author": "Environmental Defense Fund",
+            "title": "National Organization",
+            "location": "",
+            "image": "/assets/placeholders/edf-logo.png",
+            "type": "endorsement"
+          },
+          {
+            "quote": "A champion for healthcare access and reproductive rights. We need this voice in office.",
+            "author": "Dr. James Chen",
+            "title": "Physician",
+            "location": "Metro Area",
+            "image": "/assets/placeholders/testimonial-2.jpg",
+            "type": "supporter"
+          },
+          {
+            "quote": "Standing up for workers' rights and union families. Proud to support this campaign.",
+            "author": "AFL-CIO Local 1234",
+            "title": "Labor Union",
+            "location": "",
+            "image": "/assets/placeholders/aflcio-logo.png",
+            "type": "endorsement"
+          },
+          {
+            "quote": "The progressive leadership our community deserves. Let's make history together!",
+            "author": "Maria Rodriguez",
+            "title": "Small Business Owner",
+            "location": "Downtown",
+            "image": "/assets/placeholders/testimonial-3.jpg",
+            "type": "supporter"
+          },
+          {
+            "quote": "A proven record of fighting for education and our students. Educators unite behind this campaign!",
+            "author": "Teachers Association",
+            "title": "Education Union",
+            "location": "",
+            "image": "/assets/placeholders/teachers-logo.png",
+            "type": "endorsement"
+          }
+        ],
+        "show_more": true,
+        "all_endorsements_url": "/endorsements",
+        "animation": "fade-in-up"
+      }
+    },
+    {
+      "type": "donation",
+      "variant": "tiers",
+      "order": 5,
+      "settings": {
+        "section_id": "donation-section",
+        "section_headline": "Power This Movement",
+        "section_subheadline": "This campaign is funded by people like you, not corporate PACs.",
+        "background": "linear-gradient(135deg, #2271b1 0%, #135e96 100%)",
+        "text_color": "#ffffff",
+        "padding": "100px-0",
+        "tiers": [
+          {
+            "amount": 27,
+            "label": "Grassroots Supporter",
+            "description": "Help us reach voters with digital ads",
+            "icon": "🌱",
+            "popular": true
+          },
+          {
+            "amount": 50,
+            "label": "Champion",
+            "description": "Fund yard signs and literature",
+            "icon": "⭐"
+          },
+          {
+            "amount": 100,
+            "label": "Advocate",
+            "description": "Support our field operations",
+            "icon": "📢"
+          },
+          {
+            "amount": 250,
+            "label": "Leader",
+            "description": "Power our voter outreach",
+            "icon": "🎯"
+          },
+          {
+            "amount": 500,
+            "label": "Champion",
+            "description": "Make a major impact",
+            "icon": "🏆"
+          },
+          {
+            "amount": 1000,
+            "label": "Movement Builder",
+            "description": "Maximum individual contribution",
+            "icon": "💪"
+          }
+        ],
+        "custom_amount": true,
+        "recurring_option": true,
+        "recurring_default": false,
+        "recurring_message": "Make it monthly to maximize your impact!",
+        "thermometer": {
+          "enabled": true,
+          "goal": 50000,
+          "raised": 32750,
+          "label": "Goal: $50,000",
+          "show_percentage": true,
+          "show_amount": true
+        },
+        "disclaimer": "Contributions are not tax deductible. Federal law requires us to collect your name, address, occupation, and employer.",
+        "payment_processor": "actblue",
+        "form_fields": ["name", "email", "amount", "occupation", "employer"],
+        "animation": "scale-in"
+      }
+    },
+    {
+      "type": "volunteer",
+      "variant": "opportunities",
+      "order": 6,
+      "settings": {
+        "section_headline": "Get Involved",
+        "section_subheadline": "Your time and skills can make the difference",
+        "background": "#ffffff",
+        "padding": "80px-0",
+        "layout": "card-grid",
+        "opportunities": [
+          {
+            "title": "Phone Banking",
+            "description": "Call voters from home or join us at HQ",
+            "icon": "📞",
+            "time_commitment": "2-4 hours/week",
+            "skill_level": "No experience needed",
+            "image": "/assets/placeholders/phone-banking.jpg",
+            "cta_text": "Sign Up",
+            "cta_link": "/volunteer/phone-banking"
+          },
+          {
+            "title": "Canvassing",
+            "description": "Talk to neighbors door-to-door",
+            "icon": "🚶",
+            "time_commitment": "Weekends",
+            "skill_level": "Training provided",
+            "image": "/assets/placeholders/canvassing.jpg",
+            "cta_text": "Sign Up",
+            "cta_link": "/volunteer/canvassing"
+          },
+          {
+            "title": "Event Support",
+            "description": "Help at rallies, town halls, and events",
+            "icon": "🎪",
+            "time_commitment": "Flexible",
+            "skill_level": "All welcome",
+            "image": "/assets/placeholders/events.jpg",
+            "cta_text": "Sign Up",
+            "cta_link": "/volunteer/events"
+          },
+          {
+            "title": "Social Media",
+            "description": "Amplify our message online",
+            "icon": "📱",
+            "time_commitment": "1-2 hours/week",
+            "skill_level": "Social media savvy",
+            "image": "/assets/placeholders/social-media.jpg",
+            "cta_text": "Sign Up",
+            "cta_link": "/volunteer/social"
+          }
+        ],
+        "general_signup_cta": {
+          "text": "General Volunteer Sign-Up",
+          "link": "/volunteer",
+          "style": "primary"
+        },
+        "animation": "stagger-in"
+      }
+    },
+    {
+      "type": "events",
+      "variant": "featured",
+      "order": 7,
+      "settings": {
+        "section_headline": "Upcoming Events",
+        "section_subheadline": "Join us at an event near you",
+        "background": "#f8f9fa",
+        "padding": "60px-0",
+        "max_events": 3,
+        "layout": "horizontal-cards",
+        "show_map": false,
+        "fallback_message": "No upcoming events. Check back soon!",
+        "all_events_link": "/events",
+        "animation": "slide-in-left"
+      }
+    },
+    {
+      "type": "social-feed",
+      "variant": "combined",
+      "order": 8,
+      "settings": {
+        "section_headline": "Follow the Campaign",
+        "section_subheadline": "Stay connected on social media",
+        "background": "#ffffff",
+        "padding": "60px-0",
+        "platforms": [
+          {
+            "type": "twitter",
+            "handle": "@candidate",
+            "show_feed": true,
+            "max_posts": 3
+          },
+          {
+            "type": "facebook",
+            "page": "candidatename",
+            "show_feed": false
+          },
+          {
+            "type": "instagram",
+            "handle": "@candidate",
+            "show_feed": true,
+            "max_posts": 6
+          }
+        ],
+        "follow_buttons": true,
+        "hashtag": "#OurMovement",
+        "animation": "fade-in"
+      }
+    },
+    {
+      "type": "cta",
+      "variant": "banner",
+      "order": 9,
+      "settings": {
+        "layout": "centered",
+        "headline": "Ready to Make History?",
+        "subheadline": "Join thousands of supporters fighting for real change.",
+        "background": "#2271b1",
+        "text_color": "#ffffff",
+        "padding": "80px-0",
+        "buttons": [
+          {
+            "text": "Donate Today",
+            "style": "white-solid",
+            "link": "#donation-section",
+            "icon": "heart"
+          },
+          {
+            "text": "Volunteer",
+            "style": "white-outline",
+            "link": "/volunteer",
+            "icon": "users"
+          }
+        ],
+        "animation": "pulse"
+      }
+    }
+  ],
+  "custom_css": "/* Template-specific custom styles */\n.cp-progressive-leader {\n  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;\n}\n\n.cp-progressive-leader h1 {\n  font-weight: 800;\n  letter-spacing: -0.02em;\n}\n\n.cp-progressive-leader .cp-donation-tier.popular {\n  transform: scale(1.05);\n  box-shadow: 0 8px 24px rgba(34, 113, 177, 0.3);\n}",
+  "responsive_settings": {
+    "mobile": {
+      "hide_components": [],
+      "stack_order": "default",
+      "adjustments": {
+        "hero_height": "60vh",
+        "stats_columns": 2,
+        "issues_tabs_vertical": true,
+        "testimonials_columns": 1
+      }
+    },
+    "tablet": {
+      "adjustments": {
+        "stats_columns": 2,
+        "testimonials_columns": 2
+      }
+    }
+  },
+  "seo": {
+    "title": "{{Candidate Name}} - Fighting for Real Change",
+    "description": "Join our grassroots movement for healthcare, climate action, economic justice, and more. Together we can build a future that works for everyone.",
+    "keywords": ["progressive", "democratic", "campaign", "healthcare", "climate", "economic justice"],
+    "og_image": "/assets/templates/og-progressive-leader.jpg"
+  },
+  "setup_instructions": [
+    "1. Replace placeholder candidate name with actual name",
+    "2. Update video URL with campaign announcement video",
+    "3. Customize stats with real campaign numbers",
+    "4. Edit policy positions to match candidate's platform",
+    "5. Add real testimonials and endorsement logos",
+    "6. Connect payment processor (ActBlue/NGP VAN)",
+    "7. Link social media accounts",
+    "8. Update all placeholder images with campaign photos"
+  ],
+  "recommended_plugins": [
+    "ActBlue Integration",
+    "Google Analytics",
+    "Social Media Auto-Poster",
+    "Event Calendar Pro"
+  ],
+  "credits": {
+    "designer": "CampaignPress Design Team",
+    "inspiration": "Winning 2022 progressive campaigns",
+    "version": "1.0.0",
+    "last_updated": "2024-01-15"
+  }
+}

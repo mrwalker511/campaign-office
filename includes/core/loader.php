@@ -43,6 +43,8 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-portal.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-communications.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/analytics-dashboard.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-design-studio.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/mega-menu-builder.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/enhanced-customizer.php';
 
 // Load Block Logic
 if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/registration.php' ) ) {

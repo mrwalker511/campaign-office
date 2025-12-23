@@ -72,6 +72,7 @@ class CP_Campaign_Design_Studio {
         add_action('wp_ajax_cp_load_design', array($this, 'ajax_load_design'));
         add_action('wp_ajax_cp_get_component_html', array($this, 'ajax_get_component_html'));
         add_action('wp_ajax_cp_preview_design', array($this, 'ajax_preview_design'));
+        add_action('wp_ajax_cp_apply_template', array($this, 'ajax_apply_template'));
 
         // Enqueue studio assets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_studio_assets'));
@@ -754,54 +755,115 @@ class CP_Campaign_Design_Studio {
      * Render templates page
      */
     public function render_templates_page() {
+        $templates = $this->get_template_data();
+        $gradients = array(
+            'classic_campaign' => 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'grassroots_movement' => 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            'issues_first' => 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        );
+        $icons = array(
+            'classic_campaign' => '🎯',
+            'grassroots_movement' => '📱',
+            'issues_first' => '📋',
+        );
         ?>
         <div class="wrap">
             <h1><?php esc_html_e('Design Templates', 'campaign-office'); ?></h1>
+            <p class="description">
+                <?php esc_html_e('Choose a template, select a page, and apply it instantly. Each template includes pre-configured components optimized for campaign websites.', 'campaign-office'); ?>
+            </p>
+
+            <div style="background: #fff; padding: 1.5rem; margin: 2rem 0 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <label for="cp-template-page-selector" style="font-weight: 600; margin-right: 1rem;">
+                    <?php esc_html_e('Apply template to:', 'campaign-office'); ?>
+                </label>
+                <select id="cp-template-page-selector" style="min-width: 300px;">
+                    <option value=""><?php esc_html_e('Select a page...', 'campaign-office'); ?></option>
+                    <?php
+                    $pages = get_pages();
+                    foreach ($pages as $page) {
+                        printf(
+                            '<option value="%d">%s</option>',
+                            $page->ID,
+                            esc_html($page->post_title)
+                        );
+                    }
+                    ?>
+                </select>
+            </div>
 
             <div class="cp-templates-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
 
-                <!-- Template Card -->
+                <?php foreach ($templates as $key => $template) : ?>
                 <div class="cp-template-card" style="background: #fff; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <div class="cp-template-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 3rem;">
-                        🎯
+                    <div class="cp-template-preview" style="background: <?php echo esc_attr($gradients[$key] ?? '#667eea'); ?>; height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 3rem;">
+                        <?php echo $icons[$key] ?? '📄'; ?>
                     </div>
                     <div class="cp-template-info" style="padding: 1.5rem;">
-                        <h3 style="margin: 0 0 0.5rem 0;"><?php esc_html_e('Classic Campaign', 'campaign-office'); ?></h3>
+                        <h3 style="margin: 0 0 0.5rem 0;"><?php echo esc_html($template['name']); ?></h3>
                         <p style="color: #666; font-size: 0.875rem; margin: 0 0 1rem 0;">
-                            <?php esc_html_e('Traditional political campaign layout with hero, issues, and donation sections.', 'campaign-office'); ?>
+                            <?php echo esc_html($template['description']); ?>
                         </p>
-                        <button class="button button-primary"><?php esc_html_e('Use Template', 'campaign-office'); ?></button>
+                        <div style="margin-bottom: 1rem; padding: 0.75rem; background: #f5f5f5; border-radius: 0.25rem;">
+                            <strong style="font-size: 0.75rem; color: #666; text-transform: uppercase;">
+                                <?php esc_html_e('Includes:', 'campaign-office'); ?>
+                            </strong>
+                            <ul style="margin: 0.5rem 0 0 0; padding-left: 1.25rem; font-size: 0.75rem; color: #666;">
+                                <?php foreach ($template['components'] as $component) : ?>
+                                    <li><?php echo esc_html(ucfirst(str_replace('_', ' ', $component['type']))); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <button class="button button-primary cp-use-template" data-template="<?php echo esc_attr($key); ?>" style="width: 100%;">
+                            <?php esc_html_e('Use This Template', 'campaign-office'); ?>
+                        </button>
                     </div>
                 </div>
-
-                <div class="cp-template-card" style="background: #fff; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <div class="cp-template-preview" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 3rem;">
-                        📱
-                    </div>
-                    <div class="cp-template-info" style="padding: 1.5rem;">
-                        <h3 style="margin: 0 0 0.5rem 0;"><?php esc_html_e('Grassroots Movement', 'campaign-office'); ?></h3>
-                        <p style="color: #666; font-size: 0.875rem; margin: 0 0 1rem 0;">
-                            <?php esc_html_e('Volunteer-focused design emphasizing community engagement and action.', 'campaign-office'); ?>
-                        </p>
-                        <button class="button button-primary"><?php esc_html_e('Use Template', 'campaign-office'); ?></button>
-                    </div>
-                </div>
-
-                <div class="cp-template-card" style="background: #fff; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <div class="cp-template-preview" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 3rem;">
-                        📋
-                    </div>
-                    <div class="cp-template-info" style="padding: 1.5rem;">
-                        <h3 style="margin: 0 0 0.5rem 0;"><?php esc_html_e('Issues-First', 'campaign-office'); ?></h3>
-                        <p style="color: #666; font-size: 0.875rem; margin: 0 0 1rem 0;">
-                            <?php esc_html_e('Policy-driven layout that leads with detailed issue positions.', 'campaign-office'); ?>
-                        </p>
-                        <button class="button button-primary"><?php esc_html_e('Use Template', 'campaign-office'); ?></button>
-                    </div>
-                </div>
+                <?php endforeach; ?>
 
             </div>
         </div>
+
+        <script>
+        jQuery(document).ready(function($) {
+            $('.cp-use-template').click(function() {
+                var templateKey = $(this).data('template');
+                var postId = $('#cp-template-page-selector').val();
+                var $btn = $(this);
+
+                if (!postId) {
+                    alert('<?php esc_js_e('Please select a page first', 'campaign-office'); ?>');
+                    return;
+                }
+
+                $btn.prop('disabled', true).text('<?php esc_js_e('Applying...', 'campaign-office'); ?>');
+
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'cp_apply_template',
+                        template: templateKey,
+                        post_id: postId,
+                        _wpnonce: '<?php echo wp_create_nonce('cp_apply_template'); ?>'
+                    },
+                    success: function(response) {
+                        $btn.prop('disabled', false).text('<?php esc_js_e('Use This Template', 'campaign-office'); ?>');
+                        if (response.success) {
+                            alert('<?php esc_js_e('Template applied successfully! Open the Design Studio to customize it.', 'campaign-office'); ?>');
+                            window.location.href = '?page=cp-design-studio&post_id=' + postId;
+                        } else {
+                            alert(response.data.message || '<?php esc_js_e('Error applying template', 'campaign-office'); ?>');
+                        }
+                    },
+                    error: function() {
+                        $btn.prop('disabled', false).text('<?php esc_js_e('Use This Template', 'campaign-office'); ?>');
+                        alert('<?php esc_js_e('Error applying template', 'campaign-office'); ?>');
+                    }
+                });
+            });
+        });
+        </script>
         <?php
     }
 
@@ -977,6 +1039,94 @@ class CP_Campaign_Design_Studio {
     public function ajax_preview_design() {
         // Preview design
         wp_send_json_success();
+    }
+
+    public function ajax_apply_template() {
+        check_ajax_referer('cp_apply_template');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $post_id = intval($_POST['post_id']);
+        $template_key = sanitize_text_field($_POST['template']);
+
+        $templates = $this->get_template_data();
+
+        if (!isset($templates[$template_key])) {
+            wp_send_json_error(array('message' => __('Template not found', 'campaign-office')));
+        }
+
+        $template = $templates[$template_key];
+
+        global $wpdb;
+
+        // Check if design exists
+        $existing = $wpdb->get_var($wpdb->prepare("SELECT id FROM {$this->designs_table} WHERE post_id = %d", $post_id));
+
+        if ($existing) {
+            $wpdb->update(
+                $this->designs_table,
+                array(
+                    'design_data' => wp_json_encode($template['components']),
+                    'template_name' => $template_key,
+                ),
+                array('post_id' => $post_id)
+            );
+        } else {
+            $wpdb->insert(
+                $this->designs_table,
+                array(
+                    'post_id' => $post_id,
+                    'design_data' => wp_json_encode($template['components']),
+                    'template_name' => $template_key,
+                    'created_by' => get_current_user_id(),
+                )
+            );
+        }
+
+        wp_send_json_success(array('message' => __('Template applied successfully', 'campaign-office')));
+    }
+
+    /**
+     * Get template data
+     */
+    private function get_template_data() {
+        return array(
+            'classic_campaign' => array(
+                'name' => __('Classic Campaign', 'campaign-office'),
+                'description' => __('Traditional political campaign layout with hero, issues, and donation sections.', 'campaign-office'),
+                'components' => array(
+                    array('type' => 'hero', 'variant' => 'centered'),
+                    array('type' => 'stats', 'variant' => 'counters'),
+                    array('type' => 'issues', 'variant' => 'grid'),
+                    array('type' => 'donation', 'variant' => 'tiers'),
+                    array('type' => 'events', 'variant' => 'featured'),
+                ),
+            ),
+            'grassroots_movement' => array(
+                'name' => __('Grassroots Movement', 'campaign-office'),
+                'description' => __('Volunteer-focused design emphasizing community engagement and action.', 'campaign-office'),
+                'components' => array(
+                    array('type' => 'hero', 'variant' => 'video'),
+                    array('type' => 'volunteer', 'variant' => 'opportunities'),
+                    array('type' => 'testimonials', 'variant' => 'carousel'),
+                    array('type' => 'events', 'variant' => 'list'),
+                    array('type' => 'cta', 'variant' => 'banner'),
+                ),
+            ),
+            'issues_first' => array(
+                'name' => __('Issues-First', 'campaign-office'),
+                'description' => __('Policy-driven layout that leads with detailed issue positions.', 'campaign-office'),
+                'components' => array(
+                    array('type' => 'hero', 'variant' => 'minimal'),
+                    array('type' => 'issues', 'variant' => 'accordion'),
+                    array('type' => 'timeline', 'variant' => 'vertical'),
+                    array('type' => 'team', 'variant' => 'grid'),
+                    array('type' => 'cta', 'variant' => 'card'),
+                ),
+            ),
+        );
     }
 
     /**

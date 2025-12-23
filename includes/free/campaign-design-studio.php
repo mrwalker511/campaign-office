@@ -1027,18 +1027,108 @@ class CP_Campaign_Design_Studio {
     }
 
     public function ajax_load_design() {
-        // Load design handler
-        wp_send_json_success();
+        check_ajax_referer('cp_load_design');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $post_id = intval($_POST['post_id']);
+        $design = $this->get_design_data($post_id);
+
+        if ($design) {
+            wp_send_json_success(array(
+                'design_data' => json_decode($design->design_data, true),
+                'custom_css' => $design->custom_css ?? '',
+                'template_name' => $design->template_name ?? '',
+            ));
+        } else {
+            wp_send_json_success(array(
+                'design_data' => array(),
+                'custom_css' => '',
+                'template_name' => '',
+            ));
+        }
     }
 
     public function ajax_get_component_html() {
-        // Get component HTML
-        wp_send_json_success();
+        check_ajax_referer('cp_get_component');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $component_type = sanitize_text_field($_POST['component_type'] ?? '');
+        $variant = sanitize_text_field($_POST['variant'] ?? 'default');
+
+        if (!isset($this->components[$component_type])) {
+            wp_send_json_error(array('message' => __('Invalid component type', 'campaign-office')));
+        }
+
+        $component = $this->components[$component_type];
+
+        // Generate component HTML based on type and variant
+        $html = $this->generate_component_html($component_type, $variant);
+
+        wp_send_json_success(array(
+            'html' => $html,
+            'component' => $component_type,
+            'variant' => $variant,
+        ));
     }
 
     public function ajax_preview_design() {
-        // Preview design
-        wp_send_json_success();
+        check_ajax_referer('cp_preview_design');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $design_data = wp_unslash($_POST['design_data'] ?? '');
+        $custom_css = sanitize_textarea_field($_POST['custom_css'] ?? '');
+
+        // Return preview URL or HTML
+        wp_send_json_success(array(
+            'preview' => true,
+            'message' => __('Preview ready', 'campaign-office'),
+        ));
+    }
+
+    /**
+     * Generate component HTML
+     */
+    private function generate_component_html($type, $variant) {
+        $component_info = $this->components[$type] ?? null;
+
+        if (!$component_info) {
+            return '';
+        }
+
+        // Generate placeholder HTML for the component
+        $html = sprintf(
+            '<div class="cp-component cp-component-%s cp-variant-%s">
+                <div class="cp-component-icon">%s</div>
+                <h3 class="cp-component-title">%s</h3>
+                <p class="cp-component-description">%s variant preview</p>
+                <div class="cp-component-content">
+                    <!-- Component content will be rendered here -->
+                    <p style="text-align: center; padding: 2rem; background: #f5f5f5; border-radius: 0.5rem;">
+                        <strong>%s Component</strong><br>
+                        <span style="color: #666;">Variant: %s</span><br>
+                        <small>Customize this component in the properties panel</small>
+                    </p>
+                </div>
+            </div>',
+            esc_attr($type),
+            esc_attr($variant),
+            $component_info['icon'],
+            esc_html($component_info['name']),
+            esc_html(ucfirst($variant)),
+            esc_html($component_info['name']),
+            esc_html(ucfirst($variant))
+        );
+
+        return $html;
     }
 
     public function ajax_apply_template() {

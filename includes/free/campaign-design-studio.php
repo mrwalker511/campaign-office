@@ -631,17 +631,17 @@ class CP_Campaign_Design_Studio {
             // Device switcher
             $('#cp-device-desktop').click(function() {
                 $('.cp-canvas-viewport').attr('data-device', 'desktop');
-                $('.cp-canvas-viewport button').removeClass('button-primary');
+                $('#cp-device-desktop, #cp-device-tablet, #cp-device-mobile').removeClass('button-primary');
                 $(this).addClass('button-primary');
             });
             $('#cp-device-tablet').click(function() {
                 $('.cp-canvas-viewport').attr('data-device', 'tablet');
-                $('.cp-canvas-viewport button').removeClass('button-primary');
+                $('#cp-device-desktop, #cp-device-tablet, #cp-device-mobile').removeClass('button-primary');
                 $(this).addClass('button-primary');
             });
             $('#cp-device-mobile').click(function() {
                 $('.cp-canvas-viewport').attr('data-device', 'mobile');
-                $('.cp-canvas-viewport button').removeClass('button-primary');
+                $('#cp-device-desktop, #cp-device-tablet, #cp-device-mobile').removeClass('button-primary');
                 $(this).addClass('button-primary');
             });
 
@@ -746,6 +746,47 @@ class CP_Campaign_Design_Studio {
                     window.location.href = '?page=cp-design-studio&post_id=' + postId;
                 }
             });
+
+            // Load existing design if post_id is set
+            var currentPostId = $('#cp-page-selector').val();
+            if (currentPostId) {
+                loadExistingDesign(currentPostId);
+            }
+
+            // Function to load existing design
+            function loadExistingDesign(postId) {
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'cp_load_design',
+                        post_id: postId,
+                        _wpnonce: '<?php echo wp_create_nonce('cp_load_design'); ?>'
+                    },
+                    success: function(response) {
+                        if (response.success && response.data.design_data && response.data.design_data.length > 0) {
+                            // Clear canvas
+                            $('.cp-canvas-empty-state').remove();
+
+                            // Add each component to canvas
+                            response.data.design_data.forEach(function(component) {
+                                var componentHTML = '<div class="cp-dropped-component" data-component="' + component.type + '">' +
+                                    component.html +
+                                    '</div>';
+                                $('#cp-canvas').append(componentHTML);
+                            });
+
+                            // Load custom CSS if exists
+                            if (response.data.custom_css) {
+                                $('#cp-custom-css').val(response.data.custom_css);
+                            }
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error loading design:', error);
+                    }
+                });
+            }
         });
         </script>
         <?php
@@ -1259,6 +1300,9 @@ class CP_Campaign_Design_Studio {
         if ($hook !== 'toplevel_page_cp-design-studio' && $hook !== 'design-studio_page_cp-design-templates' && $hook !== 'design-studio_page_cp-global-styles') {
             return;
         }
+
+        // Enqueue jQuery (required for all Design Studio functionality)
+        wp_enqueue_script('jquery');
 
         wp_enqueue_style('wp-color-picker');
         wp_enqueue_script('wp-color-picker');

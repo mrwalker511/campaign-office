@@ -25,7 +25,15 @@
       "Bash(powershell -ExecutionPolicy Bypass -File build-testing.ps1)",
       "Bash(powershell -ExecutionPolicy Bypass -File \".\\\\build\\\\build-testing.ps1\")",
       "Bash(powershell -ExecutionPolicy Bypass -File \".\\\\build-testing.ps1\")",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(unzip:*)",
+      "Bash(sort:*)",
+      "Bash(findstr:*)",
+      "Bash(if [ -f \"campaign-office-testing.zip\" ])",
+      "Bash(then unzip -l campaign-office-testing.zip)",
+      "Bash(else echo \"No ZIP to check\")",
+      "Bash(fi)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []

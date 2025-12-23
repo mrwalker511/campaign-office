@@ -72,7 +72,8 @@ if (Test-Path $outputZip) {
 
 # Create zip
 Write-Host "Creating zip archive..." -ForegroundColor Yellow
-Compress-Archive -Path $themeDir -DestinationPath $outputZip -CompressionLevel Optimal -Force
+# Compress contents of theme directory, not the directory itself
+Compress-Archive -Path "$themeDir\*" -DestinationPath $outputZip -CompressionLevel Optimal -Force
 
 # Cleanup temp directory
 Remove-Item $tempDir -Recurse -Force

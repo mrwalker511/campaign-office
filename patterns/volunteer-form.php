@@ -13,26 +13,26 @@
         <!-- wp:column {"width":"50%"} -->
         <div class="wp-block-column" style="flex-basis:50%">
             <!-- wp:heading {"level":2} -->
-            <h2 class="wp-block-heading"><?php esc_html_e( 'Join the Movement', 'campaign-office' ); ?></h2>
+            <h2 class="wp-block-heading"><?php esc_html_e( 'Join the Movement', 'campaignpress' ); ?></h2>
             <!-- /wp:heading -->
 
             <!-- wp:paragraph {"fontSize":"lg"} -->
-            <p class="has-lg-font-size"><?php esc_html_e( 'We need your help to win. Whether you can knock on doors, make calls, or host an event, there is a place for you on our team.', 'campaign-office' ); ?></p>
+            <p class="has-lg-font-size"><?php esc_html_e( 'We need your help to win. Whether you can knock on doors, make calls, or host an event, there is a place for you on our team.', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
 
             <!-- wp:list {"className":"is-style-check"} -->
             <ul class="is-style-check">
                 <!-- wp:list-item -->
-                <li><?php esc_html_e( 'Block Walking', 'campaign-office' ); ?></li>
+                <li><?php esc_html_e( 'Block Walking', 'campaignpress' ); ?></li>
                 <!-- /wp:list-item -->
                 <!-- wp:list-item -->
-                <li><?php esc_html_e( 'Phone Banking', 'campaign-office' ); ?></li>
+                <li><?php esc_html_e( 'Phone Banking', 'campaignpress' ); ?></li>
                 <!-- /wp:list-item -->
                 <!-- wp:list-item -->
-                <li><?php esc_html_e( 'Data Entry', 'campaign-office' ); ?></li>
+                <li><?php esc_html_e( 'Data Entry', 'campaignpress' ); ?></li>
                 <!-- /wp:list-item -->
                 <!-- wp:list-item -->
-                <li><?php esc_html_e( 'Event Hosting', 'campaign-office' ); ?></li>
+                <li><?php esc_html_e( 'Event Hosting', 'campaignpress' ); ?></li>
                 <!-- /wp:list-item -->
             </ul>
             <!-- /wp:list -->
@@ -42,15 +42,15 @@
         <!-- wp:column {"width":"50%","style":{"spacing":{"padding":{"top":"var:preset|spacing|8","right":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|8"}}},"backgroundColor":"white","textColor":"neutral-900"} -->
         <div class="wp-block-column has-neutral-900-color has-white-background-color has-text-color has-background" style="flex-basis:50%;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--8)">
             <!-- wp:heading {"level":3} -->
-            <h3 class="wp-block-heading"><?php esc_html_e( 'Sign Up Today', 'campaign-office' ); ?></h3>
+            <h3 class="wp-block-heading"><?php esc_html_e( 'Sign Up Today', 'campaignpress' ); ?></h3>
             <!-- /wp:heading -->
 
             <!-- wp:paragraph -->
-            <p><em>[Contact Form 7 or Gravity Forms Shortcode Placeholder]</em></p>
+            <p><?php echo do_shortcode('[cp_volunteer_form title="Join Our Team"]'); ?></p>
             <!-- /wp:paragraph -->
 
             <!-- wp:button {"width":100,"className":"is-style-fill"} -->
-            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-fill"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'I\'m In!', 'campaign-office' ); ?></a></div>
+            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-fill"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'I\'m In!', 'campaignpress' ); ?></a></div>
             <!-- /wp:button -->
         </div>
         <!-- /wp:column -->

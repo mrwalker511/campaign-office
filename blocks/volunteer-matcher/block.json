@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "campaignpress/volunteer-matcher",
+    "version": "2.0.0",
+    "title": "Volunteer Matcher",
+    "category": "campaign-office",
+    "icon": "groups",
+    "description": "Display a volunteer signup form with smart matching to opportunities",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Volunteer Sign Up"
+        },
+        "description": {
+            "type": "string",
+            "default": "Join our campaign and help us make a difference!"
+        },
+        "submitText": {
+            "type": "string",
+            "default": "Sign Me Up!"
+        },
+        "showInterests": {
+            "type": "boolean",
+            "default": true
+        },
+        "showAvailability": {
+            "type": "boolean",
+            "default": true
+        },
+        "showSkills": {
+            "type": "boolean",
+            "default": true
+        },
+        "backgroundColor": {
+            "type": "string"
+        },
+        "textColor": {
+            "type": "string"
+        }
+    },
+    "textdomain": "campaignpress",
+    "editorScript": "file:./index.js",
+    "style": "file:./style-index.css"
+}

@@ -41,13 +41,17 @@ Build compelling campaign pages with purpose-built blocks:
 
 ### Volunteer Management
 
-Recruit, organize, and mobilize your field team:
+Recruit, organize, and mobilize your field team with a complete volunteer management system:
 
-- **Digital Database** - Capture volunteer information, skills, interests, and availability
-- **Smart Organization** - Filter by status (new, contacted, active), skills, location, and availability
-- **Bulk Actions** - Update multiple volunteers, export lists, and track recruitment sources
-- **Flexible Placement** - Use shortcodes or blocks to add volunteer forms anywhere
-- **Integration Ready** - Email hooks for automated communications
+- **Digital Database** - Capture comprehensive volunteer information including contact details, skills, interests, and availability preferences
+- **Smart Organization** - Filter and search volunteers by status (new, contacted, active), skills, location, availability, and recruitment source
+- **Bulk Actions** - Update multiple volunteers at once, export lists to CSV, and track recruitment sources
+- **Volunteer Portal** - Self-service dashboard where volunteers can manage their profile, view assignments, and track hours
+- **Shift Scheduling** - Create and manage volunteer shifts with capacity limits and signup tracking
+- **Hours Tracking** - Log volunteer hours with verification workflow and activity categorization
+- **Leaderboards** - gamified ranking system with top volunteer recognition by hours and activities
+- **Flexible Placement** - Use shortcodes (`[cp_volunteer_form]`, `[cp_volunteer_portal]`, `[cp_volunteer_leaderboard]`) or blocks to add volunteer forms anywhere
+- **Integration Ready** - Email hooks and action filters for automated communications and third-party integrations
 
 ### Event Management & RSVP
 

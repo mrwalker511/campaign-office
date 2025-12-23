@@ -1,0 +1,514 @@
+/**
+ * Volunteer Portal Styles
+ *
+ * Styles for volunteer self-service portal including dashboard,
+ * shift management, hours tracking, and leaderboards.
+ *
+ * @package CampaignPress
+ * @since 2.0.0
+ */
+
+/* Dashboard Container */
+.cp-volunteer-dashboard {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Dashboard Header */
+.cp-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.cp-volunteer-info h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+    color: var(--wp--preset--color--neutral-900, #212529);
+}
+
+.cp-volunteer-role {
+    margin: 0;
+    color: var(--wp--preset--color--neutral-600, #6c757d);
+    font-size: 1rem;
+}
+
+.cp-dashboard-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Stats Grid */
+.cp-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.cp-stat-card {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cp-stat-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.cp-stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--wp--preset--color--primary, #0073aa);
+    margin-bottom: 0.25rem;
+}
+
+.cp-stat-label {
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+/* Dashboard Tabs */
+.cp-dashboard-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.cp-tab-button {
+    padding: 1rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    color: var(--wp--preset--color--neutral-700, #495057);
+}
+
+.cp-tab-button:hover {
+    color: var(--wp--preset--color--primary, #0073aa);
+}
+
+.cp-tab-button.active {
+    border-bottom-color: var(--wp--preset--color--primary, #0073aa);
+    color: var(--wp--preset--color--primary, #0073aa);
+}
+
+/* Tab Content */
+.cp-tab-content {
+    display: none;
+}
+
+.cp-tab-content.active {
+    display: block;
+}
+
+/* Shifts List & Grid */
+.cp-shifts-list,
+.cp-shifts-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.cp-shifts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+/* Shift Cards */
+.cp-shift-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cp-shift-card.cp-shift-available {
+    flex-direction: column;
+}
+
+.cp-shift-date {
+    background: var(--wp--preset--color--primary, #0073aa);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    min-width: 70px;
+}
+
+.cp-date-day {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.cp-date-month {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
+
+.cp-shift-details {
+    flex: 1;
+}
+
+.cp-shift-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.cp-shift-header h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    color: var(--wp--preset--color--neutral-900, #212529);
+}
+
+.cp-shift-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--wp--preset--color--neutral-100, #f1f3f5);
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--wp--preset--color--neutral-700, #495057);
+}
+
+.cp-shift-body p {
+    margin: 0.25rem 0;
+    color: var(--wp--preset--color--neutral-600, #6c757d);
+}
+
+.cp-shift-time,
+.cp-shift-location {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.cp-shift-description {
+    font-style: italic;
+    color: var(--wp--preset--color--neutral-500, #adb5bd);
+}
+
+.cp-shift-capacity {
+    font-size: 0.9rem;
+    color: var(--wp--preset--color--neutral-700, #495057);
+}
+
+.cp-shift-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Empty States */
+.cp-empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+    font-style: italic;
+}
+
+/* Volunteer Login Box */
+.cp-volunteer-login-wrapper {
+    max-width: 500px;
+    margin: 3rem auto;
+}
+
+.cp-volunteer-login-box {
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cp-volunteer-login-box h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+    color: var(--wp--preset--color--neutral-900, #212529);
+}
+
+.cp-volunteer-login-box .description {
+    margin-bottom: 1.5rem;
+    color: var(--wp--preset--color--neutral-600, #6c757d);
+}
+
+.cp-login-note {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--wp--preset--color--neutral-600, #6c757d);
+}
+
+.cp-login-note a {
+    color: var(--wp--preset--color--primary, #0073aa);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.cp-login-note a:hover {
+    text-decoration: underline;
+}
+
+/* Form Styles */
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-field {
+    margin-bottom: 1rem;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--wp--preset--color--neutral-900, #212529);
+}
+
+.cp-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.cp-input:focus {
+    outline: none;
+    border-color: var(--wp--preset--color--primary, #0073aa);
+    box-shadow: 0 0 0 2px rgba(0, 115, 170, 0.1);
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.cp-form-message {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    display: none;
+}
+
+/* Button Styles */
+.cp-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.cp-button-primary {
+    background: var(--wp--preset--color--primary, #0073aa);
+    color: #fff;
+}
+
+.cp-button-primary:hover {
+    background: var(--wp--preset--color--primary-dark, #005a87);
+}
+
+.cp-button-secondary {
+    background: #e5e5e5;
+    color: var(--wp--preset--color--neutral-900, #212529);
+}
+
+.cp-button-secondary:hover {
+    background: #d0d0d0;
+}
+
+.cp-button-ghost {
+    background: transparent;
+    color: var(--wp--preset--color--neutral-600, #6c757d);
+    border: 1px solid #e5e5e5;
+}
+
+.cp-button-ghost:hover {
+    background: #f9f9f9;
+    color: var(--wp--preset--color--neutral-900, #212529);
+}
+
+.cp-button-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Badge Styles */
+.cp-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.cp-badge-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.cp-badge-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* Hours Table */
+.cp-hours-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.cp-hours-table thead {
+    background: var(--wp--preset--color--neutral-100, #f1f3f5);
+}
+
+.cp-hours-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--wp--preset--color--neutral-700, #495057);
+    border-bottom: 2px solid var(--wp--preset--color--neutral-200, #e9ecef);
+}
+
+.cp-hours-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.cp-hours-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Leaderboard */
+.cp-volunteer-leaderboard {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cp-leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cp-leaderboard-table thead {
+    background: var(--wp--preset--color--primary, #0073aa);
+    color: #fff;
+}
+
+.cp-leaderboard-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.cp-leaderboard-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.cp-rank {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cp-volunteer-dashboard {
+        padding: 0 1rem;
+    }
+
+    .cp-dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .cp-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-dashboard-tabs {
+        flex-wrap: wrap;
+    }
+
+    .cp-tab-button {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .cp-shifts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-shift-card {
+        flex-direction: column;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .cp-dashboard-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus States */
+.cp-button:focus,
+.cp-input:focus {
+    outline: 2px solid var(--wp--preset--color--primary, #0073aa);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .cp-dashboard-actions,
+    .cp-dashboard-tabs {
+        display: none;
+    }
+
+    .cp-volunteer-dashboard {
+        max-width: 100%;
+    }
+}

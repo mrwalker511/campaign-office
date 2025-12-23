@@ -1,0 +1,504 @@
+{
+  "template_key": "conservative_champion",
+  "template_name": "Conservative Champion",
+  "template_description": "A strong, values-driven homepage for Republican and conservative candidates. Features patriotic design, traditional values emphasis, strong leadership messaging, and clear calls to action. Perfect for candidates running on conservative principles.",
+  "category": "homepage",
+  "campaign_type": "republican",
+  "election_level": "all",
+  "tags": ["conservative", "republican", "values", "leadership", "patriotic", "traditional"],
+  "is_premium": true,
+  "featured": true,
+  "preview_image": "/assets/templates/previews/conservative-champion.jpg",
+  "difficulty": "beginner",
+  "estimated_setup_time": "5-10 minutes",
+  "best_for": ["State Legislative", "Congressional", "Senate", "Gubernatorial", "Local Conservative"],
+  "color_scheme": {
+    "primary": "#CC0000",
+    "secondary": "#8B0000",
+    "accent": "#003366",
+    "text": "#1e1e1e",
+    "background": "#ffffff",
+    "patriotic": "#002868"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "split",
+      "order": 1,
+      "settings": {
+        "layout": "split-image-right",
+        "headline": "Leadership You Can Trust",
+        "subheadline": "Standing firm on conservative values. Fighting for your freedom, your family, and your future.",
+        "image": "/assets/placeholders/candidate-american-flag.jpg",
+        "background_type": "solid",
+        "background_color": "#ffffff",
+        "text_color": "#1e1e1e",
+        "height": "85vh",
+        "buttons": [
+          {
+            "text": "Join Our Team",
+            "style": "primary-large-red",
+            "action": "link",
+            "target": "/volunteer",
+            "icon": "shield"
+          },
+          {
+            "text": "Our Platform",
+            "style": "secondary-outline",
+            "action": "scroll-to-section",
+            "target": "values-section",
+            "icon": "document"
+          }
+        ],
+        "badges": [
+          {
+            "text": "Endorsed by [Organization]",
+            "icon": "check-circle",
+            "color": "#003366"
+          }
+        ],
+        "animation": "slide-in-right"
+      }
+    },
+    {
+      "type": "stats",
+      "variant": "counters",
+      "order": 2,
+      "settings": {
+        "background": "#002868",
+        "text_color": "#ffffff",
+        "padding": "60px-0",
+        "title": "Proven Conservative Leadership",
+        "stats": [
+          {
+            "label": "Years in Public Service",
+            "value": "12",
+            "icon": "⭐",
+            "color": "#ffffff",
+            "suffix": "",
+            "animate": true,
+            "description": "Consistent conservative record"
+          },
+          {
+            "label": "Bills Sponsored",
+            "value": "47",
+            "icon": "📜",
+            "color": "#ffffff",
+            "suffix": "",
+            "animate": true,
+            "description": "Fighting for conservative values"
+          },
+          {
+            "label": "Tax Cuts Supported",
+            "value": "100",
+            "icon": "💵",
+            "color": "#ffffff",
+            "prefix": "",
+            "suffix": "%",
+            "animate": true,
+            "description": "Every. Single. Time."
+          },
+          {
+            "label": "Conservative Rating",
+            "value": "98",
+            "icon": "🎯",
+            "color": "#ffffff",
+            "suffix": "%",
+            "animate": true,
+            "description": "From [Conservative Org]"
+          }
+        ],
+        "layout": "4-column-grid",
+        "animation": "count-up",
+        "animation_trigger": "scroll-into-view"
+      }
+    },
+    {
+      "type": "timeline",
+      "variant": "vertical",
+      "order": 3,
+      "settings": {
+        "section_id": "values-section",
+        "section_headline": "Our Core Values",
+        "section_subheadline": "The principles that guide everything we do",
+        "background": "#f8f9fa",
+        "padding": "80px-0",
+        "items": [
+          {
+            "title": "Faith & Family",
+            "icon": "✝️",
+            "description": "Protecting religious liberty and strengthening families as the foundation of our society.",
+            "image": "/assets/placeholders/faith-family.jpg"
+          },
+          {
+            "title": "Life",
+            "icon": "❤️",
+            "description": "Defending the sanctity of life from conception to natural death.",
+            "image": "/assets/placeholders/pro-life.jpg"
+          },
+          {
+            "title": "Freedom",
+            "icon": "🦅",
+            "description": "Protecting our constitutional rights, especially the 2nd Amendment.",
+            "image": "/assets/placeholders/freedom.jpg"
+          },
+          {
+            "title": "Fiscal Responsibility",
+            "icon": "💼",
+            "description": "Lower taxes, less government spending, balanced budgets.",
+            "image": "/assets/placeholders/fiscal.jpg"
+          },
+          {
+            "title": "Law & Order",
+            "icon": "⚖️",
+            "description": "Supporting our police and keeping communities safe.",
+            "image": "/assets/placeholders/law-order.jpg"
+          },
+          {
+            "title": "American Strength",
+            "icon": "🇺🇸",
+            "description": "Peace through strength. America First foreign policy.",
+            "image": "/assets/placeholders/america-strong.jpg"
+          }
+        ],
+        "timeline_style": "conservative",
+        "show_connecting_line": true,
+        "animation": "fade-in-up"
+      }
+    },
+    {
+      "type": "issues",
+      "variant": "grid",
+      "order": 4,
+      "settings": {
+        "section_headline": "Conservative Solutions",
+        "section_subheadline": "Common-sense policies that work",
+        "background": "#ffffff",
+        "padding": "80px-0",
+        "layout": "3-column-grid",
+        "issues": [
+          {
+            "title": "Cut Taxes",
+            "icon": "💰",
+            "summary": "Let hardworking Americans keep more of what they earn.",
+            "details": "<p>Lower income taxes, eliminate death tax, reduce business taxes to create jobs.</p>",
+            "image": "/assets/placeholders/cut-taxes.jpg",
+            "cta_text": "Read Plan",
+            "cta_link": "/issues/taxes"
+          },
+          {
+            "title": "Secure the Border",
+            "icon": "🛡️",
+            "summary": "Finish the wall. Enforce the law. Protect Americans.",
+            "details": "<p>Strong borders, immigration enforcement, end sanctuary cities.</p>",
+            "image": "/assets/placeholders/border-security.jpg",
+            "cta_text": "Read Plan",
+            "cta_link": "/issues/border"
+          },
+          {
+            "title": "School Choice",
+            "icon": "🎓",
+            "summary": "Parents' rights. Educational freedom. Quality options.",
+            "details": "<p>School choice, parental rights, end CRT indoctrination.</p>",
+            "image": "/assets/placeholders/school-choice.jpg",
+            "cta_text": "Read Plan",
+            "cta_link": "/issues/education"
+          },
+          {
+            "title": "Support Police",
+            "icon": "👮",
+            "summary": "Back the blue. Fund law enforcement. Safe streets.",
+            "details": "<p>Increased police funding, qualified immunity protection, tough on crime.</p>",
+            "image": "/assets/placeholders/back-the-blue.jpg",
+            "cta_text": "Read Plan",
+            "cta_link": "/issues/law-order"
+          },
+          {
+            "title": "Energy Independence",
+            "icon": "⚡",
+            "summary": "Drill here. Mine here. Make it here. American energy.",
+            "details": "<p>Domestic energy production, stop the Green New Deal, energy independence.</p>",
+            "image": "/assets/placeholders/energy.jpg",
+            "cta_text": "Read Plan",
+            "cta_link": "/issues/energy"
+          },
+          {
+            "title": "Defend Life",
+            "icon": "🤱",
+            "summary": "Pro-life, pro-family, protect the unborn.",
+            "details": "<p>Pro-life legislation, defund Planned Parenthood, support pregnancy centers.</p>",
+            "image": "/assets/placeholders/pro-life-2.jpg",
+            "cta_text": "Read Plan",
+            "cta_link": "/issues/life"
+          }
+        ],
+        "show_all_link": true,
+        "all_issues_url": "/platform",
+        "animation": "stagger-in"
+      }
+    },
+    {
+      "type": "testimonials",
+      "variant": "featured",
+      "order": 5,
+      "settings": {
+        "section_headline": "Endorsed by Conservatives",
+        "section_subheadline": "Trusted leaders support our campaign",
+        "background": "#f8f9fa",
+        "padding": "80px-0",
+        "layout": "featured-with-grid",
+        "featured_testimonial": {
+          "quote": "A proven conservative fighter who will stand strong for our values in office. I proudly endorse this campaign.",
+          "author": "[Prominent Conservative Leader]",
+          "title": "Former [Position]",
+          "location": "",
+          "image": "/assets/placeholders/endorser-main.jpg",
+          "type": "endorsement",
+          "verified": true
+        },
+        "testimonials": [
+          {
+            "quote": "Finally, someone who will defend our Second Amendment rights without compromise.",
+            "author": "[Gun Rights Organization]",
+            "title": "Firearms Advocacy Group",
+            "location": "",
+            "image": "/assets/placeholders/gun-rights-logo.png",
+            "type": "endorsement"
+          },
+          {
+            "quote": "A champion for the pro-life movement and defender of the unborn.",
+            "author": "[Pro-Life Organization]",
+            "title": "Right to Life Group",
+            "location": "",
+            "image": "/assets/placeholders/prolife-logo.png",
+            "type": "endorsement"
+          },
+          {
+            "quote": "100% rating on conservative issues. We're proud to support this campaign.",
+            "author": "[Conservative PAC]",
+            "title": "Political Action Committee",
+            "location": "",
+            "image": "/assets/placeholders/conservative-pac-logo.png",
+            "type": "endorsement"
+          },
+          {
+            "quote": "Stands with law enforcement when others won't. A true friend of the badge.",
+            "author": "[Police Union]",
+            "title": "Law Enforcement Union",
+            "location": "",
+            "image": "/assets/placeholders/police-union-logo.png",
+            "type": "endorsement"
+          }
+        ],
+        "show_more": true,
+        "all_endorsements_url": "/endorsements",
+        "animation": "fade-in-up"
+      }
+    },
+    {
+      "type": "donation",
+      "variant": "thermometer",
+      "order": 6,
+      "settings": {
+        "section_headline": "Fight for Conservative Values",
+        "section_subheadline": "Help us take back our country from the radical left",
+        "background": "#CC0000",
+        "text_color": "#ffffff",
+        "padding": "80px-0",
+        "tiers": [
+          {
+            "amount": 25,
+            "label": "Patriot",
+            "description": "Join the fight",
+            "icon": "🇺🇸"
+          },
+          {
+            "amount": 50,
+            "label": "Defender",
+            "description": "Defend our values",
+            "icon": "🛡️",
+            "popular": true
+          },
+          {
+            "amount": 100,
+            "label": "Guardian",
+            "description": "Protect our future",
+            "icon": "⭐"
+          },
+          {
+            "amount": 250,
+            "label": "Champion",
+            "description": "Champion conservative causes",
+            "icon": "🏆"
+          },
+          {
+            "amount": 500,
+            "label": "Leader",
+            "description": "Lead the charge",
+            "icon": "🦅"
+          },
+          {
+            "amount": 1000,
+            "label": "Founder",
+            "description": "Maximum impact",
+            "icon": "👑"
+          }
+        ],
+        "custom_amount": true,
+        "recurring_option": true,
+        "recurring_message": "Become a monthly conservative patriot!",
+        "thermometer": {
+          "enabled": true,
+          "goal": 100000,
+          "raised": 67500,
+          "label": "Goal: $100,000",
+          "show_percentage": true,
+          "show_amount": true,
+          "color": "#ffffff",
+          "background": "rgba(255,255,255,0.2)"
+        },
+        "disclaimer": "Paid for by [Committee Name]. Not authorized by any candidate.",
+        "payment_processor": "winred",
+        "animation": "scale-in"
+      }
+    },
+    {
+      "type": "volunteer",
+      "variant": "impact",
+      "order": 7,
+      "settings": {
+        "section_headline": "Join the Conservative Movement",
+        "section_subheadline": "Your voice matters. Your vote matters. Get involved today.",
+        "background": "#ffffff",
+        "padding": "80px-0",
+        "layout": "impact-cards",
+        "opportunities": [
+          {
+            "title": "Phone Banking",
+            "description": "Call fellow conservatives and get out the vote",
+            "icon": "📞",
+            "impact": "Reach 100 voters per shift",
+            "time_commitment": "2-4 hours/week",
+            "image": "/assets/placeholders/phone-banking-conservative.jpg",
+            "cta_text": "Start Calling",
+            "cta_link": "/volunteer/phones"
+          },
+          {
+            "title": "Door Knocking",
+            "description": "Talk to neighbors about our conservative message",
+            "icon": "🚪",
+            "impact": "Connect with 50 households",
+            "time_commitment": "Weekends",
+            "image": "/assets/placeholders/door-knocking.jpg",
+            "cta_text": "Sign Up",
+            "cta_link": "/volunteer/canvass"
+          },
+          {
+            "title": "Host Events",
+            "description": "Organize meet-and-greets in your community",
+            "icon": "🏠",
+            "impact": "Build local support network",
+            "time_commitment": "One event",
+            "image": "/assets/placeholders/house-party.jpg",
+            "cta_text": "Host Event",
+            "cta_link": "/volunteer/host"
+          },
+          {
+            "title": "Yard Signs",
+            "description": "Display your support, spread the message",
+            "icon": "🪧",
+            "impact": "1000s see your sign daily",
+            "time_commitment": "One-time setup",
+            "image": "/assets/placeholders/yard-signs.jpg",
+            "cta_text": "Get Signs",
+            "cta_link": "/volunteer/signs"
+          }
+        ],
+        "general_signup": {
+          "headline": "Not sure where to start?",
+          "description": "Sign up and we'll find the perfect way for you to help.",
+          "button_text": "General Volunteer Sign-Up",
+          "button_link": "/volunteer"
+        },
+        "animation": "slide-in-up"
+      }
+    },
+    {
+      "type": "cta",
+      "variant": "banner",
+      "order": 8,
+      "settings": {
+        "layout": "patriotic",
+        "headline": "America Needs Conservative Leadership",
+        "subheadline": "Join us in the fight to preserve our freedoms and values.",
+        "background": "linear-gradient(135deg, #002868 0%, #8B0000 100%)",
+        "text_color": "#ffffff",
+        "padding": "100px-0",
+        "buttons": [
+          {
+            "text": "Donate Now",
+            "style": "white-solid",
+            "link": "#donation-section",
+            "icon": "heart"
+          },
+          {
+            "text": "Get Involved",
+            "style": "white-outline",
+            "link": "/volunteer",
+            "icon": "users"
+          }
+        ],
+        "american_flag_overlay": true,
+        "animation": "pulse"
+      }
+    }
+  ],
+  "custom_css": "/* Conservative Champion Custom Styles */\n.cp-conservative-champion {\n  font-family: 'Georgia', 'Times New Roman', serif;\n}\n\n.cp-conservative-champion h1, .cp-conservative-champion h2 {\n  font-weight: 700;\n  letter-spacing: 0.02em;\n}\n\n.cp-conservative-champion .cp-patriotic-bg {\n  background: linear-gradient(135deg, #002868 0%, #8B0000 100%);\n}\n\n.cp-conservative-champion .cp-button-red {\n  background: #CC0000;\n  border: 2px solid #8B0000;\n  font-weight: 700;\n  text-transform: uppercase;\n}\n\n.cp-conservative-champion .cp-button-red:hover {\n  background: #8B0000;\n}",
+  "responsive_settings": {
+    "mobile": {
+      "hide_components": [],
+      "stack_order": "default",
+      "adjustments": {
+        "hero_layout": "stacked",
+        "stats_columns": 2,
+        "issues_columns": 1,
+        "testimonials_columns": 1
+      }
+    },
+    "tablet": {
+      "adjustments": {
+        "stats_columns": 2,
+        "issues_columns": 2,
+        "testimonials_columns": 2
+      }
+    }
+  },
+  "seo": {
+    "title": "{{Candidate Name}} - Conservative Leadership You Can Trust",
+    "description": "Standing firm on conservative values. Fighting for faith, family, freedom, and fiscal responsibility. Join our campaign today.",
+    "keywords": ["conservative", "republican", "traditional values", "faith and family", "fiscal responsibility", "law and order"],
+    "og_image": "/assets/templates/og-conservative-champion.jpg"
+  },
+  "setup_instructions": [
+    "1. Replace candidate name and photo throughout",
+    "2. Update conservative ratings and endorsements with real data",
+    "3. Customize core values to match candidate priorities",
+    "4. Edit issue positions with specific policy details",
+    "5. Add real endorsement logos and quotes",
+    "6. Configure WinRed payment processor",
+    "7. Update volunteer opportunities with local details",
+    "8. Replace all placeholder images with campaign photos"
+  ],
+  "recommended_plugins": [
+    "WinRed Integration",
+    "Conservative Voter File",
+    "Social Media Auto-Poster",
+    "Email Integration"
+  ],
+  "credits": {
+    "designer": "CampaignPress Design Team",
+    "inspiration": "Winning Republican campaigns 2020-2024",
+    "version": "1.0.0",
+    "last_updated": "2024-01-20"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "template_key": "the_journey",
+  "template_name": "The Journey",
+  "template_description": "Compelling candidate biography page. Tells the personal story, values, and journey that led to running for office.",
+  "category": "about_bio",
+  "campaign_type": "all",
+  "election_level": "all",
+  "tags": ["biography", "about", "story", "personal", "background"],
+  "is_premium": true,
+  "featured": true,
+  "difficulty": "beginner",
+  "estimated_setup_time": "10 minutes",
+  "color_scheme": {
+    "primary": "#2271b1",
+    "secondary": "#135e96"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "split",
+      "order": 1,
+      "settings": {
+        "headline": "My Story, Your Fight",
+        "subheadline": "From [hometown] to [current city], a lifetime of service and dedication to our community.",
+        "image": "/assets/placeholders/candidate-portrait.jpg",
+        "layout": "split-image-right"
+      }
+    },
+    {
+      "type": "timeline",
+      "variant": "vertical",
+      "order": 2,
+      "settings": {
+        "section_headline": "The Journey",
+        "items": [
+          {"title": "Early Life", "icon": "👶", "description": "Growing up in [place], learned values of hard work and community"},
+          {"title": "Education", "icon": "🎓", "description": "Attended [school], studied [subject]"},
+          {"title": "Career", "icon": "💼", "description": "Worked as [profession], served community"},
+          {"title": "Public Service", "icon": "⚖️", "description": "Elected to [position], fought for [cause]"},
+          {"title": "Running for Office", "icon": "🗳️", "description": "Ready to bring change to [office]"}
+        ]
+      }
+    },
+    {
+      "type": "testimonials",
+      "variant": "featured",
+      "order": 3,
+      "settings": {
+        "section_headline": "What People Say",
+        "testimonials": [
+          {"quote": "Known [candidate] for 20 years. Honest, dedicated, and committed to service.", "author": "Community Leader"}
+        ]
+      }
+    }
+  ],
+  "seo": {
+    "title": "About {{Candidate Name}} - My Journey",
+    "description": "Learn about my background, values, and commitment to serving our community."
+  },
+  "credits": {"version": "1.0.0"}
+}

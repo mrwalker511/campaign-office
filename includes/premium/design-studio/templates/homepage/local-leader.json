@@ -1,0 +1,88 @@
+{
+  "template_key": "local_leader",
+  "template_name": "Local Leader",
+  "template_description": "Community-focused homepage for local elections (City Council, School Board, County positions). Emphasizes local connections and neighborhood issues.",
+  "category": "homepage",
+  "campaign_type": "all",
+  "election_level": "local",
+  "tags": ["local", "community", "neighborhood", "city-council", "school-board"],
+  "is_premium": true,
+  "featured": false,
+  "difficulty": "beginner",
+  "estimated_setup_time": "6 minutes",
+  "best_for": ["City Council", "School Board", "County Commission", "Local Offices"],
+  "color_scheme": {
+    "primary": "#00a32a",
+    "secondary": "#008a20",
+    "accent": "#FFD700"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "centered",
+      "order": 1,
+      "settings": {
+        "headline": "Your Neighbor, Your Voice",
+        "subheadline": "Lifelong [neighborhood] resident running for [local office] to serve our community",
+        "background_image": "/assets/placeholders/neighborhood.jpg",
+        "buttons": [
+          {"text": "Meet [Name]", "style": "primary-large"},
+          {"text": "Local Issues", "style": "secondary-outline"}
+        ]
+      }
+    },
+    {
+      "type": "stats",
+      "variant": "badges",
+      "order": 2,
+      "settings": {
+        "stats": [
+          {"label": "Years in Neighborhood", "value": "15", "icon": "🏡"},
+          {"label": "Community Events", "value": "50", "suffix": "+", "icon": "🎉"},
+          {"label": "Doors Knocked", "value": "2000", "suffix": "+", "icon": "🚪"}
+        ]
+      }
+    },
+    {
+      "type": "issues",
+      "variant": "grid",
+      "order": 3,
+      "settings": {
+        "section_headline": "Local Priorities",
+        "issues": [
+          {"title": "Fix Our Streets", "icon": "🛣️", "summary": "Repair potholes, improve sidewalks"},
+          {"title": "Public Safety", "icon": "🚨", "summary": "Better lighting, neighborhood watch"},
+          {"title": "Parks & Rec", "icon": "🌳", "summary": "Maintain parks, youth programs"},
+          {"title": "Small Business", "icon": "🏪", "summary": "Support local shops, reduce red tape"}
+        ]
+      }
+    },
+    {
+      "type": "testimonials",
+      "variant": "grid",
+      "order": 4,
+      "settings": {
+        "section_headline": "What Neighbors Say",
+        "testimonials": [
+          {"quote": "Always at community meetings, really listens", "author": "Jane D., Main St"},
+          {"quote": "Organized our neighborhood cleanup", "author": "Tom R., Oak Ave"},
+          {"quote": "Cares about our schools and kids", "author": "Maria L., Parent"}
+        ]
+      }
+    },
+    {
+      "type": "volunteer",
+      "variant": "form",
+      "order": 5,
+      "settings": {
+        "section_headline": "Help Elect [Name]",
+        "description": "Join neighbors supporting our campaign"
+      }
+    }
+  ],
+  "seo": {
+    "title": "{{Candidate Name}} for {{Office}} - {{District}}",
+    "description": "Your neighbor running for {{office}}. Fighting for {{local priorities}}."
+  },
+  "credits": {"version": "1.0.0"}
+}

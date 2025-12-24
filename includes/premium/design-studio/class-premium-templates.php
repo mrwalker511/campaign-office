@@ -161,17 +161,32 @@ class CP_Premium_Templates {
      * Register premium templates from JSON files
      */
     public function register_premium_templates() {
+        // Use transient to avoid checking database on every page load
+        $templates_loaded = get_transient('cp_premium_templates_loaded');
+
+        // Check if force reload is requested
+        $force_reload = isset($_GET['force_reload_templates']) && current_user_can('manage_options');
+
+        if ($templates_loaded && !$force_reload) {
+            return;
+        }
+
         // Check if templates already registered
         global $wpdb;
         $count = $wpdb->get_var("SELECT COUNT(*) FROM {$this->templates_table}");
 
         // Only register if table is empty or forced
-        if ($count > 0 && !isset($_GET['force_reload_templates'])) {
+        if ($count > 0 && !$force_reload) {
+            // Set transient so we don't check again for 24 hours
+            set_transient('cp_premium_templates_loaded', true, DAY_IN_SECONDS);
             return;
         }
 
         // Load templates from JSON files
         $this->load_templates_from_files();
+
+        // Set transient so we don't reload on every request
+        set_transient('cp_premium_templates_loaded', true, DAY_IN_SECONDS);
     }
 
     /**
@@ -475,16 +490,28 @@ class CP_Premium_Templates {
         // Enqueue jQuery
         wp_enqueue_script('jquery');
 
-        // Template browser styles
-        wp_add_inline_style('wp-admin', $this->get_browser_css());
+        // Enqueue template browser CSS
+        wp_enqueue_style(
+            'cp-premium-template-browser',
+            get_template_directory_uri() . '/assets/css/premium-template-browser.css',
+            array(),
+            '2.0.0'
+        );
 
-        // Template browser JavaScript
-        wp_add_inline_script('jquery', $this->get_browser_js());
+        // Enqueue template browser JavaScript
+        wp_enqueue_script(
+            'cp-premium-template-browser',
+            get_template_directory_uri() . '/assets/js/premium-template-browser.js',
+            array('jquery'),
+            '2.0.0',
+            true
+        );
 
         // Localize script
-        wp_localize_script('jquery', 'cpTemplates', array(
+        wp_localize_script('cp-premium-template-browser', 'cpPremiumTemplates', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('cp_premium_templates'),
+            'postId' => isset($_GET['post_id']) ? absint($_GET['post_id']) : 0,
             'is_premium' => function_exists('cp_is_premium_active') && cp_is_premium_active(),
             'strings' => array(
                 'loading' => __('Loading...', 'campaign-office'),
@@ -499,16 +526,20 @@ class CP_Premium_Templates {
 
     /**
      * Get browser CSS
+     * @deprecated 2.0.0 Now using external file
      */
     private function get_browser_css() {
-        return '/* Premium Template Browser Styles - Will be moved to separate file */';
+        // External CSS file is now enqueued via enqueue_browser_assets
+        return '';
     }
 
     /**
      * Get browser JavaScript
+     * @deprecated 2.0.0 Now using external file
      */
     private function get_browser_js() {
-        return '/* Premium Template Browser JS - Will be moved to separate file */';
+        // External JS file is now enqueued via enqueue_browser_assets
+        return '';
     }
 
     /**

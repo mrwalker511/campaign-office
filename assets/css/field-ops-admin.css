@@ -1,0 +1,495 @@
+/**
+ * Field Operations Admin Styles
+ *
+ * Styles for the WordPress admin field operations pages
+ *
+ * @package CampaignPress
+ * @subpackage Premium/FieldOperations
+ * @since 2.0.0
+ */
+
+/* ============================================
+   Dashboard Layouts
+   ============================================ */
+
+.cp-field-ops-dashboard,
+.cp-canvassing-dashboard,
+.cp-phone-banking-dashboard,
+.cp-gotv-dashboard,
+.cp-scheduling-dashboard {
+    max-width: 100%;
+}
+
+.cp-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.cp-stat-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.cp-stat-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.cp-stat-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.cp-stat-number {
+    font-size: 36px;
+    font-weight: 600;
+    color: #2271b1;
+    line-height: 1;
+    margin: 10px 0;
+}
+
+.cp-stat-large .cp-stat-number {
+    font-size: 64px;
+}
+
+.cp-stat-meta {
+    color: #666;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+}
+
+/* ============================================
+   Quick Actions
+   ============================================ */
+
+.cp-quick-actions {
+    margin: 20px 0;
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.cp-quick-actions .button {
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+/* ============================================
+   Status Badges
+   ============================================ */
+
+.cp-status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cp-status-active {
+    background: #e8f5e9;
+    color: #46b450;
+}
+
+.cp-status-pending {
+    background: #fff4e5;
+    color: #f56e28;
+}
+
+.cp-status-completed {
+    background: #e5f5ff;
+    color: #0073aa;
+}
+
+.cp-status-cancelled {
+    background: #ffd4d4;
+    color: #dc3232;
+}
+
+.cp-status-scheduled {
+    background: #f3e5ff;
+    color: #8e44ad;
+}
+
+.cp-status-confirmed {
+    background: #e8f5e9;
+    color: #46b450;
+}
+
+/* ============================================
+   Priority Badges
+   ============================================ */
+
+.cp-priority-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.cp-priority-high {
+    background: #ffd4d4;
+    color: #dc3232;
+}
+
+.cp-priority-medium {
+    background: #fff4e5;
+    color: #f56e28;
+}
+
+.cp-priority-low {
+    background: #e8f5e9;
+    color: #46b450;
+}
+
+/* ============================================
+   Progress Indicators
+   ============================================ */
+
+.cp-progress-bar {
+    background: #e0e0e0;
+    border-radius: 4px;
+    height: 20px;
+    overflow: hidden;
+    display: inline-block;
+    width: 150px;
+    vertical-align: middle;
+}
+
+.cp-progress-fill {
+    background: #46b450;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.cp-progress-fill.cp-goal-met {
+    background: #46b450 !important;
+}
+
+.cp-progress-text {
+    margin-left: 10px;
+    font-weight: 600;
+    display: inline;
+}
+
+/* ============================================
+   Data Tables
+   ============================================ */
+
+.cp-recent-activity,
+.cp-leaderboard,
+.cp-precinct-breakdown,
+.cp-disposition-chart,
+.cp-live-feed,
+.cp-todays-shifts,
+.cp-top-volunteers {
+    margin-top: 30px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.cp-recent-activity h2,
+.cp-leaderboard h2,
+.cp-precinct-breakdown h2,
+.cp-disposition-chart h2 {
+    margin-top: 0;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* ============================================
+   Filters
+   ============================================ */
+
+.cp-filters,
+.cp-date-filter {
+    margin: 20px 0;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+}
+
+.cp-filters select,
+.cp-filters input,
+.cp-date-filter select,
+.cp-date-filter input {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.cp-date-filter label {
+    margin: 0 5px 0 15px;
+    font-weight: 600;
+}
+
+/* ============================================
+   Calendar/Month Navigator
+   ============================================ */
+
+.cp-month-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+}
+
+.cp-month-nav strong {
+    font-size: 18px;
+    color: #2271b1;
+}
+
+/* ============================================
+   Volunteer Count/Fill Status
+   ============================================ */
+
+.cp-volunteer-count {
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.cp-filled {
+    background: #e8f5e9;
+    color: #46b450;
+}
+
+.cp-partial {
+    background: #fff4e5;
+    color: #f56e28;
+}
+
+.cp-unfilled {
+    background: #ffd4d4;
+    color: #dc3232;
+}
+
+/* ============================================
+   Recurring Badge
+   ============================================ */
+
+.cp-recurring-badge {
+    color: #f56e28;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* ============================================
+   Disposition List
+   ============================================ */
+
+.cp-disposition-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.cp-disp-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.cp-disp-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.cp-disp-count {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2271b1;
+}
+
+/* ============================================
+   Activity Feed
+   ============================================ */
+
+.cp-activity-feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cp-activity-feed li {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cp-activity-feed li:last-child {
+    border-bottom: none;
+}
+
+.cp-activity-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0 5px;
+}
+
+.cp-activity-badge.cp-voted {
+    background: #e8f5e9;
+    color: #46b450;
+}
+
+.cp-time {
+    color: #999;
+    font-size: 12px;
+}
+
+/* ============================================
+   Check-in Stats
+   ============================================ */
+
+.cp-checkin-stats {
+    margin: 20px 0;
+}
+
+.cp-stat {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    padding: 20px 40px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.cp-stat-number {
+    font-size: 48px;
+    font-weight: 600;
+    color: #2271b1;
+}
+
+.cp-stat-label {
+    color: #666;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* ============================================
+   Goal Progress
+   ============================================ */
+
+.cp-goal-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ============================================
+   Voted Row
+   ============================================ */
+
+.cp-voted {
+    background-color: #f0f9ff !important;
+}
+
+.cp-voted-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #46b450;
+    font-weight: 600;
+}
+
+/* ============================================
+   Total Row
+   ============================================ */
+
+.cp-total-row {
+    background: #f9f9f9;
+    font-weight: 600;
+    border-top: 2px solid #2271b1;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 782px) {
+    .cp-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cp-month-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .cp-filters,
+    .cp-date-filter {
+        text-align: left;
+    }
+
+    .cp-filters select,
+    .cp-filters input,
+    .cp-date-filter select,
+    .cp-date-filter input {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .cp-date-filter label {
+        display: block;
+        margin: 10px 0 5px 0;
+    }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+.cp-stat-card:focus-within {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
+button:focus,
+a.button:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   WordPress Admin Integration
+   ============================================ */
+
+#wpbody-content .cp-field-ops-dashboard {
+    margin-right: 20px;
+}
+
+.cp-dashboard-card .button {
+    width: auto;
+    display: inline-block;
+}

@@ -24,7 +24,7 @@
             "default": "Washington DC"
         }
     },
-    "textdomain": "campaign-office",
+    "textdomain": "campaignpress",
     "editorScript": "file:./index.js",
     "viewScript": "file:./view.js",
     "render": "file:./render.php",

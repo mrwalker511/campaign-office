@@ -1,6 +1,6 @@
 # CampaignPress Block Implementation Guide
 
-## 🎯 Overview
+## Overview
 
 You have **3 production-ready blocks** built:
 - ✅ **hero-commander** - Full hero section with typewriter, parallax, animations
@@ -58,7 +58,7 @@ registerBlockType('campaignpress/your-block', {
 
 ---
 
-## 🚀 **Remaining Blocks**
+## **Remaining Blocks**
 
 ### **1. Countdown Block** (`blocks/countdown/`)
 

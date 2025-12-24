@@ -1297,7 +1297,7 @@ class CP_Campaign_Design_Studio {
      * Enqueue studio assets
      */
     public function enqueue_studio_assets($hook) {
-        if ($hook !== 'toplevel_page_cp-design-studio' && $hook !== 'design-studio_page_cp-design-templates' && $hook !== 'design-studio_page_cp-global-styles') {
+        if ($hook !== 'toplevel_page_cp-design-studio' && $hook !== 'cp-design-studio_page_cp-design-templates' && $hook !== 'cp-design-studio_page_cp-global-styles') {
             return;
         }
 

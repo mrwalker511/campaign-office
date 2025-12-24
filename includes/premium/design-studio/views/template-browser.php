@@ -58,7 +58,7 @@ $categories = $this->get_categories();
                 <option value=""><?php esc_html_e('All Categories', 'campaign-office'); ?></option>
                 <?php foreach ($categories as $key => $category) : ?>
                     <option value="<?php echo esc_attr($key); ?>">
-                        <?php echo esc_html($category['name']); ?> (<?php echo $category['count']; ?>)
+                        <?php echo esc_html($category['name']); ?> (<?php echo absint($category['count']); ?>)
                     </option>
                 <?php endforeach; ?>
             </select>

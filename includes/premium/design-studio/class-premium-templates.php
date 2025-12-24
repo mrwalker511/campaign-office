@@ -218,7 +218,7 @@ class CP_Premium_Templates {
                     'campaign_type' => $template_data['campaign_type'] ?? 'all',
                     'election_level' => $template_data['election_level'] ?? 'all',
                     'tags' => is_array($template_data['tags'] ?? null) ? implode(',', $template_data['tags']) : '',
-                    'is_premium' => $template_data['is_premium'] ? 1 : 0,
+                    'is_premium' => ($template_data['is_premium'] ?? true) ? 1 : 0,
                     'featured' => $template_data['featured'] ?? 0,
                     'difficulty' => $template_data['difficulty'] ?? 'beginner',
                     'setup_time' => $template_data['estimated_setup_time'] ?? '5-10 minutes',
@@ -441,7 +441,7 @@ class CP_Premium_Templates {
      * @return string Generated HTML
      */
     private function generate_component_html($component) {
-        $type = $component['type'];
+        $type = $component['type'] ?? 'unknown';
         $variant = $component['variant'] ?? 'default';
         $settings = $component['settings'] ?? array();
 

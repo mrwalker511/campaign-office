@@ -106,60 +106,81 @@ Professional, campaign-ready design:
 
 ## Premium Features
 
-### Political CRM
+Transform your campaign website into a complete operations platform for **$299/year**.
 
-Manage up to 50,000+ contacts with advanced voter data:
+### 🗂️ Advanced CRM System
 
-- **Contact Database** - 50+ fields including demographics, political affiliation, voting history, and custom data
+Professional contact management replacing NationBuilder ($500-1,000/mo):
+
+- **50,000+ Contact Database** - 50+ fields including demographics, political affiliation, voting history
 - **Engagement Scoring** - Algorithmic scoring based on interactions, donations, and event attendance
-- **Interaction Tracking** - Complete history of calls, texts, emails, door knocks, donations, and events
+- **Interaction History** - Complete timeline of calls, texts, emails, door knocks, donations, events
 - **Smart Segmentation** - Dynamic and saved segments with advanced filtering
-- **Household Grouping** - Organize contacts by address for efficient canvassing
 - **Bulk Operations** - Update, tag, or delete hundreds of contacts at once
-- **Import/Export** - Compatible with L2 Political, TargetSmart, NGP VAN, and generic CSV formats
-- **REST API** - Full programmatic access for integrations
+- **Import/Export** - Compatible with L2 Political, TargetSmart, NGP VAN, NationBuilder, Action Network
+- **REST API** - Full programmatic access for custom integrations
 
-### Field Operations
+### 🚶 Field Operations
 
-Run comprehensive ground game operations:
+Complete ground game replacing NGP VAN ($1,500-3,000/mo):
 
-- **Canvassing Module** - Walk list generation, mobile interface, offline data collection, and GPS tracking
-- **Phone Banking** - Call lists, scripts with branching logic, click-to-call integration, and disposition tracking
-- **GOTV Tools** - Early vote tracking, election day dashboard, voter transportation coordination, and turnout goals
-- **Volunteer Scheduling** - Shift management, automated reminders, check-in/out system, and hours tracking
+- **Canvassing** - Walk list generation, mobile interface, offline mode, GPS tracking
+- **Phone Banking** - Call lists, scripts with branching logic, click-to-call, disposition tracking
+- **GOTV Tools** - Early vote tracking, election day dashboard, voter transportation
+- **Volunteer Scheduling** - Shift management, automated reminders, check-in/out, hours tracking
 
-### FEC Compliance
+### ⚖️ FEC Compliance
 
 Automate campaign finance reporting:
 
 - **Contribution Tracking** - Capture all FEC-required donor information
-- **Automatic Limits** - Enforce individual ($3,300), PAC ($5,000), and party ($10,000) limits
-- **Prohibited Source Detection** - Flag foreign nationals, federal contractors, and corporate contributions
-- **Itemization** - Auto-itemize contributions over $200
-- **Report Generation** - Quarterly reports, 12-day pre-election, and 30-day post-general filings
+- **Automatic Limits** - Enforce individual, PAC, and party contribution limits
+- **Prohibited Source Detection** - Flag foreign nationals, federal contractors, corporations
+- **Report Generation** - Quarterly, pre-election, and post-general filings
 - **FEC Form 3 Export** - CSV format compatible with FEC filing software
 - **Audit Trail** - 3+ year transaction logging for compliance
 
-### Email & SMS Automation
+### 📧 Email & SMS Automation
 
-Multi-channel campaign communications:
+Multi-channel communications:
 
-- **Email Platforms** - Mailchimp, Action Network, Constant Contact, SendGrid, MailerLite
-- **SMS Platforms** - Twilio, Hustle, CallHub, RumbleUp
-- **Workflow Builder** - 14 trigger types, 9 action types, 5 condition types
-- **Automation Campaigns** - Welcome series, thank you emails, event reminders, re-engagement campaigns
+- **Email Integrations** - Mailchimp, Action Network, Constant Contact, SendGrid, MailerLite
+- **SMS Integrations** - Twilio, Hustle, CallHub, RumbleUp
+- **Workflow Builder** - Visual automation with 14 triggers, 9 actions, 5 conditions
+- **Pre-Built Campaigns** - Welcome series, thank you emails, event reminders, re-engagement
 - **Compliance** - TCPA and CAN-SPAM compliant with automatic opt-out management
 
-### Advanced Analytics
+### 📊 Advanced Analytics
 
 Data-driven campaign insights:
 
-- **Fundraising Analytics** - Total raised, donor retention, acquisition costs, and time-series trends
-- **Volunteer Metrics** - Recruitment rates, hours logged, activity tracking, and leaderboards
-- **Event Analytics** - Attendance tracking, RSVP conversion, and popular event rankings
-- **Engagement Scoring** - Contact engagement distribution and at-risk supporter identification
+- **Fundraising Analytics** - Total raised, donor retention, acquisition costs, time-series trends
+- **Volunteer Metrics** - Recruitment rates, hours logged, activity tracking, leaderboards
+- **Event Analytics** - Attendance tracking, RSVP conversion, popular event rankings
+- **Engagement Scoring** - Contact engagement distribution and at-risk supporter alerts
 - **Geographic Analysis** - Heat maps and location-based performance data
-- **Export Capabilities** - CSV exports and report generation
+- **Export Capabilities** - CSV exports and PDF report generation
+
+### 🎨 Premium Design Templates
+
+50+ professionally designed campaign page templates:
+
+- **Homepage Templates** (15) - Full campaign homepages for different candidate types
+- **Landing Pages** (10) - Donation, volunteer, email capture, event registration
+- **About/Bio Pages** (8) - Candidate biography and team pages
+- **Issues Pages** (7) - Policy positions and issue pages
+- **One-Click Application** - Apply any template to any page instantly
+- **Fully Customizable** - All templates are starting points, not limitations
+
+### 🛠️ Additional Premium Features
+
+- **Developer Console** - Advanced system management and API testing tools
+- **White Label** - Remove all CampaignPress branding
+- **Priority Support** - 24/7 support via email, chat, and phone
+- **Automatic Updates** - Security patches and features automatically installed
+- **Premium Demo Content** - 10 complete demo variations for different campaign types
+
+**📖 See [FEATURES.md](FEATURES.md) for detailed feature breakdown**
 
 ---
 
@@ -198,17 +219,30 @@ Data-driven campaign insights:
 
 ## Premium Upgrade
 
-**License Tiers:**
+**Only $299/year** - Replaces $2,500-4,000/year in platform costs
 
-- **Basic** ($99/year) - CRM (10K contacts), Analytics, REST API
-- **Professional** ($299/year) - CRM (50K contacts), Field Operations, FEC Compliance, Automation
-- **Enterprise** ($599/year) - Unlimited contacts, White Label, Priority Support, Custom Development
+### What's Included in Premium:
 
-To upgrade:
-1. Purchase a license from [campaignpress.com](https://campaignpress.com)
+- **Advanced CRM** - Manage 50,000+ contacts with engagement scoring and segmentation
+- **Field Operations** - Canvassing, phone banking, GOTV, volunteer scheduling
+- **FEC Compliance** - Automated campaign finance reporting and contribution tracking
+- **Advanced Analytics** - Deep insights into fundraising, volunteers, events, and engagement
+- **Email & SMS Automation** - Integrate with Mailchimp, Twilio, Action Network, and more
+- **Premium Templates** - 50+ professionally designed campaign page templates
+- **REST API Access** - Full programmatic access for integrations
+- **White Label** - Remove all CampaignPress branding
+- **Priority Support** - 24/7 support via email, chat, and phone
+- **Automatic Updates** - Security patches and features automatically installed
+- **Developer Console** - Advanced system management and API testing tools
+
+### To Upgrade:
+
+1. Purchase a license from [campaignpress.com/pricing](https://campaignpress.com/pricing)
 2. Install the premium plugin from your account dashboard
-3. Enter your license key under **CampaignPress Premium > License**
+3. Enter your license key under **CampaignPress Pro > License**
 4. Activate the features you need
+
+**See [FEATURES.md](FEATURES.md) for complete feature comparison**
 
 ---
 

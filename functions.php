@@ -81,12 +81,9 @@ function campaignpress_setup() {
 add_action('after_setup_theme', 'campaignpress_setup');
 
 /**
- * Set the content width in pixels
+ * Content width is controlled by theme.json settings.contentSize and settings.layout.wideSize
+ * No need for legacy $content_width global in block themes
  */
-function campaignpress_content_width() {
-    $GLOBALS['content_width'] = apply_filters('campaignpress_content_width', 1200);
-}
-add_action('after_setup_theme', 'campaignpress_content_width', 0);
 
 /**
  * Enqueue scripts and styles
@@ -132,10 +129,7 @@ function campaignpress_scripts() {
         true
     );
 
-    // Ensure jQuery is loaded (WordPress core)
-    wp_enqueue_script('jquery');
-    
-    // Main theme JS
+    // Main theme JS (jQuery dependency auto-enqueued by WordPress)
     wp_enqueue_script(
         'campaignpress-main',
         get_template_directory_uri() . '/assets/js/main.js',
@@ -292,30 +286,21 @@ add_filter('wp_headers', 'campaignpress_security_headers');
 
 /**
  * Flush rewrite rules on theme activation
- * This runs once after theme activation to ensure custom post type permalinks work
+ * Runs once when theme is activated to ensure custom post type permalinks work
  */
-function campaignpress_flush_rewrite_rules() {
-    // Check if we've already flushed for this theme activation
-    if (get_option('campaignpress_rewrite_rules_flushed')) {
-        return;
-    }
-
+function campaignpress_activation() {
     // Flush rewrite rules (CPTs are already registered via init hook)
     flush_rewrite_rules();
-
-    // Set flag so we don't flush on every page load
-    update_option('campaignpress_rewrite_rules_flushed', true);
 }
-add_action('after_setup_theme', 'campaignpress_flush_rewrite_rules', 20);
+add_action('after_switch_theme', 'campaignpress_activation');
 
 /**
- * Reset rewrite flush flag when theme is switched
+ * Clean up on theme deactivation
  */
-function campaignpress_theme_deactivation() {
-    delete_option('campaignpress_rewrite_rules_flushed');
+function campaignpress_deactivation() {
     flush_rewrite_rules();
 }
-add_action('switch_theme', 'campaignpress_theme_deactivation');
+add_action('switch_theme', 'campaignpress_deactivation');
 
 function campaignpress_customize_color_scheme($wp_customize) {
     // Add setting

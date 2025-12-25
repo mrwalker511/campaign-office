@@ -358,7 +358,7 @@ class CP_Mega_Menu_Builder {
      * Enqueue admin assets
      */
     public function enqueue_admin_assets($hook) {
-        if ($hook !== 'nav-menus.php' && $hook !== 'design-studio_page_cp-mega-menu') {
+        if ($hook !== 'nav-menus.php' && $hook !== 'cp-design-studio_page_cp-mega-menu') {
             return;
         }
 

@@ -69,14 +69,10 @@ function campaignpress_setup() {
     ));
 
     // WordPress 6.9+ Block Theme Features
-    // Most features are now controlled via theme.json
-    // These supports ensure compatibility with the Site Editor
-    add_theme_support('wp-block-styles');
-    add_theme_support('align-wide');
-    add_theme_support('responsive-embeds');
+    // All block styles, wide alignment, responsive embeds, and editor styles
+    // are now controlled via theme.json - no add_theme_support() calls needed
 
-    // Editor styles
-    add_theme_support('editor-styles');
+    // Editor stylesheet for Site Editor
     add_editor_style('assets/css/design-system-wp69.css');
 
     // Disable default block patterns (we'll create custom ones)

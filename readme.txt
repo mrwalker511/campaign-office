@@ -1,9 +1,9 @@
 === CampaignPress ===
 Contributors: campaignpress
 Tags: blog, politics, campaign, two-columns, left-sidebar, right-sidebar, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, flexible-header, footer-widgets, full-width-template, theme-options, threaded-comments, translation-ready
-Requires at least: 6.9
+Requires at least: 6.4
 Tested up to: 6.9
-Requires PHP: 8.1
+Requires PHP: 7.4
 Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -58,8 +58,8 @@ CampaignPress is a comprehensive WordPress theme built specifically for politica
 
 = Documentation & Support =
 
-For detailed documentation, visit: [Documentation URL]
-For support, visit: [Support URL]
+For detailed documentation, visit: https://campaignpress.com/docs
+For support, visit: https://campaignpress.com/support
 
 == Installation ==
 

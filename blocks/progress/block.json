@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/progress",
+    "version": "2.0.0",
+    "title": "Progress Tracker",
+    "category": "campaign-office",
+    "icon": "chart-bar",
+    "description": "Visual goal meters for fundraising, volunteer recruitment, and voter outreach.",
+    "supports": {
+        "html": false,
+        "align": true,
+        "color": {
+            "text": true,
+            "background": true
+        }
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Campaign Progress"
+        },
+        "goalType": {
+            "type": "string",
+            "default": "fundraising"
+        },
+        "currentValue": {
+            "type": "number",
+            "default": 0
+        },
+        "goalValue": {
+            "type": "number",
+            "default": 10000
+        },
+        "showPercentage": {
+            "type": "boolean",
+            "default": true
+        },
+        "showNumbers": {
+            "type": "boolean",
+            "default": true
+        },
+        "currencySymbol": {
+            "type": "string",
+            "default": "$"
+        },
+        "barColor": {
+            "type": "string",
+            "default": "#0053c3"
+        },
+        "backgroundColor": {
+            "type": "string",
+            "default": "#e9ecef"
+        },
+        "barHeight": {
+            "type": "string",
+            "default": "40px"
+        },
+        "animateOnScroll": {
+            "type": "boolean",
+            "default": true
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js"
+}

@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/hero-commander",
+    "version": "2.0.0",
+    "title": "Hero Commander",
+    "category": "campaign-office",
+    "icon": "cover-image",
+    "description": "Dynamic hero sections with typewriter effects, parallax backgrounds, and call-to-action buttons.",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"],
+        "color": {
+            "text": true,
+            "background": true,
+            "gradients": true
+        },
+        "spacing": {
+            "padding": true,
+            "margin": true
+        }
+    },
+    "attributes": {
+        "headline": {
+            "type": "string",
+            "default": "Fighting for Our Future"
+        },
+        "subheadline": {
+            "type": "string",
+            "default": "Together, we can build a better tomorrow"
+        },
+        "enableTypewriter": {
+            "type": "boolean",
+            "default": true
+        },
+        "typewriterPhrases": {
+            "type": "array",
+            "default": ["Fighting for Our Future", "Building a Better Tomorrow", "Working for Change"]
+        },
+        "backgroundImage": {
+            "type": "string",
+            "default": ""
+        },
+        "enableParallax": {
+            "type": "boolean",
+            "default": true
+        },
+        "overlayColor": {
+            "type": "string",
+            "default": "rgba(0, 0, 0, 0.5)"
+        },
+        "overlayOpacity": {
+            "type": "number",
+            "default": 50
+        },
+        "minHeight": {
+            "type": "string",
+            "default": "600px"
+        },
+        "textAlignment": {
+            "type": "string",
+            "default": "center"
+        },
+        "primaryButtonText": {
+            "type": "string",
+            "default": "Donate Now"
+        },
+        "primaryButtonUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "secondaryButtonText": {
+            "type": "string",
+            "default": "Get Involved"
+        },
+        "secondaryButtonUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "showButtons": {
+            "type": "boolean",
+            "default": true
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js"
+}

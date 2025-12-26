@@ -1,0 +1,108 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/donation-form",
+    "version": "2.0.0",
+    "title": "Donation Form",
+    "category": "campaign-office",
+    "icon": "money-alt",
+    "description": "Multi-tier fundraising form with recurring donations and payment processor integration.",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"],
+        "color": {
+            "text": true,
+            "background": true
+        }
+    },
+    "attributes": {
+        "heading": {
+            "type": "string",
+            "default": "Support Our Campaign"
+        },
+        "description": {
+            "type": "string",
+            "default": "Your contribution helps us build a better future."
+        },
+        "tiers": {
+            "type": "array",
+            "default": [
+                {"amount": 25, "label": "Supporter", "description": "", "featured": false},
+                {"amount": 50, "label": "Advocate", "description": "", "featured": false},
+                {"amount": 100, "label": "Champion", "description": "", "featured": true},
+                {"amount": 250, "label": "Leader", "description": "", "featured": false},
+                {"amount": 500, "label": "Major Donor", "description": "", "featured": false}
+            ]
+        },
+        "allowCustomAmount": {
+            "type": "boolean",
+            "default": true
+        },
+        "minCustomAmount": {
+            "type": "number",
+            "default": 5
+        },
+        "maxCustomAmount": {
+            "type": "number",
+            "default": 5000
+        },
+        "currencySymbol": {
+            "type": "string",
+            "default": "$"
+        },
+        "allowRecurring": {
+            "type": "boolean",
+            "default": true
+        },
+        "paymentProcessor": {
+            "type": "string",
+            "default": "actblue"
+        },
+        "actblueUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "enableCrypto": {
+            "type": "boolean",
+            "default": false
+        },
+        "btcAddress": {
+            "type": "string",
+            "default": ""
+        },
+        "showGoal": {
+            "type": "boolean",
+            "default": true
+        },
+        "goalAmount": {
+            "type": "number",
+            "default": 10000
+        },
+        "currentAmount": {
+            "type": "number",
+            "default": 0
+        },
+        "primaryColor": {
+            "type": "string",
+            "default": "#0053c3"
+        },
+        "backgroundColor": {
+            "type": "string",
+            "default": "#ffffff"
+        },
+        "buttonText": {
+            "type": "string",
+            "default": "Donate Now"
+        },
+        "showDisclaimer": {
+            "type": "boolean",
+            "default": true
+        },
+        "disclaimerText": {
+            "type": "string",
+            "default": "Contributions are not tax deductible. By donating, you certify that you are a U.S. citizen or permanent resident."
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js"
+}

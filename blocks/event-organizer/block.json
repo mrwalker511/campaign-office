@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/event-organizer",
+    "version": "2.0.0",
+    "title": "Event Organizer",
+    "category": "campaign-office",
+    "icon": "calendar-alt",
+    "description": "Display and manage campaign events with built-in RSVP functionality.",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Upcoming Events"
+        },
+        "displayType": {
+            "type": "string",
+            "default": "list"
+        },
+        "eventsToShow": {
+            "type": "number",
+            "default": 5
+        },
+        "showPastEvents": {
+            "type": "boolean",
+            "default": false
+        },
+        "showRSVPButton": {
+            "type": "boolean",
+            "default": true
+        },
+        "showEventImage": {
+            "type": "boolean",
+            "default": true
+        },
+        "showEventLocation": {
+            "type": "boolean",
+            "default": true
+        },
+        "showEventDate": {
+            "type": "boolean",
+            "default": true
+        },
+        "showEventTime": {
+            "type": "boolean",
+            "default": true
+        },
+        "filterByCategory": {
+            "type": "string",
+            "default": ""
+        },
+        "orderBy": {
+            "type": "string",
+            "default": "date"
+        },
+        "order": {
+            "type": "string",
+            "default": "ASC"
+        }
+    },
+    "textdomain": "campaign-office",
+    "editorScript": "file:./index.js"
+}

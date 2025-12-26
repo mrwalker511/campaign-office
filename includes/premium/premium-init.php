@@ -386,8 +386,8 @@ class CampaignPress_Premium {
      * @param string $hook Current admin page hook
      */
     public function enqueue_admin_assets($hook) {
-        // Only load on our admin pages
-        if (strpos($hook, 'campaignpress') === false) {
+        // Only load on our admin pages (campaignpress, cp-*, campaign-data, etc.)
+        if (strpos($hook, 'campaign') === false && strpos($hook, 'cp-') === false && strpos($hook, 'cp_') === false) {
             return;
         }
 

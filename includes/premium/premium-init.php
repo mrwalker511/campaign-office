@@ -1420,3 +1420,15 @@ function cp_render_feature_check($value) {
         return '<span class="cp-check-text">' . esc_html($value) . '</span>';
     }
 }
+
+/**
+ * Initialize CampaignPress Premium
+ *
+ * @return CampaignPress_Premium
+ */
+function campaignpress_premium() {
+    return CampaignPress_Premium::get_instance();
+}
+
+// Start the premium system
+campaignpress_premium();

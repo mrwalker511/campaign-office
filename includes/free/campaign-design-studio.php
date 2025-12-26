@@ -389,415 +389,7 @@ class CP_Campaign_Design_Studio {
             </div>
         </div>
 
-        <style>
-        .cp-design-studio-wrap {
-            margin: 0 -20px 0 -2px;
-            background: #f0f0f1;
-        }
-        .cp-studio-header {
-            background: #fff;
-            border-bottom: 1px solid #ddd;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .cp-studio-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .cp-studio-title h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        .cp-beta-badge {
-            background: #d63638;
-            color: #fff;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.625rem;
-            font-weight: 700;
-        }
-        .cp-studio-actions {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-        .cp-select {
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 0.25rem;
-        }
-        .cp-studio-body {
-            display: grid;
-            grid-template-columns: 300px 1fr 320px;
-            height: calc(100vh - 140px);
-        }
-        .cp-studio-sidebar {
-            background: #fff;
-            border-right: 1px solid #ddd;
-            display: flex;
-            flex-direction: column;
-        }
-        .cp-sidebar-tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
-        }
-        .cp-tab {
-            flex: 1;
-            padding: 1rem;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.75rem;
-        }
-        .cp-tab.active {
-            border-bottom-color: #2271b1;
-            color: #2271b1;
-        }
-        .cp-sidebar-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-        .cp-tab-content {
-            display: none;
-        }
-        .cp-tab-content.active {
-            display: block;
-        }
-        .cp-component-search {
-            margin-bottom: 1rem;
-        }
-        .cp-input {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 0.25rem;
-        }
-        .cp-components-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        .cp-component-card {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            cursor: grab;
-            transition: all 0.3s;
-        }
-        .cp-component-card:hover {
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-        }
-        .cp-component-card:active {
-            cursor: grabbing;
-        }
-        .cp-component-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        .cp-component-name {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        .cp-component-category {
-            font-size: 0.75rem;
-            color: #666;
-            text-transform: uppercase;
-        }
-        .cp-component-variants {
-            font-size: 0.75rem;
-            color: #0073aa;
-            margin-top: 0.5rem;
-        }
-        .cp-studio-canvas {
-            background: #e5e5e5;
-            display: flex;
-            flex-direction: column;
-            overflow: auto;
-        }
-        .cp-canvas-header {
-            background: #fff;
-            border-bottom: 1px solid #ddd;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .cp-canvas-breadcrumb {
-            font-size: 0.875rem;
-            color: #666;
-        }
-        .cp-canvas-viewport {
-            flex: 1;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-        }
-        .cp-canvas-viewport[data-device="desktop"] #cp-canvas {
-            width: 100%;
-            max-width: 1200px;
-        }
-        .cp-canvas-viewport[data-device="tablet"] #cp-canvas {
-            width: 768px;
-        }
-        .cp-canvas-viewport[data-device="mobile"] #cp-canvas {
-            width: 375px;
-        }
-        #cp-canvas {
-            background: #fff;
-            min-height: 600px;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            position: relative;
-        }
-        .cp-canvas-empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #999;
-        }
-        .cp-empty-icon .dashicons {
-            font-size: 4rem;
-            width: 4rem;
-            height: 4rem;
-        }
-        .cp-studio-properties {
-            background: #fff;
-            border-left: 1px solid #ddd;
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
-        .cp-setting-group {
-            margin-bottom: 1.5rem;
-        }
-        .cp-setting-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        .cp-dropped-component {
-            border: 2px dashed #2271b1;
-            padding: 2rem;
-            margin: 1rem;
-            border-radius: 0.5rem;
-            position: relative;
-            transition: all 0.3s;
-        }
-        .cp-dropped-component:hover {
-            background: #f9f9f9;
-        }
-        .cp-component-controls {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            display: flex;
-            gap: 0.25rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .cp-dropped-component:hover .cp-component-controls {
-            opacity: 1;
-        }
-        .cp-control-btn {
-            background: #2271b1;
-            color: #fff;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .cp-control-btn:hover {
-            background: #135e96;
-        }
-        </style>
-
-        <script>
-        jQuery(document).ready(function($) {
-            // Tab switching
-            $('.cp-tab').click(function() {
-                var tab = $(this).data('tab');
-                $('.cp-tab').removeClass('active');
-                $(this).addClass('active');
-                $('.cp-tab-content').removeClass('active');
-                $('[data-tab-content="' + tab + '"]').addClass('active');
-            });
-
-            // Device switcher
-            $('#cp-device-desktop').click(function() {
-                $('.cp-canvas-viewport').attr('data-device', 'desktop');
-                $('#cp-device-desktop, #cp-device-tablet, #cp-device-mobile').removeClass('button-primary');
-                $(this).addClass('button-primary');
-            });
-            $('#cp-device-tablet').click(function() {
-                $('.cp-canvas-viewport').attr('data-device', 'tablet');
-                $('#cp-device-desktop, #cp-device-tablet, #cp-device-mobile').removeClass('button-primary');
-                $(this).addClass('button-primary');
-            });
-            $('#cp-device-mobile').click(function() {
-                $('.cp-canvas-viewport').attr('data-device', 'mobile');
-                $('#cp-device-desktop, #cp-device-tablet, #cp-device-mobile').removeClass('button-primary');
-                $(this).addClass('button-primary');
-            });
-
-            // Drag and drop
-            var draggedComponent = null;
-
-            $('.cp-component-card').on('dragstart', function(e) {
-                draggedComponent = $(this).data('component');
-                $(this).css('opacity', '0.5');
-            });
-
-            $('.cp-component-card').on('dragend', function(e) {
-                $(this).css('opacity', '1');
-            });
-
-            $('#cp-canvas').on('dragover', function(e) {
-                e.preventDefault();
-                $(this).css('background', '#f0f8ff');
-            });
-
-            $('#cp-canvas').on('dragleave', function(e) {
-                $(this).css('background', '#fff');
-            });
-
-            $('#cp-canvas').on('drop', function(e) {
-                e.preventDefault();
-                $(this).css('background', '#fff');
-
-                if (draggedComponent) {
-                    $('.cp-canvas-empty-state').remove();
-
-                    var componentHTML = '<div class="cp-dropped-component" data-component="' + draggedComponent + '">' +
-                        '<div class="cp-component-controls">' +
-                        '<button class="cp-control-btn cp-edit-component" title="Edit"><span class="dashicons dashicons-edit"></span></button>' +
-                        '<button class="cp-control-btn cp-delete-component" title="Delete"><span class="dashicons dashicons-trash"></span></button>' +
-                        '</div>' +
-                        '<div class="cp-component-content">' +
-                        '<h3>🎯 ' + draggedComponent.replace('-', ' ').toUpperCase() + '</h3>' +
-                        '<p>Component preview will appear here</p>' +
-                        '</div>' +
-                        '</div>';
-
-                    $(this).append(componentHTML);
-                    draggedComponent = null;
-                }
-            });
-
-            // Component controls
-            $(document).on('click', '.cp-delete-component', function() {
-                if (confirm('<?php esc_js_e('Delete this component?', 'campaign-office'); ?>')) {
-                    $(this).closest('.cp-dropped-component').fadeOut(300, function() {
-                        $(this).remove();
-                        if ($('#cp-canvas .cp-dropped-component').length === 0) {
-                            $('#cp-canvas').html('<div class="cp-canvas-empty-state"><div class="cp-empty-icon"><span class="dashicons dashicons-layout"></span></div><h3><?php esc_js_e('Start Building', 'campaign-office'); ?></h3><p><?php esc_js_e('Drag components from the sidebar to start designing your page', 'campaign-office'); ?></p></div>');
-                        }
-                    });
-                }
-            });
-
-            // Clear canvas
-            $('#cp-clear-canvas').click(function() {
-                if (confirm('<?php esc_js_e('Clear all components?', 'campaign-office'); ?>')) {
-                    $('#cp-canvas').html('<div class="cp-canvas-empty-state"><div class="cp-empty-icon"><span class="dashicons dashicons-layout"></span></div><h3><?php esc_js_e('Start Building', 'campaign-office'); ?></h3><p><?php esc_js_e('Drag components from the sidebar to start designing your page', 'campaign-office'); ?></p></div>');
-                }
-            });
-
-            // Save design
-            $('#cp-save-design-btn').click(function() {
-                var components = [];
-                $('.cp-dropped-component').each(function() {
-                    components.push({
-                        type: $(this).data('component'),
-                        html: $(this).html()
-                    });
-                });
-
-                $(this).prop('disabled', true).html('<span class="dashicons dashicons-update spin"></span> <?php esc_js_e('Saving...', 'campaign-office'); ?>');
-
-                $.ajax({
-                    url: ajaxurl,
-                    type: 'POST',
-                    data: {
-                        action: 'cp_save_design',
-                        post_id: $('#cp-page-selector').val(),
-                        design_data: JSON.stringify(components),
-                        custom_css: $('#cp-custom-css').val(),
-                        _wpnonce: '<?php echo wp_create_nonce('cp_save_design'); ?>'
-                    },
-                    success: function(response) {
-                        $('#cp-save-design-btn').prop('disabled', false).html('<span class="dashicons dashicons-saved"></span> <?php esc_js_e('Saved!', 'campaign-office'); ?>');
-                        setTimeout(function() {
-                            $('#cp-save-design-btn').html('<span class="dashicons dashicons-saved"></span> <?php esc_js_e('Save Design', 'campaign-office'); ?>');
-                        }, 2000);
-                    }
-                });
-            });
-
-            // Page selector
-            $('#cp-page-selector').change(function() {
-                var postId = $(this).val();
-                if (postId) {
-                    window.location.href = '?page=cp-design-studio&post_id=' + postId;
-                }
-            });
-
-            // Load existing design if post_id is set
-            var currentPostId = $('#cp-page-selector').val();
-            if (currentPostId) {
-                loadExistingDesign(currentPostId);
-            }
-
-            // Function to load existing design
-            function loadExistingDesign(postId) {
-                $.ajax({
-                    url: ajaxurl,
-                    type: 'POST',
-                    data: {
-                        action: 'cp_load_design',
-                        post_id: postId,
-                        _wpnonce: '<?php echo wp_create_nonce('cp_load_design'); ?>'
-                    },
-                    success: function(response) {
-                        if (response.success && response.data.design_data && response.data.design_data.length > 0) {
-                            // Clear canvas
-                            $('.cp-canvas-empty-state').remove();
-
-                            // Add each component to canvas
-                            response.data.design_data.forEach(function(component) {
-                                var componentHTML = '<div class="cp-dropped-component" data-component="' + component.type + '">' +
-                                    component.html +
-                                    '</div>';
-                                $('#cp-canvas').append(componentHTML);
-                            });
-
-                            // Load custom CSS if exists
-                            if (response.data.custom_css) {
-                                $('#cp-custom-css').val(response.data.custom_css);
-                            }
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error loading design:', error);
-                    }
-                });
-            }
-        });
-        </script>
+        </div>
         <?php
     }
 
@@ -874,46 +466,6 @@ class CP_Campaign_Design_Studio {
             </div>
         </div>
 
-        <script>
-        jQuery(document).ready(function($) {
-            $('.cp-use-template').click(function() {
-                var templateKey = $(this).data('template');
-                var postId = $('#cp-template-page-selector').val();
-                var $btn = $(this);
-
-                if (!postId) {
-                    alert('<?php esc_js_e('Please select a page first', 'campaign-office'); ?>');
-                    return;
-                }
-
-                $btn.prop('disabled', true).text('<?php esc_js_e('Applying...', 'campaign-office'); ?>');
-
-                $.ajax({
-                    url: ajaxurl,
-                    type: 'POST',
-                    data: {
-                        action: 'cp_apply_template',
-                        template: templateKey,
-                        post_id: postId,
-                        _wpnonce: '<?php echo wp_create_nonce('cp_apply_template'); ?>'
-                    },
-                    success: function(response) {
-                        $btn.prop('disabled', false).text('<?php esc_js_e('Use This Template', 'campaign-office'); ?>');
-                        if (response.success) {
-                            alert('<?php esc_js_e('Template applied successfully! Open the Design Studio to customize it.', 'campaign-office'); ?>');
-                            window.location.href = '?page=cp-design-studio&post_id=' + postId;
-                        } else {
-                            alert(response.data.message || '<?php esc_js_e('Error applying template', 'campaign-office'); ?>');
-                        }
-                    },
-                    error: function() {
-                        $btn.prop('disabled', false).text('<?php esc_js_e('Use This Template', 'campaign-office'); ?>');
-                        alert('<?php esc_js_e('Error applying template', 'campaign-office'); ?>');
-                    }
-                });
-            });
-        });
-        </script>
         <?php
     }
 
@@ -1309,13 +861,16 @@ class CP_Campaign_Design_Studio {
         $allowed_hooks = array(
              $this->studio_page_hook,
              $this->templates_page_hook,
-             $this->styles_page_hook
+             $this->styles_page_hook,
+             'toplevel_page_cp-design-studio',
+             'cp-design-studio_page_cp-design-templates',
+             'cp-design-studio_page_cp-global-styles'
         );
         
         // Filter out false values
         $allowed_hooks = array_filter($allowed_hooks);
 
-        if (!in_array($hook, $allowed_hooks)) {
+        if (!in_array($hook, $allowed_hooks) && strpos($hook, 'cp-design-studio') === false) {
             return;
         }
 
@@ -1324,6 +879,45 @@ class CP_Campaign_Design_Studio {
 
         wp_enqueue_style('wp-color-picker');
         wp_enqueue_script('wp-color-picker');
+
+        // Enqueue Design Studio assets
+        wp_enqueue_style(
+            'cp-design-studio',
+            CAMPAIGNPRESS_ASSETS_URI . '/css/design-studio.css',
+            array('wp-color-picker'),
+            CAMPAIGNPRESS_VERSION
+        );
+
+        wp_enqueue_script(
+            'cp-design-studio',
+            CAMPAIGNPRESS_ASSETS_URI . '/js/design-studio.js',
+            array('jquery', 'wp-color-picker'),
+            CAMPAIGNPRESS_VERSION,
+            true
+        );
+
+        // Localize data
+        wp_localize_script('cp-design-studio', 'cpDesignStudio', array(
+            'nonces' => array(
+                'save_design' => wp_create_nonce('cp_save_design'),
+                'load_design' => wp_create_nonce('cp_load_design'),
+                'apply_template' => wp_create_nonce('cp_apply_template'),
+            ),
+            'i18n' => array(
+                'saving' => __('Saving...', 'campaign-office'),
+                'saved' => __('Saved!', 'campaign-office'),
+                'save_design' => __('Save Design', 'campaign-office'),
+                'delete_confirm' => __('Delete this component?', 'campaign-office'),
+                'clear_confirm' => __('Clear all components?', 'campaign-office'),
+                'start_building' => __('Start Building', 'campaign-office'),
+                'drag_desc' => __('Drag components from the sidebar to start designing your page', 'campaign-office'),
+                'select_page_first' => __('Please select a page first', 'campaign-office'),
+                'applying' => __('Applying...', 'campaign-office'),
+                'template_applied' => __('Template applied successfully! Open the Design Studio to customize it.', 'campaign-office'),
+                'error_applying' => __('Error applying template', 'campaign-office'),
+                'error_saving' => __('Error saving design', 'campaign-office'),
+            )
+        ));
     }
 }
 

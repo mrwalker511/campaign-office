@@ -490,7 +490,13 @@ class CP_Premium_Templates {
      * Enqueue template browser assets
      */
     public function enqueue_browser_assets($hook) {
-        if (!$this->browser_page_hook || $hook !== $this->browser_page_hook) {
+        $valid_hooks = array(
+            $this->browser_page_hook,
+            'cp-design-studio_page_cp-premium-templates'
+        );
+        $valid_hooks = array_filter($valid_hooks);
+
+        if (!in_array($hook, $valid_hooks) && strpos($hook, 'cp-premium-templates') === false) {
             return;
         }
 

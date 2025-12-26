@@ -1,7 +1,7 @@
 # CampaignPress - Political WordPress Theme
 
 **Version:** 2.0.0
-**Requires:** WordPress 6.9+ | PHP 8.1+
+**Requires:** WordPress 6.4+ | PHP 7.4+
 **License:** GPLv3 or later
 
 > A comprehensive WordPress theme that transforms your campaign website into a complete operations platform. Built for candidates, campaigns, and advocacy organizations.
@@ -210,8 +210,8 @@ Data-driven campaign insights:
 
 ### System Requirements
 
-- **WordPress:** 6.9 or higher
-- **PHP:** 8.1 or higher
+- **WordPress:** 6.4 or higher
+- **PHP:** 7.4 or higher
 - **MySQL:** 5.7+ or MariaDB 10.3+
 - **HTTPS:** Recommended for payment processing and security
 

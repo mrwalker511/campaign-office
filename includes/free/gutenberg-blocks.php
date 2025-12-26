@@ -40,7 +40,7 @@ function campaignpress_register_blocks() {
     // Enqueue block editor assets
     wp_register_script(
         'campaignpress-blocks-js',
-        CAMPAIGNPRESS_ASSETS_URI . '/dist/js/blocks.js',
+        CAMPAIGNPRESS_ASSETS_URI . '/js/blocks.js',
         array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n'),
         CAMPAIGNPRESS_VERSION,
         true

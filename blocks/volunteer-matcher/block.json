@@ -1,6 +1,6 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 2,
+    "apiVersion": 3,
     "name": "campaignpress/volunteer-matcher",
     "version": "2.0.0",
     "title": "Volunteer Matcher",
@@ -43,7 +43,7 @@
             "type": "string"
         }
     },
-    "textdomain": "campaignpress",
+    "textdomain": "campaign-office",
     "editorScript": "file:./index.js",
     "style": "file:./style-index.css"
 }

@@ -39,6 +39,15 @@ class CP_Campaign_Design_Studio {
     private $designs_table;
 
     /**
+     * Page hooks
+     *
+     * @var string
+     */
+    private $studio_page_hook;
+    private $templates_page_hook;
+    private $styles_page_hook;
+
+    /**
      * Available design components
      *
      * @var array
@@ -194,7 +203,7 @@ class CP_Campaign_Design_Studio {
      * Add admin menu
      */
     public function add_admin_menu() {
-        add_menu_page(
+        $this->studio_page_hook = add_menu_page(
             __('Design Studio', 'campaign-office'),
             __('Design Studio', 'campaign-office'),
             'edit_pages',
@@ -213,7 +222,7 @@ class CP_Campaign_Design_Studio {
             array($this, 'render_studio_page')
         );
 
-        add_submenu_page(
+        $this->templates_page_hook = add_submenu_page(
             'cp-design-studio',
             __('Templates', 'campaign-office'),
             __('Templates', 'campaign-office'),
@@ -222,7 +231,7 @@ class CP_Campaign_Design_Studio {
             array($this, 'render_templates_page')
         );
 
-        add_submenu_page(
+        $this->styles_page_hook = add_submenu_page(
             'cp-design-studio',
             __('Global Styles', 'campaign-office'),
             __('Global Styles', 'campaign-office'),
@@ -1297,7 +1306,16 @@ class CP_Campaign_Design_Studio {
      * Enqueue studio assets
      */
     public function enqueue_studio_assets($hook) {
-        if ($hook !== 'toplevel_page_cp-design-studio' && $hook !== 'cp-design-studio_page_cp-design-templates' && $hook !== 'cp-design-studio_page_cp-global-styles') {
+        $allowed_hooks = array(
+             $this->studio_page_hook,
+             $this->templates_page_hook,
+             $this->styles_page_hook
+        );
+        
+        // Filter out false values
+        $allowed_hooks = array_filter($allowed_hooks);
+
+        if (!in_array($hook, $allowed_hooks)) {
             return;
         }
 

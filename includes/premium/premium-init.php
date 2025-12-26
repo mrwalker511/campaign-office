@@ -387,7 +387,7 @@ class CampaignPress_Premium {
      */
     public function enqueue_admin_assets($hook) {
         // Only load on our admin pages
-        if (strpos($hook, 'campaign-office') === false) {
+        if (strpos($hook, 'campaignpress') === false) {
             return;
         }
 

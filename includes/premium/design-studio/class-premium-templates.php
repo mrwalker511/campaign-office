@@ -44,6 +44,13 @@ class CP_Premium_Templates {
     private $templates_dir;
 
     /**
+     * Page hooks
+     *
+     * @var string
+     */
+    private $browser_page_hook;
+
+    /**
      * Constructor
      */
     public function __construct() {
@@ -255,7 +262,7 @@ class CP_Premium_Templates {
      */
     public function add_admin_menu() {
         // Enhanced templates submenu under Design Studio
-        add_submenu_page(
+        $this->browser_page_hook = add_submenu_page(
             'cp-design-studio',
             __('Template Library', 'campaign-office'),
             __('Templates', 'campaign-office'),
@@ -483,7 +490,7 @@ class CP_Premium_Templates {
      * Enqueue template browser assets
      */
     public function enqueue_browser_assets($hook) {
-        if ($hook !== 'cp-design-studio_page_cp-premium-templates') {
+        if (!$this->browser_page_hook || $hook !== $this->browser_page_hook) {
             return;
         }
 

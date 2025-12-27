@@ -35,8 +35,9 @@ class CP_Volunteer_Manager {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'cp_volunteers';
 
-        // Database setup
-        add_action('after_setup_theme', array($this, 'create_volunteer_table'));
+        // Database setup - only create tables when needed
+        add_action('after_switch_theme', array($this, 'maybe_create_volunteer_table'));
+        add_action('admin_init', array($this, 'maybe_create_volunteer_table'));
 
         // Admin menu
         add_action('admin_menu', array($this, 'add_admin_menu'));
@@ -53,6 +54,21 @@ class CP_Volunteer_Manager {
 
         // Export functionality
         add_action('admin_post_cp_export_volunteers', array($this, 'export_volunteers_csv'));
+    }
+
+    /**
+     * Maybe create volunteer table - only runs once
+     * Prevents table creation on every page load
+     */
+    public function maybe_create_volunteer_table() {
+        // Check if we've already created the table for this version
+        $db_version = get_option('cp_volunteer_db_version', '0');
+        $current_version = '2.0.0';
+
+        if (version_compare($db_version, $current_version, '<')) {
+            $this->create_volunteer_table();
+            update_option('cp_volunteer_db_version', $current_version);
+        }
     }
 
     /**

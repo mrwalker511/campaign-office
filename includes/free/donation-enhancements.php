@@ -1088,19 +1088,32 @@ class CP_Donation_Enhancements {
         $frequency = isset($_POST['frequency']) ? sanitize_text_field($_POST['frequency']) : '';
         $amount = isset($_POST['amount']) ? absint($_POST['amount']) : 0;
 
-        // Store tracking data (can be expanded for analytics)
+        // Store comprehensive tracking data for audit trail
         $tracking_data = array(
-            'processor' => $processor,
-            'frequency' => $frequency,
-            'amount'    => $amount,
-            'timestamp' => current_time('mysql'),
-            'post_id'   => isset($_POST['post_id']) ? absint($_POST['post_id']) : 0,
+            'processor'   => $processor,
+            'frequency'   => $frequency,
+            'amount'      => $amount,
+            'timestamp'   => current_time('mysql'),
+            'post_id'     => isset($_POST['post_id']) ? absint($_POST['post_id']) : 0,
+            // Additional audit data
+            'user_id'     => get_current_user_id(), // 0 if not logged in
+            'user_ip'     => $_SERVER['REMOTE_ADDR'] ?? '',
+            'user_agent'  => substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255),
+            'referer'     => wp_get_referer() ?? '',
+            'session_id'  => session_id() ? session_id() : wp_create_nonce('cp_session_' . $_SERVER['REMOTE_ADDR']),
         );
 
-        // Save to transient for recent tracking (can be replaced with database table)
+        // Save to transient for recent tracking (last 100 clicks)
         $recent_clicks = get_transient('cp_donation_clicks') ?: array();
         $recent_clicks[] = $tracking_data;
         set_transient('cp_donation_clicks', array_slice($recent_clicks, -100), DAY_IN_SECONDS);
+
+        // Also save to permanent log for compliance auditing
+        $permanent_log = get_option('cp_donation_transaction_log', array());
+        $permanent_log[] = $tracking_data;
+        // Keep last 1000 transactions in the database
+        $permanent_log = array_slice($permanent_log, -1000);
+        update_option('cp_donation_transaction_log', $permanent_log, false); // autoload = false
 
         wp_send_json_success(array('message' => 'Tracked successfully'));
     }
@@ -1109,6 +1122,19 @@ class CP_Donation_Enhancements {
      * Show admin notices for configuration
      */
     public function show_admin_notices() {
+        // Critical: Show HTTPS warning on all admin pages if site is not secure
+        if (!is_ssl()) {
+            ?>
+            <div class="notice notice-error">
+                <p>
+                    <strong><?php esc_html_e('CRITICAL SECURITY WARNING:', 'campaign-office'); ?></strong>
+                    <?php esc_html_e('Your site is not using HTTPS. Donation forms will NOT display until you enable SSL/HTTPS. This is required for PCI compliance and secure payment processing.', 'campaign-office'); ?>
+                    <a href="https://wordpress.org/support/article/https-for-wordpress/" target="_blank"><?php esc_html_e('Learn how to enable HTTPS', 'campaign-office'); ?></a>
+                </p>
+            </div>
+            <?php
+        }
+
         $screen = get_current_screen();
         if ($screen->id !== 'appearance_page_cp-donation-settings') {
             return;

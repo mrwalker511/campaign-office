@@ -359,15 +359,7 @@ function campaignpress_block_editor_assets() {
     // Standard Editor Styles
     wp_enqueue_style(
         'campaignpress-block-editor',
-        CAMPAIGNPRESS_ASSETS_URI . '/css/block-editor.css',
-        array('wp-edit-blocks'),
-        CAMPAIGNPRESS_VERSION
-    );
-
-    // Political Studio UX Overrides (Elementor-like)
-    wp_enqueue_style(
-        'campaignpress-editor-ux',
-        CAMPAIGNPRESS_ASSETS_URI . '/css/editor-overrides.css',
+        CAMPAIGNPRESS_ASSETS_URI . '/css/editor.css',
         array('wp-edit-blocks'),
         CAMPAIGNPRESS_VERSION
     );

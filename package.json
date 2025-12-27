@@ -7,10 +7,8 @@
   "scripts": {
     "build:css": "postcss assets/css/app.css -o assets/css/dist/tailwind.css --config build/postcss.config.js",
     "watch:css": "postcss assets/css/app.css -o assets/css/dist/tailwind.css --config build/postcss.config.js --watch",
-    "build:blocks": "node build/build-blocks.cjs",
-    "watch:blocks": "wp-scripts start",
     "dev": "vite --config build/vite.config.js",
-    "build": "npm run build:css && npm run build:blocks && vite build --config build/vite.config.js",
+    "build": "npm run build:css && vite build --config build/vite.config.js",
     "preview": "vite preview --config build/vite.config.js",
     "speed-optimize": "npm run optimize:images && npm run optimize:css && npm run optimize:js && npm run critical-css && npm run lighthouse",
     "optimize:images": "node scripts/optimize-images.js",

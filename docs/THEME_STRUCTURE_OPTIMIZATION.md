@@ -106,7 +106,7 @@ Volunteer module created 7 documentation files with overlapping content:
 
 ## Build Tool Streamlining
 
-### Problem Identified
+### Problem Identified (2024)
 - Both Gulp (`build/gulpfile.js`) and Vite (`vite.config.js`) configuration files exist
 - Creates confusion about which build system to use
 - Vite is modern and documented in README
@@ -121,19 +121,34 @@ Volunteer module created 7 documentation files with overlapping content:
 - May be used for older build tasks
 - Could break legacy workflows if removed
 
-### Decision
+### Decision (2024)
 **Maintain both with documentation:**
 - Keep both files to avoid breaking older workflows
 - Add deprecation notice to gulpfile.js
 - Update documentation to clearly indicate Vite as primary
 - No immediate removal - assess impact first
 
-### Files Created
-- `docs/BUILD_SYSTEM_GUIDANCE.md` (NEW)
-  - Explains build system architecture
-  - Documents Vite as primary
-  - Notes Gulp is legacy/deprecated
-  - Provides migration path if needed
+### Resolution (2025-01-02)
+**Removed Gulp completely:**
+- Deleted `build/gulpfile.js` (no longer needed)
+- Deleted `build/build-blocks.cjs` (blocks use block.json metadata system)
+- Updated `package.json` to remove gulp and wp-scripts build commands
+- All builds now use Vite exclusively
+- Vite handles minification, bundling, and tree-shaking
+
+### Files Deleted
+- `build/gulpfile.js` - Gulp is not the build system
+- `build/build-blocks.cjs` - Blocks use block.json metadata
+- `assets/css/min/` - Vite handles minification
+- `assets/js/min/` - Vite handles minification
+- `assets/images/optimized/` - Optimized images go to assets/dist/images
+
+### Updated Build Process
+- Primary build: `npm run build` (runs build:css then Vite)
+- CSS: PostCSS processes to assets/css/dist/tailwind.css
+- JS/CSS: Vite builds to assets/dist
+- Block scripts: Loaded from block directories via block.json
+- Optimization: Separate `npm run optimize:*` scripts output to assets/dist
 
 ---
 

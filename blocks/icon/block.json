@@ -1,0 +1,68 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "campaignpress/icon",
+	"version": "1.0.0",
+	"title": "Heroicon",
+	"category": "widgets",
+	"icon": "star-filled",
+	"description": "Insert a beautiful Heroicon with customizable size and color",
+	"keywords": ["icon", "heroicon", "svg", "symbol"],
+	"supports": {
+		"html": false,
+		"align": ["left", "center", "right"],
+		"color": {
+			"text": true,
+			"background": false
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"icon": {
+			"type": "string",
+			"default": "star"
+		},
+		"iconStyle": {
+			"type": "string",
+			"default": "outline",
+			"enum": ["outline", "solid", "mini", "micro"]
+		},
+		"iconSize": {
+			"type": "string",
+			"default": "md",
+			"enum": ["sm", "md", "lg", "xl", "custom"]
+		},
+		"customSize": {
+			"type": "number",
+			"default": 24
+		},
+		"iconColor": {
+			"type": "string",
+			"default": ""
+		},
+		"linkUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"linkTarget": {
+			"type": "string",
+			"default": "_self"
+		},
+		"ariaLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "campaign-office",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

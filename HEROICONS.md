@@ -242,6 +242,69 @@ All Heroicons implementations include proper accessibility attributes:
 - No icon fonts to download
 - Optimized SVG files (from Heroicons optimized build)
 
+## Icon Picker & Browser
+
+### Heroicons Browser Admin Page
+
+A dedicated admin page for browsing all 316 Heroicons is available at **Appearance → Heroicons**.
+
+Features:
+- **Search** - Find icons by name
+- **Filter by Category** - Browse by Campaign, Arrows, Communication, UI, Files, Social, Status, Data, and People
+- **Filter by Style** - Switch between Outline, Solid, Mini, and Micro styles
+- **Display Size Options** - Preview icons in Small, Medium, Large, or XL sizes
+- **One-Click Copy** - Click any icon to copy its PHP function call to clipboard
+- **Live Preview** - See exactly how each icon looks
+
+The browser includes usage examples and makes it easy to find the perfect icon for your needs.
+
+### Gutenberg Icon Block
+
+A dedicated "Heroicon" block is available in the WordPress block editor.
+
+**Features:**
+- Icon picker with search and categories
+- Style selection (Outline, Solid, Mini, Micro)
+- Size options (Small, Medium, Large, XL, Custom)
+- Color picker for custom colors
+- Optional link URL with target options
+- Alignment controls (left, center, right)
+- ARIA label for accessibility
+
+**How to Use:**
+1. In the block editor, click the "+" button to add a block
+2. Search for "Heroicon" or find it in the Widgets category
+3. Click "Choose Icon" in the block settings
+4. Select your icon from the picker
+5. Customize size, style, color, and other options
+6. Optionally add a link URL to make the icon clickable
+
+**Block Example in Block Editor:**
+```
+<!-- wp:campaignpress/icon {"icon":"star","iconStyle":"solid","iconSize":"lg","iconColor":"#f59e0b"} /-->
+```
+
+### Design Studio Icon Component
+
+The Campaign Design Studio includes an "Icon" component in the UI Elements category.
+
+**Component Settings:**
+- **Icon Name** - Enter the icon name (browse in Appearance → Heroicons)
+- **Icon Style** - Choose from Outline, Solid, Mini, or Micro
+- **Icon Size** - Select from Small, Medium, Large, or Extra Large
+- **Icon Color** - Set a custom color using the color picker
+- **Link URL** - Optional URL to make the icon clickable
+
+**How to Use in Design Studio:**
+1. Go to Design Studio (main admin menu)
+2. Add a new section or edit an existing one
+3. Click "Add Component"
+4. Select "Icon" from the UI Elements category
+5. Configure the icon settings
+6. Save your design
+
+The icon component integrates seamlessly with other Design Studio components for building custom campaign pages.
+
 ## Browser Support
 
 Heroicons SVGs work in all modern browsers:
@@ -250,8 +313,39 @@ Heroicons SVGs work in all modern browsers:
 - Safari 14+
 - All browsers with SVG support
 
+## Quick Reference
+
+### Where to Find Icons
+
+1. **Browse All Icons**: Appearance → Heroicons
+2. **Use in Gutenberg**: Block Editor → Add Block → Search "Heroicon"
+3. **Use in Design Studio**: Design Studio → Add Component → Icon
+4. **Use in PHP**: See usage examples above
+
+### Common Workflows
+
+**Adding an Icon to a Page (Block Editor)**
+1. Open page in block editor
+2. Add "Heroicon" block
+3. Choose icon and customize
+4. Publish
+
+**Adding an Icon to a Template (PHP)**
+1. Browse icons in Appearance → Heroicons
+2. Click to copy PHP code
+3. Paste into your template file
+
+**Building a Page with Icons (Design Studio)**
+1. Open Design Studio
+2. Add sections and components
+3. Use Icon component where needed
+4. Save and apply to page
+
 ## Resources
 
 - [Heroicons Official Site](https://heroicons.com/)
 - [Heroicons GitHub](https://github.com/tailwindlabs/heroicons)
 - [Heroicons MIT License](https://github.com/tailwindlabs/heroicons/blob/master/LICENSE)
+- **In-Theme Browser**: Appearance → Heroicons
+- **Block Editor**: Search for "Heroicon" block
+- **Design Studio**: UI Elements → Icon component

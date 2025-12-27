@@ -1,0 +1,300 @@
+/**
+ * Heroicons Browser - Admin Styles
+ *
+ * @package CampaignPress
+ * @since 2.1.0
+ */
+
+.cp-icons-browser-page {
+	max-width: 1400px;
+}
+
+.cp-icons-browser-controls {
+	background: white;
+	padding: 1.5rem;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	margin: 1.5rem 0;
+}
+
+.cp-icons-search {
+	margin-bottom: 1rem;
+}
+
+.cp-icons-search input {
+	width: 100%;
+	max-width: 600px;
+	padding: 8px 12px;
+	font-size: 14px;
+}
+
+.cp-icons-filters {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.cp-icons-filters label {
+	font-weight: 600;
+	margin: 0;
+}
+
+.cp-icons-filters select {
+	padding: 6px 10px;
+}
+
+.cp-icons-stats {
+	padding: 0.75rem 0;
+	color: #646970;
+	font-size: 0.875rem;
+}
+
+.cp-icons-grid-wrapper {
+	background: white;
+	padding: 2rem;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	margin: 1.5rem 0;
+}
+
+.cp-icons-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	gap: 1rem;
+}
+
+.cp-icon-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 1rem;
+	border: 2px solid #e5e5e5;
+	border-radius: 8px;
+	transition: all 0.2s ease;
+	cursor: pointer;
+	position: relative;
+}
+
+.cp-icon-item:hover {
+	border-color: #2271b1;
+	background: #f6f7f7;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cp-icon-preview {
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.cp-icon-preview svg {
+	width: 100%;
+	height: 100%;
+	color: #1d2327;
+}
+
+/* Size variations */
+.cp-icons-grid[data-size="sm"] .cp-icon-preview {
+	width: 32px;
+	height: 32px;
+}
+
+.cp-icons-grid[data-size="md"] .cp-icon-preview {
+	width: 48px;
+	height: 48px;
+}
+
+.cp-icons-grid[data-size="lg"] .cp-icon-preview {
+	width: 64px;
+	height: 64px;
+}
+
+.cp-icons-grid[data-size="xl"] .cp-icon-preview {
+	width: 80px;
+	height: 80px;
+}
+
+.cp-icon-name {
+	font-size: 0.75rem;
+	color: #646970;
+	text-align: center;
+	word-break: break-word;
+	font-family: 'Courier New', monospace;
+}
+
+.cp-icon-copy-btn {
+	padding: 4px 12px;
+	font-size: 0.75rem;
+	background: #2271b1;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.2s ease;
+	opacity: 0;
+	visibility: hidden;
+}
+
+.cp-icon-item:hover .cp-icon-copy-btn {
+	opacity: 1;
+	visibility: visible;
+}
+
+.cp-icon-copy-btn:hover {
+	background: #135e96;
+}
+
+.cp-icon-copy-btn:active {
+	transform: scale(0.95);
+}
+
+.cp-icons-usage {
+	margin-top: 3rem;
+	padding-top: 2rem;
+	border-top: 1px solid #c3c4c7;
+}
+
+.cp-icons-usage h2 {
+	margin-bottom: 1.5rem;
+}
+
+.cp-usage-examples {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 1.5rem;
+}
+
+.cp-usage-example {
+	background: white;
+	padding: 1.5rem;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+}
+
+.cp-usage-example h3 {
+	margin-top: 0;
+	margin-bottom: 1rem;
+	font-size: 1rem;
+	color: #1d2327;
+}
+
+.cp-usage-example code {
+	display: block;
+	padding: 0.75rem;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	font-size: 0.875rem;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.cp-usage-example p {
+	margin: 0;
+	color: #646970;
+}
+
+/* Copied notification */
+.cp-copied-notice {
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
+	background: #2271b1;
+	color: white;
+	padding: 1rem 1.5rem;
+	border-radius: 4px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	z-index: 100000;
+	animation: slideInUp 0.3s ease;
+}
+
+.cp-copied-notice .dashicons {
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+}
+
+.cp-copied-notice.show {
+	display: flex;
+}
+
+@keyframes slideInUp {
+	from {
+		transform: translateY(100px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slideOutDown {
+	from {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	to {
+		transform: translateY(100px);
+		opacity: 0;
+	}
+}
+
+.cp-copied-notice.hiding {
+	animation: slideOutDown 0.3s ease;
+}
+
+/* Loading state */
+.cp-icons-grid.loading {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.cp-icons-grid.loading::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 40px;
+	height: 40px;
+	border: 4px solid #f3f3f3;
+	border-top: 4px solid #2271b1;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	0% { transform: translate(-50%, -50%) rotate(0deg); }
+	100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+	.cp-icons-grid {
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.cp-icons-filters {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.cp-icons-filters label {
+		margin-top: 0.5rem;
+	}
+
+	.cp-usage-examples {
+		grid-template-columns: 1fr;
+	}
+}

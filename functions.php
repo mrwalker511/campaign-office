@@ -455,6 +455,11 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-tags.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/heroicons.php';
 
 /**
+ * Heroicons browser admin page
+ */
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/icons-browser.php';
+
+/**
  * Security: Remove WordPress version from head
  */
 remove_action('wp_head', 'wp_generator');

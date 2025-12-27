@@ -263,6 +263,19 @@ class CP_Campaign_Design_Studio {
                     'zip_field' => array('type' => 'checkbox', 'label' => __('Show ZIP Field', 'campaign-office'), 'default' => true),
                 ),
             ),
+            'icon' => array(
+                'name' => __('Icon', 'campaign-office'),
+                'icon' => '⭐',
+                'category' => 'ui-elements',
+                'variants' => array('outline', 'solid', 'mini', 'micro'),
+                'settings' => array(
+                    'icon_name' => array('type' => 'text', 'label' => __('Icon Name', 'campaign-office'), 'default' => 'star', 'help' => __('Browse available icons in Appearance > Heroicons', 'campaign-office')),
+                    'icon_style' => array('type' => 'select', 'label' => __('Icon Style', 'campaign-office'), 'options' => array('outline' => 'Outline', 'solid' => 'Solid', 'mini' => 'Mini (20px)', 'micro' => 'Micro (16px)'), 'default' => 'outline'),
+                    'icon_size' => array('type' => 'select', 'label' => __('Icon Size', 'campaign-office'), 'options' => array('sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large'), 'default' => 'md'),
+                    'icon_color' => array('type' => 'color', 'label' => __('Icon Color', 'campaign-office'), 'default' => '#2563eb'),
+                    'link_url' => array('type' => 'text', 'label' => __('Link URL (Optional)', 'campaign-office'), 'default' => ''),
+                ),
+            ),
         );
     }
 

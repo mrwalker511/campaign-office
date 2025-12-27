@@ -125,7 +125,13 @@ function campaignpress_register_blocks() {
 
     // Register Modern Interactive Blocks
     register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/countdown' );
-    register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/progress' );}
+    register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/progress' );
+
+    // Register Heroicon Block
+    if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/icon/block.json' ) ) {
+        register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/icon' );
+    }
+}
 add_action('init', 'campaignpress_register_blocks');
 
 /**

@@ -1,0 +1,42 @@
+/**
+ * Heroicon Block - Frontend Styles
+ *
+ * @package CampaignPress
+ * @since 2.1.0
+ */
+
+.wp-block-campaignpress-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
+.wp-block-campaignpress-icon a {
+	display: inline-flex;
+	text-decoration: none;
+	color: inherit;
+	transition: transform 0.2s ease;
+}
+
+.wp-block-campaignpress-icon a:hover {
+	transform: scale(1.1);
+}
+
+.wp-block-campaignpress-icon.alignleft {
+	float: left;
+	margin-right: 1em;
+	margin-bottom: 0.5em;
+}
+
+.wp-block-campaignpress-icon.alignright {
+	float: right;
+	margin-left: 1em;
+	margin-bottom: 0.5em;
+}
+
+.wp-block-campaignpress-icon.aligncenter {
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+}

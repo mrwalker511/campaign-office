@@ -242,6 +242,117 @@ function campaignpress_is_rate_limited($action, $max_requests = 5, $time_window 
 }
 
 /**
+ * Encrypt sensitive data like API keys
+ * Uses WordPress AUTH_KEY and AUTH_SALT for encryption
+ *
+ * @param string $data Data to encrypt
+ * @return string Encrypted data (base64 encoded)
+ */
+function campaignpress_encrypt($data) {
+    if (empty($data)) {
+        return '';
+    }
+
+    // Use WordPress authentication constants for encryption key
+    $key = defined('AUTH_KEY') ? AUTH_KEY : 'campaignpress-fallback-key';
+    $salt = defined('AUTH_SALT') ? AUTH_SALT : 'campaignpress-fallback-salt';
+
+    // Create encryption key from WordPress constants
+    $encryption_key = hash('sha256', $key . $salt);
+
+    // Generate initialization vector
+    $iv_length = openssl_cipher_iv_length('aes-256-cbc');
+    $iv = openssl_random_pseudo_bytes($iv_length);
+
+    // Encrypt the data
+    $encrypted = openssl_encrypt($data, 'aes-256-cbc', $encryption_key, 0, $iv);
+
+    // Combine IV and encrypted data, then base64 encode
+    return base64_encode($iv . '::' . $encrypted);
+}
+
+/**
+ * Decrypt sensitive data like API keys
+ *
+ * @param string $encrypted_data Encrypted data (base64 encoded)
+ * @return string|false Decrypted data or false on failure
+ */
+function campaignpress_decrypt($encrypted_data) {
+    if (empty($encrypted_data)) {
+        return '';
+    }
+
+    // Decode base64
+    $decoded = base64_decode($encrypted_data);
+    if ($decoded === false) {
+        return false;
+    }
+
+    // Split IV and encrypted data
+    $parts = explode('::', $decoded, 2);
+    if (count($parts) !== 2) {
+        return false;
+    }
+
+    list($iv, $encrypted) = $parts;
+
+    // Use WordPress authentication constants for decryption key
+    $key = defined('AUTH_KEY') ? AUTH_KEY : 'campaignpress-fallback-key';
+    $salt = defined('AUTH_SALT') ? AUTH_SALT : 'campaignpress-fallback-salt';
+
+    // Create decryption key from WordPress constants
+    $encryption_key = hash('sha256', $key . $salt);
+
+    // Decrypt the data
+    $decrypted = openssl_decrypt($encrypted, 'aes-256-cbc', $encryption_key, 0, $iv);
+
+    return $decrypted;
+}
+
+/**
+ * Get encrypted option value
+ * Wrapper for get_option that automatically decrypts sensitive data
+ *
+ * @param string $option Option name
+ * @param mixed $default Default value if option doesn't exist
+ * @return mixed Decrypted option value
+ */
+function campaignpress_get_encrypted_option($option, $default = false) {
+    $encrypted_value = get_option($option, $default);
+
+    // If it's the default value or empty, return as-is
+    if ($encrypted_value === $default || empty($encrypted_value)) {
+        return $encrypted_value;
+    }
+
+    // Try to decrypt - if it fails, it might be plain text (backward compatibility)
+    $decrypted = campaignpress_decrypt($encrypted_value);
+    if ($decrypted === false || $decrypted === '') {
+        // Might be plain text from old installation
+        return $encrypted_value;
+    }
+
+    return $decrypted;
+}
+
+/**
+ * Update encrypted option value
+ * Wrapper for update_option that automatically encrypts sensitive data
+ *
+ * @param string $option Option name
+ * @param mixed $value Value to encrypt and store
+ * @return bool Whether the option was updated
+ */
+function campaignpress_update_encrypted_option($option, $value) {
+    if (empty($value)) {
+        return update_option($option, '');
+    }
+
+    $encrypted = campaignpress_encrypt($value);
+    return update_option($option, $encrypted);
+}
+
+/**
  * Enqueue block editor assets
  */
 function campaignpress_block_editor_assets() {

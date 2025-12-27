@@ -47,8 +47,9 @@ class CP_Campaign_Communications {
         $this->messages_table = $wpdb->prefix . 'cp_campaign_messages';
         $this->subscribers_table = $wpdb->prefix . 'cp_subscribers';
 
-        // Database setup
-        add_action('after_setup_theme', array($this, 'create_communications_tables'));
+        // Database setup - only create tables when needed
+        add_action('after_switch_theme', array($this, 'maybe_create_communications_tables'));
+        add_action('admin_init', array($this, 'maybe_create_communications_tables'));
 
         // Admin menu
         add_action('admin_menu', array($this, 'add_admin_menu'));
@@ -68,6 +69,21 @@ class CP_Campaign_Communications {
         // Handle subscription forms
         add_action('wp_ajax_cp_subscribe', array($this, 'handle_subscribe'));
         add_action('wp_ajax_nopriv_cp_subscribe', array($this, 'handle_subscribe'));
+    }
+
+    /**
+     * Maybe create communications tables - only runs once
+     * Prevents table creation on every page load
+     */
+    public function maybe_create_communications_tables() {
+        // Check if we've already created the tables for this version
+        $db_version = get_option('cp_communications_db_version', '0');
+        $current_version = '2.0.0';
+
+        if (version_compare($db_version, $current_version, '<')) {
+            $this->create_communications_tables();
+            update_option('cp_communications_db_version', $current_version);
+        }
     }
 
     /**
@@ -719,12 +735,28 @@ class CP_Campaign_Communications {
 
         $wpdb->insert($this->subscribers_table, $data);
 
+        $mailchimp_warning = '';
+
         // Sync with Mailchimp if enabled
         if (get_option('cp_mailchimp_enabled')) {
-            $this->sync_to_mailchimp($data);
+            $sync_result = $this->sync_to_mailchimp($data);
+            if (!$sync_result) {
+                // Subscription saved locally but Mailchimp sync failed
+                $mailchimp_warning = ' ' . __('Note: Email added to local list, but sync with Mailchimp failed. Please check your Mailchimp settings.', 'campaign-office');
+
+                // Store failed sync for admin notification
+                $failed_syncs = get_option('cp_mailchimp_failed_syncs', array());
+                $failed_syncs[] = array(
+                    'email' => $data['email'],
+                    'time' => current_time('mysql'),
+                );
+                // Keep only last 50 failed syncs
+                $failed_syncs = array_slice($failed_syncs, -50);
+                update_option('cp_mailchimp_failed_syncs', $failed_syncs);
+            }
         }
 
-        wp_send_json_success(array('message' => __('Thank you for subscribing!', 'campaign-office')));
+        wp_send_json_success(array('message' => __('Thank you for subscribing!', 'campaign-office') . $mailchimp_warning));
     }
 
     /**
@@ -790,13 +822,32 @@ class CP_Campaign_Communications {
             $data['merge_fields']['PHONE'] = $subscriber_data['phone'];
         }
 
-        wp_remote_post($url, array(
+        $response = wp_remote_post($url, array(
             'headers' => array(
                 'Authorization' => 'Basic ' . base64_encode('anystring:' . $api_key),
                 'Content-Type' => 'application/json',
             ),
             'body' => json_encode($data),
         ));
+
+        // Check for errors
+        if (is_wp_error($response)) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CampaignPress Mailchimp Error: ' . $response->get_error_message());
+            }
+            return false;
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        if ($response_code < 200 || $response_code >= 300) {
+            $body = json_decode(wp_remote_retrieve_body($response), true);
+            $error_message = $body['detail'] ?? 'Unknown error';
+
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CampaignPress Mailchimp Error: ' . $error_message . ' (Code: ' . $response_code . ')');
+            }
+            return false;
+        }
 
         return true;
     }

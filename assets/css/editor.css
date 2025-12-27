@@ -1,0 +1,210 @@
+/**
+ * CampaignPress Editor Styles
+ *
+ * @package CampaignPress
+ * @since 1.0.0
+ */
+
+/* 1. Base Editor Typography */
+.editor-styles-wrapper {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6 {
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* 2. Button Styles in Editor */
+.editor-styles-wrapper .cp-button,
+.editor-styles-wrapper .wp-block-button__link,
+.editor-styles-wrapper .cp-donation-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  background-color: var(--wp--preset--color--primary, #06c);
+  color: #fff;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* 3. Block Margins */
+.wp-block-campaignpress-donation-button,
+.wp-block-campaignpress-campaign-progress,
+.wp-block-campaignpress-issue-card,
+.wp-block-campaignpress-event-countdown,
+.wp-block-campaignpress-volunteer-cta {
+  margin: 1.5rem 0;
+}
+
+.components-panel__body-title {
+  font-weight: 600;
+}
+
+/* Block icons in inserter */
+.editor-block-list-item-campaignpress-donation-button .block-editor-block-icon,
+.editor-block-list-item-campaignpress-campaign-progress .block-editor-block-icon {
+  color: #06c;
+}
+
+/* 4. Block Editor Notice */
+.cp-block-notice {
+  padding: 1rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  color: #856404;
+  margin: 1rem 0;
+}
+
+/* 5. Style Panel (from editor-overrides) */
+.cp-style-popover {
+  min-width: 280px;
+  padding: 0;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgb(0 0 0 / 15%);
+  border: 1px solid #e0e0e0;
+}
+
+.cp-style-panel-header {
+  background: #f3f4f6;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 13px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cp-style-control-group {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cp-style-control-group:last-child {
+  border-bottom: none;
+}
+
+.cp-style-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #666;
+  letter-spacing: 0.5px;
+}
+
+/* Color Palette Adjustments in Popover */
+.cp-style-popover .components-color-palette {
+  margin-top: 8px;
+}
+
+.cp-style-popover .components-color-palette__item {
+  width: 24px;
+  height: 24px;
+}
+
+/* 6. Template Library Modal (from editor-overrides) */
+.cp-template-library-modal .components-modal__content {
+  background: #f8f9fa;
+  padding: 0;
+}
+
+.cp-template-library-modal .components-modal__header {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.cp-template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 24px;
+}
+
+.cp-template-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
+}
+
+.cp-template-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px rgb(0 0 0 / 10%);
+  border-color: var(--wp--preset--color--primary, #0053c3);
+}
+
+.cp-template-preview {
+  height: 100px;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #a0aec0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cp-template-card:hover .cp-template-preview {
+  color: var(--wp--preset--color--primary, #0053c3);
+  background: #eef2ff;
+}
+
+.cp-template-name {
+  padding: 12px;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  color: #4a5568;
+}
+
+/* 7. Canvas Styling (from editor-overrides) */
+.interface-interface-skeleton__content {
+  background-color: #f0f0f1;
+}
+
+/* 8. Responsive Preview Toggle */
+.cp-device-toggle {
+  margin-right: 12px;
+}
+
+/* 9. Toolbar Redesign (from editor-overrides) */
+.block-editor-block-toolbar {
+  background: #1e1e1e;
+  border-radius: 8px;
+  border: 1px solid #333;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+}
+
+.block-editor-block-toolbar .components-button {
+  color: #e0e0e0;
+}
+
+.block-editor-block-toolbar .components-button:hover,
+.block-editor-block-toolbar .components-button.is-pressed {
+  color: var(--wp--preset--color--primary, #0053c3);
+  background: rgb(255 255 255 / 10%);
+}
+
+/* Hide text labels in toolbar for a cleaner look (icon-only) */
+.block-editor-block-toolbar .components-button.has-text span.components-button__label {
+  display: none;
+}

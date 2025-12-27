@@ -5,7 +5,16 @@
  * @since 1.0.0
  */
 
-/* Block Editor Notice */
+/* Frontend block-specific styles */
+.wp-block-campaignpress-donation-button,
+.wp-block-campaignpress-campaign-progress,
+.wp-block-campaignpress-issue-card,
+.wp-block-campaignpress-event-countdown,
+.wp-block-campaignpress-volunteer-cta {
+  margin: 1.5rem 0;
+}
+
+/* Block Notice (used in admin notices and frontend) */
 .cp-block-notice {
   padding: 1rem;
   background-color: #fff3cd;
@@ -14,7 +23,3 @@
   color: #856404;
   margin: 1rem 0;
 }
-
-/* All blocks inherit main styles from main.css */
-
-/* This file is for block-specific overrides if needed */

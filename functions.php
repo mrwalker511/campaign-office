@@ -21,6 +21,7 @@ if (!defined('ABSPATH')) {
  *
  * NEVER set this to true in production or distributed versions.
  */
+define('CAMPAIGNPRESS_DEV_MODE', true);
 
 /**
  * Define Constants

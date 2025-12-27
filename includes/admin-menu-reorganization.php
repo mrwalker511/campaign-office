@@ -171,7 +171,8 @@ function cp_campaign_data_main_page() {
                 </ul>
             </div>
             
-            <!-- Analytics & Reports -->
+            <!-- Analytics & Reports (Premium Only) -->
+            <?php if (function_exists('cp_is_premium_active') && cp_is_premium_active()) : ?>
             <div class="card">
                 <h2><?php _e('Analytics & Reports', 'campaignpress'); ?></h2>
                 <ul style="margin: 0; padding-left: 20px;">
@@ -201,6 +202,7 @@ function cp_campaign_data_main_page() {
                     </li>
                 </ul>
             </div>
+            <?php endif; ?>
             
             <!-- Quick Actions -->
             <div class="card">
@@ -400,19 +402,26 @@ add_action('admin_head', 'cp_add_submenu_icons_css');
 function cp_move_analytics_to_campaignpress() {
     global $submenu;
 
-    // Remove Analytics from top-level if it exists
-    remove_menu_page('campaign-analytics');
+    // Only add analytics submenu if premium is active and analytics is available
+    if (!function_exists('cp_is_premium_active') || !cp_is_premium_active()) {
+        return;
+    }
+
+    // Remove the standalone Analytics top-level menu if it exists
+    remove_menu_page('campaignpress-analytics');
 
     // Add Analytics as submenu under CampaignPress
-    // Adjust 'campaignpress' to match your actual CampaignPress menu slug
-    add_submenu_page(
-        'campaignpress',                                 // Parent slug (adjust if needed)
-        __('Analytics', 'campaignpress'),               // Page title
-        __('Analytics', 'campaignpress'),               // Menu title
-        'manage_options',                                // Capability
-        'campaign-analytics',                            // Menu slug
-        'cp_analytics_page_callback'                    // Callback (adjust if needed)
-    );
+    // Uses the premium analytics callback
+    if (function_exists('campaignpress_analytics_dashboard_page')) {
+        add_submenu_page(
+            'campaignpress',                                 // Parent slug
+            __('Analytics', 'campaignpress'),               // Page title
+            __('Analytics', 'campaignpress'),               // Menu title
+            'manage_options',                                // Capability
+            'campaignpress-analytics',                       // Menu slug (matches premium)
+            'campaignpress_analytics_dashboard_page'        // Use correct premium callback
+        );
+    }
 }
 add_action('admin_menu', 'cp_move_analytics_to_campaignpress', 999);
 
@@ -422,7 +431,7 @@ add_action('admin_menu', 'cp_move_analytics_to_campaignpress', 999);
 function cp_conditionally_hide_dev_console() {
     // Only hide if WP_DEBUG is not enabled
     if (!defined('WP_DEBUG') || !WP_DEBUG) {
-        remove_menu_page('dev-console');
+        remove_menu_page('campaignpress-developer-console');
     }
 }
 add_action('admin_menu', 'cp_conditionally_hide_dev_console', 999);

@@ -679,4 +679,7 @@ class CP_Analytics_Dashboard {
 }
 
 // Initialize analytics dashboard
-new CP_Analytics_Dashboard();
+// Only load free analytics if premium analytics is not active
+if (!function_exists('cp_is_premium_active') || !cp_is_premium_active() || !cp_has_premium_feature('analytics')) {
+    new CP_Analytics_Dashboard();
+}

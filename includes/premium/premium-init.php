@@ -404,37 +404,47 @@ class CampaignPress_Premium {
             return;
         }
 
-        // Admin styles
-        wp_enqueue_style(
-            'campaignpress-premium-admin',
-            CAMPAIGNPRESS_THEME_URI . '/assets/css/premium-admin.css',
-            array(),
-            self::VERSION
-        );
+        // Admin styles - check if file exists
+        $admin_css_path = CAMPAIGNPRESS_THEME_DIR . '/assets/css/premium-admin.css';
+        if (file_exists($admin_css_path)) {
+            wp_enqueue_style(
+                'campaignpress-premium-admin',
+                CAMPAIGNPRESS_THEME_URI . '/assets/css/premium-admin.css',
+                array(),
+                self::VERSION
+            );
+        } elseif (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CampaignPress Premium: Admin CSS file not found: ' . $admin_css_path);
+        }
 
-        // Admin scripts
-        // Load in header (not footer) so localized `cpPremium` is available
-        // for inline scripts output on the admin page.
-        wp_enqueue_script(
-            'campaignpress-premium-admin',
-            CAMPAIGNPRESS_THEME_URI . '/assets/js/premium-admin.js',
-            array('jquery'),
-            self::VERSION,
-            false
-        );
+        // Admin scripts - check if file exists
+        $admin_js_path = CAMPAIGNPRESS_THEME_DIR . '/assets/js/premium-admin.js';
+        if (file_exists($admin_js_path)) {
+            // Load in header (not footer) so localized `cpPremium` is available
+            // for inline scripts output on the admin page.
+            wp_enqueue_script(
+                'campaignpress-premium-admin',
+                CAMPAIGNPRESS_THEME_URI . '/assets/js/premium-admin.js',
+                array('jquery'),
+                self::VERSION,
+                false
+            );
 
-        // Localize script with AJAX data
-        wp_localize_script('campaignpress-premium-admin', 'cpPremium', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cp_premium_nonce'),
-            'strings' => array(
-                'validating' => __('Validating license...', 'campaign-office'),
-                'deactivating' => __('Deactivating license...', 'campaign-office'),
-                'success' => __('Success!', 'campaign-office'),
-                'error' => __('An error occurred.', 'campaign-office'),
-                'confirm_deactivate' => __('Are you sure you want to deactivate your license?', 'campaign-office'),
-            ),
-        ));
+            // Localize script with AJAX data
+            wp_localize_script('campaignpress-premium-admin', 'cpPremium', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('cp_premium_nonce'),
+                'strings' => array(
+                    'validating' => __('Validating license...', 'campaign-office'),
+                    'deactivating' => __('Deactivating license...', 'campaign-office'),
+                    'success' => __('Success!', 'campaign-office'),
+                    'error' => __('An error occurred.', 'campaign-office'),
+                    'confirm_deactivate' => __('Are you sure you want to deactivate your license?', 'campaign-office'),
+                ),
+            ));
+        } elseif (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CampaignPress Premium: Admin JS file not found: ' . $admin_js_path);
+        }
     }
 
     /**
@@ -1019,6 +1029,9 @@ class CampaignPress_Premium {
             }
 
             if (!file_exists($feature_data['init_file'])) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log("CampaignPress Premium: Feature '{$feature_key}' init file not found: {$feature_data['init_file']}");
+                }
                 continue;
             }
 
@@ -1030,8 +1043,44 @@ class CampaignPress_Premium {
                 }
             }
 
+            // Check for required database tables (if specified)
+            if (isset($feature_data['required_tables']) && is_array($feature_data['required_tables'])) {
+                $missing_tables = $this->check_required_tables($feature_data['required_tables']);
+                if (!empty($missing_tables)) {
+                    // Store missing dependencies for admin notice
+                    $missing_deps = get_option('campaignpress_missing_dependencies', array());
+                    $missing_deps[$feature_key] = $missing_tables;
+                    update_option('campaignpress_missing_dependencies', $missing_deps);
+
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log("CampaignPress Premium: Feature '{$feature_key}' missing required tables: " . implode(', ', $missing_tables));
+                    }
+                    // Continue loading anyway - feature may handle missing tables gracefully
+                }
+            }
+
             require_once $feature_data['init_file'];
         }
+    }
+
+    /**
+     * Check if required database tables exist
+     *
+     * @param array $tables Array of table names (without prefix)
+     * @return array Array of missing table names
+     */
+    private function check_required_tables($tables) {
+        global $wpdb;
+        $missing = array();
+
+        foreach ($tables as $table) {
+            $table_name = $wpdb->prefix . $table;
+            if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) != $table_name) {
+                $missing[] = $table;
+            }
+        }
+
+        return $missing;
     }
 
     /**

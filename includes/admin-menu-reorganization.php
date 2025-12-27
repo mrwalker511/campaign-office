@@ -189,7 +189,8 @@ function cp_campaign_data_main_page() {
                 </ul>
             </div>
             
-            <!-- Analytics & Reports -->
+            <!-- Analytics & Reports (Premium Only) -->
+            <?php if (function_exists('cp_is_premium_active') && cp_is_premium_active()) : ?>
             <div class="card">
                 <h2><?php _e('Analytics & Reports', 'campaignpress'); ?></h2>
                 <ul style="margin: 0; padding-left: 20px;">
@@ -225,6 +226,7 @@ function cp_campaign_data_main_page() {
                     </li>
                 </ul>
             </div>
+            <?php endif; ?>
             
             <!-- Quick Actions -->
             <div class="card">

@@ -330,4 +330,43 @@ jQuery(document).ready(function ($) {
             }
         });
     }
+
+    // Template usage logic
+    $('.cp-use-template').click(function () {
+        var templateKey = $(this).data('template');
+        var postId = $('#cp-template-page-selector').val();
+        var $btn = $(this);
+        var originalText = $btn.text();
+
+        if (!postId) {
+            alert(cpDesignStudio.i18n.select_page_first);
+            return;
+        }
+
+        $btn.prop('disabled', true).text(cpDesignStudio.i18n.applying);
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'cp_apply_template',
+                template: templateKey,
+                post_id: postId,
+                _wpnonce: cpDesignStudio.nonces.apply_template
+            },
+            success: function (response) {
+                $btn.prop('disabled', false).text(originalText);
+                if (response.success) {
+                    alert(cpDesignStudio.i18n.template_applied);
+                    window.location.href = '?page=cp-design-studio&post_id=' + postId;
+                } else {
+                    alert(response.data.message || cpDesignStudio.i18n.error_applying);
+                }
+            },
+            error: function () {
+                $btn.prop('disabled', false).text(originalText);
+                alert(cpDesignStudio.i18n.error_applying);
+            }
+        });
+    });
 });

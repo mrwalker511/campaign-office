@@ -7,7 +7,7 @@ import ServerSideRender from '@wordpress/server-side-render';
 import { __ } from '@wordpress/i18n';
 
 registerBlockType('campaignpress/campaign-progress', {
-    title: __('Campaign Progress', 'campaignpress'),
+    title: __('Campaign Progress', 'campaign-office'),
     category: 'campaignpress',
     icon: 'chart-bar',
     attributes: {
@@ -21,7 +21,7 @@ registerBlockType('campaignpress/campaign-progress', {
         },
         title: {
             type: 'string',
-            default: __('Campaign Progress', 'campaignpress'),
+            default: __('Campaign Progress', 'campaign-office'),
         },
         showPercentage: {
             type: 'boolean',

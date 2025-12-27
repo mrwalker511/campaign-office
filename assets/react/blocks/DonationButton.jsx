@@ -7,13 +7,13 @@ import ServerSideRender from '@wordpress/server-side-render';
 import { __ } from '@wordpress/i18n';
 
 registerBlockType('campaignpress/donation-button', {
-    title: __('Donation Button', 'campaignpress'),
+    title: __('Donation Button', 'campaign-office'),
     category: 'campaignpress',
     icon: 'money',
     attributes: {
         buttonText: {
             type: 'string',
-            default: __('Donate Now', 'campaignpress'),
+            default: __('Donate Now', 'campaign-office'),
         },
         donationUrl: {
             type: 'string',

@@ -117,6 +117,14 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
+    // Heroicons CSS
+    wp_enqueue_style(
+        'campaignpress-heroicons',
+        get_template_directory_uri() . '/assets/css/heroicons.css',
+        array('campaignpress-style'),
+        CAMPAIGNPRESS_VERSION
+    );
+
     // Bootstrap 5 CSS (self-hosted for performance and reliability)
     wp_enqueue_style(
         'bootstrap',
@@ -440,6 +448,11 @@ add_action('widgets_init', 'campaignpress_widgets_init');
  * Custom template tags for this theme
  */
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-tags.php';
+
+/**
+ * Heroicons helper functions
+ */
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/heroicons.php';
 
 /**
  * Security: Remove WordPress version from head

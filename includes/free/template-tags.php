@@ -40,10 +40,10 @@ function campaignpress_event_details() {
     }
 
     ?>
-    <div class="cp-event-details">
+    <div class="cp-event-details event-meta">
         <?php if ($event_date || $event_time) : ?>
             <div class="cp-event-datetime">
-                <span class="dashicons dashicons-calendar-alt"></span>
+                <?php echo campaignpress_get_ui_icon('calendar', array('aria-hidden' => 'true')); ?>
                 <?php
                 // Display date with timezone awareness and format validation
                 if ($event_date && preg_match('/^\d{4}-\d{2}-\d{2}$/', $event_date)) {
@@ -73,7 +73,7 @@ function campaignpress_event_details() {
 
         <?php if ($event_location || $event_address) : ?>
             <div class="cp-event-location">
-                <span class="dashicons dashicons-location"></span>
+                <?php echo campaignpress_get_ui_icon('location', array('aria-hidden' => 'true')); ?>
                 <?php
                 if ($event_location) {
                     echo '<strong>' . esc_html($event_location) . '</strong><br>';
@@ -236,22 +236,32 @@ function campaignpress_social_links() {
         return;
     }
 
-    echo '<div class="cp-social-links">';
+    echo '<div class="cp-social-links social-links">';
 
     if ($social_urls['facebook']) {
-        echo '<a href="' . esc_url($social_urls['facebook']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Facebook', 'campaign-office') . '"><span class="dashicons dashicons-facebook"></span></a>';
+        echo '<a href="' . esc_url($social_urls['facebook']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Facebook', 'campaign-office') . '">';
+        echo campaignpress_get_social_heroicon('facebook', array('aria-hidden' => 'true'));
+        echo '</a>';
     }
     if ($social_urls['twitter']) {
-        echo '<a href="' . esc_url($social_urls['twitter']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Twitter', 'campaign-office') . '"><span class="dashicons dashicons-twitter"></span></a>';
+        echo '<a href="' . esc_url($social_urls['twitter']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Twitter', 'campaign-office') . '">';
+        echo campaignpress_get_social_heroicon('twitter', array('aria-hidden' => 'true'));
+        echo '</a>';
     }
     if ($social_urls['instagram']) {
-        echo '<a href="' . esc_url($social_urls['instagram']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Instagram', 'campaign-office') . '"><span class="dashicons dashicons-instagram"></span></a>';
+        echo '<a href="' . esc_url($social_urls['instagram']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Instagram', 'campaign-office') . '">';
+        echo campaignpress_get_social_heroicon('instagram', array('aria-hidden' => 'true'));
+        echo '</a>';
     }
     if ($social_urls['youtube']) {
-        echo '<a href="' . esc_url($social_urls['youtube']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('YouTube', 'campaign-office') . '"><span class="dashicons dashicons-video-alt3"></span></a>';
+        echo '<a href="' . esc_url($social_urls['youtube']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('YouTube', 'campaign-office') . '">';
+        echo campaignpress_get_social_heroicon('youtube', array('aria-hidden' => 'true'));
+        echo '</a>';
     }
     if ($social_urls['linkedin']) {
-        echo '<a href="' . esc_url($social_urls['linkedin']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('LinkedIn', 'campaign-office') . '"><span class="dashicons dashicons-linkedin"></span></a>';
+        echo '<a href="' . esc_url($social_urls['linkedin']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('LinkedIn', 'campaign-office') . '">';
+        echo campaignpress_get_social_heroicon('linkedin', array('aria-hidden' => 'true'));
+        echo '</a>';
     }
 
     echo '</div>';

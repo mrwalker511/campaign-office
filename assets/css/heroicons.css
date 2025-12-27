@@ -1,0 +1,395 @@
+/**
+ * Heroicons CSS
+ *
+ * Styles for Heroicons integration in CampaignPress theme
+ *
+ * @package CampaignPress
+ * @since 2.1.0
+ */
+
+/* Base Heroicon Styles */
+.heroicon {
+	display: inline-block;
+	vertical-align: middle;
+	fill: currentColor;
+	flex-shrink: 0;
+}
+
+/* Size variants */
+.heroicon-micro {
+	width: 16px;
+	height: 16px;
+}
+
+.heroicon-mini {
+	width: 20px;
+	height: 20px;
+}
+
+.heroicon-outline,
+.heroicon-solid {
+	width: 24px;
+	height: 24px;
+}
+
+/* Contextual icon sizing */
+.heroicon-sm {
+	width: 18px;
+	height: 18px;
+}
+
+.heroicon-md {
+	width: 24px;
+	height: 24px;
+}
+
+.heroicon-lg {
+	width: 32px;
+	height: 32px;
+}
+
+.heroicon-xl {
+	width: 48px;
+	height: 48px;
+}
+
+/* Icon in buttons */
+.btn .heroicon,
+.button .heroicon,
+.wp-block-button__link .heroicon {
+	margin-right: 0.5rem;
+}
+
+.btn .heroicon:last-child,
+.button .heroicon:last-child,
+.wp-block-button__link .heroicon:last-child {
+	margin-right: 0;
+	margin-left: 0.5rem;
+}
+
+/* Icon in links */
+a .heroicon {
+	transition: transform 0.2s ease-in-out;
+}
+
+a:hover .heroicon {
+	transform: translateX(2px);
+}
+
+/* Social media icons */
+.social-links .heroicon {
+	width: 24px;
+	height: 24px;
+	transition: all 0.3s ease;
+}
+
+.social-links a:hover .heroicon {
+	transform: scale(1.1);
+}
+
+/* Badge icons */
+.cp-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.25rem 0.75rem;
+	border-radius: 0.375rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.025em;
+	line-height: 1.5;
+}
+
+.cp-badge-icon {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+.cp-badge-text {
+	display: inline-block;
+}
+
+/* Badge variants with Heroicons */
+.cp-badge-success {
+	background-color: #e8f5e9;
+	color: #46b450;
+}
+
+.cp-badge-warning {
+	background-color: #fff4e5;
+	color: #f56e28;
+}
+
+.cp-badge-danger {
+	background-color: #ffd4d4;
+	color: #dc3232;
+}
+
+.cp-badge-info {
+	background-color: #e5f5ff;
+	color: #0073aa;
+}
+
+.cp-badge-active {
+	background-color: #e8f5e9;
+	color: #46b450;
+}
+
+.cp-badge-pending {
+	background-color: #fff4e5;
+	color: #f56e28;
+}
+
+.cp-badge-completed {
+	background-color: #e5f5ff;
+	color: #0073aa;
+}
+
+.cp-badge-cancelled {
+	background-color: #ffd4d4;
+	color: #dc3232;
+}
+
+.cp-badge-new {
+	background-color: #f3e5f5;
+	color: #9c27b0;
+}
+
+.cp-badge-contacted {
+	background-color: #e8f5e9;
+	color: #2e7d32;
+}
+
+/* Event details icons */
+.event-meta .heroicon {
+	margin-right: 0.5rem;
+	color: var(--wp--preset--color--primary, #2563eb);
+}
+
+/* Admin icons */
+.cp-admin-icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 0.5rem;
+	vertical-align: middle;
+}
+
+/* Dashboard icons */
+.cp-dashboard-card .heroicon {
+	width: 32px;
+	height: 32px;
+	margin-bottom: 1rem;
+	color: var(--wp--preset--color--primary, #2563eb);
+}
+
+/* Status indicators */
+.cp-status-indicator {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.cp-status-indicator .heroicon {
+	width: 18px;
+	height: 18px;
+}
+
+/* Action buttons with icons */
+.cp-action-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+	border: 1px solid #ddd;
+	border-radius: 0.375rem;
+	background: white;
+	color: #333;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.cp-action-btn:hover {
+	background: #f5f5f5;
+	border-color: #ccc;
+	color: #000;
+	text-decoration: none;
+}
+
+.cp-action-btn .heroicon {
+	width: 18px;
+	height: 18px;
+}
+
+/* Icon list */
+.cp-icon-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.cp-icon-list li {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	padding: 0.5rem 0;
+}
+
+.cp-icon-list .heroicon {
+	width: 20px;
+	height: 20px;
+	margin-top: 0.125rem;
+	flex-shrink: 0;
+}
+
+/* Color variants for icons */
+.heroicon-primary {
+	color: var(--wp--preset--color--primary, #2563eb);
+}
+
+.heroicon-secondary {
+	color: var(--wp--preset--color--secondary, #64748b);
+}
+
+.heroicon-success {
+	color: #46b450;
+}
+
+.heroicon-warning {
+	color: #f56e28;
+}
+
+.heroicon-danger {
+	color: #dc3232;
+}
+
+.heroicon-info {
+	color: #0073aa;
+}
+
+.heroicon-muted {
+	color: #999;
+}
+
+/* Loading/spinning animation for refresh icons */
+@keyframes heroicon-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.heroicon-spin {
+	animation: heroicon-spin 1s linear infinite;
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+	.heroicon-responsive {
+		width: 20px;
+		height: 20px;
+	}
+
+	.cp-dashboard-card .heroicon {
+		width: 28px;
+		height: 28px;
+	}
+}
+
+/* Focus states for accessibility */
+a:focus .heroicon,
+button:focus .heroicon {
+	outline: 2px solid var(--wp--preset--color--primary, #2563eb);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+	.cp-badge-success {
+		background-color: rgba(76, 175, 80, 0.2);
+		color: #81c784;
+	}
+
+	.cp-badge-warning {
+		background-color: rgba(255, 152, 0, 0.2);
+		color: #ffb74d;
+	}
+
+	.cp-badge-danger {
+		background-color: rgba(244, 67, 54, 0.2);
+		color: #e57373;
+	}
+
+	.cp-badge-info {
+		background-color: rgba(33, 150, 243, 0.2);
+		color: #64b5f6;
+	}
+}
+
+/* Icon button (icon-only buttons) */
+.cp-icon-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 1px solid #ddd;
+	border-radius: 0.375rem;
+	background: white;
+	color: #333;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.cp-icon-button:hover {
+	background: #f5f5f5;
+	border-color: #ccc;
+	color: #000;
+}
+
+.cp-icon-button .heroicon {
+	width: 20px;
+	height: 20px;
+}
+
+/* Icon grid for icon pickers or showcases */
+.cp-icon-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+	gap: 1rem;
+	padding: 1rem;
+}
+
+.cp-icon-grid-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 1rem;
+	border: 1px solid #e5e5e5;
+	border-radius: 0.5rem;
+	text-align: center;
+	transition: all 0.2s ease;
+}
+
+.cp-icon-grid-item:hover {
+	background: #f9f9f9;
+	border-color: #ccc;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cp-icon-grid-item .heroicon {
+	width: 32px;
+	height: 32px;
+}
+
+.cp-icon-grid-item span {
+	font-size: 0.75rem;
+	color: #666;
+}

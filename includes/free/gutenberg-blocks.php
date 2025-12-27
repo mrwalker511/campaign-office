@@ -48,7 +48,7 @@ function campaignpress_register_blocks() {
 
     wp_register_style(
         'campaignpress-blocks-editor-css',
-        CAMPAIGNPRESS_ASSETS_URI . '/css/blocks-editor.css',
+        CAMPAIGNPRESS_ASSETS_URI . '/css/editor.css',
         array('wp-edit-blocks'),
         CAMPAIGNPRESS_VERSION
     );

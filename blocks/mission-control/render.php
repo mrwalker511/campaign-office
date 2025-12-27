@@ -30,7 +30,7 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
         <div class="cp-mc-module cp-mc-weather" role="region" aria-label="<?php esc_attr_e('Weather Information', 'campaign-office'); ?>">
             <h4 class="cp-mc-label"><?php echo esc_html($city); ?></h4>
             <div class="cp-weather-display">
-                <span class="dashicons dashicons-cloud" aria-hidden="true"></span>
+                <?php echo campaignpress_get_heroicon('cloud', 'outline', array('aria-hidden' => 'true', 'class' => 'heroicon-lg')); ?>
                 <span class="cp-temp">72°F</span>
             </div>
             <p class="cp-weather-desc"><?php esc_html_e('Perfect canvassing weather', 'campaign-office'); ?></p>

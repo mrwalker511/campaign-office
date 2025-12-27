@@ -8,8 +8,6 @@ composer.lock
 vendor/
 
 # Build & Configuration Files
-gulpfile.js
-build-blocks.js
 vite.config.js
 tailwind.config.js
 postcss.config.js
@@ -67,12 +65,12 @@ tests/
 phpunit.xml
 .phpunit.result.cache
 
-# Source Files (keep only minified)
-assets/css/*.css
-!assets/css/min/*.css
+# Source Files (keep only dist and critical)
+assets/react/
+blocks/**/index.js
+blocks/**/view.js
+!assets/dist/**
 !assets/css/critical/*.css
-assets/js/*.js
-!assets/js/min/*.js
 
 # Development Scripts
 scripts/build*

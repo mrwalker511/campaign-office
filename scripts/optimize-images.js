@@ -12,10 +12,10 @@ async function optimizeImages() {
     console.log('🖼️  Optimizing images with Sharp...\n');
 
     const images = await glob('assets/images/**/*.{jpg,jpeg,png}', {
-        ignore: ['**/optimized/**']
+        ignore: ['**/dist/**']
     });
 
-    const outputDir = 'assets/images/optimized';
+    const outputDir = 'assets/dist/images';
     await fs.mkdir(outputDir, { recursive: true });
 
     for (const imagePath of images) {

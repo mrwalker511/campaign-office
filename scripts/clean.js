@@ -9,9 +9,6 @@ async function clean() {
     console.log('🧹 Cleaning optimized files...\n');
 
     const dirsToClean = [
-        'assets/images/optimized',
-        'assets/css/min',
-        'assets/js/min',
         'assets/css/critical'
     ];
 

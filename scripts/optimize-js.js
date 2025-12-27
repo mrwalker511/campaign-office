@@ -12,10 +12,10 @@ async function optimizeJS() {
     console.log('⚡ Optimizing JavaScript with ESBuild...\n');
 
     const jsFiles = await glob('assets/js/**/*.js', {
-        ignore: ['**/min/**']
+        ignore: ['**/dist/**']
     });
 
-    const outputDir = 'assets/js/min';
+    const outputDir = 'assets/dist/js';
     await fs.mkdir(outputDir, { recursive: true });
 
     for (const jsFile of jsFiles) {

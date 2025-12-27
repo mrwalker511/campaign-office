@@ -11,7 +11,7 @@ console.log('═'.repeat(60) + '\n');
 const checks = [];
 
 // Check 1: Optimized images exist
-const optimizedImagesDir = 'assets/images/optimized';
+const optimizedImagesDir = 'assets/dist/images';
 try {
     const files = await fs.readdir(optimizedImagesDir);
     const avifFiles = files.filter(f => f.endsWith('.avif'));
@@ -34,7 +34,7 @@ try {
 }
 
 // Check 2: Minified CSS exists
-const minCSSDir = 'assets/css/min';
+const minCSSDir = 'assets/dist/css';
 try {
     const files = await fs.readdir(minCSSDir);
     checks.push({
@@ -49,7 +49,7 @@ try {
 }
 
 // Check 3: Minified JS exists
-const minJSDir = 'assets/js/min';
+const minJSDir = 'assets/dist/js';
 try {
     const files = await fs.readdir(minJSDir);
     checks.push({

@@ -38,14 +38,6 @@ function campaignpress_register_blocks() {
     }
 
     // Enqueue block editor assets
-    wp_register_script(
-        'campaignpress-blocks-js',
-        CAMPAIGNPRESS_ASSETS_URI . '/js/blocks.js',
-        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n'),
-        CAMPAIGNPRESS_VERSION,
-        true
-    );
-
     wp_register_style(
         'campaignpress-blocks-editor-css',
         CAMPAIGNPRESS_ASSETS_URI . '/css/editor.css',
@@ -62,7 +54,6 @@ function campaignpress_register_blocks() {
 
     // Register Donation Button Block
     register_block_type('campaignpress/donation-button', array(
-        'editor_script'   => 'campaignpress-blocks-js',
         'editor_style'    => 'campaignpress-blocks-editor-css',
         'style'           => 'campaignpress-blocks-css',
         'render_callback' => 'campaignpress_render_donation_button_block',
@@ -88,7 +79,6 @@ function campaignpress_register_blocks() {
 
     // Register Issue Card Block
     register_block_type('campaignpress/issue-card', array(
-        'editor_script'   => 'campaignpress-blocks-js',
         'editor_style'    => 'campaignpress-blocks-editor-css',
         'style'           => 'campaignpress-blocks-css',
         'render_callback' => 'campaignpress_render_issue_card_block',
@@ -110,7 +100,6 @@ function campaignpress_register_blocks() {
 
     // Register Volunteer CTA Block
     register_block_type('campaignpress/volunteer-cta', array(
-        'editor_script'   => 'campaignpress-blocks-js',
         'editor_style'    => 'campaignpress-blocks-editor-css',
         'style'           => 'campaignpress-blocks-css',
         'render_callback' => 'campaignpress_render_volunteer_cta_block',

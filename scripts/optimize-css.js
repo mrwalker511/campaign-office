@@ -13,10 +13,10 @@ async function optimizeCSS() {
     console.log('🎨 Optimizing CSS with LightningCSS and PurgeCSS...\n');
 
     const cssFiles = await glob('assets/css/**/*.css', {
-        ignore: ['**/min/**', '**/critical/**']
+        ignore: ['**/critical/**', '**/dist/**']
     });
 
-    const outputDir = 'assets/css/min';
+    const outputDir = 'assets/dist/css';
     await fs.mkdir(outputDir, { recursive: true });
 
     for (const cssFile of cssFiles) {

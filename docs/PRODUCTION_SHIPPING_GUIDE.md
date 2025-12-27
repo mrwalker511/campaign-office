@@ -3,7 +3,6 @@
 ## ❌ DO NOT INCLUDE (Reduce size by ~14MB)
 
 ### Development Tools & Dependencies
-- `wp-cli.phar` (6.9MB)
 - `package.json`
 - `package-lock.json` (1.1MB)
 - `node_modules/` (if present)
@@ -12,8 +11,6 @@
 - `vendor/` (unless required for production)
 
 ### Build & Configuration Files
-- `gulpfile.js`
-- `build-blocks.js`
 - `vite.config.js`
 - `tailwind.config.js`
 - `postcss.config.js`
@@ -109,10 +106,13 @@ campaign-office/
 │
 ├── assets/
 │   ├── css/
-│   │   └── min/ (minified only)
+│   │   ├── dist/ (Vite-built minified only)
+│   │   └── critical/ (critical CSS)
 │   ├── js/
-│   │   └── min/ (minified only)
+│   │   └── dist/ (Vite-built minified only)
 │   ├── fonts/ (web-optimized)
+│   ├── images/
+│   │   └── dist/ (optimized images)
 │   └── vendor/ (production deps only)
 │
 ├── blocks/

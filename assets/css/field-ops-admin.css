@@ -493,3 +493,63 @@ a.button:focus {
     width: auto;
     display: inline-block;
 }
+
+/* ============================================
+   Modal Styles
+   ============================================ */
+
+.cp-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+}
+
+.cp-modal {
+    background: #fff;
+    border-radius: 4px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cp-modal h2 {
+    margin-top: 0;
+    color: #1d2327;
+}
+
+.cp-modal p {
+    color: #646970;
+    margin-bottom: 20px;
+}
+
+.cp-modal select {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 8px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+}
+
+.cp-modal-actions {
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.cp-modal-actions .button {
+    margin-left: 10px;
+}
+
+.voter-recorded {
+    opacity: 0.6;
+    background-color: #f0f6fc !important;
+}

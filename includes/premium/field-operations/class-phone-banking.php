@@ -1511,32 +1511,200 @@ class CP_Phone_Banking {
      */
     public function ajax_create_call_list() {
         check_ajax_referer('cp_create_call_list', 'cp_call_list_nonce');
-        // Implementation
-        wp_send_json_success(array('message' => __('Call list created!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+        $description = isset($_POST['description']) ? sanitize_textarea_field($_POST['description']) : '';
+        $script_id = isset($_POST['script_id']) ? absint($_POST['script_id']) : null;
+
+        if (empty($name)) {
+            wp_send_json_error(array('message' => __('Call list name is required.', 'campaign-office')));
+        }
+
+        $result = $wpdb->insert(
+            $this->table_call_lists,
+            array(
+                'name' => $name,
+                'description' => $description,
+                'script_id' => $script_id,
+                'created_by' => get_current_user_id(),
+                'status' => 'active',
+            ),
+            array('%s', '%s', '%d', '%d', '%s')
+        );
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('Call list created!', 'campaign-office'),
+                'id' => $wpdb->insert_id,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to create call list.', 'campaign-office')));
+        }
     }
 
     public function ajax_save_call() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        // Implementation
-        wp_send_json_success(array('message' => __('Call saved!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        $call_data = array(
+            'call_list_id' => isset($_POST['call_list_id']) ? absint($_POST['call_list_id']) : 0,
+            'script_id' => isset($_POST['script_id']) ? absint($_POST['script_id']) : null,
+            'caller_id' => get_current_user_id(),
+            'contact_name' => isset($_POST['contact_name']) ? sanitize_text_field($_POST['contact_name']) : '',
+            'contact_phone' => isset($_POST['contact_phone']) ? sanitize_text_field($_POST['contact_phone']) : '',
+            'contact_email' => isset($_POST['contact_email']) ? sanitize_email($_POST['contact_email']) : '',
+            'disposition' => isset($_POST['disposition']) ? sanitize_text_field($_POST['disposition']) : '',
+            'call_duration' => isset($_POST['call_duration']) ? absint($_POST['call_duration']) : null,
+            'responses' => isset($_POST['responses']) ? wp_json_encode($_POST['responses']) : '',
+            'notes' => isset($_POST['notes']) ? sanitize_textarea_field($_POST['notes']) : '',
+            'callback_scheduled' => isset($_POST['callback_scheduled']) ? sanitize_text_field($_POST['callback_scheduled']) : null,
+        );
+
+        $result = $this->save_call($call_data);
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('Call saved!', 'campaign-office'),
+                'id' => $result,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to save call.', 'campaign-office')));
+        }
     }
 
     public function ajax_get_next_call() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        // Implementation
-        wp_send_json_success(array());
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        $call_list_id = isset($_POST['call_list_id']) ? absint($_POST['call_list_id']) : 0;
+
+        if (!$call_list_id) {
+            wp_send_json_error(array('message' => __('Invalid call list ID.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        // Get call list with script
+        $call_list = $wpdb->get_row($wpdb->prepare(
+            "SELECT cl.*, cs.content as script_content
+            FROM {$this->table_call_lists} cl
+            LEFT JOIN {$this->table_call_scripts} cs ON cl.script_id = cs.id
+            WHERE cl.id = %d",
+            $call_list_id
+        ));
+
+        if (!$call_list) {
+            wp_send_json_error(array('message' => __('Call list not found.', 'campaign-office')));
+        }
+
+        // Get next contact (sample data for demonstration)
+        // In real implementation, this would pull from a contact database
+        $contact = array(
+            'id' => rand(1000, 9999),
+            'name' => 'John Doe',
+            'phone' => '(555) 123-4567',
+            'email' => 'john.doe@example.com',
+            'address' => '123 Main St, Springfield, IL 62701',
+            'script' => $call_list->script_content ?: 'Hi, this is calling from the campaign...',
+            'notes' => 'Previous conversation was positive',
+        );
+
+        wp_send_json_success(array('contact' => $contact));
     }
 
     public function ajax_schedule_callback() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        // Implementation
-        wp_send_json_success(array('message' => __('Callback scheduled!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        $call_id = isset($_POST['call_id']) ? absint($_POST['call_id']) : 0;
+        $callback_time = isset($_POST['callback_time']) ? sanitize_text_field($_POST['callback_time']) : '';
+
+        if (!$call_id || !$callback_time) {
+            wp_send_json_error(array('message' => __('Call ID and callback time are required.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $result = $wpdb->update(
+            $this->table_calls,
+            array('callback_scheduled' => $callback_time),
+            array('id' => $call_id),
+            array('%s'),
+            array('%d')
+        );
+
+        if ($result !== false) {
+            wp_send_json_success(array('message' => __('Callback scheduled!', 'campaign-office')));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to schedule callback.', 'campaign-office')));
+        }
     }
 
     public function ajax_save_script() {
         check_ajax_referer('cp_save_script', 'cp_script_nonce');
-        // Implementation
-        wp_send_json_success(array('message' => __('Script saved!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $script_id = isset($_POST['script_id']) ? absint($_POST['script_id']) : 0;
+        $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+        $content = isset($_POST['content']) ? wp_kses_post($_POST['content']) : '';
+
+        if (empty($name) || empty($content)) {
+            wp_send_json_error(array('message' => __('Script name and content are required.', 'campaign-office')));
+        }
+
+        $script_data = array(
+            'name' => $name,
+            'content' => $content,
+            'status' => 'active',
+        );
+
+        if ($script_id) {
+            // Update existing script
+            $result = $wpdb->update(
+                $this->table_call_scripts,
+                $script_data,
+                array('id' => $script_id),
+                array('%s', '%s', '%s'),
+                array('%d')
+            );
+        } else {
+            // Create new script
+            $result = $wpdb->insert(
+                $this->table_call_scripts,
+                $script_data,
+                array('%s', '%s', '%s')
+            );
+            $script_id = $wpdb->insert_id;
+        }
+
+        if ($result !== false) {
+            wp_send_json_success(array(
+                'message' => __('Script saved!', 'campaign-office'),
+                'id' => $script_id,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to save script.', 'campaign-office')));
+        }
     }
 
     /**

@@ -1175,27 +1175,274 @@ class CP_Volunteer_Scheduling {
      */
     public function ajax_create_shift() {
         check_ajax_referer('cp_create_shift', 'cp_shift_nonce');
-        wp_send_json_success(array('message' => __('Shift created!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+        $shift_date = isset($_POST['shift_date']) ? sanitize_text_field($_POST['shift_date']) : '';
+        $start_time = isset($_POST['start_time']) ? sanitize_text_field($_POST['start_time']) : '';
+        $end_time = isset($_POST['end_time']) ? sanitize_text_field($_POST['end_time']) : '';
+        $shift_type = isset($_POST['shift_type']) ? sanitize_text_field($_POST['shift_type']) : 'general';
+        $max_volunteers = isset($_POST['max_volunteers']) ? absint($_POST['max_volunteers']) : null;
+
+        if (empty($name) || empty($shift_date) || empty($start_time) || empty($end_time)) {
+            wp_send_json_error(array('message' => __('All fields are required.', 'campaign-office')));
+        }
+
+        $result = $wpdb->insert(
+            $this->table_shifts,
+            array(
+                'name' => $name,
+                'shift_date' => $shift_date,
+                'start_time' => $start_time,
+                'end_time' => $end_time,
+                'shift_type' => $shift_type,
+                'max_volunteers' => $max_volunteers,
+                'created_by' => get_current_user_id(),
+                'status' => 'active',
+            ),
+            array('%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s')
+        );
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('Shift created!', 'campaign-office'),
+                'id' => $wpdb->insert_id,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to create shift.', 'campaign-office')));
+        }
     }
 
     public function ajax_assign_volunteer() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Volunteer assigned!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $shift_id = isset($_POST['shift_id']) ? absint($_POST['shift_id']) : 0;
+        $volunteer_id = isset($_POST['volunteer_id']) ? absint($_POST['volunteer_id']) : 0;
+
+        if (!$shift_id || !$volunteer_id) {
+            wp_send_json_error(array('message' => __('Shift ID and volunteer ID are required.', 'campaign-office')));
+        }
+
+        // Check if already assigned
+        $existing = $wpdb->get_var($wpdb->prepare(
+            "SELECT id FROM {$this->table_shift_assignments}
+            WHERE shift_id = %d AND volunteer_id = %d",
+            $shift_id,
+            $volunteer_id
+        ));
+
+        if ($existing) {
+            wp_send_json_error(array('message' => __('Volunteer is already assigned to this shift.', 'campaign-office')));
+        }
+
+        $result = $wpdb->insert(
+            $this->table_shift_assignments,
+            array(
+                'shift_id' => $shift_id,
+                'volunteer_id' => $volunteer_id,
+                'status' => 'confirmed',
+            ),
+            array('%d', '%d', '%s')
+        );
+
+        if ($result) {
+            $volunteer = get_user_by('id', $volunteer_id);
+            wp_send_json_success(array(
+                'message' => sprintf(__('%s assigned to shift successfully!', 'campaign-office'), $volunteer->display_name),
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to assign volunteer.', 'campaign-office')));
+        }
     }
 
     public function ajax_check_in() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Checked in successfully!', 'campaign-office')));
+
+        $volunteer_id = get_current_user_id();
+        if (!$volunteer_id) {
+            wp_send_json_error(array('message' => __('You must be logged in.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $shift_id = isset($_POST['shift_id']) ? absint($_POST['shift_id']) : null;
+        $location = isset($_POST['location']) ? sanitize_text_field($_POST['location']) : '';
+
+        // Check if already checked in
+        $existing = $wpdb->get_var($wpdb->prepare(
+            "SELECT id FROM {$this->table_check_ins}
+            WHERE volunteer_id = %d AND check_out_time IS NULL
+            ORDER BY check_in_time DESC LIMIT 1",
+            $volunteer_id
+        ));
+
+        if ($existing) {
+            wp_send_json_error(array('message' => __('You are already checked in. Please check out first.', 'campaign-office')));
+        }
+
+        $result = $wpdb->insert(
+            $this->table_check_ins,
+            array(
+                'volunteer_id' => $volunteer_id,
+                'shift_id' => $shift_id,
+                'check_in_time' => current_time('mysql'),
+                'location' => $location,
+            ),
+            array('%d', '%d', '%s', '%s')
+        );
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('Checked in successfully!', 'campaign-office'),
+                'checkin_id' => $wpdb->insert_id,
+                'time' => current_time('mysql'),
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to check in.', 'campaign-office')));
+        }
     }
 
     public function ajax_check_out() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Checked out successfully!', 'campaign-office')));
+
+        $volunteer_id = get_current_user_id();
+        if (!$volunteer_id) {
+            wp_send_json_error(array('message' => __('You must be logged in.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $checkin_id = isset($_POST['checkin_id']) ? absint($_POST['checkin_id']) : 0;
+
+        // Get the last check-in if no ID provided
+        if (!$checkin_id) {
+            $checkin = $wpdb->get_row($wpdb->prepare(
+                "SELECT * FROM {$this->table_check_ins}
+                WHERE volunteer_id = %d AND check_out_time IS NULL
+                ORDER BY check_in_time DESC LIMIT 1",
+                $volunteer_id
+            ));
+
+            if (!$checkin) {
+                wp_send_json_error(array('message' => __('No active check-in found.', 'campaign-office')));
+            }
+
+            $checkin_id = $checkin->id;
+            $check_in_time = $checkin->check_in_time;
+            $shift_id = $checkin->shift_id;
+        } else {
+            $checkin = $wpdb->get_row($wpdb->prepare(
+                "SELECT * FROM {$this->table_check_ins} WHERE id = %d",
+                $checkin_id
+            ));
+
+            if (!$checkin || $checkin->volunteer_id != $volunteer_id) {
+                wp_send_json_error(array('message' => __('Invalid check-in ID.', 'campaign-office')));
+            }
+
+            $check_in_time = $checkin->check_in_time;
+            $shift_id = $checkin->shift_id;
+        }
+
+        $check_out_time = current_time('mysql');
+
+        // Update check-in record
+        $result = $wpdb->update(
+            $this->table_check_ins,
+            array('check_out_time' => $check_out_time),
+            array('id' => $checkin_id),
+            array('%s'),
+            array('%d')
+        );
+
+        if ($result !== false) {
+            // Calculate hours worked
+            $hours_worked = (strtotime($check_out_time) - strtotime($check_in_time)) / 3600;
+
+            // Record hours
+            $wpdb->insert(
+                $this->table_hours,
+                array(
+                    'volunteer_id' => $volunteer_id,
+                    'shift_id' => $shift_id,
+                    'hours' => $hours_worked,
+                    'hours_date' => date('Y-m-d', strtotime($check_in_time)),
+                ),
+                array('%d', '%d', '%f', '%s')
+            );
+
+            wp_send_json_success(array(
+                'message' => __('Checked out successfully!', 'campaign-office'),
+                'hours' => round($hours_worked, 2),
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to check out.', 'campaign-office')));
+        }
     }
 
     public function ajax_save_availability() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Availability saved!', 'campaign-office')));
+
+        $volunteer_id = get_current_user_id();
+        if (!$volunteer_id) {
+            wp_send_json_error(array('message' => __('You must be logged in.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $availability_data = isset($_POST['availability']) ? wp_unslash($_POST['availability']) : array();
+
+        if (empty($availability_data)) {
+            wp_send_json_error(array('message' => __('No availability data provided.', 'campaign-office')));
+        }
+
+        // Delete existing availability
+        $wpdb->delete(
+            $this->table_availability,
+            array('volunteer_id' => $volunteer_id),
+            array('%d')
+        );
+
+        // Insert new availability records
+        $success_count = 0;
+        foreach ($availability_data as $day => $times) {
+            if (!empty($times['available'])) {
+                $result = $wpdb->insert(
+                    $this->table_availability,
+                    array(
+                        'volunteer_id' => $volunteer_id,
+                        'day_of_week' => sanitize_text_field($day),
+                        'start_time' => sanitize_text_field($times['start_time']),
+                        'end_time' => sanitize_text_field($times['end_time']),
+                    ),
+                    array('%d', '%s', '%s', '%s')
+                );
+
+                if ($result) {
+                    $success_count++;
+                }
+            }
+        }
+
+        if ($success_count > 0) {
+            wp_send_json_success(array(
+                'message' => __('Availability saved!', 'campaign-office'),
+                'count' => $success_count,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to save availability.', 'campaign-office')));
+        }
     }
 
     /**

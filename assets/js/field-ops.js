@@ -329,9 +329,64 @@
             return;
         }
 
-        // TODO: Implement call saving
-        alert('Call saved! Loading next call...');
-        loadNextCall($('.cp-phone-banking-interface').data('call-list-id'));
+        var callListId = $('.cp-phone-banking-interface').data('call-list-id');
+        var contactName = $('#cp-contact-name').text();
+        var contactPhone = $('#cp-contact-phone').text();
+        var timerDisplay = $('#cp-timer-display').text();
+        var callDuration = 0;
+
+        if (timerDisplay) {
+            var parts = timerDisplay.split(':');
+            callDuration = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        }
+
+        var data = {
+            action: 'cp_save_call',
+            nonce: cpFieldOps.nonce,
+            call_list_id: callListId,
+            contact_name: contactName,
+            contact_phone: contactPhone,
+            disposition: disposition,
+            call_duration: callDuration,
+            notes: $('#cp-call-notes').val(),
+            responses: {}
+        };
+
+        // Collect response data if answered
+        if (disposition === 'answered') {
+            $('.cp-response-field').each(function() {
+                var fieldName = $(this).data('field');
+                data.responses[fieldName] = $(this).val();
+            });
+        }
+
+        $.ajax({
+            url: cpFieldOps.ajaxUrl,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                if (response.success) {
+                    // Clear form
+                    $('.cp-disp-btn').removeClass('active');
+                    $('#cp-response-form').slideUp();
+                    $('#cp-call-notes').val('');
+                    $('#cp-timer-display').text('00:00');
+
+                    // Load next call
+                    loadNextCall(callListId);
+                } else {
+                    alert(response.data.message || cpFieldOps.strings.errorOccurred);
+                }
+            },
+            error: function() {
+                // Save to offline queue if offline
+                offlineQueue.push(data);
+                updateOfflineQueue();
+                
+                // Load next call anyway
+                loadNextCall(callListId);
+            }
+        });
     }
 
     /**

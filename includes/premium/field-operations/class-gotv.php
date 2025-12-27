@@ -82,6 +82,7 @@ class CP_GOTV {
         add_action('wp_ajax_cp_record_turnout', array($this, 'ajax_record_turnout'));
         add_action('wp_ajax_cp_request_ride', array($this, 'ajax_request_ride'));
         add_action('wp_ajax_cp_update_early_vote', array($this, 'ajax_update_early_vote'));
+        add_action('wp_ajax_cp_assign_driver', array($this, 'ajax_assign_driver'));
 
         // Frontend AJAX
         add_action('wp_ajax_nopriv_cp_request_ride', array($this, 'ajax_request_ride'));
@@ -1316,22 +1317,199 @@ class CP_GOTV {
      */
     public function ajax_record_pledge() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Pledge recorded!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $voter_name = isset($_POST['voter_name']) ? sanitize_text_field($_POST['voter_name']) : '';
+        $voter_email = isset($_POST['voter_email']) ? sanitize_email($_POST['voter_email']) : '';
+        $voter_phone = isset($_POST['voter_phone']) ? sanitize_text_field($_POST['voter_phone']) : '';
+        $pledge_type = isset($_POST['pledge_type']) ? sanitize_text_field($_POST['pledge_type']) : 'vote';
+
+        if (empty($voter_name)) {
+            wp_send_json_error(array('message' => __('Voter name is required.', 'campaign-office')));
+        }
+
+        $result = $wpdb->insert(
+            $this->table_pledges,
+            array(
+                'voter_name' => $voter_name,
+                'voter_email' => $voter_email,
+                'voter_phone' => $voter_phone,
+                'pledge_type' => $pledge_type,
+                'recorded_by' => get_current_user_id(),
+                'pledge_date' => current_time('mysql'),
+                'status' => 'active',
+            ),
+            array('%s', '%s', '%s', '%s', '%d', '%s', '%s')
+        );
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('Pledge recorded!', 'campaign-office'),
+                'id' => $wpdb->insert_id,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to record pledge.', 'campaign-office')));
+        }
     }
 
     public function ajax_record_turnout() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Turnout recorded!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $voter_id = isset($_POST['voter_id']) ? absint($_POST['voter_id']) : 0;
+        $voter_name = isset($_POST['voter_name']) ? sanitize_text_field($_POST['voter_name']) : '';
+        $voted_at = isset($_POST['voted_at']) ? sanitize_text_field($_POST['voted_at']) : current_time('mysql');
+        $vote_method = isset($_POST['vote_method']) ? sanitize_text_field($_POST['vote_method']) : 'in_person';
+
+        if (empty($voter_name)) {
+            wp_send_json_error(array('message' => __('Voter name is required.', 'campaign-office')));
+        }
+
+        $result = $wpdb->insert(
+            $this->table_turnout,
+            array(
+                'voter_name' => $voter_name,
+                'vote_method' => $vote_method,
+                'voted_at' => $voted_at,
+                'recorded_by' => get_current_user_id(),
+                'verified' => 1,
+            ),
+            array('%s', '%s', '%s', '%d', '%d')
+        );
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('Turnout recorded!', 'campaign-office'),
+                'id' => $wpdb->insert_id,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to record turnout.', 'campaign-office')));
+        }
     }
 
     public function ajax_request_ride() {
         check_ajax_referer('cp_request_ride', 'cp_ride_nonce');
-        wp_send_json_success(array('message' => __('Ride request received!', 'campaign-office')));
+
+        global $wpdb;
+
+        $voter_name = isset($_POST['voter_name']) ? sanitize_text_field($_POST['voter_name']) : '';
+        $voter_phone = isset($_POST['voter_phone']) ? sanitize_text_field($_POST['voter_phone']) : '';
+        $pickup_address = isset($_POST['pickup_address']) ? sanitize_text_field($_POST['pickup_address']) : '';
+        $pickup_time = isset($_POST['pickup_time']) ? sanitize_text_field($_POST['pickup_time']) : '';
+        $special_needs = isset($_POST['special_needs']) ? sanitize_textarea_field($_POST['special_needs']) : '';
+
+        if (empty($voter_name) || empty($voter_phone) || empty($pickup_address)) {
+            wp_send_json_error(array('message' => __('Name, phone, and pickup address are required.', 'campaign-office')));
+        }
+
+        $result = $wpdb->insert(
+            $this->table_rides,
+            array(
+                'voter_name' => $voter_name,
+                'voter_phone' => $voter_phone,
+                'pickup_address' => $pickup_address,
+                'pickup_time' => $pickup_time,
+                'special_needs' => $special_needs,
+                'status' => 'pending',
+            ),
+            array('%s', '%s', '%s', '%s', '%s', '%s')
+        );
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('Ride request received! Someone will contact you shortly.', 'campaign-office'),
+                'id' => $wpdb->insert_id,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to submit ride request.', 'campaign-office')));
+        }
     }
 
     public function ajax_update_early_vote() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
-        wp_send_json_success(array('message' => __('Early vote updated!', 'campaign-office')));
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $voter_name = isset($_POST['voter_name']) ? sanitize_text_field($_POST['voter_name']) : '';
+        $early_vote_location = isset($_POST['early_vote_location']) ? sanitize_text_field($_POST['early_vote_location']) : '';
+        $early_vote_date = isset($_POST['early_vote_date']) ? sanitize_text_field($_POST['early_vote_date']) : current_time('mysql');
+
+        if (empty($voter_name)) {
+            wp_send_json_error(array('message' => __('Voter name is required.', 'campaign-office')));
+        }
+
+        $result = $wpdb->insert(
+            $this->table_turnout,
+            array(
+                'voter_name' => $voter_name,
+                'vote_method' => 'early',
+                'voted_at' => $early_vote_date,
+                'polling_place' => $early_vote_location,
+                'recorded_by' => get_current_user_id(),
+                'verified' => 1,
+            ),
+            array('%s', '%s', '%s', '%s', '%d', '%d')
+        );
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('Early vote recorded!', 'campaign-office'),
+                'id' => $wpdb->insert_id,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to record early vote.', 'campaign-office')));
+        }
+    }
+
+    public function ajax_assign_driver() {
+        check_ajax_referer('cp_field_ops_nonce', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        $ride_id = isset($_POST['ride_id']) ? absint($_POST['ride_id']) : 0;
+        $driver_id = isset($_POST['driver_id']) ? absint($_POST['driver_id']) : 0;
+
+        if (!$ride_id || !$driver_id) {
+            wp_send_json_error(array('message' => __('Ride ID and driver ID are required.', 'campaign-office')));
+        }
+
+        $result = $wpdb->update(
+            $this->table_rides,
+            array(
+                'driver_id' => $driver_id,
+                'status' => 'assigned',
+            ),
+            array('id' => $ride_id),
+            array('%d', '%s'),
+            array('%d')
+        );
+
+        if ($result !== false) {
+            $driver = get_user_by('id', $driver_id);
+            wp_send_json_success(array(
+                'message' => sprintf(__('Driver %s assigned successfully!', 'campaign-office'), $driver->display_name),
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to assign driver.', 'campaign-office')));
+        }
     }
 
     /**

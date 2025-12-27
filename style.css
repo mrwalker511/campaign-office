@@ -35,8 +35,10 @@ CampaignPress is a comprehensive WordPress theme built specifically for politica
   --cp-text: var(--wp--preset--color--neutral-900);
 
   /* WCAG AA Compliant High Contrast Colors */
-  --cp-primary-text: var(--wp--preset--color--primary-text); /* #003d91 - 10.2:1 ratio on white */
-  --cp-accent-text: var(--wp--preset--color--accent-text); /* #cc6d00 - 4.7:1 ratio on white */
+  --cp-primary-text: var(--wp--preset--color--primary-text);
+  /* #003d91 - 10.2:1 ratio on white */
+  --cp-accent-text: var(--wp--preset--color--accent-text);
+  /* #cc6d00 - 4.7:1 ratio on white */
 
   /* Typography Optimization */
   --cp-max-reading-width: 65ch;
@@ -76,8 +78,15 @@ input[type="submit"] {
 }
 
 /* High Contrast Text Colors for Accessibility */
-.has-primary-color, .has-primary-color a { color: var(--cp-primary-text) !important; }
-.has-accent-color, .has-accent-color a { color: var(--cp-accent-text) !important; }
+.has-primary-color,
+.has-primary-color a {
+  color: var(--cp-primary-text) !important;
+}
+
+.has-accent-color,
+.has-accent-color a {
+  color: var(--cp-accent-text) !important;
+}
 
 /* Screening Reader Only Text */
 .sr-only,
@@ -95,6 +104,21 @@ input[type="submit"] {
 
 /* Support for standard WP search form styling */
 .search-form {
-    display: flex;
-    gap: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Form Feedback */
+.cp-form-message.success {
+  background: #e7f6ed;
+  color: #007017;
+  border: 1px solid #b7e1c7;
+  display: block !important;
+}
+
+.cp-form-message.error {
+  background: #fcf0f1;
+  color: #d63638;
+  border: 1px solid #f5cfd0;
+  display: block !important;
 }

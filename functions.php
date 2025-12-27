@@ -21,6 +21,7 @@ if (!defined('ABSPATH')) {
  *
  * NEVER set this to true in production or distributed versions.
  */
+define('CAMPAIGNPRESS_DEV_MODE', true);
 
 /**
  * Define Constants
@@ -55,6 +56,10 @@ function campaignpress_setup() {
 
     // Navigation is handled by the Navigation block in block themes
     // Menus can be created in Appearance > Menus and assigned via the Navigation block
+    register_nav_menus(array(
+        'primary' => __('Primary Menu', 'campaign-office'),
+        'footer'  => __('Footer Menu', 'campaign-office'),
+    ));
 
     // Switch default core markup to output valid HTML5
     add_theme_support('html5', array(
@@ -303,6 +308,24 @@ function campaignpress_color_scheme_body_class($classes) {
     return $classes;
 }
 add_filter('body_class', 'campaignpress_color_scheme_body_class');
+
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function campaignpress_widgets_init() {
+    register_sidebar(array(
+        'name'          => __('Main Sidebar', 'campaign-office'),
+        'id'            => 'main-sidebar',
+        'description'   => __('Widgets added here will appear in the sidebar of classic-compatible pages.', 'campaign-office'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
+}
+add_action('widgets_init', 'campaignpress_widgets_init');
 
 /**
  * Block theme template hierarchy

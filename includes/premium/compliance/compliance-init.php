@@ -213,8 +213,8 @@ class CampaignPress_FEC_Compliance {
         add_action('after_switch_theme', array($this, 'activate'));
         add_action('switch_theme', array($this, 'deactivate'));
 
-        // Initialize on theme setup
-        add_action('after_setup_theme', array($this, 'init'));
+        // Initialize on init
+        add_action('init', array($this, 'init'), 11);
 
         // Admin initialization
         add_action('admin_init', array($this, 'admin_init'));

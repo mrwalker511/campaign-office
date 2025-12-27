@@ -1451,15 +1451,212 @@ class CP_Canvassing {
      * AJAX: Get walk list
      */
     public function ajax_get_walk_list() {
-        // Implementation for retrieving walk list data
-        wp_send_json_success(array());
+        check_ajax_referer('cp_field_ops_nonce', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        $walk_list_id = isset($_POST['walk_list_id']) ? absint($_POST['walk_list_id']) : 0;
+
+        if (!$walk_list_id) {
+            wp_send_json_error(array('message' => __('Invalid walk list ID.', 'campaign-office')));
+        }
+
+        global $wpdb;
+
+        // Get walk list details
+        $walk_list = $wpdb->get_row($wpdb->prepare(
+            "SELECT * FROM {$this->table_walk_lists} WHERE id = %d",
+            $walk_list_id
+        ));
+
+        if (!$walk_list) {
+            wp_send_json_error(array('message' => __('Walk list not found.', 'campaign-office')));
+        }
+
+        // Generate sample addresses for the walk list
+        // In a real implementation, this would pull from a voter database or external API
+        $addresses = array();
+        $total = min($walk_list->total_addresses, 100); // Limit to 100 addresses per session
+
+        for ($i = 0; $i < $total; $i++) {
+            $addresses[] = array(
+                'id' => $i + 1,
+                'full_address' => sprintf('%d Main Street', 100 + $i),
+                'city' => 'Springfield',
+                'state' => 'IL',
+                'zip' => '62701',
+                'voter_info' => array(
+                    'registered' => true,
+                    'party' => 'Democrat',
+                    'turnout_score' => rand(60, 100),
+                ),
+            );
+        }
+
+        wp_send_json_success(array(
+            'walk_list' => $walk_list,
+            'addresses' => $addresses,
+        ));
     }
 
     /**
      * AJAX: Export data
      */
     public function ajax_export_data() {
-        // Implementation for data export
-        wp_send_json_success(array('message' => __('Export complete!', 'campaign-office')));
+        check_ajax_referer('cp_field_ops_nonce', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+        }
+
+        $data_type = isset($_POST['data_type']) ? sanitize_text_field($_POST['data_type']) : 'interactions';
+        $walk_list_id = isset($_POST['walk_list_id']) ? absint($_POST['walk_list_id']) : 0;
+        $date_from = isset($_POST['date_from']) ? sanitize_text_field($_POST['date_from']) : '';
+        $date_to = isset($_POST['date_to']) ? sanitize_text_field($_POST['date_to']) : '';
+
+        global $wpdb;
+
+        switch ($data_type) {
+            case 'interactions':
+                $query = "SELECT i.*, u.display_name as canvasser_name, w.name as walk_list_name
+                         FROM {$this->table_interactions} i
+                         LEFT JOIN {$wpdb->users} u ON i.canvasser_id = u.ID
+                         LEFT JOIN {$this->table_walk_lists} w ON i.walk_list_id = w.id
+                         WHERE 1=1";
+
+                if ($walk_list_id) {
+                    $query .= $wpdb->prepare(" AND i.walk_list_id = %d", $walk_list_id);
+                }
+                if ($date_from) {
+                    $query .= $wpdb->prepare(" AND DATE(i.interaction_date) >= %s", $date_from);
+                }
+                if ($date_to) {
+                    $query .= $wpdb->prepare(" AND DATE(i.interaction_date) <= %s", $date_to);
+                }
+
+                $query .= " ORDER BY i.interaction_date DESC";
+                $data = $wpdb->get_results($query, ARRAY_A);
+
+                $filename = 'canvassing-interactions-' . date('Y-m-d') . '.csv';
+                $headers = array('ID', 'Date', 'Canvasser', 'Walk List', 'Address', 'City', 'State', 'ZIP', 'Result', 'Voter Name', 'Email', 'Phone', 'Notes');
+                break;
+
+            case 'walk_lists':
+                $query = "SELECT w.*, u.display_name as created_by_name, t.name as turf_name
+                         FROM {$this->table_walk_lists} w
+                         LEFT JOIN {$wpdb->users} u ON w.created_by = u.ID
+                         LEFT JOIN {$this->table_turfs} t ON w.turf_id = t.id
+                         ORDER BY w.created_at DESC";
+                $data = $wpdb->get_results($query, ARRAY_A);
+
+                $filename = 'walk-lists-' . date('Y-m-d') . '.csv';
+                $headers = array('ID', 'Name', 'Description', 'Turf', 'Total Addresses', 'Completed', 'Status', 'Created By', 'Created At');
+                break;
+
+            case 'turfs':
+                $query = "SELECT t.*, u.display_name as assigned_to_name
+                         FROM {$this->table_turfs} t
+                         LEFT JOIN {$wpdb->users} u ON t.assigned_to = u.ID
+                         ORDER BY t.priority DESC, t.name ASC";
+                $data = $wpdb->get_results($query, ARRAY_A);
+
+                $filename = 'turfs-' . date('Y-m-d') . '.csv';
+                $headers = array('ID', 'Name', 'Description', 'Assigned To', 'Total Addresses', 'Priority', 'Status', 'ZIP Codes', 'Precincts');
+                break;
+
+            default:
+                wp_send_json_error(array('message' => __('Invalid export type.', 'campaign-office')));
+        }
+
+        if (empty($data)) {
+            wp_send_json_error(array('message' => __('No data to export.', 'campaign-office')));
+        }
+
+        // Generate CSV content
+        $csv_data = $this->generate_csv($data, $headers, $data_type);
+
+        wp_send_json_success(array(
+            'filename' => $filename,
+            'content' => $csv_data,
+            'records' => count($data),
+        ));
+    }
+
+    /**
+     * Generate CSV from data array
+     *
+     * @param array $data Data to export
+     * @param array $headers Column headers
+     * @param string $type Data type
+     * @return string CSV content
+     */
+    private function generate_csv($data, $headers, $type) {
+        $output = fopen('php://temp', 'r+');
+
+        // Write headers
+        fputcsv($output, $headers);
+
+        // Write data rows
+        foreach ($data as $row) {
+            $csv_row = array();
+
+            switch ($type) {
+                case 'interactions':
+                    $csv_row = array(
+                        $row['id'],
+                        $row['interaction_date'],
+                        $row['canvasser_name'],
+                        $row['walk_list_name'],
+                        $row['address'],
+                        $row['city'],
+                        $row['state'],
+                        $row['zip'],
+                        $row['result'],
+                        $row['voter_name'],
+                        $row['voter_email'],
+                        $row['voter_phone'],
+                        $row['notes'],
+                    );
+                    break;
+
+                case 'walk_lists':
+                    $csv_row = array(
+                        $row['id'],
+                        $row['name'],
+                        $row['description'],
+                        $row['turf_name'],
+                        $row['total_addresses'],
+                        $row['completed_addresses'],
+                        $row['status'],
+                        $row['created_by_name'],
+                        $row['created_at'],
+                    );
+                    break;
+
+                case 'turfs':
+                    $csv_row = array(
+                        $row['id'],
+                        $row['name'],
+                        $row['description'],
+                        $row['assigned_to_name'],
+                        $row['total_addresses'],
+                        $row['priority'],
+                        $row['status'],
+                        $row['zip_codes'],
+                        $row['precincts'],
+                    );
+                    break;
+            }
+
+            fputcsv($output, $csv_row);
+        }
+
+        rewind($output);
+        $csv_content = stream_get_contents($output);
+        fclose($output);
+
+        return $csv_content;
     }
 }

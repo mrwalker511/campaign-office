@@ -290,6 +290,11 @@ class CP_Volunteer_Manager {
             wp_send_json_error(array('message' => __('Security verification failed.', 'campaignpress')));
         }
 
+        // Rate limiting: 5 submissions per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_signup', 5, 3600)) {
+            wp_send_json_error(array('message' => __('Too many submissions. Please try again later.', 'campaignpress')));
+        }
+
         // Validate required fields
         if (empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['email'])) {
             wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaignpress')));

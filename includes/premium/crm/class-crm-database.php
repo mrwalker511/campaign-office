@@ -112,8 +112,10 @@ class CampaignPress_CRM_Database {
 			return $created;
 
 		} catch ( Exception $e ) {
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			error_log( 'CampaignPress CRM Database Error: ' . $e->getMessage() );
-			return false;
+		}
+		return false;
 		}
 	}
 

@@ -50,9 +50,9 @@ function cp_campaign_data_main_page() {
     $donations_table = $wpdb->prefix . 'campaignpress_donations';
     $total_donations = 0;
     $donation_count = 0;
-    if ($wpdb->get_var("SHOW TABLES LIKE '{$donations_table}'") == $donations_table) {
-        $total_donations = $wpdb->get_var("SELECT SUM(amount) FROM {$donations_table} WHERE status = 'completed'") ?? 0;
-        $donation_count = $wpdb->get_var("SELECT COUNT(*) FROM {$donations_table} WHERE status = 'completed'") ?? 0;
+    if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $donations_table)) == $donations_table) {
+        $total_donations = $wpdb->get_var($wpdb->prepare("SELECT SUM(amount) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
+        $donation_count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
     }
     
     ?>

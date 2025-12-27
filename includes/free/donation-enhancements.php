@@ -532,6 +532,14 @@ class CP_Donation_Enhancements {
      * @return string HTML output
      */
     public function render_donation_shortcode($atts) {
+        // Check for HTTPS - required for PCI compliance when handling donations
+        if (!is_ssl() && !is_admin()) {
+            return '<div class="cp-donation-error" style="background: #fff3cd; border: 1px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">' .
+                   '<strong>' . esc_html__('Security Warning:', 'campaign-office') . '</strong> ' .
+                   esc_html__('Donation forms require HTTPS (SSL certificate) for secure payment processing and PCI compliance. Please enable HTTPS on this site.', 'campaign-office') .
+                   '</div>';
+        }
+
         $atts = shortcode_atts(array(
             'processor' => get_option('cp_default_processor', 'actblue'),
             'amounts'   => get_option('cp_donation_amounts', implode(',', $this->default_amounts)),

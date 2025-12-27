@@ -700,6 +700,11 @@ class CP_Campaign_Communications {
     public function handle_subscribe() {
         check_ajax_referer('cp_subscribe', 'cp_subscribe_nonce');
 
+        // Rate limiting: 3 subscriptions per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('subscribe', 3, 3600)) {
+            wp_send_json_error(array('message' => __('Too many subscription attempts. Please try again later.', 'campaignpress')));
+        }
+
         global $wpdb;
 
         $data = array(

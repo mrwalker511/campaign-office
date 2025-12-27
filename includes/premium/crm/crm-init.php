@@ -479,7 +479,9 @@ class CampaignPress_CRM_Init {
         update_option( 'cp_crm_activated', time() );
 
         // Log activation
-        error_log( 'CampaignPress CRM activated at ' . date( 'Y-m-d H:i:s' ) );
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'CampaignPress CRM activated at ' . date( 'Y-m-d H:i:s' ) );
+        }
     }
 
     /**
@@ -493,7 +495,9 @@ class CampaignPress_CRM_Init {
         wp_clear_scheduled_hook( 'cp_crm_recalculate_engagement_scores' );
 
         // Log deactivation
-        error_log( 'CampaignPress CRM deactivated at ' . date( 'Y-m-d H:i:s' ) );
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'CampaignPress CRM deactivated at ' . date( 'Y-m-d H:i:s' ) );
+        }
     }
 
     /**
@@ -612,7 +616,9 @@ class CampaignPress_CRM_Init {
         $this->recalculate_dynamic_segments();
 
         // Log maintenance
-        error_log( 'CampaignPress CRM daily maintenance completed at ' . date( 'Y-m-d H:i:s' ) );
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'CampaignPress CRM daily maintenance completed at ' . date( 'Y-m-d H:i:s' ) );
+        }
     }
 
     /**
@@ -640,7 +646,9 @@ class CampaignPress_CRM_Init {
         } while ( $page <= $result['pages'] );
 
         // Log completion
-        error_log( 'CampaignPress CRM engagement scores recalculated at ' . date( 'Y-m-d H:i:s' ) );
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'CampaignPress CRM engagement scores recalculated at ' . date( 'Y-m-d H:i:s' ) );
+        }
     }
 
     /**

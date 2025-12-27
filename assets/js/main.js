@@ -153,7 +153,7 @@
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
     $element.find('.cp-countdown-number').text(days);
-    $element.find('.cp-countdown-label').text(days === 1 ? 'Day' : 'Days');
+    $element.find('.cp-countdown-label').text(days === 1 ? campaignpress_vars.day_singular : campaignpress_vars.day_plural);
   }
 
   /**

@@ -145,8 +145,11 @@ function campaignpress_scripts() {
 
     // Localize script for AJAX
     wp_localize_script('campaignpress-main', 'campaignpress_vars', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce'    => wp_create_nonce('campaignpress_nonce'),
+        'ajax_url'         => admin_url('admin-ajax.php'),
+        'nonce'            => wp_create_nonce('campaignpress_nonce'),
+        'countdown_ended'  => __('Event has ended', 'campaignpress'),
+        'day_singular'     => __('Day', 'campaignpress'),
+        'day_plural'       => __('Days', 'campaignpress'),
     ));
 }
 add_action('wp_enqueue_scripts', 'campaignpress_scripts');
@@ -175,8 +178,18 @@ function campaignpress_clear_homepage_cache($post_id) {
     if ('cp_event' === $post_type) {
         // Clear all event transients (one per day)
         global $wpdb;
-        $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_campaignpress_homepage_events_%'");
-        $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_timeout_campaignpress_homepage_events_%'");
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM $wpdb->options WHERE option_name LIKE %s",
+                $wpdb->esc_like('_transient_campaignpress_homepage_events_') . '%'
+            )
+        );
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM $wpdb->options WHERE option_name LIKE %s",
+                $wpdb->esc_like('_transient_timeout_campaignpress_homepage_events_') . '%'
+            )
+        );
     }
 }
 add_action('save_post', 'campaignpress_clear_homepage_cache');
@@ -187,6 +200,41 @@ add_action('delete_post', 'campaignpress_clear_homepage_cache');
  * For privacy compliance (GDPR), fonts should be self-hosted
  * See PATCHES.md for instructions on localizing Google Fonts
  */
+
+/**
+ * Rate limiting helper for public AJAX endpoints
+ * Prevents spam and DDoS attacks on public forms
+ *
+ * @param string $action The AJAX action name
+ * @param int $max_requests Maximum requests allowed per time window
+ * @param int $time_window Time window in seconds (default: 3600 = 1 hour)
+ * @return bool True if rate limit exceeded, false otherwise
+ */
+function campaignpress_is_rate_limited($action, $max_requests = 5, $time_window = 3600) {
+    // Get user identifier (IP address)
+    $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+
+    // Create transient key based on action and IP
+    $transient_key = 'cp_rate_limit_' . md5($action . $user_ip);
+
+    // Get current request count
+    $request_count = get_transient($transient_key);
+
+    if (false === $request_count) {
+        // First request in this time window
+        set_transient($transient_key, 1, $time_window);
+        return false;
+    }
+
+    if ($request_count >= $max_requests) {
+        // Rate limit exceeded
+        return true;
+    }
+
+    // Increment request count
+    set_transient($transient_key, $request_count + 1, $time_window);
+    return false;
+}
 
 /**
  * Enqueue block editor assets

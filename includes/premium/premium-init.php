@@ -58,6 +58,9 @@ class CampaignPress_Premium {
     /**
      * License server URL
      *
+     * Note: This URL must be configured to point to your license server.
+     * Use the 'campaignpress_license_server_url' filter to override this value.
+     *
      * @var string
      */
     const LICENSE_SERVER = 'https://api.campaignpress.com/v1/';
@@ -108,8 +111,9 @@ class CampaignPress_Premium {
      * @since 2.0.0
      */
     private function __construct() {
-        // Set development mode based on WP_DEBUG or custom constant
-        $this->dev_mode = defined('CAMPAIGNPRESS_DEV_MODE') ? CAMPAIGNPRESS_DEV_MODE : WP_DEBUG;
+        // Set development mode - must explicitly define CAMPAIGNPRESS_DEV_MODE
+        // Note: WP_DEBUG is NOT used as a fallback to prevent accidental premium bypass
+        $this->dev_mode = defined('CAMPAIGNPRESS_DEV_MODE') && CAMPAIGNPRESS_DEV_MODE;
 
         // Define premium features
         $this->define_premium_features();
@@ -117,14 +121,23 @@ class CampaignPress_Premium {
         // Initialize hooks
         $this->init_hooks();
 
-        // In dev mode, relax CSP on admin pages served from localhost so previews and
-        // local setups can load scripts/styles. This only runs when dev_mode is true
-        // and when in admin to avoid changing site-wide CSP in production.
-        if ($this->dev_mode && is_admin() && in_array($_SERVER['HTTP_HOST'] ?? '', array('localhost', '127.0.0.1')) ) {
-            add_action('send_headers', function() {
-                // Allow scripts/styles/images/connects for local development only
-                header("Content-Security-Policy: default-src 'self' data: blob: http: https: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http: https:; style-src 'self' 'unsafe-inline' http: https:; img-src 'self' data: http: https:; connect-src 'self' http: https:; frame-ancestors 'self' http: https:");
-            });
+        // WARNING: CSP header relaxation for local development only
+        // This provides a permissive CSP header to facilitate local development and testing.
+        // It ONLY applies when:
+        // 1. CAMPAIGNPRESS_DEV_MODE is explicitly set to true
+        // 2. The request is in the admin area
+        // 3. The hostname is exactly 'localhost' or '127.0.0.1'
+        // NEVER enable CAMPAIGNPRESS_DEV_MODE on production sites.
+        if ($this->dev_mode && is_admin() && in_array($_SERVER['HTTP_HOST'] ?? '', array('localhost', '127.0.0.1'), true) ) {
+            // Only add CSP header if not already set
+            if (!headers_sent() && !isset($GLOBALS['cp_csp_header_set'])) {
+                add_action('send_headers', function() {
+                    // Mark that we've set the CSP header
+                    $GLOBALS['cp_csp_header_set'] = true;
+                    // Permissive CSP for local development only
+                    header("Content-Security-Policy: default-src 'self' data: blob: http://localhost https://localhost http://127.0.0.1 https://127.0.0.1 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost https://localhost http://127.0.0.1 https://127.0.0.1; style-src 'self' 'unsafe-inline' http://localhost https://localhost; img-src 'self' data: http://localhost https://localhost; connect-src 'self' http://localhost https://localhost;");
+                });
+            }
         }
 
         // Log initialization
@@ -586,17 +599,23 @@ class CampaignPress_Premium {
      */
     public function ajax_validate_license() {
         // Log that the AJAX endpoint was called (do not log sensitive license values)
-        error_log('cp_validate_license called; user=' . get_current_user_id());
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('cp_validate_license called; user=' . get_current_user_id());
+        }
 
         // Security checks - use non-die check to log/debug failures gracefully in dev
         $nonce_ok = check_ajax_referer('cp_premium_nonce', 'nonce', false);
         if (!$nonce_ok) {
-            error_log('cp_validate_license: nonce verification failed; user=' . get_current_user_id());
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('cp_validate_license: nonce verification failed; user=' . get_current_user_id());
+            }
             wp_send_json_error(array('message' => __('Security check failed (invalid nonce).', 'campaign-office')));
         }
 
         if (!current_user_can('manage_options')) {
-            error_log('cp_validate_license: insufficient permissions; user=' . get_current_user_id());
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('cp_validate_license: insufficient permissions; user=' . get_current_user_id());
+            }
             wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
         }
 
@@ -766,22 +785,19 @@ class CampaignPress_Premium {
             );
         }
 
-        // Special Test Key
-        if ($license_key === 'TEST-KEY-123') {
+        // Allow customization of license server URL via filter
+        $license_server_url = apply_filters('campaignpress_license_server_url', self::LICENSE_SERVER);
+
+        // Check if license server is configured
+        if ($license_server_url === self::LICENSE_SERVER && self::LICENSE_SERVER === 'https://api.campaignpress.com/v1/') {
             return array(
-                'success' => true,
-                'message' => __('Test license activated successfully.', 'campaign-office'),
-                'data' => array(
-                    'license_type' => 'professional',
-                    'expiry_date' => date('Y-m-d', strtotime('+1 year')),
-                    'site_limit' => 1,
-                    'is_test' => true,
-                ),
+                'success' => false,
+                'message' => __('License server not configured. Please set up your license server or use the campaignpress_license_server_url filter.', 'campaign-office'),
             );
         }
 
         // Make API request to license server
-        $response = wp_remote_post(self::LICENSE_SERVER . 'validate', array(
+        $response = wp_remote_post($license_server_url . 'validate', array(
             'timeout' => 15,
             'body' => array(
                 'license_key' => $license_key,

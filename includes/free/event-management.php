@@ -471,6 +471,11 @@ class CP_Event_Manager {
             wp_send_json_error(array('message' => __('Security verification failed.', 'campaign-office')));
         }
 
+        // Rate limiting: 10 RSVPs per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('event_rsvp', 10, 3600)) {
+            wp_send_json_error(array('message' => __('Too many RSVP submissions. Please try again later.', 'campaign-office')));
+        }
+
         $event_id = absint($_POST['event_id'] ?? 0);
 
         // Validate event

@@ -359,6 +359,12 @@
 
     // Initialize on document ready
     $(document).ready(function() {
+        // Ensure localization object exists
+        if (typeof cpPremiumTemplates === 'undefined') {
+            console.error('CampaignPress: Premium template browser localization not loaded');
+            return;
+        }
+
         if ($('#cp-template-grid').length) {
             TemplateBrowser.init();
         }

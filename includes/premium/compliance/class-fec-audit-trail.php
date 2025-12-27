@@ -184,12 +184,14 @@ class CampaignPress_FEC_Audit_Trail {
 
         if ($result === false) {
             // If logging fails, try to log to PHP error log
-            error_log(sprintf(
-                'FEC Audit Log Insert Failed: Type=%s, User=%s, Data=%s',
-                $event_type,
-                $user_login,
-                json_encode($data)
-            ));
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log(sprintf(
+                    'FEC Audit Log Insert Failed: Type=%s, User=%s, Data=%s',
+                    $event_type,
+                    $user_login,
+                    json_encode($data)
+                ));
+            }
             return false;
         }
 

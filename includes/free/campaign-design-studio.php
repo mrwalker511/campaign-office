@@ -82,6 +82,7 @@ class CP_Campaign_Design_Studio {
         add_action('wp_ajax_cp_get_component_html', array($this, 'ajax_get_component_html'));
         add_action('wp_ajax_cp_preview_design', array($this, 'ajax_preview_design'));
         add_action('wp_ajax_cp_apply_template', array($this, 'ajax_apply_template'));
+        add_action('wp_ajax_cp_get_component_properties', array($this, 'ajax_get_component_properties'));
 
         // Enqueue studio assets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_studio_assets'));
@@ -129,66 +130,116 @@ class CP_Campaign_Design_Studio {
                 'icon' => '🎯',
                 'category' => 'headers',
                 'variants' => array('centered', 'split', 'video', 'minimal'),
+                'settings' => array(
+                    'heading' => array('type' => 'text', 'label' => __('Heading', 'campaign-office'), 'default' => __('Join Our Movement', 'campaign-office')),
+                    'subheading' => array('type' => 'textarea', 'label' => __('Subheading', 'campaign-office'), 'default' => __('Building a better future for every citizen in our district.', 'campaign-office')),
+                    'button_text' => array('type' => 'text', 'label' => __('Button Text', 'campaign-office'), 'default' => __('Volunteer Now', 'campaign-office')),
+                    'bg_color' => array('type' => 'color', 'label' => __('Background Color', 'campaign-office'), 'default' => '#0073aa'),
+                    'text_color' => array('type' => 'color', 'label' => __('Text Color', 'campaign-office'), 'default' => '#ffffff'),
+                ),
             ),
             'cta' => array(
                 'name' => __('Call-to-Action', 'campaign-office'),
                 'icon' => '📢',
                 'category' => 'conversion',
                 'variants' => array('banner', 'card', 'modal', 'inline'),
+                'settings' => array(
+                    'title' => array('type' => 'text', 'label' => __('Title', 'campaign-office'), 'default' => __('Ready to Make a Difference?', 'campaign-office')),
+                    'button_text' => array('type' => 'text', 'label' => __('Button Text', 'campaign-office'), 'default' => __('Donate Today', 'campaign-office')),
+                    'style' => array('type' => 'select', 'label' => __('Style', 'campaign-office'), 'options' => array('primary', 'outline', 'dark'), 'default' => 'primary'),
+                ),
             ),
             'stats' => array(
                 'name' => __('Campaign Stats', 'campaign-office'),
                 'icon' => '📊',
                 'category' => 'data',
                 'variants' => array('counters', 'progress-bars', 'charts', 'badges'),
+                'settings' => array(
+                    'stat_1_label' => array('type' => 'text', 'label' => __('Stat 1 Label', 'campaign-office'), 'default' => __('Volunteers', 'campaign-office')),
+                    'stat_1_value' => array('type' => 'text', 'label' => __('Stat 1 Value', 'campaign-office'), 'default' => '1,200+'),
+                    'stat_2_label' => array('type' => 'text', 'label' => __('Stat 2 Label', 'campaign-office'), 'default' => __('Donors', 'campaign-office')),
+                    'stat_2_value' => array('type' => 'text', 'label' => __('Stat 2 Value', 'campaign-office'), 'default' => '5,000+'),
+                ),
             ),
             'testimonials' => array(
                 'name' => __('Testimonials', 'campaign-office'),
                 'icon' => '💬',
                 'category' => 'social-proof',
                 'variants' => array('carousel', 'grid', 'masonry', 'featured'),
+                'settings' => array(
+                    'quote' => array('type' => 'textarea', 'label' => __('Featured Quote', 'campaign-office'), 'default' => __('"The most passionate candidate I have ever supported!"', 'campaign-office')),
+                    'author' => array('type' => 'text', 'label' => __('Author', 'campaign-office'), 'default' => __('Jane Doe, Local Teacher', 'campaign-office')),
+                ),
             ),
             'donation' => array(
                 'name' => __('Donation Form', 'campaign-office'),
                 'icon' => '💰',
                 'category' => 'conversion',
                 'variants' => array('tiers', 'thermometer', 'quick-donate', 'recurring'),
+                'settings' => array(
+                    'goal_amount' => array('type' => 'text', 'label' => __('Goal Amount', 'campaign-office'), 'default' => '50000'),
+                    'current_amount' => array('type' => 'text', 'label' => __('Current Amount', 'campaign-office'), 'default' => '25000'),
+                    'form_title' => array('type' => 'text', 'label' => __('Form Title', 'campaign-office'), 'default' => __('Help Us Reach Our Goal', 'campaign-office')),
+                ),
             ),
             'volunteer' => array(
                 'name' => __('Volunteer Signup', 'campaign-office'),
                 'icon' => '👥',
                 'category' => 'conversion',
                 'variants' => array('form', 'opportunities', 'impact', 'leaderboard'),
+                'settings' => array(
+                    'form_title' => array('type' => 'text', 'label' => __('Form Title', 'campaign-office'), 'default' => __('Join Our Campaign', 'campaign-office')),
+                    'button_text' => array('type' => 'text', 'label' => __('Sign Up Text', 'campaign-office'), 'default' => __('Sign Up To Help', 'campaign-office')),
+                ),
             ),
             'events' => array(
                 'name' => __('Events Calendar', 'campaign-office'),
                 'icon' => '📅',
                 'category' => 'content',
                 'variants' => array('list', 'grid', 'calendar', 'featured'),
+                'settings' => array(
+                    'max_events' => array('type' => 'number', 'label' => __('Max Events to Show', 'campaign-office'), 'default' => 3),
+                    'show_map' => array('type' => 'checkbox', 'label' => __('Show Event Maps', 'campaign-office'), 'default' => true),
+                ),
             ),
             'issues' => array(
                 'name' => __('Policy Issues', 'campaign-office'),
                 'icon' => '📋',
                 'category' => 'content',
                 'variants' => array('grid', 'accordion', 'tabs', 'timeline'),
+                'settings' => array(
+                    'num_issues' => array('type' => 'number', 'label' => __('Number of Issues', 'campaign-office'), 'default' => 4),
+                    'columns' => array('type' => 'select', 'label' => __('Columns', 'campaign-office'), 'options' => array('2' => '2 Columns', '3' => '3 Columns', '4' => '4 Columns'), 'default' => '3'),
+                ),
             ),
             'team' => array(
                 'name' => __('Team Members', 'campaign-office'),
                 'icon' => '👔',
                 'category' => 'about',
                 'variants' => array('grid', 'carousel', 'org-chart', 'cards'),
+                'settings' => array(
+                    'show_titles' => array('type' => 'checkbox', 'label' => __('Show Staff Titles', 'campaign-office'), 'default' => true),
+                    'image_style' => array('type' => 'select', 'label' => __('Image Style', 'campaign-office'), 'options' => array('square' => 'Square', 'rounded' => 'Rounded', 'circle' => 'Circle'), 'default' => 'circle'),
+                ),
             ),
             'timeline' => array(
                 'name' => __('Campaign Timeline', 'campaign-office'),
                 'icon' => '⏳',
                 'category' => 'content',
                 'variants' => array('vertical', 'horizontal', 'roadmap', 'milestones'),
+                'settings' => array(
+                    'start_year' => array('type' => 'text', 'label' => __('Start Year', 'campaign-office'), 'default' => '2024'),
+                ),
             ),
             'countdown' => array(
                 'name' => __('Election Countdown', 'campaign-office'),
                 'icon' => '⏰',
                 'category' => 'urgency',
-                'variants' => array('flip-clock', 'simple', 'circular', 'banner'),
+                'variants' => array('minimal', 'cards', 'inline', 'bar'),
+                'settings' => array(
+                    'election_date' => array('type' => 'text', 'label' => __('Election Date', 'campaign-office'), 'default' => '2024-11-05'),
+                    'label' => array('type' => 'text', 'label' => __('Label', 'campaign-office'), 'default' => __('Days Until Election', 'campaign-office')),
+                ),
             ),
             'social-feed' => array(
                 'name' => __('Social Media', 'campaign-office'),
@@ -668,14 +719,34 @@ class CP_Campaign_Design_Studio {
         }
 
         $component = $this->components[$component_type];
+        $settings = $_POST['settings'] ?? array();
 
         // Generate component HTML based on type and variant
-        $html = $this->generate_component_html($component_type, $variant);
+        $html = $this->generate_component_html($component_type, $variant, $settings);
 
         wp_send_json_success(array(
             'html' => $html,
             'component' => $component_type,
             'variant' => $variant,
+        ));
+    }
+
+    public function ajax_get_component_properties() {
+        check_ajax_referer('cp_get_component');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $component_type = sanitize_text_field($_POST['component_type'] ?? '');
+
+        if (!isset($this->components[$component_type])) {
+            wp_send_json_error(array('message' => __('Invalid component type', 'campaign-office')));
+        }
+
+        wp_send_json_success(array(
+            'settings' => $this->components[$component_type]['settings'] ?? array(),
+            'variants' => $this->components[$component_type]['variants'] ?? array(),
         ));
     }
 
@@ -699,36 +770,65 @@ class CP_Campaign_Design_Studio {
     /**
      * Generate component HTML
      */
-    private function generate_component_html($type, $variant) {
+    private function generate_component_html($type, $variant, $settings = array()) {
         $component_info = $this->components[$type] ?? null;
 
         if (!$component_info) {
             return '';
         }
 
-        // Generate placeholder HTML for the component
+        // Merge defaults if settings is empty
+        if (empty($settings) && isset($component_info['settings'])) {
+            foreach ($component_info['settings'] as $key => $schema) {
+                $settings[$key] = $schema['default'];
+            }
+        }
+
+        // Specific rendering logic for Hero component (as an example)
+        if ($type === 'hero') {
+            $heading = $settings['heading'] ?? '';
+            $subheading = $settings['subheading'] ?? '';
+            $bg_color = $settings['bg_color'] ?? '#0073aa';
+            $text_color = $settings['text_color'] ?? '#ffffff';
+            $btn_text = $settings['button_text'] ?? '';
+
+            return sprintf(
+                '<div class="cp-component cp-component-hero cp-variant-%s" style="background-color: %s; color: %s; padding: 4rem 2rem; text-align: center;">
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem;">%s</h1>
+                    <p style="font-size: 1.25rem; margin-bottom: 2rem;">%s</p>
+                    <button class="button button-primary button-large">%s</button>
+                </div>',
+                esc_attr($variant),
+                esc_attr($bg_color),
+                esc_attr($text_color),
+                esc_html($heading),
+                esc_html($subheading),
+                esc_html($btn_text)
+            );
+        }
+
+        // Generic placeholder for other components
         $html = sprintf(
-            '<div class="cp-component cp-component-%s cp-variant-%s">
-                <div class="cp-component-icon">%s</div>
+            '<div class="cp-component cp-component-%s cp-variant-%s" style="padding: 2rem; border: 1px dashed #ccc; background: #fafafa; border-radius: 8px;">
+                <div class="cp-component-icon" style="font-size: 2rem; margin-bottom: 1rem;">%s</div>
                 <h3 class="cp-component-title">%s</h3>
-                <p class="cp-component-description">%s variant preview</p>
+                <p class="cp-component-description">%s variant</p>
                 <div class="cp-component-content">
-                    <!-- Component content will be rendered here -->
-                    <p style="text-align: center; padding: 2rem; background: #f5f5f5; border-radius: 0.5rem;">
-                        <strong>%s Component</strong><br>
-                        <span style="color: #666;">Variant: %s</span><br>
-                        <small>Customize this component in the properties panel</small>
-                    </p>
-                </div>
-            </div>',
+                    <ul style="list-style: disc; padding-left: 1.5rem;">',
             esc_attr($type),
             esc_attr($variant),
             $component_info['icon'],
             esc_html($component_info['name']),
-            esc_html(ucfirst($variant)),
-            esc_html($component_info['name']),
             esc_html(ucfirst($variant))
         );
+
+        foreach ($settings as $key => $value) {
+            $html .= sprintf('<li><strong>%s:</strong> %s</li>', esc_html(ucfirst(str_replace('_', ' ', $key))), esc_html($value));
+        }
+
+        $html .= '    </ul>
+                </div>
+            </div>';
 
         return $html;
     }
@@ -902,6 +1002,7 @@ class CP_Campaign_Design_Studio {
                 'save_design' => wp_create_nonce('cp_save_design'),
                 'load_design' => wp_create_nonce('cp_load_design'),
                 'apply_template' => wp_create_nonce('cp_apply_template'),
+                'get_component' => wp_create_nonce('cp_get_component'),
             ),
             'i18n' => array(
                 'saving' => __('Saving...', 'campaign-office'),

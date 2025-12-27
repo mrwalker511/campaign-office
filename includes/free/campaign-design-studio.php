@@ -246,6 +246,11 @@ class CP_Campaign_Design_Studio {
                 'icon' => '📱',
                 'category' => 'social',
                 'variants' => array('instagram', 'twitter', 'facebook', 'combined'),
+                'settings' => array(
+                    'username' => array('type' => 'text', 'label' => __('Username', 'campaign-office'), 'default' => '@candidate'),
+                    'count' => array('type' => 'number', 'label' => __('Post Count', 'campaign-office'), 'default' => 4),
+                    'columns' => array('type' => 'select', 'label' => __('Columns', 'campaign-office'), 'options' => array('1' => '1 Column', '2' => '2 Columns', '3' => '3 Columns', '4' => '4 Columns'), 'default' => '4'),
+                ),
             ),
         );
     }
@@ -434,7 +439,7 @@ class CP_Campaign_Design_Studio {
                 <div class="cp-studio-properties">
                     <h3><?php esc_html_e('Component Properties', 'campaign-office'); ?></h3>
                     <div id="cp-properties-content">
-                        <p class="description"><?php esc_html_e('Select a component to edit its properties', 'campaign-office'); ?></p>
+                        <p class="description"><?php esc_html_e('Drag components from the sidebar to start designing your page', 'campaign-office'); ?></p>
                     </div>
                 </div>
             </div>

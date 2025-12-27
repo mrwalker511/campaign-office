@@ -97,16 +97,12 @@ jQuery(document).ready(function ($) {
         var settings = $el.data('settings') || {};
 
         $('#cp-selected-component-name').text(type.replace('-', ' ').toUpperCase());
-
-        // Switch to STYLES tab
-        $('.cp-tab[data-tab="styles"]').trigger('click');
-
         loadComponentProperties(type, variant, settings);
     }
 
     // Load and render property controls
     function loadComponentProperties(type, currentVariant, settings) {
-        var $container = $('#cp-style-controls');
+        var $container = $('#cp-properties-content');
         $container.html('<span class="dashicons dashicons-update spin"></span> Loading properties...');
 
         $.ajax({
@@ -126,7 +122,7 @@ jQuery(document).ready(function ($) {
     }
 
     function renderPropertiesPanel(variants, schema, currentVariant, currentSettings) {
-        var $container = $('#cp-style-controls');
+        var $container = $('#cp-properties-content');
         $container.empty();
 
         // Variant Selector
@@ -246,7 +242,7 @@ jQuery(document).ready(function ($) {
                 $(this).remove();
                 if ($('#cp-canvas .cp-dropped-component').length === 0) {
                     $('#cp-canvas').html('<div class="cp-canvas-empty-state"><div class="cp-empty-icon"><span class="dashicons dashicons-layout"></span></div><h3>' + cpDesignStudio.i18n.start_building + '</h3><p>' + cpDesignStudio.i18n.drag_desc + '</p></div>');
-                    $('#cp-style-controls').html('<p class="cp-empty-notice">' + cpDesignStudio.i18n.drag_desc + '</p>');
+                    $('#cp-properties-content').html('<p class="description">' + cpDesignStudio.i18n.drag_desc + '</p>');
                 }
             });
         }
@@ -256,7 +252,7 @@ jQuery(document).ready(function ($) {
     $('#cp-clear-canvas').click(function () {
         if (confirm(cpDesignStudio.i18n.clear_confirm)) {
             $('#cp-canvas').html('<div class="cp-canvas-empty-state"><div class="cp-empty-icon"><span class="dashicons dashicons-layout"></span></div><h3>' + cpDesignStudio.i18n.start_building + '</h3><p>' + cpDesignStudio.i18n.drag_desc + '</p></div>');
-            $('#cp-style-controls').html('<p class="cp-empty-notice">' + cpDesignStudio.i18n.drag_desc + '</p>');
+            $('#cp-properties-content').html('<p class="description">' + cpDesignStudio.i18n.drag_desc + '</p>');
         }
     });
 

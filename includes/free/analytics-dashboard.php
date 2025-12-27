@@ -53,14 +53,19 @@ class CP_Analytics_Dashboard {
      * Add admin menu
      */
     public function add_admin_menu() {
+        // Prevent duplicate menu if premium analytics is active
+        if (function_exists('cp_has_premium_feature') && cp_has_premium_feature('analytics')) {
+            return;
+        }
+
         add_menu_page(
             __('Analytics', 'campaign-office'),
             __('Analytics', 'campaign-office'),
-            'edit_posts',
+            'manage_options',
             'cp-analytics',
             array($this, 'render_dashboard_page'),
             'dashicons-chart-bar',
-            26
+            30
         );
 
         add_submenu_page(
@@ -582,7 +587,7 @@ class CP_Analytics_Dashboard {
      */
     public function render_analytics_widget($atts) {
         $atts = shortcode_atts(array(
-            'metric' => 'volunteers',
+            'nonce' => wp_create_nonce('cp_analytics_nonce'),
             'label' => '',
         ), $atts, 'cp_analytics_widget');
 
@@ -653,14 +658,14 @@ class CP_Analytics_Dashboard {
      */
 
     public function ajax_get_dashboard_data() {
-        check_ajax_referer('wp_rest');
+        check_ajax_referer('cp_analytics_nonce');
 
         $metrics = $this->get_campaign_metrics();
         wp_send_json_success($metrics);
     }
 
     public function ajax_export_analytics() {
-        check_ajax_referer('wp_rest');
+        check_ajax_referer('cp_analytics_nonce');
 
         // Export logic would go here
         wp_send_json_success(array('message' => __('Report generated successfully', 'campaign-office')));

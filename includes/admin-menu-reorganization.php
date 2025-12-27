@@ -45,6 +45,7 @@ function cp_campaign_data_main_page() {
     $endorsements_count = wp_count_posts('cp_endorsement')->publish ?? 0;
     $team_count = wp_count_posts('cp_team')->publish ?? 0;
     $volunteers_count = wp_count_posts('cp_volunteer')->publish ?? 0;
+    $press_count = wp_count_posts('cp_press_release')->publish ?? 0;
     
     // Get donation stats if table exists
     $donations_table = $wpdb->prefix . 'campaignpress_donations';
@@ -129,6 +130,17 @@ function cp_campaign_data_main_page() {
                 </div>
             </div>
             
+            <!-- Press Stat -->
+            <div class="stat-card" style="background: #fff; padding: 20px; border-left: 4px solid #3498db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold; color: #3498db;"><?php echo number_format($press_count); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Press Releases', 'campaignpress'); ?></div>
+                    </div>
+                    <span class="dashicons dashicons-media-document" style="font-size: 48px; color: #3498db; opacity: 0.3;"></span>
+                </div>
+            </div>
+            
         </div>
         
         <!-- Quick Actions Grid -->
@@ -168,6 +180,12 @@ function cp_campaign_data_main_page() {
                             <?php _e('Manage Volunteers', 'campaignpress'); ?>
                         </a>
                     </li>
+                    <li style="margin-bottom: 10px;">
+                        <a href="<?php echo admin_url('edit.php?post_type=cp_press_release'); ?>" class="row-title">
+                            <span class="dashicons dashicons-media-document" style="color: #3498db;"></span>
+                            <?php _e('Manage Press', 'campaignpress'); ?>
+                        </a>
+                    </li>
                 </ul>
             </div>
             
@@ -176,7 +194,13 @@ function cp_campaign_data_main_page() {
                 <h2><?php _e('Analytics & Reports', 'campaignpress'); ?></h2>
                 <ul style="margin: 0; padding-left: 20px;">
                     <li style="margin-bottom: 10px;">
-                        <a href="<?php echo admin_url('admin.php?page=campaignpress-analytics'); ?>" class="row-title">
+                        <?php 
+                        $analytics_slug = 'cp-analytics';
+                        if (function_exists('cp_has_premium_feature') && cp_has_premium_feature('analytics')) {
+                            $analytics_slug = 'campaignpress-analytics';
+                        }
+                        ?>
+                        <a href="<?php echo admin_url('admin.php?page=' . $analytics_slug); ?>" class="row-title">
                             <span class="dashicons dashicons-chart-area" style="color: #2271b1;"></span>
                             <?php _e('Campaign Analytics', 'campaignpress'); ?>
                         </a>
@@ -223,6 +247,12 @@ function cp_campaign_data_main_page() {
                         <?php _e('Add New Endorsement', 'campaignpress'); ?>
                     </a>
                 </p>
+                <p style="margin-bottom: 15px;">
+                    <a href="<?php echo admin_url('post-new.php?post_type=cp_press_release'); ?>" class="button button-secondary button-large" style="width: 100%; text-align: center;">
+                        <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
+                        <?php _e('Add New Press Release', 'campaignpress'); ?>
+                    </a>
+                </p>
             </div>
             
         </div>
@@ -237,6 +267,7 @@ function cp_campaign_data_main_page() {
                 <li><?php _e('<strong>Endorsements</strong> - Showcase support from organizations and community leaders', 'campaignpress'); ?></li>
                 <li><?php _e('<strong>Team</strong> - Introduce your campaign staff and leadership', 'campaignpress'); ?></li>
                 <li><?php _e('<strong>Volunteers</strong> - Manage volunteer recruitment and activities', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Press Releases</strong> - Official campaign statements and news', 'campaignpress'); ?></li>
             </ol>
             <p><?php _e('Use the Analytics section to track campaign performance, donations, and engagement metrics.', 'campaignpress'); ?></p>
         </div>
@@ -273,6 +304,10 @@ function cp_move_cpts_to_campaign_data() {
         'cp_volunteer' => array(
             'name' => __('Volunteers', 'campaignpress'),
             'icon' => 'dashicons-heart'
+        ),
+        'cp_press_release' => array(
+            'name' => __('Press Releases', 'campaignpress'),
+            'icon' => 'dashicons-media-document'
         )
     );
 
@@ -311,7 +346,8 @@ function cp_enforce_campaign_data_submenu_order() {
         'edit.php?post_type=cp_event',             // Events
         'edit.php?post_type=cp_endorsement',       // Endorsements
         'edit.php?post_type=cp_team',              // Team
-        'edit.php?post_type=cp_volunteer'          // Volunteers
+        'edit.php?post_type=cp_volunteer',         // Volunteers
+        'edit.php?post_type=cp_press_release'      // Press Releases
     );
 
     // Create a new ordered submenu array
@@ -396,25 +432,27 @@ add_action('admin_head', 'cp_add_submenu_icons_css');
 
 /**
  * Move Analytics menu item under CampaignPress
+ * Note: Disabled to prevent conflicts with free/premium analytics modules
  */
+/*
 function cp_move_analytics_to_campaignpress() {
     global $submenu;
 
     // Remove Analytics from top-level if it exists
-    remove_menu_page('campaign-analytics');
+    remove_menu_page('cp-analytics');
 
     // Add Analytics as submenu under CampaignPress
-    // Adjust 'campaignpress' to match your actual CampaignPress menu slug
     add_submenu_page(
-        'campaignpress',                                 // Parent slug (adjust if needed)
-        __('Analytics', 'campaignpress'),               // Page title
-        __('Analytics', 'campaignpress'),               // Menu title
-        'manage_options',                                // Capability
-        'campaign-analytics',                            // Menu slug
-        'cp_analytics_page_callback'                    // Callback (adjust if needed)
+        'campaignpress',                                 
+        __('Analytics', 'campaignpress'),               
+        __('Analytics', 'campaignpress'),               
+        'manage_options',                                
+        'cp-analytics',                            
+        'cp_analytics_page_callback'                    
     );
 }
 add_action('admin_menu', 'cp_move_analytics_to_campaignpress', 999);
+*/
 
 /**
  * Conditionally hide Dev Console menu unless WP_DEBUG is true
@@ -422,7 +460,7 @@ add_action('admin_menu', 'cp_move_analytics_to_campaignpress', 999);
 function cp_conditionally_hide_dev_console() {
     // Only hide if WP_DEBUG is not enabled
     if (!defined('WP_DEBUG') || !WP_DEBUG) {
-        remove_menu_page('dev-console');
+        remove_menu_page('campaignpress-developer-console');
     }
 }
 add_action('admin_menu', 'cp_conditionally_hide_dev_console', 999);

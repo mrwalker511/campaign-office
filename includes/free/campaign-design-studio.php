@@ -252,6 +252,17 @@ class CP_Campaign_Design_Studio {
                     'columns' => array('type' => 'select', 'label' => __('Columns', 'campaign-office'), 'options' => array('1' => '1 Column', '2' => '2 Columns', '3' => '3 Columns', '4' => '4 Columns'), 'default' => '4'),
                 ),
             ),
+            'communications' => array(
+                'name' => __('Communications', 'campaign-office'),
+                'icon' => '📢',
+                'category' => 'forms',
+                'variants' => array('subscribe', 'unsubscribe'),
+                'settings' => array(
+                    'title' => array('type' => 'text', 'label' => __('Title', 'campaign-office'), 'default' => __('Join Our Movement', 'campaign-office')),
+                    'type' => array('type' => 'select', 'label' => __('Input Type', 'campaign-office'), 'options' => array('both' => 'Email & SMS', 'email' => 'Email Only', 'sms' => 'SMS Only'), 'default' => 'both'),
+                    'zip_field' => array('type' => 'checkbox', 'label' => __('Show ZIP Field', 'campaign-office'), 'default' => true),
+                ),
+            ),
         );
     }
 
@@ -812,7 +823,68 @@ class CP_Campaign_Design_Studio {
             );
         }
 
-        // Generic placeholder for other components
+        // Communications component logic
+        if ($type === 'communications') {
+            $title = $settings['title'] ?? __('Join Our Movement', 'campaign-office');
+            $input_type = $settings['type'] ?? 'both';
+            $show_zip = $settings['zip_field'] ?? true;
+
+            if ($variant === 'unsubscribe') {
+                return sprintf(
+                    '<div class="cp-component cp-communications cp-variant-unsubscribe">
+                        <div class="cp-unsubscribe-wrapper">
+                            <h3>%s</h3>
+                            <p>%s</p>
+                            <form class="cp-unsubscribe-form">
+                                <input type="email" name="email" placeholder="%s" required class="cp-input">
+                                <button type="submit" class="cp-button">%s</button>
+                            </form>
+                        </div>
+                    </div>',
+                    esc_html($title),
+                    esc_html__('To unsubscribe from our communications, please enter your email address below.', 'campaign-office'),
+                    esc_attr__('Email Address', 'campaign-office'),
+                    esc_html__('Unsubscribe', 'campaign-office')
+                );
+            }
+
+            // Default: subscribe
+            $zip_html = $show_zip ? sprintf('<div class="form-field"><input type="text" name="zip" placeholder="%s" class="cp-input"></div>', esc_attr__('ZIP Code', 'campaign-office')) : '';
+            $email_html = in_array($input_type, array('both', 'email')) ? sprintf('<div class="form-field"><input type="email" name="email" placeholder="%s" required class="cp-input"></div>', esc_attr__('Email Address', 'campaign-office')) : '';
+            $phone_html = in_array($input_type, array('both', 'sms')) ? sprintf('<div class="form-field"><input type="tel" name="phone" placeholder="%s" class="cp-input"></div>', esc_attr__('Phone Number', 'campaign-office')) : '';
+
+            return sprintf(
+                '<div class="cp-component cp-communications cp-variant-subscribe">
+                    <div class="cp-subscribe-form-wrapper">
+                        <h3>%s</h3>
+                        <form class="cp-subscribe-form">
+                            %s
+                            <div class="form-row">
+                                <input type="text" name="first_name" placeholder="%s" required class="cp-input">
+                                <input type="text" name="last_name" placeholder="%s" required class="cp-input">
+                            </div>
+                            %s
+                            %s
+                            %s
+                            <div class="form-actions">
+                                <button type="submit" class="cp-button cp-button-primary">%s</button>
+                            </div>
+                            <div class="cp-form-message" style="display:none;"></div>
+                        </form>
+                    </div>
+                </div>',
+                esc_html($title),
+                wp_nonce_field('cp_subscribe', 'cp_subscribe_nonce', false, false),
+                esc_attr__('First Name', 'campaign-office'),
+                esc_attr__('Last Name', 'campaign-office'),
+                $email_html,
+                $phone_html,
+                $zip_html,
+                esc_html__('Subscribe', 'campaign-office')
+            );
+        }
+
+        // Generic placeholder
         $html = sprintf(
             '<div class="cp-component cp-component-%s cp-variant-%s" style="padding: 2rem; border: 1px dashed #ccc; background: #fafafa; border-radius: 8px;">
                 <div class="cp-component-icon" style="font-size: 2rem; margin-bottom: 1rem;">%s</div>

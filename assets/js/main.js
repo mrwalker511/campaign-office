@@ -29,7 +29,48 @@
 
     // Donation thermometer animations
     initDonationThermometer();
+
+    // Subscribe form handling
+    initSubscribeForms();
   });
+
+  /**
+   * Initialize communications subscribe forms
+   */
+  function initSubscribeForms() {
+    $(document).on('submit', '.cp-subscribe-form', function (e) {
+      e.preventDefault();
+      const $form = $(this);
+      const $message = $form.find('.cp-form-message');
+      const $submit = $form.find('button[type="submit"]');
+      const originalText = $submit.text();
+
+      $submit.prop('disabled', true).text(campaignpress_vars.saving || 'Subscribing...');
+      $message.hide().removeClass('success error');
+
+      const formData = $form.serialize() + '&action=cp_subscribe';
+
+      if (window.campaignpress && window.campaignpress.ajaxSubmit) {
+        window.campaignpress.ajaxSubmit(formData, function (response) {
+          $submit.prop('disabled', false).text(originalText);
+          $message.show().text(response.data.message || response.message);
+
+          if (response.success) {
+            $message.addClass('success');
+            $form[0].reset();
+          } else {
+            $message.addClass('error');
+          }
+        });
+      }
+    });
+
+    $(document).on('submit', '.cp-unsubscribe-form', function (e) {
+      e.preventDefault();
+      // Unsubscribe logic could be added here if needed, 
+      // but for now we'll focus on the primary request.
+    });
+  }
 
   /**
    * Initialize mobile menu

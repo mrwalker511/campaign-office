@@ -372,3 +372,16 @@
     animation: cp-spin 1s linear infinite;
     display: inline-block;
 }
+
+/* Form Feedback */
+.cp-form-message.success {
+    background: #e7f6ed;
+    color: #007017;
+    border: 1px solid #b7e1c7;
+}
+
+.cp-form-message.error {
+    background: #fcf0f1;
+    color: #d63638;
+    border: 1px solid #f5cfd0;
+}

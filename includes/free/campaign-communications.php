@@ -651,7 +651,7 @@ class CP_Campaign_Communications {
                         <?php esc_html_e('Subscribe', 'campaign-office'); ?>
                     </button>
                 </div>
-                <div class="cp-form-message" style="display:none;"></div>
+                <div class="cp-form-message" style="display:none; margin-top: 1rem; padding: 0.75rem; border-radius: 4px;"></div>
             </form>
         </div>
         <?php

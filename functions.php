@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
  *
  * NEVER set this to true in production or distributed versions.
  */
-define('CAMPAIGNPRESS_DEV_MODE', true);
+define('CAMPAIGNPRESS_DEV_MODE', false);
 
 /**
  * Define Constants
@@ -152,9 +152,9 @@ function campaignpress_scripts() {
     wp_localize_script('campaignpress-main', 'campaignpress_vars', array(
         'ajax_url'         => admin_url('admin-ajax.php'),
         'nonce'            => wp_create_nonce('campaignpress_nonce'),
-        'countdown_ended'  => __('Event has ended', 'campaignpress'),
-        'day_singular'     => __('Day', 'campaignpress'),
-        'day_plural'       => __('Days', 'campaignpress'),
+        'countdown_ended'  => __('Event has ended', 'campaign-office'),
+        'day_singular'     => __('Day', 'campaign-office'),
+        'day_plural'       => __('Days', 'campaign-office'),
     ));
 }
 add_action('wp_enqueue_scripts', 'campaignpress_scripts');

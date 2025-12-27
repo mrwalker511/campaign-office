@@ -7,7 +7,7 @@ import ServerSideRender from '@wordpress/server-side-render';
 import { __ } from '@wordpress/i18n';
 
 registerBlockType('campaignpress/issue-card', {
-    title: __('Issue Card', 'campaignpress'),
+    title: __('Issue Card', 'campaign-office'),
     category: 'campaignpress',
     icon: 'megaphone',
     attributes: {

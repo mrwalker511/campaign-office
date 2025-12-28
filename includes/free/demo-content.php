@@ -340,7 +340,7 @@ class CampaignPress_Demo_Content {
 
                         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-import-demo-form" class="cp-force-import-form">
                             <input type="hidden" name="action" value="cp_import_demo">
-                            <input type="hidden" name="force_import" value="1">
+                            <input type="hidden" name="force" value="1">
                             <?php wp_nonce_field('cp_import_demo', 'cp_demo_nonce'); ?>
                             <button type="submit" class="button button-secondary" onclick="return confirm('<?php echo esc_js(__('Force re-import will overwrite existing demo content settings but may create duplicate posts. Are you sure?', 'campaign-office')); ?>');">
                                 <?php esc_html_e('Force Re-import', 'campaign-office'); ?>
@@ -614,7 +614,7 @@ class CampaignPress_Demo_Content {
             wp_die(__('Insufficient permissions', 'campaign-office'));
         }
 
-        $force = !empty($_POST['force_import']) || !empty($_GET['force_import']);
+        $force = !empty($_POST['force']) || !empty($_GET['force']);
 
         if (!$force && (get_option('campaignpress_demo_imported', false) || !empty(get_option('campaignpress_demo_post_ids', array())))) {
             wp_redirect(add_query_arg('import_error', '1', wp_get_referer()));

@@ -52,6 +52,9 @@
 
     function startImport() {
         var $button = $('#cp-import-demo-button');
+        var $form = $('#cp-import-demo-form');
+        var force = $form.find('input[name="force"]').val() || 0;
+
         $button.prop('disabled', true);
 
         setProgress(1, campaignpressDemoImport.strings.starting);
@@ -63,6 +66,7 @@
             data: {
                 action: 'cp_demo_import_start',
                 nonce: campaignpressDemoImport.nonce,
+                force: force,
             },
         })
             .done(function (response) {

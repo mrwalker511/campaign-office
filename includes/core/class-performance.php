@@ -171,9 +171,20 @@ class Performance {
      * Defer JS execution (except jQuery).
      */
     public static function defer_scripts($tag, $handle) {
-        if (in_array($handle, array('jquery', 'jquery-core', 'jquery-migrate'), true)) {
+        // Scripts that should NOT be deferred for better interactivity/reliability
+        $exclude = array(
+            'jquery',
+            'jquery-core',
+            'jquery-migrate',
+            'campaignpress-main', // Core theme interactions
+            'campaignpress-scripts', // Critical logic
+            'bootstrap-bundle', // Required for UI components immediately
+        );
+
+        if (in_array($handle, $exclude, true)) {
             return $tag;
         }
+
         if (strpos($tag, 'defer') === false) {
             $tag = str_replace(' src', ' defer src', $tag);
         }

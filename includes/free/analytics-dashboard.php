@@ -388,15 +388,21 @@ class CP_Analytics_Dashboard {
         $hours_table = $wpdb->prefix . 'cp_volunteer_hours';
         $volunteers_table = $wpdb->prefix . 'cp_volunteers';
 
-        $top_volunteers = $wpdb->get_results($wpdb->prepare("
-            SELECT v.first_name, v.last_name, SUM(h.hours) as total_hours
-            FROM {$volunteers_table} v
-            LEFT JOIN {$hours_table} h ON v.id = h.volunteer_id
-            WHERE h.verified = 1
-            GROUP BY v.id
-            ORDER BY total_hours DESC
-            LIMIT %d
-        ", $limit));
+        $cache_key = 'cp_top_volunteers_' . $limit;
+        $top_volunteers = get_transient($cache_key);
+
+        if (false === $top_volunteers) {
+            $top_volunteers = $wpdb->get_results($wpdb->prepare("
+                SELECT v.first_name, v.last_name, SUM(h.hours) as total_hours
+                FROM {$volunteers_table} v
+                LEFT JOIN {$hours_table} h ON v.id = h.volunteer_id
+                WHERE h.verified = 1
+                GROUP BY v.id
+                ORDER BY total_hours DESC
+                LIMIT %d
+            ", $limit));
+            set_transient($cache_key, $top_volunteers, HOUR_IN_SECONDS);
+        }
 
         if (empty($top_volunteers)) {
             return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No volunteer hours logged yet.', 'campaign-office') . '</p>';
@@ -537,14 +543,20 @@ class CP_Analytics_Dashboard {
         global $wpdb;
         $volunteers_table = $wpdb->prefix . 'cp_volunteers';
 
-        $distribution = $wpdb->get_results("
-            SELECT zip, COUNT(*) as count
-            FROM {$volunteers_table}
-            WHERE zip IS NOT NULL AND zip != ''
-            GROUP BY zip
-            ORDER BY count DESC
-            LIMIT 10
-        ");
+        $cache_key = 'cp_geo_distribution';
+        $distribution = get_transient($cache_key);
+
+        if (false === $distribution) {
+            $distribution = $wpdb->get_results("
+                SELECT zip, COUNT(*) as count
+                FROM {$volunteers_table}
+                WHERE zip IS NOT NULL AND zip != ''
+                GROUP BY zip
+                ORDER BY count DESC
+                LIMIT 10
+            ");
+            set_transient($cache_key, $distribution, HOUR_IN_SECONDS);
+        }
 
         if (empty($distribution)) {
             return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No geographic data available yet.', 'campaign-office') . '</p>';

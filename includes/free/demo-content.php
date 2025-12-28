@@ -329,15 +329,32 @@ class CampaignPress_Demo_Content {
                     <div class="notice notice-info inline">
                         <p><?php esc_html_e('Demo content is currently installed.', 'campaign-office'); ?></p>
                     </div>
-                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-delete-demo-form">
-                        <input type="hidden" name="action" value="cp_delete_demo">
-                        <?php wp_nonce_field('cp_delete_demo', 'cp_demo_nonce'); ?>
-                        <p>
+                    <div style="display: flex; gap: 10px; margin-top: 16px;">
+                        <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-delete-demo-form">
+                            <input type="hidden" name="action" value="cp_delete_demo">
+                            <?php wp_nonce_field('cp_delete_demo', 'cp_demo_nonce'); ?>
                             <button type="submit" class="button button-secondary">
                                 <?php esc_html_e('Delete Demo Content', 'campaign-office'); ?>
                             </button>
-                        </p>
-                    </form>
+                        </form>
+
+                        <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-import-demo-form" class="cp-force-import-form">
+                            <input type="hidden" name="action" value="cp_import_demo">
+                            <input type="hidden" name="force_import" value="1">
+                            <?php wp_nonce_field('cp_import_demo', 'cp_demo_nonce'); ?>
+                            <button type="submit" class="button button-secondary" onclick="return confirm('<?php echo esc_js(__('Force re-import will overwrite existing demo content settings but may create duplicate posts. Are you sure?', 'campaign-office')); ?>');">
+                                <?php esc_html_e('Force Re-import', 'campaign-office'); ?>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="cp-demo-import-progress" style="display:none; margin-top: 16px;">
+                        <p class="description" id="cp-demo-import-status"></p>
+                        <div style="background: #e5e5e5; border-radius: 4px; height: 10px; overflow: hidden;">
+                            <div id="cp-demo-import-progress-bar" style="background: #2271b1; width: 0%; height: 10px;"></div>
+                        </div>
+                    </div>
+
                     <script>
                     document.getElementById('cp-delete-demo-form').addEventListener('submit', function(e) {
                         if (!confirm('<?php echo esc_js(__('Are you sure you want to delete all demo content? This cannot be undone.', 'campaign-office')); ?>')) {
@@ -358,12 +375,12 @@ class CampaignPress_Demo_Content {
             wp_send_json_error(array('message' => __('Insufficient permissions', 'campaign-office')));
         }
 
-        if (get_option('campaignpress_demo_imported', false)) {
+        if (get_option('campaignpress_demo_imported', false) && empty($_POST['force'])) {
             wp_send_json_error(array('message' => __('Demo content is already installed. Delete it first to re-import.', 'campaign-office')));
         }
 
         $existing_ids = get_option('campaignpress_demo_post_ids', array());
-        if (!empty($existing_ids)) {
+        if (!empty($existing_ids) && empty($_POST['force'])) {
             wp_send_json_error(array('message' => __('Demo content already exists. Delete it first to re-import.', 'campaign-office')));
         }
 
@@ -597,7 +614,9 @@ class CampaignPress_Demo_Content {
             wp_die(__('Insufficient permissions', 'campaign-office'));
         }
 
-        if (get_option('campaignpress_demo_imported', false) || !empty(get_option('campaignpress_demo_post_ids', array()))) {
+        $force = !empty($_POST['force_import']) || !empty($_GET['force_import']);
+
+        if (!$force && (get_option('campaignpress_demo_imported', false) || !empty(get_option('campaignpress_demo_post_ids', array())))) {
             wp_redirect(add_query_arg('import_error', '1', wp_get_referer()));
             exit;
         }

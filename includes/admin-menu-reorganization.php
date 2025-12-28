@@ -39,22 +39,40 @@ add_action('admin_menu', 'cp_register_campaign_data_menu', 9);
 function cp_campaign_data_main_page() {
     global $wpdb;
     
-    // Get counts for dashboard stats
-    $issues_count = wp_count_posts('cp_issue')->publish ?? 0;
-    $events_count = wp_count_posts('cp_event')->publish ?? 0;
-    $endorsements_count = wp_count_posts('cp_endorsement')->publish ?? 0;
-    $team_count = wp_count_posts('cp_team')->publish ?? 0;
-    $volunteers_count = wp_count_posts('cp_volunteer')->publish ?? 0;
-    $press_count = wp_count_posts('cp_press_release')->publish ?? 0;
+    // Use transients for dashboard stats to improve performance
+    $cache_key = 'cp_dashboard_stats';
+    $stats = get_transient($cache_key);
     
-    // Get donation stats if table exists
-    $donations_table = $wpdb->prefix . 'campaignpress_donations';
-    $total_donations = 0;
-    $donation_count = 0;
-    if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $donations_table)) == $donations_table) {
-        $total_donations = $wpdb->get_var($wpdb->prepare("SELECT SUM(amount) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
-        $donation_count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
+    if (false === $stats) {
+        $stats = array(
+            'issues' => wp_count_posts('cp_issue')->publish ?? 0,
+            'events' => wp_count_posts('cp_event')->publish ?? 0,
+            'endorsements' => wp_count_posts('cp_endorsement')->publish ?? 0,
+            'team' => wp_count_posts('cp_team')->publish ?? 0,
+            'volunteers' => wp_count_posts('cp_volunteer')->publish ?? 0,
+            'press' => wp_count_posts('cp_press_release')->publish ?? 0,
+            'total_donations' => 0,
+            'donation_count' => 0,
+        );
+        
+        // Get donation stats if table exists
+        $donations_table = $wpdb->prefix . 'campaignpress_donations';
+        if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $donations_table)) == $donations_table) {
+            $stats['total_donations'] = $wpdb->get_var($wpdb->prepare("SELECT SUM(amount) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
+            $stats['donation_count'] = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
+        }
+        
+        set_transient($cache_key, $stats, HOUR_IN_SECONDS);
     }
+    
+    $issues_count = $stats['issues'];
+    $events_count = $stats['events'];
+    $endorsements_count = $stats['endorsements'];
+    $team_count = $stats['team'];
+    $volunteers_count = $stats['volunteers'];
+    $press_count = $stats['press'];
+    $total_donations = $stats['total_donations'];
+    $donation_count = $stats['donation_count'];
     
     ?>
     <div class="wrap campaignpress-dashboard">

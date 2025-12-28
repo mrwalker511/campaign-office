@@ -10,7 +10,7 @@ Version: 2.0.0 | Last Updated: December 28, 2025
 
 ### For Users & Product Managers
 - **[../README.md](../README.md)** - Project overview and quick start
-- **[../FEATURES.md](../FEATURES.md)** - Complete feature breakdown (free vs premium)
+- **[FEATURES.md](FEATURES.md)** - Complete feature breakdown (free vs premium)
 - **[../GETTING-STARTED.md](../GETTING-STARTED.md)** - Installation and setup guide
 - **[../CHANGELOG.md](../CHANGELOG.md)** - Version history and updates
 
@@ -46,8 +46,9 @@ Version: 2.0.0 | Last Updated: December 28, 2025
   - Troubleshooting
 
 ### For Testers & QA
-- **[../TESTING.md](../TESTING.md)** - Testing framework and practices
-- **[../TECHNICAL-REPORTS.md](../TECHNICAL-REPORTS.md)** - Technical analysis and reports
+- **[TESTING.md](TESTING.md)** - Testing framework and practices
+- **[TECHNICAL-REPORTS.md](TECHNICAL-REPORTS.md)** - Technical analysis and reports
+- **[DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md)** - Legacy developer guide (see DEVELOPER-REFERENCE.md for latest)
 
 ---
 

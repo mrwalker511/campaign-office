@@ -64,21 +64,35 @@ class CampaignPress_CRM_Contacts {
 	 * @return int|WP_Error Contact ID on success, WP_Error on failure
 	 */
 	public function create_contact( $data ) {
-		// Validate required data
-		if ( empty( $data['first_name'] ) && empty( $data['last_name'] ) && empty( $data['email'] ) ) {
-			return new WP_Error( 'missing_data', __( 'At least one of first name, last name, or email is required.', 'campaign-office' ) );
+		// Identify or Create Central Contact
+		global $cp_contact_manager;
+		$contact_id = $cp_contact_manager->find_or_create( $data );
+
+		if ( is_wp_error( $contact_id ) ) {
+			return $contact_id;
 		}
 
-		// Check for duplicate email
-		if ( ! empty( $data['email'] ) ) {
-			$existing = $this->get_contact_by_email( $data['email'] );
-			if ( $existing ) {
-				return new WP_Error( 'duplicate_email', __( 'A contact with this email already exists.', 'campaign-office' ) );
-			}
+		// Check if this contact already has CRM data
+		$existing_crm = $this->wpdb->get_var( $this->wpdb->prepare(
+			"SELECT id FROM {$this->table_name} WHERE contact_id = %d",
+			$contact_id
+		) );
+
+		if ( $existing_crm ) {
+			return new WP_Error( 'duplicate_crm', __( 'This contact already exists in the CRM.', 'campaign-office' ) );
 		}
 
-		// Sanitize data
+		// Sanitize CRM-specific data
 		$sanitized_data = $this->sanitize_contact_data( $data );
+		
+		// Remove core contact fields from CRM-only insert
+		$core_fields = array( 'first_name', 'last_name', 'email', 'phone', 'mobile_phone', 'address_line1', 'address_line2', 'city', 'state', 'zip_code', 'country', 'external_id' );
+		foreach ( $core_fields as $field ) {
+			unset( $sanitized_data[ $field ] );
+		}
+
+		// Add contact_id link
+		$sanitized_data['contact_id'] = $contact_id;
 
 		// Add created_by if not set
 		if ( ! isset( $sanitized_data['created_by'] ) ) {
@@ -90,31 +104,25 @@ class CampaignPress_CRM_Contacts {
 			$sanitized_data['age'] = $this->calculate_age( $sanitized_data['date_of_birth'] );
 		}
 
-		// Insert contact
+		// Insert CRM-specific record
 		$result = $this->wpdb->insert(
 			$this->table_name,
-			$sanitized_data,
-			$this->get_field_formats()
+			$sanitized_data
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to create contact.', 'campaign-office' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to create CRM record.', 'campaign-office' ), $this->wpdb->last_error );
 		}
 
-		$contact_id = $this->wpdb->insert_id;
+		$crm_contact_id = $this->wpdb->insert_id;
 
-		// Check for potential duplicates
-		$this->check_duplicates( $contact_id );
-
-		// Update household if address provided
-		if ( ! empty( $sanitized_data['address_line1'] ) && ! empty( $sanitized_data['city'] ) && ! empty( $sanitized_data['zip_code'] ) ) {
-			$this->assign_household( $contact_id );
-		}
+		// Update household and districts (these now use the link to master)
+		$this->assign_household( $crm_contact_id );
 
 		// Log action
-		do_action( 'cp_crm_contact_created', $contact_id, $sanitized_data );
+		do_action( 'cp_crm_contact_created', $crm_contact_id, $sanitized_data );
 
-		return $contact_id;
+		return $crm_contact_id;
 	}
 
 	/**
@@ -125,54 +133,53 @@ class CampaignPress_CRM_Contacts {
 	 * @param array $data Contact data to update
 	 * @return bool|WP_Error True on success, WP_Error on failure
 	 */
-	public function update_contact( $contact_id, $data ) {
-		// Verify contact exists
-		$contact = $this->get_contact( $contact_id );
-		if ( ! $contact ) {
-			return new WP_Error( 'not_found', __( 'Contact not found.', 'campaign-office' ) );
+	public function update_contact( $crm_contact_id, $data ) {
+		// Verify CRM contact exists
+		$crm_contact = $this->wpdb->get_row( $this->wpdb->prepare(
+			"SELECT * FROM {$this->table_name} WHERE id = %d",
+			$crm_contact_id
+		) );
+		
+		if ( ! $crm_contact ) {
+			return new WP_Error( 'not_found', __( 'CRM record not found.', 'campaign-office' ) );
 		}
 
-		// Check email uniqueness if being updated
-		if ( ! empty( $data['email'] ) && $data['email'] !== $contact->email ) {
-			$existing = $this->get_contact_by_email( $data['email'] );
-			if ( $existing && $existing->id !== $contact_id ) {
-				return new WP_Error( 'duplicate_email', __( 'A contact with this email already exists.', 'campaign-office' ) );
-			}
-		}
+		// Update Central Contact Info
+		global $cp_contact_manager;
+		$cp_contact_manager->update_contact( $crm_contact->contact_id, $data );
 
-		// Sanitize data
+		// Sanitize CRM-specific data
 		$sanitized_data = $this->sanitize_contact_data( $data );
+		
+		// Remove core contact fields from CRM update
+		$core_fields = array( 'first_name', 'last_name', 'email', 'phone', 'mobile_phone', 'address_line1', 'address_line2', 'city', 'state', 'zip_code', 'country', 'external_id' );
+		foreach ( $core_fields as $field ) {
+			unset( $sanitized_data[ $field ] );
+		}
 
 		// Calculate age if date of birth updated
 		if ( ! empty( $sanitized_data['date_of_birth'] ) ) {
 			$sanitized_data['age'] = $this->calculate_age( $sanitized_data['date_of_birth'] );
 		}
 
-		// Update contact
-		$result = $this->wpdb->update(
-			$this->table_name,
-			$sanitized_data,
-			array( 'id' => $contact_id ),
-			$this->get_field_formats(),
-			array( '%d' )
-		);
+		// Update CRM-specific data
+		if ( ! empty( $sanitized_data ) ) {
+			$result = $this->wpdb->update(
+				$this->table_name,
+				$sanitized_data,
+				array( 'id' => $crm_contact_id )
+			);
 
-		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to update contact.', 'campaign-office' ), $this->wpdb->last_error );
+			if ( false === $result ) {
+				return new WP_Error( 'db_error', __( 'Failed to update CRM record.', 'campaign-office' ), $this->wpdb->last_error );
+			}
 		}
 
-		// Recheck duplicates if key fields changed
-		if ( isset( $data['email'] ) || isset( $data['phone'] ) || isset( $data['first_name'] ) || isset( $data['last_name'] ) ) {
-			$this->check_duplicates( $contact_id );
-		}
-
-		// Update household if address changed
-		if ( isset( $data['address_line1'] ) || isset( $data['city'] ) || isset( $data['zip_code'] ) ) {
-			$this->assign_household( $contact_id );
-		}
+		// Update household and districts if needed
+		$this->assign_household( $crm_contact_id );
 
 		// Log action
-		do_action( 'cp_crm_contact_updated', $contact_id, $sanitized_data );
+		do_action( 'cp_crm_contact_updated', $crm_contact_id, $sanitized_data );
 
 		return true;
 	}
@@ -194,7 +201,7 @@ class CampaignPress_CRM_Contacts {
 		// Delete related data
 		$this->delete_contact_relationships( $contact_id );
 
-		// Delete contact
+		// Delete CRM record
 		$result = $this->wpdb->delete(
 			$this->table_name,
 			array( 'id' => $contact_id ),
@@ -202,8 +209,11 @@ class CampaignPress_CRM_Contacts {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to delete contact.', 'campaign-office' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to delete CRM record.', 'campaign-office' ), $this->wpdb->last_error );
 		}
+
+		// Note: We typically don't delete the central contact here as they might have other links (RSVP, Donor)
+		// but we could delete if this was the only reference.
 
 		// Log action
 		do_action( 'cp_crm_contact_deleted', $contact_id );
@@ -215,14 +225,18 @@ class CampaignPress_CRM_Contacts {
 	 * Get a single contact by ID
 	 *
 	 * @since 1.0.0
-	 * @param int $contact_id Contact ID
+	 * @param int $crm_contact_id CRM Contact ID
 	 * @return object|null Contact object or null if not found
 	 */
-	public function get_contact( $contact_id ) {
+	public function get_contact( $crm_contact_id ) {
+		$master_table = $this->wpdb->prefix . 'cp_contacts';
 		$contact = $this->wpdb->get_row(
 			$this->wpdb->prepare(
-				"SELECT * FROM {$this->table_name} WHERE id = %d",
-				$contact_id
+				"SELECT v.*, c.first_name, c.last_name, c.email, c.phone, c.mobile_phone, c.address_line1, c.address_line2, c.city, c.state, c.zip_code, c.country, c.external_id
+				 FROM {$this->table_name} v
+				 JOIN {$master_table} c ON v.contact_id = c.id
+				 WHERE v.id = %d",
+				$crm_contact_id
 			)
 		);
 
@@ -237,9 +251,13 @@ class CampaignPress_CRM_Contacts {
 	 * @return object|null Contact object or null if not found
 	 */
 	public function get_contact_by_email( $email ) {
+		$master_table = $this->wpdb->prefix . 'cp_contacts';
 		$contact = $this->wpdb->get_row(
 			$this->wpdb->prepare(
-				"SELECT * FROM {$this->table_name} WHERE email = %s",
+				"SELECT v.*, c.first_name, c.last_name, c.email, c.phone, c.mobile_phone, c.address_line1, c.address_line2, c.city, c.state, c.zip_code, c.country, c.external_id
+				 FROM {$this->table_name} v
+				 JOIN {$master_table} c ON v.contact_id = c.id
+				 WHERE c.email = %s",
 				sanitize_email( $email )
 			)
 		);
@@ -255,9 +273,13 @@ class CampaignPress_CRM_Contacts {
 	 * @return object|null Contact object or null if not found
 	 */
 	public function get_contact_by_voter_id( $voter_id ) {
+		$master_table = $this->wpdb->prefix . 'cp_contacts';
 		$contact = $this->wpdb->get_row(
 			$this->wpdb->prepare(
-				"SELECT * FROM {$this->table_name} WHERE voter_id = %s",
+				"SELECT v.*, c.first_name, c.last_name, c.email, c.phone, c.mobile_phone, c.address_line1, c.address_line2, c.city, c.state, c.zip_code, c.country, c.external_id
+				 FROM {$this->table_name} v
+				 JOIN {$master_table} c ON v.contact_id = c.id
+				 WHERE v.voter_id = %s",
 				sanitize_text_field( $voter_id )
 			)
 		);
@@ -313,21 +335,30 @@ class CampaignPress_CRM_Contacts {
 
 		// Validate orderby
 		$allowed_orderby = array( 'id', 'first_name', 'last_name', 'email', 'city', 'state', 'engagement_score', 'last_contact_date', 'created_at' );
-		$orderby = in_array( $args['orderby'], $allowed_orderby, true ) ? $args['orderby'] : 'last_name';
+		$orderby_field = in_array( $args['orderby'], $allowed_orderby, true ) ? $args['orderby'] : 'last_name';
+		
+		// Map orderby field to table alias
+		$core_fields = array( 'first_name', 'last_name', 'email', 'city', 'state' );
+		$alias = in_array( $orderby_field, $core_fields ) ? 'c' : 'v';
+		$orderby = "{$alias}.{$orderby_field}";
 
 		// Validate order
 		$order = strtoupper( $args['order'] ) === 'DESC' ? 'DESC' : 'ASC';
 
+		$master_table = $this->wpdb->prefix . 'cp_contacts';
+
 		// Get total count
-		$total = $this->wpdb->get_var( "SELECT COUNT(*) FROM {$this->table_name} WHERE 1=1 {$where}" );
+		$total = $this->wpdb->get_var( "SELECT COUNT(*) FROM {$this->table_name} v JOIN {$master_table} c ON v.contact_id = c.id WHERE 1=1 {$where}" );
 
 		// Get contacts
 		$contacts = $this->wpdb->get_results(
 			$this->wpdb->prepare(
-				"SELECT * FROM {$this->table_name}
-				WHERE 1=1 {$where}
-				ORDER BY {$orderby} {$order}
-				LIMIT %d OFFSET %d",
+				"SELECT v.*, c.first_name, c.last_name, c.email, c.phone, c.mobile_phone, c.address_line1, c.address_line2, c.city, c.state, c.zip_code, c.country, c.external_id
+				 FROM {$this->table_name} v
+				 JOIN {$master_table} c ON v.contact_id = c.id
+				 WHERE 1=1 {$where}
+				 ORDER BY {$orderby} {$order}
+				 LIMIT %d OFFSET %d",
 				$args['per_page'],
 				$offset
 			)
@@ -354,99 +385,99 @@ class CampaignPress_CRM_Contacts {
 		if ( ! empty( $args['search'] ) ) {
 			$search = '%' . $this->wpdb->esc_like( $args['search'] ) . '%';
 			$where .= $this->wpdb->prepare(
-				" AND (first_name LIKE %s OR last_name LIKE %s OR email LIKE %s OR phone LIKE %s OR mobile_phone LIKE %s OR address_line1 LIKE %s OR city LIKE %s OR voter_id LIKE %s)",
+				" AND (c.first_name LIKE %s OR c.last_name LIKE %s OR c.email LIKE %s OR c.phone LIKE %s OR c.mobile_phone LIKE %s OR c.address_line1 LIKE %s OR c.city LIKE %s OR v.voter_id LIKE %s)",
 				$search, $search, $search, $search, $search, $search, $search, $search
 			);
 		}
 
 		// Filter by location
 		if ( ! empty( $args['state'] ) ) {
-			$where .= $this->wpdb->prepare( " AND state = %s", $args['state'] );
+			$where .= $this->wpdb->prepare( " AND c.state = %s", $args['state'] );
 		}
 		if ( ! empty( $args['city'] ) ) {
-			$where .= $this->wpdb->prepare( " AND city = %s", $args['city'] );
+			$where .= $this->wpdb->prepare( " AND c.city = %s", $args['city'] );
 		}
 		if ( ! empty( $args['zip_code'] ) ) {
-			$where .= $this->wpdb->prepare( " AND zip_code = %s", $args['zip_code'] );
+			$where .= $this->wpdb->prepare( " AND c.zip_code = %s", $args['zip_code'] );
 		}
 
 		// Filter by districts
 		if ( ! empty( $args['congressional_district'] ) ) {
-			$where .= $this->wpdb->prepare( " AND congressional_district = %s", $args['congressional_district'] );
+			$where .= $this->wpdb->prepare( " AND v.congressional_district = %s", $args['congressional_district'] );
 		}
 		if ( ! empty( $args['state_house_district'] ) ) {
-			$where .= $this->wpdb->prepare( " AND state_house_district = %s", $args['state_house_district'] );
+			$where .= $this->wpdb->prepare( " AND v.state_house_district = %s", $args['state_house_district'] );
 		}
 		if ( ! empty( $args['state_senate_district'] ) ) {
-			$where .= $this->wpdb->prepare( " AND state_senate_district = %s", $args['state_senate_district'] );
+			$where .= $this->wpdb->prepare( " AND v.state_senate_district = %s", $args['state_senate_district'] );
 		}
 
 		// Filter by party
 		if ( ! empty( $args['party_affiliation'] ) ) {
-			$where .= $this->wpdb->prepare( " AND party_affiliation = %s", $args['party_affiliation'] );
+			$where .= $this->wpdb->prepare( " AND v.party_affiliation = %s", $args['party_affiliation'] );
 		}
 
 		// Filter by engagement score
 		if ( null !== $args['min_engagement'] ) {
-			$where .= $this->wpdb->prepare( " AND engagement_score >= %d", $args['min_engagement'] );
+			$where .= $this->wpdb->prepare( " AND v.engagement_score >= %d", $args['min_engagement'] );
 		}
 		if ( null !== $args['max_engagement'] ) {
-			$where .= $this->wpdb->prepare( " AND engagement_score <= %d", $args['max_engagement'] );
+			$where .= $this->wpdb->prepare( " AND v.engagement_score <= %d", $args['max_engagement'] );
 		}
 
 		// Filter by flags
 		if ( null !== $args['is_volunteer'] ) {
-			$where .= $this->wpdb->prepare( " AND is_volunteer = %d", (int) $args['is_volunteer'] );
+			$where .= $this->wpdb->prepare( " AND v.is_volunteer = %d", (int) $args['is_volunteer'] );
 		}
 		if ( null !== $args['is_donor'] ) {
-			$where .= $this->wpdb->prepare( " AND is_donor = %d", (int) $args['is_donor'] );
+			$where .= $this->wpdb->prepare( " AND v.is_donor = %d", (int) $args['is_donor'] );
 		}
 		if ( null !== $args['is_likely_supporter'] ) {
-			$where .= $this->wpdb->prepare( " AND is_likely_supporter = %d", (int) $args['is_likely_supporter'] );
+			$where .= $this->wpdb->prepare( " AND v.is_likely_supporter = %d", (int) $args['is_likely_supporter'] );
 		}
 		if ( null !== $args['do_not_contact'] ) {
-			$where .= $this->wpdb->prepare( " AND do_not_contact = %d", (int) $args['do_not_contact'] );
+			$where .= $this->wpdb->prepare( " AND v.do_not_contact = %d", (int) $args['do_not_contact'] );
 		}
 
 		// Filter by contact info availability
 		if ( null !== $args['has_email'] ) {
-			$where .= $args['has_email'] ? " AND email IS NOT NULL AND email != ''" : " AND (email IS NULL OR email = '')";
+			$where .= $args['has_email'] ? " AND c.email IS NOT NULL AND c.email != ''" : " AND (c.email IS NULL OR c.email = '')";
 		}
 		if ( null !== $args['has_phone'] ) {
-			$where .= $args['has_phone'] ? " AND (phone IS NOT NULL AND phone != '' OR mobile_phone IS NOT NULL AND mobile_phone != '')" : " AND (phone IS NULL OR phone = '') AND (mobile_phone IS NULL OR mobile_phone = '')";
+			$where .= $args['has_phone'] ? " AND (c.phone IS NOT NULL AND c.phone != '' OR c.mobile_phone IS NOT NULL AND c.mobile_phone != '')" : " AND (c.phone IS NULL OR c.phone = '') AND (c.mobile_phone IS NULL OR c.mobile_phone = '')";
 		}
 
 		// Filter by dates
 		if ( ! empty( $args['created_after'] ) ) {
-			$where .= $this->wpdb->prepare( " AND created_at >= %s", $args['created_after'] );
+			$where .= $this->wpdb->prepare( " AND v.created_at >= %s", $args['created_after'] );
 		}
 		if ( ! empty( $args['created_before'] ) ) {
-			$where .= $this->wpdb->prepare( " AND created_at <= %s", $args['created_before'] );
+			$where .= $this->wpdb->prepare( " AND v.created_at <= %s", $args['created_before'] );
 		}
 		if ( ! empty( $args['last_contact_after'] ) ) {
-			$where .= $this->wpdb->prepare( " AND last_contact_date >= %s", $args['last_contact_after'] );
+			$where .= $this->wpdb->prepare( " AND v.last_contact_date >= %s", $args['last_contact_after'] );
 		}
 		if ( ! empty( $args['last_contact_before'] ) ) {
-			$where .= $this->wpdb->prepare( " AND last_contact_date <= %s", $args['last_contact_before'] );
+			$where .= $this->wpdb->prepare( " AND v.last_contact_date <= %s", $args['last_contact_before'] );
 		}
 
 		// Filter by household
 		if ( ! empty( $args['household_id'] ) ) {
-			$where .= $this->wpdb->prepare( " AND household_id = %d", $args['household_id'] );
+			$where .= $this->wpdb->prepare( " AND v.household_id = %d", $args['household_id'] );
 		}
 
 		// Filter by tags
 		if ( ! empty( $args['tags'] ) && is_array( $args['tags'] ) ) {
 			$tag_ids = implode( ',', array_map( 'intval', $args['tags'] ) );
 			$contact_tags_table = $this->db->get_table_name( 'contact_tags' );
-			$where .= " AND id IN (SELECT contact_id FROM {$contact_tags_table} WHERE tag_id IN ({$tag_ids}))";
+			$where .= " AND v.id IN (SELECT contact_id FROM {$contact_tags_table} WHERE tag_id IN ({$tag_ids}))";
 		}
 
 		// Filter by segment
 		if ( ! empty( $args['segment_id'] ) ) {
 			$segment_contacts_table = $this->db->get_table_name( 'segment_contacts' );
 			$where .= $this->wpdb->prepare(
-				" AND id IN (SELECT contact_id FROM {$segment_contacts_table} WHERE segment_id = %d)",
+				" AND v.id IN (SELECT contact_id FROM {$segment_contacts_table} WHERE segment_id = %d)",
 				$args['segment_id']
 			);
 		}
@@ -464,19 +495,22 @@ class CampaignPress_CRM_Contacts {
 	 */
 	public function search_contacts( $query, $limit = 20 ) {
 		$search = '%' . $this->wpdb->esc_like( $query ) . '%';
+		$master_table = $this->wpdb->prefix . 'cp_contacts';
 
 		$contacts = $this->wpdb->get_results(
 			$this->wpdb->prepare(
-				"SELECT * FROM {$this->table_name}
-				WHERE first_name LIKE %s
-				OR last_name LIKE %s
-				OR email LIKE %s
-				OR phone LIKE %s
-				OR address_line1 LIKE %s
-				OR city LIKE %s
-				OR voter_id LIKE %s
-				ORDER BY last_name, first_name
-				LIMIT %d",
+				"SELECT v.*, c.first_name, c.last_name, c.email, c.phone, c.mobile_phone, c.address_line1, c.address_line2, c.city, c.state, c.zip_code, c.country, c.external_id
+				 FROM {$this->table_name} v
+				 JOIN {$master_table} c ON v.contact_id = c.id
+				 WHERE c.first_name LIKE %s
+				 OR c.last_name LIKE %s
+				 OR c.email LIKE %s
+				 OR c.phone LIKE %s
+				 OR c.address_line1 LIKE %s
+				 OR c.city LIKE %s
+				 OR v.voter_id LIKE %s
+				 ORDER BY c.last_name, c.first_name
+				 LIMIT %d",
 				$search, $search, $search, $search, $search, $search, $search, $limit
 			)
 		);

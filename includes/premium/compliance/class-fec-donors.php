@@ -59,18 +59,7 @@ class CampaignPress_FEC_Donors {
 
         $sql = "CREATE TABLE IF NOT EXISTS {$this->table_name} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-            first_name varchar(100) NOT NULL,
-            last_name varchar(100) NOT NULL,
-            middle_name varchar(100) DEFAULT '',
-            suffix varchar(20) DEFAULT '',
-            email varchar(200) DEFAULT '',
-            phone varchar(50) DEFAULT '',
-            street1 varchar(255) NOT NULL,
-            street2 varchar(255) DEFAULT '',
-            city varchar(100) NOT NULL,
-            state varchar(2) NOT NULL,
-            zip varchar(10) NOT NULL,
-            country varchar(2) DEFAULT 'US',
+            contact_id bigint(20) UNSIGNED NOT NULL,
             occupation varchar(200) DEFAULT '',
             employer varchar(200) DEFAULT '',
             employer_street1 varchar(255) DEFAULT '',
@@ -100,9 +89,7 @@ class CampaignPress_FEC_Donors {
             created_date datetime NOT NULL,
             modified_date datetime DEFAULT NULL,
             PRIMARY KEY  (id),
-            KEY email_idx (email),
-            KEY last_name_idx (last_name),
-            KEY zip_idx (zip),
+            UNIQUE KEY contact_id (contact_id),
             KEY donor_type_idx (donor_type),
             KEY is_prohibited_source_idx (is_prohibited_source),
             KEY aggregate_cycle_idx (aggregate_cycle)
@@ -122,39 +109,50 @@ class CampaignPress_FEC_Donors {
     public function create_donor($data) {
         global $wpdb;
 
-        // Validate required fields
-        $validation = $this->validate_donor_data($data);
-        if (is_wp_error($validation)) {
-            return $validation;
-        }
-
         // Check for duplicates
-        $duplicate = $this->find_duplicate($data);
-        if ($duplicate) {
-            return new WP_Error('duplicate_donor', __('Potential duplicate donor found. Please review existing donor records.', 'campaign-office'), array('duplicate_id' => $duplicate));
+        $contact_data = array(
+            'first_name'    => $data['first_name'],
+            'last_name'     => $data['last_name'],
+            'middle_name'   => $data['middle_name'] ?? '',
+            'suffix'        => $data['suffix'] ?? '',
+            'email'         => $data['email'] ?? '',
+            'phone'         => $data['phone'] ?? '',
+            'address_line1' => $data['street1'],
+            'address_line2' => $data['street2'] ?? '',
+            'city'          => $data['city'],
+            'state'         => $data['state'],
+            'zip_code'      => $data['zip'],
+            'country'       => $data['country'] ?? 'US',
+        );
+
+        // Identify or Create Central Contact
+        global $cp_contact_manager;
+        $contact_id = $cp_contact_manager->find_or_create($contact_data);
+
+        if (is_wp_error($contact_id)) {
+            return $contact_id;
         }
 
-        // Prepare donor data
+        // Check if this contact is already a donor
+        $existing_donor_id = $wpdb->get_var($wpdb->prepare(
+            "SELECT id FROM {$this->table_name} WHERE contact_id = %d",
+            $contact_id
+        ));
+
+        if ($existing_donor_id) {
+            return new WP_Error('duplicate_donor', __('This contact is already registered as a donor.', 'campaign-office'), array('donor_id' => $existing_donor_id));
+        }
+
+        // Prepare FEC-specific data
         $insert_data = array(
-            'first_name' => sanitize_text_field($data['first_name']),
-            'last_name' => sanitize_text_field($data['last_name']),
-            'middle_name' => isset($data['middle_name']) ? sanitize_text_field($data['middle_name']) : '',
-            'suffix' => isset($data['suffix']) ? sanitize_text_field($data['suffix']) : '',
-            'email' => isset($data['email']) ? sanitize_email($data['email']) : '',
-            'phone' => isset($data['phone']) ? sanitize_text_field($data['phone']) : '',
-            'street1' => sanitize_text_field($data['street1']),
-            'street2' => isset($data['street2']) ? sanitize_text_field($data['street2']) : '',
-            'city' => sanitize_text_field($data['city']),
-            'state' => sanitize_text_field($data['state']),
-            'zip' => sanitize_text_field($data['zip']),
-            'country' => isset($data['country']) ? sanitize_text_field($data['country']) : 'US',
-            'occupation' => isset($data['occupation']) ? sanitize_text_field($data['occupation']) : '',
-            'employer' => isset($data['employer']) ? sanitize_text_field($data['employer']) : '',
-            'donor_type' => isset($data['donor_type']) ? sanitize_text_field($data['donor_type']) : 'individual',
+            'contact_id'        => $contact_id,
+            'occupation'        => isset($data['occupation']) ? sanitize_text_field($data['occupation']) : '',
+            'employer'          => isset($data['employer']) ? sanitize_text_field($data['employer']) : '',
+            'donor_type'        => isset($data['donor_type']) ? sanitize_text_field($data['donor_type']) : 'individual',
             'organization_name' => isset($data['organization_name']) ? sanitize_text_field($data['organization_name']) : '',
-            'committee_id' => isset($data['committee_id']) ? sanitize_text_field($data['committee_id']) : '',
-            'created_by' => get_current_user_id(),
-            'created_date' => current_time('mysql'),
+            'committee_id'      => isset($data['committee_id']) ? sanitize_text_field($data['committee_id']) : '',
+            'created_by'        => get_current_user_id(),
+            'created_date'      => current_time('mysql'),
         );
 
         // Check for prohibited sources
@@ -209,78 +207,90 @@ class CampaignPress_FEC_Donors {
         global $wpdb;
 
         // Validate donor exists
-        $donor = $this->get_donor($donor_id);
+        $donor = $wpdb->get_row($wpdb->prepare(
+            "SELECT * FROM {$this->table_name} WHERE id = %d",
+            $donor_id
+        ));
+
         if (!$donor) {
             return new WP_Error('donor_not_found', __('Donor not found.', 'campaign-office'));
         }
 
-        // Prepare update data
-        $update_data = array();
-        $update_format = array();
+        // Update Central Contact Info
+        global $cp_contact_manager;
+        $contact_data = array();
+        $core_map = array(
+            'first_name' => 'first_name',
+            'last_name'  => 'last_name',
+            'middle_name'=> 'middle_name',
+            'suffix'     => 'suffix',
+            'email'      => 'email',
+            'phone'      => 'phone',
+            'street1'    => 'address_line1',
+            'street2'    => 'address_line2',
+            'city'       => 'city',
+            'state'      => 'state',
+            'zip'        => 'zip_code',
+            'country'    => 'country',
+        );
 
+        foreach ($core_map as $fec_field => $master_field) {
+            if (isset($data[$fec_field])) {
+                $contact_data[$master_field] = $data[$fec_field];
+            }
+        }
+
+        if (!empty($contact_data)) {
+            $cp_contact_manager->update_contact($donor->contact_id, $contact_data);
+        }
+
+        // Prepare update data for FEC specific fields
+        $update_data = array();
         $fields = array(
-            'first_name', 'last_name', 'middle_name', 'suffix', 'email', 'phone',
-            'street1', 'street2', 'city', 'state', 'zip', 'country',
-            'occupation', 'employer', 'organization_name', 'committee_id',
-            'internal_notes'
+            'occupation', 'employer', 'organization_name', 'committee_id', 'internal_notes'
         );
 
         foreach ($fields as $field) {
             if (isset($data[$field])) {
-                if ($field === 'email') {
-                    $update_data[$field] = sanitize_email($data[$field]);
-                } else {
-                    $update_data[$field] = sanitize_text_field($data[$field]);
-                }
-                $update_format[] = '%s';
+                $update_data[$field] = sanitize_text_field($data[$field]);
             }
         }
 
+        if (empty($update_data) && empty($contact_data)) {
+            return true;
+        }
+
         $update_data['modified_date'] = current_time('mysql');
-        $update_format[] = '%s';
 
-        // Re-check prohibited source if relevant fields changed
-        if (isset($data['country']) || isset($data['donor_type'])) {
-            $check_data = array_merge((array)$donor, $update_data);
-            $prohibited_check = $this->check_prohibited_source($check_data);
+        // Update FEC-specific data
+        if (!empty($update_data)) {
+            $result = $wpdb->update(
+                $this->table_name,
+                $update_data,
+                array('id' => $donor_id)
+            );
 
-            $update_data['is_prohibited_source'] = $prohibited_check['is_prohibited'] ? 1 : 0;
-            $update_data['prohibited_source_reason'] = $prohibited_check['reason'];
-            $update_format[] = '%d';
-            $update_format[] = '%s';
+            if (false === $result) {
+                return new WP_Error('db_error', __('Failed to update donor record.', 'campaign-office'));
+            }
         }
 
-        // Update donor
-        $result = $wpdb->update(
-            $this->table_name,
-            $update_data,
-            array('id' => $donor_id),
-            $update_format,
-            array('%d')
-        );
-
-        if ($result === false) {
-            return new WP_Error('db_error', __('Failed to update donor record.', 'campaign-office'));
-        }
-
-        // Action hook after donor update
-        do_action('cp_fec_donor_updated', $donor_id, $update_data);
+        // Log action
+        do_action('cp_fec_donor_updated', $donor_id, $data);
 
         return true;
     }
 
-    /**
-     * Get donor by ID
-     *
-     * @since 1.0.0
-     * @param int $donor_id Donor ID
-     * @return object|null Donor object or null
-     */
     public function get_donor($donor_id) {
         global $wpdb;
+        $contacts_table = $wpdb->prefix . 'cp_contacts';
 
         $donor = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM {$this->table_name} WHERE id = %d",
+            "SELECT d.*, c.first_name, c.last_name, c.middle_name, c.suffix, c.email, c.phone, 
+                    c.address_line1 as street1, c.address_line2 as street2, c.city, c.state, c.zip_code as zip, c.country
+             FROM {$this->table_name} d
+             JOIN {$contacts_table} c ON d.contact_id = c.id
+             WHERE d.id = %d",
             $donor_id
         ));
 
@@ -309,12 +319,13 @@ class CampaignPress_FEC_Donors {
 
         $args = wp_parse_args($args, $defaults);
 
+        $contacts_table = $wpdb->prefix . 'cp_contacts';
         $where = array('1=1');
         $where_values = array();
 
         // Search by name, email, or address
         if (!empty($args['search'])) {
-            $where[] = "(first_name LIKE %s OR last_name LIKE %s OR email LIKE %s OR organization_name LIKE %s)";
+            $where[] = "(c.first_name LIKE %s OR c.last_name LIKE %s OR c.email LIKE %s OR d.organization_name LIKE %s)";
             $search_term = '%' . $wpdb->esc_like($args['search']) . '%';
             $where_values[] = $search_term;
             $where_values[] = $search_term;
@@ -324,20 +335,20 @@ class CampaignPress_FEC_Donors {
 
         // Filter by donor type
         if (!empty($args['donor_type'])) {
-            $where[] = "donor_type = %s";
+            $where[] = "d.donor_type = %s";
             $where_values[] = $args['donor_type'];
         }
 
         // Filter by prohibited source
         if ($args['is_prohibited_source'] !== '') {
-            $where[] = "is_prohibited_source = %d";
+            $where[] = "d.is_prohibited_source = %d";
             $where_values[] = $args['is_prohibited_source'] ? 1 : 0;
         }
 
         $where_clause = implode(' AND ', $where);
 
         // Get total count
-        $count_query = "SELECT COUNT(*) FROM {$this->table_name} WHERE {$where_clause}";
+        $count_query = "SELECT COUNT(*) FROM {$this->table_name} d JOIN {$contacts_table} c ON d.contact_id = c.id WHERE {$where_clause}";
         if (!empty($where_values)) {
             $count_query = $wpdb->prepare($count_query, $where_values);
         }
@@ -346,10 +357,18 @@ class CampaignPress_FEC_Donors {
         // Calculate pagination
         $offset = ($args['page'] - 1) * $args['per_page'];
 
+        // Map orderby
+        $core_fields = array('first_name', 'last_name', 'email', 'city', 'state');
+        $alias = in_array($args['orderby'], $core_fields) ? 'c' : 'd';
+        $orderby = "{$alias}.{$args['orderby']}";
+
         // Get donors
-        $query = "SELECT * FROM {$this->table_name}
+        $query = "SELECT d.*, c.first_name, c.last_name, c.middle_name, c.suffix, c.email, c.phone, 
+                         c.address_line1 as street1, c.address_line2 as street2, c.city, c.state, c.zip_code as zip, c.country
+                  FROM {$this->table_name} d
+                  JOIN {$contacts_table} c ON d.contact_id = c.id
                   WHERE {$where_clause}
-                  ORDER BY {$args['orderby']} {$args['order']}
+                  ORDER BY {$orderby} {$args['order']}
                   LIMIT %d OFFSET %d";
 
         $where_values[] = $args['per_page'];

@@ -16,6 +16,19 @@ if (!defined('ABSPATH')) {
 class CampaignPress_Developer_Database_Manager {
 
     /**
+     * Contact Migration instance
+     */
+    private $migration;
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        require_once plugin_dir_path(__FILE__) . '../../core/class-contact-migration.php';
+        $this->migration = new CampaignPress_Contact_Migration();
+    }
+
+    /**
      * Dangerous query patterns
      */
     private $dangerous_patterns = array(
@@ -454,5 +467,23 @@ class CampaignPress_Developer_Database_Manager {
         );
 
         return $stats;
+    }
+
+    /**
+     * Run the contact consolidation migration
+     *
+     * @return array Results
+     */
+    public function run_contact_migration() {
+        if (!current_user_can('manage_options')) {
+            return array('success' => false, 'message' => 'Unauthorized');
+        }
+
+        $results = $this->migration->run_migration();
+
+        return array(
+            'success' => true,
+            'results' => $results
+        );
     }
 }

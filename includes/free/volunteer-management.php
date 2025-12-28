@@ -83,14 +83,7 @@ class CP_Volunteer_Manager {
 
         $sql = "CREATE TABLE IF NOT EXISTS {$this->table_name} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-            first_name varchar(100) NOT NULL,
-            last_name varchar(100) NOT NULL,
-            email varchar(100) NOT NULL,
-            phone varchar(20) DEFAULT NULL,
-            address varchar(255) DEFAULT NULL,
-            city varchar(100) DEFAULT NULL,
-            state varchar(2) DEFAULT NULL,
-            zip varchar(10) DEFAULT NULL,
+            contact_id bigint(20) UNSIGNED DEFAULT NULL,
             skills text DEFAULT NULL,
             interests text DEFAULT NULL,
             availability text DEFAULT NULL,
@@ -102,7 +95,7 @@ class CP_Volunteer_Manager {
             created_at datetime DEFAULT CURRENT_TIMESTAMP,
             updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
-            KEY email (email),
+            KEY contact_id (contact_id),
             KEY status (status),
             KEY created_at (created_at)
         ) $charset_collate;";
@@ -316,28 +309,38 @@ class CP_Volunteer_Manager {
             wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaign-office')));
         }
 
-        // Sanitize input data
+        // Identify or Create Contact
+        global $cp_contact_manager;
+        $contact_id = $cp_contact_manager->find_or_create(array(
+            'first_name'    => sanitize_text_field($_POST['first_name']),
+            'last_name'     => sanitize_text_field($_POST['last_name']),
+            'email'         => sanitize_email($_POST['email']),
+            'phone'         => isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '',
+            'address_line1' => isset($_POST['address']) ? sanitize_text_field($_POST['address']) : '',
+            'city'          => isset($_POST['city']) ? sanitize_text_field($_POST['city']) : '',
+            'state'         => isset($_POST['state']) ? strtoupper(sanitize_text_field($_POST['state'])) : '',
+            'zip_code'      => isset($_POST['zip']) ? sanitize_text_field($_POST['zip']) : '',
+        ));
+
+        if (is_wp_error($contact_id)) {
+            wp_send_json_error(array('message' => $contact_id->get_error_message()));
+        }
+
+        // Sanitize volunteer-specific data
         $volunteer_data = array(
-            'first_name' => sanitize_text_field($_POST['first_name']),
-            'last_name' => sanitize_text_field($_POST['last_name']),
-            'email' => sanitize_email($_POST['email']),
-            'phone' => isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '',
-            'address' => isset($_POST['address']) ? sanitize_text_field($_POST['address']) : '',
-            'city' => isset($_POST['city']) ? sanitize_text_field($_POST['city']) : '',
-            'state' => isset($_POST['state']) ? strtoupper(sanitize_text_field($_POST['state'])) : '',
-            'zip' => isset($_POST['zip']) ? sanitize_text_field($_POST['zip']) : '',
-            'skills' => isset($_POST['skills']) ? sanitize_textarea_field($_POST['skills']) : '',
-            'interests' => isset($_POST['interests']) ? wp_json_encode(array_map('sanitize_text_field', $_POST['interests'])) : '',
-            'availability' => isset($_POST['availability']) ? wp_json_encode(array_map('sanitize_text_field', $_POST['availability'])) : '',
+            'contact_id'     => $contact_id,
+            'skills'         => isset($_POST['skills']) ? sanitize_textarea_field($_POST['skills']) : '',
+            'interests'      => isset($_POST['interests']) ? wp_json_encode(array_map('sanitize_text_field', $_POST['interests'])) : '',
+            'availability'   => isset($_POST['availability']) ? wp_json_encode(array_map('sanitize_text_field', $_POST['availability'])) : '',
             'opportunity_id' => isset($_POST['opportunity_id']) ? absint($_POST['opportunity_id']) : null,
-            'source' => 'website_form',
-            'status' => 'new',
+            'source'         => 'website_form',
+            'status'         => 'new',
         );
 
         // Insert into database
         global $wpdb;
         $result = $wpdb->insert($this->table_name, $volunteer_data, array(
-            '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s'
+            '%d', '%s', '%s', '%s', '%d', '%s', '%s'
         ));
 
         if ($result) {
@@ -374,13 +377,14 @@ class CP_Volunteer_Manager {
         $search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
 
         // Build query
+        $contacts_table = $wpdb->prefix . 'cp_contacts';
         $where = array('1=1');
         if ($status_filter) {
-            $where[] = $wpdb->prepare('status = %s', $status_filter);
+            $where[] = $wpdb->prepare('v.status = %s', $status_filter);
         }
         if ($search) {
             $where[] = $wpdb->prepare(
-                '(first_name LIKE %s OR last_name LIKE %s OR email LIKE %s)',
+                '(c.first_name LIKE %s OR c.last_name LIKE %s OR c.email LIKE %s)',
                 '%' . $wpdb->esc_like($search) . '%',
                 '%' . $wpdb->esc_like($search) . '%',
                 '%' . $wpdb->esc_like($search) . '%'
@@ -395,13 +399,17 @@ class CP_Volunteer_Manager {
         $offset = ($page - 1) * $per_page;
 
         // Get total count
-        $total_volunteers = $wpdb->get_var("SELECT COUNT(*) FROM {$this->table_name} WHERE {$where_clause}");
+        $total_volunteers = $wpdb->get_var("SELECT COUNT(*) FROM {$this->table_name} v JOIN {$contacts_table} c ON v.contact_id = c.id WHERE {$where_clause}");
         $total_pages = ceil($total_volunteers / $per_page);
 
         // Get volunteers
         $volunteers = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM {$this->table_name} WHERE {$where_clause} ORDER BY created_at DESC LIMIT %d OFFSET %d",
+                "SELECT v.*, c.first_name, c.last_name, c.email, c.phone, c.city, c.state 
+                 FROM {$this->table_name} v 
+                 JOIN {$contacts_table} c ON v.contact_id = c.id 
+                 WHERE {$where_clause} 
+                 ORDER BY v.created_at DESC LIMIT %d OFFSET %d",
                 $per_page,
                 $offset
             )
@@ -597,7 +605,13 @@ class CP_Volunteer_Manager {
         }
 
         global $wpdb;
-        $volunteers = $wpdb->get_results("SELECT * FROM {$this->table_name} ORDER BY created_at DESC", ARRAY_A);
+        $contacts_table = $wpdb->prefix . 'cp_contacts';
+        $volunteers = $wpdb->get_results("
+            SELECT v.*, c.first_name, c.last_name, c.email, c.phone, c.address_line1 as address, c.city, c.state, c.zip_code as zip
+            FROM {$this->table_name} v
+            JOIN {$contacts_table} c ON v.contact_id = c.id
+            ORDER BY v.created_at DESC
+        ", ARRAY_A);
 
         // Set headers for CSV download
         header('Content-Type: text/csv; charset=utf-8');

@@ -16,10 +16,12 @@ if (!defined('ABSPATH')) {
 // Load Core Classes
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-performance.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-template-loader.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-contact-manager.php';
 
 // Initialize Core Systems
 CampaignPress\Core\Performance::init();
 CampaignPress\Core\Template_Loader::init();
+$GLOBALS['cp_contact_manager'] = new CampaignPress_Contact_Manager();
 
 
 // Load Free Features (Legacy functional style)

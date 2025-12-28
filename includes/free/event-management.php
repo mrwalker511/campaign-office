@@ -39,7 +39,7 @@ class CP_Event_Manager {
 
         // Meta boxes for event settings
         add_action('add_meta_boxes', array($this, 'add_event_meta_boxes'));
-        add_action('save_post_cp_event', array($this, 'save_event_meta'));
+        add_action('save_post_cp_event', array($this, 'save_event_meta'), 10, 3);
 
         // AJAX handlers for RSVP
         add_action('wp_ajax_cp_submit_event_rsvp', array($this, 'handle_event_rsvp'));
@@ -69,10 +69,7 @@ class CP_Event_Manager {
         $sql = "CREATE TABLE IF NOT EXISTS {$this->rsvp_table_name} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             event_id bigint(20) UNSIGNED NOT NULL,
-            first_name varchar(100) NOT NULL,
-            last_name varchar(100) NOT NULL,
-            email varchar(100) NOT NULL,
-            phone varchar(20) DEFAULT NULL,
+            contact_id bigint(20) UNSIGNED DEFAULT NULL,
             guests int(11) DEFAULT 0,
             rsvp_status varchar(20) DEFAULT 'attending',
             dietary_restrictions text DEFAULT NULL,
@@ -80,7 +77,7 @@ class CP_Event_Manager {
             created_at datetime DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
             KEY event_id (event_id),
-            KEY email (email),
+            KEY contact_id (contact_id),
             KEY rsvp_status (rsvp_status)
         ) $charset_collate;";
 
@@ -213,7 +210,7 @@ class CP_Event_Manager {
     /**
      * Save event meta data
      */
-    public function save_event_meta($post_id, $post, $update) {
+    public function save_event_meta($post_id, $post = null, $update = false) {
         // Check nonces
         if (isset($_POST['cp_event_rsvp_settings_nonce']) &&
             wp_verify_nonce($_POST['cp_event_rsvp_settings_nonce'], 'cp_event_rsvp_settings')) {
@@ -492,27 +489,41 @@ class CP_Event_Manager {
             wp_send_json_error(array('message' => __('Sorry, this event is at full capacity.', 'campaign-office')));
         }
 
-        // Sanitize input data
-        $rsvp_data = array(
-            'event_id' => $event_id,
-            'first_name' => sanitize_text_field($_POST['first_name'] ?? ''),
-            'last_name' => sanitize_text_field($_POST['last_name'] ?? ''),
-            'email' => sanitize_email($_POST['email'] ?? ''),
-            'phone' => sanitize_text_field($_POST['phone'] ?? ''),
-            'guests' => $guests,
-            'dietary_restrictions' => sanitize_textarea_field($_POST['dietary_restrictions'] ?? ''),
-            'rsvp_status' => 'attending',
-        );
+        $first_name = sanitize_text_field($_POST['first_name'] ?? '');
+        $last_name = sanitize_text_field($_POST['last_name'] ?? '');
+        $email = sanitize_email($_POST['email'] ?? '');
 
         // Validate required fields
-        if (empty($rsvp_data['first_name']) || empty($rsvp_data['last_name']) || empty($rsvp_data['email'])) {
+        if (empty($first_name) || empty($last_name) || empty($email)) {
             wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaign-office')));
         }
+
+        // Identify or Create Contact
+        global $cp_contact_manager;
+        $contact_id = $cp_contact_manager->find_or_create(array(
+            'first_name' => $first_name,
+            'last_name'  => $last_name,
+            'email'      => $email,
+            'phone'      => sanitize_text_field($_POST['phone'] ?? ''),
+        ));
+
+        if (is_wp_error($contact_id)) {
+            wp_send_json_error(array('message' => $contact_id->get_error_message()));
+        }
+
+        // Sanitize input data
+        $rsvp_data = array(
+            'event_id'             => $event_id,
+            'contact_id'           => $contact_id,
+            'guests'               => $guests,
+            'dietary_restrictions' => sanitize_textarea_field($_POST['dietary_restrictions'] ?? ''),
+            'rsvp_status'          => 'attending',
+        );
 
         // Insert into database
         global $wpdb;
         $result = $wpdb->insert($this->rsvp_table_name, $rsvp_data, array(
-            '%d', '%s', '%s', '%s', '%s', '%d', '%s', '%s'
+            '%d', '%d', '%d', '%s', '%s'
         ));
 
         if ($result) {
@@ -561,12 +572,19 @@ class CP_Event_Manager {
         $event_filter = isset($_GET['event_id']) ? absint($_GET['event_id']) : 0;
 
         // Build query
+        $contacts_table = $wpdb->prefix . 'cp_contacts';
         $where = '1=1';
         if ($event_filter) {
-            $where = $wpdb->prepare('event_id = %d', $event_filter);
+            $where = $wpdb->prepare('r.event_id = %d', $event_filter);
         }
 
-        $rsvps = $wpdb->get_results("SELECT * FROM {$this->rsvp_table_name} WHERE {$where} ORDER BY created_at DESC");
+        $rsvps = $wpdb->get_results("
+            SELECT r.*, c.first_name, c.last_name, c.email, c.phone 
+            FROM {$this->rsvp_table_name} r 
+            JOIN {$contacts_table} c ON r.contact_id = c.id 
+            WHERE {$where} 
+            ORDER BY r.created_at DESC
+        ");
 
         // Get all events for filter dropdown
         $events = get_posts(array(
@@ -647,11 +665,18 @@ class CP_Event_Manager {
         }
 
         global $wpdb;
+        $contacts_table = $wpdb->prefix . 'cp_contacts';
 
         $event_id = isset($_GET['event_id']) ? absint($_GET['event_id']) : 0;
-        $where = $event_id ? $wpdb->prepare('WHERE event_id = %d', $event_id) : '';
+        $where = $event_id ? $wpdb->prepare('WHERE r.event_id = %d', $event_id) : 'WHERE 1=1';
 
-        $rsvps = $wpdb->get_results("SELECT * FROM {$this->rsvp_table_name} {$where} ORDER BY created_at DESC", ARRAY_A);
+        $rsvps = $wpdb->get_results("
+            SELECT r.*, c.first_name, c.last_name, c.email, c.phone 
+            FROM {$this->rsvp_table_name} r 
+            JOIN {$contacts_table} c ON r.contact_id = c.id 
+            {$where} 
+            ORDER BY r.created_at DESC
+        ", ARRAY_A);
 
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename=event-rsvps-' . date('Y-m-d') . '.csv');

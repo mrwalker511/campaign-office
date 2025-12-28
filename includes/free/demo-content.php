@@ -575,7 +575,11 @@ class CampaignPress_Demo_Content {
             }
             delete_transient($state_key);
             delete_option('campaignpress_demo_import_in_progress');
-            wp_send_json_error(array('message' => __('Demo import failed. Please check server logs and try again.', 'campaign-office')));
+            
+            $error_message = __('Demo import failed. ', 'campaign-office');
+            $error_message .= $e->getMessage();
+            
+            wp_send_json_error(array('message' => $error_message));
         }
 
         if (!$done) {

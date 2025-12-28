@@ -624,6 +624,14 @@ class CampaignPress_Developer_Console {
         // Export data
         add_action('wp_ajax_cp_dev_export_data', array($this, 'ajax_export_data'));
 
+        // Database management
+        add_action('wp_ajax_cp_dev_get_tables', array($this, 'ajax_get_tables'));
+        add_action('wp_ajax_cp_dev_get_table_structure', array($this, 'ajax_get_table_structure'));
+        add_action('wp_ajax_cp_dev_get_table_preview', array($this, 'ajax_get_table_preview'));
+        add_action('wp_ajax_cp_dev_optimize_table', array($this, 'ajax_optimize_table'));
+        add_action('wp_ajax_cp_dev_get_cp_stats', array($this, 'ajax_get_cp_stats'));
+        add_action('wp_ajax_cp_dev_run_migration', array($this, 'ajax_run_contact_migration'));
+
         // User management
         add_action('wp_ajax_cp_dev_manage_users', array($this, 'ajax_manage_users'));
     }
@@ -690,6 +698,84 @@ class CampaignPress_Developer_Console {
         $result = $db_manager->execute_query($_POST);
 
         wp_send_json($result);
+    }
+
+    /**
+     * AJAX: Get all tables
+     */
+    public function ajax_get_tables() {
+        check_ajax_referer('cp_dev_console_nonce', 'nonce');
+        $access = $this->verify_access();
+        if (!$access['allowed']) wp_send_json_error(array('message' => $access['message']));
+
+        require_once __DIR__ . '/class-database-manager.php';
+        $db_manager = new CampaignPress_Developer_Database_Manager();
+        wp_send_json_success($db_manager->get_all_tables());
+    }
+
+    /**
+     * AJAX: Get table structure
+     */
+    public function ajax_get_table_structure() {
+        check_ajax_referer('cp_dev_console_nonce', 'nonce');
+        $access = $this->verify_access();
+        if (!$access['allowed']) wp_send_json_error(array('message' => $access['message']));
+
+        require_once __DIR__ . '/class-database-manager.php';
+        $db_manager = new CampaignPress_Developer_Database_Manager();
+        wp_send_json($db_manager->get_table_structure($_POST['table'] ?? ''));
+    }
+
+    /**
+     * AJAX: Get table preview
+     */
+    public function ajax_get_table_preview() {
+        check_ajax_referer('cp_dev_console_nonce', 'nonce');
+        $access = $this->verify_access();
+        if (!$access['allowed']) wp_send_json_error(array('message' => $access['message']));
+
+        require_once __DIR__ . '/class-database-manager.php';
+        $db_manager = new CampaignPress_Developer_Database_Manager();
+        wp_send_json($db_manager->get_table_preview($_POST['table'] ?? ''));
+    }
+
+    /**
+     * AJAX: Optimize table
+     */
+    public function ajax_optimize_table() {
+        check_ajax_referer('cp_dev_console_nonce', 'nonce');
+        $access = $this->verify_access();
+        if (!$access['allowed']) wp_send_json_error(array('message' => $access['message']));
+
+        require_once __DIR__ . '/class-database-manager.php';
+        $db_manager = new CampaignPress_Developer_Database_Manager();
+        wp_send_json($db_manager->optimize_table($_POST['table'] ?? ''));
+    }
+
+    /**
+     * AJAX: Get CampaignPress stats
+     */
+    public function ajax_get_cp_stats() {
+        check_ajax_referer('cp_dev_console_nonce', 'nonce');
+        $access = $this->verify_access();
+        if (!$access['allowed']) wp_send_json_error(array('message' => $access['message']));
+
+        require_once __DIR__ . '/class-database-manager.php';
+        $db_manager = new CampaignPress_Developer_Database_Manager();
+        wp_send_json_success($db_manager->get_campaignpress_stats());
+    }
+
+    /**
+     * AJAX: Run migration
+     */
+    public function ajax_run_contact_migration() {
+        check_ajax_referer('cp_dev_console_nonce', 'nonce');
+        $access = $this->verify_access();
+        if (!$access['allowed']) wp_send_json_error(array('message' => $access['message']));
+
+        require_once __DIR__ . '/class-database-manager.php';
+        $db_manager = new CampaignPress_Developer_Database_Manager();
+        wp_send_json($db_manager->run_contact_migration());
     }
 
     /**

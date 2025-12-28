@@ -131,7 +131,12 @@ $current_user = wp_get_current_user();
             </div>
 
             <div class="cp-dev-card cp-dev-full-width">
-                <h2><span class="dashicons dashicons-list-view"></span> Database Tables</h2>
+                <div class="cp-dev-card-header">
+                    <h2><span class="dashicons dashicons-list-view"></span> Database Tables</h2>
+                    <button class="button button-secondary" id="run-migration-btn">
+                        <span class="dashicons dashicons-groups"></span> Run Consolidation Migration
+                    </button>
+                </div>
                 <div id="database-tables-content">
                     <div class="cp-loading">Loading database tables...</div>
                 </div>
@@ -397,6 +402,18 @@ $current_user = wp_get_current_user();
     <input type="hidden" id="export-filename" name="export_filename">
     <input type="hidden" id="export-mimetype" name="export_mimetype">
 </form>
+
+<style>
+    .cp-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+    .cp-stat-card { background: #f9f9f9; border: 1px solid #ccd0d4; padding: 15px; border-radius: 4px; }
+    .cp-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+    .cp-dev-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .cp-dev-card-header h2 { margin-bottom: 0; }
+    .cp-status-enabled { color: #46b450; font-weight: bold; }
+    .cp-status-disabled { color: #dc3232; font-weight: bold; }
+    .cp-dev-table-actions .button { margin-right: 5px; }
+    .cp-result-json { background: #23282d; color: #fff; padding: 15px; border-radius: 4px; overflow-x: auto; }
+</style>
 
 <script type="text/javascript">
     var cpDevConsole = {

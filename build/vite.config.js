@@ -18,11 +18,30 @@ export default defineConfig({
         chunkFileNames: 'js/[name]-[hash].js',
         assetFileNames: 'css/[name].[ext]',
       },
+      // Externalize WordPress-provided libraries
+      external: [
+        'react',
+        'react-dom',
+        '@wordpress/element',
+        '@wordpress/components',
+        '@wordpress/blocks',
+        '@wordpress/block-editor',
+        '@wordpress/i18n',
+        '@wordpress/data',
+        '@wordpress/api-fetch',
+      ],
     },
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, '..', 'assets/react'),
+      // Map React imports to WordPress globals
+      'react': 'wp.element',
+      'react-dom': 'wp.element',
     },
+  },
+  define: {
+    // Define WordPress globals for build
+    'process.env.NODE_ENV': JSON.stringify('production'),
   },
 });

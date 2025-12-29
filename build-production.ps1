@@ -75,17 +75,20 @@ $ExcludePatterns = @(
 
     # Node/NPM
     "node_modules",
+    "package.json",
     "package-lock.json",
     ".npmrc",
 
-    # Build tools
+    # Composer
+    "composer.json",
+    "composer.lock",
+
+    # Build tools and scripts
     "build-production.ps1",
     "build-production.sh",
-    "webpack.config.js",
-    "vite.config.js",
-    "tsconfig.json",
-    "postcss.config.js",
-    "tailwind.config.js",
+    "build-testing.ps1",
+    "build",
+    "scripts",
 
     # Testing
     "tests",
@@ -95,9 +98,10 @@ $ExcludePatterns = @(
     "playwright-report",
     "test-results",
 
-    # Documentation (optional - remove if you want to include)
+    # Documentation
     "docs",
-    "CONTRIBUTING.md",
+    ".distignore",
+    ".github",
 
     # IDE files
     ".vscode",
@@ -126,9 +130,9 @@ $ExcludePatterns = @(
 
     # Development files
     ".editorconfig",
-    ".eslintrc",
-    ".stylelintrc",
-    ".prettierrc",
+    ".eslintrc*",
+    ".stylelintrc*",
+    ".prettierrc*",
 
     # Claude/AI files
     ".claude",
@@ -136,11 +140,16 @@ $ExcludePatterns = @(
     # ZIP files
     "*.zip",
 
-    # Build artifacts (source files if you're compiling)
-    # Uncomment if you compile your assets
-    # "assets/src",
-    # "assets/react",
-    # "assets/scss",
+    # Source files (keep only compiled assets)
+    "assets/react",
+    "assets/js",
+
+    # Block source JS files
+    "blocks/*/index.js",
+    "blocks/*/view.js",
+
+    # CSS source (keep only critical)
+    "assets/css/*",
 
     # Composer dev dependencies
     "vendor/bin",
@@ -157,6 +166,11 @@ function Should-Exclude {
     param([string]$Path)
 
     $RelativePath = $Path.Replace("$ThemeDir\", "").Replace("$ThemeDir/", "")
+
+    # Special case: include critical CSS files even though assets/css/* is excluded
+    if ($RelativePath -like "assets/css/critical*") {
+        return $false
+    }
 
     foreach ($Pattern in $ExcludePatterns) {
         # Handle wildcards

@@ -85,23 +85,40 @@ $ExcludeDirs = @(
 $ExcludeFiles = @(
     ".gitignore",
     ".gitattributes",
+
+    # Node/NPM
+    "node_modules",
+    "package.json",
     "package-lock.json",
     ".npmrc",
+
+    # Composer
+    "composer.json",
+    "composer.lock",
+
+    # Build tools and scripts
     "build-production.ps1",
     "build-production.sh",
-    "webpack.config.js",
-    "vite.config.js",
-    "tsconfig.json",
-    "postcss.config.js",
-    "tailwind.config.js",
+    "build-testing.ps1",
+    "build",
+    "scripts",
+
+    # Testing
+    "tests",
     "phpunit.xml",
     ".phpunit.result.cache",
     "playwright.config.js",
-    "CONTRIBUTING.md",
-    ".editorconfig",
-    ".eslintrc",
-    ".stylelintrc",
-    ".prettierrc",
+    "playwright-report",
+    "test-results",
+
+    # Documentation
+    "docs",
+    ".distignore",
+    ".github",
+
+    # IDE files
+    ".vscode",
+    ".idea",
     "*.code-workspace",
     ".env",
     ".env.*",
@@ -114,34 +131,57 @@ $ExcludeFiles = @(
     "*.tmp",
     "*.temp",
     "*.cache",
-    "*.zip"
+    ".sass-cache",
+
+    # Development files
+    ".editorconfig",
+    ".eslintrc*",
+    ".stylelintrc*",
+    ".prettierrc*",
+
+    # Claude/AI files
+    ".claude",
+
+    # ZIP files
+    "*.zip",
+
+    # Source files (keep only compiled assets)
+    "assets/react",
+    "assets/js",
+
+    # Block source JS files
+    "blocks/*/index.js",
+    "blocks/*/view.js",
+
+    # CSS source (keep only critical)
+    "assets/css/*",
+
+    # Composer dev dependencies
+    "vendor/bin",
+    "vendor/*/*/tests",
+    "vendor/*/*/test",
+    "vendor/*/*/Tests",
+    "vendor/*/*/Test"
 )
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-# Build robocopy command
-$XD = ($ExcludeDirs | ForEach-Object { Join-Path $ThemeDir $_ }) -join '" "'
-$XF = $ExcludeFiles -join '" "'
+# Function to check if path should be excluded
+function Should-Exclude {
+    param([string]$Path)
 
-# Use robocopy for fast copying
-$RoboCopyArgs = "`"$ThemeDir`" `"$BuildDir`" /E /NJH /NJS /NP /NFL /NDL /R:1 /W:1 /XD `"$XD`" /XF `"$XF`""
+    $RelativePath = $Path.Replace("$ThemeDir\", "").Replace("$ThemeDir/", "")
 
-$null = Invoke-Expression "robocopy $RoboCopyArgs"
+    # Special case: include critical CSS files even though assets/css/* is excluded
+    if ($RelativePath -like "assets/css/critical*") {
+        return $false
+    }
 
-# Robocopy exit codes: 0-7 are success (1=files copied, 2=extra files found, etc.)
-$ExitCode = $LASTEXITCODE
-if ($ExitCode -ge 8) {
-    Write-Host "    Error: Robocopy failed with exit code $ExitCode" -ForegroundColor $ErrorColor
-    Write-Host "    Attempting fallback copy method..." -ForegroundColor $WarningColor
-
-    # Fallback: Use simple copy with filter
-    $Filter = {
-        $path = $_.FullName
-        $skip = $false
-        foreach ($dir in $ExcludeDirs) {
-            if ($path -like "*\$dir\*" -or $path -like "*\$dir") {
-                $skip = $true
-                break
+    foreach ($Pattern in $ExcludePatterns) {
+        # Handle wildcards
+        if ($Pattern -like "*`**") {
+            if ($RelativePath -like $Pattern) {
+                return $true
             }
         }
         -not $skip

@@ -8,16 +8,16 @@
  * @since 2.0.0
  */
 
-(function($) {
+(function ($) {
     'use strict';
 
     var DevConsole = {
-        init: function() {
+        init: function () {
             this.bindEvents();
             this.loadDashboard();
         },
 
-        bindEvents: function() {
+        bindEvents: function () {
             // Tab switching
             $('.cp-dev-tabs .nav-tab').on('click', this.switchTab);
 
@@ -31,6 +31,7 @@
             $(document).on('click', '.view-table-structure', this.viewTableStructure);
             $(document).on('click', '.preview-table', this.previewTable);
             $(document).on('click', '.optimize-table', this.optimizeTable);
+            $('#run-migration-btn').on('click', this.runContactMigration);
 
             // API Tester
             $('#test-api-btn').on('click', this.testAPI);
@@ -51,7 +52,7 @@
             $('#security-settings-form').on('submit', this.saveSecuritySettings);
         },
 
-        switchTab: function(e) {
+        switchTab: function (e) {
             e.preventDefault();
             var tab = $(this).data('tab');
 
@@ -64,7 +65,7 @@
             $('#tab-' + tab).addClass('cp-dev-tab-active');
 
             // Load tab-specific content
-            switch(tab) {
+            switch (tab) {
                 case 'system-health':
                     DevConsole.loadSystemHealth();
                     break;
@@ -89,13 +90,13 @@
             }
         },
 
-        loadDashboard: function() {
+        loadDashboard: function () {
             this.loadSystemOverview();
             this.loadQuickStats();
             this.loadRecentActivity();
         },
 
-        loadSystemOverview: function() {
+        loadSystemOverview: function () {
             $.ajax({
                 url: cpDevConsole.ajaxUrl,
                 type: 'POST',
@@ -103,7 +104,7 @@
                     action: 'cp_dev_system_health',
                     nonce: cpDevConsole.nonce
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         var html = '<div class="cp-stat-item">';
                         html += '<span class="cp-stat-label">WordPress Version</span>';
@@ -131,7 +132,7 @@
             });
         },
 
-        loadQuickStats: function() {
+        loadQuickStats: function () {
             // Load CampaignPress stats
             $.ajax({
                 url: cpDevConsole.ajaxUrl,
@@ -141,7 +142,7 @@
                     nonce: cpDevConsole.nonce,
                     query: 'SELECT COUNT(*) as count FROM ' + cpDevConsole.tablePrefix + 'cp_crm_contacts'
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success && response.results && response.results.length > 0) {
                         var html = '<div class="cp-stat-item">';
                         html += '<span class="cp-stat-label">Total CRM Contacts</span>';
@@ -153,7 +154,7 @@
             });
         },
 
-        loadRecentActivity: function() {
+        loadRecentActivity: function () {
             $.ajax({
                 url: cpDevConsole.ajaxUrl,
                 type: 'POST',
@@ -162,7 +163,7 @@
                     nonce: cpDevConsole.nonce,
                     limit: 5
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         DevConsole.renderActivityLogs(response.data.logs, '#recent-activity-content');
                     }
@@ -170,7 +171,7 @@
             });
         },
 
-        loadSystemHealth: function() {
+        loadSystemHealth: function () {
             $('#system-health-content').html('<div class="cp-loading">Loading system health data...</div>');
 
             $.ajax({
@@ -180,20 +181,20 @@
                     action: 'cp_dev_system_health',
                     nonce: cpDevConsole.nonce
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         DevConsole.renderSystemHealth(response.data);
                     } else {
                         $('#system-health-content').html('<div class="cp-dev-notice error">' + response.data.message + '</div>');
                     }
                 },
-                error: function() {
+                error: function () {
                     $('#system-health-content').html('<div class="cp-dev-notice error">Failed to load system health data</div>');
                 }
             });
         },
 
-        renderSystemHealth: function(data) {
+        renderSystemHealth: function (data) {
             var html = '<div class="cp-dev-grid">';
 
             // WordPress Info
@@ -233,7 +234,7 @@
             $('#system-health-content').html(html);
         },
 
-        executeQuery: function() {
+        executeQuery: function () {
             var query = $('#db-query').val().trim();
 
             if (!query) {
@@ -252,7 +253,7 @@
                     query: query,
                     confirmed: confirmed
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.requires_confirmation) {
                         if (confirm(response.warning + '\n\n' + response.message)) {
                             $('#query-confirm-dangerous').prop('checked', true);
@@ -264,13 +265,13 @@
                         alert('Query failed: ' + response.message);
                     }
                 },
-                error: function() {
+                error: function () {
                     alert('Failed to execute query');
                 }
             });
         },
 
-        renderQueryResult: function(data) {
+        renderQueryResult: function (data) {
             var html = '<div class="cp-result-meta">';
             html += '<strong>Query Type:</strong> ' + data.query_type + ' | ';
             html += '<strong>Execution Time:</strong> ' + data.execution_time + 's | ';
@@ -288,15 +289,15 @@
                 html += '<table class="cp-result-table">';
                 html += '<thead><tr>';
 
-                data.columns.forEach(function(col) {
+                data.columns.forEach(function (col) {
                     html += '<th>' + col + '</th>';
                 });
 
                 html += '</tr></thead><tbody>';
 
-                data.results.forEach(function(row) {
+                data.results.forEach(function (row) {
                     html += '<tr>';
-                    data.columns.forEach(function(col) {
+                    data.columns.forEach(function (col) {
                         html += '<td>' + (row[col] !== null ? row[col] : '<em>NULL</em>') + '</td>';
                     });
                     html += '</tr>';
@@ -313,27 +314,34 @@
             $('#query-result-container').show();
         },
 
-        loadDatabaseTables: function() {
-            $('#database-tables-content').html('<div class="cp-loading">Loading database tables...</div>');
+        loadDatabaseTables: function () {
+            var $container = $('#database-tables-content');
+            $container.html('<div class="cp-loading">Loading database tables...</div>');
 
             $.ajax({
                 url: cpDevConsole.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'cp_dev_execute_query',
-                    nonce: cpDevConsole.nonce,
-                    query: 'SHOW TABLES'
+                    action: 'cp_dev_get_tables',
+                    nonce: cpDevConsole.nonce
                 },
-                success: function(response) {
-                    if (response.success && response.results) {
+                success: function (response) {
+                    if (response.success && response.data) {
                         var html = '<div class="cp-dev-table-wrapper">';
                         html += '<table class="cp-dev-table">';
-                        html += '<thead><tr><th>Table Name</th><th>Actions</th></tr></thead><tbody>';
+                        html += '<thead><tr><th>Table Name</th><th>Rows</th><th>Size</th><th>Engine</th><th>Actions</th></tr></thead><tbody>';
 
-                        response.results.forEach(function(row) {
-                            var tableName = Object.values(row)[0];
+                        response.data.forEach(function (table) {
+                            var tableName = table.TABLE_NAME || table.table_name;
+                            var tableRows = table.TABLE_ROWS || table.table_rows;
+                            var engine = table.ENGINE || table.engine;
+                            var sizeMg = table.size_mb || table.SIZE_MB || 0;
+
                             html += '<tr>';
                             html += '<td><code>' + tableName + '</code></td>';
+                            html += '<td>' + (parseInt(tableRows) || 0).toLocaleString() + '</td>';
+                            html += '<td>' + sizeMg + ' MB</td>';
+                            html += '<td>' + engine + '</td>';
                             html += '<td class="cp-dev-table-actions">';
                             html += '<button class="button button-small preview-table" data-table="' + tableName + '">Preview</button>';
                             html += '<button class="button button-small view-table-structure" data-table="' + tableName + '">Structure</button>';
@@ -342,31 +350,184 @@
                         });
 
                         html += '</tbody></table></div>';
-                        $('#database-tables-content').html(html);
+                        $container.html(html);
+                    } else {
+                        $container.html('<div class="cp-dev-notice error">Failed to load tables</div>');
                     }
                 }
             });
         },
 
-        loadSavedQueries: function() {
+        viewTableStructure: function () {
+            var table = $(this).data('table');
+            var $btn = $(this);
+            $btn.prop('disabled', true).text('Loading...');
+
+            $.ajax({
+                url: cpDevConsole.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'cp_dev_get_table_structure',
+                    nonce: cpDevConsole.nonce,
+                    table: table
+                },
+                success: function (response) {
+                    $btn.prop('disabled', false).text('Structure');
+                    if (response.success) {
+                        var html = '<h4>Structure: ' + table + '</h4>';
+                        html += '<pre class="cp-result-json"><code>' + response.create_statement + '</code></pre>';
+
+                        html += '<h5>Columns</h5><div class="cp-dev-table-wrapper"><table class="cp-result-table"><thead><tr>';
+                        html += '<th>Field</th><th>Type</th><th>Null</th><th>Key</th><th>Default</th>';
+                        html += '</tr></thead><tbody>';
+
+                        response.columns.forEach(function (col) {
+                            html += '<tr><td>' + col.Field + '</td><td>' + col.Type + '</td><td>' + col.Null + '</td><td>' + col.Key + '</td><td>' + (col.Default || '') + '</td></tr>';
+                        });
+                        html += '</tbody></table></div>';
+
+                        $('#query-result').html(html);
+                        $('#query-result-container').show();
+                        $('html, body').animate({ scrollTop: $("#query-result-container").offset().top - 100 }, 500);
+                    } else {
+                        alert('Failed: ' + response.message);
+                    }
+                }
+            });
+        },
+
+        previewTable: function () {
+            var table = $(this).data('table');
+            var $btn = $(this);
+            $btn.prop('disabled', true).text('Loading...');
+
+            $.ajax({
+                url: cpDevConsole.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'cp_dev_get_table_preview',
+                    nonce: cpDevConsole.nonce,
+                    table: table
+                },
+                success: function (response) {
+                    $btn.prop('disabled', false).text('Preview');
+                    if (response.success) {
+                        DevConsole.renderQueryResult(response);
+                        $('html, body').animate({ scrollTop: $("#query-result-container").offset().top - 100 }, 500);
+                    } else {
+                        alert('Failed: ' + response.message);
+                    }
+                }
+            });
+        },
+
+        optimizeTable: function () {
+            var table = $(this).data('table');
+            var $btn = $(this);
+
+            if (!confirm('Optimize table ' + table + '? This may take a moment.')) return;
+
+            $btn.prop('disabled', true).text('Optimizing...');
+
+            $.ajax({
+                url: cpDevConsole.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'cp_dev_optimize_table',
+                    nonce: cpDevConsole.nonce,
+                    table: table
+                },
+                success: function (response) {
+                    $btn.prop('disabled', false).text('Optimize');
+                    if (response.success) {
+                        alert(response.message);
+                    } else {
+                        alert('Optimization failed: ' + response.message);
+                    }
+                }
+            });
+        },
+
+        loadSavedQueries: function () {
             $('#saved-queries-content').html('<div class="cp-loading">Loading saved queries...</div>');
 
             // Placeholder - would load from database
             $('#saved-queries-content').html('<p>No saved queries yet.</p>');
         },
 
-        loadCampaignPressStats: function() {
-            $('#cp-stats-content').html('<div class="cp-loading">Loading statistics...</div>');
+        loadCampaignPressStats: function () {
+            var $container = $('#cp-stats-content');
+            $container.html('<div class="cp-loading">Loading statistics...</div>');
 
-            // Load various CampaignPress statistics
-            var html = '<div class="cp-stat-item">';
-            html += '<span class="cp-stat-label">Loading...</span>';
-            html += '</div>';
+            $.ajax({
+                url: cpDevConsole.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'cp_dev_get_cp_stats',
+                    nonce: cpDevConsole.nonce
+                },
+                success: function (response) {
+                    if (response.success && response.data) {
+                        var html = '<div class="cp-stats-grid">';
 
-            $('#cp-stats-content').html(html);
+                        // CRM
+                        html += '<div class="cp-stat-card"><h4>CRM</h4>';
+                        html += '<div class="cp-stat-item"><span class="cp-stat-label">Contacts</span><span class="cp-stat-value">' + response.data.crm.contacts + '</span></div>';
+                        html += '<div class="cp-stat-item"><span class="cp-stat-label">Interactions</span><span class="cp-stat-value">' + response.data.crm.interactions + '</span></div>';
+                        html += '</div>';
+
+                        // FEC
+                        html += '<div class="cp-stat-card"><h4>FEC Compliance</h4>';
+                        html += '<div class="cp-stat-item"><span class="cp-stat-label">Donors</span><span class="cp-stat-value">' + response.data.fec.donors + '</span></div>';
+                        html += '<div class="cp-stat-item"><span class="cp-stat-label">Contributions</span><span class="cp-stat-value">' + response.data.fec.contributions + '</span></div>';
+                        html += '</div>';
+
+                        // Content
+                        html += '<div class="cp-stat-card"><h4>Content</h4>';
+                        html += '<div class="cp-stat-item"><span class="cp-stat-label">Events</span><span class="cp-stat-value">' + response.data.content.events + '</span></div>';
+                        html += '<div class="cp-stat-item"><span class="cp-stat-label">Volunteers</span><span class="cp-stat-value">' + response.data.content.volunteer_opportunities + '</span></div>';
+                        html += '</div>';
+
+                        html += '</div>';
+                        $container.html(html);
+                    }
+                }
+            });
         },
 
-        testAPI: function() {
+        runContactMigration: function () {
+            if (!confirm('Run contact consolidation migration? This will merge duplicate contacts and link all module data to the master contact table.')) return;
+
+            var $btn = $(this);
+            $btn.prop('disabled', true).text('Migrating...');
+
+            $.ajax({
+                url: cpDevConsole.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'cp_dev_run_migration',
+                    nonce: cpDevConsole.nonce
+                },
+                success: function (response) {
+                    $btn.prop('disabled', false).text('Run Consolidation Migration');
+                    if (response.success) {
+                        var results = response.results;
+                        var msg = 'Migration completed successfully!\n\n';
+                        msg += 'Volunteers: ' + (results.volunteers.migrated || 0) + '\n';
+                        msg += 'Event RSVPs: ' + (results.event_rsvps.migrated || 0) + '\n';
+                        msg += 'CRM Contacts: ' + (results.crm_contacts.migrated || 0) + '\n';
+                        msg += 'FEC Donors: ' + (results.fec_donors.migrated || 0) + '\n';
+                        alert(msg);
+                        DevConsole.loadDatabaseTables();
+                        DevConsole.loadCampaignPressStats();
+                    } else {
+                        alert('Migration failed: ' + response.message);
+                    }
+                }
+            });
+        },
+
+        testAPI: function () {
             var method = $('#api-method').val();
             var endpoint = $('#api-endpoint').val();
             var body = $('#api-body').val();
@@ -391,16 +552,16 @@
                 url: cpDevConsole.ajaxUrl,
                 type: 'POST',
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     DevConsole.renderAPIResult(response);
                 },
-                error: function() {
+                error: function () {
                     alert('Failed to test API endpoint');
                 }
             });
         },
 
-        renderAPIResult: function(response) {
+        renderAPIResult: function (response) {
             var html = '<div class="cp-result-meta">';
 
             if (response.success) {
@@ -425,25 +586,25 @@
             $('#api-result-container').show();
         },
 
-        loadAPIEndpoints: function() {
+        loadAPIEndpoints: function () {
             var endpoints = [
-                {path: '/contacts', methods: ['GET', 'POST'], description: 'Manage CRM contacts'},
-                {path: '/contacts/{id}', methods: ['GET', 'PUT', 'DELETE'], description: 'Individual contact'},
-                {path: '/interactions', methods: ['GET', 'POST'], description: 'Manage interactions'},
-                {path: '/walks', methods: ['GET', 'POST'], description: 'Canvassing walks'},
-                {path: '/phone-calls', methods: ['GET', 'POST'], description: 'Phone banking calls'},
-                {path: '/donors', methods: ['GET', 'POST'], description: 'FEC donors'},
-                {path: '/contributions', methods: ['GET', 'POST'], description: 'FEC contributions'}
+                { path: '/contacts', methods: ['GET', 'POST'], description: 'Manage CRM contacts' },
+                { path: '/contacts/{id}', methods: ['GET', 'PUT', 'DELETE'], description: 'Individual contact' },
+                { path: '/interactions', methods: ['GET', 'POST'], description: 'Manage interactions' },
+                { path: '/walks', methods: ['GET', 'POST'], description: 'Canvassing walks' },
+                { path: '/phone-calls', methods: ['GET', 'POST'], description: 'Phone banking calls' },
+                { path: '/donors', methods: ['GET', 'POST'], description: 'FEC donors' },
+                { path: '/contributions', methods: ['GET', 'POST'], description: 'FEC contributions' }
             ];
 
             var html = '';
 
-            endpoints.forEach(function(endpoint) {
+            endpoints.forEach(function (endpoint) {
                 html += '<div class="cp-api-endpoint" data-path="' + endpoint.path + '">';
                 html += '<div class="cp-api-endpoint-path">' + endpoint.path + '</div>';
                 html += '<div class="cp-api-endpoint-methods">';
 
-                endpoint.methods.forEach(function(method) {
+                endpoint.methods.forEach(function (method) {
                     html += '<span class="cp-api-method ' + method + '">' + method + '</span>';
                 });
 
@@ -455,16 +616,16 @@
             $('#api-endpoints-list').html(html);
         },
 
-        loadAPIStats: function() {
+        loadAPIStats: function () {
             $('#api-stats-content').html('<div class="cp-stat-item"><span class="cp-stat-label">Total Requests</span><span class="cp-stat-value">0</span></div>');
         },
 
-        selectAPIEndpoint: function() {
+        selectAPIEndpoint: function () {
             var path = $(this).data('path');
             $('#api-endpoint').val(path);
         },
 
-        loadActivityLogs: function() {
+        loadActivityLogs: function () {
             var category = $('#log-category-filter').val() || 'all';
 
             $('#activity-logs-content').html('<div class="cp-loading">Loading activity logs...</div>');
@@ -478,7 +639,7 @@
                     category: category,
                     limit: 50
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         DevConsole.renderActivityLogs(response.data.logs, '#activity-logs-content');
                     }
@@ -486,7 +647,7 @@
             });
         },
 
-        renderActivityLogs: function(logs, container) {
+        renderActivityLogs: function (logs, container) {
             if (!logs || logs.length === 0) {
                 $(container).html('<p>No activity logs found.</p>');
                 return;
@@ -494,7 +655,7 @@
 
             var html = '';
 
-            logs.forEach(function(log) {
+            logs.forEach(function (log) {
                 html += '<div class="cp-log-item category-' + log.action_category + '">';
                 html += '<div class="cp-log-header">';
                 html += '<span class="cp-log-action cp-status-' + log.result_status + '">' + log.action_type + '</span>';
@@ -516,7 +677,7 @@
             $(container).html(html);
         },
 
-        exportData: function() {
+        exportData: function () {
             var exportType = $('#export-type').val();
             var format = $('#export-format').val();
 
@@ -531,7 +692,7 @@
                     export_type: exportType,
                     format: format
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#export-data-btn').prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Export Data');
 
                     if (response.success) {
@@ -547,31 +708,31 @@
                         alert('Export failed: ' + response.message);
                     }
                 },
-                error: function() {
+                error: function () {
                     $('#export-data-btn').prop('disabled', false).html('<span class="dashicons dashicons-download"></span> Export Data');
                     alert('Export failed');
                 }
             });
         },
 
-        downloadExport: function() {
+        downloadExport: function () {
             if (!cpDevConsole.exportData) {
                 alert('No export data available');
                 return;
             }
 
-            var blob = new Blob([cpDevConsole.exportData.content], {type: cpDevConsole.exportData.mime_type});
+            var blob = new Blob([cpDevConsole.exportData.content], { type: cpDevConsole.exportData.mime_type });
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
             link.download = cpDevConsole.exportData.filename;
             link.click();
         },
 
-        loadExportHistory: function() {
+        loadExportHistory: function () {
             $('#export-history-content').html('<p>No recent exports.</p>');
         },
 
-        loadUsers: function() {
+        loadUsers: function () {
             $('#users-content').html('<div class="cp-loading">Loading users...</div>');
 
             $.ajax({
@@ -582,7 +743,7 @@
                     nonce: cpDevConsole.nonce,
                     action_type: 'list'
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         DevConsole.renderUsers(response.data.users);
                     }
@@ -590,7 +751,7 @@
             });
         },
 
-        renderUsers: function(users) {
+        renderUsers: function (users) {
             if (!users || users.length === 0) {
                 $('#users-content').html('<p>No users found.</p>');
                 return;
@@ -598,14 +759,14 @@
 
             var html = '';
 
-            users.forEach(function(user) {
+            users.forEach(function (user) {
                 html += '<div class="cp-user-item">';
                 html += '<div class="cp-user-info">';
                 html += '<div class="cp-user-name">' + user.login + '</div>';
                 html += '<div class="cp-user-email">' + user.email + '</div>';
                 html += '<div class="cp-user-roles">';
 
-                user.roles.forEach(function(role) {
+                user.roles.forEach(function (role) {
                     html += '<span class="cp-user-role">' + role + '</span>';
                 });
 
@@ -615,13 +776,32 @@
             $('#users-content').html(html);
         },
 
-        saveSecuritySettings: function(e) {
+        saveSecuritySettings: function (e) {
             e.preventDefault();
             alert('Security settings saved (placeholder)');
-        }
+        },
+
+        // Missing Method Stubs to prevent JS crash
+        saveQuery: function () { alert('Save Query function coming soon.'); },
+        loadSavedQuery: function () { alert('Load Saved Query function coming soon.'); },
+        loadSavedQueries: function () { $('#saved-queries-content').html('<p>No saved queries yet.</p>'); },
+        loadAPIEndpoints: function () {
+            var endpoints = [
+                { path: '/contacts', methods: ['GET', 'POST'], description: 'Manage CRM contacts' },
+                { path: '/donors', methods: ['GET', 'POST'], description: 'FEC donors' }
+            ];
+            var html = '';
+            endpoints.forEach(function (endpoint) {
+                html += '<div class="cp-api-endpoint" data-path="' + endpoint.path + '"><strong>' + endpoint.path + '</strong> (' + endpoint.methods.join(', ') + ')</div>';
+            });
+            $('#api-endpoints-list').html(html);
+        },
+        loadAPIStats: function () { $('#api-stats-content').html('<p>API tracking initialized.</p>'); },
+        loadExportHistory: function () { $('#export-history-content').html('<p>No recent exports found.</p>'); },
+        selectAPIEndpoint: function () { var path = $(this).data('path'); $('#api-endpoint').val(path); }
     };
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         DevConsole.init();
     });
 

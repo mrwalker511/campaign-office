@@ -6,11 +6,11 @@
  * This class provides helper methods to properly enqueue scripts with
  * WordPress dependencies, ensuring optimal performance and compatibility.
  *
- * @package CampaignOffice\Core
+ * @package CampaignPress\Core
  * @since 2.0.0
  */
 
-namespace CampaignOffice\Core;
+namespace CampaignPress\Core;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -387,6 +387,3 @@ class Script_Manager {
         }, 999);
     }
 }
-
-// Initialize
-Script_Manager::init();

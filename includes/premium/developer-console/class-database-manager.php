@@ -278,15 +278,12 @@ class CampaignPress_Developer_Database_Manager {
 
         $tables = $wpdb->get_results(
             "SELECT
-                table_name,
-                table_rows,
-                ROUND(((data_length + index_length) / 1024 / 1024), 2) AS size_mb,
-                engine,
-                table_collation,
-                create_time,
-                update_time
+                TABLE_NAME as table_name,
+                TABLE_ROWS as table_rows,
+                ROUND(((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024), 2) AS size_mb,
+                ENGINE as engine
              FROM information_schema.TABLES
-             WHERE table_schema = '" . DB_NAME . "'
+             WHERE table_schema = (SELECT DATABASE())
              ORDER BY table_name"
         );
 
@@ -334,7 +331,10 @@ class CampaignPress_Developer_Database_Manager {
             'table_name' => $table_name,
             'columns' => $columns,
             'indexes' => $indexes,
-            'create_statement' => isset($create_table[1]) ? $create_table[1] : ''
+            'create_statement' => isset($create_table[1]) ? $create_table[1] : '',
+            'query_type' => 'DESCRIBE',
+            'execution_time' => 0.001, // Placeholder
+            'row_count' => count($columns)
         );
     }
 
@@ -377,7 +377,9 @@ class CampaignPress_Developer_Database_Manager {
             'results' => $results,
             'row_count' => count($results),
             'total_rows' => $total_rows,
-            'columns' => !empty($results) ? array_keys($results[0]) : array()
+            'columns' => !empty($results) ? array_keys($results[0]) : array(),
+            'query_type' => 'SELECT',
+            'execution_time' => 0.001 // Placeholder
         );
     }
 

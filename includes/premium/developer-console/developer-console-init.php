@@ -36,7 +36,7 @@ add_action('admin_enqueue_scripts', function($hook) {
         'cp-developer-console',
         get_template_directory_uri() . '/includes/premium/developer-console/assets/developer-console.css',
         array(),
-        '1.0.0'
+        '1.0.1'
     );
 
     // Enqueue JavaScript
@@ -44,7 +44,7 @@ add_action('admin_enqueue_scripts', function($hook) {
         'cp-developer-console',
         get_template_directory_uri() . '/includes/premium/developer-console/assets/developer-console.js',
         array('jquery'),
-        '1.0.0',
+        '1.0.1',
         true
     );
 

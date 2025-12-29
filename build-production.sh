@@ -112,8 +112,8 @@ if command -v rsync &> /dev/null; then
         --exclude='*.zip' \
         --exclude='assets/react/' \
         --exclude='assets/js/' \
-        --exclude='blocks/**/index.js' \
-        --exclude='blocks/**/view.js' \
+        --include='blocks/**/index.js' \
+        --include='blocks/**/view.js' \
         --include='assets/css/critical/' \
         --exclude='assets/css/*' \
         "$THEME_DIR/" "$BUILD_DIR/"
@@ -144,8 +144,7 @@ else
     rm -f .editorconfig .eslintrc* .stylelintrc* .prettierrc* 2>/dev/null || true
     rm -f *.zip 2>/dev/null || true
     rm -rf assets/react/ assets/js/ 2>/dev/null || true
-    find blocks/ -name "index.js" -delete 2>/dev/null || true
-    find blocks/ -name "view.js" -delete 2>/dev/null || true
+    # Keep block scripts - remove only specific exclusions, not all JS files
     # Keep only critical CSS, remove other assets/css contents
     find assets/css/ -type f ! -path "assets/css/critical/*" -delete 2>/dev/null || true
 

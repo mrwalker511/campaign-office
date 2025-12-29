@@ -33,7 +33,8 @@
       "Bash(then unzip -l campaign-office-testing.zip)",
       "Bash(else echo \"No ZIP to check\")",
       "Bash(fi)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []

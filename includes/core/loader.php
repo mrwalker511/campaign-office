@@ -14,16 +14,40 @@ if (!defined('ABSPATH')) {
 }
 
 // Load Core Classes
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-performance.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-template-loader.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-contact-manager.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-script-manager.php';
+$core_files = array(
+    CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-performance.php',
+    CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-template-loader.php',
+    CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-contact-manager.php',
+    CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-script-manager.php',
+);
+
+foreach ($core_files as $file) {
+    if (file_exists($file)) {
+        require_once $file;
+    } else {
+        // Log error in debug mode
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Campaign Office: Core file missing - ' . $file);
+        }
+    }
+}
 
 // Initialize Core Systems
-CampaignPress\Core\Performance::init();
-CampaignPress\Core\Template_Loader::init();
-CampaignPress\Core\Script_Manager::init();
-$GLOBALS['cp_contact_manager'] = new CampaignPress_Contact_Manager();
+if (class_exists('CampaignPress\Core\Performance')) {
+    CampaignPress\Core\Performance::init();
+}
+
+if (class_exists('CampaignPress\Core\Template_Loader')) {
+    CampaignPress\Core\Template_Loader::init();
+}
+
+if (class_exists('CampaignPress\Core\Script_Manager')) {
+    CampaignPress\Core\Script_Manager::init();
+}
+
+if (class_exists('CampaignPress_Contact_Manager')) {
+    $GLOBALS['cp_contact_manager'] = new CampaignPress_Contact_Manager();
+}
 
 
 // Load Free Features (Legacy functional style)

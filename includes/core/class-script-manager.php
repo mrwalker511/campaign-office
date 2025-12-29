@@ -387,6 +387,3 @@ class Script_Manager {
         }, 999);
     }
 }
-
-// Initialize
-Script_Manager::init();

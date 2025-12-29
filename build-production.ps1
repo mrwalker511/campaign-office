@@ -5,6 +5,7 @@
 
 .DESCRIPTION
     Creates a clean production ZIP excluding development files, tests, and git history.
+    
     Includes only files necessary for theme distribution.
 
 .PARAMETER OutputDir
@@ -72,14 +73,13 @@ $ExcludeDirs = @(
     "node_modules",
     "tests",
     "docs",
-    "build",
     ".vscode",
     ".idea",
     ".claude",
     "playwright-report",
     "test-results",
     ".sass-cache",
-    "vendor"
+    "vendor\bin"
 )
 
 $ExcludeFiles = @(
@@ -119,27 +119,14 @@ $ExcludeFiles = @(
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-# Build robocopy command (XD and XF expect names, not full paths)
-# Each excluded item needs to be a separate argument
-$RoboCopyArgs = @(
-    $ThemeDir,
-    $BuildDir,
-    "/E", "/NJH", "/NJS", "/NP", "/NFL", "/NDL", "/R:1", "/W:1"
-)
+# Build robocopy command
+$XD = ($ExcludeDirs | ForEach-Object { Join-Path $ThemeDir $_ }) -join '" "'
+$XF = $ExcludeFiles -join '" "'
 
-# Add excluded directories
-if ($ExcludeDirs.Count -gt 0) {
-    $RoboCopyArgs += "/XD"
-    $RoboCopyArgs += $ExcludeDirs
-}
+# Use robocopy for fast copying
+$RoboCopyArgs = "`"$ThemeDir`" `"$BuildDir`" /E /NJH /NJS /NP /NFL /NDL /R:1 /W:1 /XD `"$XD`" /XF `"$XF`""
 
-# Add excluded files
-if ($ExcludeFiles.Count -gt 0) {
-    $RoboCopyArgs += "/XF"
-    $RoboCopyArgs += $ExcludeFiles
-}
-
-$null = & robocopy $RoboCopyArgs
+$null = Invoke-Expression "robocopy $RoboCopyArgs"
 
 # Robocopy exit codes: 0-7 are success (1=files copied, 2=extra files found, etc.)
 $ExitCode = $LASTEXITCODE

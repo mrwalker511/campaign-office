@@ -29,15 +29,18 @@ $GLOBALS['cp_contact_manager'] = new CampaignPress_Contact_Manager();
 // Load Free Features (Legacy functional style)
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/font-preconnect.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-bootstrap-navwalker.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';
+// Custom post types moved to Campaign Office Core plugin (v2.0)
+// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-functions.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/integrations.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-notices.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
+// Volunteer management moved to Campaign Office Core plugin (v2.0)
+// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';
+// Event management moved to Campaign Office Core plugin (v2.0)
+// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-calendar-enhancements.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';

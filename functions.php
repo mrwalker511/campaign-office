@@ -33,6 +33,124 @@ define('CAMPAIGNPRESS_INCLUDES_DIR', CAMPAIGNPRESS_THEME_DIR . '/includes');
 define('CAMPAIGNPRESS_ASSETS_URI', CAMPAIGNPRESS_THEME_URI . '/assets');
 
 /**
+ * Check for Campaign Office Core Plugin
+ *
+ * The theme works best with the Campaign Office Core plugin which provides
+ * custom post types, volunteer management, and other campaign features.
+ */
+function campaignpress_check_core_plugin() {
+    if (!class_exists('Campaign_Office_Core')) {
+        add_action('admin_notices', 'campaignpress_core_plugin_notice');
+    } else {
+        // Plugin is active - add theme support
+        add_theme_support('campaign-office-core');
+    }
+}
+add_action('after_setup_theme', 'campaignpress_check_core_plugin');
+
+/**
+ * Admin notice if Campaign Office Core plugin is not active
+ */
+function campaignpress_core_plugin_notice() {
+    // Only show to users who can install plugins
+    if (!current_user_can('install_plugins')) {
+        return;
+    }
+
+    // Check if notice has been dismissed
+    $dismissed = get_user_meta(get_current_user_id(), 'campaignpress_dismiss_plugin_notice', true);
+    if ($dismissed === 'yes') {
+        return;
+    }
+
+    $plugin_slug = 'campaign-office-core';
+    $plugin_file = $plugin_slug . '/' . $plugin_slug . '.php';
+
+    // Check if plugin is installed but not activated
+    $all_plugins = get_plugins();
+    $is_installed = isset($all_plugins[$plugin_file]);
+
+    if ($is_installed) {
+        // Plugin is installed but not activated
+        $activate_url = wp_nonce_url(
+            admin_url('plugins.php?action=activate&plugin=' . urlencode($plugin_file)),
+            'activate-plugin_' . $plugin_file
+        );
+
+        $message = sprintf(
+            /* translators: %s: plugin name */
+            __('Campaign Office theme works best with the %s plugin. The plugin is installed but not active.', 'campaign-office'),
+            '<strong>Campaign Office Core</strong>'
+        );
+
+        $button = sprintf(
+            '<a href="%s" class="button button-primary">%s</a>',
+            esc_url($activate_url),
+            __('Activate Plugin', 'campaign-office')
+        );
+    } else {
+        // Plugin is not installed
+        $install_url = wp_nonce_url(
+            self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_slug),
+            'install-plugin_' . $plugin_slug
+        );
+
+        $message = sprintf(
+            /* translators: %s: plugin name */
+            __('Campaign Office theme requires the %s plugin for full functionality.', 'campaign-office'),
+            '<strong>Campaign Office Core</strong>'
+        );
+
+        $button = sprintf(
+            '<a href="%s" class="button button-primary">%s</a>',
+            esc_url($install_url),
+            __('Install Plugin', 'campaign-office')
+        );
+    }
+
+    $dismiss_url = add_query_arg(
+        array(
+            'campaignpress_dismiss_notice' => 'plugin',
+            'nonce' => wp_create_nonce('campaignpress_dismiss_notice')
+        ),
+        admin_url()
+    );
+
+    ?>
+    <div class="notice notice-warning is-dismissible" data-dismiss-url="<?php echo esc_url($dismiss_url); ?>">
+        <p>
+            <?php echo wp_kses_post($message); ?>
+        </p>
+        <p>
+            <?php echo $button; ?>
+            <a href="<?php echo esc_url($dismiss_url); ?>" class="button">
+                <?php _e('Dismiss', 'campaign-office'); ?>
+            </a>
+        </p>
+        <p>
+            <small>
+                <?php _e('Note: Without the plugin, some features like volunteer management, custom post types, and event RSVPs will not be available.', 'campaign-office'); ?>
+            </small>
+        </p>
+    </div>
+    <?php
+}
+
+/**
+ * Handle notice dismissal
+ */
+function campaignpress_handle_notice_dismissal() {
+    if (isset($_GET['campaignpress_dismiss_notice']) && isset($_GET['nonce'])) {
+        if (wp_verify_nonce($_GET['nonce'], 'campaignpress_dismiss_notice')) {
+            update_user_meta(get_current_user_id(), 'campaignpress_dismiss_plugin_notice', 'yes');
+            wp_safe_redirect(remove_query_arg(array('campaignpress_dismiss_notice', 'nonce')));
+            exit;
+        }
+    }
+}
+add_action('admin_init', 'campaignpress_handle_notice_dismissal');
+
+/**
  * Theme Setup
  */
 function campaignpress_setup() {

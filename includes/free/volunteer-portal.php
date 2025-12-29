@@ -37,6 +37,14 @@ class CP_Volunteer_Portal {
     private $shifts_table;
     private $hours_table;
     private $assignments_table;
+    private $tokens_table;
+
+    /**
+     * Cached volunteer table columns
+     *
+     * @var array|null
+     */
+    private $volunteer_table_columns = null;
 
     /**
      * Constructor
@@ -46,9 +54,14 @@ class CP_Volunteer_Portal {
         $this->shifts_table = $wpdb->prefix . 'cp_volunteer_shifts';
         $this->hours_table = $wpdb->prefix . 'cp_volunteer_hours';
         $this->assignments_table = $wpdb->prefix . 'cp_volunteer_assignments';
+        $this->tokens_table = $wpdb->prefix . 'cp_volunteer_portal_tokens';
 
-        // Database setup
-        add_action('after_setup_theme', array($this, 'create_portal_tables'));
+        // Database setup (run once per version)
+        add_action('after_switch_theme', array($this, 'maybe_create_portal_tables'));
+        add_action('admin_init', array($this, 'maybe_create_portal_tables'));
+
+        // Handle magic-link login before headers are sent
+        add_action('template_redirect', array($this, 'maybe_handle_magic_link_login'));
 
         // Shortcodes
         add_shortcode('cp_volunteer_portal', array($this, 'render_volunteer_portal'));
@@ -59,16 +72,62 @@ class CP_Volunteer_Portal {
         // AJAX handlers
         add_action('wp_ajax_cp_volunteer_login', array($this, 'ajax_volunteer_login'));
         add_action('wp_ajax_nopriv_cp_volunteer_login', array($this, 'ajax_volunteer_login'));
+
+        add_action('wp_ajax_cp_volunteer_logout', array($this, 'ajax_volunteer_logout'));
+        add_action('wp_ajax_nopriv_cp_volunteer_logout', array($this, 'ajax_volunteer_logout'));
+
         add_action('wp_ajax_cp_volunteer_signup_shift', array($this, 'ajax_signup_shift'));
+        add_action('wp_ajax_nopriv_cp_volunteer_signup_shift', array($this, 'ajax_signup_shift'));
+
         add_action('wp_ajax_cp_volunteer_log_hours', array($this, 'ajax_log_hours'));
+        add_action('wp_ajax_nopriv_cp_volunteer_log_hours', array($this, 'ajax_log_hours'));
+
         add_action('wp_ajax_cp_get_volunteer_shifts', array($this, 'ajax_get_shifts'));
+        add_action('wp_ajax_nopriv_cp_get_volunteer_shifts', array($this, 'ajax_get_shifts'));
+
         add_action('wp_ajax_cp_update_volunteer_profile', array($this, 'ajax_update_profile'));
+        add_action('wp_ajax_nopriv_cp_update_volunteer_profile', array($this, 'ajax_update_profile'));
 
         // Admin menu
         add_action('admin_menu', array($this, 'add_admin_menu'));
 
         // Enqueue assets
         add_action('wp_enqueue_scripts', array($this, 'enqueue_portal_assets'));
+    }
+
+    /**
+     * Maybe create portal database tables (runs once per version)
+     */
+    public function maybe_create_portal_tables() {
+        $db_version = get_option('cp_volunteer_portal_db_version', '0');
+        $current_version = defined('CAMPAIGNPRESS_VERSION') ? CAMPAIGNPRESS_VERSION : '2.0.0';
+
+        if (version_compare($db_version, $current_version, '<')) {
+            $this->create_portal_tables();
+            update_option('cp_volunteer_portal_db_version', $current_version);
+        }
+    }
+
+    /**
+     * Handle magic-link login tokens before headers are sent
+     */
+    public function maybe_handle_magic_link_login() {
+        if (empty($_GET['cpvp_token'])) {
+            return;
+        }
+
+        $token = sanitize_text_field(wp_unslash($_GET['cpvp_token']));
+        if (empty($token) || !preg_match('/^[A-Za-z0-9]{32,128}$/', $token)) {
+            return;
+        }
+
+        $result = $this->consume_login_token_and_start_session($token);
+
+        $redirect_url = remove_query_arg('cpvp_token');
+        $redirect_url = add_query_arg('cpvp_login', is_wp_error($result) ? 'invalid' : 'success', $redirect_url);
+
+        wp_safe_redirect($redirect_url);
+        exit;
     }
 
     /**
@@ -135,10 +194,28 @@ class CP_Volunteer_Portal {
             UNIQUE KEY volunteer_shift (volunteer_id, shift_id)
         ) $charset_collate;";
 
+        // Volunteer auth/session tokens table
+        $sql_tokens = "CREATE TABLE IF NOT EXISTS {$this->tokens_table} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            volunteer_id bigint(20) UNSIGNED NOT NULL,
+            token_hash char(64) NOT NULL,
+            token_type varchar(20) NOT NULL,
+            expires_at datetime NOT NULL,
+            consumed tinyint(1) DEFAULT 0,
+            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            last_seen_at datetime DEFAULT NULL,
+            PRIMARY KEY (id),
+            UNIQUE KEY token_hash (token_hash),
+            KEY volunteer_id (volunteer_id),
+            KEY token_type (token_type),
+            KEY expires_at (expires_at)
+        ) $charset_collate;";
+
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql_shifts);
         dbDelta($sql_hours);
         dbDelta($sql_assignments);
+        dbDelta($sql_tokens);
 
         update_option('cp_volunteer_portal_tables_created', true);
     }
@@ -183,36 +260,49 @@ class CP_Volunteer_Portal {
             'auto_login' => 'false',
         ), $atts, 'cp_volunteer_portal');
 
+        $login_notice = '';
+        if (!empty($_GET['cpvp_login'])) {
+            $status = sanitize_text_field(wp_unslash($_GET['cpvp_login']));
+            if ($status === 'success') {
+                $login_notice = '<div class="cp-form-message success">' . esc_html__('Login successful.', 'campaign-office') . '</div>';
+            } elseif ($status === 'invalid') {
+                $login_notice = '<div class="cp-form-message error">' . esc_html__('That login link is invalid or has expired. Please request a new one.', 'campaign-office') . '</div>';
+            }
+        }
+
         $volunteer_id = $this->get_current_volunteer_id();
 
         if (!$volunteer_id) {
-            return $this->render_volunteer_login(array());
+            return $login_notice . $this->render_volunteer_login(array());
         }
 
-        return $this->render_volunteer_dashboard(array());
+        return $login_notice . $this->render_volunteer_dashboard(array());
     }
 
     /**
      * Render volunteer login form
      */
     public function render_volunteer_login($atts) {
+        $redirect_to = is_singular() ? get_permalink(get_queried_object_id()) : home_url('/');
+
         ob_start();
         ?>
         <div class="cp-volunteer-login-wrapper">
             <div class="cp-volunteer-login-box">
                 <h2><?php esc_html_e('Volunteer Login', 'campaign-office'); ?></h2>
                 <p class="description">
-                    <?php esc_html_e('Enter your email address to access your volunteer portal.', 'campaign-office'); ?>
+                    <?php esc_html_e('Enter your email address and we’ll send you a secure login link.', 'campaign-office'); ?>
                 </p>
                 <form class="cp-volunteer-login-form" id="cp-volunteer-login-form">
                     <?php wp_nonce_field('cp_volunteer_login', 'cp_volunteer_login_nonce'); ?>
+                    <input type="hidden" name="redirect_to" value="<?php echo esc_url($redirect_to); ?>">
                     <div class="form-field">
                         <label for="volunteer_email"><?php esc_html_e('Email Address', 'campaign-office'); ?></label>
                         <input type="email" id="volunteer_email" name="volunteer_email" required class="cp-input">
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="cp-button cp-button-primary">
-                            <?php esc_html_e('Access Portal', 'campaign-office'); ?>
+                            <?php esc_html_e('Send Login Link', 'campaign-office'); ?>
                         </button>
                     </div>
                     <div class="cp-login-message" style="display:none;"></div>
@@ -238,6 +328,11 @@ class CP_Volunteer_Portal {
         }
 
         $volunteer = $this->get_volunteer($volunteer_id);
+        if (!$volunteer) {
+            $this->clear_cookie('cp_volunteer_session');
+            return $this->render_volunteer_login(array());
+        }
+
         $stats = $this->get_volunteer_stats($volunteer_id);
         $upcoming_shifts = $this->get_volunteer_upcoming_shifts($volunteer_id);
 
@@ -320,14 +415,14 @@ class CP_Volunteer_Portal {
                         <?php foreach ($upcoming_shifts as $shift) : ?>
                             <div class="cp-shift-card">
                                 <div class="cp-shift-date">
-                                    <div class="cp-date-day"><?php echo date('j', strtotime($shift->shift_date)); ?></div>
-                                    <div class="cp-date-month"><?php echo date('M', strtotime($shift->shift_date)); ?></div>
+                                    <div class="cp-date-day"><?php echo esc_html(date_i18n('j', strtotime($shift->shift_date))); ?></div>
+                                    <div class="cp-date-month"><?php echo esc_html(date_i18n('M', strtotime($shift->shift_date))); ?></div>
                                 </div>
                                 <div class="cp-shift-details">
                                     <h4><?php echo esc_html($shift->title); ?></h4>
                                     <p class="cp-shift-time">
-                                        <?php echo date('g:i A', strtotime($shift->start_time)); ?> -
-                                        <?php echo date('g:i A', strtotime($shift->end_time)); ?>
+                                        <?php echo esc_html(date_i18n(get_option('time_format'), strtotime($shift->shift_date . ' ' . $shift->start_time))); ?> -
+                                        <?php echo esc_html(date_i18n(get_option('time_format'), strtotime($shift->shift_date . ' ' . $shift->end_time))); ?>
                                     </p>
                                     <p class="cp-shift-location">
                                         <span class="dashicons dashicons-location"></span>
@@ -396,9 +491,9 @@ class CP_Volunteer_Portal {
                     </div>
                     <div class="cp-shift-body">
                         <p class="cp-shift-date-time">
-                            <strong><?php echo date_i18n(get_option('date_format'), strtotime($shift->shift_date)); ?></strong><br>
-                            <?php echo date('g:i A', strtotime($shift->start_time)); ?> -
-                            <?php echo date('g:i A', strtotime($shift->end_time)); ?>
+                            <strong><?php echo esc_html(date_i18n(get_option('date_format'), strtotime($shift->shift_date))); ?></strong><br>
+                            <?php echo esc_html(date_i18n(get_option('time_format'), strtotime($shift->shift_date . ' ' . $shift->start_time))); ?> -
+                            <?php echo esc_html(date_i18n(get_option('time_format'), strtotime($shift->shift_date . ' ' . $shift->end_time))); ?>
                         </p>
                         <p class="cp-shift-location">
                             <span class="dashicons dashicons-location"></span>
@@ -449,7 +544,7 @@ class CP_Volunteer_Portal {
                 </div>
                 <div class="form-field">
                     <label for="activity_date"><?php esc_html_e('Date', 'campaign-office'); ?></label>
-                    <input type="date" id="activity_date" name="activity_date" required class="cp-input" max="<?php echo date('Y-m-d'); ?>">
+                    <input type="date" id="activity_date" name="activity_date" required class="cp-input" max="<?php echo esc_attr(gmdate('Y-m-d')); ?>">
                 </div>
                 <div class="form-field">
                     <label for="hours"><?php esc_html_e('Hours', 'campaign-office'); ?></label>
@@ -595,18 +690,37 @@ class CP_Volunteer_Portal {
             $where = 'AND h.activity_date >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)';
         }
 
-        $leaderboard = $wpdb->get_results($wpdb->prepare("
-            SELECT v.id, v.first_name, v.last_name,
-                   COALESCE(SUM(h.hours), 0) as total_hours,
-                   COUNT(DISTINCT h.id) as activities_count
-            FROM {$volunteers_table} v
-            LEFT JOIN {$this->hours_table} h ON v.id = h.volunteer_id {$where}
-            WHERE v.status = 'active'
-            GROUP BY v.id
-            HAVING total_hours > 0
-            ORDER BY total_hours DESC
-            LIMIT %d
-        ", $atts['limit']));
+        if ($this->volunteers_table_has_column('contact_id')) {
+            $contacts_table = $wpdb->prefix . 'cp_contacts';
+            $leaderboard = $wpdb->get_results($wpdb->prepare("
+                SELECT v.id,
+                       COALESCE(c.first_name, '') AS first_name,
+                       COALESCE(c.last_name, '') AS last_name,
+                       COALESCE(SUM(h.hours), 0) as total_hours,
+                       COUNT(DISTINCT h.id) as activities_count
+                FROM {$volunteers_table} v
+                LEFT JOIN {$contacts_table} c ON v.contact_id = c.id
+                LEFT JOIN {$this->hours_table} h ON v.id = h.volunteer_id {$where}
+                WHERE v.status = 'active'
+                GROUP BY v.id
+                HAVING total_hours > 0
+                ORDER BY total_hours DESC
+                LIMIT %d
+            ", $atts['limit']));
+        } else {
+            $leaderboard = $wpdb->get_results($wpdb->prepare("
+                SELECT v.id, v.first_name, v.last_name,
+                       COALESCE(SUM(h.hours), 0) as total_hours,
+                       COUNT(DISTINCT h.id) as activities_count
+                FROM {$volunteers_table} v
+                LEFT JOIN {$this->hours_table} h ON v.id = h.volunteer_id {$where}
+                WHERE v.status = 'active'
+                GROUP BY v.id
+                HAVING total_hours > 0
+                ORDER BY total_hours DESC
+                LIMIT %d
+            ", $atts['limit']));
+        }
 
         if (empty($leaderboard)) {
             return '<p class="cp-empty-state">' . esc_html__('No volunteer activity yet.', 'campaign-office') . '</p>';
@@ -635,7 +749,7 @@ class CP_Volunteer_Portal {
                         elseif ($rank === 3) $medal = '🥉';
                     ?>
                         <tr>
-                            <td class="cp-rank"><?php echo $medal; ?> #<?php echo $rank; ?></td>
+                            <td class="cp-rank"><?php echo esc_html(trim($medal . ' #' . $rank)); ?></td>
                             <td><?php echo esc_html($vol->first_name . ' ' . substr($vol->last_name, 0, 1) . '.'); ?></td>
                             <td><?php echo esc_html(number_format($vol->total_hours, 1)); ?></td>
                             <td><?php echo esc_html($vol->activities_count); ?></td>
@@ -655,23 +769,226 @@ class CP_Volunteer_Portal {
      * Helper functions
      */
 
-    private function get_current_volunteer_id() {
-        // Check session/cookie for logged-in volunteer
-        if (isset($_COOKIE['cp_volunteer_id']) && isset($_COOKIE['cp_volunteer_hash'])) {
-            $volunteer_id = intval($_COOKIE['cp_volunteer_id']);
-            $volunteer = $this->get_volunteer($volunteer_id);
-            
-            if ($volunteer && wp_hash($volunteer->id . $volunteer->email) === $_COOKIE['cp_volunteer_hash']) {
-                return $volunteer_id;
-            }
+    private function get_cookie_value($name) {
+        if (!isset($_COOKIE[$name])) {
+            return '';
         }
-        return null;
+
+        return sanitize_text_field(wp_unslash($_COOKIE[$name]));
+    }
+
+    private function set_cookie($name, $value, $expires) {
+        setcookie($name, $value, array(
+            'expires' => $expires,
+            'path' => COOKIEPATH,
+            'domain' => COOKIE_DOMAIN,
+            'secure' => is_ssl(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ));
+    }
+
+    private function clear_cookie($name) {
+        $this->set_cookie($name, '', time() - DAY_IN_SECONDS);
+    }
+
+    private function tokens_table_exists() {
+        global $wpdb;
+        $exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $this->tokens_table));
+        return $exists === $this->tokens_table;
+    }
+
+    private function get_volunteer_table_columns() {
+        if (is_array($this->volunteer_table_columns)) {
+            return $this->volunteer_table_columns;
+        }
+
+        global $wpdb;
+        $volunteers_table = $wpdb->prefix . 'cp_volunteers';
+
+        $exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $volunteers_table));
+        if ($exists !== $volunteers_table) {
+            $this->volunteer_table_columns = array();
+            return $this->volunteer_table_columns;
+        }
+
+        $columns = $wpdb->get_col("SHOW COLUMNS FROM {$volunteers_table}", 0);
+        $this->volunteer_table_columns = is_array($columns) ? $columns : array();
+        return $this->volunteer_table_columns;
+    }
+
+    private function volunteers_table_has_column($column) {
+        return in_array($column, $this->get_volunteer_table_columns(), true);
+    }
+
+    private function generate_portal_token($length = 64) {
+        if (function_exists('wp_generate_password')) {
+            return wp_generate_password($length, false, false);
+        }
+
+        $bytes = max(16, (int) ceil($length / 2));
+        try {
+            return substr(bin2hex(random_bytes($bytes)), 0, $length);
+        } catch (Exception $e) {
+            return substr(md5(uniqid((string) wp_rand(), true)), 0, $length);
+        }
+    }
+
+    private function create_portal_token_record($volunteer_id, $token_type, $ttl_seconds) {
+        if (!$this->tokens_table_exists()) {
+            return new WP_Error('missing_tokens_table', __('Volunteer portal authentication is not available yet. Please try again later.', 'campaign-office'));
+        }
+
+        global $wpdb;
+
+        $token = $this->generate_portal_token(64);
+        $token_hash = hash('sha256', $token);
+
+        $now = current_time('timestamp', true);
+        $expires_at = gmdate('Y-m-d H:i:s', $now + absint($ttl_seconds));
+
+        $result = $wpdb->insert($this->tokens_table, array(
+            'volunteer_id' => absint($volunteer_id),
+            'token_hash' => $token_hash,
+            'token_type' => sanitize_text_field($token_type),
+            'expires_at' => $expires_at,
+            'consumed' => 0,
+            'created_at' => gmdate('Y-m-d H:i:s', $now),
+        ));
+
+        if (false === $result) {
+            return new WP_Error('token_create_failed', __('Unable to create login token. Please try again.', 'campaign-office'));
+        }
+
+        return $token;
+    }
+
+    private function consume_login_token_and_start_session($login_token) {
+        if (!$this->tokens_table_exists()) {
+            return new WP_Error('missing_tokens_table', __('Volunteer portal authentication is not available yet. Please try again later.', 'campaign-office'));
+        }
+
+        global $wpdb;
+
+        $token_hash = hash('sha256', $login_token);
+        $row = $wpdb->get_row($wpdb->prepare(
+            "SELECT id, volunteer_id, expires_at FROM {$this->tokens_table}
+             WHERE token_hash = %s AND token_type = %s AND consumed = 0
+             LIMIT 1",
+            $token_hash,
+            'login'
+        ));
+
+        if (!$row) {
+            return new WP_Error('invalid_token', __('Invalid login token.', 'campaign-office'));
+        }
+
+        $now = current_time('timestamp', true);
+        $expires_ts = strtotime($row->expires_at . ' UTC');
+
+        if ($expires_ts < $now) {
+            $wpdb->update($this->tokens_table, array('consumed' => 1), array('id' => absint($row->id)));
+            return new WP_Error('expired_token', __('Login token expired.', 'campaign-office'));
+        }
+
+        // Mark login token consumed
+        $wpdb->update($this->tokens_table, array('consumed' => 1), array('id' => absint($row->id)));
+
+        // Create a long-lived session token
+        $session_token = $this->create_portal_token_record(absint($row->volunteer_id), 'session', 30 * DAY_IN_SECONDS);
+        if (is_wp_error($session_token)) {
+            return $session_token;
+        }
+
+        $this->set_cookie('cp_volunteer_session', $session_token, $now + (30 * DAY_IN_SECONDS));
+
+        return true;
+    }
+
+    private function get_current_volunteer_id() {
+        if (!$this->tokens_table_exists()) {
+            return null;
+        }
+
+        $session_token = $this->get_cookie_value('cp_volunteer_session');
+        if (empty($session_token) || !preg_match('/^[A-Za-z0-9]{32,128}$/', $session_token)) {
+            return null;
+        }
+
+        global $wpdb;
+
+        $token_hash = hash('sha256', $session_token);
+        $row = $wpdb->get_row($wpdb->prepare(
+            "SELECT id, volunteer_id, expires_at FROM {$this->tokens_table}
+             WHERE token_hash = %s AND token_type = %s AND consumed = 0
+             LIMIT 1",
+            $token_hash,
+            'session'
+        ));
+
+        if (!$row) {
+            return null;
+        }
+
+        $now = current_time('timestamp', true);
+        $expires_ts = strtotime($row->expires_at . ' UTC');
+
+        if ($expires_ts < $now) {
+            $wpdb->delete($this->tokens_table, array('id' => absint($row->id)));
+            $this->clear_cookie('cp_volunteer_session');
+            return null;
+        }
+
+        // Update last seen (best-effort)
+        $wpdb->update(
+            $this->tokens_table,
+            array('last_seen_at' => gmdate('Y-m-d H:i:s', $now)),
+            array('id' => absint($row->id))
+        );
+
+        return absint($row->volunteer_id);
     }
 
     private function get_volunteer($id) {
         global $wpdb;
         $volunteers_table = $wpdb->prefix . 'cp_volunteers';
-        return $wpdb->get_row($wpdb->prepare("SELECT * FROM {$volunteers_table} WHERE id = %d", $id));
+
+        if ($this->volunteers_table_has_column('contact_id')) {
+            $contacts_table = $wpdb->prefix . 'cp_contacts';
+            return $wpdb->get_row($wpdb->prepare(
+                "SELECT v.*, c.first_name, c.last_name, c.email, c.phone
+                 FROM {$volunteers_table} v
+                 LEFT JOIN {$contacts_table} c ON v.contact_id = c.id
+                 WHERE v.id = %d",
+                absint($id)
+            ));
+        }
+
+        return $wpdb->get_row($wpdb->prepare("SELECT * FROM {$volunteers_table} WHERE id = %d", absint($id)));
+    }
+
+    private function find_volunteer_by_email($email) {
+        global $wpdb;
+        $volunteers_table = $wpdb->prefix . 'cp_volunteers';
+
+        $exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $volunteers_table));
+        if ($exists !== $volunteers_table) {
+            return null;
+        }
+
+        if ($this->volunteers_table_has_column('email')) {
+            return $wpdb->get_row($wpdb->prepare("SELECT * FROM {$volunteers_table} WHERE email = %s LIMIT 1", $email));
+        }
+
+        if ($this->volunteers_table_has_column('contact_id')) {
+            $contacts_table = $wpdb->prefix . 'cp_contacts';
+            return $wpdb->get_row($wpdb->prepare(
+                "SELECT v.* FROM {$volunteers_table} v JOIN {$contacts_table} c ON v.contact_id = c.id WHERE c.email = %s LIMIT 1",
+                $email
+            ));
+        }
+
+        return null;
     }
 
     private function get_volunteer_stats($volunteer_id) {
@@ -730,35 +1047,84 @@ class CP_Volunteer_Portal {
     public function ajax_volunteer_login() {
         check_ajax_referer('cp_volunteer_login', 'cp_volunteer_login_nonce');
 
-        $email = sanitize_email($_POST['volunteer_email']);
-
-        global $wpdb;
-        $volunteers_table = $wpdb->prefix . 'cp_volunteers';
-        $volunteer = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$volunteers_table} WHERE email = %s", $email));
-
-        if (!$volunteer) {
-            wp_send_json_error(array('message' => __('Email not found. Please check your email or sign up as a new volunteer.', 'campaign-office')));
+        // Rate limiting: 5 login requests per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_portal_login', 5, 3600)) {
+            wp_send_json_error(array('message' => __('Too many login attempts. Please try again later.', 'campaign-office')));
         }
 
-        // Set secure cookies
-        $hash = wp_hash($volunteer->id . $volunteer->email);
-        setcookie('cp_volunteer_id', $volunteer->id, time() + (30 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN);
-        setcookie('cp_volunteer_hash', $hash, time() + (30 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN);
+        $email = isset($_POST['volunteer_email']) ? sanitize_email($_POST['volunteer_email']) : '';
+        if (empty($email)) {
+            wp_send_json_error(array('message' => __('Please enter a valid email address.', 'campaign-office')));
+        }
 
-        wp_send_json_success(array(
-            'message' => __('Login successful! Redirecting...', 'campaign-office'),
-            'volunteer_id' => $volunteer->id,
-        ));
+        $redirect_to = isset($_POST['redirect_to']) ? esc_url_raw($_POST['redirect_to']) : '';
+        $redirect_to = wp_validate_redirect($redirect_to, home_url('/'));
+
+        $volunteer = $this->find_volunteer_by_email($email);
+
+        // Always return a generic response to avoid email enumeration.
+        $generic_message = __('If that email address is in our system, we’ll send a login link.', 'campaign-office');
+
+        if (!$volunteer) {
+            wp_send_json_success(array('message' => $generic_message));
+        }
+
+        $login_token = $this->create_portal_token_record(absint($volunteer->id), 'login', 15 * MINUTE_IN_SECONDS);
+        if (is_wp_error($login_token)) {
+            wp_send_json_error(array('message' => $login_token->get_error_message()));
+        }
+
+        $login_url = add_query_arg('cpvp_token', $login_token, $redirect_to);
+
+        $site_name = wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES);
+        $subject = sprintf(__('Your Volunteer Portal login link for %s', 'campaign-office'), $site_name);
+        $message = sprintf(
+            __("Use the link below to access your volunteer portal. This link expires in 15 minutes:\n\n%s\n\nIf you did not request this email, you can ignore it.", 'campaign-office'),
+            esc_url_raw($login_url)
+        );
+
+        wp_mail($email, $subject, $message);
+
+        wp_send_json_success(array('message' => $generic_message));
+    }
+
+    public function ajax_volunteer_logout() {
+        check_ajax_referer('campaignpress_volunteer_portal');
+
+        if (!$this->tokens_table_exists()) {
+            $this->clear_cookie('cp_volunteer_session');
+            wp_send_json_success(array('message' => __('Logged out.', 'campaign-office')));
+        }
+
+        $session_token = $this->get_cookie_value('cp_volunteer_session');
+        if (!empty($session_token)) {
+            global $wpdb;
+            $wpdb->delete(
+                $this->tokens_table,
+                array(
+                    'token_hash' => hash('sha256', $session_token),
+                    'token_type' => 'session',
+                )
+            );
+        }
+
+        $this->clear_cookie('cp_volunteer_session');
+
+        wp_send_json_success(array('message' => __('Logged out.', 'campaign-office')));
     }
 
     public function ajax_signup_shift() {
         check_ajax_referer('campaignpress_volunteer_portal');
 
         $volunteer_id = $this->get_current_volunteer_id();
-        $shift_id = intval($_POST['shift_id']);
+        $shift_id = isset($_POST['shift_id']) ? absint($_POST['shift_id']) : 0;
 
         if (!$volunteer_id) {
             wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
+        }
+
+        if (!$shift_id) {
+            wp_send_json_error(array('message' => __('Invalid shift.', 'campaign-office')));
         }
 
         global $wpdb;
@@ -774,11 +1140,15 @@ class CP_Volunteer_Portal {
         }
 
         // Insert assignment
-        $wpdb->insert($this->assignments_table, array(
+        $inserted = $wpdb->insert($this->assignments_table, array(
             'volunteer_id' => $volunteer_id,
             'shift_id' => $shift_id,
             'status' => 'confirmed',
         ));
+
+        if (false === $inserted) {
+            wp_send_json_error(array('message' => __('Failed to sign up for this shift. Please try again.', 'campaign-office')));
+        }
 
         // Update shift filled count
         $wpdb->query($wpdb->prepare("UPDATE {$this->shifts_table} SET filled = filled + 1 WHERE id = %d", $shift_id));
@@ -789,20 +1159,40 @@ class CP_Volunteer_Portal {
     public function ajax_log_hours() {
         check_ajax_referer('cp_log_hours', 'cp_log_hours_nonce');
 
-        $volunteer_id = intval($_POST['volunteer_id']);
-        $activity = sanitize_text_field($_POST['activity']);
-        $hours = floatval($_POST['hours']);
-        $activity_date = sanitize_text_field($_POST['activity_date']);
-        $notes = sanitize_textarea_field($_POST['notes'] ?? '');
+        $volunteer_id = $this->get_current_volunteer_id();
+        if (!$volunteer_id) {
+            wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
+        }
+
+        $activity = isset($_POST['activity']) ? sanitize_text_field($_POST['activity']) : '';
+        $hours = isset($_POST['hours']) ? floatval($_POST['hours']) : 0;
+        $activity_date = isset($_POST['activity_date']) ? sanitize_text_field($_POST['activity_date']) : '';
+        $notes = isset($_POST['notes']) ? sanitize_textarea_field($_POST['notes']) : '';
+
+        if (empty($activity) || empty($activity_date) || $hours <= 0) {
+            wp_send_json_error(array('message' => __('Please complete all required fields.', 'campaign-office')));
+        }
+
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $activity_date)) {
+            wp_send_json_error(array('message' => __('Please provide a valid date.', 'campaign-office')));
+        }
+
+        if ($hours > 24) {
+            wp_send_json_error(array('message' => __('Please enter a valid number of hours.', 'campaign-office')));
+        }
 
         global $wpdb;
-        $wpdb->insert($this->hours_table, array(
-            'volunteer_id' => $volunteer_id,
+        $inserted = $wpdb->insert($this->hours_table, array(
+            'volunteer_id' => absint($volunteer_id),
             'activity' => $activity,
             'hours' => $hours,
             'activity_date' => $activity_date,
             'notes' => $notes,
         ));
+
+        if (false === $inserted) {
+            wp_send_json_error(array('message' => __('Failed to log hours. Please try again.', 'campaign-office')));
+        }
 
         wp_send_json_success(array('message' => __('Hours logged successfully!', 'campaign-office')));
     }
@@ -810,28 +1200,108 @@ class CP_Volunteer_Portal {
     public function ajax_update_profile() {
         check_ajax_referer('cp_update_profile', 'cp_profile_nonce');
 
-        $volunteer_id = intval($_POST['volunteer_id']);
+        $volunteer_id = $this->get_current_volunteer_id();
+        if (!$volunteer_id) {
+            wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
+        }
+
+        $first_name = isset($_POST['first_name']) ? sanitize_text_field($_POST['first_name']) : '';
+        $last_name = isset($_POST['last_name']) ? sanitize_text_field($_POST['last_name']) : '';
+        $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+        $phone = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
+        $skills = isset($_POST['skills']) ? sanitize_textarea_field($_POST['skills']) : '';
+        $availability = isset($_POST['availability']) ? sanitize_textarea_field($_POST['availability']) : '';
+
+        if (empty($email)) {
+            wp_send_json_error(array('message' => __('Please provide a valid email address.', 'campaign-office')));
+        }
 
         global $wpdb;
         $volunteers_table = $wpdb->prefix . 'cp_volunteers';
 
-        $wpdb->update(
-            $volunteers_table,
-            array(
-                'first_name' => sanitize_text_field($_POST['first_name']),
-                'last_name' => sanitize_text_field($_POST['last_name']),
-                'email' => sanitize_email($_POST['email']),
-                'phone' => sanitize_text_field($_POST['phone']),
-                'skills' => sanitize_textarea_field($_POST['skills']),
-                'availability' => sanitize_textarea_field($_POST['availability']),
-            ),
-            array('id' => $volunteer_id)
-        );
+        $volunteer = $this->get_volunteer($volunteer_id);
+        if (!$volunteer) {
+            wp_send_json_error(array('message' => __('Volunteer record not found.', 'campaign-office')));
+        }
+
+        if ($this->volunteers_table_has_column('contact_id') && !empty($volunteer->contact_id)) {
+            $contacts_table = $wpdb->prefix . 'cp_contacts';
+
+            // Prevent email collisions
+            $existing_contact_id = $wpdb->get_var($wpdb->prepare(
+                "SELECT id FROM {$contacts_table} WHERE email = %s AND id != %d",
+                $email,
+                absint($volunteer->contact_id)
+            ));
+
+            if ($existing_contact_id) {
+                wp_send_json_error(array('message' => __('That email address is already in use.', 'campaign-office')));
+            }
+
+            $updated_contact = $wpdb->update(
+                $contacts_table,
+                array(
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'email' => $email,
+                    'phone' => $phone,
+                ),
+                array('id' => absint($volunteer->contact_id))
+            );
+
+            $updated_volunteer = $wpdb->update(
+                $volunteers_table,
+                array(
+                    'skills' => $skills,
+                    'availability' => $availability,
+                ),
+                array('id' => absint($volunteer_id))
+            );
+
+            if ($updated_contact === false || $updated_volunteer === false) {
+                wp_send_json_error(array('message' => __('Failed to update profile. Please try again.', 'campaign-office')));
+            }
+        } else {
+            $update_data = array(
+                'skills' => $skills,
+                'availability' => $availability,
+            );
+
+            if ($this->volunteers_table_has_column('first_name')) {
+                $update_data['first_name'] = $first_name;
+            }
+            if ($this->volunteers_table_has_column('last_name')) {
+                $update_data['last_name'] = $last_name;
+            }
+            if ($this->volunteers_table_has_column('email')) {
+                $update_data['email'] = $email;
+            }
+            if ($this->volunteers_table_has_column('phone')) {
+                $update_data['phone'] = $phone;
+            }
+
+            $updated = $wpdb->update(
+                $volunteers_table,
+                $update_data,
+                array('id' => absint($volunteer_id))
+            );
+
+            if ($updated === false) {
+                wp_send_json_error(array('message' => __('Failed to update profile. Please try again.', 'campaign-office')));
+            }
+        }
 
         wp_send_json_success(array('message' => __('Profile updated successfully!', 'campaign-office')));
     }
 
     public function ajax_get_shifts() {
+        check_ajax_referer('campaignpress_volunteer_portal');
+
+        $volunteer_id = $this->get_current_volunteer_id();
+        if (!$volunteer_id) {
+            wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
+        }
+
         $shifts = $this->render_available_shifts();
         wp_send_json_success(array('html' => $shifts));
     }
@@ -897,7 +1367,7 @@ class CP_Volunteer_Portal {
             wp_enqueue_script('cp-volunteer-portal', CAMPAIGNPRESS_ASSETS_URI . '/js/volunteer-portal.js', array('jquery'), CAMPAIGNPRESS_VERSION, true);
             
             // Localize script with translated strings and AJAX URL
-            wp_localize_script('cp-volunteer-portal', 'campaignpress_vars', array(
+            wp_localize_script('cp-volunteer-portal', 'cp_volunteer_portal_vars', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('campaignpress_volunteer_portal'),
                 'login_error' => __('An error occurred. Please try again.', 'campaign-office'),
@@ -906,6 +1376,10 @@ class CP_Volunteer_Portal {
             ));
         } else {
             // Fallback to inline scripts if file doesn't exist
+            wp_localize_script('campaignpress-main', 'cp_volunteer_portal_vars', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('campaignpress_volunteer_portal'),
+            ));
             wp_add_inline_script('campaignpress-main', $this->get_portal_scripts());
         }
     }
@@ -958,14 +1432,14 @@ class CP_Volunteer_Portal {
             $("#cp-volunteer-login-form").submit(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    url: campaignpress_vars.ajax_url,
+                    url: cp_volunteer_portal_vars.ajax_url,
                     type: "POST",
                     data: $(this).serialize() + "&action=cp_volunteer_login",
                     success: function(response) {
                         if (response.success) {
-                            location.reload();
+                            $(".cp-login-message").html("<div class=\"cp-success-message\">" + (response.data && response.data.message ? response.data.message : "Check your email for a login link.") + "</div>").show();
                         } else {
-                            $(".cp-login-message").html("<p class=\"error\">" + response.data.message + "</p>").show();
+                            $(".cp-login-message").html("<div class=\"cp-error-message\">" + (response.data && response.data.message ? response.data.message : "Unable to send login link.") + "</div>").show();
                         }
                     }
                 });
@@ -973,10 +1447,10 @@ class CP_Volunteer_Portal {
 
             $(document).on("click", ".cp-signup-shift-btn", function() {
                 var shiftId = $(this).data("shift-id");
-                $.post(campaignpress_vars.ajax_url, {
+                $.post(cp_volunteer_portal_vars.ajax_url, {
                     action: "cp_volunteer_signup_shift",
                     shift_id: shiftId,
-                    _wpnonce: campaignpress_vars.nonce
+                    _wpnonce: cp_volunteer_portal_vars.nonce
                 }, function(response) {
                     if (response.success) {
                         alert(response.data.message);
@@ -989,9 +1463,13 @@ class CP_Volunteer_Portal {
         });
 
         function cpVolunteerLogout() {
-            document.cookie = "cp_volunteer_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            document.cookie = "cp_volunteer_hash=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            location.reload();
+            jQuery.post(cp_volunteer_portal_vars.ajax_url, {
+                action: "cp_volunteer_logout",
+                _wpnonce: cp_volunteer_portal_vars.nonce
+            }).always(function() {
+                document.cookie = "cp_volunteer_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                location.reload();
+            });
         }
         ';
     }

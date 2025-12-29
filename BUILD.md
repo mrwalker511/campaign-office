@@ -26,7 +26,8 @@ chmod +x build-production.sh
 The production build includes:
 - ✅ All theme PHP files
 - ✅ Templates and template parts
-- ✅ Compiled CSS and JavaScript
+- ✅ Compiled assets in `assets/dist/` (must run `npm run build` first)
+- ✅ Critical CSS files in `assets/css/critical/`
 - ✅ Images and fonts
 - ✅ Language files
 - ✅ README and documentation
@@ -37,16 +38,20 @@ The production build includes:
 
 The build script automatically excludes:
 - ❌ `.git` directory and git files
-- ❌ `node_modules`
+- ❌ `node_modules` and package files (`package.json`, `package-lock.json`)
+- ❌ Composer files (`composer.json`, `composer.lock`)
+- ❌ Build configuration and scripts (`build/`, `scripts/`)
 - ❌ Tests (`tests/`, `phpunit.xml`, etc.)
-- ❌ Build tools config (`webpack.config.js`, `vite.config.js`, etc.)
-- ❌ Documentation source (`docs/`)
+- ❌ Documentation (`docs/`, `.distignore`, `.github/`)
 - ❌ IDE files (`.vscode`, `.idea`, etc.)
 - ❌ Environment files (`.env`, `.env.*`)
 - ❌ Log files (`*.log`, `debug.log`, etc.)
 - ❌ OS files (`.DS_Store`, `Thumbs.db`, etc.)
 - ❌ Temporary files (`*.tmp`, `.cache`, etc.)
 - ❌ Development dependencies from `vendor/*/tests`
+- ❌ Source files (`assets/react/`, `assets/js/`)
+- ❌ Block source JS files (`blocks/*/index.js`, `blocks/*/view.js`)
+- ❌ Non-critical CSS (keeps only `assets/css/critical/`)
 - ❌ The build scripts themselves
 
 ## Advanced Usage
@@ -121,6 +126,8 @@ npm run build
 # Or if using composer
 composer install --no-dev --optimize-autoloader
 ```
+
+**Important**: The production build script expects compiled assets in `assets/dist/`. If this directory doesn't exist, the zip will include source files instead. Always run `npm run build` before creating the production zip.
 
 ### 3. Test the Theme
 

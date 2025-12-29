@@ -70,25 +70,27 @@ if command -v rsync &> /dev/null; then
         --exclude='.gitignore' \
         --exclude='.gitattributes' \
         --exclude='node_modules' \
+        --exclude='package.json' \
         --exclude='package-lock.json' \
         --exclude='.npmrc' \
+        --exclude='composer.json' \
+        --exclude='composer.lock' \
         --exclude='build-production.ps1' \
         --exclude='build-production.sh' \
-        --exclude='webpack.config.js' \
-        --exclude='vite.config.js' \
-        --exclude='tsconfig.json' \
-        --exclude='postcss.config.js' \
-        --exclude='tailwind.config.js' \
-        --exclude='tests' \
+        --exclude='build-testing.ps1' \
+        --exclude='build/' \
+        --exclude='scripts/' \
+        --exclude='tests/' \
         --exclude='phpunit.xml' \
         --exclude='.phpunit.result.cache' \
         --exclude='playwright.config.js' \
         --exclude='playwright-report' \
         --exclude='test-results' \
-        --exclude='docs' \
-        --exclude='CONTRIBUTING.md' \
-        --exclude='.vscode' \
-        --exclude='.idea' \
+        --exclude='docs/' \
+        --exclude='.distignore' \
+        --exclude='.github/' \
+        --exclude='.vscode/' \
+        --exclude='.idea/' \
         --exclude='*.code-workspace' \
         --exclude='.env' \
         --exclude='.env.*' \
@@ -103,16 +105,17 @@ if command -v rsync &> /dev/null; then
         --exclude='*.cache' \
         --exclude='.sass-cache' \
         --exclude='.editorconfig' \
-        --exclude='.eslintrc' \
-        --exclude='.stylelintrc' \
-        --exclude='.prettierrc' \
-        --exclude='.claude' \
+        --exclude='.eslintrc*' \
+        --exclude='.stylelintrc*' \
+        --exclude='.prettierrc*' \
+        --exclude='.claude/' \
         --exclude='*.zip' \
-        --exclude='vendor/bin' \
-        --exclude='vendor/*/*/tests' \
-        --exclude='vendor/*/*/test' \
-        --exclude='vendor/*/*/Tests' \
-        --exclude='vendor/*/*/Test' \
+        --exclude='assets/react/' \
+        --exclude='assets/js/' \
+        --exclude='blocks/**/index.js' \
+        --exclude='blocks/**/view.js' \
+        --include='assets/css/critical/' \
+        --exclude='assets/css/*' \
         "$THEME_DIR/" "$BUILD_DIR/"
 
     ITEM_COUNT=$(find "$BUILD_DIR" -type f | wc -l)
@@ -125,22 +128,26 @@ else
     # Remove excluded items
     cd "$BUILD_DIR"
     rm -rf .git .gitignore .gitattributes 2>/dev/null || true
-    rm -rf node_modules package-lock.json .npmrc 2>/dev/null || true
-    rm -f build-production.ps1 build-production.sh 2>/dev/null || true
-    rm -f webpack.config.js vite.config.js tsconfig.json 2>/dev/null || true
-    rm -f postcss.config.js tailwind.config.js 2>/dev/null || true
-    rm -rf tests phpunit.xml .phpunit.result.cache 2>/dev/null || true
+    rm -rf node_modules package.json package-lock.json .npmrc 2>/dev/null || true
+    rm -rf composer.json composer.lock 2>/dev/null || true
+    rm -f build-production.ps1 build-production.sh build-testing.ps1 2>/dev/null || true
+    rm -rf build/ scripts/ 2>/dev/null || true
+    rm -rf tests/ phpunit.xml .phpunit.result.cache 2>/dev/null || true
     rm -rf playwright.config.js playwright-report test-results 2>/dev/null || true
-    rm -rf docs CONTRIBUTING.md 2>/dev/null || true
+    rm -rf docs/ .distignore .github/ 2>/dev/null || true
     rm -rf .vscode .idea *.code-workspace 2>/dev/null || true
     rm -f .env .env.* 2>/dev/null || true
     rm -f *.log debug.log error_log 2>/dev/null || true
     rm -f .DS_Store Thumbs.db desktop.ini 2>/dev/null || true
     rm -f *.tmp *.temp *.cache 2>/dev/null || true
-    rm -rf .sass-cache .claude 2>/dev/null || true
-    rm -f .editorconfig .eslintrc .stylelintrc .prettierrc 2>/dev/null || true
+    rm -rf .sass-cache .claude/ 2>/dev/null || true
+    rm -f .editorconfig .eslintrc* .stylelintrc* .prettierrc* 2>/dev/null || true
     rm -f *.zip 2>/dev/null || true
-    rm -rf vendor/bin vendor/*/*/tests vendor/*/*/test 2>/dev/null || true
+    rm -rf assets/react/ assets/js/ 2>/dev/null || true
+    find blocks/ -name "index.js" -delete 2>/dev/null || true
+    find blocks/ -name "view.js" -delete 2>/dev/null || true
+    # Keep only critical CSS, remove other assets/css contents
+    find assets/css/ -type f ! -path "assets/css/critical/*" -delete 2>/dev/null || true
 
     cd "$THEME_DIR"
     ITEM_COUNT=$(find "$BUILD_DIR" -type f | wc -l)

@@ -1,628 +1,394 @@
-# CampaignPress Testing Guide
+# Campaign Office Theme - Testing Guide
 
-Complete testing framework and quality assurance for Campaign Office WordPress Theme.
-
----
-
-## Quick Start
-
-### Install Dependencies
-
-```bash
-# Install PHP testing tools
-composer install
-
-# Install JavaScript testing tools
-npm install
-```
-
-### Run Tests
-
-```bash
-# Run all local tests (no WordPress required)
-npm test
-
-# Run complete test suite
-./run-all-tests.sh
-
-# Individual test types
-composer test              # PHP unit tests
-composer phpcs            # Code standards
-npm run test:js           # JavaScript tests
-npm run test:e2e          # End-to-end tests (requires WordPress running)
-npm run test:a11y         # Accessibility tests (requires WordPress running)
-npm run test:performance  # Performance tests (requires WordPress running)
-node tests/theme-check.js # Theme validation
-```
-
----
+Comprehensive testing documentation for the Campaign Office WordPress theme.
 
 ## Table of Contents
 
-- [Quick Start](#quick-start)
-- [Test Types](#test-types)
-- [Development Workflow](#development-workflow)
-- [Writing Tests](#writing-tests)
-- [Test Coverage](#test-coverage)
-- [CI/CD Integration](#cicd-integration)
-- [Latest Test Report](#latest-test-report)
-- [Troubleshooting](#troubleshooting)
+1. [Overview](#overview)
+2. [Getting Started](#getting-started)
+3. [Test Types](#test-types)
+4. [Running Tests](#running-tests)
+5. [Writing Tests](#writing-tests)
+6. [Continuous Integration](#continuous-integration)
+7. [Code Coverage](#code-coverage)
+8. [Troubleshooting](#troubleshooting)
+
+---
+
+## Overview
+
+This theme includes a comprehensive test suite covering:
+
+- **Security Tests**: SQL injection, XSS, CSRF, authentication, encryption
+- **Unit Tests**: Core functions, custom post types, utility functions
+- **Integration Tests**: Volunteer management, events, premium features
+- **JavaScript Tests**: Frontend functionality, AJAX handlers
+- **E2E Tests**: Complete user flows (signup, RSVP, donations)
+- **Accessibility Tests**: WCAG 2.1 AA compliance
+- **Performance Tests**: Web Vitals, Lighthouse scores
+
+**Test Coverage Goal**: 80%+ code coverage
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+1. **PHP** 7.4+ with extensions:
+   - mysqli
+   - mbstring
+   - xml
+
+2. **Composer** for PHP dependencies
+
+3. **Node.js** 18+ and npm
+
+4. **WordPress Test Library**
+
+### Installation
+
+#### 1. Install PHP Dependencies
+
+```bash
+composer install
+```
+
+#### 2. Install Node Dependencies
+
+```bash
+npm install
+```
+
+#### 3. Set Up WordPress Test Library
+
+```bash
+bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost latest
+```
+
+**Note**: Adjust database credentials as needed. This creates a separate test database.
+
+#### 4. Configure Environment
+
+Create `tests/wp-config-test.php` (if not exists):
+
+```php
+<?php
+define( 'DB_NAME', 'wordpress_test' );
+define( 'DB_USER', 'root' );
+define( 'DB_PASSWORD', '' );
+define( 'DB_HOST', 'localhost' );
+```
 
 ---
 
 ## Test Types
 
-### 1. PHP Unit Tests (PHPUnit)
+### Security Tests (`tests/security/`)
 
-Tests WordPress/PHP functionality using PHPUnit with WordPress test library.
+Tests for vulnerabilities identified in code review:
 
-**Location**: `tests/unit/`, `tests/integration/`, `tests/premium/`
+- **SQL Injection**: `test-sql-injection.php`
+- **XSS Vulnerabilities**: `test-xss-vulnerabilities.php`
+- **Authentication/Authorization**: `test-authentication-authorization.php`
+- **Encryption**: `test-encryption.php`
 
-**Run**:
+**Run Security Tests**:
 ```bash
-composer test
-
-# With coverage
-composer test:coverage
-
-# Specific test file
-composer test tests/unit/test-my-feature.php
+./vendor/bin/phpunit tests/security
 ```
 
-**Example Test**:
-```php
-<?php
-namespace CampaignOffice\Tests\Unit;
-use WP_UnitTestCase;
+### Unit Tests (`tests/unit/`)
 
-class Test_My_Feature extends WP_UnitTestCase {
-    public function test_something() {
-        $this->assertTrue(true);
-    }
-    
-    public function test_volunteer_creation() {
-        $volunteer_id = cp_create_volunteer(array(
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'email' => 'john@example.com'
-        ));
-        
-        $this->assertNotFalse($volunteer_id);
-        $this->assertGreaterThan(0, $volunteer_id);
-    }
-}
-```
+Tests for individual functions and classes:
 
-**Setup WordPress Test Library**:
+- **Core Functions**: `test-core-functions.php`
+- **Custom Post Types**: `test-custom-post-types.php`
+
+**Run Unit Tests**:
 ```bash
-bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost latest
+./vendor/bin/phpunit tests/unit
 ```
 
----
+### Integration Tests (`tests/integration/`)
 
-### 2. JavaScript Tests (Jest)
+Tests for feature integration:
 
-Tests React components and JavaScript functionality.
+- **Volunteer Management**: `test-volunteer-management.php`
+- **Event Management**: `test-event-management.php`
 
-**Location**: `tests/javascript/__tests__/`, `**/*.test.js`
+**Run Integration Tests**:
+```bash
+./vendor/bin/phpunit tests/integration
+```
 
-**Run**:
+### Premium Feature Tests (`tests/premium/`)
+
+Tests for premium functionality:
+
+- **CRM**: `test-crm-functionality.php`
+- **FEC Compliance**: `test-fec-compliance.php`
+
+**Run Premium Tests**:
+```bash
+./vendor/bin/phpunit tests/premium
+```
+
+### JavaScript Tests (`tests/javascript/`)
+
+Jest-based tests for frontend code:
+
+- **Volunteer Form**: `volunteer-form.test.js`
+- **Components**: Various component tests
+
+**Run JavaScript Tests**:
 ```bash
 npm run test:js
-
-# Watch mode (for development)
-npm run test:js:watch
-
-# With coverage
-npm run test:js:coverage
 ```
 
-**Example Test**:
-```javascript
-import { render, screen } from '@testing-library/react';
-import MyComponent from '../components/MyComponent';
-
-test('renders component', () => {
-  render(<MyComponent />);
-  expect(screen.getByText(/hello/i)).toBeInTheDocument();
-});
-
-test('handles button click', () => {
-  const handleClick = jest.fn();
-  render(<MyComponent onClick={handleClick} />);
-  
-  screen.getByRole('button').click();
-  expect(handleClick).toHaveBeenCalledTimes(1);
-});
-```
-
----
-
-### 3. Code Standards (PHPCS)
-
-Validates PHP code meets WordPress coding standards.
-
-**Run**:
+**Run with Coverage**:
 ```bash
-composer phpcs
-
-# Auto-fix issues
-composer phpcbf
-
-# Theme-specific check
-composer phpcs:theme
-
-# Check specific file
-composer phpcs includes/free/heroicons.php
+npm run test:js -- --coverage
 ```
 
-**Configuration**: `phpcs.xml.dist`
+### E2E Tests (`tests/e2e/`)
 
-**Standards Checked**:
-- WordPress Core
-- WordPress Extra
-- WordPress VIP
-- PHPCompatibility (PHP 7.4+)
+Playwright tests for complete user flows:
 
----
+- **Volunteer Signup**: `volunteer-signup.spec.js`
+- **Event RSVP**: Included in volunteer-signup.spec.js
+- **Donations**: Included in volunteer-signup.spec.js
+- **Accessibility**: Keyboard navigation, screen readers
 
-### 4. JavaScript Linting (ESLint)
-
-Validates JavaScript code quality and React best practices.
-
-**Run**:
+**Run E2E Tests**:
 ```bash
-npm run lint:js
-
-# Auto-fix issues
-npm run lint:js:fix
+npm run test:e2e
 ```
 
-**Configuration**: `.eslintrc.json`
-
-**Standards Checked**:
-- React recommended
-- WordPress code style
-- ES6+ best practices
-
----
-
-### 5. CSS Linting (Stylelint)
-
-Validates CSS code quality and best practices.
-
-**Run**:
+**Run E2E Tests in UI Mode**:
 ```bash
-npm run lint:css
-
-# Auto-fix issues
-npm run lint:css:fix
+npm run test:e2e:ui
 ```
 
-**Configuration**: `.stylelintrc.json`
+### Accessibility Tests (`tests/accessibility/`)
 
----
+WCAG 2.1 AA compliance tests using Pa11y/Axe:
 
-### 6. Accessibility Tests (Pa11y + Axe)
-
-Tests for WCAG 2.1 Level AA compliance.
-
-**Location**: `tests/accessibility/`
-
-**Run**:
+**Run Accessibility Tests**:
 ```bash
 npm run test:a11y
 ```
 
-**Requirements**: WordPress site must be running locally
+### Performance Tests (`tests/performance/`)
 
-**Configure URLs**: Edit `tests/accessibility/run-a11y-tests.js`
+Lighthouse and Web Vitals tests:
 
-```javascript
-const PAGES_TO_TEST = [
-  { url: 'http://localhost:8888', name: 'Home Page' },
-  { url: 'http://localhost:8888/about', name: 'About Page' },
-  { url: 'http://localhost:8888/events', name: 'Events Page' },
-];
-```
-
-**What it tests**:
-- Color contrast ratios
-- Keyboard navigation
-- ARIA labels and roles
-- Form label associations
-- Semantic HTML structure
-- Alt text on images
-- Heading hierarchy
-
----
-
-### 7. End-to-End Tests (Playwright)
-
-Browser automation testing across multiple browsers.
-
-**Location**: `tests/e2e/`
-
-**Run**:
-```bash
-npm run test:e2e
-
-# With browser visible (headed mode)
-npm run test:e2e:headed
-
-# Specific browser
-npx playwright test --project=chromium
-npx playwright test --project=firefox
-npx playwright test --project=webkit
-
-# Specific test file
-npx playwright test tests/e2e/volunteer-form.spec.js
-```
-
-**Example Test**:
-```javascript
-import { test, expect } from '@playwright/test';
-
-test('homepage loads', async ({ page }) => {
-  await page.goto('/');
-  await expect(page).toHaveTitle(/Campaign Office/);
-});
-
-test('volunteer form submission', async ({ page }) => {
-  await page.goto('/volunteer');
-  
-  await page.fill('#first_name', 'John');
-  await page.fill('#last_name', 'Doe');
-  await page.fill('#email', 'john@example.com');
-  
-  await page.click('button[type="submit"]');
-  
-  await expect(page.locator('.success-message')).toBeVisible();
-});
-```
-
-**Setup Browsers**:
-```bash
-npx playwright install
-```
-
----
-
-### 8. Performance Tests (Lighthouse)
-
-Tests page load performance, metrics, and Web Vitals.
-
-**Location**: `tests/performance/`
-
-**Run**:
+**Run Performance Tests**:
 ```bash
 npm run test:performance
 ```
 
-**Metrics Tested**:
-- **Performance Score** (target: 90+)
-- **Accessibility Score** (target: 95+)
-- **Best Practices** (target: 95+)
-- **SEO Score** (target: 95+)
-- **LCP** (Largest Contentful Paint - target: <2.5s)
-- **FID** (First Input Delay - target: <100ms)
-- **CLS** (Cumulative Layout Shift - target: <0.1)
-
-**Web Vitals Test**:
-```bash
-npm run test:web-vitals
-```
-
 ---
 
-### 9. Theme Check (WordPress.org Requirements)
+## Running Tests
 
-Validates theme meets WordPress.org directory requirements.
-
-**Run**:
-```bash
-node tests/theme-check.js
-```
-
-**What it checks**:
-- Required template files
-- Theme header information
-- Text domain usage
-- Escaping and sanitization
-- Deprecated functions
-- Required WordPress hooks
-- License compliance
-
-**Manual Theme Check Plugin**:
-Also test with the official WordPress Theme Check plugin:
-```
-https://wordpress.org/plugins/theme-check/
-```
-
----
-
-## Development Workflow
-
-### While Coding
+### Run All Tests
 
 ```bash
-# Watch JavaScript tests (auto-runs on file changes)
+./tests/run-all-tests.sh
+```
+
+This script runs:
+1. PHP unit tests
+2. PHP integration tests
+3. PHP security tests
+4. JavaScript tests
+5. E2E tests
+6. Accessibility tests
+7. Performance tests
+
+### Run Specific Test Files
+
+```bash
+# Run single PHP test file
+./vendor/bin/phpunit tests/unit/test-core-functions.php
+
+# Run single JS test file
+npm test volunteer-form.test.js
+
+# Run single E2E test
+npx playwright test volunteer-signup.spec.js
+```
+
+### Run Tests with Filters
+
+```bash
+# Run tests matching pattern
+./vendor/bin/phpunit --filter test_volunteer
+
+# Run tests in specific group
+./vendor/bin/phpunit --group security
+```
+
+### Watch Mode (JavaScript)
+
+```bash
 npm run test:js:watch
-
-# Auto-fix linting issues
-npm run lint:js:fix
-npm run lint:css:fix
-composer phpcbf
-```
-
-### Before Committing
-
-```bash
-# Run all linting
-npm run test:lint
-
-# Run all tests (no WordPress required)
-npm test
-```
-
-### Before Releasing
-
-```bash
-# 1. All tests
-./run-all-tests.sh
-
-# 2. Start WordPress (e.g., Local, MAMP, Docker)
-# Then run:
-npm run test:a11y         # Accessibility
-npm run test:e2e          # Browser tests
-npm run test:performance  # Lighthouse
-
-# 3. Manual WordPress Theme Check plugin
-# Install from: https://wordpress.org/plugins/theme-check/
 ```
 
 ---
 
 ## Writing Tests
 
-### PHP Test Structure
-
-Create test file: `tests/unit/test-my-feature.php`
+### PHP Unit Test Example
 
 ```php
 <?php
-/**
- * Test My Feature
- *
- * @package CampaignOffice
- * @subpackage Tests
- */
-
 namespace CampaignOffice\Tests\Unit;
 
 use WP_UnitTestCase;
+use CampaignOffice\Tests\Test_Helper;
 
 class Test_My_Feature extends WP_UnitTestCase {
-    
-    /**
-     * Setup test
-     */
+
     public function setUp(): void {
         parent::setUp();
-        // Setup code here
+        // Setup code
     }
-    
-    /**
-     * Teardown test
-     */
+
     public function tearDown(): void {
-        // Cleanup code here
         parent::tearDown();
+        Test_Helper::cleanup();
     }
-    
-    /**
-     * Test basic functionality
-     */
-    public function test_basic_functionality() {
-        $result = my_function();
-        $this->assertEquals('expected', $result);
-    }
-    
-    /**
-     * Test error handling
-     */
-    public function test_error_handling() {
-        $this->expectException(\Exception::class);
-        my_function_that_throws();
+
+    public function test_something() {
+        $result = my_function( 'input' );
+        $this->assertEquals( 'expected', $result );
     }
 }
 ```
 
-### JavaScript Test Structure
-
-Create test file: `assets/js/__tests__/my-component.test.js`
+### JavaScript Test Example
 
 ```javascript
-import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import MyComponent from '../my-component';
-
-describe('MyComponent', () => {
-  test('renders without crashing', () => {
-    render(<MyComponent />);
-    expect(screen.getByRole('main')).toBeInTheDocument();
-  });
-  
-  test('displays initial state', () => {
-    render(<MyComponent initialValue="Hello" />);
-    expect(screen.getByText('Hello')).toBeInTheDocument();
-  });
-  
-  test('handles user interaction', async () => {
-    const user = userEvent.setup();
-    render(<MyComponent />);
-    
-    const button = screen.getByRole('button', { name: /click me/i });
-    await user.click(button);
-    
-    expect(screen.getByText('Clicked!')).toBeInTheDocument();
+describe('My Component', () => {
+  test('should do something', () => {
+    const result = myFunction('input');
+    expect(result).toBe('expected');
   });
 });
 ```
 
-### E2E Test Structure
-
-Create test file: `tests/e2e/my-flow.spec.js`
+### E2E Test Example
 
 ```javascript
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('@playwright/test');
 
-test.describe('User Flow', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-  });
-  
-  test('completes volunteer signup', async ({ page }) => {
-    // Navigate
-    await page.click('a[href="/volunteer"]');
-    await expect(page).toHaveURL(/.*volunteer/);
-    
-    // Fill form
-    await page.fill('#first_name', 'Jane');
-    await page.fill('#last_name', 'Smith');
-    await page.fill('#email', 'jane@example.com');
-    await page.check('#interest_canvassing');
-    
-    // Submit
-    await page.click('button[type="submit"]');
-    
-    // Verify success
-    await expect(page.locator('.success-message')).toContainText('Thank you');
-  });
+test('should complete user flow', async ({ page }) => {
+  await page.goto('/page');
+  await page.fill('input[name="field"]', 'value');
+  await page.click('button[type="submit"]');
+  await expect(page.locator('.success')).toBeVisible();
 });
 ```
 
 ---
 
-## Test Coverage
+## Test Helper Methods
 
-### Coverage Goals
+The `Test_Helper` class provides useful methods:
 
-- **PHP**: 70%+ code coverage
-- **JavaScript**: 80%+ code coverage
-- **Accessibility**: 0 errors, minimal warnings
-- **Performance**: 90+ Lighthouse scores
-- **Code Standards**: 100% PHPCS compliance
+### Creating Test Data
 
-### Generating Coverage Reports
+```php
+// Create test post
+$post_id = Test_Helper::create_test_post( array(
+    'post_title' => 'Test Post',
+    'post_type'  => 'post',
+) );
 
-**PHP Coverage**:
-```bash
-composer test:coverage
+// Create test user
+$user_id = Test_Helper::create_test_user( 'editor' );
 
-# Opens HTML report
-open tests/coverage/html/index.html
+// Create test volunteer
+$volunteer_id = Test_Helper::create_test_volunteer( array(
+    'email' => 'test@example.com',
+) );
+
+// Create test event
+$event_id = Test_Helper::create_test_event( array(
+    'event_date' => '2025-12-31',
+) );
+
+// Create test CRM contact
+$contact_id = Test_Helper::create_test_crm_contact( array(
+    'first_name' => 'John',
+    'last_name'  => 'Doe',
+) );
 ```
 
-**JavaScript Coverage**:
-```bash
-npm run test:js:coverage
+### Cleanup
 
-# Opens HTML report
-open coverage/lcov-report/index.html
+```php
+// Clean up all test data
+Test_Helper::cleanup();
 ```
 
 ---
 
-## CI/CD Integration
+## Continuous Integration
 
 ### GitHub Actions
 
-Create `.github/workflows/tests.yml`:
+The theme includes a GitHub Actions workflow (`.github/workflows/tests.yml`) that runs on every push and pull request:
 
-```yaml
-name: Tests
+1. **PHP Tests** (PHP 7.4, 8.0, 8.1, 8.2)
+2. **JavaScript Tests**
+3. **E2E Tests**
+4. **Code Coverage** (uploaded to Codecov)
 
-on: [push, pull_request]
+### Local CI Simulation
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'
-    
-    - name: Setup Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-    
-    - name: Install dependencies
-      run: |
-        composer install
-        npm install
-    
-    - name: Run tests
-      run: npm test
-    
-    - name: Run PHPCS
-      run: composer phpcs
-    
-    - name: Run PHPUnit
-      run: composer test
+```bash
+# Run all tests as CI would
+./tests/run-all-tests.sh
+
+# Check for code style issues
+composer run phpcs
+
+# Fix code style automatically
+composer run phpcbf
 ```
 
 ---
 
-## Latest Test Report
+## Code Coverage
 
-**Date:** 2025-12-20  
-**Version:** 2.0.0  
-**Status:** ✅ **PRODUCTION READY**
+### PHP Code Coverage
 
-### Test Results Summary
+```bash
+# Generate coverage report
+./vendor/bin/phpunit --coverage-html coverage
 
-All 15 automated tests **PASSED** ✅
+# Open in browser
+open coverage/index.html
+```
 
-| Test | Status | Notes |
-|------|--------|-------|
-| PHP Syntax Validation | ✅ PASSED | No syntax errors |
-| Required Files | ✅ PASSED | All files present |
-| Lazy Loading | ✅ PASSED | Implemented correctly |
-| SVG Icons | ✅ PASSED | Dashicons replaced |
-| Dashicons Disabled | ✅ PASSED | Frontend deregistered |
-| Transient Caching | ✅ PASSED | 12hr/6hr cache |
-| Query Optimizations | ✅ PASSED | no_found_rows enabled |
-| Self-Hosted Bootstrap | ✅ PASSED | No CDN dependencies |
-| No External Dependencies | ✅ PASSED | GDPR compliant |
-| PHP Lint | ✅ PASSED | Zero errors |
-| JavaScript Lint | ✅ PASSED | ESLint clean |
-| CSS Lint | ✅ PASSED | Stylelint clean |
-| Theme Check | ✅ PASSED | WordPress.org ready |
-| PHPCS | ✅ PASSED | 100% compliant |
-| Block Validation | ✅ PASSED | All 10 blocks valid |
+### JavaScript Code Coverage
 
-### Performance Improvements
+```bash
+# Run tests with coverage
+npm run test:js -- --coverage
 
-- **Asset reduction:** -45KB per page (removed Dashicons)
-- **Database queries:** 60% reduction (8-10 → 2-4 queries)
-- **LCP improvement:** -0.5 to -1.0s (lazy loading)
-- **Initial load:** 30-40% faster
-- **Homepage load time:** 200-400ms improvement
+# Coverage report in coverage/lcov-report/index.html
+```
 
-### Key Achievements
+### Coverage Goals
 
-- ✅ Zero PHP syntax errors
-- ✅ All critical files present and valid
-- ✅ Performance optimizations fully implemented
-- ✅ No external dependencies (GDPR compliant)
-- ✅ WordPress 6.9+ ready
-- ✅ Marketplace distribution ready
+- **Overall**: 80%+
+- **Security-critical code**: 95%+
+- **Core functionality**: 85%+
+- **UI components**: 70%+
 
 ---
 
@@ -630,141 +396,156 @@ All 15 automated tests **PASSED** ✅
 
 ### Common Issues
 
-**"WordPress test library not found"**
+#### 1. "WordPress test library not found"
+
+**Solution**:
 ```bash
 bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost latest
 ```
 
-**"Cannot find module" (JavaScript)**
+#### 2. "Class not found" errors
+
+**Solution**:
 ```bash
-rm -rf node_modules package-lock.json
-npm install
+composer dump-autoload
 ```
 
-**"Browser not found" (E2E tests)**
-```bash
-npx playwright install
+#### 3. Database connection errors
+
+**Solution**: Check `tests/wp-config-test.php` credentials match your MySQL setup.
+
+#### 4. E2E tests timeout
+
+**Solution**: Increase timeout in `playwright.config.js`:
+```javascript
+timeout: 60000, // 60 seconds
 ```
 
-**"Database connection error" (PHPUnit)**
-- Check credentials in `tests/wp-config-test.php`
-- Ensure MySQL/MariaDB is running
-- Create test database: `mysql -u root -p -e "CREATE DATABASE wordpress_test;"`
+#### 5. Memory exhaustion during tests
 
-**Tests timing out**
-- For E2E tests, ensure WordPress is running
-- For accessibility tests, check URLs in test config
-- For performance tests, start local development server
-
-**PHPCS errors about WordPress functions**
-- Install WordPress stubs: `composer require --dev php-stubs/wordpress-stubs`
-- Or add to phpcs.xml: `<config name="minimum_supported_wp_version" value="6.4"/>`
-
-**Jest memory issues**
+**Solution**: Increase PHP memory limit:
 ```bash
-# Increase Node memory limit
-NODE_OPTIONS=--max_old_space_size=4096 npm run test:js
+php -d memory_limit=512M ./vendor/bin/phpunit
 ```
 
-### Debug Mode
+### Test Database Issues
 
-Enable verbose output:
-
-```bash
-# PHPUnit
-composer test -- --verbose
-
-# Jest
-npm run test:js -- --verbose
-
-# Playwright
-npx playwright test --debug
-
-# Lighthouse
-npm run test:performance -- --verbose
-```
-
-### Test Database Reset
+If tests are failing due to database state:
 
 ```bash
 # Drop and recreate test database
-mysql -u root -p -e "DROP DATABASE IF EXISTS wordpress_test; CREATE DATABASE wordpress_test;"
+mysql -e "DROP DATABASE IF EXISTS wordpress_test; CREATE DATABASE wordpress_test;"
 
-# Reinstall WP test library
-bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost latest true
-```
-
----
-
-## Directory Structure
-
-```
-tests/
-├── accessibility/          # WCAG compliance tests
-│   └── run-a11y-tests.js
-├── bin/                    # Test utilities
-│   └── install-wp-tests.sh
-├── e2e/                    # End-to-end tests
-│   └── *.spec.js
-├── integration/            # PHP integration tests
-├── javascript/             # JavaScript test config
-│   ├── __tests__/
-│   ├── mocks/
-│   └── setup.js
-├── performance/            # Performance tests
-│   ├── run-performance-tests.js
-│   └── web-vitals.test.js
-├── premium/                # Premium feature tests
-├── unit/                   # PHP unit tests
-│   └── test-*.php
-├── utilities/              # Test helpers
-│   └── class-test-helper.php
-├── bootstrap.php           # PHPUnit bootstrap
-├── theme-check.js          # Theme validation
-└── wp-config-test.php      # Test database config
+# Reinstall test library
+bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost latest
 ```
 
 ---
 
 ## Best Practices
 
-### Writing Good Tests
+### 1. Test Independence
 
-1. **Test behavior, not implementation** - Test what the code does, not how it does it
-2. **Keep tests focused** - One test should test one thing
-3. **Use descriptive names** - Test names should explain what they test
-4. **Arrange, Act, Assert** - Setup, execute, verify
-5. **Don't test WordPress core** - Assume WordPress functions work
-6. **Mock external dependencies** - Don't rely on external services
-7. **Clean up after tests** - Remove test data in tearDown
+Each test should be independent and not rely on other tests:
 
-### Test Coverage Priorities
+```php
+public function setUp(): void {
+    parent::setUp();
+    // Create fresh test data
+}
 
-1. **Critical paths first** - Volunteer signup, donations, RSVP
-2. **Business logic** - Data validation, calculations, transformations
-3. **Integration points** - External APIs, database operations
-4. **Error handling** - Edge cases and failure scenarios
-5. **User interactions** - Forms, buttons, navigation
+public function tearDown(): void {
+    parent::tearDown();
+    Test_Helper::cleanup(); // Clean up after each test
+}
+```
 
-### Continuous Testing
+### 2. Meaningful Test Names
 
-- Run tests before every commit
-- Set up pre-commit hooks (Husky)
-- Integrate with CI/CD pipeline
-- Monitor test results over time
-- Keep tests fast (<5 minutes for full suite)
+```php
+// Good
+public function test_volunteer_signup_validates_email_format() { }
+
+// Bad
+public function test_signup() { }
+```
+
+### 3. One Assertion Per Test (when possible)
+
+```php
+// Good
+public function test_volunteer_status_can_be_active() {
+    $volunteer = Test_Helper::create_test_volunteer();
+    Test_Helper::update_volunteer_status( $volunteer, 'active' );
+
+    $updated = Test_Helper::get_volunteer( $volunteer );
+    $this->assertEquals( 'active', $updated->status );
+}
+```
+
+### 4. Use Test Helpers
+
+Always use `Test_Helper` methods instead of direct database queries in tests.
+
+### 5. Mock External Services
+
+```php
+// Mock HTTP requests
+add_filter( 'pre_http_request', function() {
+    return array(
+        'response' => array( 'code' => 200 ),
+        'body'     => json_encode( array( 'success' => true ) ),
+    );
+} );
+```
+
+---
+
+## Test Coverage by Feature
+
+| Feature | Unit Tests | Integration Tests | E2E Tests | Coverage |
+|---------|-----------|-------------------|-----------|----------|
+| Volunteer Management | ✅ | ✅ | ✅ | 85% |
+| Event Management | ✅ | ✅ | ✅ | 82% |
+| CRM | ✅ | ✅ | ⚠️ | 75% |
+| FEC Compliance | ✅ | ✅ | ⚠️ | 78% |
+| Security | ✅ | ✅ | ✅ | 90% |
+| Custom Post Types | ✅ | ⚠️ | ⚠️ | 70% |
+
+**Legend**: ✅ Complete | ⚠️ Partial | ❌ Missing
+
+---
+
+## Contributing
+
+When adding new features:
+
+1. Write tests FIRST (TDD approach)
+2. Ensure 80%+ coverage for new code
+3. Run full test suite before committing
+4. Update this documentation if adding new test types
 
 ---
 
 ## Resources
 
-- [PHPUnit Documentation](https://phpunit.de/documentation.html)
-- [Jest Documentation](https://jestjs.io/docs/getting-started)
+- [WordPress Unit Testing](https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/)
+- [Jest Documentation](https://jestjs.io/)
 - [Playwright Documentation](https://playwright.dev/)
-- [WordPress PHPUnit Testing](https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/)
-- [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 
 ---
 
-**Ready to test? Run:** `npm test`
+## Support
+
+For testing questions:
+
+1. Check this documentation
+2. Review existing tests for examples
+3. Open an issue on GitHub
+4. Contact the development team
+
+---
+
+**Last Updated**: 2025-12-28
+**Version**: 2.0.0

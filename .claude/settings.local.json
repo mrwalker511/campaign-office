@@ -43,7 +43,10 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(powershell -ExecutionPolicy Bypass -File build-production.ps1:*)",
       "Bash(del campaign-office-2.0.0.zip)",
-      "Bash(Select-String -Pattern \"Building|Validating|Reading|Creating|Copying|ZIP|Complete|Error|Size|Files|Location\" -Context 0)"
+      "Bash(Select-String -Pattern \"Building|Validating|Reading|Creating|Copying|ZIP|Complete|Error|Size|Files|Location\" -Context 0)",
+      "WebSearch",
+      "WebFetch(domain:vps.do)",
+      "Bash(powershell -ExecutionPolicy Bypass -Command \"& ''.\\\\build-production.ps1''\")"
     ],
     "deny": [],
     "ask": []

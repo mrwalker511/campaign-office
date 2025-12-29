@@ -72,13 +72,14 @@ $ExcludeDirs = @(
     "node_modules",
     "tests",
     "docs",
+    "build",
     ".vscode",
     ".idea",
     ".claude",
     "playwright-report",
     "test-results",
     ".sass-cache",
-    "vendor\bin"
+    "vendor"
 )
 
 $ExcludeFiles = @(
@@ -118,14 +119,27 @@ $ExcludeFiles = @(
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-# Build robocopy command
-$XD = ($ExcludeDirs | ForEach-Object { Join-Path $ThemeDir $_ }) -join '" "'
-$XF = $ExcludeFiles -join '" "'
+# Build robocopy command (XD and XF expect names, not full paths)
+# Each excluded item needs to be a separate argument
+$RoboCopyArgs = @(
+    $ThemeDir,
+    $BuildDir,
+    "/E", "/NJH", "/NJS", "/NP", "/NFL", "/NDL", "/R:1", "/W:1"
+)
 
-# Use robocopy for fast copying
-$RoboCopyArgs = "`"$ThemeDir`" `"$BuildDir`" /E /NJH /NJS /NP /NFL /NDL /R:1 /W:1 /XD `"$XD`" /XF `"$XF`""
+# Add excluded directories
+if ($ExcludeDirs.Count -gt 0) {
+    $RoboCopyArgs += "/XD"
+    $RoboCopyArgs += $ExcludeDirs
+}
 
-$null = Invoke-Expression "robocopy $RoboCopyArgs"
+# Add excluded files
+if ($ExcludeFiles.Count -gt 0) {
+    $RoboCopyArgs += "/XF"
+    $RoboCopyArgs += $ExcludeFiles
+}
+
+$null = & robocopy $RoboCopyArgs
 
 # Robocopy exit codes: 0-7 are success (1=files copied, 2=extra files found, etc.)
 $ExitCode = $LASTEXITCODE
@@ -191,7 +205,7 @@ if (Test-Path $ZipPath) {
 # Create ZIP using .NET for better performance
 try {
     Add-Type -Assembly "System.IO.Compression.FileSystem"
-    [System.IO.Compression.ZipFile]::CreateFromDirectory($BuildDir, $ZipPath, [System.IO.Compression.CompressionLevel]::Optimal, $false)
+    [System.IO.Compression.ZipFile]::CreateFromDirectory($BuildDir, $ZipPath, [System.IO.Compression.CompressionLevel]::Optimal, $true)
 
     $ZipSize = (Get-Item $ZipPath).Length
     $ZipSizeKB = [math]::Round($ZipSize / 1KB, 2)

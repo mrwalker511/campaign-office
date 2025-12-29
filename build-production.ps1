@@ -5,6 +5,7 @@
 
 .DESCRIPTION
     Creates a clean production ZIP excluding development files, tests, and git history.
+    
     Includes only files necessary for theme distribution.
 
 .PARAMETER OutputDir
@@ -66,10 +67,22 @@ $BuildDir = Join-Path $TempDir $ThemeName
 Write-Host "[3/5] Creating temporary build directory..." -ForegroundColor $InfoColor
 New-Item -ItemType Directory -Path $BuildDir -Force | Out-Null
 
-# Files and directories to EXCLUDE
-$ExcludePatterns = @(
-    # Version control
+# Files and directories to EXCLUDE (simple names only, no wildcards for robocopy)
+$ExcludeDirs = @(
     ".git",
+    "node_modules",
+    "tests",
+    "docs",
+    ".vscode",
+    ".idea",
+    ".claude",
+    "playwright-report",
+    "test-results",
+    ".sass-cache",
+    "vendor\bin"
+)
+
+$ExcludeFiles = @(
     ".gitignore",
     ".gitattributes",
 
@@ -107,22 +120,14 @@ $ExcludePatterns = @(
     ".vscode",
     ".idea",
     "*.code-workspace",
-
-    # Environment files
     ".env",
     ".env.*",
-
-    # Logs
     "*.log",
     "debug.log",
     "error_log",
-
-    # OS files
     ".DS_Store",
     "Thumbs.db",
     "desktop.ini",
-
-    # Temporary files
     "*.tmp",
     "*.temp",
     "*.cache",
@@ -179,49 +184,22 @@ function Should-Exclude {
                 return $true
             }
         }
-        # Handle directory/file names
-        else {
-            $PathParts = $RelativePath -split '[\\/]'
-            if ($PathParts -contains $Pattern) {
-                return $true
-            }
-            if ($RelativePath -eq $Pattern) {
-                return $true
-            }
-        }
+        -not $skip
     }
 
-    return $false
-}
-
-# Copy files recursively
-$ItemCount = 0
-$ExcludedCount = 0
-
-Get-ChildItem -Path $ThemeDir -Recurse -Force | ForEach-Object {
-    $SourcePath = $_.FullName
-
-    if (Should-Exclude $SourcePath) {
-        $ExcludedCount++
-        return
-    }
-
-    $RelativePath = $SourcePath.Substring($ThemeDir.Length + 1)
-    $DestPath = Join-Path $BuildDir $RelativePath
-
-    if ($_.PSIsContainer) {
-        New-Item -ItemType Directory -Path $DestPath -Force | Out-Null
-    } else {
-        $DestDir = Split-Path $DestPath -Parent
-        if (-not (Test-Path $DestDir)) {
-            New-Item -ItemType Directory -Path $DestDir -Force | Out-Null
+    Get-ChildItem -Path $ThemeDir -Recurse -File | Where-Object $Filter | ForEach-Object {
+        $dest = $_.FullName.Replace($ThemeDir, $BuildDir)
+        $destDir = Split-Path $dest
+        if (!(Test-Path $destDir)) {
+            New-Item -ItemType Directory -Path $destDir -Force | Out-Null
         }
-        Copy-Item $SourcePath $DestPath -Force
-        $ItemCount++
+        Copy-Item $_.FullName $dest -Force
     }
 }
 
-Write-Host "    Copied $ItemCount files (excluded $ExcludedCount items)" -ForegroundColor $SuccessColor
+# Count files
+$ItemCount = (Get-ChildItem -Path $BuildDir -Recurse -File -ErrorAction SilentlyContinue | Measure-Object).Count
+Write-Host "    Copied $ItemCount files" -ForegroundColor $SuccessColor
 
 # Create ZIP file
 $OutputPath = Resolve-Path $OutputDir
@@ -232,13 +210,29 @@ Write-Host "[5/5] Creating ZIP archive..." -ForegroundColor $InfoColor
 
 # Remove existing ZIP if it exists
 if (Test-Path $ZipPath) {
-    Remove-Item $ZipPath -Force
-    Write-Host "    Removed existing ZIP file" -ForegroundColor $WarningColor
+    try {
+        Remove-Item $ZipPath -Force -ErrorAction Stop
+        Write-Host "    Removed existing ZIP file" -ForegroundColor $WarningColor
+    } catch {
+        # File is locked, try to find a new name
+        $Counter = 1
+        while (Test-Path $ZipPath) {
+            $ZipFileName = "$ThemeName-$Version-build$Counter.zip"
+            $ZipPath = Join-Path $OutputPath $ZipFileName
+            $Counter++
+            if ($Counter -gt 10) {
+                Write-Host "    Error: Cannot create ZIP file, too many existing files" -ForegroundColor $ErrorColor
+                exit 1
+            }
+        }
+        Write-Host "    Warning: Original ZIP in use, creating: $ZipFileName" -ForegroundColor $WarningColor
+    }
 }
 
-# Create ZIP (requires PowerShell 5.0+)
+# Create ZIP using .NET for better performance
 try {
-    Compress-Archive -Path $BuildDir -DestinationPath $ZipPath -CompressionLevel Optimal
+    Add-Type -Assembly "System.IO.Compression.FileSystem"
+    [System.IO.Compression.ZipFile]::CreateFromDirectory($BuildDir, $ZipPath, [System.IO.Compression.CompressionLevel]::Optimal, $true)
 
     $ZipSize = (Get-Item $ZipPath).Length
     $ZipSizeKB = [math]::Round($ZipSize / 1KB, 2)
@@ -264,7 +258,7 @@ try {
 } finally {
     # Cleanup temp directory
     if (Test-Path $TempDir) {
-        Remove-Item $TempDir -Recurse -Force
+        Remove-Item $TempDir -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
 

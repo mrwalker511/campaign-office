@@ -17,10 +17,12 @@ if (!defined('ABSPATH')) {
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-performance.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-template-loader.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-contact-manager.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-script-manager.php';
 
 // Initialize Core Systems
 CampaignPress\Core\Performance::init();
 CampaignPress\Core\Template_Loader::init();
+CampaignPress\Core\Script_Manager::init();
 $GLOBALS['cp_contact_manager'] = new CampaignPress_Contact_Manager();
 
 

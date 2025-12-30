@@ -81,6 +81,22 @@ $BuildDir = Join-Path $TempDir $ThemeName
 Write-Host "[3/5] Creating temporary build directory..." -ForegroundColor $InfoColor
 New-Item -ItemType Directory -Path $BuildDir -Force | Out-Null
 
+# Check for compiled assets
+Write-Host "[3.1/5] Validating compiled assets..." -ForegroundColor $InfoColor
+$DistPath = Join-Path $ThemeDir "assets\dist"
+if (-not (Test-Path $DistPath)) {
+    Write-Host "Error: assets/dist directory not found. Run 'npm run build' first." -ForegroundColor $ErrorColor
+    exit 1
+} else {
+    $DistCount = (Get-ChildItem -Path $DistPath -Recurse -File | Measure-Object).Count
+    if ($DistCount -eq 0) {
+        Write-Host "Error: assets/dist directory is empty. Run 'npm run build' first." -ForegroundColor $ErrorColor
+        exit 1
+    } else {
+        Write-Host "    Found $DistCount compiled assets" -ForegroundColor $SuccessColor
+    }
+}
+
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
 # Define excluded directories
@@ -133,50 +149,46 @@ $ExcludeFiles = @(
     ".stylelintrc*",
     ".prettierrc*",
     "*.zip"
-)
+) -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
 
-# Use robocopy for fast, selective copying
-$ExcludeDirArgs = $ExcludeDirs | ForEach-Object { "/XD `"$_`"" }
-$ExcludeFileArgs = $ExcludeFiles | ForEach-Object { "/XF `"$_`"" }
-$RobocopyArgs = @(
-    "`"$ThemeDir`"",
-    "`"$BuildDir`"",
-    "/E",  # Copy subdirectories including empty ones
-    "/NFL", # No file list
-    "/NDL", # No directory list
-    "/NJH", # No job header
-    "/NJS", # No job summary
-    "/NP"   # No progress
-) + $ExcludeDirArgs + $ExcludeFileArgs
-
-$RobocopyCmd = "robocopy $($RobocopyArgs -join ' ')"
-Invoke-Expression $RobocopyCmd | Out-Null
-
-# Robocopy exit codes: 0-7 are success (0=no files, 1=files copied, etc.)
-if ($LASTEXITCODE -gt 7) {
-    Write-Host "Error: File copy failed (robocopy exit code: $LASTEXITCODE)" -ForegroundColor $ErrorColor
-    exit 1
-}
-
-# Remove assets/react and assets/js (source files)
-$SourceDirs = @("assets\react", "assets\js")
-foreach ($SourceDir in $SourceDirs) {
-    $FullPath = Join-Path $BuildDir $SourceDir
-    if (Test-Path $FullPath) {
-        Remove-Item $FullPath -Recurse -Force -ErrorAction SilentlyContinue
-    }
-}
-
-# Keep only critical CSS - remove all other CSS
-if (Test-Path "$BuildDir\assets\css") {
-    $CriticalCssPath = "$BuildDir\assets\css\critical"
-    $TempCriticalPath = "$TempDir\critical-backup"
+Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
     if (Test-Path $CriticalCssPath) {
         Copy-Item -Path $CriticalCssPath -Destination $TempCriticalPath -Recurse -Force
     }
 
-    Remove-Item "$BuildDir\assets\css" -Recurse -Force -ErrorAction SilentlyContinue
+            if (-not $ExcludeDir) {
+                # Recurse into directory
+                $NewDest = Join-Path $DestPath $Item.Name
+                Copy-FilesWithExclusions -SourcePath $Item.FullName -DestPath $NewDest -RelativeBase $RelativePath
+            }
+        } else {
+            # Check if file should be excluded
+            $ExcludeFile = $false
+
+            # Exclude block source files (compiled by Vite)
+            if ($RelativePath -match "^blocks/.+/(index|view)\.js$") {
+                $ExcludeFile = $true
+            }
+            # Exclude non-critical CSS (assets/css/* except critical/)
+            elseif ($RelativePath -like "assets/css/*" -and $RelativePath -notlike "assets/css/critical/*") {
+                $ExcludeFile = $true
+            }
+            else {
+                # Check file exclusion patterns
+                foreach ($Pattern in $ExcludeFiles) {
+                    if ($Item.Name -eq $Pattern -or $RelativePath -eq $Pattern) {
+                        $ExcludeFile = $true
+                        break
+                    }
+                    if ($Pattern -like "*`**") {
+                        if ($Item.Name -like $Pattern -or $RelativePath -like $Pattern) {
+                            $ExcludeFile = $true
+                            break
+                        }
+                    }
+                }
+            }
 
     if (Test-Path $TempCriticalPath) {
         New-Item -ItemType Directory -Path "$BuildDir\assets\css" -Force | Out-Null

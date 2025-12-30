@@ -65,6 +65,21 @@ BUILD_DIR="$TEMP_DIR/$THEME_NAME"
 echo -e "${BLUE}[3/5] Creating temporary build directory...${NC}"
 mkdir -p "$BUILD_DIR"
 
+# Check for compiled assets
+echo -e "${BLUE}[3.1/5] Validating compiled assets...${NC}"
+if [ ! -d "$THEME_DIR/assets/dist" ]; then
+    echo -e "${RED}Error: assets/dist directory not found. Run 'npm run build' first.${NC}"
+    exit 1
+else
+    DIST_COUNT=$(find "$THEME_DIR/assets/dist" -type f | wc -l)
+    if [ "$DIST_COUNT" -eq 0 ]; then
+        echo -e "${RED}Error: assets/dist directory is empty. Run 'npm run build' first.${NC}"
+        exit 1
+    else
+        echo -e "${GREEN}    Found $DIST_COUNT compiled assets${NC}"
+    fi
+fi
+
 # Cleanup function
 cleanup() {
     if [ -d "$TEMP_DIR" ]; then
@@ -126,9 +141,9 @@ if command -v rsync &> /dev/null; then
         --exclude='assets/js/' \
         --exclude='blocks/*/index.js' \
         --exclude='blocks/*/view.js' \
-        --exclude='assets/css/' \
-        --include='assets/css/critical/**' \
+        --exclude='assets/css/*' \
         --include='assets/css/critical/' \
+        --include='assets/css/critical/**' \
         "$THEME_DIR/" "$BUILD_DIR/"
 
     ITEM_COUNT=$(find "$BUILD_DIR" -type f | wc -l)

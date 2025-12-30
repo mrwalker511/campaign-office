@@ -83,12 +83,168 @@ class CP_Campaign_Design_Studio {
         add_action('wp_ajax_cp_preview_design', array($this, 'ajax_preview_design'));
         add_action('wp_ajax_cp_apply_template', array($this, 'ajax_apply_template'));
         add_action('wp_ajax_cp_get_component_properties', array($this, 'ajax_get_component_properties'));
+        add_action('wp_ajax_cp_save_page_settings', array($this, 'ajax_save_page_settings'));
+        add_action('wp_ajax_cp_save_style_settings', array($this, 'ajax_save_style_settings'));
 
         // Enqueue studio assets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_studio_assets'));
 
         // Front-end rendering
         add_filter('the_content', array($this, 'render_custom_design'));
+
+        // Output design system styles
+        add_action('wp_head', array($this, 'output_design_system_styles'));
+    }
+
+    /**
+     * Output design system styles to head
+     */
+    public function output_design_system_styles() {
+        if (!is_singular()) {
+            return;
+        }
+
+        $post_id = get_the_ID();
+
+        // Get page settings
+        $page_settings = get_post_meta($post_id, '_cp_page_settings', true);
+        if (!$page_settings) {
+            return;
+        }
+
+        // Get style settings
+        $style_settings = get_post_meta($post_id, '_cp_style_settings', true);
+        if (!$style_settings) {
+            return;
+        }
+
+        // Map values
+        $bg_color = $page_settings['bg_color'] ?? '#ffffff';
+        $container_width = $page_settings['container_width'] ?? '1200';
+        $border_radius = $page_settings['border_radius'] ?? '4';
+
+        $base_font_size = $style_settings['base_font_size'] ?? '16';
+        $heading_weight = $style_settings['heading_weight'] ?? '600';
+        $line_height = $style_settings['line_height'] ?? '1.5';
+        $primary_color = $style_settings['primary_color'] ?? '#0073aa';
+        $secondary_color = $style_settings['secondary_color'] ?? '#005a87';
+        $accent_color = $style_settings['accent_color'] ?? '#d63638';
+        $text_color = $style_settings['text_color'] ?? '#333333';
+        $section_padding = $style_settings['section_padding'] ?? 'standard';
+        $element_spacing = $style_settings['element_spacing'] ?? 'standard';
+
+        // Map padding values to rem
+        $padding_map = array(
+            'compact' => '3rem',
+            'standard' => '4rem',
+            'spacious' => '6rem',
+            'extra-spacious' => '8rem',
+        );
+        $section_padding_rem = $padding_map[$section_padding] ?? '4rem';
+
+        // Map spacing values to rem
+        $spacing_map = array(
+            'tight' => '0.5rem',
+            'standard' => '1rem',
+            'relaxed' => '1.5rem',
+        );
+        $element_spacing_rem = $spacing_map[$element_spacing] ?? '1rem';
+
+        // Output styles
+        ?>
+        <style id="cp-design-system-styles">
+            :root {
+                --cp-page-bg: <?php echo esc_attr($bg_color); ?>;
+                --cp-container-width: <?php echo esc_attr($container_width); ?>px;
+                --cp-border-radius: <?php echo esc_attr($border_radius); ?>px;
+
+                --cp-base-font-size: <?php echo esc_attr($base_font_size); ?>px;
+                --cp-heading-weight: <?php echo esc_attr($heading_weight); ?>;
+                --cp-line-height: <?php echo esc_attr($line_height); ?>;
+
+                --cp-primary-color: <?php echo esc_attr($primary_color); ?>;
+                --cp-secondary-color: <?php echo esc_attr($secondary_color); ?>;
+                --cp-accent-color: <?php echo esc_attr($accent_color); ?>;
+                --cp-text-color: <?php echo esc_attr($text_color); ?>;
+
+                --cp-section-padding: <?php echo esc_attr($section_padding_rem); ?>;
+                --cp-element-spacing: <?php echo esc_attr($element_spacing_rem); ?>;
+            }
+
+            body {
+                background-color: var(--cp-page-bg);
+                font-size: var(--cp-base-font-size);
+                line-height: var(--cp-line-height);
+                color: var(--cp-text-color);
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: var(--cp-heading-weight);
+                line-height: var(--cp-line-height);
+            }
+
+            .site-container,
+            .container,
+            .wp-block-group__inner-container {
+                max-width: var(--cp-container-width);
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            * {
+                border-radius: var(--cp-border-radius);
+            }
+
+            .wp-block-button__link,
+            .button,
+            .btn-primary {
+                background-color: var(--cp-primary-color);
+                border-color: var(--cp-primary-color);
+                border-radius: var(--cp-border-radius);
+            }
+
+            .wp-block-button__link:hover,
+            .button:hover,
+            .btn-primary:hover {
+                background-color: var(--cp-secondary-color);
+                border-color: var(--cp-secondary-color);
+            }
+
+            .cp-section {
+                padding: var(--cp-section-padding) 1rem;
+            }
+
+            .cp-section > * + * {
+                margin-top: var(--cp-element-spacing);
+            }
+
+            /* Hero section height variations */
+            <?php if (isset($page_settings['hero_height'])) : ?>
+                <?php $hero_height = $page_settings['hero_height']; ?>
+                <?php if ($hero_height === 'short') : ?>
+                    .hero-section,
+                    .site-header {
+                        min-height: 45vh;
+                    }
+                <?php elseif ($hero_height === 'standard') : ?>
+                    .hero-section,
+                    .site-header {
+                        min-height: 60vh;
+                    }
+                <?php elseif ($hero_height === 'tall') : ?>
+                    .hero-section,
+                    .site-header {
+                        min-height: 75vh;
+                    }
+                <?php elseif ($hero_height === 'full') : ?>
+                    .hero-section,
+                    .site-header {
+                        min-height: 100vh;
+                    }
+                <?php endif; ?>
+            <?php endif; ?>
+        </style>
+        <?php
     }
 
     /**
@@ -327,6 +483,27 @@ class CP_Campaign_Design_Studio {
     public function render_studio_page() {
         $post_id = isset($_GET['post_id']) ? intval($_GET['post_id']) : 0;
         $design_data = $this->get_design_data($post_id);
+
+        // Get saved page settings
+        $page_settings = $post_id ? get_post_meta($post_id, '_cp_page_settings', true) : array();
+        $style_settings = $post_id ? get_post_meta($post_id, '_cp_style_settings', true) : array();
+
+        // Set defaults
+        $bg_color = $page_settings['bg_color'] ?? '#ffffff';
+        $hero_height = $page_settings['hero_height'] ?? 'standard';
+        $container_width = $page_settings['container_width'] ?? '1200';
+        $border_radius = $page_settings['border_radius'] ?? '4';
+        $custom_css = $design_data ? $design_data->custom_css : '';
+
+        $base_font_size = $style_settings['base_font_size'] ?? '16';
+        $heading_weight = $style_settings['heading_weight'] ?? '600';
+        $line_height = $style_settings['line_height'] ?? '1.5';
+        $primary_color = $style_settings['primary_color'] ?? '#0073aa';
+        $secondary_color = $style_settings['secondary_color'] ?? '#005a87';
+        $accent_color = $style_settings['accent_color'] ?? '#d63638';
+        $text_color = $style_settings['text_color'] ?? '#333333';
+        $section_padding = $style_settings['section_padding'] ?? 'standard';
+        $element_spacing = $style_settings['element_spacing'] ?? 'standard';
         ?>
         <div class="wrap cp-design-studio-wrap">
             <div class="cp-studio-header">
@@ -364,6 +541,26 @@ class CP_Campaign_Design_Studio {
                     </button>
                 </div>
             </div>
+
+            <script>
+            jQuery(document).ready(function($) {
+                // Load saved settings into inputs
+                $('#cp-page-bg-color').val('<?php echo esc_js($bg_color); ?>').wpColorPicker('color', '<?php echo esc_js($bg_color); ?>');
+                $('#cp-hero-height').val('<?php echo esc_js($hero_height); ?>');
+                $('#cp-container-width').val('<?php echo esc_js($container_width); ?>');
+                $('#cp-border-radius').val('<?php echo esc_js($border_radius); ?>');
+
+                $('#cp-base-font-size').val('<?php echo esc_js($base_font_size); ?>');
+                $('#cp-heading-weight').val('<?php echo esc_js($heading_weight); ?>');
+                $('#cp-line-height').val('<?php echo esc_js($line_height); ?>');
+                $('#cp-primary-color').val('<?php echo esc_js($primary_color); ?>').wpColorPicker('color', '<?php echo esc_js($primary_color); ?>');
+                $('#cp-secondary-color').val('<?php echo esc_js($secondary_color); ?>').wpColorPicker('color', '<?php echo esc_js($secondary_color); ?>');
+                $('#cp-accent-color').val('<?php echo esc_js($accent_color); ?>').wpColorPicker('color', '<?php echo esc_js($accent_color); ?>');
+                $('#cp-text-color').val('<?php echo esc_js($text_color); ?>').wpColorPicker('color', '<?php echo esc_js($text_color); ?>');
+                $('#cp-section-padding').val('<?php echo esc_js($section_padding); ?>');
+                $('#cp-element-spacing').val('<?php echo esc_js($element_spacing); ?>');
+            });
+            </script>
 
             <div class="cp-studio-body">
                 <!-- Component Sidebar -->
@@ -408,27 +605,122 @@ class CP_Campaign_Design_Studio {
 
                         <!-- Styles Tab -->
                         <div class="cp-tab-content" data-tab-content="styles">
-                            <h3><?php esc_html_e('Component Styles', 'campaign-office'); ?></h3>
-                            <div id="cp-style-controls">
-                                <p class="description"><?php esc_html_e('Select a component to edit its styles', 'campaign-office'); ?></p>
+                            <h3><?php esc_html_e('Typography Settings', 'campaign-office'); ?></h3>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Base Font Size', 'campaign-office'); ?></label>
+                                <select class="cp-input" id="cp-base-font-size">
+                                    <option value="14"><?php esc_html_e('Small (14px)', 'campaign-office'); ?></option>
+                                    <option value="16" selected><?php esc_html_e('Standard (16px)', 'campaign-office'); ?></option>
+                                    <option value="18"><?php esc_html_e('Large (18px)', 'campaign-office'); ?></option>
+                                    <option value="20"><?php esc_html_e('Extra Large (20px)', 'campaign-office'); ?></option>
+                                </select>
                             </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Heading Font Weight', 'campaign-office'); ?></label>
+                                <select class="cp-input" id="cp-heading-weight">
+                                    <option value="400"><?php esc_html_e('Normal (400)', 'campaign-office'); ?></option>
+                                    <option value="500"><?php esc_html_e('Medium (500)', 'campaign-office'); ?></option>
+                                    <option value="600" selected><?php esc_html_e('Semibold (600)', 'campaign-office'); ?></option>
+                                    <option value="700"><?php esc_html_e('Bold (700)', 'campaign-office'); ?></option>
+                                    <option value="800"><?php esc_html_e('Extra Bold (800)', 'campaign-office'); ?></option>
+                                </select>
+                            </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Line Height', 'campaign-office'); ?></label>
+                                <select class="cp-input" id="cp-line-height">
+                                    <option value="1.3"><?php esc_html_e('Compact (1.3)', 'campaign-office'); ?></option>
+                                    <option value="1.5" selected><?php esc_html_e('Standard (1.5)', 'campaign-office'); ?></option>
+                                    <option value="1.7"><?php esc_html_e('Relaxed (1.7)', 'campaign-office'); ?></option>
+                                    <option value="1.9"><?php esc_html_e('Loose (1.9)', 'campaign-office'); ?></option>
+                                </select>
+                            </div>
+
+                            <h3><?php esc_html_e('Color Settings', 'campaign-office'); ?></h3>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Primary Color', 'campaign-office'); ?></label>
+                                <input type="text" class="cp-input cp-color-picker" id="cp-primary-color" value="#0073aa">
+                            </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Secondary Color', 'campaign-office'); ?></label>
+                                <input type="text" class="cp-input cp-color-picker" id="cp-secondary-color" value="#005a87">
+                            </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Accent Color', 'campaign-office'); ?></label>
+                                <input type="text" class="cp-input cp-color-picker" id="cp-accent-color" value="#d63638">
+                            </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Text Color', 'campaign-office'); ?></label>
+                                <input type="text" class="cp-input cp-color-picker" id="cp-text-color" value="#333333">
+                            </div>
+
+                            <h3><?php esc_html_e('Spacing Settings', 'campaign-office'); ?></h3>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Section Padding', 'campaign-office'); ?></label>
+                                <select class="cp-input" id="cp-section-padding">
+                                    <option value="compact"><?php esc_html_e('Compact (3rem)', 'campaign-office'); ?></option>
+                                    <option value="standard" selected><?php esc_html_e('Standard (4rem)', 'campaign-office'); ?></option>
+                                    <option value="spacious"><?php esc_html_e('Spacious (6rem)', 'campaign-office'); ?></option>
+                                    <option value="extra-spacious"><?php esc_html_e('Extra Spacious (8rem)', 'campaign-office'); ?></option>
+                                </select>
+                            </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Element Spacing', 'campaign-office'); ?></label>
+                                <select class="cp-input" id="cp-element-spacing">
+                                    <option value="tight"><?php esc_html_e('Tight (0.5rem)', 'campaign-office'); ?></option>
+                                    <option value="standard" selected><?php esc_html_e('Standard (1rem)', 'campaign-office'); ?></option>
+                                    <option value="relaxed"><?php esc_html_e('Relaxed (1.5rem)', 'campaign-office'); ?></option>
+                                </select>
+                            </div>
+
+                            <button class="button button-primary" id="cp-save-style-settings">
+                                <span class="dashicons dashicons-saved"></span>
+                                <?php esc_html_e('Save Style Settings', 'campaign-office'); ?>
+                            </button>
                         </div>
 
                         <!-- Settings Tab -->
                         <div class="cp-tab-content" data-tab-content="settings">
                             <h3><?php esc_html_e('Page Settings', 'campaign-office'); ?></h3>
                             <div class="cp-setting-group">
-                                <label><?php esc_html_e('Page Template', 'campaign-office'); ?></label>
-                                <select class="cp-input">
-                                    <option><?php esc_html_e('Default', 'campaign-office'); ?></option>
-                                    <option><?php esc_html_e('Full Width', 'campaign-office'); ?></option>
-                                    <option><?php esc_html_e('Landing Page', 'campaign-office'); ?></option>
+                                <label><?php esc_html_e('Page Background Color', 'campaign-office'); ?></label>
+                                <input type="text" class="cp-input cp-color-picker" id="cp-page-bg-color" value="#ffffff">
+                            </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Hero Section Height', 'campaign-office'); ?></label>
+                                <select class="cp-input" id="cp-hero-height">
+                                    <option value="standard"><?php esc_html_e('Standard (60vh)', 'campaign-office'); ?></option>
+                                    <option value="tall"><?php esc_html_e('Tall (75vh)', 'campaign-office'); ?></option>
+                                    <option value="short"><?php esc_html_e('Short (45vh)', 'campaign-office'); ?></option>
+                                    <option value="full"><?php esc_html_e('Full Screen (100vh)', 'campaign-office'); ?></option>
+                                </select>
+                            </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Container Width', 'campaign-office'); ?></label>
+                                <select class="cp-input" id="cp-container-width">
+                                    <option value="1140"><?php esc_html_e('Narrow (1140px)', 'campaign-office'); ?></option>
+                                    <option value="1200" selected><?php esc_html_e('Standard (1200px)', 'campaign-office'); ?></option>
+                                    <option value="1320"><?php esc_html_e('Wide (1320px)', 'campaign-office'); ?></option>
+                                    <option value="1440"><?php esc_html_e('Extra Wide (1440px)', 'campaign-office'); ?></option>
+                                </select>
+                            </div>
+                            <div class="cp-setting-group">
+                                <label><?php esc_html_e('Border Radius', 'campaign-office'); ?></label>
+                                <select class="cp-input" id="cp-border-radius">
+                                    <option value="0"><?php esc_html_e('Sharp (0px)', 'campaign-office'); ?></option>
+                                    <option value="4" selected><?php esc_html_e('Rounded (4px)', 'campaign-office'); ?></option>
+                                    <option value="8"><?php esc_html_e('More Rounded (8px)', 'campaign-office'); ?></option>
+                                    <option value="12"><?php esc_html_e('Very Rounded (12px)', 'campaign-office'); ?></option>
                                 </select>
                             </div>
                             <div class="cp-setting-group">
                                 <label><?php esc_html_e('Custom CSS', 'campaign-office'); ?></label>
                                 <textarea class="cp-input" id="cp-custom-css" rows="10" placeholder="/* Add custom CSS here */"></textarea>
+                                <p class="description"><?php esc_html_e('Custom CSS will be applied to this page only.', 'campaign-office'); ?></p>
                             </div>
+                            <button class="button button-primary" id="cp-save-page-settings">
+                                <span class="dashicons dashicons-saved"></span>
+                                <?php esc_html_e('Save Page Settings', 'campaign-office'); ?>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -968,6 +1260,67 @@ class CP_Campaign_Design_Studio {
         }
 
         wp_send_json_success(array('message' => __('Template applied successfully', 'campaign-office')));
+    }
+
+    /**
+     * AJAX handler for saving page settings
+     */
+    public function ajax_save_page_settings() {
+        check_ajax_referer('cp_save_design');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $post_id = intval($_POST['post_id']);
+
+        if (!$post_id) {
+            wp_send_json_error(array('message' => __('Invalid page ID', 'campaign-office')));
+        }
+
+        $settings = array(
+            'bg_color' => sanitize_hex_color($_POST['bg_color'] ?? '#ffffff'),
+            'hero_height' => sanitize_text_field($_POST['hero_height'] ?? 'standard'),
+            'container_width' => sanitize_text_field($_POST['container_width'] ?? '1200'),
+            'border_radius' => sanitize_text_field($_POST['border_radius'] ?? '4'),
+        );
+
+        update_post_meta($post_id, '_cp_page_settings', $settings);
+
+        wp_send_json_success(array('message' => __('Page settings saved successfully', 'campaign-office')));
+    }
+
+    /**
+     * AJAX handler for saving style settings
+     */
+    public function ajax_save_style_settings() {
+        check_ajax_referer('cp_save_design');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $post_id = intval($_POST['post_id']);
+
+        if (!$post_id) {
+            wp_send_json_error(array('message' => __('Invalid page ID', 'campaign-office')));
+        }
+
+        $settings = array(
+            'base_font_size' => sanitize_text_field($_POST['base_font_size'] ?? '16'),
+            'heading_weight' => sanitize_text_field($_POST['heading_weight'] ?? '600'),
+            'line_height' => sanitize_text_field($_POST['line_height'] ?? '1.5'),
+            'primary_color' => sanitize_hex_color($_POST['primary_color'] ?? '#0073aa'),
+            'secondary_color' => sanitize_hex_color($_POST['secondary_color'] ?? '#005a87'),
+            'accent_color' => sanitize_hex_color($_POST['accent_color'] ?? '#d63638'),
+            'text_color' => sanitize_hex_color($_POST['text_color'] ?? '#333333'),
+            'section_padding' => sanitize_text_field($_POST['section_padding'] ?? 'standard'),
+            'element_spacing' => sanitize_text_field($_POST['element_spacing'] ?? 'standard'),
+        );
+
+        update_post_meta($post_id, '_cp_style_settings', $settings);
+
+        wp_send_json_success(array('message' => __('Style settings saved successfully', 'campaign-office')));
     }
 
     /**

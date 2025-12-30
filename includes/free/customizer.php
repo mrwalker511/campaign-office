@@ -15,77 +15,134 @@ if (!defined('ABSPATH')) {
  * Add postMessage support for site title and description
  */
 function campaignpress_customize_register($wp_customize) {
-    $wp_customize->get_setting('blogname')->transport = 'postMessage';
-    $wp_customize->get_setting('blogdescription')->transport = 'postMessage';
-    $wp_customize->get_setting('header_textcolor')->transport = 'postMessage';
+    $blogname = $wp_customize->get_setting('blogname');
+    if ($blogname) {
+        $blogname->transport = 'postMessage';
+    }
+
+    $blogdescription = $wp_customize->get_setting('blogdescription');
+    if ($blogdescription) {
+        $blogdescription->transport = 'postMessage';
+    }
+
+    $header_textcolor = $wp_customize->get_setting('header_textcolor');
+    if ($header_textcolor) {
+        $header_textcolor->transport = 'postMessage';
+    }
 
     if (isset($wp_customize->selective_refresh)) {
         $wp_customize->selective_refresh->add_partial(
             'blogname',
             array(
-                'selector'        => '.site-title a',
+                'selector'        => '.wp-block-site-title a, .site-title a',
                 'render_callback' => 'campaignpress_customize_partial_blogname',
             )
         );
         $wp_customize->selective_refresh->add_partial(
             'blogdescription',
             array(
-                'selector'        => '.site-description',
+                'selector'        => '.wp-block-site-tagline, .site-description',
                 'render_callback' => 'campaignpress_customize_partial_blogdescription',
             )
         );
     }
 
     /**
-     * Color Scheme Section
+     * Colors
+     *
+     * Theme-specific color controls are registered inside the core "Colors" section
+     * to avoid duplicated sections in the Customizer.
      */
-    $wp_customize->add_section('campaignpress_color_scheme', array(
-        'title'    => __('Color Scheme', 'campaign-office'),
-        'priority' => 30,
-    ));
+    if (!$wp_customize->get_section('colors')) {
+        $wp_customize->add_section('colors', array(
+            'title'    => __('Colors', 'campaign-office'),
+            'priority' => 30,
+        ));
+    }
 
-    // Color scheme preset
     $wp_customize->add_setting('campaignpress_color_scheme', array(
-        'default'           => 'neutral',
+        'default'           => 'democrat-blue',
         'sanitize_callback' => 'campaignpress_sanitize_color_scheme',
+        'transport'         => 'postMessage',
     ));
 
     $wp_customize->add_control('campaignpress_color_scheme', array(
-        'label'    => __('Select Color Scheme', 'campaign-office'),
-        'section'  => 'campaignpress_color_scheme',
-        'type'     => 'select',
-        'choices'  => array(
-            'democrat-blue'        => __('Democrat Blue', 'campaign-office'),
-            'republican-red'       => __('Republican Red', 'campaign-office'),
-            'independent-purple'   => __('Independent Purple', 'campaign-office'),
-            'green-party'          => __('Green Party', 'campaign-office'),
-            'neutral'              => __('Neutral', 'campaign-office'),
+        'label'       => __('Party Color Scheme', 'campaign-office'),
+        'description' => __('Applies a preset palette across the site.', 'campaign-office'),
+        'section'     => 'colors',
+        'type'        => 'select',
+        'choices'     => array(
+            'democrat-blue'      => __('Democrat Blue', 'campaign-office'),
+            'republican-red'     => __('Republican Red', 'campaign-office'),
+            'independent-purple' => __('Independent Purple', 'campaign-office'),
+            'green-party'        => __('Green Party', 'campaign-office'),
+            'neutral'            => __('Neutral', 'campaign-office'),
         ),
     ));
 
-    // Primary color
+    // Optional per-site color overrides.
     $wp_customize->add_setting('campaignpress_primary_color', array(
-        'default'           => '#0066cc',
+        'default'           => '#0053c3',
         'sanitize_callback' => 'sanitize_hex_color',
         'transport'         => 'postMessage',
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'campaignpress_primary_color', array(
-        'label'    => __('Primary Color', 'campaign-office'),
-        'section'  => 'campaignpress_color_scheme',
+        'label'       => __('Primary Color Override', 'campaign-office'),
+        'description' => __('Overrides the theme primary color (useful for matching your logo).', 'campaign-office'),
+        'section'     => 'colors',
     )));
 
-    // Secondary color
     $wp_customize->add_setting('campaignpress_secondary_color', array(
-        'default'           => '#333333',
+        'default'           => '#ff8800',
         'sanitize_callback' => 'sanitize_hex_color',
         'transport'         => 'postMessage',
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'campaignpress_secondary_color', array(
-        'label'    => __('Secondary Color', 'campaign-office'),
-        'section'  => 'campaignpress_color_scheme',
+        'label'       => __('Accent Color Override', 'campaign-office'),
+        'description' => __('Overrides the theme accent color.', 'campaign-office'),
+        'section'     => 'colors',
     )));
+
+    // Footer compliance disclaimer text.
+    $wp_customize->add_setting('campaignpress_disclaimer_text', array(
+        'default'           => __('Paid for by Friends of the Candidate', 'campaign-office'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control('campaignpress_disclaimer_text', array(
+        'label'       => __('"Paid for by" Disclaimer', 'campaign-office'),
+        'description' => __('Shown in the footer (use for campaign compliance).', 'campaign-office'),
+        'section'     => 'title_tagline',
+        'type'        => 'text',
+    ));
+
+    /**
+     * Navigation
+     */
+    $wp_customize->add_section('campaignpress_navigation', array(
+        'title'    => __('Navigation', 'campaign-office'),
+        'priority' => 36,
+    ));
+
+    $wp_customize->add_setting('campaignpress_primary_menu_layout', array(
+        'default'           => 'inline',
+        'sanitize_callback' => 'campaignpress_sanitize_menu_layout',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control('campaignpress_primary_menu_layout', array(
+        'label'       => __('Primary Menu Layout', 'campaign-office'),
+        'description' => __('Controls whether the header menu is inline or stacked vertically.', 'campaign-office'),
+        'section'     => 'campaignpress_navigation',
+        'type'        => 'radio',
+        'choices'     => array(
+            'inline'   => __('Inline (Horizontal)', 'campaign-office'),
+            'vertical' => __('Vertical (Stacked)', 'campaign-office'),
+        ),
+    ));
 
     /**
      * Layout Section
@@ -277,7 +334,7 @@ function campaignpress_customize_partial_blogdescription() {
  */
 function campaignpress_sanitize_color_scheme($input) {
     $valid = array('democrat-blue', 'republican-red', 'independent-purple', 'green-party', 'neutral');
-    return in_array($input, $valid, true) ? $input : 'neutral';
+    return in_array($input, $valid, true) ? $input : 'democrat-blue';
 }
 
 /**
@@ -295,6 +352,41 @@ function campaignpress_sanitize_general_layout($input) {
     $valid = array('default', 'left-sidebar', 'no-sidebar');
     return in_array($input, $valid, true) ? $input : 'default';
 }
+
+/**
+ * Sanitize primary menu layout
+ */
+function campaignpress_sanitize_menu_layout($input) {
+    $valid = array('inline', 'vertical');
+    return in_array($input, $valid, true) ? $input : 'inline';
+}
+
+/**
+ * Output customizer-driven CSS overrides
+ */
+function campaignpress_customizer_output_css() {
+    $primary = sanitize_hex_color(get_theme_mod('campaignpress_primary_color', null));
+    $accent = sanitize_hex_color(get_theme_mod('campaignpress_secondary_color', null));
+
+    if (!$primary && !$accent) {
+        return;
+    }
+
+    $declarations = array();
+
+    if ($primary) {
+        $declarations[] = '--wp--preset--color--primary: ' . $primary . ' !important;';
+        $declarations[] = '--cp-primary: ' . $primary . ' !important;';
+    }
+
+    if ($accent) {
+        $declarations[] = '--wp--preset--color--accent: ' . $accent . ' !important;';
+        $declarations[] = '--cp-secondary: ' . $accent . ' !important;';
+    }
+
+    echo '<style id="campaignpress-customizer-css">body{' . implode('', $declarations) . '}</style>' . "\n";
+}
+add_action('wp_head', 'campaignpress_customizer_output_css', 100);
 
 /**
  * Enqueue customizer preview JavaScript

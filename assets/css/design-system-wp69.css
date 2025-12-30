@@ -295,6 +295,21 @@ body {
   box-shadow: var(--wp--preset--shadow--sm);
 }
 
+/* Primary navigation layout (Customizer option) */
+body.cp-primary-menu-vertical .cp-primary-navigation .wp-block-navigation__container {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+body.cp-primary-menu-vertical .cp-primary-navigation .wp-block-navigation-item {
+  width: 100%;
+}
+
+body.cp-primary-menu-inline .cp-primary-navigation .wp-block-navigation__container {
+  flex-direction: row;
+  align-items: center;
+}
+
 /* ============================================
    Hero Section (WordPress Cover Block Enhanced)
    ============================================ */

@@ -266,3 +266,16 @@ function campaignpress_social_links() {
 
     echo '</div>';
 }
+
+function campaignpress_disclaimer_shortcode() {
+    $default = __('Paid for by Friends of the Candidate', 'campaign-office');
+    $disclaimer = get_theme_mod('campaignpress_disclaimer_text', $default);
+    $disclaimer = trim((string) $disclaimer);
+
+    if ($disclaimer === '') {
+        return '';
+    }
+
+    return '<p class="cp-disclaimer has-text-color has-small-font-size" style="color:var(--wp--preset--color--neutral-400)">' . esc_html($disclaimer) . '</p>';
+}
+add_shortcode('campaignpress_disclaimer', 'campaignpress_disclaimer_shortcode');

@@ -26,7 +26,7 @@ function campaignpress_body_class_additions($classes) {
         $classes[] = 'full-width';
     }
     // Adds a class of no-sidebar when there is no sidebar present
-    elseif (!is_active_sidebar('sidebar-1')) {
+    elseif (!is_active_sidebar('main-sidebar')) {
         $classes[] = 'no-sidebar';
     }
 
@@ -120,7 +120,7 @@ function campaignpress_show_sidebar() {
     }
 
     // Don't show if sidebar is not active
-    if (!is_active_sidebar('sidebar-1')) {
+    if (!is_active_sidebar('main-sidebar')) {
         return false;
     }
 

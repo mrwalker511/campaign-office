@@ -214,9 +214,9 @@ fi
 
 # Get file size
 if [ -f "$ZIP_PATH" ]; then
-    ZIP_SIZE=$(stat -f%z "$ZIP_PATH" 2>/dev/null || stat -c%s "$ZIP_PATH" 2>/dev/null)
-    ZIP_SIZE_KB=$(awk "BEGIN {printf \"%.2f\", $ZIP_SIZE / 1024}")
-    ZIP_SIZE_MB=$(awk "BEGIN {printf \"%.2f\", $ZIP_SIZE / 1048576}")
+    ZIP_SIZE=$(stat -f%z "$ZIP_PATH" 2>/dev/null || stat -c%s "$ZIP_PATH" 2>/dev/null || wc -c < "$ZIP_PATH")
+    ZIP_SIZE_KB=$((ZIP_SIZE / 1024))
+    ZIP_SIZE_MB=$((ZIP_SIZE / 1048576))
 
     echo -e "\n${GREEN}========================================"
     echo "Build Complete!"
@@ -226,7 +226,7 @@ if [ -f "$ZIP_PATH" ]; then
     echo -e "${GREEN}  Location: $ZIP_PATH${NC}"
 
     # Show size in appropriate unit
-    if [ $(awk "BEGIN {print ($ZIP_SIZE_MB > 1)}") -eq 1 ]; then
+    if [ "$ZIP_SIZE_MB" -gt 0 ]; then
         echo -e "${GREEN}  Size: ${ZIP_SIZE_MB} MB${NC}"
     else
         echo -e "${GREEN}  Size: ${ZIP_SIZE_KB} KB${NC}"

@@ -2,6 +2,16 @@ jQuery(document).ready(function ($) {
     var draggedComponent = null;
     var activeComponent = null;
 
+    // Initialize color pickers
+    $('.cp-color-picker').wpColorPicker({
+        change: function (event, ui) {
+            $(this).val(ui.color.toString());
+        },
+        clear: function () {
+            $(this).val('');
+        }
+    });
+
     // Tab switching
     $('.cp-tab').click(function () {
         var tab = $(this).data('tab');
@@ -290,6 +300,107 @@ jQuery(document).ready(function ($) {
             error: function () {
                 $btn.prop('disabled', false).html(originalHTML);
                 alert(cpDesignStudio.i18n.error_saving);
+            }
+        });
+    });
+
+    // Save page settings
+    $('#cp-save-page-settings').click(function () {
+        var $btn = $(this);
+        var originalText = $btn.text();
+        var postId = $('#cp-page-selector').val();
+
+        if (!postId) {
+            alert(cpDesignStudio.i18n.select_page_first);
+            return;
+        }
+
+        $btn.prop('disabled', true).text(cpDesignStudio.i18n.saving);
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'cp_save_page_settings',
+                post_id: postId,
+                bg_color: $('#cp-page-bg-color').val(),
+                hero_height: $('#cp-hero-height').val(),
+                container_width: $('#cp-container-width').val(),
+                border_radius: $('#cp-border-radius').val(),
+                _wpnonce: cpDesignStudio.nonces.save_design
+            },
+            success: function (response) {
+                if (response.success) {
+                    $btn.prop('disabled', false).text(originalText);
+                    // Show success message
+                    var $msg = $('<div class="notice notice-success is-dismissible"><p>' + response.data.message + '</p></div>');
+                    $('.cp-studio-header').after($msg);
+                    setTimeout(function () {
+                        $msg.fadeOut(function () {
+                            $(this).remove();
+                        });
+                    }, 3000);
+                } else {
+                    alert(response.data.message || cpDesignStudio.i18n.error_saving);
+                    $btn.prop('disabled', false).text(originalText);
+                }
+            },
+            error: function () {
+                alert(cpDesignStudio.i18n.error_saving);
+                $btn.prop('disabled', false).text(originalText);
+            }
+        });
+    });
+
+    // Save style settings
+    $('#cp-save-style-settings').click(function () {
+        var $btn = $(this);
+        var originalText = $btn.text();
+        var postId = $('#cp-page-selector').val();
+
+        if (!postId) {
+            alert(cpDesignStudio.i18n.select_page_first);
+            return;
+        }
+
+        $btn.prop('disabled', true).text(cpDesignStudio.i18n.saving);
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'cp_save_style_settings',
+                post_id: postId,
+                base_font_size: $('#cp-base-font-size').val(),
+                heading_weight: $('#cp-heading-weight').val(),
+                line_height: $('#cp-line-height').val(),
+                primary_color: $('#cp-primary-color').val(),
+                secondary_color: $('#cp-secondary-color').val(),
+                accent_color: $('#cp-accent-color').val(),
+                text_color: $('#cp-text-color').val(),
+                section_padding: $('#cp-section-padding').val(),
+                element_spacing: $('#cp-element-spacing').val(),
+                _wpnonce: cpDesignStudio.nonces.save_design
+            },
+            success: function (response) {
+                if (response.success) {
+                    $btn.prop('disabled', false).text(originalText);
+                    // Show success message
+                    var $msg = $('<div class="notice notice-success is-dismissible"><p>' + response.data.message + '</p></div>');
+                    $('.cp-studio-header').after($msg);
+                    setTimeout(function () {
+                        $msg.fadeOut(function () {
+                            $(this).remove();
+                        });
+                    }, 3000);
+                } else {
+                    alert(response.data.message || cpDesignStudio.i18n.error_saving);
+                    $btn.prop('disabled', false).text(originalText);
+                }
+            },
+            error: function () {
+                alert(cpDesignStudio.i18n.error_saving);
+                $btn.prop('disabled', false).text(originalText);
             }
         });
     });

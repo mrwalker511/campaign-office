@@ -70,10 +70,28 @@ if (Test-Path $outputZip) {
     Remove-Item $outputZip -Force
 }
 
-# Create zip
+# Create zip with forward slashes (required for WordPress/PHP compatibility)
 Write-Host "Creating zip archive..." -ForegroundColor Yellow
-# Compress theme directory (includes the folder in the ZIP as required by WordPress)
-Compress-Archive -Path $themeDir -DestinationPath $outputZip -CompressionLevel Optimal -Force
+
+Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+# Create ZIP with forward slashes for cross-platform compatibility
+$zipFullPath = Join-Path (Get-Location) $outputZip
+$zip = [System.IO.Compression.ZipFile]::Open($zipFullPath, 'Create')
+
+# Resolve temp directory to get actual path (handles short path names)
+$resolvedTempDir = (Resolve-Path $tempDir).Path
+
+Get-ChildItem -Path $themeDir -Recurse -File | ForEach-Object {
+    # Get path relative to temp dir (starts with theme folder name)
+    $relativePath = $_.FullName.Substring($resolvedTempDir.Length + 1)
+    # Convert backslashes to forward slashes for WordPress compatibility
+    $entryName = $relativePath -replace '\\', '/'
+    [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $_.FullName, $entryName, [System.IO.Compression.CompressionLevel]::Optimal) | Out-Null
+}
+
+$zip.Dispose()
 
 # Cleanup temp directory
 Remove-Item $tempDir -Recurse -Force

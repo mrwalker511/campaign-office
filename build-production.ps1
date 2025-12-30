@@ -83,15 +83,28 @@ New-Item -ItemType Directory -Path $BuildDir -Force | Out-Null
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-# Copy all files first
-Copy-Item -Path "$ThemeDir\*" -Destination $BuildDir -Recurse -Force
-
-# Remove excluded files and directories
-$ExcludePaths = @(
+# Define excluded directories
+$ExcludeDirs = @(
     ".git",
+    "node_modules",
+    "vendor",
+    "build",
+    "scripts",
+    "tests",
+    "playwright-report",
+    "test-results",
+    "docs",
+    ".github",
+    ".vscode",
+    ".idea",
+    ".claude",
+    ".sass-cache"
+)
+
+# Define excluded files
+$ExcludeFiles = @(
     ".gitignore",
     ".gitattributes",
-    "node_modules",
     "package.json",
     "package-lock.json",
     ".npmrc",
@@ -100,35 +113,11 @@ $ExcludePaths = @(
     "build-production.ps1",
     "build-production.sh",
     "build-testing.ps1",
-    "build",
-    "scripts",
-    "tests",
     "phpunit.xml",
     ".phpunit.result.cache",
     "playwright.config.js",
-    "playwright-report",
-    "test-results",
-    "docs",
     ".distignore",
-    ".github",
-    ".vscode",
-    ".idea",
-    ".claude",
-    ".sass-cache",
     ".editorconfig",
-    "assets\react",
-    "assets\js"
-)
-
-foreach ($ExcludePath in $ExcludePaths) {
-    $FullPath = Join-Path $BuildDir $ExcludePath
-    if (Test-Path $FullPath) {
-        Remove-Item $FullPath -Recurse -Force -ErrorAction SilentlyContinue
-    }
-}
-
-# Remove specific file patterns
-Get-ChildItem -Path $BuildDir -Recurse -File -Include @(
     "*.code-workspace",
     ".env*",
     "*.log",
@@ -144,114 +133,63 @@ Get-ChildItem -Path $BuildDir -Recurse -File -Include @(
     ".stylelintrc*",
     ".prettierrc*",
     "*.zip"
-) -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+)
 
-    # Claude/AI files
-    ".claude",
+# Use robocopy for fast, selective copying
+$ExcludeDirArgs = $ExcludeDirs | ForEach-Object { "/XD `"$_`"" }
+$ExcludeFileArgs = $ExcludeFiles | ForEach-Object { "/XF `"$_`"" }
+$RobocopyArgs = @(
+    "`"$ThemeDir`"",
+    "`"$BuildDir`"",
+    "/E",  # Copy subdirectories including empty ones
+    "/NFL", # No file list
+    "/NDL", # No directory list
+    "/NJH", # No job header
+    "/NJS", # No job summary
+    "/NP"   # No progress
+) + $ExcludeDirArgs + $ExcludeFileArgs
 
-    # ZIP files
-    "*.zip",
+$RobocopyCmd = "robocopy $($RobocopyArgs -join ' ')"
+Invoke-Expression $RobocopyCmd | Out-Null
 
-    # Source files (keep only compiled assets)
-    "assets/react",
-    "assets/js",
+# Robocopy exit codes: 0-7 are success (0=no files, 1=files copied, etc.)
+if ($LASTEXITCODE -gt 7) {
+    Write-Host "Error: File copy failed (robocopy exit code: $LASTEXITCODE)" -ForegroundColor $ErrorColor
+    exit 1
+}
 
-    # Composer dev dependencies
-    "vendor/bin",
-    "vendor/*/*/tests",
-    "vendor/*/*/test",
-    "vendor/*/*/Tests",
-    "vendor/*/*/Test"
-
-
-Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
-
-# Function to recursively copy files with exclusions
-function Copy-FilesWithExclusions {
-    param(
-        [string]$SourcePath,
-        [string]$DestPath,
-        [string]$RelativeBase = ""
-    )
-
-    # Get items in current directory
-    $Items = Get-ChildItem -Path $SourcePath -ErrorAction SilentlyContinue
-
-    foreach ($Item in $Items) {
-        $RelativePath = if ($RelativeBase) { "$RelativeBase/$($Item.Name)" } else { $Item.Name }
-        $RelativePath = $RelativePath.Replace("\", "/")
-
-        # Check if directory should be excluded
-        if ($Item.PSIsContainer) {
-            $ExcludeDir = $false
-            foreach ($ExcludeDirPattern in $ExcludeDirs) {
-                if ($Item.Name -eq $ExcludeDirPattern -or $RelativePath -eq $ExcludeDirPattern -or $RelativePath -like "$ExcludeDirPattern/*") {
-                    $ExcludeDir = $true
-                    break
-                }
-            }
-
-            if (-not $ExcludeDir) {
-                # Recurse into directory
-                $NewDest = Join-Path $DestPath $Item.Name
-                Copy-FilesWithExclusions -SourcePath $Item.FullName -DestPath $NewDest -RelativeBase $RelativePath
-            }
-        } else {
-            # Check if file should be excluded
-            $ExcludeFile = $false
-
-            # Special includes (override exclusions)
-            # Include block scripts (index.js and view.js in blocks/)
-            if ($RelativePath -match "^blocks/.+/(index|view)\.js$") {
-                $ExcludeFile = $false
-            }
-            # Include critical CSS files
-            elseif ($RelativePath -like "assets/css/critical/*") {
-                $ExcludeFile = $false
-            }
-            # Exclude non-critical CSS (assets/css/* except critical/)
-            elseif ($RelativePath -like "assets/css/*" -and $RelativePath -notlike "assets/css/critical/*") {
-                $ExcludeFile = $true
-            }
-            else {
-                # Check file exclusion patterns
-                foreach ($Pattern in $ExcludeFiles) {
-                    if ($Item.Name -eq $Pattern -or $RelativePath -eq $Pattern) {
-                        $ExcludeFile = $true
-                        break
-                    }
-                    if ($Pattern -like "*`**") {
-                        if ($Item.Name -like $Pattern -or $RelativePath -like $Pattern) {
-                            $ExcludeFile = $true
-                            break
-                        }
-                    }
-                }
-            }
-
-            if (-not $ExcludeFile) {
-                # Copy file
-                if (-not (Test-Path $DestPath)) {
-                    New-Item -ItemType Directory -Path $DestPath -Force | Out-Null
-                }
-                Copy-Item $Item.FullName (Join-Path $DestPath $Item.Name) -Force
-                $script:CopiedCount++
-
-                # Show progress every 50 files
-                if ($script:CopiedCount % 50 -eq 0) {
-                    Write-Host "    Copied $($script:CopiedCount) files..." -ForegroundColor $InfoColor
-                }
-            }
-        }
+# Remove assets/react and assets/js (source files)
+$SourceDirs = @("assets\react", "assets\js")
+foreach ($SourceDir in $SourceDirs) {
+    $FullPath = Join-Path $BuildDir $SourceDir
+    if (Test-Path $FullPath) {
+        Remove-Item $FullPath -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
 
-# Copy files
-$script:CopiedCount = 0
-Copy-FilesWithExclusions -SourcePath $ThemeDir -DestPath $BuildDir
+# Keep only critical CSS - remove all other CSS
+if (Test-Path "$BuildDir\assets\css") {
+    $CriticalCssPath = "$BuildDir\assets\css\critical"
+    $TempCriticalPath = "$TempDir\critical-backup"
 
-$ItemCount = $script:CopiedCount
-Write-Host "    Total: $ItemCount files copied" -ForegroundColor $SuccessColor
+    if (Test-Path $CriticalCssPath) {
+        Copy-Item -Path $CriticalCssPath -Destination $TempCriticalPath -Recurse -Force
+    }
+
+    Remove-Item "$BuildDir\assets\css" -Recurse -Force -ErrorAction SilentlyContinue
+
+    if (Test-Path $TempCriticalPath) {
+        New-Item -ItemType Directory -Path "$BuildDir\assets\css" -Force | Out-Null
+        Copy-Item -Path $TempCriticalPath -Destination "$BuildDir\assets\css\critical" -Recurse -Force
+    }
+}
+
+# Remove block source files (index.js and view.js)
+Get-ChildItem -Path "$BuildDir\blocks" -Recurse -File -Include @("index.js", "view.js") -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+
+# Count files
+$ItemCount = (Get-ChildItem -Path $BuildDir -Recurse -File -ErrorAction SilentlyContinue | Measure-Object).Count
+Write-Host "    Copied $ItemCount files" -ForegroundColor $SuccessColor
 
 # Create ZIP file
 $OutputPath = Resolve-Path $OutputDir

@@ -26,7 +26,8 @@ $excludePatterns = @(
     "*.log", "*.tmp", "*.bak", ".gitignore", ".gitattributes",
     "package.json", "package-lock.json", "composer.json", "composer.lock",
     "wp-cli.phar", ".DS_Store", "Thumbs.db", ".env", ".env.local",
-    "build-testing.ps1", "nul", "NUL"
+    "build-testing.ps1", "build-production.ps1", "nul", "NUL",
+    "campaign-office-testing.zip", "*.zip"
 )
 
 Write-Host "Copying theme files..." -ForegroundColor Yellow
@@ -80,14 +81,14 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zipFullPath = Join-Path (Get-Location) $outputZip
 $zip = [System.IO.Compression.ZipFile]::Open($zipFullPath, 'Create')
 
-# Resolve temp directory to get actual path (handles short path names)
-$resolvedTempDir = (Resolve-Path $tempDir).Path
+# Get resolved paths for accurate relative path calculation
+$resolvedThemeDir = (Get-Item $themeDir).FullName
+$parentOfThemeDir = (Get-Item $themeDir).Parent.FullName
 
 Get-ChildItem -Path $themeDir -Recurse -File | ForEach-Object {
-    # Get path relative to temp dir (starts with theme folder name)
-    $relativePath = $_.FullName.Substring($resolvedTempDir.Length + 1)
-    # Convert backslashes to forward slashes for WordPress compatibility
-    $entryName = $relativePath -replace '\\', '/'
+    # Get path relative to theme dir and prepend theme name with forward slashes
+    $fileRelativePath = $_.FullName.Substring($resolvedThemeDir.Length + 1) -replace '\\', '/'
+    $entryName = "$themeName/$fileRelativePath"
     [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $_.FullName, $entryName, [System.IO.Compression.CompressionLevel]::Optimal) | Out-Null
 }
 

@@ -53,7 +53,11 @@
       "Bash(powershell -ExecutionPolicy Bypass -File \".\\\\test-copy.ps1\")",
       "Bash(powershell -ExecutionPolicy Bypass -Command \"$input = ''N''; & ''.\\\\build-production.ps1''; $input\")",
       "Bash(del \"../campaign-office-2.0.0.zip\")",
-      "Bash(Select-String -Pattern \"Validating|Reading|Creating|Copying|ZIP|Complete|Error|Size|Files|Location|slug|Version\")"
+      "Bash(Select-String -Pattern \"Validating|Reading|Creating|Copying|ZIP|Complete|Error|Size|Files|Location|slug|Version\")",
+      "Bash(git checkout:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(git stash pop:*)"
     ],
     "deny": [],
     "ask": []

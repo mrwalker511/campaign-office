@@ -149,13 +149,6 @@ $ExcludeFiles = @(
     "assets/react",
     "assets/js",
 
-    # Block source JS files
-    "blocks/*/index.js",
-    "blocks/*/view.js",
-
-    # CSS source (keep only critical)
-    "assets/css/*",
-
     # Composer dev dependencies
     "vendor/bin",
     "vendor/*/*/tests",
@@ -166,40 +159,92 @@ $ExcludeFiles = @(
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-# Function to check if path should be excluded
-function Should-Exclude {
-    param([string]$Path)
+# Function to recursively copy files with exclusions
+function Copy-FilesWithExclusions {
+    param(
+        [string]$SourcePath,
+        [string]$DestPath,
+        [string]$RelativeBase = ""
+    )
 
-    $RelativePath = $Path.Replace("$ThemeDir\", "").Replace("$ThemeDir/", "")
+    # Get items in current directory
+    $Items = Get-ChildItem -Path $SourcePath -ErrorAction SilentlyContinue
 
-    # Special case: include critical CSS files even though assets/css/* is excluded
-    if ($RelativePath -like "assets/css/critical*") {
-        return $false
-    }
+    foreach ($Item in $Items) {
+        $RelativePath = if ($RelativeBase) { "$RelativeBase/$($Item.Name)" } else { $Item.Name }
+        $RelativePath = $RelativePath.Replace("\", "/")
 
-    foreach ($Pattern in $ExcludePatterns) {
-        # Handle wildcards
-        if ($Pattern -like "*`**") {
-            if ($RelativePath -like $Pattern) {
-                return $true
+        # Check if directory should be excluded
+        if ($Item.PSIsContainer) {
+            $ExcludeDir = $false
+            foreach ($ExcludeDirPattern in $ExcludeDirs) {
+                if ($Item.Name -eq $ExcludeDirPattern -or $RelativePath -eq $ExcludeDirPattern -or $RelativePath -like "$ExcludeDirPattern/*") {
+                    $ExcludeDir = $true
+                    break
+                }
+            }
+
+            if (-not $ExcludeDir) {
+                # Recurse into directory
+                $NewDest = Join-Path $DestPath $Item.Name
+                Copy-FilesWithExclusions -SourcePath $Item.FullName -DestPath $NewDest -RelativeBase $RelativePath
+            }
+        } else {
+            # Check if file should be excluded
+            $ExcludeFile = $false
+
+            # Special includes (override exclusions)
+            # Include block scripts (index.js and view.js in blocks/)
+            if ($RelativePath -match "^blocks/.+/(index|view)\.js$") {
+                $ExcludeFile = $false
+            }
+            # Include critical CSS files
+            elseif ($RelativePath -like "assets/css/critical/*") {
+                $ExcludeFile = $false
+            }
+            # Exclude non-critical CSS (assets/css/* except critical/)
+            elseif ($RelativePath -like "assets/css/*" -and $RelativePath -notlike "assets/css/critical/*") {
+                $ExcludeFile = $true
+            }
+            else {
+                # Check file exclusion patterns
+                foreach ($Pattern in $ExcludeFiles) {
+                    if ($Item.Name -eq $Pattern -or $RelativePath -eq $Pattern) {
+                        $ExcludeFile = $true
+                        break
+                    }
+                    if ($Pattern -like "*`**") {
+                        if ($Item.Name -like $Pattern -or $RelativePath -like $Pattern) {
+                            $ExcludeFile = $true
+                            break
+                        }
+                    }
+                }
+            }
+
+            if (-not $ExcludeFile) {
+                # Copy file
+                if (-not (Test-Path $DestPath)) {
+                    New-Item -ItemType Directory -Path $DestPath -Force | Out-Null
+                }
+                Copy-Item $Item.FullName (Join-Path $DestPath $Item.Name) -Force
+                $script:CopiedCount++
+
+                # Show progress every 50 files
+                if ($script:CopiedCount % 50 -eq 0) {
+                    Write-Host "    Copied $($script:CopiedCount) files..." -ForegroundColor $InfoColor
+                }
             }
         }
-        -not $skip
-    }
-
-    Get-ChildItem -Path $ThemeDir -Recurse -File | Where-Object $Filter | ForEach-Object {
-        $dest = $_.FullName.Replace($ThemeDir, $BuildDir)
-        $destDir = Split-Path $dest
-        if (!(Test-Path $destDir)) {
-            New-Item -ItemType Directory -Path $destDir -Force | Out-Null
-        }
-        Copy-Item $_.FullName $dest -Force
     }
 }
 
-# Count files
-$ItemCount = (Get-ChildItem -Path $BuildDir -Recurse -File -ErrorAction SilentlyContinue | Measure-Object).Count
-Write-Host "    Copied $ItemCount files" -ForegroundColor $SuccessColor
+# Copy files
+$script:CopiedCount = 0
+Copy-FilesWithExclusions -SourcePath $ThemeDir -DestPath $BuildDir
+
+$ItemCount = $script:CopiedCount
+Write-Host "    Total: $ItemCount files copied" -ForegroundColor $SuccessColor
 
 # Create ZIP file
 $OutputPath = Resolve-Path $OutputDir

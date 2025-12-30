@@ -162,7 +162,7 @@ Get-ChildItem -Path $BuildDir -Recurse -File -Include @(
     "vendor/*/*/test",
     "vendor/*/*/Tests",
     "vendor/*/*/Test"
-)
+
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 

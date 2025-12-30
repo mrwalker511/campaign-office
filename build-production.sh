@@ -24,7 +24,6 @@ echo -e "========================================${NC}\n"
 
 # Get theme directory (script location)
 THEME_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-THEME_NAME="$(basename "$THEME_DIR")"
 
 echo -e "${BLUE}[1/5] Validating theme directory...${NC}"
 if [ ! -f "$THEME_DIR/style.css" ]; then
@@ -32,18 +31,31 @@ if [ ! -f "$THEME_DIR/style.css" ]; then
     exit 1
 fi
 
+# Get theme slug from Text Domain in style.css
+echo -e "${BLUE}[2/5] Reading theme information from style.css...${NC}"
+THEME_SLUG=$(grep -i "Text Domain:" "$THEME_DIR/style.css" | head -n 1 | sed -E 's/.*Text Domain:\s*([a-z0-9_-]+).*/\1/')
+if [ -z "$THEME_SLUG" ]; then
+    # Fallback to directory name if Text Domain not found
+    THEME_SLUG="$(basename "$THEME_DIR")"
+    echo -e "${YELLOW}    Warning: Text Domain not found in style.css, using directory name: $THEME_SLUG${NC}"
+else
+    echo -e "${GREEN}    Theme slug: $THEME_SLUG${NC}"
+fi
+
+# For backward compatibility
+THEME_NAME="$THEME_SLUG"
+
 # Get version from style.css if not provided
 if [ -z "$VERSION" ]; then
-    echo -e "${BLUE}[2/5] Reading version from style.css...${NC}"
     VERSION=$(grep -i "Version:" "$THEME_DIR/style.css" | head -n 1 | sed -E 's/.*Version:\s*([0-9.]+).*/\1/')
     if [ -z "$VERSION" ]; then
         VERSION="dev"
         echo -e "${YELLOW}    Warning: Version not found, using 'dev'${NC}"
     else
-        echo -e "${GREEN}    Found version: $VERSION${NC}"
+        echo -e "${GREEN}    Version: $VERSION${NC}"
     fi
 else
-    echo -e "${BLUE}[2/5] Using provided version: $VERSION${NC}"
+    echo -e "${GREEN}    Version: $VERSION (provided)${NC}"
 fi
 
 # Create temp directory
@@ -112,10 +124,11 @@ if command -v rsync &> /dev/null; then
         --exclude='*.zip' \
         --exclude='assets/react/' \
         --exclude='assets/js/' \
-        --include='blocks/**/index.js' \
-        --include='blocks/**/view.js' \
+        --exclude='blocks/*/index.js' \
+        --exclude='blocks/*/view.js' \
+        --exclude='assets/css/' \
+        --include='assets/css/critical/**' \
         --include='assets/css/critical/' \
-        --exclude='assets/css/*' \
         "$THEME_DIR/" "$BUILD_DIR/"
 
     ITEM_COUNT=$(find "$BUILD_DIR" -type f | wc -l)
@@ -123,7 +136,7 @@ if command -v rsync &> /dev/null; then
 else
     # Fallback to cp with manual exclusion
     echo -e "${YELLOW}    rsync not found, using cp (slower)${NC}"
-    cp -r "$THEME_DIR" "$BUILD_DIR"
+    cp -r "$THEME_DIR/." "$TEMP_DIR/$THEME_NAME/"
 
     # Remove excluded items
     cd "$BUILD_DIR"
@@ -133,7 +146,8 @@ else
     rm -f build-production.ps1 build-production.sh build-testing.ps1 2>/dev/null || true
     rm -rf build/ scripts/ 2>/dev/null || true
     rm -rf tests/ phpunit.xml .phpunit.result.cache 2>/dev/null || true
-    rm -rf playwright.config.js playwright-report test-results 2>/dev/null || true
+    rm -f playwright.config.js 2>/dev/null || true
+    rm -rf playwright-report test-results 2>/dev/null || true
     rm -rf docs/ .distignore .github/ 2>/dev/null || true
     rm -rf .vscode .idea *.code-workspace 2>/dev/null || true
     rm -f .env .env.* 2>/dev/null || true
@@ -144,9 +158,25 @@ else
     rm -f .editorconfig .eslintrc* .stylelintrc* .prettierrc* 2>/dev/null || true
     rm -f *.zip 2>/dev/null || true
     rm -rf assets/react/ assets/js/ 2>/dev/null || true
-    # Keep block scripts - remove only specific exclusions, not all JS files
-    # Keep only critical CSS, remove other assets/css contents
-    find assets/css/ -type f ! -path "assets/css/critical/*" -delete 2>/dev/null || true
+    
+    # Remove block source files
+    find blocks/ -type f -name "index.js" -delete 2>/dev/null || true
+    find blocks/ -type f -name "view.js" -delete 2>/dev/null || true
+    
+    # Keep only critical CSS
+    if [ -d "assets/css" ]; then
+        # Save critical CSS
+        if [ -d "assets/css/critical" ]; then
+            cp -r assets/css/critical "$TEMP_DIR/critical-backup"
+        fi
+        # Remove all CSS
+        rm -rf assets/css
+        # Restore critical CSS
+        if [ -d "$TEMP_DIR/critical-backup" ]; then
+            mkdir -p assets/css
+            mv "$TEMP_DIR/critical-backup" assets/css/critical
+        fi
+    fi
 
     cd "$THEME_DIR"
     ITEM_COUNT=$(find "$BUILD_DIR" -type f | wc -l)
@@ -155,7 +185,15 @@ fi
 
 # Create ZIP file
 ZIP_FILENAME="$THEME_NAME-$VERSION.zip"
-ZIP_PATH="$OUTPUT_DIR/$ZIP_FILENAME"
+
+# Convert OUTPUT_DIR to absolute path
+if [[ "$OUTPUT_DIR" = /* ]]; then
+    # Already absolute
+    ZIP_PATH="$OUTPUT_DIR/$ZIP_FILENAME"
+else
+    # Convert relative to absolute
+    ZIP_PATH="$(cd "$OUTPUT_DIR" && pwd)/$ZIP_FILENAME"
+fi
 
 echo -e "${BLUE}[5/5] Creating ZIP archive...${NC}"
 
@@ -177,8 +215,8 @@ fi
 # Get file size
 if [ -f "$ZIP_PATH" ]; then
     ZIP_SIZE=$(stat -f%z "$ZIP_PATH" 2>/dev/null || stat -c%s "$ZIP_PATH" 2>/dev/null)
-    ZIP_SIZE_KB=$(echo "scale=2; $ZIP_SIZE / 1024" | bc)
-    ZIP_SIZE_MB=$(echo "scale=2; $ZIP_SIZE / 1048576" | bc)
+    ZIP_SIZE_KB=$(awk "BEGIN {printf \"%.2f\", $ZIP_SIZE / 1024}")
+    ZIP_SIZE_MB=$(awk "BEGIN {printf \"%.2f\", $ZIP_SIZE / 1048576}")
 
     echo -e "\n${GREEN}========================================"
     echo "Build Complete!"
@@ -188,7 +226,7 @@ if [ -f "$ZIP_PATH" ]; then
     echo -e "${GREEN}  Location: $ZIP_PATH${NC}"
 
     # Show size in appropriate unit
-    if (( $(echo "$ZIP_SIZE_MB > 1" | bc -l) )); then
+    if [ $(awk "BEGIN {print ($ZIP_SIZE_MB > 1)}") -eq 1 ]; then
         echo -e "${GREEN}  Size: ${ZIP_SIZE_MB} MB${NC}"
     else
         echo -e "${GREEN}  Size: ${ZIP_SIZE_KB} KB${NC}"

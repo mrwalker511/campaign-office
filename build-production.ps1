@@ -99,15 +99,28 @@ if (-not (Test-Path $DistPath)) {
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-# Copy all files first
-Copy-Item -Path "$ThemeDir\*" -Destination $BuildDir -Recurse -Force
-
-# Remove excluded files and directories
-$ExcludePaths = @(
+# Define excluded directories
+$ExcludeDirs = @(
     ".git",
+    "node_modules",
+    "vendor",
+    "build",
+    "scripts",
+    "tests",
+    "playwright-report",
+    "test-results",
+    "docs",
+    ".github",
+    ".vscode",
+    ".idea",
+    ".claude",
+    ".sass-cache"
+)
+
+# Define excluded files
+$ExcludeFiles = @(
     ".gitignore",
     ".gitattributes",
-    "node_modules",
     "package.json",
     "package-lock.json",
     ".npmrc",
@@ -116,35 +129,11 @@ $ExcludePaths = @(
     "build-production.ps1",
     "build-production.sh",
     "build-testing.ps1",
-    "build",
-    "scripts",
-    "tests",
     "phpunit.xml",
     ".phpunit.result.cache",
     "playwright.config.js",
-    "playwright-report",
-    "test-results",
-    "docs",
     ".distignore",
-    ".github",
-    ".vscode",
-    ".idea",
-    ".claude",
-    ".sass-cache",
     ".editorconfig",
-    "assets\react",
-    "assets\js"
-)
-
-foreach ($ExcludePath in $ExcludePaths) {
-    $FullPath = Join-Path $BuildDir $ExcludePath
-    if (Test-Path $FullPath) {
-        Remove-Item $FullPath -Recurse -Force -ErrorAction SilentlyContinue
-    }
-}
-
-# Remove specific file patterns
-Get-ChildItem -Path $BuildDir -Recurse -File -Include @(
     "*.code-workspace",
     ".env*",
     "*.log",
@@ -164,30 +153,9 @@ Get-ChildItem -Path $BuildDir -Recurse -File -Include @(
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-# Function to recursively copy files with exclusions
-function Copy-FilesWithExclusions {
-    param(
-        [string]$SourcePath,
-        [string]$DestPath,
-        [string]$RelativeBase = ""
-    )
-
-    # Get items in current directory
-    $Items = Get-ChildItem -Path $SourcePath -ErrorAction SilentlyContinue
-
-    foreach ($Item in $Items) {
-        $RelativePath = if ($RelativeBase) { "$RelativeBase/$($Item.Name)" } else { $Item.Name }
-        $RelativePath = $RelativePath.Replace("\", "/")
-
-        # Check if directory should be excluded
-        if ($Item.PSIsContainer) {
-            $ExcludeDir = $false
-            foreach ($ExcludeDirPattern in $ExcludeDirs) {
-                if ($Item.Name -eq $ExcludeDirPattern -or $RelativePath -eq $ExcludeDirPattern -or $RelativePath -like "$ExcludeDirPattern/*") {
-                    $ExcludeDir = $true
-                    break
-                }
-            }
+    if (Test-Path $CriticalCssPath) {
+        Copy-Item -Path $CriticalCssPath -Destination $TempCriticalPath -Recurse -Force
+    }
 
             if (-not $ExcludeDir) {
                 # Recurse into directory
@@ -222,29 +190,18 @@ function Copy-FilesWithExclusions {
                 }
             }
 
-            if (-not $ExcludeFile) {
-                # Copy file
-                if (-not (Test-Path $DestPath)) {
-                    New-Item -ItemType Directory -Path $DestPath -Force | Out-Null
-                }
-                Copy-Item $Item.FullName (Join-Path $DestPath $Item.Name) -Force
-                $script:CopiedCount++
-
-                # Show progress every 50 files
-                if ($script:CopiedCount % 50 -eq 0) {
-                    Write-Host "    Copied $($script:CopiedCount) files..." -ForegroundColor $InfoColor
-                }
-            }
-        }
+    if (Test-Path $TempCriticalPath) {
+        New-Item -ItemType Directory -Path "$BuildDir\assets\css" -Force | Out-Null
+        Copy-Item -Path $TempCriticalPath -Destination "$BuildDir\assets\css\critical" -Recurse -Force
     }
 }
 
-# Copy files
-$script:CopiedCount = 0
-Copy-FilesWithExclusions -SourcePath $ThemeDir -DestPath $BuildDir
+# Remove block source files (index.js and view.js)
+Get-ChildItem -Path "$BuildDir\blocks" -Recurse -File -Include @("index.js", "view.js") -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
 
-$ItemCount = $script:CopiedCount
-Write-Host "    Total: $ItemCount files copied" -ForegroundColor $SuccessColor
+# Count files
+$ItemCount = (Get-ChildItem -Path $BuildDir -Recurse -File -ErrorAction SilentlyContinue | Measure-Object).Count
+Write-Host "    Copied $ItemCount files" -ForegroundColor $SuccessColor
 
 # Create ZIP file
 $OutputPath = Resolve-Path $OutputDir

@@ -538,6 +538,19 @@ function campaignpress_color_scheme_body_class($classes) {
 }
 add_filter('body_class', 'campaignpress_color_scheme_body_class');
 
+function campaignpress_primary_menu_layout_body_class($classes) {
+    $layout = get_theme_mod('campaignpress_primary_menu_layout', 'inline');
+
+    if (!in_array($layout, array('inline', 'vertical'), true)) {
+        $layout = 'inline';
+    }
+
+    $classes[] = 'cp-primary-menu-' . $layout;
+
+    return $classes;
+}
+add_filter('body_class', 'campaignpress_primary_menu_layout_body_class');
+
 /**
  * Register widget area.
  *
@@ -611,45 +624,3 @@ function campaignpress_deactivation() {
     flush_rewrite_rules();
 }
 add_action('switch_theme', 'campaignpress_deactivation');
-
-function campaignpress_customize_color_scheme($wp_customize) {
-    // Add setting
-    $wp_customize->add_setting('campaignpress_color_scheme', array(
-        'default' => 'democrat-blue',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport' => 'refresh',
-    ));
-
-    // Add control
-    $wp_customize->add_control('campaignpress_color_scheme', array(
-        'label' => __('Party Color Scheme', 'campaign-office'),
-        'description' => __('Choose a color scheme that matches your political affiliation.', 'campaign-office'),
-        'section' => 'colors',
-        'type' => 'select',
-        'choices' => array(
-            'democrat-blue' => __('Democrat Blue', 'campaign-office'),
-            'republican-red' => __('Republican Red', 'campaign-office'),
-            'independent-purple' => __('Independent Purple', 'campaign-office'),
-            'green-party' => __('Green Party', 'campaign-office'),
-        ),
-    ));
-}
-add_action('customize_register', 'campaignpress_customize_color_scheme');
-
-
-
-function campaignpress_customize_disclaimer($wp_customize) {
-    $wp_customize->add_setting('campaignpress_disclaimer_text', array(
-        'default' => '',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport' => 'refresh',
-    ));
-
-    $wp_customize->add_control('campaignpress_disclaimer_text', array(
-        'label' => __('"Paid for by" Disclaimer', 'campaign-office'),
-        'description' => __('e.g. Paid for by Friends of Candidate', 'campaign-office'),
-        'section' => 'title_tagline',
-        'type' => 'text',
-    ));
-}
-add_action('customize_register', 'campaignpress_customize_disclaimer');

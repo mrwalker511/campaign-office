@@ -31,10 +31,12 @@ if (!defined('CAMPAIGNPRESS_DEV_MODE') || !CAMPAIGNPRESS_DEV_MODE) {
  *
  * These are valid test keys for different license tiers.
  * Use these in the License activation page during testing.
+ *
+ * Professional: CP-DEV-PROFESSIONAL-2024-X1Y2Z3W4V5U6
+ * Email: dev@campaignpress.test
  */
-define('CP_TEST_LICENSE_STARTER', 'CP-DEV-STARTER-2024-A1B2C3D4E5F6');
+define('CP_TEST_LICENSE_FREE', 'CP-DEV-FREE-2024-F1R2E3E4EEEE');
 define('CP_TEST_LICENSE_PROFESSIONAL', 'CP-DEV-PROFESSIONAL-2024-X1Y2Z3W4V5U6');
-define('CP_TEST_LICENSE_ENTERPRISE', 'CP-DEV-ENTERPRISE-2024-Q1W2E3R4T5Y6');
 define('CP_TEST_LICENSE_EXPIRED', 'CP-DEV-EXPIRED-2024-M1N2O3P4Q5R6');
 define('CP_TEST_LICENSE_INVALID', 'CP-DEV-INVALID-2024-FAKEFAKEFAKE');
 
@@ -87,8 +89,8 @@ add_filter('pre_http_request', function($preempt, $args, $url) {
  * @return array Mock HTTP response
  */
 function wp_remote_retrieve_mock_response($license_key, $email) {
-	// Starter License
-	if ($license_key === CP_TEST_LICENSE_STARTER) {
+	// Free License
+	if ($license_key === CP_TEST_LICENSE_FREE) {
 		return array(
 			'response' => array(
 				'code' => 200,
@@ -99,16 +101,14 @@ function wp_remote_retrieve_mock_response($license_key, $email) {
 				'message' => 'License validated successfully',
 				'data' => array(
 					'license_key' => $license_key,
-					'license_type' => 'starter',
+					'license_type' => 'free',
 					'email' => $email,
-					'expiry_date' => date('Y-m-d', strtotime('+1 year')),
+					'expiry_date' => date('Y-m-d', strtotime('+100 years')),
 					'site_limit' => 1,
 					'sites_active' => 1,
-					'customer_name' => 'Test User (Starter)',
+					'customer_name' => 'Test User (Free)',
 					'features' => array(
-						'premium_templates',
-						'custom_blocks',
-						'email_integration',
+						'basic_templates',
 					),
 				),
 			)),
@@ -143,43 +143,6 @@ function wp_remote_retrieve_mock_response($license_key, $email) {
 						'compliance_tools',
 						'field_operations',
 						'auto_updates',
-					),
-				),
-			)),
-		);
-	}
-
-	// Enterprise License
-	if ($license_key === CP_TEST_LICENSE_ENTERPRISE) {
-		return array(
-			'response' => array(
-				'code' => 200,
-				'message' => 'OK',
-			),
-			'body' => json_encode(array(
-				'success' => true,
-				'message' => 'License validated successfully',
-				'data' => array(
-					'license_key' => $license_key,
-					'license_type' => 'enterprise',
-					'email' => $email,
-					'expiry_date' => date('Y-m-d', strtotime('+2 years')),
-					'site_limit' => 999,
-					'sites_active' => 1,
-					'customer_name' => 'Test User (Enterprise)',
-					'features' => array(
-						'premium_templates',
-						'custom_blocks',
-						'email_integration',
-						'advanced_analytics',
-						'donor_management',
-						'volunteer_portal',
-						'compliance_tools',
-						'field_operations',
-						'auto_updates',
-						'white_label',
-						'priority_support',
-						'custom_development',
 					),
 				),
 			)),
@@ -238,9 +201,8 @@ add_action('admin_notices', function() {
 			</p>
 			<p style="font-family: monospace; font-size: 0.9em;">
 				<strong>Test License Keys:</strong><br>
-				Starter: <?php echo esc_html(CP_TEST_LICENSE_STARTER); ?><br>
+				Free: <?php echo esc_html(CP_TEST_LICENSE_FREE); ?><br>
 				Professional: <?php echo esc_html(CP_TEST_LICENSE_PROFESSIONAL); ?><br>
-				Enterprise: <?php echo esc_html(CP_TEST_LICENSE_ENTERPRISE); ?><br>
 				Email: <?php echo esc_html(CP_TEST_LICENSE_EMAIL); ?>
 			</p>
 		</div>

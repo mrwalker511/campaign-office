@@ -798,8 +798,8 @@ class CampaignPress_Premium {
         // Allow customization of license server URL via filter
         $license_server_url = apply_filters('campaignpress_license_server_url', self::LICENSE_SERVER);
 
-        // Check if license server is configured
-        if ($license_server_url === self::LICENSE_SERVER && self::LICENSE_SERVER === 'https://api.campaignpress.com/v1/') {
+        // Check if license server is configured (skip check in dev mode to allow mock server)
+        if (!$this->dev_mode && $license_server_url === self::LICENSE_SERVER && self::LICENSE_SERVER === 'https://api.campaignpress.com/v1/') {
             return array(
                 'success' => false,
                 'message' => __('License server not configured. Please set up your license server or use the campaignpress_license_server_url filter.', 'campaign-office'),

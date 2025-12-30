@@ -81,6 +81,22 @@ $BuildDir = Join-Path $TempDir $ThemeName
 Write-Host "[3/5] Creating temporary build directory..." -ForegroundColor $InfoColor
 New-Item -ItemType Directory -Path $BuildDir -Force | Out-Null
 
+# Check for compiled assets
+Write-Host "[3.1/5] Validating compiled assets..." -ForegroundColor $InfoColor
+$DistPath = Join-Path $ThemeDir "assets\dist"
+if (-not (Test-Path $DistPath)) {
+    Write-Host "Error: assets/dist directory not found. Run 'npm run build' first." -ForegroundColor $ErrorColor
+    exit 1
+} else {
+    $DistCount = (Get-ChildItem -Path $DistPath -Recurse -File | Measure-Object).Count
+    if ($DistCount -eq 0) {
+        Write-Host "Error: assets/dist directory is empty. Run 'npm run build' first." -ForegroundColor $ErrorColor
+        exit 1
+    } else {
+        Write-Host "    Found $DistCount compiled assets" -ForegroundColor $SuccessColor
+    }
+}
+
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
 # Copy all files first
@@ -146,24 +162,6 @@ Get-ChildItem -Path $BuildDir -Recurse -File -Include @(
     "*.zip"
 ) -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
 
-    # Claude/AI files
-    ".claude",
-
-    # ZIP files
-    "*.zip",
-
-    # Source files (keep only compiled assets)
-    "assets/react",
-    "assets/js",
-
-    # Composer dev dependencies
-    "vendor/bin",
-    "vendor/*/*/tests",
-    "vendor/*/*/test",
-    "vendor/*/*/Tests",
-    "vendor/*/*/Test"
-)
-
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
 # Function to recursively copy files with exclusions
@@ -200,14 +198,9 @@ function Copy-FilesWithExclusions {
             # Check if file should be excluded
             $ExcludeFile = $false
 
-            # Special includes (override exclusions)
-            # Include block scripts (index.js and view.js in blocks/)
+            # Exclude block source files (compiled by Vite)
             if ($RelativePath -match "^blocks/.+/(index|view)\.js$") {
-                $ExcludeFile = $false
-            }
-            # Include critical CSS files
-            elseif ($RelativePath -like "assets/css/critical/*") {
-                $ExcludeFile = $false
+                $ExcludeFile = $true
             }
             # Exclude non-critical CSS (assets/css/* except critical/)
             elseif ($RelativePath -like "assets/css/*" -and $RelativePath -notlike "assets/css/critical/*") {

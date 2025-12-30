@@ -38,7 +38,6 @@ Write-Host "========================================`n" -ForegroundColor $InfoCo
 
 # Get theme directory (script location)
 $ThemeDir = $PSScriptRoot
-$ThemeName = Split-Path $ThemeDir -Leaf
 
 Write-Host "[1/5] Validating theme directory..." -ForegroundColor $InfoColor
 if (-not (Test-Path "$ThemeDir\style.css")) {
@@ -46,19 +45,34 @@ if (-not (Test-Path "$ThemeDir\style.css")) {
     exit 1
 }
 
+# Get theme slug and version from style.css
+Write-Host "[2/5] Reading theme information from style.css..." -ForegroundColor $InfoColor
+$StyleContent = Get-Content "$ThemeDir\style.css" -Raw
+
+# Extract theme slug from Text Domain
+if ($StyleContent -match "Text Domain:\s*([a-z0-9_-]+)") {
+    $ThemeSlug = $matches[1]
+    Write-Host "    Theme slug: $ThemeSlug" -ForegroundColor $SuccessColor
+} else {
+    # Fallback to directory name if Text Domain not found
+    $ThemeSlug = Split-Path $ThemeDir -Leaf
+    Write-Host "    Warning: Text Domain not found in style.css, using directory name: $ThemeSlug" -ForegroundColor $WarningColor
+}
+
+# For backward compatibility
+$ThemeName = $ThemeSlug
+
 # Get version from style.css if not provided
 if ([string]::IsNullOrEmpty($Version)) {
-    Write-Host "[2/5] Reading version from style.css..." -ForegroundColor $InfoColor
-    $StyleContent = Get-Content "$ThemeDir\style.css" -Raw
     if ($StyleContent -match "Version:\s*([0-9.]+)") {
         $Version = $matches[1]
-        Write-Host "    Found version: $Version" -ForegroundColor $SuccessColor
+        Write-Host "    Version: $Version" -ForegroundColor $SuccessColor
     } else {
         $Version = "dev"
         Write-Host "    Warning: Version not found, using 'dev'" -ForegroundColor $WarningColor
     }
 } else {
-    Write-Host "[2/5] Using provided version: $Version" -ForegroundColor $InfoColor
+    Write-Host "    Version: $Version (provided)" -ForegroundColor $SuccessColor
 }
 
 # Create temp directory
@@ -67,61 +81,56 @@ $BuildDir = Join-Path $TempDir $ThemeName
 Write-Host "[3/5] Creating temporary build directory..." -ForegroundColor $InfoColor
 New-Item -ItemType Directory -Path $BuildDir -Force | Out-Null
 
-# Files and directories to EXCLUDE (simple names only, no wildcards for robocopy)
-$ExcludeDirs = @(
-    ".git",
-    "node_modules",
-    "tests",
-    "docs",
-    ".vscode",
-    ".idea",
-    ".claude",
-    "playwright-report",
-    "test-results",
-    ".sass-cache",
-    "vendor\bin"
-)
+Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-$ExcludeFiles = @(
+# Copy all files first
+Copy-Item -Path "$ThemeDir\*" -Destination $BuildDir -Recurse -Force
+
+# Remove excluded files and directories
+$ExcludePaths = @(
+    ".git",
     ".gitignore",
     ".gitattributes",
-
-    # Node/NPM
     "node_modules",
     "package.json",
     "package-lock.json",
     ".npmrc",
-
-    # Composer
     "composer.json",
     "composer.lock",
-
-    # Build tools and scripts
     "build-production.ps1",
     "build-production.sh",
     "build-testing.ps1",
     "build",
     "scripts",
-
-    # Testing
     "tests",
     "phpunit.xml",
     ".phpunit.result.cache",
     "playwright.config.js",
     "playwright-report",
     "test-results",
-
-    # Documentation
     "docs",
     ".distignore",
     ".github",
-
-    # IDE files
     ".vscode",
     ".idea",
+    ".claude",
+    ".sass-cache",
+    ".editorconfig",
+    "assets\react",
+    "assets\js"
+)
+
+foreach ($ExcludePath in $ExcludePaths) {
+    $FullPath = Join-Path $BuildDir $ExcludePath
+    if (Test-Path $FullPath) {
+        Remove-Item $FullPath -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
+# Remove specific file patterns
+Get-ChildItem -Path $BuildDir -Recurse -File -Include @(
     "*.code-workspace",
-    ".env",
-    ".env.*",
+    ".env*",
     "*.log",
     "debug.log",
     "error_log",
@@ -131,13 +140,11 @@ $ExcludeFiles = @(
     "*.tmp",
     "*.temp",
     "*.cache",
-    ".sass-cache",
-
-    # Development files
-    ".editorconfig",
     ".eslintrc*",
     ".stylelintrc*",
     ".prettierrc*",
+    "*.zip"
+) -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
 
     # Claude/AI files
     ".claude",

@@ -19,15 +19,19 @@ $themeDir = Join-Path $tempDir $themeName
 Write-Host "Creating temporary build directory..." -ForegroundColor Yellow
 New-Item -Path $themeDir -ItemType Directory -Force | Out-Null
 
-# Define what to exclude
-$excludePatterns = @(
+# Directories to exclude (matched as path segments)
+$excludeDirs = @(
     "node_modules", ".git", ".github", ".claude", ".vscode", ".idea",
-    "docs", "tests", "build", "lighthouse-reports", "vendor",
-    "*.log", "*.tmp", "*.bak", ".gitignore", ".gitattributes",
+    "docs", "tests", "build", "lighthouse-reports", "vendor"
+)
+
+# Files/patterns to exclude
+$excludeFiles = @(
+    "*.log", "*.tmp", "*.bak", "*.zip",
+    ".gitignore", ".gitattributes", ".DS_Store", "Thumbs.db",
     "package.json", "package-lock.json", "composer.json", "composer.lock",
-    "wp-cli.phar", ".DS_Store", "Thumbs.db", ".env", ".env.local",
-    "build-testing.ps1", "build-production.ps1", "nul", "NUL",
-    "campaign-office-testing.zip", "*.zip"
+    "wp-cli.phar", ".env", ".env.local", "nul", "NUL",
+    "build-testing.ps1", "build-production.ps1"
 )
 
 Write-Host "Copying theme files..." -ForegroundColor Yellow
@@ -36,13 +40,24 @@ $fileCount = 0
 Get-ChildItem -Path . -Recurse -Force -File | ForEach-Object {
     $file = $_
     $relativePath = $file.FullName.Substring((Get-Location).Path.Length + 1)
+    $pathParts = $relativePath -split '\\'
 
-    # Check if should exclude
+    # Check if in excluded directory
     $exclude = $false
-    foreach ($pattern in $excludePatterns) {
-        if ($relativePath -like "*$pattern*") {
+    foreach ($dir in $excludeDirs) {
+        if ($pathParts -contains $dir) {
             $exclude = $true
             break
+        }
+    }
+
+    # Check if file matches exclude pattern
+    if (-not $exclude) {
+        foreach ($pattern in $excludeFiles) {
+            if ($file.Name -like $pattern) {
+                $exclude = $true
+                break
+            }
         }
     }
 

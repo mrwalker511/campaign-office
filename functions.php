@@ -311,6 +311,50 @@ function campaignpress_disable_dashicons() {
 add_action('wp_enqueue_scripts', 'campaignpress_disable_dashicons');
 
 /**
+ * Add lazy loading to images
+ *
+ * Loads images lazily to improve initial page load time.
+ * Skips lazy loading for above-the-fold images.
+ *
+ * @param array $attr Image attributes.
+ * @param WP_Post $attachment Image attachment post.
+ * @param string|array $size Requested image size.
+ * @return array Modified attributes.
+ */
+function campaignpress_add_lazy_loading($attr, $attachment, $size) {
+    // Skip lazy loading for above-the-fold images
+    $lazy_skip_sizes = apply_filters('campaignpress_lazy_skip_sizes', array(
+        'hero',
+        'full',
+        'campaignpress-candidate-headshot',
+        'campaignpress-event-hero'
+    ));
+
+    if (in_array($size, $lazy_skip_sizes, true)) {
+        return $attr;
+    }
+
+    // Skip if in admin
+    if (is_admin()) {
+        return $attr;
+    }
+
+    // Skip if feed
+    if (is_feed()) {
+        return $attr;
+    }
+
+    // Add lazy loading attribute
+    $attr['loading'] = 'lazy';
+
+    // Add decoding attribute for better performance
+    $attr['decoding'] = 'async';
+
+    return $attr;
+}
+add_filter('wp_get_attachment_image_attributes', 'campaignpress_add_lazy_loading', 10, 3);
+
+/**
  * Clear homepage transients when issues or events are updated
  */
 function campaignpress_clear_homepage_cache($post_id) {

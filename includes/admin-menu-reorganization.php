@@ -55,10 +55,10 @@ function cp_campaign_data_main_page() {
             'donation_count' => 0,
         );
         
-        // Get donation stats if table exists
+        // Get donation stats if table exists (use strict comparison for security)
         $donations_table = $wpdb->prefix . 'campaignpress_donations';
         $table_exists = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $donations_table));
-        if ($table_exists === $donations_table) {
+        if (null !== $table_exists && $table_exists === $donations_table) {
             $stats['total_donations'] = $wpdb->get_var($wpdb->prepare("SELECT SUM(amount) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
             $stats['donation_count'] = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
         }

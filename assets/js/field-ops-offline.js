@@ -8,7 +8,7 @@
  * @since 2.0.0
  */
 
-(function() {
+(function () {
     'use strict';
 
     var dbName = 'cp_field_ops_offline';
@@ -26,16 +26,15 @@
 
         var request = indexedDB.open(dbName, dbVersion);
 
-        request.onerror = function(event) {
-            console.error('IndexedDB error:', event.target.error);
+        request.onerror = function (event) {
+            // IndexedDB error - silently handle in production
         };
 
-        request.onsuccess = function(event) {
+        request.onsuccess = function (event) {
             db = event.target.result;
-            console.log('IndexedDB initialized');
         };
 
-        request.onupgradeneeded = function(event) {
+        request.onupgradeneeded = function (event) {
             db = event.target.result;
 
             // Create object stores for offline data
@@ -61,8 +60,6 @@
                 var walkListStore = db.createObjectStore('walk_lists', { keyPath: 'id' });
                 walkListStore.createIndex('last_updated', 'last_updated', { unique: false });
             }
-
-            console.log('IndexedDB schema created');
         };
     }
 
@@ -71,11 +68,10 @@
      */
     function saveOffline(storeName, data) {
         if (!db) {
-            console.error('Database not initialized');
             return Promise.reject('Database not available');
         }
 
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             data.timestamp = Date.now();
             data.synced = false;
 
@@ -83,13 +79,11 @@
             var store = transaction.objectStore(storeName);
             var request = store.add(data);
 
-            request.onsuccess = function() {
-                console.log('Data saved offline:', storeName);
+            request.onsuccess = function () {
                 resolve(request.result);
             };
 
-            request.onerror = function() {
-                console.error('Failed to save offline:', request.error);
+            request.onerror = function () {
                 reject(request.error);
             };
         });
@@ -103,17 +97,17 @@
             return Promise.resolve([]);
         }
 
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             var transaction = db.transaction([storeName], 'readonly');
             var store = transaction.objectStore(storeName);
             var index = store.index('synced');
             var request = index.getAll(false);
 
-            request.onsuccess = function() {
+            request.onsuccess = function () {
                 resolve(request.result);
             };
 
-            request.onerror = function() {
+            request.onerror = function () {
                 reject(request.error);
             };
         });
@@ -127,25 +121,25 @@
             return Promise.resolve();
         }
 
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             var transaction = db.transaction([storeName], 'readwrite');
             var store = transaction.objectStore(storeName);
 
-            var promises = ids.map(function(id) {
-                return new Promise(function(resolveItem, rejectItem) {
+            var promises = ids.map(function (id) {
+                return new Promise(function (resolveItem, rejectItem) {
                     var getRequest = store.get(id);
 
-                    getRequest.onsuccess = function() {
+                    getRequest.onsuccess = function () {
                         var data = getRequest.result;
                         if (data) {
                             data.synced = true;
                             var putRequest = store.put(data);
 
-                            putRequest.onsuccess = function() {
+                            putRequest.onsuccess = function () {
                                 resolveItem();
                             };
 
-                            putRequest.onerror = function() {
+                            putRequest.onerror = function () {
                                 rejectItem(putRequest.error);
                             };
                         } else {
@@ -153,7 +147,7 @@
                         }
                     };
 
-                    getRequest.onerror = function() {
+                    getRequest.onerror = function () {
                         rejectItem(getRequest.error);
                     };
                 });
@@ -168,13 +162,12 @@
      */
     function syncAllData() {
         if (!navigator.onLine) {
-            console.log('Cannot sync: offline');
             return Promise.resolve();
         }
 
         var stores = ['canvassing', 'phone_banking', 'gotv'];
-        var syncPromises = stores.map(function(storeName) {
-            return getUnsyncedData(storeName).then(function(data) {
+        var syncPromises = stores.map(function (storeName) {
+            return getUnsyncedData(storeName).then(function (data) {
                 if (data.length === 0) {
                     return;
                 }
@@ -206,22 +199,21 @@
                 nonce: cpFieldOps.nonce
             })
         })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(response) {
-            if (response.success) {
-                // Mark as synced
-                var ids = data.map(function(item) { return item.id; });
-                return markAsSynced(storeName, ids);
-            } else {
-                throw new Error(response.data.message || 'Sync failed');
-            }
-        })
-        .catch(function(error) {
-            console.error('Sync error:', error);
-            throw error;
-        });
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (response) {
+                if (response.success) {
+                    // Mark as synced
+                    var ids = data.map(function (item) { return item.id; });
+                    return markAsSynced(storeName, ids);
+                } else {
+                    throw new Error(response.data.message || 'Sync failed');
+                }
+            })
+            .catch(function (error) {
+                throw error;
+            });
     }
 
     /**
@@ -232,7 +224,7 @@
             return Promise.resolve();
         }
 
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             var transaction = db.transaction(['walk_lists'], 'readwrite');
             var store = transaction.objectStore('walk_lists');
 
@@ -244,12 +236,11 @@
 
             var request = store.put(data);
 
-            request.onsuccess = function() {
-                console.log('Walk list cached');
+            request.onsuccess = function () {
                 resolve();
             };
 
-            request.onerror = function() {
+            request.onerror = function () {
                 reject(request.error);
             };
         });
@@ -263,16 +254,16 @@
             return Promise.resolve(null);
         }
 
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             var transaction = db.transaction(['walk_lists'], 'readonly');
             var store = transaction.objectStore('walk_lists');
             var request = store.get(walkListId);
 
-            request.onsuccess = function() {
+            request.onsuccess = function () {
                 resolve(request.result);
             };
 
-            request.onerror = function() {
+            request.onerror = function () {
                 reject(request.error);
             };
         });
@@ -286,18 +277,17 @@
     }
 
     // Auto-sync when coming back online
-    window.addEventListener('online', function() {
-        console.log('Connection restored, syncing data...');
-        syncAllData().then(function() {
-            console.log('Sync complete');
-        }).catch(function(error) {
-            console.error('Sync failed:', error);
+    window.addEventListener('online', function () {
+        syncAllData().then(function () {
+            // Sync completed
+        }).catch(function (error) {
+            // Sync failed - will retry on next online event
         });
     });
 
     // Periodic sync if configured
     if (cpFieldOps.syncInterval) {
-        setInterval(function() {
+        setInterval(function () {
             if (navigator.onLine) {
                 syncAllData();
             }

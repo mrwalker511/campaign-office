@@ -8,11 +8,11 @@
  * @since 2.0.0
  */
 
-(function($) {
+(function ($) {
     'use strict';
 
     // Wait for DOM ready
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         // Initialize admin features
         initDataExport();
@@ -25,7 +25,7 @@
      * Initialize data export functionality
      */
     function initDataExport() {
-        $('.cp-export-data').on('click', function(e) {
+        $('.cp-export-data').on('click', function (e) {
             e.preventDefault();
 
             var $btn = $(this);
@@ -45,7 +45,7 @@
                     date_from: $('#export-date-from').val() || '',
                     date_to: $('#export-date-to').val() || ''
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         var csvContent = 'data:text/csv;charset=utf-8,' + encodeURIComponent(response.data.content);
                         var link = document.createElement('a');
@@ -60,10 +60,10 @@
                         showNotification(response.data.message || cpFieldOps.strings.errorOccurred, 'error');
                     }
                 },
-                error: function() {
+                error: function () {
                     showNotification(cpFieldOps.strings.errorOccurred, 'error');
                 },
-                complete: function() {
+                complete: function () {
                     $btn.prop('disabled', false).text('Export Data');
                 }
             });
@@ -75,7 +75,7 @@
      */
     function initQuickActions() {
         // Mark voter as voted
-        $(document).on('click', '.cp-mark-voted', function(e) {
+        $(document).on('click', '.cp-mark-voted', function (e) {
             e.preventDefault();
             var $btn = $(this);
             var voterId = $btn.data('voter-id');
@@ -92,7 +92,7 @@
                         voter_name: voterName,
                         vote_method: 'in_person'
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             $btn.closest('tr').addClass('voter-recorded');
                             $btn.prop('disabled', true).text('Voted ✓');
@@ -101,7 +101,7 @@
                             showNotification(response.data.message || cpFieldOps.strings.errorOccurred, 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         showNotification(cpFieldOps.strings.errorOccurred, 'error');
                     }
                 });
@@ -109,16 +109,16 @@
         });
 
         // Assign driver to ride
-        $(document).on('click', '.cp-assign-driver', function(e) {
+        $(document).on('click', '.cp-assign-driver', function (e) {
             e.preventDefault();
             var rideId = $(this).data('ride-id');
             var driversList = $(this).data('drivers') || [];
 
             var driverSelect = '<select id="driver-select" class="widefat">';
             driverSelect += '<option value="">Select a driver...</option>';
-            
+
             if (typeof driversList === 'object' && Object.keys(driversList).length > 0) {
-                $.each(driversList, function(id, name) {
+                $.each(driversList, function (id, name) {
                     driverSelect += '<option value="' + id + '">' + name + '</option>';
                 });
             } else {
@@ -140,7 +140,7 @@
 
             $('body').append(modal);
 
-            $('#confirm-driver').on('click', function() {
+            $('#confirm-driver').on('click', function () {
                 var driverId = $('#driver-select').val();
                 if (!driverId) {
                     alert('Please select a driver');
@@ -156,7 +156,7 @@
                         ride_id: rideId,
                         driver_id: driverId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             showNotification(response.data.message, 'success');
                             location.reload();
@@ -164,22 +164,22 @@
                             showNotification(response.data.message || cpFieldOps.strings.errorOccurred, 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         showNotification(cpFieldOps.strings.errorOccurred, 'error');
                     },
-                    complete: function() {
+                    complete: function () {
                         $('.cp-modal-overlay').remove();
                     }
                 });
             });
 
-            $('#cancel-driver').on('click', function() {
+            $('#cancel-driver').on('click', function () {
                 $('.cp-modal-overlay').remove();
             });
         });
 
         // Check out volunteer
-        $(document).on('click', '.cp-checkout-btn', function(e) {
+        $(document).on('click', '.cp-checkout-btn', function (e) {
             e.preventDefault();
             var checkinId = $(this).data('checkin-id');
 
@@ -192,7 +192,7 @@
                         nonce: cpFieldOps.nonce,
                         checkin_id: checkinId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             showNotification(response.data.message + ' Hours: ' + response.data.hours, 'success');
                             location.reload();
@@ -200,7 +200,7 @@
                             showNotification(response.data.message || cpFieldOps.strings.errorOccurred, 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         showNotification(cpFieldOps.strings.errorOccurred, 'error');
                     }
                 });
@@ -215,7 +215,7 @@
         // Check if we're on a dashboard page
         if ($('.cp-field-ops-dashboard, .cp-gotv-dashboard, .cp-scheduling-dashboard').length) {
             // Refresh stats every 30 seconds
-            setInterval(function() {
+            setInterval(function () {
                 refreshDashboardStats();
             }, 30000);
         }
@@ -228,37 +228,35 @@
         $.ajax({
             url: cpFieldOps.restUrl + 'field-ops/stats',
             type: 'GET',
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader('X-WP-Nonce', cpFieldOps.nonce);
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.canvassing) {
                     $('.cp-canvassing-doors-knocked').text(numberFormat(response.canvassing.doors_knocked));
                     $('.cp-canvassing-conversations').text(numberFormat(response.canvassing.conversations));
                     $('.cp-canvassing-rate').text(response.canvassing.completion_rate.toFixed(1) + '%');
                 }
-                
+
                 if (response.phone_banking) {
                     $('.cp-phonebank-calls').text(numberFormat(response.phone_banking.calls_made));
                     $('.cp-phonebank-answered').text(numberFormat(response.phone_banking.answered));
                     $('.cp-phonebank-talk-time').text(formatDuration(response.phone_banking.total_talk_time));
                 }
-                
+
                 if (response.gotv) {
                     $('.cp-gotv-turnout').text(response.gotv.turnout_percentage.toFixed(1) + '%');
                     $('.cp-gotv-pledges').text(numberFormat(response.gotv.pledges));
                     $('.cp-gotv-rides').text(numberFormat(response.gotv.ride_requests));
                 }
-                
+
                 if (response.volunteers) {
                     $('.cp-volunteers-active').text(numberFormat(response.volunteers.volunteers_today));
                     $('.cp-volunteers-hours').text(response.volunteers.hours_today.toFixed(1));
                 }
-
-                console.log('Stats refreshed successfully');
             },
-            error: function() {
-                console.log('Failed to refresh stats');
+            error: function () {
+                // Silently fail - stats refresh is non-critical
             }
         });
     }
@@ -294,8 +292,8 @@
         $('.wrap > h1').after($notice);
 
         // Auto-dismiss after 5 seconds
-        setTimeout(function() {
-            $notice.fadeOut(function() {
+        setTimeout(function () {
+            $notice.fadeOut(function () {
                 $(this).remove();
             });
         }, 5000);

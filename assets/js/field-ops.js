@@ -8,7 +8,7 @@
  * @since 2.0.0
  */
 
-(function($) {
+(function ($) {
     'use strict';
 
     var currentAddress = 0;
@@ -16,7 +16,7 @@
     var offlineQueue = [];
 
     // Wait for DOM ready
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         // Initialize canvassing interface if present
         if ($('.cp-canvassing-interface').length) {
@@ -50,7 +50,7 @@
         loadWalkList(walkListId);
 
         // Result button handlers
-        $('.cp-result-btn').on('click', function() {
+        $('.cp-result-btn').on('click', function () {
             $('.cp-result-btn').removeClass('active');
             $(this).addClass('active');
 
@@ -64,35 +64,34 @@
         });
 
         // Save interaction
-        $('#cp-save-interaction').on('click', function() {
+        $('#cp-save-interaction').on('click', function () {
             saveInteraction();
         });
 
         // Navigation
-        $('#cp-next-address').on('click', function() {
+        $('#cp-next-address').on('click', function () {
             nextAddress();
         });
 
-        $('#cp-prev-address').on('click', function() {
+        $('#cp-prev-address').on('click', function () {
             previousAddress();
         });
 
-        $('#cp-skip-address').on('click', function() {
+        $('#cp-skip-address').on('click', function () {
             nextAddress();
         });
 
         // GPS tracking
-        $('#cp-track-location').on('click', function() {
+        $('#cp-track-location').on('click', function () {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    console.log('Location:', position.coords.latitude, position.coords.longitude);
-                    // Store location data
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    // Store location data for canvassing
                 });
             }
         });
 
         // Callback scheduling
-        $('#cp-schedule-callback').on('change', function() {
+        $('#cp-schedule-callback').on('change', function () {
             $('#cp-callback-time').toggle(this.checked);
         });
     }
@@ -107,12 +106,12 @@
         loadNextCall(callListId);
 
         // Click-to-call
-        $('#cp-click-to-call').on('click', function() {
+        $('#cp-click-to-call').on('click', function () {
             startCall();
         });
 
         // Disposition buttons
-        $('.cp-disp-btn').on('click', function() {
+        $('.cp-disp-btn').on('click', function () {
             $('.cp-disp-btn').removeClass('active');
             $(this).addClass('active');
 
@@ -126,12 +125,12 @@
         });
 
         // Save call
-        $('#cp-save-call').on('click', function() {
+        $('#cp-save-call').on('click', function () {
             saveCall();
         });
 
         // Skip call
-        $('#cp-skip-call').on('click', function() {
+        $('#cp-skip-call').on('click', function () {
             loadNextCall(callListId);
         });
     }
@@ -141,7 +140,7 @@
      */
     function initGotvDashboard() {
         // Refresh turnout stats every 60 seconds
-        setInterval(function() {
+        setInterval(function () {
             refreshGotvStats();
         }, 60000);
     }
@@ -150,11 +149,11 @@
      * Initialize volunteer check-in
      */
     function initVolunteerCheckin() {
-        $('#cp-checkin-btn').on('click', function() {
+        $('#cp-checkin-btn').on('click', function () {
             checkIn();
         });
 
-        $('#cp-checkout-btn').on('click', function() {
+        $('#cp-checkout-btn').on('click', function () {
             checkOut();
         });
     }
@@ -173,13 +172,13 @@
                 walk_list_id: walkListId,
                 nonce: cpFieldOps.nonce
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success && response.data.addresses) {
                     walkListData = response.data.addresses;
                     displayAddress(0);
                 }
             },
-            error: function() {
+            error: function () {
                 alert(cpFieldOps.strings.errorOccurred);
             }
         });
@@ -231,7 +230,7 @@
             url: cpFieldOps.ajaxUrl,
             type: 'POST',
             data: data,
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     // Clear form
                     $('.cp-result-btn').removeClass('active');
@@ -244,7 +243,7 @@
                     alert(response.data.message || cpFieldOps.strings.errorOccurred);
                 }
             },
-            error: function() {
+            error: function () {
                 // Save to offline queue if offline
                 offlineQueue.push(data);
                 updateOfflineQueue();
@@ -285,7 +284,7 @@
                 call_list_id: callListId,
                 nonce: cpFieldOps.nonce
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success && response.data.contact) {
                     var contact = response.data.contact;
                     $('#cp-contact-name').text(contact.name);
@@ -305,7 +304,7 @@
 
         // Start timer
         var seconds = 0;
-        var timer = setInterval(function() {
+        var timer = setInterval(function () {
             seconds++;
             var minutes = Math.floor(seconds / 60);
             var secs = seconds % 60;
@@ -354,7 +353,7 @@
 
         // Collect response data if answered
         if (disposition === 'answered') {
-            $('.cp-response-field').each(function() {
+            $('.cp-response-field').each(function () {
                 var fieldName = $(this).data('field');
                 data.responses[fieldName] = $(this).val();
             });
@@ -364,7 +363,7 @@
             url: cpFieldOps.ajaxUrl,
             type: 'POST',
             data: data,
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     // Clear form
                     $('.cp-disp-btn').removeClass('active');
@@ -378,11 +377,11 @@
                     alert(response.data.message || cpFieldOps.strings.errorOccurred);
                 }
             },
-            error: function() {
+            error: function () {
                 // Save to offline queue if offline
                 offlineQueue.push(data);
                 updateOfflineQueue();
-                
+
                 // Load next call anyway
                 loadNextCall(callListId);
             }
@@ -400,7 +399,7 @@
                 action: 'cp_check_in_volunteer',
                 nonce: cpFieldOps.nonce
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     $('#cp-checkin-btn').hide();
                     $('#cp-checkout-btn').show();
@@ -421,7 +420,7 @@
                 action: 'cp_check_out_volunteer',
                 nonce: cpFieldOps.nonce
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     $('#cp-checkout-btn').hide();
                     $('#cp-checkin-btn').show();
@@ -438,7 +437,7 @@
         $.ajax({
             url: cpFieldOps.restUrl + 'gotv/turnout',
             type: 'GET',
-            success: function(response) {
+            success: function (response) {
                 // Update turnout display
                 if (response.turnout_percentage !== undefined) {
                     $('.cp-turnout-percentage').text(response.turnout_percentage.toFixed(1) + '%');
@@ -460,7 +459,7 @@
     }
 
     // Monitor online/offline status
-    window.addEventListener('online', function() {
+    window.addEventListener('online', function () {
         $('.cp-status-indicator').removeClass('cp-offline').addClass('cp-online');
         $('.cp-status-text').text('Connected');
 
@@ -468,7 +467,7 @@
         syncOfflineData();
     });
 
-    window.addEventListener('offline', function() {
+    window.addEventListener('offline', function () {
         $('.cp-status-indicator').removeClass('cp-online').addClass('cp-offline');
         $('.cp-status-text').text('Offline');
     });
@@ -489,7 +488,7 @@
                 }),
                 nonce: cpFieldOps.nonce
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     offlineQueue = [];
                     updateOfflineQueue();

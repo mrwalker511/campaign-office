@@ -247,18 +247,28 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Bootstrap 5 CSS (self-hosted for performance and reliability)
+    // Bootstrap 5 CSS (self-hosted by default, filterable for CDN)
+    // To use CDN, add to functions.php: add_filter('campaignpress_bootstrap_css_url', function() { return 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'; });
+    $bootstrap_css_url = apply_filters(
+        'campaignpress_bootstrap_css_url',
+        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'
+    );
     wp_enqueue_style(
         'bootstrap',
-        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css',
+        $bootstrap_css_url,
         array(),
         '5.3.0'
     );
 
-    // Bootstrap 5 JS Bundle (self-hosted, includes Popper)
+    // Bootstrap 5 JS Bundle (self-hosted by default, filterable for CDN)
+    // To use CDN, add to functions.php: add_filter('campaignpress_bootstrap_js_url', function() { return 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'; });
+    $bootstrap_js_url = apply_filters(
+        'campaignpress_bootstrap_js_url',
+        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'
+    );
     wp_enqueue_script(
         'bootstrap-bundle',
-        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js',
+        $bootstrap_js_url,
         array(),
         '5.3.0',
         true

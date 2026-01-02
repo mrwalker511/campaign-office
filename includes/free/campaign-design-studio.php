@@ -283,7 +283,7 @@ class CP_Campaign_Design_Studio {
         $this->components = array(
             'hero' => array(
                 'name' => __('Hero Section', 'campaign-office'),
-                'icon' => '🎯',
+                'icon' => 'dashicons-star-filled',
                 'category' => 'headers',
                 'variants' => array('centered', 'split', 'video', 'minimal'),
                 'settings' => array(
@@ -296,7 +296,7 @@ class CP_Campaign_Design_Studio {
             ),
             'cta' => array(
                 'name' => __('Call-to-Action', 'campaign-office'),
-                'icon' => '📢',
+                'icon' => 'dashicons-megaphone',
                 'category' => 'conversion',
                 'variants' => array('banner', 'card', 'modal', 'inline'),
                 'settings' => array(
@@ -307,7 +307,7 @@ class CP_Campaign_Design_Studio {
             ),
             'stats' => array(
                 'name' => __('Campaign Stats', 'campaign-office'),
-                'icon' => '📊',
+                'icon' => 'dashicons-chart-bar',
                 'category' => 'data',
                 'variants' => array('counters', 'progress-bars', 'charts', 'badges'),
                 'settings' => array(
@@ -319,7 +319,7 @@ class CP_Campaign_Design_Studio {
             ),
             'testimonials' => array(
                 'name' => __('Testimonials', 'campaign-office'),
-                'icon' => '💬',
+                'icon' => 'dashicons-format-quote',
                 'category' => 'social-proof',
                 'variants' => array('carousel', 'grid', 'masonry', 'featured'),
                 'settings' => array(
@@ -329,7 +329,7 @@ class CP_Campaign_Design_Studio {
             ),
             'donation' => array(
                 'name' => __('Donation Form', 'campaign-office'),
-                'icon' => '💰',
+                'icon' => 'dashicons-money-alt',
                 'category' => 'conversion',
                 'variants' => array('tiers', 'thermometer', 'quick-donate', 'recurring'),
                 'settings' => array(
@@ -340,7 +340,7 @@ class CP_Campaign_Design_Studio {
             ),
             'volunteer' => array(
                 'name' => __('Volunteer Signup', 'campaign-office'),
-                'icon' => '👥',
+                'icon' => 'dashicons-groups',
                 'category' => 'conversion',
                 'variants' => array('form', 'opportunities', 'impact', 'leaderboard'),
                 'settings' => array(
@@ -350,7 +350,7 @@ class CP_Campaign_Design_Studio {
             ),
             'events' => array(
                 'name' => __('Events Calendar', 'campaign-office'),
-                'icon' => '📅',
+                'icon' => 'dashicons-calendar-alt',
                 'category' => 'content',
                 'variants' => array('list', 'grid', 'calendar', 'featured'),
                 'settings' => array(
@@ -360,7 +360,7 @@ class CP_Campaign_Design_Studio {
             ),
             'issues' => array(
                 'name' => __('Policy Issues', 'campaign-office'),
-                'icon' => '📋',
+                'icon' => 'dashicons-clipboard',
                 'category' => 'content',
                 'variants' => array('grid', 'accordion', 'tabs', 'timeline'),
                 'settings' => array(
@@ -370,7 +370,7 @@ class CP_Campaign_Design_Studio {
             ),
             'team' => array(
                 'name' => __('Team Members', 'campaign-office'),
-                'icon' => '👔',
+                'icon' => 'dashicons-businessperson',
                 'category' => 'about',
                 'variants' => array('grid', 'carousel', 'org-chart', 'cards'),
                 'settings' => array(
@@ -380,7 +380,7 @@ class CP_Campaign_Design_Studio {
             ),
             'timeline' => array(
                 'name' => __('Campaign Timeline', 'campaign-office'),
-                'icon' => '⏳',
+                'icon' => 'dashicons-backup',
                 'category' => 'content',
                 'variants' => array('vertical', 'horizontal', 'roadmap', 'milestones'),
                 'settings' => array(
@@ -389,7 +389,7 @@ class CP_Campaign_Design_Studio {
             ),
             'countdown' => array(
                 'name' => __('Election Countdown', 'campaign-office'),
-                'icon' => '⏰',
+                'icon' => 'dashicons-clock',
                 'category' => 'urgency',
                 'variants' => array('minimal', 'cards', 'inline', 'bar'),
                 'settings' => array(
@@ -399,7 +399,7 @@ class CP_Campaign_Design_Studio {
             ),
             'social-feed' => array(
                 'name' => __('Social Media', 'campaign-office'),
-                'icon' => '📱',
+                'icon' => 'dashicons-share',
                 'category' => 'social',
                 'variants' => array('instagram', 'twitter', 'facebook', 'combined'),
                 'settings' => array(
@@ -410,26 +410,13 @@ class CP_Campaign_Design_Studio {
             ),
             'communications' => array(
                 'name' => __('Communications', 'campaign-office'),
-                'icon' => '📢',
+                'icon' => 'dashicons-email-alt',
                 'category' => 'forms',
                 'variants' => array('subscribe', 'unsubscribe'),
                 'settings' => array(
                     'title' => array('type' => 'text', 'label' => __('Title', 'campaign-office'), 'default' => __('Join Our Movement', 'campaign-office')),
                     'type' => array('type' => 'select', 'label' => __('Input Type', 'campaign-office'), 'options' => array('both' => 'Email & SMS', 'email' => 'Email Only', 'sms' => 'SMS Only'), 'default' => 'both'),
                     'zip_field' => array('type' => 'checkbox', 'label' => __('Show ZIP Field', 'campaign-office'), 'default' => true),
-                ),
-            ),
-            'icon' => array(
-                'name' => __('Icon', 'campaign-office'),
-                'icon' => '⭐',
-                'category' => 'ui-elements',
-                'variants' => array('outline', 'solid', 'mini', 'micro'),
-                'settings' => array(
-                    'icon_name' => array('type' => 'text', 'label' => __('Icon Name', 'campaign-office'), 'default' => 'star', 'help' => __('Browse available icons in Appearance > Heroicons', 'campaign-office')),
-                    'icon_style' => array('type' => 'select', 'label' => __('Icon Style', 'campaign-office'), 'options' => array('outline' => 'Outline', 'solid' => 'Solid', 'mini' => 'Mini (20px)', 'micro' => 'Micro (16px)'), 'default' => 'outline'),
-                    'icon_size' => array('type' => 'select', 'label' => __('Icon Size', 'campaign-office'), 'options' => array('sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large'), 'default' => 'md'),
-                    'icon_color' => array('type' => 'color', 'label' => __('Icon Color', 'campaign-office'), 'default' => '#2563eb'),
-                    'link_url' => array('type' => 'text', 'label' => __('Link URL (Optional)', 'campaign-office'), 'default' => ''),
                 ),
             ),
         );
@@ -590,7 +577,7 @@ class CP_Campaign_Design_Studio {
                             <div class="cp-components-list">
                                 <?php foreach ($this->components as $key => $component) : ?>
                                     <div class="cp-component-card" data-component="<?php echo esc_attr($key); ?>" draggable="true">
-                                        <div class="cp-component-icon"><?php echo $component['icon']; ?></div>
+                                        <div class="cp-component-icon"><span class="dashicons <?php echo esc_attr($component['icon']); ?>"></span></div>
                                         <div class="cp-component-info">
                                             <div class="cp-component-name"><?php echo esc_html($component['name']); ?></div>
                                             <div class="cp-component-category"><?php echo esc_html(ucfirst($component['category'])); ?></div>

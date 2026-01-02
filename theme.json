@@ -16,9 +16,54 @@
       "defaultPalette": false,
       "palette": [
         {
+          "slug": "primary-50",
+          "color": "#e6f0ff",
+          "name": "Primary 50"
+        },
+        {
+          "slug": "primary-100",
+          "color": "#b3d4ff",
+          "name": "Primary 100"
+        },
+        {
+          "slug": "primary-200",
+          "color": "#80b8ff",
+          "name": "Primary 200"
+        },
+        {
+          "slug": "primary-300",
+          "color": "#4d9dff",
+          "name": "Primary 300"
+        },
+        {
+          "slug": "primary-400",
+          "color": "#1a81ff",
+          "name": "Primary 400"
+        },
+        {
           "slug": "primary",
           "color": "#0053c3",
           "name": "Democratic Blue (Primary)"
+        },
+        {
+          "slug": "primary-600",
+          "color": "#004399",
+          "name": "Primary 600"
+        },
+        {
+          "slug": "primary-700",
+          "color": "#003270",
+          "name": "Primary 700"
+        },
+        {
+          "slug": "primary-800",
+          "color": "#002247",
+          "name": "Primary 800"
+        },
+        {
+          "slug": "primary-900",
+          "color": "#00111d",
+          "name": "Primary 900"
         },
         {
           "slug": "primary-dark",
@@ -26,14 +71,54 @@
           "name": "Democratic Dark"
         },
         {
-          "slug": "primary-700",
-          "color": "#00408f",
-          "name": "Primary 700"
+          "slug": "accent-50",
+          "color": "#fff4e6",
+          "name": "Accent 50"
         },
         {
-          "slug": "primary-300",
-          "color": "#4d8fdb",
-          "name": "Primary 300"
+          "slug": "accent-100",
+          "color": "#ffe0b3",
+          "name": "Accent 100"
+        },
+        {
+          "slug": "accent-200",
+          "color": "#ffcc80",
+          "name": "Accent 200"
+        },
+        {
+          "slug": "accent-300",
+          "color": "#ffb84d",
+          "name": "Accent 300"
+        },
+        {
+          "slug": "accent-400",
+          "color": "#ffa41a",
+          "name": "Accent 400"
+        },
+        {
+          "slug": "accent",
+          "color": "#ff8800",
+          "name": "Accent (Orange)"
+        },
+        {
+          "slug": "accent-600",
+          "color": "#e67a00",
+          "name": "Accent 600"
+        },
+        {
+          "slug": "accent-700",
+          "color": "#cc6c00",
+          "name": "Accent 700"
+        },
+        {
+          "slug": "accent-800",
+          "color": "#995100",
+          "name": "Accent 800"
+        },
+        {
+          "slug": "accent-900",
+          "color": "#331a00",
+          "name": "Accent 900"
         },
         {
           "slug": "republican-red",
@@ -56,14 +141,29 @@
           "name": "Independent Purple"
         },
         {
-          "slug": "accent",
-          "color": "#ff8800",
-          "name": "Accent (Orange)"
-        },
-        {
           "slug": "gold",
           "color": "#ffd700",
           "name": "Gold (Winner)"
+        },
+        {
+          "slug": "success",
+          "color": "#28a745",
+          "name": "Success"
+        },
+        {
+          "slug": "warning",
+          "color": "#ffc107",
+          "name": "Warning"
+        },
+        {
+          "slug": "error",
+          "color": "#dc3545",
+          "name": "Error"
+        },
+        {
+          "slug": "info",
+          "color": "#17a2b8",
+          "name": "Info"
         },
         {
           "slug": "white",
@@ -146,24 +246,6 @@
           "slug": "hero-gradient",
           "gradient": "linear-gradient(135deg, var(--wp--preset--color--primary-dark) 0%, var(--wp--preset--color--primary) 100%)",
           "name": "Hero Gradient"
-        }
-      ],
-      "duotone": [
-        {
-          "colors": [
-            "#000000",
-            "#ffffff"
-          ],
-          "slug": "grayscale",
-          "name": "Grayscale"
-        },
-        {
-          "colors": [
-            "#003275",
-            "#e81b23"
-          ],
-          "slug": "bipartisan",
-          "name": "Bipartisan (Blue/Red)"
         }
       ]
     },
@@ -282,7 +364,7 @@
         "%"
       ],
       "spacingScale": {
-        "steps": 0
+        "steps": 1
       },
       "spacingSizes": [
         {

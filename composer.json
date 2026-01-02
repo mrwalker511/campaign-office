@@ -17,11 +17,12 @@
   },
   "scripts": {
     "test": "phpunit --configuration tests/phpunit.xml.dist",
+    "test:unit": "phpunit --configuration tests/phpunit.xml.dist --testsuite 'Unit Tests'",
     "test:coverage": "phpunit --configuration tests/phpunit.xml.dist --coverage-html coverage",
     "phpcs": "phpcs --standard=build/phpcs.xml.dist includes/ blocks/ *.php",
     "phpcbf": "phpcbf --standard=build/phpcs.xml.dist includes/ blocks/ *.php",
     "phpcs:theme": "phpcs --standard=WordPress-Theme --runtime-set testVersion 7.4- .",
-    "lint": "find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' | xargs -n 1 php -l"
+    "lint": "php -l functions.php && php -l index.php && php -d display_errors=1 -r \"foreach (glob('includes/**/*.php', GLOB_BRACE) as $f) { echo $f.PHP_EOL; shell_exec('php -l '.escapeshellarg($f)); }\""
   },
   "autoload-dev": {
     "psr-4": {

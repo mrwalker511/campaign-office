@@ -52,17 +52,37 @@ See [TESTING-QUICK-START.md](../TESTING-QUICK-START.md) in the theme root.
 
 ## Running Tests
 
-```bash
-# All tests
-./run-all-tests.sh
+### Quick Commands
 
-# Specific types
+```bash
+# Run ALL tests (recommended)
+npm run test:all
+
+# Quick validation (fast - lint + JS only)
+npm run test:quick
+```
+
+### Full Test Runner
+
+```bash
+# Windows (PowerShell)
+.\run-all-tests.ps1
+
+# macOS/Linux (Bash)
+./run-all-tests.sh
+```
+
+### Individual Suites
+
+```bash
 composer test              # PHP unit tests
 npm run test:js           # JavaScript tests
-npm run test:e2e          # E2E tests
+npm run test:e2e          # E2E tests (requires WP)
 npm run test:a11y         # Accessibility
 npm run test:performance  # Performance
+npm run test:lint         # All linters
 ```
+
 
 ## Writing Tests
 

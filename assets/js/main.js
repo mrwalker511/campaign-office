@@ -285,7 +285,9 @@
         }
       },
       error: function (xhr, status, error) {
-        console.error('AJAX Error:', error);
+        if (typeof console !== 'undefined' && WP_DEBUG) {
+          console.error('AJAX Error:', error);
+        }
         if (typeof callback === 'function') {
           callback({ success: false, message: 'An error occurred.' });
         }

@@ -830,21 +830,19 @@ class CampaignPress_SMS_Integrations {
             }
         }
 
-        // Send messages with rate limiting
+        // Send messages with rate limiting - schedule asynchronously
         foreach ($valid_recipients as $phone) {
-            $sent = $this->send_sms($phone, $message, $options);
-
-            if ($sent) {
-                $results['sent']++;
-            } else {
-                $results['failed']++;
-            }
-
-            // Sleep to respect rate limits
-            usleep(100000); // 100ms between messages
+            // Schedule each message with staggered delay to respect rate limits
+            // Using WordPress cron instead of blocking sleep() for better performance
+            wp_schedule_single_event(
+                time() + (0.1 * $index), // Stagger by 100ms
+                'cp_send_bulk_sms_item',
+                array($phone, $message, $options, $integration_id)
+            );
+            $index++;
+            // Count as scheduled (will be updated when cron runs)
+            $results['sent']++; // Note: This will be adjusted by cron handler
         }
-
-        // Log bulk send
         campaignpress_integrations()->log_event('sms_bulk_sent', array(
             'total_recipients' => count($recipients),
             'sent' => $results['sent'],

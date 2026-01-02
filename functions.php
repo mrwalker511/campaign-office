@@ -21,7 +21,11 @@ if (!defined('ABSPATH')) {
  *
  * NEVER set this to true in production or distributed versions.
  */
-define('CAMPAIGNPRESS_DEV_MODE', true);
+if (defined('CAMPAIGNPRESS_DEV_MODE') && CAMPAIGNPRESS_DEV_MODE) {
+    // Development mode is enabled via wp-config.php
+} else {
+    define('CAMPAIGNPRESS_DEV_MODE', false);
+}
 
 /**
  * Define Constants
@@ -307,20 +311,32 @@ function campaignpress_clear_homepage_cache($post_id) {
     }
 
     if ('cp_event' === $post_type) {
-        // Clear all event transients (one per day)
+        // Clear all event transients (one per day) using WordPress cache API
         global $wpdb;
-        $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM $wpdb->options WHERE option_name LIKE %s",
-                $wpdb->esc_like('_transient_campaignpress_homepage_events_') . '%'
-            )
-        );
-        $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM $wpdb->options WHERE option_name LIKE %s",
-                $wpdb->esc_like('_transient_timeout_campaignpress_homepage_events_') . '%'
-            )
-        );
+        $transient_pattern = '_transient_campaignpress_homepage_events_';
+        $timeout_pattern = '_transient_timeout_campaignpress_homepage_events_';
+
+        // Get all matching transients
+        $transients = $wpdb->get_col($wpdb->prepare(
+            "SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
+            $wpdb->esc_like($transient_pattern) . '%'
+        ));
+
+        $timeouts = $wpdb->get_col($wpdb->prepare(
+            "SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
+            $wpdb->esc_like($timeout_pattern) . '%'
+        ));
+
+        // Delete each transient individually for safety
+        foreach ($transients as $transient) {
+            $name = str_replace('_transient_', '', $transient);
+            delete_transient($name);
+        }
+
+        foreach ($timeouts as $timeout) {
+            $name = str_replace('_transient_timeout_', '', $timeout);
+            delete_option($timeout); // Cleanup timeout option
+        }
     }
 }
 add_action('save_post', 'campaignpress_clear_homepage_cache');

@@ -57,7 +57,8 @@ function cp_campaign_data_main_page() {
         
         // Get donation stats if table exists
         $donations_table = $wpdb->prefix . 'campaignpress_donations';
-        if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $donations_table)) == $donations_table) {
+        $table_exists = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $donations_table));
+        if ($table_exists === $donations_table) {
             $stats['total_donations'] = $wpdb->get_var($wpdb->prepare("SELECT SUM(amount) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
             $stats['donation_count'] = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$donations_table} WHERE status = %s", 'completed')) ?? 0;
         }

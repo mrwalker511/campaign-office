@@ -78,7 +78,14 @@ class Performance {
 
         if ($critical_css_file && file_exists($critical_css_file)) {
             $critical_css = file_get_contents($critical_css_file);
-            echo '<style id="critical-css">' . $critical_css . '</style>' . "\n";
+            if ($critical_css !== false) {
+                echo '<style id="critical-css">' . $critical_css . '</style>' . "\n";
+            } else {
+                // Log error in debug mode only
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('CampaignPress: Failed to load critical CSS: ' . $critical_css_file);
+                }
+            }
         }
     }
 

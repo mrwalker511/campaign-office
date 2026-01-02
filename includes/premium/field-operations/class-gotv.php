@@ -1400,6 +1400,11 @@ class CP_GOTV {
     public function ajax_request_ride() {
         check_ajax_referer('cp_request_ride', 'cp_ride_nonce');
 
+        // Rate limiting: 3 ride requests per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('gotv_ride_request', 3, 3600)) {
+            wp_send_json_error(array('message' => __('Too many ride requests. Please try again later.', 'campaign-office')));
+        }
+
         global $wpdb;
 
         $voter_name = isset($_POST['voter_name']) ? sanitize_text_field($_POST['voter_name']) : '';

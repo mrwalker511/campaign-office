@@ -751,6 +751,11 @@ class CampaignPress_Email_Integrations {
         // Get raw POST data
         $raw_data = file_get_contents('php://input');
 
+        if (false === $raw_data) {
+            wp_send_json_error(array('message' => 'Failed to read request body'));
+            return;
+        }
+
         // Get integration for platform
         $integration = $this->get_integration_by_platform($platform);
 

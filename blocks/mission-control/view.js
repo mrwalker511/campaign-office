@@ -9,19 +9,23 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize Mission Control dashboard
     const missionControl = document.querySelector('.cp-mission-control');
-    
+
     // Early exit if mission control block not present
     if (!missionControl) {
-        console.debug('Mission Control: Block not found');
+        if (typeof campaignpress_vars !== 'undefined' && campaignpress_vars.debug) {
+            console.debug('Mission Control: Block not found');
+        }
         return;
     }
 
     // Get target date from data attribute
     const targetDateStr = missionControl.getAttribute('data-date');
-    
+
     // Validate date is present and properly formatted
     if (!targetDateStr || targetDateStr === '') {
-        console.debug('Mission Control: No election date configured');
+        if (typeof campaignpress_vars !== 'undefined' && campaignpress_vars.debug) {
+            console.debug('Mission Control: No election date configured');
+        }
         // Show error state (already handled by PHP)
         return;
     }
@@ -29,22 +33,26 @@ document.addEventListener('DOMContentLoaded', function () {
     let targetDate;
     try {
         targetDate = new Date(targetDateStr);
-        
+
         // Validate date object
         if (!(targetDate instanceof Date) || isNaN(targetDate.getTime())) {
             throw new Error('Invalid date format');
         }
-        
+
         // Check if date is in the past
         const now = new Date();
         if (targetDate <= now) {
-            console.debug('Mission Control: Election date has passed');
+            if (typeof campaignpress_vars !== 'undefined' && campaignpress_vars.debug) {
+                console.debug('Mission Control: Election date has passed');
+            }
             // Display "Election Day" message or hide countdown
             updateExpiredState();
             return;
         }
     } catch (error) {
-        console.error('Mission Control: Error parsing election date:', error);
+        if (typeof campaignpress_vars !== 'undefined' && campaignpress_vars.debug) {
+            console.error('Mission Control: Error parsing election date:', error);
+        }
         return;
     }
 
@@ -52,10 +60,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const dayElement = missionControl.querySelector('[data-unit="days"]');
     const hourElement = missionControl.querySelector('[data-unit="hours"]');
     const minuteElement = missionControl.querySelector('[data-unit="mins"]');
-    
+
     // Validate DOM elements exist
     if (!dayElement || !hourElement || !minuteElement) {
-        console.error('Mission Control: Required DOM elements not found');
+        if (typeof campaignpress_vars !== 'undefined' && campaignpress_vars.debug) {
+            console.error('Mission Control: Required DOM elements not found');
+        }
         return;
     }
 
@@ -86,7 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
             safeUpdateElement(minuteElement, minutes.toString());
 
         } catch (error) {
-            console.error('Mission Control: Error updating countdown:', error);
+            if (typeof campaignpress_vars !== 'undefined' && campaignpress_vars.debug) {
+                console.error('Mission Control: Error updating countdown:', error);
+            }
             cleanup();
         }
     }
@@ -111,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
             safeUpdateElement(hourElement, '0');
             safeUpdateElement(minuteElement, '0');
         }
-        
+
         // Show election day message
         const countdownModule = missionControl.querySelector('.cp-mc-countdown');
         if (countdownModule) {
@@ -119,13 +131,13 @@ document.addEventListener('DOMContentLoaded', function () {
             expiredMessage.className = 'cp-mc-expired-message';
             expiredMessage.textContent = 'Election Day';
             expiredMessage.setAttribute('role', 'alert');
-            
+
             // Remove any existing error messages
             const existingErrors = countdownModule.querySelector('.cp-mc-error');
             if (existingErrors) {
                 existingErrors.remove();
             }
-            
+
             countdownModule.appendChild(expiredMessage);
         }
     }
@@ -142,23 +154,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start countdown interval
     const intervalId = setInterval(updateCountdown, 1000);
-    
+
     // Initial display update
     updateCountdown();
-    
+
     // Clean up on page unload
     window.addEventListener('beforeunload', cleanup);
-    
+
     // Clean up if element is removed from DOM (for SPA scenarios)
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
             if (mutation.type === 'childList' && !document.contains(missionControl)) {
                 cleanup();
                 observer.disconnect();
             }
         });
     });
-    
+
     if (missionControl.parentNode) {
         observer.observe(missionControl.parentNode, { childList: true });
     }

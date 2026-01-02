@@ -216,6 +216,7 @@ class CP_Field_Operations_Init {
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'restUrl' => rest_url('campaignpress/v1/'),
             'nonce' => wp_create_nonce('cp_field_ops_nonce'),
+            'debug' => defined('WP_DEBUG') && WP_DEBUG,
             'strings' => array(
                 'confirmDelete' => __('Are you sure you want to delete this item?', 'campaign-office'),
                 'savingChanges' => __('Saving changes...', 'campaign-office'),
@@ -269,6 +270,7 @@ class CP_Field_Operations_Init {
             'nonce' => wp_create_nonce('cp_field_ops_nonce'),
             'offlineMode' => true,
             'syncInterval' => 30000, // 30 seconds
+            'debug' => defined('WP_DEBUG') && WP_DEBUG,
             'strings' => array(
                 'offline' => __('You are currently offline. Data will sync when connection is restored.', 'campaign-office'),
                 'online' => __('Connection restored. Syncing data...', 'campaign-office'),
@@ -294,10 +296,14 @@ class CP_Field_Operations_Init {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('<?php echo esc_url(get_template_directory_uri() . '/assets/js/service-worker.js'); ?>')
                     .then(function(registration) {
-                        console.log('Service Worker registered:', registration);
+                        if (typeof cpFieldOps !== 'undefined' && cpFieldOps.debug) {
+                            console.log('Service Worker registered:', registration);
+                        }
                     })
                     .catch(function(error) {
-                        console.log('Service Worker registration failed:', error);
+                        if (typeof cpFieldOps !== 'undefined' && cpFieldOps.debug) {
+                            console.log('Service Worker registration failed:', error);
+                        }
                     });
             });
         }
@@ -402,16 +408,57 @@ class CP_Field_Operations_Init {
     public function rest_sync_offline_data($request) {
         $sync_data = $request->get_json_params();
 
-        // Similar logic to handle_offline_sync but for REST API
+        if (empty($sync_data)) {
+            return new WP_Error('no_data', __('No data to sync.', 'campaign-office'), array('status' => 400));
+        }
+
         $results = array(
-            'synced' => 0,
+            'canvassing' => 0,
+            'phone_banking' => 0,
+            'gotv' => 0,
             'errors' => array(),
         );
 
-        // Process sync data
-        // ... (implementation similar to handle_offline_sync)
+        // Process canvassing records
+        if (isset($sync_data['canvassing']) && is_array($sync_data['canvassing'])) {
+            foreach ($sync_data['canvassing'] as $record) {
+                $result = $this->canvassing->save_interaction($record);
+                if ($result) {
+                    $results['canvassing']++;
+                } else {
+                    $results['errors'][] = 'Canvassing record failed to save';
+                }
+            }
+        }
 
-        return new WP_REST_Response($results, 200);
+        // Process phone banking records
+        if (isset($sync_data['phone_banking']) && is_array($sync_data['phone_banking'])) {
+            foreach ($sync_data['phone_banking'] as $record) {
+                $result = $this->phone_banking->save_call($record);
+                if ($result) {
+                    $results['phone_banking']++;
+                } else {
+                    $results['errors'][] = 'Phone banking record failed to save';
+                }
+            }
+        }
+
+        // Process GOTV records
+        if (isset($sync_data['gotv']) && is_array($sync_data['gotv'])) {
+            foreach ($sync_data['gotv'] as $record) {
+                $result = $this->gotv->save_voter_contact($record);
+                if ($result) {
+                    $results['gotv']++;
+                } else {
+                    $results['errors'][] = 'GOTV record failed to save';
+                }
+            }
+        }
+
+        return new WP_REST_Response(array(
+            'message' => __('Data synced successfully!', 'campaign-office'),
+            'results' => $results,
+        ), 200);
     }
 
     /**

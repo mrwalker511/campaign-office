@@ -472,6 +472,8 @@ class CP_Campaign_Communications {
                 </a>
             </h1>
 
+            <?php wp_nonce_field('cp_campaign_nonce_action', 'cp_campaign_nonce'); ?>
+
             <div class="cp-campaigns-stats" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0;">
                 <?php
                 $total_campaigns = count($campaigns);
@@ -853,13 +855,59 @@ class CP_Campaign_Communications {
     }
 
     public function ajax_send_campaign() {
-        // Placeholder for campaign sending logic
-        wp_send_json_success();
+        check_ajax_referer('cp_campaign_nonce_action', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $campaign_id = isset($_POST['campaign_id']) ? absint($_POST['campaign_id']) : 0;
+        if (!$campaign_id) {
+            wp_send_json_error(array('message' => __('Invalid campaign ID', 'campaign-office')));
+        }
+
+        global $wpdb;
+        $campaign = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->campaigns_table} WHERE id = %d", $campaign_id));
+
+        if (!$campaign) {
+            wp_send_json_error(array('message' => __('Campaign not found', 'campaign-office')));
+        }
+
+        // Mark as sending
+        $wpdb->update($this->campaigns_table, array(
+            'status' => 'sending',
+            'sent_at' => current_time('mysql')
+        ), array('id' => $campaign_id));
+
+        // Placeholder: In a real implementation, this would trigger a background process or cron job
+        // to actually send the emails/SMS to all subscribers in the target audience.
+
+        wp_send_json_success(array('message' => __('Campaign sending started!', 'campaign-office')));
     }
 
     public function ajax_get_campaign_stats() {
-        // Placeholder for campaign stats
-        wp_send_json_success();
+        check_ajax_referer('cp_campaign_nonce_action', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $campaign_id = isset($_POST['campaign_id']) ? absint($_POST['campaign_id']) : 0;
+        if (!$campaign_id) {
+            wp_send_json_error(array('message' => __('Invalid campaign ID', 'campaign-office')));
+        }
+
+        global $wpdb;
+        $stats = $wpdb->get_row($wpdb->prepare(
+            "SELECT total_sent, total_delivered, total_opened, total_clicked, total_failed FROM {$this->campaigns_table} WHERE id = %d",
+            $campaign_id
+        ), ARRAY_A);
+
+        if (!$stats) {
+            wp_send_json_error(array('message' => __('Stats not found', 'campaign-office')));
+        }
+
+        wp_send_json_success($stats);
     }
 }
 

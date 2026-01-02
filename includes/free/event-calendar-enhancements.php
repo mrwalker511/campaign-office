@@ -497,6 +497,11 @@ class CP_Event_Calendar_Enhancements {
      * AJAX: Get calendar events
      */
     public function ajax_get_calendar_events() {
+        // Verify nonce for security (passed from JavaScript)
+        if (!check_ajax_referer('cp_calendar_events', 'nonce', false)) {
+            wp_send_json_error(array('message' => __('Security check failed.', 'campaign-office')));
+        }
+
         $view = sanitize_text_field($_POST['view'] ?? 'month');
         $date = sanitize_text_field($_POST['date'] ?? current_time('Y-m'));
 
@@ -522,6 +527,9 @@ class CP_Event_Calendar_Enhancements {
      */
     public function enqueue_frontend_assets() {
         wp_add_inline_style('campaignpress-style', $this->get_calendar_styles());
+        
+        // Add inline script with nonce for calendar AJAX
+        wp_add_inline_script('campaignpress-main', 'var cpCalendarNonce = "' . wp_create_nonce('cp_calendar_events') . '";', 'before');
     }
 
     /**

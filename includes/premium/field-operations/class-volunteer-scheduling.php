@@ -1269,6 +1269,11 @@ class CP_Volunteer_Scheduling {
     public function ajax_check_in() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
 
+        // Rate limiting: 5 check-ins per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_check_in', 5, 3600)) {
+            wp_send_json_error(array('message' => __('Too many check-in attempts. Please try again later.', 'campaign-office')));
+        }
+
         $volunteer_id = get_current_user_id();
         if (!$volunteer_id) {
             wp_send_json_error(array('message' => __('You must be logged in.', 'campaign-office')));
@@ -1315,6 +1320,11 @@ class CP_Volunteer_Scheduling {
 
     public function ajax_check_out() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
+
+        // Rate limiting: 5 check-out attempts per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_check_out', 5, 3600)) {
+            wp_send_json_error(array('message' => __('Too many check-out attempts. Please try again later.', 'campaign-office')));
+        }
 
         $volunteer_id = get_current_user_id();
         if (!$volunteer_id) {

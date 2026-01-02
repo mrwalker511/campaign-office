@@ -1128,6 +1128,11 @@ class CP_Volunteer_Portal {
     public function ajax_signup_shift() {
         check_ajax_referer('campaignpress_volunteer_portal');
 
+        // Rate limiting: 10 signups per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_signup_shift', 10, 3600)) {
+            wp_send_json_error(array('message' => __('Too many signup attempts. Please try again later.', 'campaign-office')));
+        }
+
         $volunteer_id = $this->get_current_volunteer_id();
         $shift_id = isset($_POST['shift_id']) ? absint($_POST['shift_id']) : 0;
 
@@ -1171,6 +1176,11 @@ class CP_Volunteer_Portal {
     public function ajax_log_hours() {
         check_ajax_referer('cp_log_hours', 'cp_log_hours_nonce');
 
+        // Rate limiting: 5 log attempts per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_log_hours', 5, 3600)) {
+            wp_send_json_error(array('message' => __('Too many attempts to log hours. Please try again later.', 'campaign-office')));
+        }
+
         $volunteer_id = $this->get_current_volunteer_id();
         if (!$volunteer_id) {
             wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
@@ -1211,6 +1221,11 @@ class CP_Volunteer_Portal {
 
     public function ajax_update_profile() {
         check_ajax_referer('cp_update_profile', 'cp_profile_nonce');
+
+        // Rate limiting: 3 profile updates per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_update_profile', 3, 3600)) {
+            wp_send_json_error(array('message' => __('Too many profile updates. Please try again later.', 'campaign-office')));
+        }
 
         $volunteer_id = $this->get_current_volunteer_id();
         if (!$volunteer_id) {

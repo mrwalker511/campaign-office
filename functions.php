@@ -247,11 +247,11 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Bootstrap 5 CSS (self-hosted by default, filterable for CDN)
-    // To use CDN, add to functions.php: add_filter('campaignpress_bootstrap_css_url', function() { return 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'; });
+    // Bootstrap 5 CSS (CDN by default, filterable for local fallback)
+    // To use local, add to functions.php: add_filter('campaignpress_bootstrap_css_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'; });
     $bootstrap_css_url = apply_filters(
         'campaignpress_bootstrap_css_url',
-        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
     );
     wp_enqueue_style(
         'bootstrap',
@@ -260,11 +260,11 @@ function campaignpress_scripts() {
         '5.3.0'
     );
 
-    // Bootstrap 5 JS Bundle (self-hosted by default, filterable for CDN)
-    // To use CDN, add to functions.php: add_filter('campaignpress_bootstrap_js_url', function() { return 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'; });
+    // Bootstrap 5 JS Bundle (CDN by default, filterable for local fallback)
+    // To use local, add to functions.php: add_filter('campaignpress_bootstrap_js_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'; });
     $bootstrap_js_url = apply_filters(
         'campaignpress_bootstrap_js_url',
-        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'
     );
     wp_enqueue_script(
         'bootstrap-bundle',
@@ -295,6 +295,7 @@ function campaignpress_scripts() {
         'countdown_ended'  => __('Event has ended', 'campaign-office'),
         'day_singular'     => __('Day', 'campaign-office'),
         'day_plural'       => __('Days', 'campaign-office'),
+        'debug'            => defined('WP_DEBUG') && WP_DEBUG,
     ));
 }
 add_action('wp_enqueue_scripts', 'campaignpress_scripts');

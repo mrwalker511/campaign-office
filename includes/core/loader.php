@@ -53,18 +53,13 @@ if (class_exists('CampaignPress_Contact_Manager')) {
 // Load Free Features (Legacy functional style)
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/font-preconnect.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-bootstrap-navwalker.php';
-// Custom post types now handled by Campaign Office Core plugin
-// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';
+// Custom features now handled by Campaign Office Core plugin
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-functions.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/integrations.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-notices.php';
-// Volunteer management now handled by Campaign Office Core plugin
-// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';
-// Event management now handled by Campaign Office Core plugin
-// require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-calendar-enhancements.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';

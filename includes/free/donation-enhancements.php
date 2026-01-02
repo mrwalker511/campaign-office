@@ -1084,6 +1084,11 @@ class CP_Donation_Enhancements {
     public function track_donation_click() {
         check_ajax_referer('cp_donation_tracking', 'nonce');
 
+        // Rate limiting: 20 tracking requests per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('donation_tracking', 20, 3600)) {
+            wp_send_json_error(array('message' => 'Rate limit exceeded'));
+        }
+
         $processor = isset($_POST['processor']) ? sanitize_text_field($_POST['processor']) : '';
         $frequency = isset($_POST['frequency']) ? sanitize_text_field($_POST['frequency']) : '';
         $amount = isset($_POST['amount']) ? absint($_POST['amount']) : 0;

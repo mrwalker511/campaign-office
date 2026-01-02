@@ -1551,6 +1551,11 @@ class CP_Phone_Banking {
     public function ajax_save_call() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
 
+        // Rate limiting: 60 calls per hour per IP (high because automated dialers might be fast)
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('phone_banking_save_call', 60, 3600)) {
+            wp_send_json_error(array('message' => __('Rate limit exceeded. Please slow down.', 'campaign-office')));
+        }
+
         if (!current_user_can('edit_posts')) {
             wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
         }
@@ -1583,6 +1588,11 @@ class CP_Phone_Banking {
 
     public function ajax_get_next_call() {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
+
+        // Rate limiting: 100 requests per hour per IP
+        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('phone_banking_next_call', 100, 3600)) {
+            wp_send_json_error(array('message' => __('Too many requests. Please try again later.', 'campaign-office')));
+        }
 
         if (!current_user_can('edit_posts')) {
             wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));

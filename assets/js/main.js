@@ -285,7 +285,7 @@
         }
       },
       error: function (xhr, status, error) {
-        if (typeof console !== 'undefined' && WP_DEBUG) {
+        if (typeof console !== 'undefined' && typeof campaignpress_vars !== 'undefined' && campaignpress_vars.debug) {
           console.error('AJAX Error:', error);
         }
         if (typeof callback === 'function') {

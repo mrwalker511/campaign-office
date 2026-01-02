@@ -268,6 +268,8 @@ class CP_Mega_Menu_Builder {
                 <strong><?php esc_html_e('Mega Menu Options', 'campaign-office'); ?></strong>
             </p>
 
+            <?php wp_nonce_field('cp_mega_menu_nonce_action', 'cp_mega_menu_nonce'); ?>
+
             <!-- Enable Mega Menu -->
             <?php if ($depth === 0) : ?>
             <p class="field-cp-mega-menu description description-wide">
@@ -329,6 +331,10 @@ class CP_Mega_Menu_Builder {
      * Save custom menu item fields
      */
     public function save_menu_item_fields($menu_id, $menu_item_db_id) {
+        if (!isset($_POST['cp_mega_menu_nonce']) || !wp_verify_nonce($_POST['cp_mega_menu_nonce'], 'cp_mega_menu_nonce_action')) {
+            return;
+        }
+
         $fields = array('_cp_mega_menu', '_cp_menu_icon', '_cp_is_cta', '_cp_badge_text', '_cp_badge_color', '_cp_column_count');
 
         foreach ($fields as $field) {

@@ -21,6 +21,11 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+// Force development mode when this file is included
+if (!defined('CAMPAIGNPRESS_DEV_MODE')) {
+	define('CAMPAIGNPRESS_DEV_MODE', true);
+}
+
 // Only run in development environments
 if (!defined('CAMPAIGNPRESS_DEV_MODE') || !CAMPAIGNPRESS_DEV_MODE) {
 	return;

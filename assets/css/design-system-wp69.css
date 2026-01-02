@@ -1118,11 +1118,11 @@ input[type="button"][disabled] {
   position: absolute;
   inset: -3px;
   background: linear-gradient(45deg,
-      var(--wp--preset--color--accent-500),
+      var(--wp--preset--color--accent),
       var(--wp--preset--color--primary),
       var(--wp--preset--color--accent-600),
       var(--wp--preset--color--primary),
-      var(--wp--preset--color--accent-500));
+      var(--wp--preset--color--accent));
   background-size: 300% 300%;
   border-radius: calc(var(--cp-radius-lg) + 3px);
   opacity: 0;
@@ -1661,7 +1661,7 @@ input[type="button"][disabled] {
   background: linear-gradient(to top,
       var(--wp--preset--color--accent-700) 0%,
       var(--wp--preset--color--accent-600) 50%,
-      var(--wp--preset--color--accent-500) 100%);
+      var(--wp--preset--color--accent) 100%);
   border-radius: 30px;
   transition: height 2s cubic-bezier(0.65, 0, 0.35, 1);
   box-shadow: 0 -4px 20px rgb(228 29 72 / 40%);

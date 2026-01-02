@@ -20,7 +20,7 @@
      */
     function initDB() {
         if (!window.indexedDB) {
-            console.warn('IndexedDB not supported');
+            // IndexedDB not supported - silently return in production
             return;
         }
 

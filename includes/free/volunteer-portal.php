@@ -992,6 +992,13 @@ class CP_Volunteer_Portal {
     }
 
     private function get_volunteer_stats($volunteer_id) {
+        // Check object cache first
+        $cache_key = 'cp_volunteer_stats_' . $volunteer_id;
+        $stats = wp_cache_get($cache_key, 'campaignpress');
+        if (false !== $stats) {
+            return $stats;
+        }
+
         global $wpdb;
 
         $total_hours = $wpdb->get_var($wpdb->prepare("
@@ -1018,12 +1025,17 @@ class CP_Volunteer_Portal {
             ) as rankings
         ", $volunteer_id));
 
-        return array(
+        $stats = array(
             'total_hours' => floatval($total_hours),
             'shifts_completed' => intval($shifts_completed),
             'upcoming_shifts' => intval($upcoming_shifts),
             'rank' => intval($rank),
         );
+
+        // Cache for 1 hour
+        wp_cache_set($cache_key, $stats, 'campaignpress', HOUR_IN_SECONDS);
+
+        return $stats;
     }
 
     private function get_volunteer_upcoming_shifts($volunteer_id) {

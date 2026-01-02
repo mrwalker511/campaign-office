@@ -62,4 +62,123 @@
       $disclaimer.text((newval || '').trim());
     });
   });
+
+  // Hero overlay opacity
+  wp.customize('campaignpress_hero_overlay_opacity', function (value) {
+    value.bind(function (newval) {
+      var opacity = parseFloat(newval) / 100;
+      $(
+        '.is-style-campaign-hero .wp-block-cover__background, .hero-video-section .wp-block-cover__background'
+      ).css('opacity', opacity);
+    });
+  });
+
+  // Hero background image
+  wp.customize('campaignpress_hero_image', function (value) {
+    value.bind(function (newval) {
+      var mediaType = wp.customize('campaignpress_hero_media_type').get();
+      if (mediaType === 'image' && newval) {
+        $('.is-style-campaign-hero, .hero-video-section').css(
+          'background-image',
+          'url("' + newval + '")'
+        );
+      }
+    });
+  });
+
+  // Hero media type toggle
+  wp.customize('campaignpress_hero_media_type', function (value) {
+    value.bind(function (newval) {
+      var $heroSections = $('.is-style-campaign-hero, .hero-video-section');
+
+      if (newval === 'video') {
+        // Remove background image when video is selected
+        $heroSections.css('background-image', 'none');
+
+        // Add video if URL is set
+        var videoUrl = wp.customize('campaignpress_hero_video').get();
+        if (videoUrl) {
+          $heroSections.each(function () {
+            var $section = $(this);
+            if (!$section.find('.cp-hero-video').length) {
+              var $video = $('<video>', {
+                class:
+                  'wp-block-cover__video-background intrinsic-ignore cp-hero-video',
+                autoplay: true,
+                muted: true,
+                loop: true,
+                playsinline: true,
+                src: videoUrl,
+              }).css({
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                'min-width': '100%',
+                'min-height': '100%',
+                width: 'auto',
+                height: 'auto',
+                transform: 'translate(-50%, -50%)',
+                'object-fit': 'cover',
+                'z-index': 0,
+              });
+              $section.prepend($video);
+            }
+          });
+        }
+      } else {
+        // Remove video elements when image is selected
+        $heroSections.find('.cp-hero-video').remove();
+
+        // Restore background image if set
+        var imageUrl = wp.customize('campaignpress_hero_image').get();
+        if (imageUrl) {
+          $heroSections.css('background-image', 'url("' + imageUrl + '")');
+        }
+      }
+    });
+  });
+
+  // Hero video URL
+  wp.customize('campaignpress_hero_video', function (value) {
+    value.bind(function (newval) {
+      var mediaType = wp.customize('campaignpress_hero_media_type').get();
+      if (mediaType !== 'video') {
+        return;
+      }
+
+      var $video = $('.cp-hero-video');
+      if ($video.length && newval) {
+        $video.attr('src', newval);
+      } else if (newval) {
+        // Video doesn't exist yet, create it
+        var $heroSections = $('.is-style-campaign-hero, .hero-video-section');
+        $heroSections.each(function () {
+          var $section = $(this);
+          if (!$section.find('.cp-hero-video').length) {
+            var $newVideo = $('<video>', {
+              class:
+                'wp-block-cover__video-background intrinsic-ignore cp-hero-video',
+              autoplay: true,
+              muted: true,
+              loop: true,
+              playsinline: true,
+              src: newval,
+            }).css({
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              'min-width': '100%',
+              'min-height': '100%',
+              width: 'auto',
+              height: 'auto',
+              transform: 'translate(-50%, -50%)',
+              'object-fit': 'cover',
+              'z-index': 0,
+            });
+            $section.prepend($newVideo);
+          }
+        });
+      }
+    });
+  });
 })(jQuery);

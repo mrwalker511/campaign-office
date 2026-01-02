@@ -312,6 +312,79 @@ function campaignpress_customize_register($wp_customize) {
         'type'        => 'url',
         'description' => __('Link to ActBlue, WinRed, or other donation processor', 'campaign-office'),
     ));
+
+    /**
+     * Hero Section
+     */
+    $wp_customize->add_section('campaignpress_hero', array(
+        'title'       => __('Hero Section', 'campaign-office'),
+        'description' => __('Customize your homepage hero section background and overlay.', 'campaign-office'),
+        'priority'    => 37,
+    ));
+
+    // Hero media type (image or video)
+    $wp_customize->add_setting('campaignpress_hero_media_type', array(
+        'default'           => 'image',
+        'sanitize_callback' => 'campaignpress_sanitize_hero_media_type',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control('campaignpress_hero_media_type', array(
+        'label'       => __('Background Media Type', 'campaign-office'),
+        'description' => __('Choose between an image or video background.', 'campaign-office'),
+        'section'     => 'campaignpress_hero',
+        'type'        => 'radio',
+        'choices'     => array(
+            'image' => __('Image', 'campaign-office'),
+            'video' => __('Video', 'campaign-office'),
+        ),
+    ));
+
+    // Hero background image
+    $wp_customize->add_setting('campaignpress_hero_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'campaignpress_hero_image', array(
+        'label'       => __('Hero Background Image', 'campaign-office'),
+        'description' => __('Upload or select an image for the hero section background.', 'campaign-office'),
+        'section'     => 'campaignpress_hero',
+    )));
+
+    // Hero background video URL
+    $wp_customize->add_setting('campaignpress_hero_video', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control('campaignpress_hero_video', array(
+        'label'       => __('Hero Background Video URL', 'campaign-office'),
+        'description' => __('Enter the URL for a self-hosted video file (MP4 recommended).', 'campaign-office'),
+        'section'     => 'campaignpress_hero',
+        'type'        => 'url',
+    ));
+
+    // Hero overlay opacity
+    $wp_customize->add_setting('campaignpress_hero_overlay_opacity', array(
+        'default'           => 50,
+        'sanitize_callback' => 'campaignpress_sanitize_opacity',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control('campaignpress_hero_overlay_opacity', array(
+        'label'       => __('Overlay Opacity', 'campaign-office'),
+        'description' => __('Adjust the darkness of the overlay (0 = transparent, 100 = fully dark). Recommended: 40-60% for optimal text readability.', 'campaign-office'),
+        'section'     => 'campaignpress_hero',
+        'type'        => 'range',
+        'input_attrs' => array(
+            'min'  => 0,
+            'max'  => 100,
+            'step' => 5,
+        ),
+    ));
 }
 add_action('customize_register', 'campaignpress_customize_register');
 
@@ -362,17 +435,33 @@ function campaignpress_sanitize_menu_layout($input) {
 }
 
 /**
+ * Sanitize hero media type
+ */
+function campaignpress_sanitize_hero_media_type($input) {
+    $valid = array('image', 'video');
+    return in_array($input, $valid, true) ? $input : 'image';
+}
+
+/**
+ * Sanitize opacity value (0-100)
+ */
+function campaignpress_sanitize_opacity($input) {
+    $input = absint($input);
+    return min(100, max(0, $input));
+}
+
+/**
  * Output customizer-driven CSS overrides
  */
 function campaignpress_customizer_output_css() {
     $primary = sanitize_hex_color(get_theme_mod('campaignpress_primary_color', null));
     $accent = sanitize_hex_color(get_theme_mod('campaignpress_secondary_color', null));
-
-    if (!$primary && !$accent) {
-        return;
-    }
+    $hero_opacity = get_theme_mod('campaignpress_hero_overlay_opacity', 50);
+    $hero_image = esc_url(get_theme_mod('campaignpress_hero_image', ''));
+    $hero_media_type = get_theme_mod('campaignpress_hero_media_type', 'image');
 
     $declarations = array();
+    $hero_css = '';
 
     if ($primary) {
         $declarations[] = '--wp--preset--color--primary: ' . $primary . ' !important;';
@@ -384,7 +473,32 @@ function campaignpress_customizer_output_css() {
         $declarations[] = '--cp-secondary: ' . $accent . ' !important;';
     }
 
-    echo '<style id="campaignpress-customizer-css">body{' . implode('', $declarations) . '}</style>' . "\n";
+    // Hero overlay opacity (convert 0-100 to 0-1)
+    $opacity_decimal = $hero_opacity / 100;
+    $hero_css .= '.is-style-campaign-hero .wp-block-cover__background,';
+    $hero_css .= '.hero-video-section .wp-block-cover__background {';
+    $hero_css .= 'opacity: ' . esc_attr($opacity_decimal) . ' !important;';
+    $hero_css .= '}';
+
+    // Hero background image (only apply if media type is image and URL is set)
+    if ($hero_media_type === 'image' && $hero_image) {
+        $hero_css .= '.is-style-campaign-hero,';
+        $hero_css .= '.hero-video-section {';
+        $hero_css .= 'background-image: url("' . $hero_image . '") !important;';
+        $hero_css .= 'background-size: cover !important;';
+        $hero_css .= 'background-position: center !important;';
+        $hero_css .= '}';
+    }
+
+    $output = '';
+    if (!empty($declarations)) {
+        $output .= '<style id="campaignpress-customizer-css">body{' . implode('', $declarations) . '}</style>' . "\n";
+    }
+    if ($hero_css) {
+        $output .= '<style id="campaignpress-hero-css">' . $hero_css . '</style>' . "\n";
+    }
+
+    echo $output;
 }
 add_action('wp_head', 'campaignpress_customizer_output_css', 100);
 
@@ -401,3 +515,47 @@ function campaignpress_customize_preview_js() {
     );
 }
 add_action('customize_preview_init', 'campaignpress_customize_preview_js');
+
+/**
+ * Output hero video background if video media type is selected
+ */
+function campaignpress_hero_video_output() {
+    $hero_media_type = get_theme_mod('campaignpress_hero_media_type', 'image');
+    $hero_video = esc_url(get_theme_mod('campaignpress_hero_video', ''));
+
+    if ($hero_media_type !== 'video' || empty($hero_video)) {
+        return;
+    }
+
+    // Output inline script to inject video into hero sections
+    ?>
+    <script id="campaignpress-hero-video-script">
+    (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            var heroSections = document.querySelectorAll('.is-style-campaign-hero, .hero-video-section');
+            var videoUrl = <?php echo wp_json_encode($hero_video); ?>;
+
+            heroSections.forEach(function(section) {
+                // Check if video already exists
+                if (section.querySelector('.cp-hero-video')) {
+                    return;
+                }
+
+                var video = document.createElement('video');
+                video.className = 'wp-block-cover__video-background intrinsic-ignore cp-hero-video';
+                video.autoplay = true;
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.src = videoUrl;
+                video.style.cssText = 'position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover;z-index:0;';
+
+                // Insert video as first child
+                section.insertBefore(video, section.firstChild);
+            });
+        });
+    })();
+    </script>
+    <?php
+}
+add_action('wp_footer', 'campaignpress_hero_video_output');

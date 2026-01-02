@@ -237,6 +237,9 @@ class CampaignPress_SMS_Integrations {
 
         // Scheduled messages
         add_action('campaignpress_send_scheduled_sms', array($this, 'send_scheduled_message'), 10, 1);
+
+        // Bulk SMS cron handler
+        add_action('cp_send_bulk_sms_item', array($this, 'handle_scheduled_bulk_sms'), 10, 4);
     }
 
     /**
@@ -830,12 +833,16 @@ class CampaignPress_SMS_Integrations {
             }
         }
 
+        // Get default integration for bulk sending
+        $integration_id = $options['integration_id'] ?? $this->get_default_integration();
+
         // Send messages with rate limiting - schedule asynchronously
+        $index = 0;
         foreach ($valid_recipients as $phone) {
             // Schedule each message with staggered delay to respect rate limits
             // Using WordPress cron instead of blocking sleep() for better performance
             wp_schedule_single_event(
-                time() + (0.1 * $index), // Stagger by 100ms
+                time() + (int) ($index * 0.1), // Stagger by 100ms
                 'cp_send_bulk_sms_item',
                 array($phone, $message, $options, $integration_id)
             );
@@ -888,6 +895,46 @@ class CampaignPress_SMS_Integrations {
         ));
 
         return true;
+    }
+
+    /**
+     * Handle scheduled bulk SMS item
+     *
+     * Processes a single SMS message that was scheduled during bulk send.
+     * This prevents blocking with sleep() and allows WordPress cron to handle rate limiting.
+     *
+     * @param string $phone Phone number to send to
+     * @param string $message Message content
+     * @param array $options Additional options
+     * @param int $integration_id Integration ID
+     * @return bool Success status
+     * @since 2.0.0
+     */
+    public function handle_scheduled_bulk_sms($phone, $message, $options, $integration_id) {
+        // Verify integration exists
+        if (!isset($this->integrations[$integration_id])) {
+            campaignpress_integrations()->log_event('sms_bulk_item_failed', array(
+                'phone' => $phone,
+                'reason' => 'Integration not found'
+            ));
+            return false;
+        }
+
+        // Send SMS
+        $sent = $this->send_sms($phone, $message, array_merge($options, array(
+            'integration_id' => $integration_id
+        )));
+
+        // Log completion
+        $integration = $this->integrations[$integration_id];
+        campaignpress_integrations()->log_event('sms_bulk_item_sent', array(
+            'phone' => $phone,
+            'success' => $sent,
+            'integration_id' => $integration_id,
+            'platform' => $integration['platform']
+        ));
+
+        return $sent;
     }
 
     /**

@@ -23,7 +23,8 @@
 
 param(
     [string]$OutputDir = "..",
-    [string]$Version = ""
+    [string]$Version = "",
+    [switch]$NoPrompt
 )
 
 # Colors for output
@@ -53,7 +54,8 @@ $StyleContent = Get-Content "$ThemeDir\style.css" -Raw
 if ($StyleContent -match "Text Domain:\s*([a-z0-9_-]+)") {
     $ThemeSlug = $matches[1]
     Write-Host "    Theme slug: $ThemeSlug" -ForegroundColor $SuccessColor
-} else {
+}
+else {
     # Fallback to directory name if Text Domain not found
     $ThemeSlug = Split-Path $ThemeDir -Leaf
     Write-Host "    Warning: Text Domain not found in style.css, using directory name: $ThemeSlug" -ForegroundColor $WarningColor
@@ -67,11 +69,13 @@ if ([string]::IsNullOrEmpty($Version)) {
     if ($StyleContent -match "Version:\s*([0-9.]+)") {
         $Version = $matches[1]
         Write-Host "    Version: $Version" -ForegroundColor $SuccessColor
-    } else {
+    }
+    else {
         $Version = "dev"
         Write-Host "    Warning: Version not found, using 'dev'" -ForegroundColor $WarningColor
     }
-} else {
+}
+else {
     Write-Host "    Version: $Version (provided)" -ForegroundColor $SuccessColor
 }
 
@@ -87,12 +91,14 @@ $DistPath = Join-Path $ThemeDir "assets\dist"
 if (-not (Test-Path $DistPath)) {
     Write-Host "Error: assets/dist directory not found. Run 'npm run build' first." -ForegroundColor $ErrorColor
     exit 1
-} else {
+}
+else {
     $DistCount = (Get-ChildItem -Path $DistPath -Recurse -File | Measure-Object).Count
     if ($DistCount -eq 0) {
         Write-Host "Error: assets/dist directory is empty. Run 'npm run build' first." -ForegroundColor $ErrorColor
         exit 1
-    } else {
+    }
+    else {
         Write-Host "    Found $DistCount compiled assets" -ForegroundColor $SuccessColor
     }
 }
@@ -116,7 +122,6 @@ $ExcludeDirs = @(
     ".claude",
     ".sass-cache"
 )
-
 # Define excluded files
 $ExcludeFiles = @(
     ".gitignore",
@@ -149,55 +154,79 @@ $ExcludeFiles = @(
     ".stylelintrc*",
     ".prettierrc*",
     "*.zip"
-) -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+)
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor
 
-    if (Test-Path $CriticalCssPath) {
-        Copy-Item -Path $CriticalCssPath -Destination $TempCriticalPath -Recurse -Force
-    }
+# Optional: copy critical CSS into a temp location if provided
+$TempCriticalPath = Join-Path $TempDir "critical-css"
+if ($PSBoundParameters.ContainsKey('CriticalCssPath') -and (Test-Path $CriticalCssPath)) {
+    Copy-Item -Path $CriticalCssPath -Destination $TempCriticalPath -Recurse -Force
+}
 
+function Copy-FilesWithExclusions {
+    param(
+        [Parameter(Mandatory = $true)][string]$SourcePath,
+        [Parameter(Mandatory = $true)][string]$DestPath,
+        [string]$RelativeBase = ""
+    )
+
+    if (-not (Test-Path $SourcePath)) { return }
+    if (-not (Test-Path $DestPath)) { New-Item -ItemType Directory -Path $DestPath -Force | Out-Null }
+
+    foreach ($Item in Get-ChildItem -Path $SourcePath -Force) {
+        $RelativePath = if ($RelativeBase) { Join-Path $RelativeBase $Item.Name } else { $Item.Name }
+
+        if ($Item.PSIsContainer) {
+            $ExcludeDir = $false
+            foreach ($d in $ExcludeDirs) {
+                if ($RelativePath -eq $d -or $RelativePath -like "$d/*") { $ExcludeDir = $true; break }
+            }
             if (-not $ExcludeDir) {
-                # Recurse into directory
                 $NewDest = Join-Path $DestPath $Item.Name
                 Copy-FilesWithExclusions -SourcePath $Item.FullName -DestPath $NewDest -RelativeBase $RelativePath
             }
-        } else {
-            # Check if file should be excluded
+        }
+        else {
             $ExcludeFile = $false
 
-            # Exclude block source files (compiled by Vite)
             if ($RelativePath -match "^blocks/.+/(index|view)\.js$") {
                 $ExcludeFile = $true
             }
-            # Exclude non-critical CSS (assets/css/* except critical/)
             elseif ($RelativePath -like "assets/css/*" -and $RelativePath -notlike "assets/css/critical/*") {
                 $ExcludeFile = $true
             }
             else {
-                # Check file exclusion patterns
                 foreach ($Pattern in $ExcludeFiles) {
-                    if ($Item.Name -eq $Pattern -or $RelativePath -eq $Pattern) {
-                        $ExcludeFile = $true
-                        break
-                    }
-                    if ($Pattern -like "*`**") {
-                        if ($Item.Name -like $Pattern -or $RelativePath -like $Pattern) {
-                            $ExcludeFile = $true
-                            break
-                        }
+                    if ($Pattern -match '[\*\?]') {
+                        if ($Item.Name -like $Pattern -or $RelativePath -like $Pattern) { $ExcludeFile = $true; break }
+                    } else {
+                        if ($Item.Name -eq $Pattern -or $RelativePath -eq $Pattern) { $ExcludeFile = $true; break }
                     }
                 }
             }
 
-    if (Test-Path $TempCriticalPath) {
-        New-Item -ItemType Directory -Path "$BuildDir\assets\css" -Force | Out-Null
-        Copy-Item -Path $TempCriticalPath -Destination "$BuildDir\assets\css\critical" -Recurse -Force
+            if (-not $ExcludeFile) {
+                Copy-Item -Path $Item.FullName -Destination $DestPath -Force
+            }
+        }
     }
 }
 
+# Start copying from theme root into build directory
+Copy-FilesWithExclusions -SourcePath $ThemeDir -DestPath $BuildDir -RelativeBase ""
+
+# If temporary critical CSS was prepared, place it into the build
+if (Test-Path $TempCriticalPath) {
+    New-Item -ItemType Directory -Path "$BuildDir\assets\css" -Force | Out-Null
+    Copy-Item -Path $TempCriticalPath -Destination "$BuildDir\assets\css\critical" -Recurse -Force
+}
+
 # Remove block source files (index.js and view.js)
-Get-ChildItem -Path "$BuildDir\blocks" -Recurse -File -Include @("index.js", "view.js") -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+$blockFiles = Get-ChildItem -Path "$BuildDir\blocks" -Recurse -File -Include @("index.js", "view.js") -ErrorAction SilentlyContinue
+if ($blockFiles -and $blockFiles.Count -gt 0) {
+    $blockFiles | Remove-Item -Force -ErrorAction SilentlyContinue
+}
 
 # Count files
 $ItemCount = (Get-ChildItem -Path $BuildDir -Recurse -File -ErrorAction SilentlyContinue | Measure-Object).Count
@@ -215,7 +244,8 @@ if (Test-Path $ZipPath) {
     try {
         Remove-Item $ZipPath -Force -ErrorAction Stop
         Write-Host "    Removed existing ZIP file" -ForegroundColor $WarningColor
-    } catch {
+    }
+    catch {
         # File is locked, try to find a new name
         $Counter = 1
         while (Test-Path $ZipPath) {
@@ -248,16 +278,19 @@ try {
     Write-Host "  Location: $ZipPath" -ForegroundColor $SuccessColor
     if ($ZipSizeMB -gt 1) {
         Write-Host "  Size: $ZipSizeMB MB" -ForegroundColor $SuccessColor
-    } else {
+    }
+    else {
         Write-Host "  Size: $ZipSizeKB KB" -ForegroundColor $SuccessColor
     }
     Write-Host "  Files: $ItemCount" -ForegroundColor $SuccessColor
     Write-Host "`nReady for distribution!`n" -ForegroundColor $SuccessColor
 
-} catch {
+}
+catch {
     Write-Host "`nError creating ZIP file: $_" -ForegroundColor $ErrorColor
     exit 1
-} finally {
+}
+finally {
     # Cleanup temp directory
     if (Test-Path $TempDir) {
         Remove-Item $TempDir -Recurse -Force -ErrorAction SilentlyContinue
@@ -265,7 +298,10 @@ try {
 }
 
 # Open file location (optional)
-$OpenLocation = Read-Host "`nOpen file location? (Y/N)"
+$OpenLocation = $null
+if (-not $NoPrompt) {
+    $OpenLocation = Read-Host "`nOpen file location? (Y/N)"
+}
 if ($OpenLocation -eq "Y" -or $OpenLocation -eq "y") {
     Start-Process explorer.exe "/select,$ZipPath"
 }

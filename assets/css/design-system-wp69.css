@@ -125,6 +125,21 @@ body.color-scheme-green-party {
   --wp--preset--color--accent-700: #fbc02d;
 }
 
+/* Neutral Theme (Non-partisan) */
+body.color-scheme-neutral {
+  --wp--preset--color--primary: #495057;
+  --wp--preset--color--primary-600: #343a40;
+  --wp--preset--color--primary-700: #212529;
+  --wp--preset--color--primary-400: #6c757d;
+  --wp--preset--color--primary-300: #adb5bd;
+  --wp--preset--color--accent: #17a2b8;
+  --wp--preset--color--accent-600: #138496;
+  --wp--preset--color--accent-700: #0f6674;
+}
+
+/* Democrat Blue Theme is the default - uses base colors from theme.json */
+
+
 /* ============================================
    Enhanced Typography (WordPress 6.9)
    ============================================ */
@@ -372,6 +387,7 @@ body.cp-primary-menu-inline .cp-primary-navigation .wp-block-navigation__contain
 }
 
 @keyframes heroGradientShift {
+
   0%,
   100% {
     opacity: 0.3;
@@ -520,6 +536,7 @@ body.cp-primary-menu-inline .cp-primary-navigation .wp-block-navigation__contain
 }
 
 @keyframes buttonPulse {
+
   0%,
   100% {
     box-shadow:
@@ -894,7 +911,8 @@ input[type="button"][disabled] {
 /* ============================================
     Responsive Design
     ============================================ */
-@media (width <= 768px) {
+@media (width <=768px) {
+
   .campaign-hero,
   .wp-block-cover.is-style-campaign-hero {
     min-height: 55vh;
@@ -935,6 +953,7 @@ input[type="button"][disabled] {
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -960,6 +979,7 @@ input[type="button"][disabled] {
    Print Styles
    ============================================ */
 @media print {
+
   .campaign-hero,
   .wp-block-cover {
     page-break-inside: avoid;
@@ -1065,7 +1085,7 @@ input[type="button"][disabled] {
   animation: fadeInUp 1s ease 0.8s backwards;
 }
 
-@media (width >= 640px) {
+@media (width >=640px) {
   .hero-cta-buttons {
     flex-direction: row;
   }
@@ -1112,6 +1132,7 @@ input[type="button"][disabled] {
 }
 
 @keyframes gradientRotate {
+
   0%,
   100% {
     background-position: 0% 50%;
@@ -1175,6 +1196,7 @@ input[type="button"][disabled] {
 }
 
 @keyframes bounce {
+
   0%,
   20%,
   50%,
@@ -1251,13 +1273,13 @@ input[type="button"][disabled] {
   perspective: 1000px;
 }
 
-@media (width >= 768px) {
+@media (width >=768px) {
   .issues-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (width >= 1024px) {
+@media (width >=1024px) {
   .issues-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1349,13 +1371,13 @@ input[type="button"][disabled] {
   perspective: 1000px;
 }
 
-@media (width >= 768px) {
+@media (width >=768px) {
   .events-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (width >= 1024px) {
+@media (width >=1024px) {
   .events-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1528,7 +1550,7 @@ input[type="button"][disabled] {
 }
 
 /* Responsive Typography Adjustments */
-@media (width >= 768px) {
+@media (width >=768px) {
   .hero-title {
     font-size: clamp(4rem, 8vw, 6rem);
   }
@@ -1685,6 +1707,7 @@ input[type="button"][disabled] {
 }
 
 @keyframes bulbPulse {
+
   0%,
   100% {
     box-shadow:

@@ -527,6 +527,9 @@ class CP_Event_Manager {
         ));
 
         if ($result) {
+            // Invalidate cache
+            wp_cache_delete('cp_event_rsvp_count_' . $event_id, 'campaign-office');
+
             do_action('cp_event_rsvp_success', $wpdb->insert_id, $rsvp_data);
 
             wp_send_json_success(array(
@@ -542,11 +545,19 @@ class CP_Event_Manager {
      * Get RSVP count for an event
      */
     private function get_event_rsvp_count($event_id) {
-        global $wpdb;
-        return (int) $wpdb->get_var($wpdb->prepare(
-            "SELECT SUM(guests) FROM {$this->rsvp_table_name} WHERE event_id = %d AND rsvp_status = 'attending'",
-            $event_id
-        ));
+        $cache_key = 'cp_event_rsvp_count_' . $event_id;
+        $count = wp_cache_get($cache_key, 'campaign-office');
+
+        if (false === $count) {
+            global $wpdb;
+            $count = (int) $wpdb->get_var($wpdb->prepare(
+                "SELECT SUM(guests) FROM {$this->rsvp_table_name} WHERE event_id = %d AND rsvp_status = 'attending'",
+                $event_id
+            ));
+            wp_cache_set($cache_key, $count, 'campaign-office', HOUR_IN_SECONDS);
+        }
+
+        return $count;
     }
 
     /**

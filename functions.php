@@ -200,7 +200,7 @@ function campaignpress_setup() {
     // are now controlled via theme.json - no add_theme_support() calls needed
 
     // Editor stylesheet for Site Editor
-    add_editor_style('assets/css/design-system-wp69.css');
+    add_editor_style('assets/css/dist/tailwind.css');
 
     // Disable default block patterns (we'll create custom ones)
     remove_theme_support('core-block-patterns');
@@ -232,9 +232,11 @@ function campaignpress_scripts() {
     // WordPress 6.9+ Enhanced Design System
     // This CSS uses theme.json variables and adds advanced animations
     // Future-proof for WordPress 6.9 and beyond
+    // CampaignPress Tailwind CSS (Combined Design System)
+    // Builds from assets/css/app.css to assets/css/dist/tailwind.css
     wp_enqueue_style(
-        'campaignpress-design-wp69',
-        get_template_directory_uri() . '/assets/css/design-system-wp69.css',
+        'campaignpress-tailwind',
+        get_template_directory_uri() . '/assets/css/dist/tailwind.css',
         array('campaignpress-style'),
         CAMPAIGNPRESS_VERSION
     );

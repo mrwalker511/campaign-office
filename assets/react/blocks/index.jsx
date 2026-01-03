@@ -17,5 +17,3 @@ import './CampaignProgress';
 import './IssueCard';
 import './EventCountdown';
 import './VolunteerCTA';
-
-console.log('CampaignPress Blocks loaded');

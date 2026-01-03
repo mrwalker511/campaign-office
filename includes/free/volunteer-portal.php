@@ -994,7 +994,7 @@ class CP_Volunteer_Portal {
     private function get_volunteer_stats($volunteer_id) {
         // Check object cache first
         $cache_key = 'cp_volunteer_stats_' . $volunteer_id;
-        $stats = wp_cache_get($cache_key, 'campaignpress');
+        $stats = wp_cache_get($cache_key, 'campaign-office');
         if (false !== $stats) {
             return $stats;
         }
@@ -1033,7 +1033,7 @@ class CP_Volunteer_Portal {
         );
 
         // Cache for 1 hour
-        wp_cache_set($cache_key, $stats, 'campaignpress', HOUR_IN_SECONDS);
+        wp_cache_set($cache_key, $stats, 'campaign-office', HOUR_IN_SECONDS);
 
         return $stats;
     }

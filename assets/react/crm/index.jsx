@@ -16,7 +16,5 @@ const { createElement, Component } = wp.element; // ✓ Use WordPress React
 // Example: import ContactManager from './ContactManager';
 // Example: import VolunteerTracker from './VolunteerTracker';
 
-console.log('CampaignPress CRM loaded');
-
 // Export CRM components
 export default {};

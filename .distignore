@@ -6,13 +6,20 @@ node_modules/
 composer.json
 composer.lock
 vendor/
+tools/
 
 # Build & Configuration Files
 vite.config.js
 tailwind.config.js
 postcss.config.js
 .eslintrc.json
+.stylelintrc.json
+.prettierrc
 build_log.txt
+build-production.sh
+build-production.ps1
+build-testing.ps1
+dev-license-helper.php
 
 # Git & Version Control
 .git
@@ -21,6 +28,8 @@ build_log.txt
 .gitattributes
 
 # Documentation & Development Files
+*.md
+!README.md
 AUDIT_WALKTHROUGH.md
 BLOCK_IMPLEMENTATION_GUIDE.md
 CODE_REVIEW_REPORT.md
@@ -67,6 +76,8 @@ phpunit.xml
 
 # Source Files (keep only dist, critical, and block scripts)
 assets/react/
+assets/js/*.js
+!assets/js/main.js
 !assets/dist/**
 !assets/css/critical/*.css
 
@@ -75,6 +86,5 @@ assets/react/
 !blocks/**/view.js
 
 # Development Scripts
-scripts/build*
-scripts/dev*
-scripts/watch*
+scripts/
+build/

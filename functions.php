@@ -247,11 +247,24 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Bootstrap 5 CSS (self-hosted by default, filterable for CDN)
-    // To use CDN, add to functions.php: add_filter('campaignpress_bootstrap_css_url', function() { return 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'; });
+    // Tailwind CSS (compiled from assets/css/app.css)
+    $tailwind_css = get_template_directory_uri() . '/assets/css/dist/tailwind.css';
+    if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/css/tailwind.css')) {
+        $tailwind_css = get_template_directory_uri() . '/assets/dist/css/tailwind.css';
+    }
+    
+    wp_enqueue_style(
+        'campaignpress-tailwind',
+        $tailwind_css,
+        array('campaignpress-style'),
+        CAMPAIGNPRESS_VERSION
+    );
+
+    // Bootstrap 5 CSS (CDN by default, filterable)
+    // To use local version, add to functions.php: add_filter('campaignpress_bootstrap_css_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'; });
     $bootstrap_css_url = apply_filters(
         'campaignpress_bootstrap_css_url',
-        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
     );
     wp_enqueue_style(
         'bootstrap',
@@ -260,11 +273,11 @@ function campaignpress_scripts() {
         '5.3.0'
     );
 
-    // Bootstrap 5 JS Bundle (self-hosted by default, filterable for CDN)
-    // To use CDN, add to functions.php: add_filter('campaignpress_bootstrap_js_url', function() { return 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'; });
+    // Bootstrap 5 JS Bundle (CDN by default, filterable)
+    // To use local version, add to functions.php: add_filter('campaignpress_bootstrap_js_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'; });
     $bootstrap_js_url = apply_filters(
         'campaignpress_bootstrap_js_url',
-        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'
     );
     wp_enqueue_script(
         'bootstrap-bundle',
@@ -275,9 +288,14 @@ function campaignpress_scripts() {
     );
 
     // Main theme JS (jQuery dependency auto-enqueued by WordPress)
+    $main_js = get_template_directory_uri() . '/assets/js/main.js';
+    if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/js/main.js')) {
+        $main_js = get_template_directory_uri() . '/assets/dist/js/main.js';
+    }
+
     wp_enqueue_script(
         'campaignpress-main',
-        get_template_directory_uri() . '/assets/js/main.js',
+        $main_js,
         array('jquery'), // Depends on jQuery
         CAMPAIGNPRESS_VERSION,
         true

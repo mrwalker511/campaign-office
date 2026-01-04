@@ -105,6 +105,7 @@ if command -v rsync &> /dev/null; then
         --exclude='build-production.ps1' \
         --exclude='build-production.sh' \
         --exclude='build-testing.ps1' \
+        --exclude='dev-license-helper.php' \
         --exclude='build/' \
         --exclude='scripts/' \
         --exclude='tests/' \
@@ -158,7 +159,7 @@ else
     rm -rf .git .gitignore .gitattributes 2>/dev/null || true
     rm -rf node_modules package.json package-lock.json .npmrc 2>/dev/null || true
     rm -rf composer.json composer.lock 2>/dev/null || true
-    rm -f build-production.ps1 build-production.sh build-testing.ps1 2>/dev/null || true
+    rm -f build-production.ps1 build-production.sh build-testing.ps1 dev-license-helper.php 2>/dev/null || true
     rm -rf build/ scripts/ 2>/dev/null || true
     rm -rf tests/ phpunit.xml .phpunit.result.cache 2>/dev/null || true
     rm -f playwright.config.js 2>/dev/null || true

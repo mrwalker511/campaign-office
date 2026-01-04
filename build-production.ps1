@@ -134,6 +134,7 @@ $ExcludeFiles = @(
     "build-production.ps1",
     "build-production.sh",
     "build-testing.ps1",
+    "dev-license-helper.php",
     "phpunit.xml",
     ".phpunit.result.cache",
     "playwright.config.js",

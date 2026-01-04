@@ -45,5 +45,6 @@
     },
     "textdomain": "campaign-office",
     "editorScript": "file:./index.js",
-    "style": "file:./style-index.css"
+    "render": "file:./render.php",
+    "style": "file:./style.css"
 }

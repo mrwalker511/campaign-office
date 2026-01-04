@@ -154,7 +154,8 @@ $ExcludeFiles = @(
     ".eslintrc*",
     ".stylelintrc*",
     ".prettierrc*",
-    "*.zip"
+    "*.zip",
+    "campaign-office\BUILD.md"  # Exclude build instructions inside theme folder
 )
 
 Write-Host "[4/5] Copying production files..." -ForegroundColor $InfoColor

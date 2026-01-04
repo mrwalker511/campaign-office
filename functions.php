@@ -179,8 +179,8 @@ add_action('admin_init', 'campaignpress_handle_notice_dismissal');
  * Theme Setup
  */
 function campaignpress_setup() {
-    // Make theme available for translation
-    load_theme_textdomain('campaign-office', get_template_directory() . '/languages');
+    // Note: Translations are loaded separately at 'init' hook to comply with WordPress 6.7.0+
+    // See campaignpress_load_textdomain() below
 
     // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');

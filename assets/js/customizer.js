@@ -8,6 +8,84 @@
 (function ($) {
   'use strict';
 
+  /**
+   * Color scheme definitions
+   * Maps scheme slugs to their primary and accent colors
+   */
+  var colorSchemes = {
+    'democrat-blue': {
+      primary: '#0053c3',
+      primaryDark: '#003275',
+      accent: '#ff8800'
+    },
+    'republican-red': {
+      primary: '#e81b23',
+      primaryDark: '#9e0e14',
+      accent: '#002868'
+    },
+    'independent-purple': {
+      primary: '#6554c0',
+      primaryDark: '#4a3d91',
+      accent: '#00b8d9'
+    },
+    'green-party': {
+      primary: '#228B22',
+      primaryDark: '#1a6b1a',
+      accent: '#FFD700'
+    },
+    'neutral': {
+      primary: '#495057',
+      primaryDark: '#343a40',
+      accent: '#6c757d'
+    }
+  };
+
+  /**
+   * Apply color scheme to the preview
+   *
+   * @param {string} scheme - The scheme slug
+   */
+  function applyColorScheme(scheme) {
+    var colors = colorSchemes[scheme];
+    if (!colors) {
+      return;
+    }
+
+    // Create or update the color scheme style element
+    var styleId = 'campaignpress-scheme-preview';
+    var $style = $('#' + styleId);
+
+    if (!$style.length) {
+      $style = $('<style id="' + styleId + '"></style>');
+      $('head').append($style);
+    }
+
+    var css =
+      'body {' +
+      '--cp-primary: ' + colors.primary + ' !important;' +
+      '--wp--preset--color--primary: ' + colors.primary + ' !important;' +
+      '--cp-primary-dark: ' + colors.primaryDark + ' !important;' +
+      '--wp--preset--color--primary-dark: ' + colors.primaryDark + ' !important;' +
+      '--cp-secondary: ' + colors.accent + ' !important;' +
+      '--wp--preset--color--accent: ' + colors.accent + ' !important;' +
+      '}';
+
+    $style.html(css);
+
+    // Update the color picker controls in the customizer panel if available
+    if (wp.customize && wp.customize.control) {
+      var primaryControl = wp.customize.control('campaignpress_primary_color');
+      var accentControl = wp.customize.control('campaignpress_secondary_color');
+
+      if (primaryControl) {
+        wp.customize('campaignpress_primary_color').set(colors.primary);
+      }
+      if (accentControl) {
+        wp.customize('campaignpress_secondary_color').set(colors.accent);
+      }
+    }
+  }
+
   wp.customize('blogname', function (value) {
     value.bind(function (newval) {
       $('.wp-block-site-title a, .site-title a').text(newval);
@@ -22,25 +100,56 @@
 
   wp.customize('campaignpress_primary_color', function (value) {
     value.bind(function (newval) {
-      $('body').css('--cp-primary', newval);
-      $('body').css('--wp--preset--color--primary', newval);
+      // Create or update style element for primary color
+      var styleId = 'campaignpress-primary-preview';
+      var $style = $('#' + styleId);
+
+      if (!$style.length) {
+        $style = $('<style id="' + styleId + '"></style>');
+        $('head').append($style);
+      }
+
+      var css =
+        'body {' +
+        '--cp-primary: ' + newval + ' !important;' +
+        '--wp--preset--color--primary: ' + newval + ' !important;' +
+        '}';
+
+      $style.html(css);
     });
   });
 
   wp.customize('campaignpress_secondary_color', function (value) {
     value.bind(function (newval) {
-      $('body').css('--cp-secondary', newval);
-      $('body').css('--wp--preset--color--accent', newval);
+      // Create or update style element for secondary/accent color
+      var styleId = 'campaignpress-secondary-preview';
+      var $style = $('#' + styleId);
+
+      if (!$style.length) {
+        $style = $('<style id="' + styleId + '"></style>');
+        $('head').append($style);
+      }
+
+      var css =
+        'body {' +
+        '--cp-secondary: ' + newval + ' !important;' +
+        '--wp--preset--color--accent: ' + newval + ' !important;' +
+        '}';
+
+      $style.html(css);
     });
   });
 
   wp.customize('campaignpress_color_scheme', function (value) {
     value.bind(function (newval) {
+      // Update body class for CSS fallback
       $('body').removeClass(function (index, className) {
         return (className.match(/\bcolor-scheme-\S+/g) || []).join(' ');
       });
-
       $('body').addClass('color-scheme-' + newval);
+
+      // Apply the color scheme colors
+      applyColorScheme(newval);
     });
   });
 

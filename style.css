@@ -45,6 +45,61 @@ CampaignPress is a comprehensive WordPress theme built specifically for politica
 }
 
 /* ============================================
+   COLOR SCHEME CSS FALLBACKS
+   Applied via body class when JS updates aren't possible
+   ============================================ */
+
+/* Democrat Blue (Default) */
+body.color-scheme-democrat-blue {
+  --wp--preset--color--primary: #0053c3;
+  --wp--preset--color--primary-dark: #003275;
+  --wp--preset--color--accent: #ff8800;
+  --cp-primary: #0053c3;
+  --cp-primary-dark: #003275;
+  --cp-secondary: #ff8800;
+}
+
+/* Republican Red */
+body.color-scheme-republican-red {
+  --wp--preset--color--primary: #e81b23;
+  --wp--preset--color--primary-dark: #9e0e14;
+  --wp--preset--color--accent: #002868;
+  --cp-primary: #e81b23;
+  --cp-primary-dark: #9e0e14;
+  --cp-secondary: #002868;
+}
+
+/* Independent Purple */
+body.color-scheme-independent-purple {
+  --wp--preset--color--primary: #6554c0;
+  --wp--preset--color--primary-dark: #4a3d91;
+  --wp--preset--color--accent: #00b8d9;
+  --cp-primary: #6554c0;
+  --cp-primary-dark: #4a3d91;
+  --cp-secondary: #00b8d9;
+}
+
+/* Green Party */
+body.color-scheme-green-party {
+  --wp--preset--color--primary: #228B22;
+  --wp--preset--color--primary-dark: #1a6b1a;
+  --wp--preset--color--accent: #FFD700;
+  --cp-primary: #228B22;
+  --cp-primary-dark: #1a6b1a;
+  --cp-secondary: #FFD700;
+}
+
+/* Neutral */
+body.color-scheme-neutral {
+  --wp--preset--color--primary: #495057;
+  --wp--preset--color--primary-dark: #343a40;
+  --wp--preset--color--accent: #6c757d;
+  --cp-primary: #495057;
+  --cp-primary-dark: #343a40;
+  --cp-secondary: #6c757d;
+}
+
+/* ============================================
    ENHANCED TYPOGRAPHY SYSTEM
    ============================================ */
 

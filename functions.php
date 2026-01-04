@@ -12,6 +12,36 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Define Constants
+ */
+define('CAMPAIGNPRESS_VERSION', '2.0.0');
+define('CAMPAIGNPRESS_THEME_DIR', get_template_directory());
+define('CAMPAIGNPRESS_THEME_URI', get_template_directory_uri());
+define('CAMPAIGNPRESS_INCLUDES_DIR', CAMPAIGNPRESS_THEME_DIR . '/includes');
+define('CAMPAIGNPRESS_ASSETS_URI', CAMPAIGNPRESS_THEME_URI . '/assets');
+
+/**
+ * Development License Helper (Auto-loaded for Testing)
+ *
+ * If dev-license-helper.php exists in the theme directory, it will be auto-loaded.
+ * This provides a mock license server for testing without needing a real license server.
+ *
+ * The dev-license-helper.php file:
+ * - Is NOT included in production builds (excluded by build scripts)
+ * - Provides test license keys for all license tiers
+ * - Enables the mock license server filter
+ *
+ * Test License Keys (when dev-license-helper.php is present):
+ *   Professional: CP-DEV-PROFESSIONAL-2024-X1Y2Z3W4V5U6
+ *   Free: CP-DEV-FREE-2024-F1R2E3E4EEEE
+ *   Email: dev@campaignpress.test
+ */
+$dev_helper_path = CAMPAIGNPRESS_THEME_DIR . '/dev-license-helper.php';
+if (!defined('CAMPAIGNPRESS_DEV_MODE') && file_exists($dev_helper_path)) {
+    require_once $dev_helper_path;
+}
+
+/**
  * Development Mode (Optional)
  *
  * To enable premium features during development without a license key,
@@ -22,19 +52,10 @@ if (!defined('ABSPATH')) {
  * NEVER set this to true in production or distributed versions.
  */
 if (defined('CAMPAIGNPRESS_DEV_MODE') && CAMPAIGNPRESS_DEV_MODE) {
-    // Development mode is enabled via wp-config.php
+    // Development mode is enabled via wp-config.php or dev-license-helper.php
 } else {
     define('CAMPAIGNPRESS_DEV_MODE', false);
 }
-
-/**
- * Define Constants
- */
-define('CAMPAIGNPRESS_VERSION', '2.0.0');
-define('CAMPAIGNPRESS_THEME_DIR', get_template_directory());
-define('CAMPAIGNPRESS_THEME_URI', get_template_directory_uri());
-define('CAMPAIGNPRESS_INCLUDES_DIR', CAMPAIGNPRESS_THEME_DIR . '/includes');
-define('CAMPAIGNPRESS_ASSETS_URI', CAMPAIGNPRESS_THEME_URI . '/assets');
 
 /**
  * Check for Campaign Office Core Plugin

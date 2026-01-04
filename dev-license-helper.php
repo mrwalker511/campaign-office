@@ -32,6 +32,14 @@ if (!defined('CAMPAIGNPRESS_DEV_MODE') || !CAMPAIGNPRESS_DEV_MODE) {
 }
 
 /**
+ * Enable mock license server mode
+ *
+ * This filter tells the premium system that a mock license server is available,
+ * allowing license validation to proceed without a real license server configured.
+ */
+add_filter('campaignpress_mock_license_server_enabled', '__return_true');
+
+/**
  * TEST LICENSE KEYS
  *
  * These are valid test keys for different license tiers.

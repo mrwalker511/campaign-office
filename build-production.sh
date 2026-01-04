@@ -115,6 +115,8 @@ if command -v rsync &> /dev/null; then
         --exclude='playwright-report' \
         --exclude='test-results' \
         --exclude='docs/' \
+        --exclude='*.md' \
+        --exclude='*.MD' \
         --exclude='.distignore' \
         --exclude='.github/' \
         --exclude='.vscode/' \
@@ -171,6 +173,7 @@ else
     rm -rf .sass-cache .claude/ 2>/dev/null || true
     rm -f .editorconfig .eslintrc* .stylelintrc* .prettierrc* 2>/dev/null || true
     rm -f *.zip 2>/dev/null || true
+    find . -iname '*.md' -delete 2>/dev/null || true
     rm -rf assets/react/ assets/js/ 2>/dev/null || true
 
     # Keep only critical CSS

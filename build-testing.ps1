@@ -28,6 +28,7 @@ $excludeDirs = @(
 # Files/patterns to exclude
 $excludeFiles = @(
     "*.log", "*.tmp", "*.bak", "*.zip",
+    "*.md",
     ".gitignore", ".gitattributes", ".DS_Store", "Thumbs.db",
     "package.json", "package-lock.json", "composer.json", "composer.lock",
     "wp-cli.phar", ".env", ".env.local", "nul", "NUL",

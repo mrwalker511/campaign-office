@@ -29,6 +29,7 @@ dev-license-helper.php
 
 # Documentation & Development Files
 *.md
+*.MD
 !README.md
 AUDIT_WALKTHROUGH.md
 BLOCK_IMPLEMENTATION_GUIDE.md

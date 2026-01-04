@@ -37,7 +37,7 @@ define('CAMPAIGNPRESS_ASSETS_URI', CAMPAIGNPRESS_THEME_URI . '/assets');
  *   Email: dev@campaignpress.test
  */
 $dev_helper_path = CAMPAIGNPRESS_THEME_DIR . '/dev-license-helper.php';
-if (!defined('CAMPAIGNPRESS_DEV_MODE') && file_exists($dev_helper_path)) {
+if (file_exists($dev_helper_path)) {
     require_once $dev_helper_path;
 }
 

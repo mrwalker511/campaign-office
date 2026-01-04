@@ -21,23 +21,24 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+/**
+ * Enable mock license server mode
+ *
+ * This filter is added FIRST (before any early returns) to ensure the mock
+ * license server is always enabled when this file is present in the theme.
+ * This allows license testing even without full dev mode enabled.
+ */
+add_filter('campaignpress_mock_license_server_enabled', '__return_true');
+
 // Force development mode when this file is included
 if (!defined('CAMPAIGNPRESS_DEV_MODE')) {
 	define('CAMPAIGNPRESS_DEV_MODE', true);
 }
 
-// Only run in development environments
+// Only run remaining dev features in development environments
 if (!defined('CAMPAIGNPRESS_DEV_MODE') || !CAMPAIGNPRESS_DEV_MODE) {
 	return;
 }
-
-/**
- * Enable mock license server mode
- *
- * This filter tells the premium system that a mock license server is available,
- * allowing license validation to proceed without a real license server configured.
- */
-add_filter('campaignpress_mock_license_server_enabled', '__return_true');
 
 /**
  * TEST LICENSE KEYS

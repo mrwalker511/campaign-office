@@ -192,10 +192,7 @@ function Copy-FilesWithExclusions {
         else {
             $ExcludeFile = $false
 
-            if ($RelativePath -match "^blocks/.+/(index|view)\.js$") {
-                $ExcludeFile = $true
-            }
-            elseif ($RelativePath -like "assets/css/*" -and $RelativePath -notlike "assets/css/critical/*") {
+            if ($RelativePath -like "assets/css/*" -and $RelativePath -notlike "assets/css/critical/*") {
                 $ExcludeFile = $true
             }
             else {
@@ -222,12 +219,6 @@ Copy-FilesWithExclusions -SourcePath $ThemeDir -DestPath $BuildDir -RelativeBase
 if (Test-Path $TempCriticalPath) {
     New-Item -ItemType Directory -Path "$BuildDir\assets\css" -Force | Out-Null
     Copy-Item -Path $TempCriticalPath -Destination "$BuildDir\assets\css\critical" -Recurse -Force
-}
-
-# Remove block source files (index.js and view.js)
-$blockFiles = Get-ChildItem -Path "$BuildDir\blocks" -Recurse -File -Include @("index.js", "view.js") -ErrorAction SilentlyContinue
-if ($blockFiles -and $blockFiles.Count -gt 0) {
-    $blockFiles | Remove-Item -Force -ErrorAction SilentlyContinue
 }
 
 # Count files

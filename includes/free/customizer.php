@@ -403,12 +403,70 @@ function campaignpress_customize_partial_blogdescription() {
 }
 
 /**
+ * Color scheme definitions
+ *
+ * @return array
+ */
+function campaignpress_get_color_schemes() {
+    return array(
+        'democrat-blue' => array(
+            'primary'      => '#0053c3',
+            'primary_dark' => '#003275',
+            'accent'       => '#ff8800',
+        ),
+        'republican-red' => array(
+            'primary'      => '#e81b23',
+            'primary_dark' => '#9e0e14',
+            'accent'       => '#002868',
+        ),
+        'independent-purple' => array(
+            'primary'      => '#6554c0',
+            'primary_dark' => '#4a3d91',
+            'accent'       => '#00b8d9',
+        ),
+        'green-party' => array(
+            'primary'      => '#228B22',
+            'primary_dark' => '#1a6b1a',
+            'accent'       => '#FFD700',
+        ),
+        'neutral' => array(
+            'primary'      => '#495057',
+            'primary_dark' => '#343a40',
+            'accent'       => '#6c757d',
+        ),
+    );
+}
+
+/**
  * Sanitize color scheme
  */
 function campaignpress_sanitize_color_scheme($input) {
     $valid = array('democrat-blue', 'republican-red', 'independent-purple', 'green-party', 'neutral');
     return in_array($input, $valid, true) ? $input : 'democrat-blue';
 }
+
+/**
+ * Apply color scheme colors when scheme is changed
+ *
+ * @param mixed $value The new value.
+ * @param mixed $old_value The old value.
+ * @return mixed The sanitized value.
+ */
+function campaignpress_apply_color_scheme_on_save($value, $old_value) {
+    if ($value === $old_value) {
+        return $value;
+    }
+
+    $schemes = campaignpress_get_color_schemes();
+    if (isset($schemes[$value])) {
+        $colors = $schemes[$value];
+        set_theme_mod('campaignpress_primary_color', $colors['primary']);
+        set_theme_mod('campaignpress_secondary_color', $colors['accent']);
+    }
+
+    return $value;
+}
+add_filter('pre_set_theme_mod_campaignpress_color_scheme', 'campaignpress_apply_color_scheme_on_save', 10, 2);
 
 /**
  * Sanitize layout (homepage layout)
@@ -454,8 +512,16 @@ function campaignpress_sanitize_opacity($input) {
  * Output customizer-driven CSS overrides
  */
 function campaignpress_customizer_output_css() {
-    $primary = sanitize_hex_color(get_theme_mod('campaignpress_primary_color', null));
-    $accent = sanitize_hex_color(get_theme_mod('campaignpress_secondary_color', null));
+    $color_scheme = get_theme_mod('campaignpress_color_scheme', 'democrat-blue');
+    $schemes = campaignpress_get_color_schemes();
+
+    // Get colors from color scheme as defaults
+    $scheme_colors = isset($schemes[$color_scheme]) ? $schemes[$color_scheme] : $schemes['democrat-blue'];
+
+    // Get custom colors (use scheme colors as defaults)
+    $primary = sanitize_hex_color(get_theme_mod('campaignpress_primary_color', $scheme_colors['primary']));
+    $primary_dark = $scheme_colors['primary_dark'];
+    $accent = sanitize_hex_color(get_theme_mod('campaignpress_secondary_color', $scheme_colors['accent']));
     $hero_opacity = get_theme_mod('campaignpress_hero_overlay_opacity', 50);
     $hero_image = esc_url(get_theme_mod('campaignpress_hero_image', ''));
     $hero_media_type = get_theme_mod('campaignpress_hero_media_type', 'image');
@@ -463,11 +529,15 @@ function campaignpress_customizer_output_css() {
     $declarations = array();
     $hero_css = '';
 
+    // Always output primary color (either custom or from scheme)
     if ($primary) {
         $declarations[] = '--wp--preset--color--primary: ' . $primary . ' !important;';
         $declarations[] = '--cp-primary: ' . $primary . ' !important;';
+        $declarations[] = '--wp--preset--color--primary-dark: ' . $primary_dark . ' !important;';
+        $declarations[] = '--cp-primary-dark: ' . $primary_dark . ' !important;';
     }
 
+    // Always output accent color (either custom or from scheme)
     if ($accent) {
         $declarations[] = '--wp--preset--color--accent: ' . $accent . ' !important;';
         $declarations[] = '--cp-secondary: ' . $accent . ' !important;';
@@ -515,6 +585,20 @@ function campaignpress_customize_preview_js() {
     );
 }
 add_action('customize_preview_init', 'campaignpress_customize_preview_js');
+
+/**
+ * Enqueue customizer control JavaScript (runs in the customizer panel)
+ */
+function campaignpress_customize_controls_js() {
+    wp_enqueue_script(
+        'campaignpress-customizer-controls',
+        CAMPAIGNPRESS_ASSETS_URI . '/js/customizer-controls.js',
+        array('customize-controls', 'jquery'),
+        CAMPAIGNPRESS_VERSION,
+        true
+    );
+}
+add_action('customize_controls_enqueue_scripts', 'campaignpress_customize_controls_js');
 
 /**
  * Output hero video background if video media type is selected

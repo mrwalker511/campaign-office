@@ -85,6 +85,7 @@ class CP_Campaign_Design_Studio {
         add_action('wp_ajax_cp_get_component_properties', array($this, 'ajax_get_component_properties'));
         add_action('wp_ajax_cp_save_page_settings', array($this, 'ajax_save_page_settings'));
         add_action('wp_ajax_cp_save_style_settings', array($this, 'ajax_save_style_settings'));
+        add_action('wp_ajax_cp_import_page_content', array($this, 'ajax_import_page_content'));
 
         // Enqueue studio assets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_studio_assets'));
@@ -719,10 +720,16 @@ class CP_Campaign_Design_Studio {
                             <?php esc_html_e('Canvas', 'campaign-office'); ?> /
                             <span id="cp-selected-component-name"><?php esc_html_e('No component selected', 'campaign-office'); ?></span>
                         </span>
-                        <button class="button button-small" id="cp-clear-canvas">
-                            <span class="dashicons dashicons-trash"></span>
-                            <?php esc_html_e('Clear All', 'campaign-office'); ?>
-                        </button>
+                        <div class="cp-canvas-actions">
+                            <button class="button button-small" id="cp-import-content" title="<?php esc_attr_e('Import existing page content as components', 'campaign-office'); ?>">
+                                <span class="dashicons dashicons-download"></span>
+                                <?php esc_html_e('Import Content', 'campaign-office'); ?>
+                            </button>
+                            <button class="button button-small" id="cp-clear-canvas">
+                                <span class="dashicons dashicons-trash"></span>
+                                <?php esc_html_e('Clear All', 'campaign-office'); ?>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="cp-canvas-viewport" id="cp-canvas-viewport" data-device="desktop">
@@ -1011,6 +1018,222 @@ class CP_Campaign_Design_Studio {
             ));
         }
     }
+
+    /**
+     * AJAX handler for importing existing page content
+     *
+     * Parses Gutenberg blocks from the page content and converts them
+     * to Design Studio components.
+     */
+    public function ajax_import_page_content() {
+        check_ajax_referer('cp_import_content');
+
+        if (!current_user_can('edit_pages')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+        }
+
+        $post_id = intval($_POST['post_id']);
+        $post = get_post($post_id);
+
+        if (!$post) {
+            wp_send_json_error(array('message' => __('Post not found', 'campaign-office')));
+        }
+
+        $content = $post->post_content;
+        $components = array();
+
+        // Parse Gutenberg blocks
+        $blocks = parse_blocks($content);
+
+        foreach ($blocks as $block) {
+            if (empty($block['blockName'])) {
+                continue;
+            }
+
+            $component = $this->convert_block_to_component($block);
+            if ($component) {
+                $components[] = $component;
+            }
+        }
+
+        // If no blocks found but content exists, create a generic content component
+        if (empty($components) && !empty(trim($content))) {
+            $components[] = array(
+                'type' => 'content',
+                'variant' => 'default',
+                'settings' => array(
+                    'content' => wp_strip_all_tags($content),
+                ),
+                'html' => '<div class="cp-component cp-component-content"><div class="cp-content-wrapper">' . wp_kses_post($content) . '</div></div>',
+            );
+        }
+
+        wp_send_json_success(array(
+            'components' => $components,
+            'message' => sprintf(
+                /* translators: %d is the number of components imported */
+                __('Imported %d components from page content', 'campaign-office'),
+                count($components)
+            ),
+        ));
+    }
+
+    /**
+     * Convert a Gutenberg block to a Design Studio component
+     *
+     * @param array $block Parsed Gutenberg block
+     * @return array|null Component data or null if not convertible
+     */
+    private function convert_block_to_component($block) {
+        $block_name = $block['blockName'];
+        $attrs = $block['attrs'] ?? array();
+        $inner_html = $block['innerHTML'] ?? '';
+
+        // Map Gutenberg blocks to Design Studio components
+        switch ($block_name) {
+            case 'core/cover':
+            case 'core/media-text':
+                return array(
+                    'type' => 'hero',
+                    'variant' => 'centered',
+                    'settings' => array(
+                        'heading' => $this->extract_heading_from_html($inner_html) ?: __('Hero Section', 'campaign-office'),
+                        'subheading' => $this->extract_paragraph_from_html($inner_html) ?: '',
+                        'button_text' => $this->extract_button_text_from_html($inner_html) ?: __('Learn More', 'campaign-office'),
+                        'bg_color' => $attrs['overlayColor'] ?? '#0073aa',
+                        'text_color' => '#ffffff',
+                    ),
+                    'html' => $this->generate_component_html('hero', 'centered', array(
+                        'heading' => $this->extract_heading_from_html($inner_html) ?: __('Hero Section', 'campaign-office'),
+                        'subheading' => $this->extract_paragraph_from_html($inner_html) ?: '',
+                        'button_text' => __('Learn More', 'campaign-office'),
+                        'bg_color' => $attrs['overlayColor'] ?? '#0073aa',
+                        'text_color' => '#ffffff',
+                    )),
+                );
+
+            case 'core/buttons':
+            case 'core/button':
+                return array(
+                    'type' => 'cta',
+                    'variant' => 'banner',
+                    'settings' => array(
+                        'title' => __('Take Action', 'campaign-office'),
+                        'button_text' => $this->extract_button_text_from_html($inner_html) ?: __('Get Started', 'campaign-office'),
+                        'style' => 'primary',
+                    ),
+                    'html' => $this->generate_component_html('cta', 'banner'),
+                );
+
+            case 'core/columns':
+            case 'core/group':
+                // Check if it looks like a stats section
+                if (preg_match_all('/\d+[,\d]*\+?/', $inner_html, $matches) && count($matches[0]) >= 2) {
+                    return array(
+                        'type' => 'stats',
+                        'variant' => 'counters',
+                        'settings' => array(
+                            'stat_1_label' => __('Stat 1', 'campaign-office'),
+                            'stat_1_value' => $matches[0][0] ?? '1,000+',
+                            'stat_2_label' => __('Stat 2', 'campaign-office'),
+                            'stat_2_value' => $matches[0][1] ?? '500+',
+                        ),
+                        'html' => $this->generate_component_html('stats', 'counters'),
+                    );
+                }
+                // Fall through to generic content
+                return array(
+                    'type' => 'content',
+                    'variant' => 'default',
+                    'settings' => array(),
+                    'html' => '<div class="cp-component cp-component-content">' . wp_kses_post($inner_html) . '</div>',
+                );
+
+            case 'core/quote':
+            case 'core/pullquote':
+                return array(
+                    'type' => 'testimonials',
+                    'variant' => 'featured',
+                    'settings' => array(
+                        'quote' => $this->extract_paragraph_from_html($inner_html) ?: __('Great quote here', 'campaign-office'),
+                        'author' => $attrs['citation'] ?? __('Supporter', 'campaign-office'),
+                    ),
+                    'html' => $this->generate_component_html('testimonials', 'featured'),
+                );
+
+            case 'core/heading':
+            case 'core/paragraph':
+                // Skip small content blocks - they'll be grouped later
+                if (strlen(strip_tags($inner_html)) < 50) {
+                    return null;
+                }
+                return array(
+                    'type' => 'content',
+                    'variant' => 'default',
+                    'settings' => array(
+                        'content' => wp_strip_all_tags($inner_html),
+                    ),
+                    'html' => '<div class="cp-component cp-component-content">' . wp_kses_post($inner_html) . '</div>',
+                );
+
+            case 'core/image':
+            case 'core/gallery':
+                return array(
+                    'type' => 'content',
+                    'variant' => 'default',
+                    'settings' => array(
+                        'image_url' => $attrs['url'] ?? '',
+                    ),
+                    'html' => '<div class="cp-component cp-component-content">' . wp_kses_post($inner_html) . '</div>',
+                );
+
+            default:
+                // For unknown blocks, create a generic content component
+                if (!empty(trim(strip_tags($inner_html)))) {
+                    return array(
+                        'type' => 'content',
+                        'variant' => 'default',
+                        'settings' => array(),
+                        'html' => '<div class="cp-component cp-component-content">' . wp_kses_post($inner_html) . '</div>',
+                    );
+                }
+                return null;
+        }
+    }
+
+    /**
+     * Extract heading text from HTML content
+     */
+    private function extract_heading_from_html($html) {
+        if (preg_match('/<h[1-6][^>]*>(.*?)<\/h[1-6]>/is', $html, $matches)) {
+            return wp_strip_all_tags($matches[1]);
+        }
+        return '';
+    }
+
+    /**
+     * Extract paragraph text from HTML content
+     */
+    private function extract_paragraph_from_html($html) {
+        if (preg_match('/<p[^>]*>(.*?)<\/p>/is', $html, $matches)) {
+            return wp_strip_all_tags($matches[1]);
+        }
+        return '';
+    }
+
+    /**
+     * Extract button text from HTML content
+     */
+    private function extract_button_text_from_html($html) {
+        if (preg_match('/<a[^>]*class="[^"]*wp-block-button__link[^"]*"[^>]*>(.*?)<\/a>/is', $html, $matches)) {
+            return wp_strip_all_tags($matches[1]);
+        }
+        if (preg_match('/<button[^>]*>(.*?)<\/button>/is', $html, $matches)) {
+            return wp_strip_all_tags($matches[1]);
+        }
+        return '';
+    }
+
 
     public function ajax_get_component_html() {
         check_ajax_referer('cp_get_component');
@@ -1433,6 +1656,7 @@ class CP_Campaign_Design_Studio {
                 'load_design' => wp_create_nonce('cp_load_design'),
                 'apply_template' => wp_create_nonce('cp_apply_template'),
                 'get_component' => wp_create_nonce('cp_get_component'),
+                'import_content' => wp_create_nonce('cp_import_content'),
             ),
             'i18n' => array(
                 'saving' => __('Saving...', 'campaign-office'),
@@ -1447,6 +1671,11 @@ class CP_Campaign_Design_Studio {
                 'template_applied' => __('Template applied successfully! Open the Design Studio to customize it.', 'campaign-office'),
                 'error_applying' => __('Error applying template', 'campaign-office'),
                 'error_saving' => __('Error saving design', 'campaign-office'),
+                'importing' => __('Importing...', 'campaign-office'),
+                'import_success' => __('Content imported successfully!', 'campaign-office'),
+                'import_error' => __('Error importing content', 'campaign-office'),
+                'import_confirm' => __('Import existing page content? This will add components to the canvas.', 'campaign-office'),
+                'no_content' => __('No content found to import', 'campaign-office'),
             )
         ));
     }

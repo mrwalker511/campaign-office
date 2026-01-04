@@ -266,6 +266,78 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    // Import existing page content
+    $('#cp-import-content').click(function () {
+        var postId = $('#cp-page-selector').val();
+        var $btn = $(this);
+        var originalHTML = $btn.html();
+
+        if (!postId) {
+            alert(cpDesignStudio.i18n.select_page_first);
+            return;
+        }
+
+        if (!confirm(cpDesignStudio.i18n.import_confirm)) {
+            return;
+        }
+
+        $btn.prop('disabled', true).html('<span class="dashicons dashicons-update spin"></span> ' + cpDesignStudio.i18n.importing);
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'cp_import_page_content',
+                post_id: postId,
+                _wpnonce: cpDesignStudio.nonces.import_content
+            },
+            success: function (response) {
+                $btn.prop('disabled', false).html(originalHTML);
+
+                if (response.success && response.data.components && response.data.components.length > 0) {
+                    // Remove empty state if present
+                    $('.cp-canvas-empty-state').remove();
+
+                    // Add each imported component to the canvas
+                    response.data.components.forEach(function (component) {
+                        addImportedComponent(component);
+                    });
+
+                    // Show success message
+                    var $msg = $('<div class="notice notice-success is-dismissible"><p>' + response.data.message + '</p></div>');
+                    $('.cp-studio-header').after($msg);
+                    setTimeout(function () {
+                        $msg.fadeOut(function () {
+                            $(this).remove();
+                        });
+                    }, 3000);
+                } else if (response.success && (!response.data.components || response.data.components.length === 0)) {
+                    alert(cpDesignStudio.i18n.no_content);
+                } else {
+                    alert(response.data.message || cpDesignStudio.i18n.import_error);
+                }
+            },
+            error: function () {
+                $btn.prop('disabled', false).html(originalHTML);
+                alert(cpDesignStudio.i18n.import_error);
+            }
+        });
+    });
+
+    // Add imported component directly to canvas (already has HTML)
+    function addImportedComponent(component) {
+        var $el = $('<div class="cp-dropped-component" data-component="' + component.type + '" data-variant="' + (component.variant || 'default') + '">' +
+            '<div class="cp-component-controls">' +
+            '<button class="cp-control-btn cp-edit-component" title="Edit"><span class="dashicons dashicons-edit"></span></button>' +
+            '<button class="cp-control-btn cp-delete-component" title="Delete"><span class="dashicons dashicons-trash"></span></button>' +
+            '</div>' +
+            '<div class="cp-component-content-wrap">' + (component.html || '') + '</div>' +
+            '</div>');
+
+        $el.data('settings', component.settings || {});
+        $('#cp-canvas').append($el);
+    }
+
     // Save design
     $('#cp-save-design-btn').click(function () {
         var components = [];

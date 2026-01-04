@@ -40,8 +40,8 @@ class CP_Translation_Support {
      * Constructor
      */
     public function __construct() {
-        // Load text domain
-        add_action('after_setup_theme', array($this, 'load_textdomain'));
+        // Load text domain at 'init' to comply with WordPress 6.7.0+ requirements
+        add_action('init', array($this, 'load_textdomain'), 1);
 
         // Register language switcher widget
         add_action('widgets_init', array($this, 'register_language_switcher_widget'));

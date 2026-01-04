@@ -123,12 +123,19 @@ function campaignpress_register_blocks() {
         ),
     ));
 
-    // Register Modern Interactive Blocks
-    register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/countdown' );
-    register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/progress' );
+    // Register Modern Interactive Blocks (check if not already registered to prevent duplicates)
+    $block_registry = WP_Block_Type_Registry::get_instance();
+
+    if ( ! $block_registry->is_registered( 'campaignpress/countdown' ) ) {
+        register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/countdown' );
+    }
+
+    if ( ! $block_registry->is_registered( 'campaignpress/progress' ) ) {
+        register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/progress' );
+    }
 
     // Register Heroicon Block
-    if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/icon/block.json' ) ) {
+    if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/icon/block.json' ) && ! $block_registry->is_registered( 'campaignpress/icon' ) ) {
         register_block_type( CAMPAIGNPRESS_THEME_DIR . '/blocks/icon' );
     }
 }

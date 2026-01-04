@@ -104,5 +104,7 @@
         }
     },
     "textdomain": "campaign-office",
-    "editorScript": "file:./index.js"
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "file:./style.css"
 }

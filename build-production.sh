@@ -140,11 +140,9 @@ if command -v rsync &> /dev/null; then
         --exclude='*.zip' \
         --exclude='assets/react/' \
         --exclude='assets/js/' \
-        --exclude='blocks/*/index.js' \
-        --exclude='blocks/*/view.js' \
-        --exclude='assets/css/*' \
         --include='assets/css/critical/' \
         --include='assets/css/critical/**' \
+        --exclude='assets/css/*' \
         "$THEME_DIR/" "$BUILD_DIR/"
 
     ITEM_COUNT=$(find "$BUILD_DIR" -type f | wc -l)
@@ -174,11 +172,7 @@ else
     rm -f .editorconfig .eslintrc* .stylelintrc* .prettierrc* 2>/dev/null || true
     rm -f *.zip 2>/dev/null || true
     rm -rf assets/react/ assets/js/ 2>/dev/null || true
-    
-    # Remove block source files
-    find blocks/ -type f -name "index.js" -delete 2>/dev/null || true
-    find blocks/ -type f -name "view.js" -delete 2>/dev/null || true
-    
+
     # Keep only critical CSS
     if [ -d "assets/css" ]; then
         # Save critical CSS

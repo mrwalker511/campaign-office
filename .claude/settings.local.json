@@ -58,7 +58,10 @@
       "Bash(git pull:*)",
       "Bash(git stash:*)",
       "Bash(git stash pop:*)",
-      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Matt Walker\\\\Desktop\\\\wp\\\\campaign-office\\\\build-testing.ps1\")"
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Matt Walker\\\\Desktop\\\\wp\\\\campaign-office\\\\build-testing.ps1\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"check-zip.ps1\")",
+      "Bash($funcs = $zip.Entries)",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"verify-zip.ps1\")"
     ],
     "deny": [],
     "ask": []

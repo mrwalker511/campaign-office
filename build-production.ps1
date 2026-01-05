@@ -134,6 +134,7 @@ $ExcludeFiles = @(
     "build-production.ps1",
     "build-production.sh",
     "build-testing.ps1",
+    "check-zip.ps1",
     "dev-license-helper.php",
     "phpunit.xml",
     ".phpunit.result.cache",
@@ -254,10 +255,36 @@ if (Test-Path $ZipPath) {
     }
 }
 
-# Create ZIP using .NET for better performance
+# Create ZIP using .NET with proper path separators for cross-platform compatibility
 try {
+    Add-Type -Assembly "System.IO.Compression"
     Add-Type -Assembly "System.IO.Compression.FileSystem"
-    [System.IO.Compression.ZipFile]::CreateFromDirectory($BuildDir, $ZipPath, [System.IO.Compression.CompressionLevel]::Optimal, $true)
+
+    # Create empty ZIP file
+    $ZipFileStream = [System.IO.File]::Create($ZipPath)
+    $ZipArchive = [System.IO.Compression.ZipArchive]::new($ZipFileStream, [System.IO.Compression.ZipArchiveMode]::Create)
+
+    # Add files with forward slashes (ZIP standard) and include top-level folder
+    # Normalize the BuildDir path to avoid 8.3 short name issues (Windows)
+    $NormalizedBuildDir = (Get-Item $BuildDir).FullName
+    $BuildDirLength = $NormalizedBuildDir.Length
+
+    Get-ChildItem -Path $BuildDir -Recurse -File | ForEach-Object {
+        $RelativePath = $_.FullName.Substring($BuildDirLength + 1)
+        # Replace backslashes with forward slashes for ZIP standard (required by WordPress)
+        # Include theme folder name as top level (required by WordPress)
+        $ZipEntryPath = "$ThemeName/$($RelativePath.Replace('\', '/'))"
+
+        $Entry = $ZipArchive.CreateEntry($ZipEntryPath, [System.IO.Compression.CompressionLevel]::Optimal)
+        $EntryStream = $Entry.Open()
+        $FileStream = [System.IO.File]::OpenRead($_.FullName)
+        $FileStream.CopyTo($EntryStream)
+        $FileStream.Close()
+        $EntryStream.Close()
+    }
+
+    $ZipArchive.Dispose()
+    $ZipFileStream.Close()
 
     $ZipSize = (Get-Item $ZipPath).Length
     $ZipSizeKB = [math]::Round($ZipSize / 1KB, 2)

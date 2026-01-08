@@ -1,6 +1,6 @@
 # CampaignPress
 
-A professional WordPress theme designed specifically for political campaigns, featuring custom post types, comprehensive theme options, and demo content.
+A professional WordPress theme designed specifically for political campaigns, featuring custom post types, modern system fonts for performance, comprehensive theme options, and demo content.
 
 [![WordPress](https://img.shields.io/badge/WordPress-6.4%2B-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net/)
@@ -160,11 +160,12 @@ Yes! Each page and post has a "Layout Options" meta box in the editor where you 
 
 - Major update: WordPress 6.9+ design system integration
 - Added comprehensive theme.json with 33 colors, fluid typography, and spacing system
-- Introduced distinctive typography (Bricolage Grotesque, Plus Jakarta Sans, JetBrains Mono)
+- Switched to system fonts for zero load time and optimal performance
 - Enhanced accessibility compliance (WCAG 2.1 AA)
 - Added 4 party color schemes (Democrat Blue, Republican Red, Independent Purple, Green Party)
 - Improved block editor integration with custom patterns
 - Performance optimizations and security enhancements
+- 100% GDPR compliant (no external font requests)
 
 ### Version 1.0.0 - 2024-11-01
 

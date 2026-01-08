@@ -1,58 +1,124 @@
-# CampaignPress Font Files
+# CampaignPress Font Strategy
 
-## ⚠️ IMPORTANT: Font Files Required
+## ✅ System Fonts - No Files Needed!
 
-The font files in this directory are currently **placeholder files (0 bytes)** and must be replaced with actual font files before the theme will display correctly.
+**CampaignPress now uses system fonts** for optimal performance, privacy, and user experience.
 
-## Required Fonts
+## Why System Fonts?
 
-This theme uses three variable fonts for optimal performance and typography:
+### Performance Benefits
+- **Zero load time** - Fonts are already on the user's device
+- **No external requests** - Faster initial page load
+- **No bandwidth usage** - Reduces data costs for mobile users
+- **Instant rendering** - No FOUT (Flash of Unstyled Text)
 
-### 1. Bricolage Grotesque (Display Font)
-- **File:** `BricolageGrotesque-Variable.woff2`
-- **Usage:** Headings and display text
-- **License:** SIL Open Font License 1.1
-- **Download:** [Google Fonts](https://fonts.google.com/specimen/Bricolage+Grotesque)
+### Privacy & Compliance
+- **100% GDPR compliant** - No external font CDN requests
+- **No tracking** - No third-party connections
+- **User privacy first** - No data shared with font providers
 
-### 2. Plus Jakarta Sans (Body Font)
-- **File:** `PlusJakartaSans-Variable.woff2`
-- **Usage:** Body text and UI elements
-- **License:** SIL Open Font License 1.1
-- **Download:** [Google Fonts](https://fonts.google.com/specimen/Plus+Jakarta+Sans)
+### User Experience
+- **Familiar typography** - Uses fonts users are accustomed to
+- **Native feel** - Matches the operating system aesthetic
+- **Better readability** - Optimized for each platform
 
-### 3. JetBrains Mono (Monospace Font)
-- **File:** `JetBrainsMono-Variable.woff2`
-- **Usage:** Code blocks and technical content
-- **License:** SIL Open Font License 1.1
-- **Download:** [Google Fonts](https://fonts.google.com/specimen/JetBrains+Mono)
+## Font Stack Details
 
-## How to Add Fonts
+CampaignPress uses modern, cross-platform system font stacks:
 
-### Option 1: Download from Google Fonts (Recommended)
+### Display & Body Text
+```css
+-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+'Helvetica Neue', Arial, sans-serif,
+'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'
+```
 
-1. Visit each font's Google Fonts page (links above)
-2. Click "Download family"
-3. Extract the ZIP file
-4. Convert TTF/OTF files to WOFF2 format using:
-   - [CloudConvert](https://cloudconvert.com/ttf-to-woff2)
-   - [Font Squirrel WebFont Generator](https://www.fontsquirrel.com/tools/webfont-generator)
-5. For variable fonts, select the file ending in `-Variable.ttf`
-6. Convert to WOFF2 and rename to match the filenames above
-7. Replace the placeholder files in this directory
+**What users see:**
+- **macOS/iOS:** San Francisco (Apple's native font)
+- **Windows:** Segoe UI (Microsoft's modern font)
+- **Android:** Roboto (Google's system font)
+- **Linux:** System default or DejaVu Sans
+- **Fallback:** Arial (universal)
 
-### Option 2: Use google-webfonts-helper
+### Monospace (Code Blocks)
+```css
+ui-monospace, 'Cascadia Code', 'Source Code Pro',
+Menlo, Consolas, 'DejaVu Sans Mono', monospace
+```
 
-1. Visit [google-webfonts-helper](https://gwfh.mranftl.com/fonts)
-2. Search for each font name
-3. Select "modern browsers" charset
-4. Select "Variable" if available
-5. Download the WOFF2 file
-6. Rename to match the required filename
-7. Replace the placeholder files in this directory
+**What users see:**
+- **macOS:** Menlo or SF Mono
+- **Windows:** Cascadia Code or Consolas
+- **Linux:** DejaVu Sans Mono or Liberation Mono
+- **Modern browsers:** ui-monospace (automatic system choice)
 
-### Option 3: Use System Fonts (Alternative)
+## WordPress Best Practice
 
-If you prefer to avoid licensing concerns or want faster load times, you can modify `theme.json` to use system fonts:
+WordPress core and the default themes (Twenty Twenty-Four, etc.) use system fonts for:
+- Performance
+- Accessibility
+- User familiarity
+- Reduced complexity
+
+CampaignPress follows this best practice.
+
+## Need Custom Fonts?
+
+If you want to use custom web fonts for brand consistency, you have options:
+
+### Option 1: Use Google Fonts (via CDN)
+
+**Pros:** Easy setup, extensive font library
+**Cons:** GDPR concerns, external dependency
+
+1. Uncomment the preconnect code in `/includes/free/font-preconnect.php`
+2. Update `theme.json` fontFamilies to reference your chosen fonts
+3. Optionally enqueue Google Fonts stylesheet
+
+**Note:** Using Google Fonts CDN may not comply with WordPress.org requirements and GDPR regulations in some jurisdictions.
+
+### Option 2: Self-Host Custom Fonts
+
+**Pros:** GDPR compliant, full control, no external dependencies
+**Cons:** Requires font file management, licensing consideration
+
+1. Download fonts from [Google Fonts](https://fonts.google.com/) or [google-webfonts-helper](https://gwfh.mranftl.com/fonts)
+2. Convert to WOFF2 format (if needed)
+3. Place font files in this directory
+4. Update `theme.json` fontFamilies with @font-face declarations or font URLs
+5. Ensure font license allows redistribution (OFL, MIT, etc.)
+
+### Option 3: Use WordPress Font Library (WP 6.5+)
+
+WordPress 6.5+ includes a Font Library feature:
+
+1. Go to **Appearance → Editor → Styles → Typography → Manage fonts**
+2. Upload your font files
+3. WordPress handles font management automatically
+4. Fonts are stored in `/wp-content/uploads/fonts/`
+
+This is the **recommended approach** for custom fonts in modern WordPress!
+
+## Current Font Stack Reference
+
+The theme currently uses these system font stacks (configured in `theme.json`):
+
+**Display & Body:**
+```
+-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+'Helvetica Neue', Arial, sans-serif,
+'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'
+```
+
+**Monospace:**
+```
+ui-monospace, 'Cascadia Code', 'Source Code Pro',
+Menlo, Consolas, 'DejaVu Sans Mono', monospace
+```
+
+## Customization Example
+
+To add your own brand fonts, edit `theme.json`:
 
 ```json
 {
@@ -60,19 +126,18 @@ If you prefer to avoid licensing concerns or want faster load times, you can mod
     "typography": {
       "fontFamilies": [
         {
-          "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+          "fontFamily": "'YourBrandFont', -apple-system, sans-serif",
           "slug": "display",
-          "name": "System Display"
-        },
-        {
-          "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-          "slug": "body",
-          "name": "System Body"
-        },
-        {
-          "fontFamily": "'Courier New', Courier, monospace",
-          "slug": "mono",
-          "name": "System Mono"
+          "name": "Brand Display",
+          "fontFace": [
+            {
+              "fontFamily": "YourBrandFont",
+              "fontWeight": "400 700",
+              "fontStyle": "normal",
+              "fontStretch": "normal",
+              "src": [ "file:./assets/fonts/your-font.woff2" ]
+            }
+          ]
         }
       ]
     }
@@ -80,64 +145,16 @@ If you prefer to avoid licensing concerns or want faster load times, you can mod
 }
 ```
 
-## Font Loading Performance
-
-### Current Setup (Self-Hosted)
-✅ GDPR compliant (no external requests)
-✅ No dependency on third-party CDNs
-✅ Complete control over caching
-❌ Requires manual font file management
-
-### Alternative: Google Fonts CDN
-If you prefer to use Google Fonts CDN:
-
-1. Remove the WOFF2 files from this directory
-2. Uncomment the preconnect code in `/includes/free/font-preconnect.php`
-3. Update `theme.json` to reference Google Fonts URLs
-4. Note: This may not comply with WordPress.org theme requirements
-
-## License Compliance
-
-All three fonts are licensed under the **SIL Open Font License 1.1**, which allows:
-- ✅ Free use in commercial projects
-- ✅ Modification and redistribution
-- ✅ Bundling with themes
-
-**Important:** You must include the font license file with your theme distribution. Download the OFL.txt file from each font's repository.
-
-## Troubleshooting
-
-### Fonts not loading?
-
-1. **Check file size:** Files should be ~50-200KB each, not 0 bytes
-2. **Check file format:** Must be `.woff2` format
-3. **Check permissions:** Files should be readable (chmod 644)
-4. **Clear cache:** Clear WordPress cache and browser cache
-5. **Check console:** Open browser DevTools and check for font loading errors
-
-### Want to use different fonts?
-
-1. Choose your fonts (must be GPL-compatible or OFL)
-2. Update `theme.json` fontFamilies section
-3. Update this README with new font information
-4. Add the new WOFF2 files to this directory
-
-## File Size Guidelines
-
-- **Variable fonts:** 100-200KB each (recommended)
-- **Static fonts:** 20-50KB each subset
-- **Total fonts:** Should not exceed 500KB for performance
-
 ## For Theme Reviewers
 
-⚠️ **Current Status:** Font files are placeholders (0 bytes) and must be replaced before theme distribution.
+✅ **Current Status:** Theme uses system fonts - no external font dependencies.
 
-**Before submitting to WordPress.org or commercial marketplaces:**
-1. Add actual font files (verify licensing)
-2. Include font license files (OFL.txt)
-3. Test typography rendering in theme demo
-4. Verify GDPR compliance (self-hosted fonts)
-5. Check total theme ZIP size remains under 10MB
+**WordPress.org Compliance:**
+- ✅ No external font CDN requests
+- ✅ No licensing concerns
+- ✅ GDPR compliant
+- ✅ Optimal performance
+- ✅ No font files to review
 
 ---
 

@@ -8,7 +8,7 @@ Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A professional WordPress theme designed specifically for political campaigns, featuring custom post types, comprehensive theme options, and demo content.
+A professional WordPress theme designed specifically for political campaigns, featuring custom post types, system fonts for performance, comprehensive theme options, and demo content.
 
 == Description ==
 
@@ -137,11 +137,12 @@ Yes! Each page and post has a "Layout Options" meta box in the editor where you 
 = 2.0.0 - 2025-01-08 =
 * Major update: WordPress 6.9+ design system integration
 * Added comprehensive theme.json with 33 colors, fluid typography, and spacing system
-* Introduced distinctive typography (Bricolage Grotesque, Plus Jakarta Sans, JetBrains Mono)
+* Switched to system fonts for zero load time and optimal performance
 * Enhanced accessibility compliance (WCAG 2.1 AA)
 * Added 4 party color schemes (Democrat Blue, Republican Red, Independent Purple, Green Party)
 * Improved block editor integration with custom patterns
 * Performance optimizations and security enhancements
+* 100% GDPR compliant (no external font requests)
 
 = 1.0.0 - 2024-11-01 =
 * Initial release

@@ -284,7 +284,15 @@ function campaignpress_scripts() {
     );
 
     // Bootstrap 5 CSS (CDN by default, filterable)
-    // To use local version, add to functions.php: add_filter('campaignpress_bootstrap_css_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'; });
+    // NOTE: For WordPress.org submission, Bootstrap MUST be bundled locally.
+    // For production/commercial use, download Bootstrap and place in /assets/vendor/bootstrap/
+    // Then use the filter below to switch to local files.
+    //
+    // To use local version, add to child theme or wp-config.php:
+    // add_filter('campaignpress_bootstrap_css_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'; });
+    // add_filter('campaignpress_bootstrap_js_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'; });
+    //
+    // Download Bootstrap: https://getbootstrap.com/docs/5.3/getting-started/download/
     $bootstrap_css_url = apply_filters(
         'campaignpress_bootstrap_css_url',
         'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
@@ -297,7 +305,6 @@ function campaignpress_scripts() {
     );
 
     // Bootstrap 5 JS Bundle (CDN by default, filterable)
-    // To use local version, add to functions.php: add_filter('campaignpress_bootstrap_js_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'; });
     $bootstrap_js_url = apply_filters(
         'campaignpress_bootstrap_js_url',
         'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'

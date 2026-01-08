@@ -4,7 +4,7 @@ A professional WordPress theme designed specifically for political campaigns, fe
 
 [![WordPress](https://img.shields.io/badge/WordPress-6.4%2B-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net/)
-[![License](https://img.shields.io/badge/License-GPLv2-green.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
+[![License](https://img.shields.io/badge/License-GPLv2%20or%20later-green.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 [![Version](https://img.shields.io/badge/Version-2.0.0-orange.svg)](https://github.com/mrwalker511/campaign-office)
 
 ## Table of Contents
@@ -156,7 +156,7 @@ Yes! Each page and post has a "Layout Options" meta box in the editor where you 
 
 ## Changelog
 
-### Version 2.0.0 - 2025-12-10
+### Version 2.0.0 - 2025-01-08
 
 - Major update: WordPress 6.9+ design system integration
 - Added comprehensive theme.json with 33 colors, fluid typography, and spacing system
@@ -166,7 +166,7 @@ Yes! Each page and post has a "Layout Options" meta box in the editor where you 
 - Improved block editor integration with custom patterns
 - Performance optimizations and security enhancements
 
-### Version 1.0.0 - 2025-01-15
+### Version 1.0.0 - 2024-11-01
 
 - Initial release
 - Custom post types for Issues, Events, Endorsements, Team Members, and Volunteer Opportunities
@@ -190,7 +190,7 @@ Yes! Each page and post has a "Layout Options" meta box in the editor where you 
 
 **CampaignPress WordPress Theme, Copyright 2025**
 
-CampaignPress is distributed under the terms of the GNU GPL v2 or later.
+CampaignPress is distributed under the terms of the GNU General Public License v2 or later.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
 

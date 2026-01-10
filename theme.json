@@ -42,33 +42,33 @@
         },
         {
           "slug": "primary",
-          "color": "#0053c3",
-          "name": "Democratic Blue (Primary)"
+          "color": "#14213d",
+          "name": "Navy (Primary)"
         },
         {
           "slug": "primary-600",
-          "color": "#004399",
+          "color": "#101b32",
           "name": "Primary 600"
         },
         {
           "slug": "primary-700",
-          "color": "#003270",
+          "color": "#0d1527",
           "name": "Primary 700"
         },
         {
           "slug": "primary-800",
-          "color": "#002247",
+          "color": "#0a101d",
           "name": "Primary 800"
         },
         {
           "slug": "primary-900",
-          "color": "#00111d",
+          "color": "#060a12",
           "name": "Primary 900"
         },
         {
           "slug": "primary-dark",
-          "color": "#003275",
-          "name": "Democratic Dark"
+          "color": "#0d1527",
+          "name": "Navy Dark"
         },
         {
           "slug": "accent-50",
@@ -121,13 +121,23 @@
           "name": "Accent 900"
         },
         {
+          "slug": "secondary",
+          "color": "#C4232C",
+          "name": "Red (Secondary)"
+        },
+        {
+          "slug": "secondary-dark",
+          "color": "#9e1c23",
+          "name": "Red Dark"
+        },
+        {
           "slug": "republican-red",
-          "color": "#e81b23",
+          "color": "#C4232C",
           "name": "Republican Red"
         },
         {
           "slug": "republican-dark",
-          "color": "#9e0e14",
+          "color": "#9e1c23",
           "name": "Republican Dark"
         },
         {
@@ -142,8 +152,8 @@
         },
         {
           "slug": "gold",
-          "color": "#ffd700",
-          "name": "Gold (Winner)"
+          "color": "#BF9B30",
+          "name": "Gold (Accent)"
         },
         {
           "slug": "success",
@@ -228,24 +238,34 @@
       ],
       "gradients": [
         {
+          "slug": "navy-gradient",
+          "gradient": "linear-gradient(135deg, #14213d 0%, #0d1527 100%)",
+          "name": "Navy Gradient"
+        },
+        {
+          "slug": "red-gradient",
+          "gradient": "linear-gradient(135deg, #C4232C 0%, #9e1c23 100%)",
+          "name": "Red Gradient"
+        },
+        {
+          "slug": "hero-gradient",
+          "gradient": "linear-gradient(135deg, rgba(20, 33, 61, 0.95) 0%, rgba(13, 21, 39, 0.95) 100%)",
+          "name": "Hero Gradient (Dark Overlay)"
+        },
+        {
           "slug": "democrat-gradient",
-          "gradient": "linear-gradient(135deg, #0053c3 0%, #003275 100%)",
+          "gradient": "linear-gradient(135deg, #14213d 0%, #0d1527 100%)",
           "name": "Democratic Gradient"
         },
         {
           "slug": "republican-gradient",
-          "gradient": "linear-gradient(135deg, #e81b23 0%, #9e0e14 100%)",
+          "gradient": "linear-gradient(135deg, #C4232C 0%, #9e1c23 100%)",
           "name": "Republican Gradient"
         },
         {
           "slug": "independent-gradient",
           "gradient": "linear-gradient(135deg, #6554c0 0%, #00b8d9 100%)",
           "name": "Independent Gradient"
-        },
-        {
-          "slug": "hero-gradient",
-          "gradient": "linear-gradient(135deg, var(--wp--preset--color--primary-dark) 0%, var(--wp--preset--color--primary) 100%)",
-          "name": "Hero Gradient"
         }
       ]
     },
@@ -261,14 +281,14 @@
       "fluid": true,
       "fontFamilies": [
         {
-          "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+          "fontFamily": "'Playfair Display', Georgia, 'Times New Roman', serif",
           "slug": "display",
-          "name": "System Display"
+          "name": "Playfair Display"
         },
         {
-          "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+          "fontFamily": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
           "slug": "body",
-          "name": "System Body"
+          "name": "Inter"
         },
         {
           "fontFamily": "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace",
@@ -584,7 +604,7 @@
           "text": "var(--wp--preset--color--white)"
         },
         "border": {
-          "radius": "0.75rem"
+          "radius": "0"
         },
         "spacing": {
           "padding": {
@@ -595,24 +615,25 @@
           }
         },
         "typography": {
-          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontFamily": "var(--wp--preset--font-family--body)",
           "fontSize": "var(--wp--preset--font-size--base)",
-          "fontWeight": "700",
-          "letterSpacing": "0.02em"
+          "fontWeight": "600",
+          "letterSpacing": "0.1em",
+          "textTransform": "uppercase"
         },
-        "shadow": "var(--wp--preset--shadow--lg)",
+        "shadow": "none",
         ":hover": {
           "color": {
             "background": "var(--wp--preset--color--primary-700)"
           },
-          "shadow": "var(--wp--preset--shadow--xl)"
+          "shadow": "none"
         },
         ":focus": {
           "border": {
-            "color": "var(--wp--preset--color--accent)",
-            "width": "3px"
+            "color": "var(--wp--preset--color--gold)",
+            "width": "2px"
           },
-          "shadow": "var(--wp--preset--shadow--xl)"
+          "shadow": "none"
         }
       }
     },
@@ -664,7 +685,7 @@
       },
       "core/button": {
         "border": {
-          "radius": "0.75rem"
+          "radius": "0"
         }
       },
       "core/quote": {
@@ -749,6 +770,13 @@
     {
       "name": "home-block",
       "title": "Political Home (Block)",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "home-classic-statesman",
+      "title": "Classic Statesman Homepage",
       "postTypes": [
         "page"
       ]

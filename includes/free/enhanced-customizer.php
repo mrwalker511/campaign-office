@@ -153,6 +153,18 @@ class CP_Enhanced_Customizer {
                 ),
                 'gradient' => 'linear-gradient(135deg, #000080 0%, #4169E1 100%)',
             ),
+            'classic_statesman' => array(
+                'name' => __('Classic Statesman', 'campaign-office'),
+                'description' => __('Authoritative design blending law firm gravitas with grassroots energy', 'campaign-office'),
+                'colors' => array(
+                    'primary' => '#14213d',
+                    'secondary' => '#C4232C',
+                    'accent' => '#BF9B30',
+                    'background' => '#f8f9fa',
+                    'text' => '#212529',
+                ),
+                'gradient' => 'linear-gradient(135deg, #14213d 0%, #0d1527 100%)',
+            ),
         );
     }
 

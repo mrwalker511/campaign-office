@@ -385,3 +385,104 @@
     color: #d63638;
     border: 1px solid #f5cfd0;
 }
+
+/* Classic Statesman Template Styles */
+.classic-statesman-template {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.classic-statesman-template h1,
+.classic-statesman-template h2,
+.classic-statesman-template h3,
+.classic-statesman-template h4,
+.classic-statesman-template h5,
+.classic-statesman-template h6 {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+}
+
+.classic-statesman-template button,
+.classic-statesman-template .wp-block-button__link,
+.classic-statesman-template .cp-button {
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.classic-statesman-template .cp-component[data-type="hero"] {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-center;
+    position: relative;
+}
+
+.classic-statesman-template .cp-hero-overlay {
+    background: rgba(20, 33, 61, 0.95);
+}
+
+.classic-statesman-template .cp-section-label {
+    color: #BF9B30;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.classic-statesman-template .cp-border-accent {
+    border-left: 4px solid #BF9B30;
+}
+
+.classic-statesman-template .cp-stats-bar {
+    background-color: #14213d;
+    color: #ffffff;
+}
+
+.classic-statesman-template .cp-stat-value {
+    color: #BF9B30;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 3rem);
+    font-weight: 700;
+}
+
+.classic-statesman-template .cp-donation-banner {
+    background-color: #C4232C;
+    color: #ffffff;
+}
+
+.classic-statesman-template .cp-footer {
+    background-color: #14213d;
+    color: #ffffff;
+}
+
+.classic-statesman-template .cp-card {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.classic-statesman-template .cp-quote {
+    border-left: 4px solid #BF9B30;
+    padding-left: 1.5rem;
+    font-style: italic;
+}
+
+/* Classic Statesman Color Utilities */
+.classic-statesman-navy {
+    background-color: #14213d;
+    color: #ffffff;
+}
+
+.classic-statesman-red {
+    background-color: #C4232C;
+    color: #ffffff;
+}
+
+.classic-statesman-gold {
+    color: #BF9B30;
+}
+
+.classic-statesman-border-gold {
+    border-color: #BF9B30;
+}

@@ -1,0 +1,312 @@
+{
+  "template_key": "classic-statesman",
+  "template_name": "Classic Statesman",
+  "template_description": "Authoritative campaign design blending law firm gravitas with grassroots energy. Features formal serif typography, navy and red color scheme, sharp corners, and high-contrast sections. Perfect for serious, traditional political campaigns.",
+  "category": "homepage",
+  "campaign_type": "all",
+  "election_level": "state",
+  "tags": ["traditional", "authoritative", "professional", "conservative", "serif", "formal"],
+  "is_premium": true,
+  "featured": true,
+  "difficulty": "intermediate",
+  "estimated_setup_time": "15-20 minutes",
+  "color_scheme": {
+    "primary": "#14213d",
+    "primary_dark": "#0d1527",
+    "secondary": "#C4232C",
+    "secondary_dark": "#9e1c23",
+    "accent": "#BF9B30",
+    "accent_light": "#d7bf5e",
+    "background": "#f8f9fa",
+    "text": "#212529",
+    "text_light": "#6c757d"
+  },
+  "typography": {
+    "heading_font": "Playfair Display, Georgia, Times New Roman, serif",
+    "body_font": "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+    "heading_weight": "700",
+    "body_weight": "400"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "centered",
+      "settings": {
+        "background_type": "image",
+        "background_image": "/assets/images/rally-background.svg",
+        "overlay": true,
+        "overlay_color": "#14213d",
+        "overlay_opacity": 0.95,
+        "height": "100vh",
+        "text_align": "center",
+        "logo": "Anderson for Senate",
+        "tagline": "For Senate '26",
+        "tagline_color": "#BF9B30",
+        "headline": "Restoring Faith In America",
+        "headline_color": "#ffffff",
+        "headline_size": "clamp(2.5rem, 5vw, 5rem)",
+        "subheadline": "",
+        "primary_cta_text": "Join the Movement",
+        "primary_cta_url": "#volunteer",
+        "primary_cta_style": "solid",
+        "primary_cta_color": "#C4232C",
+        "secondary_cta_text": "Watch the Video",
+        "secondary_cta_url": "#video",
+        "secondary_cta_style": "outline",
+        "secondary_cta_color": "#ffffff",
+        "border_radius": "0",
+        "letter_spacing": "0.15em"
+      }
+    },
+    {
+      "type": "stats",
+      "variant": "counters",
+      "settings": {
+        "background_color": "#14213d",
+        "text_color": "#ffffff",
+        "accent_color": "#BF9B30",
+        "columns": 4,
+        "stats": [
+          {
+            "value": "25+",
+            "label": "Years of Service"
+          },
+          {
+            "value": "98%",
+            "label": "Pro-Constitution"
+          },
+          {
+            "value": "10,000+",
+            "label": "Volunteers"
+          },
+          {
+            "value": "$2.5M",
+            "label": "Grassroots Raised"
+          }
+        ],
+        "padding_top": "3rem",
+        "padding_bottom": "3rem",
+        "border_color": "#BF9B30",
+        "show_dividers": true
+      }
+    },
+    {
+      "type": "issues",
+      "variant": "grid",
+      "settings": {
+        "section_title": "Core Values",
+        "section_subtitle": "What We Stand For",
+        "label_text": "Core Values",
+        "label_color": "#BF9B30",
+        "background_color": "#f8f9fa",
+        "columns": 3,
+        "items": [
+          {
+            "icon": "flag",
+            "title": "Individual Liberty",
+            "description": "Protecting constitutional rights and personal freedoms for every American citizen. Our nation was built on the principle that government exists to serve the people, not control them."
+          },
+          {
+            "icon": "trending-up",
+            "title": "Economic Opportunity",
+            "description": "Creating conditions for prosperity through free enterprise, fair taxation, and responsible governance. Every hardworking American deserves a chance to build a better future."
+          },
+          {
+            "icon": "users",
+            "title": "Strong Families",
+            "description": "Supporting the bedrock of our society with policies that empower parents, strengthen communities, and preserve our values for future generations."
+          }
+        ],
+        "card_style": "border-left",
+        "border_color": "#BF9B30",
+        "border_width": "4px",
+        "border_radius": "0",
+        "padding_top": "5rem",
+        "padding_bottom": "5rem"
+      }
+    },
+    {
+      "type": "team",
+      "variant": "cards",
+      "settings": {
+        "layout": "split",
+        "section_title": "Meet the Candidate",
+        "label_text": "Meet the Candidate",
+        "label_color": "#BF9B30",
+        "background_color": "#ffffff",
+        "image_position": "left",
+        "image": "/assets/images/candidate-portrait.svg",
+        "name": "John Anderson",
+        "title": "Candidate for U.S. Senate",
+        "bio": "A fifth-generation American with deep roots in our community, John Anderson has spent the last 25 years fighting for the values that made this country great.\n\nAs a former Marine, small business owner, and state legislator, John understands the challenges facing everyday Americans. He's not a career politician—he's a proven leader who gets results.\n\nJohn and his wife Sarah have raised three children here, coached Little League, and volunteered at local charities. He knows what matters to families because he lives it every day.",
+        "quote": "I'm running for Senate because our country needs leaders who will put principle over politics and people over party.",
+        "quote_attribution": "John Anderson",
+        "quote_style": "border-left",
+        "border_color": "#BF9B30",
+        "accent_color": "#BF9B30",
+        "padding_top": "5rem",
+        "padding_bottom": "5rem"
+      }
+    },
+    {
+      "type": "issues",
+      "variant": "accordion",
+      "settings": {
+        "section_title": "Policy Platform",
+        "section_subtitle": "Economic Recovery Plan",
+        "label_text": "Policy Platform",
+        "label_color": "#BF9B30",
+        "background_color": "#ffffff",
+        "style": "numbered",
+        "numbered_style": "bordered",
+        "accent_color": "#BF9B30",
+        "items": [
+          {
+            "number": "01",
+            "title": "Cut Taxes for Working Families",
+            "description": "Reduce the tax burden on middle-class families by 15% while closing corporate loopholes. Every hardworking American should be able to keep more of what they earn."
+          },
+          {
+            "number": "02",
+            "title": "Support Small Business Growth",
+            "description": "Eliminate unnecessary regulations and provide targeted tax credits for small businesses that create local jobs. Our economy thrives when entrepreneurs can innovate without government interference."
+          },
+          {
+            "number": "03",
+            "title": "Invest in Infrastructure",
+            "description": "Direct federal funding to rebuild roads, bridges, and broadband networks in underserved areas. Strong infrastructure connects communities and drives economic growth."
+          },
+          {
+            "number": "04",
+            "title": "Promote Energy Independence",
+            "description": "Develop domestic energy resources while investing in next-generation technologies. America should never depend on foreign nations for our energy security."
+          },
+          {
+            "number": "05",
+            "title": "Protect Social Security",
+            "description": "Ensure our seniors receive the benefits they've earned through a lifetime of hard work. We will fight any attempt to cut or privatize Social Security."
+          }
+        ],
+        "padding_top": "5rem",
+        "padding_bottom": "5rem"
+      }
+    },
+    {
+      "type": "volunteer",
+      "variant": "form",
+      "settings": {
+        "background_color": "#14213d",
+        "background_image": "/assets/images/volunteer-office.svg",
+        "background_opacity": 0.1,
+        "text_color": "#ffffff",
+        "section_title": "Join Our Movement",
+        "section_subtitle": "Every volunteer makes a difference",
+        "icon": "users",
+        "icon_color": "#BF9B30",
+        "form_background": "#ffffff",
+        "form_text_color": "#14213d",
+        "button_text": "Sign Up to Volunteer",
+        "button_color": "#C4232C",
+        "button_style": "solid",
+        "border_radius": "0",
+        "fields": ["name", "email", "phone", "zip"],
+        "padding_top": "5rem",
+        "padding_bottom": "5rem"
+      }
+    },
+    {
+      "type": "testimonials",
+      "variant": "grid",
+      "settings": {
+        "section_title": "What People Say",
+        "section_subtitle": "Voices from the Community",
+        "label_text": "What People Say",
+        "label_color": "#BF9B30",
+        "background_color": "#f8f9fa",
+        "columns": 3,
+        "testimonials": [
+          {
+            "quote": "John understands what small business owners face every day. He fought to cut red tape at the state level, and I know he'll do the same in Washington.",
+            "name": "Maria Rodriguez",
+            "title": "Small Business Owner",
+            "image": ""
+          },
+          {
+            "quote": "As a veteran, I need leaders who will stand up for those who served. John has proven he has the courage and integrity to fight for us.",
+            "name": "Robert Thompson",
+            "title": "U.S. Army Veteran",
+            "image": ""
+          },
+          {
+            "quote": "Our children deserve quality education and safe schools. John's record shows he puts students first, not special interests.",
+            "name": "Jennifer Lee",
+            "title": "Public School Teacher",
+            "image": ""
+          }
+        ],
+        "card_style": "border-left",
+        "border_color": "#BF9B30",
+        "border_width": "4px",
+        "border_radius": "0",
+        "quote_icon": true,
+        "icon_color": "#BF9B30",
+        "padding_top": "5rem",
+        "padding_bottom": "5rem"
+      }
+    },
+    {
+      "type": "events",
+      "variant": "grid",
+      "settings": {
+        "section_title": "Latest News",
+        "section_subtitle": "Campaign Updates",
+        "label_text": "Latest News",
+        "label_color": "#BF9B30",
+        "background_color": "#ffffff",
+        "columns": 3,
+        "card_style": "border-left",
+        "border_color": "#14213d",
+        "border_width": "4px",
+        "border_radius": "0",
+        "show_date": true,
+        "date_color": "#BF9B30",
+        "show_cta": true,
+        "cta_text": "View All News",
+        "cta_url": "#news",
+        "cta_style": "solid",
+        "cta_color": "#14213d",
+        "padding_top": "5rem",
+        "padding_bottom": "5rem"
+      }
+    },
+    {
+      "type": "donation",
+      "variant": "tiers",
+      "settings": {
+        "background_color": "#C4232C",
+        "text_color": "#ffffff",
+        "section_title": "Support Our Campaign",
+        "section_subtitle": "Your contribution helps us reach more voters and spread our message",
+        "icon": "heart",
+        "icon_color": "#ffffff",
+        "form_background": "#ffffff",
+        "form_text_color": "#14213d",
+        "amounts": [50, 100, 250, 500, 1000],
+        "custom_amount": true,
+        "button_text": "Donate Now",
+        "button_color": "#14213d",
+        "button_style": "solid",
+        "selected_amount_color": "#BF9B30",
+        "border_radius": "0",
+        "disclaimer": "Contributions are not tax-deductible. Federal law requires us to collect and report the name, mailing address, occupation, and employer of individuals whose contributions exceed $200 in an election cycle. Maximum contribution limit: $3,300 per individual per election.",
+        "padding_top": "5rem",
+        "padding_bottom": "5rem"
+      }
+    }
+  ],
+  "custom_css": ".classic-statesman-template { font-family: 'Inter', sans-serif; } .classic-statesman-template h1, .classic-statesman-template h2, .classic-statesman-template h3, .classic-statesman-template h4, .classic-statesman-template h5, .classic-statesman-template h6 { font-family: 'Playfair Display', serif; } .classic-statesman-template button, .classic-statesman-template .wp-block-button__link { border-radius: 0 !important; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600; }",
+  "seo": {
+    "title": "Classic Statesman Campaign Template - Authoritative Political Design",
+    "description": "Professional campaign homepage template with formal styling, serif typography, and traditional American design elements. Perfect for serious political campaigns seeking authority and trust."
+  }
+}

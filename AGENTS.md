@@ -10,6 +10,44 @@ This document provides workflow guidance for AI development agents (like Claude 
 
 ---
 
+## Documentation Structure
+
+CampaignPress has a well-organized documentation system:
+
+### Root Directory Documentation
+- **CLAUDE.md** - Comprehensive project instructions and architecture (31KB+ - READ THIS FIRST)
+- **ARCHITECTURE.md** - Detailed system architecture breakdown
+- **AGENTS.md** - This file - workflow guidance for AI agents
+- **Campaign-Website-Design-Documentation.md** - Complete design specifications
+- **README.md** - Main project README
+- **TESTING.md** - Testing guide with commands and strategies
+- **TESTING-QUICK-START.md** - Quick testing reference
+
+### /docs Directory Documentation
+- **GETTING-STARTED.md** - Complete onboarding guide
+- **DEVELOPER-GUIDE.md** - Full developer documentation (23KB+)
+- **DEVELOPER-REFERENCE.md** - Technical reference for developers
+- **DESIGN-REFERENCE.md** - Design system and style guide
+- **QUICKSTART.md** - 5-minute quick start guide
+- **TESTING.md** - Complete testing framework documentation
+- **CHANGELOG.md** - Version history and release notes
+- **FEATURES.md** - Comprehensive feature breakdown (Free vs Premium)
+- **INTRODUCTION.md** - Project introduction and philosophy
+- **TECH_STACK.md** - Technology stack details
+- **BUILD.md** - Build system documentation
+- **PRODUCTION-REFERENCE.md** - Production deployment guide
+- **LAUNCH-CHECKLIST.md** - Pre-launch verification checklist
+- **SCREENSHOT-REQUIREMENTS.md** - Theme screenshot guidelines
+- **MIGRATION_GUIDE.md** - Migration and upgrade guide
+- **THEME_PLUGIN_ARCHITECTURE.md** - Theme/plugin separation architecture
+- **WORDPRESS_LIBRARIES.md** - WordPress built-in libraries reference
+- **TECHNICAL-REPORTS.md** - Technical audit reports
+- **QUICK-REFERENCE.md** - One-page quick reference
+
+**Important:** Always check the root CLAUDE.md file first - it contains the most comprehensive project instructions and is regularly updated.
+
+---
+
 ## Agent Responsibilities
 
 ### 1. Code Understanding
@@ -493,11 +531,13 @@ Closes #123
 
 ### Essential Reading
 
-- `docs/CLAUDE.md` - Complete architecture overview
-- `docs/ARCHITECTURE.md` - System architecture
-- `docs/TECH_STACK.md` - Technology stack
-- `DEVELOPER-GUIDE.md` - Developer documentation
-- `DESIGN_SYSTEM.md` - Design system guide
+- `CLAUDE.md` (root) - Complete architecture overview and project instructions
+- `ARCHITECTURE.md` (root) - System architecture
+- `Campaign-Website-Design-Documentation.md` (root) - Design specifications
+- `docs/DEVELOPER-GUIDE.md` - Complete developer documentation
+- `docs/DEVELOPER-REFERENCE.md` - Technical reference
+- `docs/DESIGN-REFERENCE.md` - Design system guide
+- `docs/TECH_STACK.md` - Technology stack details
 
 ### WordPress Resources
 
@@ -526,5 +566,5 @@ Following these workflows ensures:
 
 ---
 
-**Last Updated:** December 28, 2025
+**Last Updated:** January 10, 2026
 **Version:** 2.0.0

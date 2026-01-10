@@ -2,71 +2,37 @@
 /**
  * Layout Module: Testimonials
  * 
- * Grid of social proof / endorsements.
+ * Testimonials section with left border accent styling.
+ * New design system: background color, left red border, italic quotes.
  */
 ?>
-<section class="py-20 bg-white border-t border-neutral-100" aria-label="Endorsements">
-    <div class="container mx-auto px-4">
-        <div class="text-center max-w-3xl mx-auto mb-14">
-            <h2 class="font-serif text-3xl md:text-4xl text-brand-900 font-bold mb-4">
-                Voices from the Community
-            </h2>
-            <div class="h-1 w-20 bg-accent-400 mx-auto rounded-full"></div>
+<section class="cp-section cp-section--gray" aria-label="<?php esc_attr_e( 'Testimonials', 'campaign-office' ); ?>">
+    <div class="cp-container">
+        <!-- Section Header -->
+        <div class="cp-text-center cp-mb-4">
+            <span class="cp-section__label"><?php esc_html_e( 'What People Say', 'campaign-office' ); ?></span>
+            <h2 class="cp-section__title"><?php esc_html_e( 'Endorsements', 'campaign-office' ); ?></h2>
+            <div class="cp-divider"></div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Testimonials Grid -->
+        <div class="cp-grid cp-grid--2">
             <!-- Testimonial 1 -->
-            <div class="bg-neutral-50 p-8 rounded-2xl relative">
-                <!-- Quote Icon -->
-                <div class="text-accent-200 absolute top-4 left-4 text-6xl font-serif leading-none select-none opacity-50">“</div>
-                
-                <p class="text-neutral-700 leading-relaxed mb-6 italic relative z-10 pt-4">
-                    Finally, a candidate who actually listens to our concerns. The town hall meeting wasn't just talk; we saw real plans for action.
+            <div class="cp-testimonial">
+                <p class="cp-testimonial__quote">
+                    "<?php esc_html_e( 'The clear choice for our future. Honest, hardworking, and dedicated to the values that make our community strong.', 'campaign-office' ); ?>"
                 </p>
-                <div class="flex items-center">
-                    <div class="w-12 h-12 bg-neutral-300 rounded-full flex-shrink-0 mr-4 overflow-hidden">
-                        <!-- Placeholder Avatar -->
-                        <svg class="w-full h-full text-neutral-400" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-brand-900 text-sm">Sarah Jenkins</h4>
-                        <span class="text-neutral-500 text-xs uppercase tracking-wide">Small Business Owner</span>
-                    </div>
-                </div>
+                <p class="cp-testimonial__author"><?php esc_html_e( 'Mayor Jane Doe', 'campaign-office' ); ?></p>
+                <p class="cp-testimonial__role"><?php esc_html_e( 'Cityville', 'campaign-office' ); ?></p>
             </div>
-
+            
             <!-- Testimonial 2 -->
-            <div class="bg-neutral-50 p-8 rounded-2xl relative">
-                <div class="text-accent-200 absolute top-4 left-4 text-6xl font-serif leading-none select-none opacity-50">“</div>
-                <p class="text-neutral-700 leading-relaxed mb-6 italic relative z-10 pt-4">
-                    The detailed policy on education reform is exactly what our district needs. It's practical, funded, and puts students first.
+            <div class="cp-testimonial">
+                <p class="cp-testimonial__quote">
+                    "<?php esc_html_e( 'A leader who listens. I\'m proud to support this campaign and the vision for our district.', 'campaign-office' ); ?>"
                 </p>
-                <div class="flex items-center">
-                    <div class="w-12 h-12 bg-neutral-300 rounded-full flex-shrink-0 mr-4 overflow-hidden">
-                        <svg class="w-full h-full text-neutral-400" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-brand-900 text-sm">Michael Rivera</h4>
-                        <span class="text-neutral-500 text-xs uppercase tracking-wide">High School Teacher</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimonial 3 -->
-            <div class="bg-neutral-50 p-8 rounded-2xl relative">
-                <div class="text-accent-200 absolute top-4 left-4 text-6xl font-serif leading-none select-none opacity-50">“</div>
-                <p class="text-neutral-700 leading-relaxed mb-6 italic relative z-10 pt-4">
-                    I've lived here for 40 years and haven't seen this level of community engagement before. We have hope again.
-                </p>
-                <div class="flex items-center">
-                    <div class="w-12 h-12 bg-neutral-300 rounded-full flex-shrink-0 mr-4 overflow-hidden">
-                        <svg class="w-full h-full text-neutral-400" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-brand-900 text-sm">Eleanor Davis</h4>
-                        <span class="text-neutral-500 text-xs uppercase tracking-wide">Community Organizer</span>
-                    </div>
-                </div>
+                <p class="cp-testimonial__author"><?php esc_html_e( 'John Smith', 'campaign-office' ); ?></p>
+                <p class="cp-testimonial__role"><?php esc_html_e( 'Teacher & Community Leader', 'campaign-office' ); ?></p>
             </div>
         </div>
     </div>

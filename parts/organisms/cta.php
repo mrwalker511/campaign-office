@@ -3,32 +3,29 @@
  * Layout Module: CTA (Call to Action)
  * 
  * High impact band for conversions (Volunteer, Donate, Join).
+ * New design system: secondary (red) background, white/navy buttons.
  */
 ?>
-<section class="py-20 bg-accent-600 text-white text-center relative overflow-hidden" aria-label="Call to Action">
-    <!-- Decor Circles -->
-    <div class="absolute top-0 left-0 -ml-16 -mt-16 w-64 h-64 bg-white opacity-10 rounded-full pointer-events-none"></div>
-    <div class="absolute bottom-0 right-0 -mr-16 -mb-16 w-64 h-64 bg-brand-900 opacity-20 rounded-full pointer-events-none"></div>
-
-    <div class="container mx-auto px-4 relative z-10">
-        <h2 class="text-3xl md:text-5xl font-serif font-bold mb-6">
-            Ready to Make a Difference?
+<section class="cp-section cp-section--dark" style="background-color: var(--ds-secondary);" aria-label="Call to Action">
+    <div class="cp-container cp-text-center">
+        <h2 class="cp-section__title" style="color: var(--wp--preset--color--white);">
+            <?php esc_html_e( 'Ready to Make a Difference?', 'campaign-office' ); ?>
         </h2>
-        <p class="text-accent-50 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Our campaign is powered by people like you. Join us in building a community that works for everyone.
+        <p class="cp-hero__subtitle" style="text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">
+            <?php esc_html_e( 'Our campaign is powered by people like you. Join us in building a community that works for everyone.', 'campaign-office' ); ?>
         </p>
         
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="#" class="inline-flex justify-center items-center py-4 px-10 bg-white text-accent-700 font-bold rounded-lg shadow-lg hover:bg-neutral-100 hover:shadow-xl hover:-translate-y-1 transition-all focus:ring-4 focus:ring-white/50">
-                Volunteer With Us
+        <div class="cp-hero__actions" style="justify-content: center;">
+            <a href="#volunteer" class="cp-btn cp-btn--outline">
+                <?php esc_html_e( 'Volunteer With Us', 'campaign-office' ); ?>
             </a>
-            <a href="#" class="inline-flex justify-center items-center py-4 px-10 bg-brand-900 text-white font-bold rounded-lg shadow-lg hover:bg-brand-800 hover:shadow-xl hover:-translate-y-1 transition-all focus:ring-4 focus:ring-brand-900/50">
-                Donate Now
+            <a href="#donate" class="cp-btn cp-btn--dark">
+                <?php esc_html_e( 'Donate Now', 'campaign-office' ); ?>
             </a>
         </div>
         
-        <p class="text-sm text-accent-200 mt-6">
-            Join 1,200+ supporters in our district.
+        <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin-top: 1.5rem;">
+            <?php esc_html_e( 'Join 1,200+ supporters in our district.', 'campaign-office' ); ?>
         </p>
     </div>
 </section>

@@ -780,6 +780,13 @@
       "postTypes": [
         "page"
       ]
+    },
+    {
+      "name": "home-harrison",
+      "title": "Conservative Campaign Homepage",
+      "postTypes": [
+        "page"
+      ]
     }
   ]
 }

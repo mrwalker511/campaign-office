@@ -177,3 +177,418 @@ input[type="submit"] {
   border: 1px solid #f5cfd0;
   display: block !important;
 }
+
+/* ============================================
+   NEW DESIGN SYSTEM - COMPONENT STYLES
+   Conservative Political Campaign Theme
+   ============================================ */
+
+/* Design System Variables */
+:root {
+  /* Primary Colors */
+  --ds-primary: #14213d;
+  --ds-primary-light: #1d3557;
+  --ds-secondary: #C4232C;
+  --ds-secondary-dark: #a01d24;
+  --ds-accent: #BF9B30;
+  
+  /* Neutrals */
+  --ds-background: #f8f9fa;
+  --ds-text-muted: #6b7280;
+  --ds-border: #e5e7eb;
+  
+  /* Typography */
+  --ds-font-serif: 'Playfair Display', Georgia, serif;
+  --ds-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Shadows */
+  --ds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ds-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --ds-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --ds-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.cp-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--wp--preset--color--white);
+  border-bottom: 1px solid var(--ds-border);
+  padding: 1rem 0;
+  box-shadow: var(--ds-shadow-sm);
+}
+
+.cp-nav__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.cp-nav__logo {
+  font-family: var(--ds-font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ds-primary);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.cp-nav__tagline {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--ds-secondary);
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.cp-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cp-nav__link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ds-text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.cp-nav__link:hover {
+  color: var(--ds-secondary);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.cp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  font-family: var(--ds-font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cp-btn--primary {
+  background-color: var(--ds-secondary);
+  color: var(--wp--preset--color--white);
+}
+
+.cp-btn--primary:hover {
+  background-color: var(--ds-secondary-dark);
+  transform: translateY(-2px);
+}
+
+.cp-btn--outline {
+  background: transparent;
+  border: 2px solid var(--wp--preset--color--white);
+  color: var(--wp--preset--color--white);
+}
+
+.cp-btn--outline:hover {
+  background: var(--wp--preset--color--white);
+  color: var(--ds-primary);
+}
+
+.cp-btn--dark {
+  background-color: var(--ds-primary);
+  color: var(--wp--preset--color--white);
+}
+
+.cp-btn--dark:hover {
+  background-color: var(--ds-primary-light);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.cp-hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding-top: 5rem;
+  background-color: var(--ds-primary);
+  overflow: hidden;
+}
+
+.cp-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+}
+
+.cp-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--ds-primary) 30%, transparent);
+}
+
+.cp-hero__content {
+  position: relative;
+  z-index: 10;
+  max-width: 700px;
+  color: var(--wp--preset--color--white);
+  padding: 0 1.5rem;
+}
+
+.cp-hero__badge {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  margin-bottom: 1.5rem;
+  background: var(--ds-secondary);
+  border-left: 4px solid var(--wp--preset--color--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--wp--preset--color--white);
+}
+
+.cp-hero__title {
+  font-family: var(--ds-font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.cp-hero__title-italic {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.cp-hero__subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.cp-hero__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.cp-card {
+  background: var(--wp--preset--color--white);
+  padding: 2.5rem;
+  border-top: 4px solid var(--ds-primary);
+  box-shadow: var(--ds-shadow-sm);
+  transition: all 0.3s;
+}
+
+.cp-card:hover {
+  box-shadow: var(--ds-shadow-lg);
+  transform: translateY(-4px);
+}
+
+.cp-card__icon {
+  width: 3rem;
+  height: 3rem;
+  background: var(--ds-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.cp-card__title {
+  font-family: var(--ds-font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--ds-primary);
+}
+
+.cp-card__text {
+  color: var(--ds-text-muted);
+  line-height: 1.7;
+}
+
+/* ============================================
+   TESTIMONIALS
+   ============================================ */
+.cp-testimonial {
+  padding: 1.5rem;
+  background: var(--ds-background);
+  border-left: 4px solid var(--ds-secondary);
+  position: relative;
+}
+
+.cp-testimonial__quote {
+  font-style: italic;
+  color: var(--ds-text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.cp-testimonial__author {
+  font-weight: 700;
+  color: var(--ds-primary);
+}
+
+.cp-testimonial__role {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ds-text-muted);
+}
+
+/* ============================================
+   SECTION STYLES
+   ============================================ */
+.cp-section {
+  padding: 6rem 0;
+}
+
+.cp-section--dark {
+  background-color: var(--ds-primary);
+  color: var(--wp--preset--color--white);
+}
+
+.cp-section--white {
+  background-color: var(--wp--preset--color--white);
+}
+
+.cp-section--gray {
+  background-color: var(--ds-background);
+}
+
+.cp-section__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ds-secondary);
+  margin-bottom: 1rem;
+}
+
+.cp-section__title {
+  font-family: var(--ds-font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.cp-divider {
+  width: 5rem;
+  height: 4px;
+  background: var(--ds-accent);
+  margin: 1.5rem auto;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.cp-footer {
+  background: var(--ds-primary);
+  color: var(--wp--preset--color--white);
+  padding: 4rem 0 2rem;
+}
+
+.cp-footer__logo {
+  font-family: var(--ds-font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.cp-footer__tagline {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--ds-secondary);
+  text-transform: uppercase;
+}
+
+.cp-footer__disclaimer {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-top: 2rem;
+}
+
+.cp-footer__copyright {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 1rem;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.cp-text-center { text-align: center; }
+.cp-text-left { text-align: left; }
+
+.cp-mb-0 { margin-bottom: 0; }
+.cp-mb-1 { margin-bottom: 0.5rem; }
+.cp-mb-2 { margin-bottom: 1rem; }
+.cp-mb-3 { margin-bottom: 1.5rem; }
+.cp-mb-4 { margin-bottom: 2rem; }
+
+.cp-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.cp-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.cp-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.cp-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.cp-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 768px) {
+  .cp-grid--2,
+  .cp-grid--3,
+  .cp-grid--4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .cp-hero__title {
+    font-size: 2.5rem;
+  }
+  
+  .cp-nav__links {
+    display: none;
+  }
+}

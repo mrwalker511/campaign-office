@@ -6,33 +6,42 @@
  * Keywords: hero, political, campaign, cover
  */
 ?>
-<!-- wp:cover {"url":"<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero-placeholder.jpg' ); ?>","dimRatio":50,"overlayColor":"primary-900","align":"full","className":"is-style-campaign-hero"} -->
-<div class="wp-block-cover alignfull is-style-campaign-hero">
-    <span aria-hidden="true" class="wp-block-cover__background has-primary-900-background-color has-background-dim"></span>
-    <div class="wp-block-cover__inner-container">
-        <!-- wp:group {"layout":{"type":"constrained"}} -->
-        <div class="wp-block-group">
-            <!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"var:preset|font-size|4-xl","fontWeight":"800"}}} -->
-            <h1 class="wp-block-heading has-text-align-center" style="font-size:var(--wp--preset--font-size--4-xl);font-weight:800"><?php esc_html_e( 'Building a Brighter Future Together', 'campaign-office' ); ?></h1>
-            <!-- /wp:heading -->
+<!-- wp:group {"align":"full","className":"cp-hero","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}},"backgroundColor":"primary","layout":{"type":"default"}} -->
+<div class="wp-block-group alignfull cp-hero has-primary-background-color has-background" style="padding-top:0;padding-bottom:0">
+    <!-- wp:cover {"url":"<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero-placeholder.jpg' ); ?>","dimRatio":60,"overlayColor":"primary","minHeight":90,"minHeightUnit":"vh","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|16"}}}} -->
+    <div class="wp-block-cover alignfull" style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--16);min-height:90vh">
+        <span aria-hidden="true" class="wp-block-cover__background has-primary-background-color has-background-dim-60 has-background-dim"></span>
+        <img class="wp-block-cover__image-background" alt="" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero-placeholder.jpg' ); ?>" data-object-fit="cover"/>
+        <div class="wp-block-cover__inner-container">
+            <!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"constrained","contentSize":"700px","justifyContent":"left"}} -->
+            <div class="wp-block-group alignwide">
+                <!-- wp:paragraph {"className":"cp-hero__badge","style":{"typography":{"fontSize":"0.75rem","fontWeight":"700","letterSpacing":"0.15em","textTransform":"uppercase"},"spacing":{"padding":{"top":"0.25rem","right":"1rem","bottom":"0.25rem","left":"1rem"},"margin":{"bottom":"1.5rem"}},"border":{"left":{"color":"var:preset|color|white","width":"4px"}}},"backgroundColor":"secondary","textColor":"white"} -->
+                <p class="cp-hero__badge has-white-color has-secondary-background-color has-text-color has-background" style="border-left-color:var(--wp--preset--color--white);border-left-width:4px;margin-bottom:1.5rem;padding-top:0.25rem;padding-right:1rem;padding-bottom:0.25rem;padding-left:1rem;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase"><?php esc_html_e( 'Official Campaign Site', 'campaign-office' ); ?></p>
+                <!-- /wp:paragraph -->
 
-            <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"var:preset|font-size|2-xl"}}} -->
-            <p class="has-text-align-center" style="font-size:var(--wp--preset--font-size--2-xl)"><?php esc_html_e( 'Vote for Integrity. Vote for Progress.', 'campaign-office' ); ?></p>
-            <!-- /wp:paragraph -->
+                <!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"clamp(2.5rem, 5vw, 4.5rem)","fontWeight":"700","lineHeight":"1.1"},"spacing":{"margin":{"bottom":"1.5rem"}}},"textColor":"white","fontFamily":"display"} -->
+                <h1 class="wp-block-heading has-white-color has-text-color has-display-font-family" style="margin-bottom:1.5rem;font-size:clamp(2.5rem, 5vw, 4.5rem);font-weight:700;line-height:1.1"><?php esc_html_e( 'Restoring Faith', 'campaign-office' ); ?><br><em><?php esc_html_e( 'In America', 'campaign-office' ); ?></em></h1>
+                <!-- /wp:heading -->
 
-            <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-            <div class="wp-block-buttons">
-                <!-- wp:button {"className":"is-style-fill"} -->
-                <div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Donate Now', 'campaign-office' ); ?></a></div>
-                <!-- /wp:button -->
+                <!-- wp:paragraph {"style":{"typography":{"fontSize":"1.25rem","fontWeight":"300","lineHeight":"1.6"},"spacing":{"margin":{"bottom":"2.5rem"}},"color":{"text":"rgba(255,255,255,0.8)"}}} -->
+                <p style="color:rgba(255,255,255,0.8);margin-bottom:2.5rem;font-size:1.25rem;font-weight:300;line-height:1.6"><?php esc_html_e( 'Join the movement dedicated to protecting our constitutional rights, strengthening our economy, and securing a brighter future for our families.', 'campaign-office' ); ?></p>
+                <!-- /wp:paragraph -->
 
-                <!-- wp:button {"className":"is-style-outline"} -->
-                <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Join the Team', 'campaign-office' ); ?></a></div>
-                <!-- /wp:button -->
+                <!-- wp:buttons {"layout":{"type":"flex","flexWrap":"wrap"}} -->
+                <div class="wp-block-buttons">
+                    <!-- wp:button {"backgroundColor":"secondary","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.05em","fontWeight":"700"},"spacing":{"padding":{"top":"1.25rem","right":"2.5rem","bottom":"1.25rem","left":"2.5rem"}}}} -->
+                    <div class="wp-block-button"><a class="wp-block-button__link has-secondary-background-color has-background wp-element-button" style="padding-top:1.25rem;padding-right:2.5rem;padding-bottom:1.25rem;padding-left:2.5rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:700"><?php esc_html_e( 'Join the Movement', 'campaign-office' ); ?></a></div>
+                    <!-- /wp:button -->
+
+                    <!-- wp:button {"className":"is-style-outline","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.05em","fontWeight":"700"},"spacing":{"padding":{"top":"1.25rem","right":"2.5rem","bottom":"1.25rem","left":"2.5rem"}},"border":{"width":"2px"}}} -->
+                    <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" style="border-width:2px;padding-top:1.25rem;padding-right:2.5rem;padding-bottom:1.25rem;padding-left:2.5rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:700"><?php esc_html_e( 'Watch the Video', 'campaign-office' ); ?></a></div>
+                    <!-- /wp:button -->
+                </div>
+                <!-- /wp:buttons -->
             </div>
-            <!-- /wp:buttons -->
+            <!-- /wp:group -->
         </div>
-        <!-- /wp:group -->
     </div>
+    <!-- /wp:cover -->
 </div>
-<!-- /wp:cover -->
+<!-- /wp:group -->

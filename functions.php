@@ -242,6 +242,14 @@ function campaignpress_scripts() {
     // Fonts are preloaded in wp_head via includes/free/font-preconnect.php
     // @font-face declarations are in theme.json
 
+    // Google Fonts - Playfair Display and Inter
+    wp_enqueue_style(
+        'campaignpress-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap',
+        array(),
+        null
+    );
+
     // Theme stylesheet (minimal, theme.json handles most styling)
     wp_enqueue_style(
         'campaignpress-style',
@@ -330,6 +338,24 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION,
         true
     );
+
+    // Classic Statesman Homepage React App
+    // Enqueue on homepage or when using classic-statesman template
+    $classic_statesman_js = get_template_directory_uri() . '/assets/react/index.jsx';
+    if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/js/classic-statesman.js')) {
+        $classic_statesman_js = get_template_directory_uri() . '/assets/dist/js/classic-statesman.js';
+    }
+
+    // Load on front page or classic statesman template
+    if (is_front_page() || is_page_template('home-classic-statesman.html')) {
+        wp_enqueue_script(
+            'campaignpress-classic-statesman',
+            $classic_statesman_js,
+            array(), // React is bundled
+            CAMPAIGNPRESS_VERSION,
+            true
+        );
+    }
 
     // Comment reply script
     if (is_singular() && comments_open() && get_option('thread_comments')) {

@@ -1,0 +1,53 @@
+<svg width="1600" height="900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Volunteer Office Scene -->
+  <defs>
+    <linearGradient id="wallGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Wall Background -->
+  <rect width="1600" height="900" fill="url(#wallGradient)"/>
+
+  <!-- Campaign Posters on Wall -->
+  <rect x="100" y="100" width="250" height="350" fill="#14213d"/>
+  <text x="225" y="280" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#ffffff" text-anchor="middle">VOTE</text>
+  <rect x="100" y="450" width="250" height="50" fill="#C4232C"/>
+
+  <rect x="1250" y="100" width="250" height="350" fill="#C4232C"/>
+  <text x="1375" y="280" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#ffffff" text-anchor="middle">2026</text>
+
+  <!-- Desk -->
+  <rect x="400" y="600" width="800" height="40" fill="#6c757d"/>
+  <rect x="420" y="640" width="20" height="200" fill="#495057"/>
+  <rect x="1160" y="640" width="20" height="200" fill="#495057"/>
+
+  <!-- Papers on Desk -->
+  <rect x="500" y="560" width="150" height="200" fill="#ffffff" stroke="#dee2e6" stroke-width="2"/>
+  <rect x="700" y="580" width="150" height="180" fill="#ffffff" stroke="#dee2e6" stroke-width="2"/>
+
+  <!-- American Flag on Desk -->
+  <rect x="950" y="480" width="120" height="80" fill="#C4232C"/>
+  <rect x="950" y="485" width="120" height="6" fill="#ffffff"/>
+  <rect x="950" y="497" width="120" height="6" fill="#ffffff"/>
+  <rect x="950" y="509" width="120" height="6" fill="#ffffff"/>
+  <rect x="950" y="521" width="120" height="6" fill="#ffffff"/>
+  <rect x="950" y="533" width="120" height="6" fill="#ffffff"/>
+  <rect x="950" y="545" width="120" height="6" fill="#ffffff"/>
+  <rect x="950" y="480" width="48" height="40" fill="#14213d"/>
+  <line x1="940" y1="470" x2="940" y2="560" stroke="#6c757d" stroke-width="4"/>
+
+  <!-- Volunteer Forms Stack -->
+  <g>
+    <rect x="520" y="570" width="130" height="3" fill="#14213d"/>
+    <rect x="520" y="590" width="100" height="3" fill="#14213d"/>
+    <rect x="520" y="610" width="110" height="3" fill="#14213d"/>
+  </g>
+
+  <!-- Gold Accent Line (Brand Element) -->
+  <rect x="0" y="850" width="1600" height="8" fill="#BF9B30"/>
+
+  <!-- Floor -->
+  <rect x="0" y="858" width="1600" height="42" fill="#dee2e6"/>
+</svg>

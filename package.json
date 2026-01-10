@@ -86,6 +86,8 @@
     "@wordpress/components": "^27.0.0",
     "@wordpress/element": "^5.29.0",
     "@wordpress/i18n": "^4.52.0",
+    "framer-motion": "^12.25.0",
+    "lucide-react": "^0.562.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

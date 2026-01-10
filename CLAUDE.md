@@ -311,41 +311,47 @@ if (file_exists(.../premium/premium-init.php)) {
 
 ## 4. CUSTOM POST TYPES & TEMPLATES
 
-### 4.1 Custom Post Types (5 CPTs)
+### 4.1 Custom Post Types (6 CPTs)
 
-**File:** `includes/free/custom-post-types.php`
+**File:** Campaign Office Core Plugin (`campaign-office-core/includes/custom-post-types.php`)
 
-All CPTs use prefix `cp_` and are registered on `init` hook:
+All CPTs use prefix `cp_` and are registered on `init` hook by the plugin:
 
 1. **cp_issue** - Policy positions
    - Supports: title, editor, thumbnail, excerpt
    - Rewrite: `/issues/`
    - Hierarchical: No
-   - Template: `templates/custom-post-types/single/single-cp_issue.php`
+   - Template: `templates/single-cp_issue.html`
 
 2. **cp_event** - Campaign events
    - Supports: title, editor, thumbnail, excerpt
    - Meta fields: event_date, event_time, event_location, event_capacity
    - Rewrite: `/events/`
-   - Template: `templates/custom-post-types/single/single-cp_event.php`
+   - Template: `templates/single-cp_event.html`
 
 3. **cp_endorsement** - Endorsements
    - Supports: title, editor, thumbnail
    - Meta fields: endorser_title, endorser_organization
    - Rewrite: `/endorsements/`
-   - Template: `templates/custom-post-types/single/single-cp_endorsement.php`
+   - Template: `templates/single-cp_endorsement.html`
 
 4. **cp_team** - Campaign team members
    - Supports: title, editor, thumbnail
    - Meta fields: team_position, team_email, team_phone, team_social
    - Rewrite: `/team/`
-   - Template: `templates/custom-post-types/single/single-cp_team.php`
+   - Template: `templates/single-cp_team.html`
 
-5. **cp_volunteer** - Volunteers
-   - Supports: title (name only, managed in separate database)
+5. **cp_volunteer** - Volunteer opportunities
+   - Supports: title, editor, thumbnail, excerpt
    - Custom table: `wp_cp_volunteers`
    - Rewrite: `/volunteers/`
-   - Template: `templates/custom-post-types/single/single-cp_volunteer.php`
+   - Template: `templates/single-cp_volunteer.html`
+
+6. **cp_press_release** - Press releases
+   - Supports: title, editor, thumbnail, excerpt, author
+   - Rewrite: `/press-releases/`
+   - Hierarchical: No
+   - Template: `templates/single-cp_press_release.html`
 
 ### 4.2 Template Resolution System
 

@@ -1,0 +1,57 @@
+<!-- wp:template-part {"slug":"header","theme":"campaign-office","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","align":"full","layout":{"type":"constrained"}} -->
+<main class="wp-block-group alignfull">
+    <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12"}}},"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--12);padding-bottom:var(--wp--preset--spacing--12)">
+        <!-- wp:heading {"level":1,"align":"wide"} -->
+        <h1 class="wp-block-heading alignwide">Press Releases</h1>
+        <!-- /wp:heading -->
+
+        <!-- wp:paragraph {"align":"wide","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}},"fontSize":"lg"} -->
+        <p class="alignwide has-lg-font-size" style="margin-bottom:var(--wp--preset--spacing--8)">Official campaign statements and announcements</p>
+        <!-- /wp:paragraph -->
+
+        <!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"cp_press_release","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"align":"wide"} -->
+        <div class="wp-block-query alignwide">
+            <!-- wp:post-template {"layout":{"type":"default"}} -->
+                <!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|4","padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6"}},"border":{"bottom":{"color":"var:preset|color|neutral-200","width":"1px"}}},"layout":{"type":"flex","orientation":"vertical"}} -->
+                <div class="wp-block-group" style="border-bottom-color:var(--wp--preset--color--neutral-200);border-bottom-width:1px;padding-top:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);gap:var(--wp--preset--spacing--4)">
+                    <!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap"},"style":{"spacing":{"blockGap":"var:preset|spacing|3"}}} -->
+                    <div class="wp-block-group" style="gap:var(--wp--preset--spacing--3)">
+                        <!-- wp:post-date {"fontSize":"xs"} /-->
+                        <!-- wp:paragraph {"fontSize":"xs"} -->
+                        <p class="has-xs-font-size">•</p>
+                        <!-- /wp:paragraph -->
+                        <!-- wp:post-author {"showAvatar":false,"fontSize":"xs"} /-->
+                    </div>
+                    <!-- /wp:group -->
+
+                    <!-- wp:post-title {"isLink":true,"fontSize":"2-xl"} /-->
+
+                    <!-- wp:post-excerpt {"excerptLength":40} /-->
+
+                    <!-- wp:read-more {"content":"Read Full Statement →"} /-->
+                </div>
+                <!-- /wp:group -->
+            <!-- /wp:post-template -->
+
+            <!-- wp:query-pagination {"paginationArrow":"arrow","layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|12"}}}} -->
+                <!-- wp:query-pagination-previous /-->
+                <!-- wp:query-pagination-numbers /-->
+                <!-- wp:query-pagination-next /-->
+            <!-- /wp:query-pagination -->
+
+            <!-- wp:query-no-results -->
+                <!-- wp:paragraph {"align":"center"} -->
+                <p class="has-text-align-center">No press releases found.</p>
+                <!-- /wp:paragraph -->
+            <!-- /wp:query-no-results -->
+        </div>
+        <!-- /wp:query -->
+    </div>
+    <!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","theme":"campaign-office","tagName":"footer"} /-->

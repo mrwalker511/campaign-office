@@ -65,7 +65,7 @@ define('CP_TEST_LICENSE_EMAIL', 'dev@campaignpress.test');
  */
 add_filter('pre_http_request', function($preempt, $args, $url) {
 	// Only intercept license server requests
-	if (strpos($url, '/validate') === false && strpos($url, '/deactivate') === false) {
+	if (strpos($url, '/validate') === false && strpos($url, '/deactivate') === false && strpos($url, '/update-check') === false) {
 		return $preempt;
 	}
 
@@ -88,6 +88,28 @@ add_filter('pre_http_request', function($preempt, $args, $url) {
 			'body' => json_encode(array(
 				'success' => true,
 				'message' => 'License deactivated successfully (mock)',
+			)),
+		);
+	}
+
+	// Update check endpoint
+	if (strpos($url, '/update-check') !== false) {
+		// Define CAMPAIGNPRESS_VERSION if it's not already defined for testing purposes
+		if (!defined('CAMPAIGNPRESS_VERSION')) {
+			define('CAMPAIGNPRESS_VERSION', '1.0.0'); // Default version for mock
+		}
+		return array(
+			'response' => array(
+				'code' => 200,
+				'message' => 'OK',
+			),
+			'body' => json_encode(array(
+				'success' => true,
+				'new_version' => CAMPAIGNPRESS_VERSION, // Return current version as new for no update
+				'package' => '', // No package URL for mock
+				'sections' => array(
+					'description' => 'Mocked update check for development. No new version available.',
+				),
 			)),
 		);
 	}

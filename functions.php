@@ -258,18 +258,6 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // WordPress 6.9+ Enhanced Design System
-    // This CSS uses theme.json variables and adds advanced animations
-    // Future-proof for WordPress 6.9 and beyond
-    // CampaignPress Tailwind CSS (Combined Design System)
-    // Builds from assets/css/app.css to assets/css/dist/tailwind.css
-    wp_enqueue_style(
-        'campaignpress-tailwind',
-        get_template_directory_uri() . '/assets/css/dist/tailwind.css',
-        array('campaignpress-style'),
-        CAMPAIGNPRESS_VERSION
-    );
-
     // Heroicons CSS
     wp_enqueue_style(
         'campaignpress-heroicons',
@@ -278,7 +266,8 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Tailwind CSS (compiled from assets/css/app.css)
+    // Tailwind CSS (Combined Design System)
+    // Builds from assets/css/app.css to assets/css/dist/tailwind.css
     $tailwind_css = get_template_directory_uri() . '/assets/css/dist/tailwind.css';
     if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/css/tailwind.css')) {
         $tailwind_css = get_template_directory_uri() . '/assets/dist/css/tailwind.css';

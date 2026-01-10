@@ -273,15 +273,15 @@ jQuery(document).ready(function ($) {
         var originalHTML = $btn.html();
 
         if (!postId) {
-            alert(cpDesignStudio.i18n.select_page_first);
+            showNotice('error', cpDesignStudio.i18n.select_page_first || 'Please select a page first.');
             return;
         }
 
-        if (!confirm(cpDesignStudio.i18n.import_confirm)) {
+        if (!confirm(cpDesignStudio.i18n.import_confirm || 'This will import the page content as components. Any unsaved changes will be lost. Continue?')) {
             return;
         }
 
-        $btn.prop('disabled', true).html('<span class="dashicons dashicons-update spin"></span> ' + cpDesignStudio.i18n.importing);
+        $btn.prop('disabled', true).html('<span class="dashicons dashicons-update spin"></span> ' + (cpDesignStudio.i18n.importing || 'Importing...'));
 
         $.ajax({
             url: ajaxurl,
@@ -304,25 +304,43 @@ jQuery(document).ready(function ($) {
                     });
 
                     // Show success message
-                    var $msg = $('<div class="notice notice-success is-dismissible"><p>' + response.data.message + '</p></div>');
-                    $('.cp-studio-header').after($msg);
-                    setTimeout(function () {
-                        $msg.fadeOut(function () {
-                            $(this).remove();
-                        });
-                    }, 3000);
+                    showNotice('success', response.data.message || (response.data.components.length + ' components imported successfully'));
                 } else if (response.success && (!response.data.components || response.data.components.length === 0)) {
-                    alert(cpDesignStudio.i18n.no_content);
+                    showNotice('error', cpDesignStudio.i18n.no_content || 'No content found on this page to import.');
                 } else {
-                    alert(response.data.message || cpDesignStudio.i18n.import_error);
+                    showNotice('error', response.data.message || cpDesignStudio.i18n.import_error || 'Failed to import content.');
                 }
             },
-            error: function () {
+            error: function (xhr, status, error) {
                 $btn.prop('disabled', false).html(originalHTML);
-                alert(cpDesignStudio.i18n.import_error);
+                console.error('Import error:', error);
+                showNotice('error', cpDesignStudio.i18n.import_error || 'An error occurred while importing content.');
             }
         });
     });
+    
+    // Helper function to show notices
+    function showNotice(type, message) {
+        var $notice = $('<div class="notice notice-' + type + ' is-dismissible">' +
+            '<p>' + message + '</p>' +
+            '<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>' +
+            '</div>');
+        $('.cp-studio-header').after($notice);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(function () {
+            $notice.fadeOut(400, function () {
+                $(this).remove();
+            });
+        }, 5000);
+        
+        // Manual dismiss
+        $notice.find('.notice-dismiss').click(function() {
+            $notice.fadeOut(400, function () {
+                $(this).remove();
+            });
+        });
+    }
 
     // Add imported component directly to canvas (already has HTML)
     function addImportedComponent(component) {

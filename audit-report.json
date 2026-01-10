@@ -1,0 +1,1278 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@jest/core": {
+      "name": "@jest/core",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/reporters",
+        "@jest/transform",
+        "jest-config",
+        "jest-haste-map",
+        "jest-resolve-dependencies",
+        "jest-runner",
+        "jest-runtime",
+        "jest-snapshot"
+      ],
+      "effects": [
+        "jest",
+        "jest-cli"
+      ],
+      "range": "<=26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/@jest/core"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@jest/reporters": {
+      "name": "@jest/reporters",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/transform",
+        "jest-haste-map"
+      ],
+      "effects": [],
+      "range": "<=26.6.2",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/@jest/reporters"
+      ],
+      "fixAvailable": true
+    },
+    "@jest/test-sequencer": {
+      "name": "@jest/test-sequencer",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-haste-map",
+        "jest-runner",
+        "jest-runtime"
+      ],
+      "effects": [
+        "jest-config"
+      ],
+      "range": "<=26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/@jest/test-sequencer",
+        "node_modules/jest-jasmine2/node_modules/@jest/test-sequencer"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@jest/transform": {
+      "name": "@jest/transform",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-haste-map"
+      ],
+      "effects": [
+        "babel-jest",
+        "jest-runtime"
+      ],
+      "range": "<=26.6.2",
+      "nodes": [
+        "node_modules/@wordpress/jest-preset-default/node_modules/@jest/transform",
+        "node_modules/@wordpress/scripts/node_modules/@jest/transform",
+        "node_modules/jest-jasmine2/node_modules/@jest/transform"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@svgr/plugin-svgo": {
+      "name": "@svgr/plugin-svgo",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "svgo"
+      ],
+      "effects": [
+        "@svgr/webpack"
+      ],
+      "range": "<=5.5.0",
+      "nodes": [
+        "node_modules/@svgr/plugin-svgo"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@svgr/webpack": {
+      "name": "@svgr/webpack",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@svgr/plugin-svgo"
+      ],
+      "effects": [
+        "@wordpress/scripts"
+      ],
+      "range": "4.0.0 - 5.5.0",
+      "nodes": [
+        "node_modules/@svgr/webpack"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@wordpress/jest-preset-default": {
+      "name": "@wordpress/jest-preset-default",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "babel-jest"
+      ],
+      "effects": [
+        "@wordpress/scripts"
+      ],
+      "range": "4.1.0 - 7.1.5-next.33ec3857e2.0",
+      "nodes": [
+        "node_modules/@wordpress/jest-preset-default"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@wordpress/scripts": {
+      "name": "@wordpress/scripts",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "@svgr/webpack",
+        "@wordpress/jest-preset-default",
+        "@wordpress/stylelint-config",
+        "babel-jest",
+        "cross-spawn",
+        "jest",
+        "jest-circus",
+        "jest-dev-server",
+        "markdownlint",
+        "markdownlint-cli",
+        "puppeteer-core",
+        "stylelint"
+      ],
+      "effects": [],
+      "range": "1.0.1-0 - 30.6.2-next.cd6172eb0.0",
+      "nodes": [
+        "node_modules/@wordpress/scripts"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@wordpress/stylelint-config": {
+      "name": "@wordpress/stylelint-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "stylelint",
+        "stylelint-config-recommended-scss",
+        "stylelint-scss"
+      ],
+      "effects": [
+        "@wordpress/scripts"
+      ],
+      "range": "<=19.1.1-next.5df0cd52b7.0",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/@wordpress/stylelint-config"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "anymatch": {
+      "name": "anymatch",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "micromatch"
+      ],
+      "effects": [
+        "sane"
+      ],
+      "range": "1.2.0 - 2.0.0",
+      "nodes": [
+        "node_modules/sane/node_modules/anymatch"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "autoprefixer": {
+      "name": "autoprefixer",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "postcss"
+      ],
+      "effects": [
+        "stylelint"
+      ],
+      "range": "1.0.20131222 - 9.8.8",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/autoprefixer"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "axios": {
+      "name": "axios",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1097679,
+          "name": "axios",
+          "dependency": "axios",
+          "title": "Axios Cross-Site Request Forgery Vulnerability",
+          "url": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-352"
+          ],
+          "cvss": {
+            "score": 6.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N"
+          },
+          "range": ">=0.8.1 <0.28.0"
+        },
+        {
+          "source": 1108262,
+          "name": "axios",
+          "dependency": "axios",
+          "title": "Axios is vulnerable to DoS attack through lack of data size check",
+          "url": "https://github.com/advisories/GHSA-4hjh-wcwx-xvwj",
+          "severity": "high",
+          "cwe": [
+            "CWE-770"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<0.30.2"
+        },
+        {
+          "source": 1111034,
+          "name": "axios",
+          "dependency": "axios",
+          "title": "axios Requests Vulnerable To Possible SSRF and Credential Leakage via Absolute URL",
+          "url": "https://github.com/advisories/GHSA-jr5f-v2jv-69x6",
+          "severity": "high",
+          "cwe": [
+            "CWE-918"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<0.30.0"
+        }
+      ],
+      "effects": [
+        "wait-on"
+      ],
+      "range": "<=0.30.1",
+      "nodes": [
+        "node_modules/axios"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "babel-jest": {
+      "name": "babel-jest",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/transform"
+      ],
+      "effects": [
+        "@wordpress/jest-preset-default",
+        "@wordpress/scripts",
+        "jest-config"
+      ],
+      "range": "24.2.0-alpha.0 - 26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/jest-preset-default/node_modules/babel-jest",
+        "node_modules/@wordpress/scripts/node_modules/babel-jest",
+        "node_modules/jest-jasmine2/node_modules/babel-jest"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "braces": {
+      "name": "braces",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1098094,
+          "name": "braces",
+          "dependency": "braces",
+          "title": "Uncontrolled resource consumption in braces",
+          "url": "https://github.com/advisories/GHSA-grv7-fg5c-xmjg",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-1050"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<3.0.3"
+        }
+      ],
+      "effects": [
+        "micromatch"
+      ],
+      "range": "<3.0.3",
+      "nodes": [
+        "node_modules/sane/node_modules/braces"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "cross-spawn": {
+      "name": "cross-spawn",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1104663,
+          "name": "cross-spawn",
+          "dependency": "cross-spawn",
+          "title": "Regular Expression Denial of Service (ReDoS) in cross-spawn",
+          "url": "https://github.com/advisories/GHSA-3xgq-45jj-v275",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<6.0.6"
+        }
+      ],
+      "effects": [
+        "@wordpress/scripts"
+      ],
+      "range": "<6.0.6",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/cross-spawn"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "css-select": {
+      "name": "css-select",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "nth-check"
+      ],
+      "effects": [
+        "svgo"
+      ],
+      "range": "<=3.1.0",
+      "nodes": [
+        "node_modules/@svgr/plugin-svgo/node_modules/css-select"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest": {
+      "name": "jest",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/core",
+        "jest-cli"
+      ],
+      "effects": [
+        "@wordpress/scripts"
+      ],
+      "range": "24.2.0-alpha.0 - 26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/jest"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-circus": {
+      "name": "jest-circus",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-runner",
+        "jest-runtime",
+        "jest-snapshot"
+      ],
+      "effects": [
+        "@wordpress/scripts"
+      ],
+      "range": "25.2.4 - 26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/jest-circus"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-cli": {
+      "name": "jest-cli",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/core",
+        "jest-config"
+      ],
+      "effects": [
+        "jest"
+      ],
+      "range": "24.2.0-alpha.0 - 26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/jest-cli"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-config": {
+      "name": "jest-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/test-sequencer",
+        "babel-jest",
+        "jest-jasmine2"
+      ],
+      "effects": [
+        "@jest/core",
+        "jest-cli",
+        "jest-runner",
+        "jest-runtime"
+      ],
+      "range": "24.2.0-alpha.0 - 26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/@jest/core/node_modules/jest-config",
+        "node_modules/@wordpress/scripts/node_modules/jest-cli/node_modules/jest-config",
+        "node_modules/@wordpress/scripts/node_modules/jest-runner/node_modules/jest-config",
+        "node_modules/@wordpress/scripts/node_modules/jest-runtime/node_modules/jest-config",
+        "node_modules/jest-jasmine2/node_modules/jest-config"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-dev-server": {
+      "name": "jest-dev-server",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "wait-on"
+      ],
+      "effects": [
+        "@wordpress/scripts"
+      ],
+      "range": "5.0.0 - 6.2.0",
+      "nodes": [
+        "node_modules/jest-dev-server"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-haste-map": {
+      "name": "jest-haste-map",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "sane"
+      ],
+      "effects": [
+        "@jest/core",
+        "@jest/reporters",
+        "@jest/test-sequencer",
+        "@jest/transform",
+        "jest-runner",
+        "jest-runtime",
+        "jest-snapshot"
+      ],
+      "range": "24.0.0-alpha.0 - 26.6.2",
+      "nodes": [
+        "node_modules/@wordpress/jest-preset-default/node_modules/jest-haste-map",
+        "node_modules/@wordpress/scripts/node_modules/jest-haste-map",
+        "node_modules/jest-jasmine2/node_modules/jest-haste-map"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-jasmine2": {
+      "name": "jest-jasmine2",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-runtime",
+        "jest-snapshot"
+      ],
+      "effects": [
+        "jest-config"
+      ],
+      "range": "24.2.0-alpha.0 - 26.6.3",
+      "nodes": [
+        "node_modules/jest-jasmine2"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-resolve-dependencies": {
+      "name": "jest-resolve-dependencies",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-snapshot"
+      ],
+      "effects": [],
+      "range": "26.1.0 - 26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/jest-resolve-dependencies"
+      ],
+      "fixAvailable": true
+    },
+    "jest-runner": {
+      "name": "jest-runner",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-config",
+        "jest-haste-map",
+        "jest-runtime"
+      ],
+      "effects": [
+        "jest-circus"
+      ],
+      "range": "24.0.0-alpha.0 - 26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/jest-runner",
+        "node_modules/jest-jasmine2/node_modules/jest-runner"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-runtime": {
+      "name": "jest-runtime",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/transform",
+        "jest-config",
+        "jest-haste-map",
+        "jest-snapshot"
+      ],
+      "effects": [
+        "jest-circus",
+        "jest-jasmine2"
+      ],
+      "range": "24.0.0-alpha.0 - 26.6.3",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/jest-runtime",
+        "node_modules/jest-jasmine2/node_modules/jest-runtime"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-snapshot": {
+      "name": "jest-snapshot",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-haste-map"
+      ],
+      "effects": [
+        "@jest/core",
+        "jest-circus",
+        "jest-jasmine2",
+        "jest-resolve-dependencies",
+        "jest-runtime"
+      ],
+      "range": "24.2.0-alpha.0 - 24.5.0 || 26.1.0 - 26.6.2",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/jest-snapshot",
+        "node_modules/jest-jasmine2/node_modules/jest-snapshot"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "markdown-it": {
+      "name": "markdown-it",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1092663,
+          "name": "markdown-it",
+          "dependency": "markdown-it",
+          "title": "Uncontrolled Resource Consumption in markdown-it",
+          "url": "https://github.com/advisories/GHSA-6vfc-qv3f-vr6c",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<12.3.2"
+        }
+      ],
+      "effects": [
+        "markdownlint"
+      ],
+      "range": "<12.3.2",
+      "nodes": [
+        "node_modules/markdown-it"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "markdownlint": {
+      "name": "markdownlint",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "markdown-it"
+      ],
+      "effects": [
+        "@wordpress/scripts",
+        "markdownlint-cli"
+      ],
+      "range": "<=0.25.0",
+      "nodes": [
+        "node_modules/markdownlint"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "markdownlint-cli": {
+      "name": "markdownlint-cli",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "markdownlint"
+      ],
+      "effects": [],
+      "range": "<=0.30.0",
+      "nodes": [
+        "node_modules/markdownlint-cli"
+      ],
+      "fixAvailable": true
+    },
+    "micromatch": {
+      "name": "micromatch",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1098681,
+          "name": "micromatch",
+          "dependency": "micromatch",
+          "title": "Regular Expression Denial of Service (ReDoS) in micromatch",
+          "url": "https://github.com/advisories/GHSA-952p-6rrq-rcjv",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<4.0.8"
+        },
+        "braces"
+      ],
+      "effects": [
+        "anymatch",
+        "sane"
+      ],
+      "range": "<=4.0.7",
+      "nodes": [
+        "node_modules/sane/node_modules/micromatch"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "node-fetch": {
+      "name": "node-fetch",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1095073,
+          "name": "node-fetch",
+          "dependency": "node-fetch",
+          "title": "node-fetch forwards secure headers to untrusted sites",
+          "url": "https://github.com/advisories/GHSA-r683-j2x4-v87g",
+          "severity": "high",
+          "cwe": [
+            "CWE-173",
+            "CWE-200",
+            "CWE-601"
+          ],
+          "cvss": {
+            "score": 8.8,
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "range": "<2.6.7"
+        }
+      ],
+      "effects": [
+        "puppeteer-core"
+      ],
+      "range": "<2.6.7",
+      "nodes": [
+        "node_modules/node-fetch"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "nth-check": {
+      "name": "nth-check",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1095141,
+          "name": "nth-check",
+          "dependency": "nth-check",
+          "title": "Inefficient Regular Expression Complexity in nth-check",
+          "url": "https://github.com/advisories/GHSA-rp65-9cf3-cjxr",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<2.0.1"
+        }
+      ],
+      "effects": [
+        "css-select"
+      ],
+      "range": "<2.0.1",
+      "nodes": [
+        "node_modules/@svgr/plugin-svgo/node_modules/nth-check"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "postcss": {
+      "name": "postcss",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1109574,
+          "name": "postcss",
+          "dependency": "postcss",
+          "title": "PostCSS line return parsing error",
+          "url": "https://github.com/advisories/GHSA-7fh5-64p2-3v2j",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-74",
+            "CWE-144"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": "<8.4.31"
+        }
+      ],
+      "effects": [
+        "autoprefixer",
+        "postcss-less",
+        "postcss-safe-parser",
+        "postcss-sass",
+        "postcss-scss",
+        "stylelint",
+        "sugarss"
+      ],
+      "range": "<8.4.31",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/autoprefixer/node_modules/postcss",
+        "node_modules/@wordpress/scripts/node_modules/postcss-safe-parser/node_modules/postcss",
+        "node_modules/@wordpress/scripts/node_modules/stylelint/node_modules/postcss",
+        "node_modules/@wordpress/scripts/node_modules/sugarss/node_modules/postcss",
+        "node_modules/postcss-less/node_modules/postcss",
+        "node_modules/postcss-sass/node_modules/postcss",
+        "node_modules/postcss-scss/node_modules/postcss"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "postcss-less": {
+      "name": "postcss-less",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "postcss"
+      ],
+      "effects": [],
+      "range": "<=3.1.4",
+      "nodes": [
+        "node_modules/postcss-less"
+      ],
+      "fixAvailable": true
+    },
+    "postcss-safe-parser": {
+      "name": "postcss-safe-parser",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "postcss"
+      ],
+      "effects": [
+        "stylelint"
+      ],
+      "range": "<=4.0.2",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/postcss-safe-parser"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "postcss-sass": {
+      "name": "postcss-sass",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "postcss"
+      ],
+      "effects": [
+        "stylelint"
+      ],
+      "range": "<=0.4.4",
+      "nodes": [
+        "node_modules/postcss-sass"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "postcss-scss": {
+      "name": "postcss-scss",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "postcss"
+      ],
+      "effects": [
+        "stylelint"
+      ],
+      "range": "<=2.1.1",
+      "nodes": [
+        "node_modules/postcss-scss"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "puppeteer-core": {
+      "name": "puppeteer-core",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "node-fetch",
+        "tar-fs",
+        "ws"
+      ],
+      "effects": [
+        "@wordpress/scripts"
+      ],
+      "range": "10.0.0 - 20.1.1",
+      "nodes": [
+        "node_modules/puppeteer-core"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "sane": {
+      "name": "sane",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "anymatch",
+        "micromatch"
+      ],
+      "effects": [
+        "jest-haste-map"
+      ],
+      "range": "1.5.0 - 4.1.0",
+      "nodes": [
+        "node_modules/sane"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "stylelint": {
+      "name": "stylelint",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "autoprefixer",
+        "postcss",
+        "postcss-less",
+        "postcss-safe-parser",
+        "postcss-sass",
+        "postcss-scss",
+        "sugarss"
+      ],
+      "effects": [
+        "@wordpress/scripts",
+        "@wordpress/stylelint-config",
+        "stylelint-config-recommended",
+        "stylelint-config-recommended-scss",
+        "stylelint-scss"
+      ],
+      "range": "0.1.0 - 13.13.1",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/stylelint"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "stylelint-config-recommended": {
+      "name": "stylelint-config-recommended",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "stylelint"
+      ],
+      "effects": [
+        "stylelint-config-recommended-scss"
+      ],
+      "range": "<=2.2.0 || 4.0.0 - 5.0.0",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/stylelint-config-recommended-scss/node_modules/stylelint-config-recommended"
+      ],
+      "fixAvailable": true
+    },
+    "stylelint-config-recommended-scss": {
+      "name": "stylelint-config-recommended-scss",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "stylelint",
+        "stylelint-config-recommended",
+        "stylelint-scss"
+      ],
+      "effects": [],
+      "range": "<=4.3.0",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/stylelint-config-recommended-scss"
+      ],
+      "fixAvailable": true
+    },
+    "stylelint-scss": {
+      "name": "stylelint-scss",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "stylelint"
+      ],
+      "effects": [],
+      "range": "0.0.0-alpha.1 || 1.0.0 - 3.21.0",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/stylelint-scss"
+      ],
+      "fixAvailable": true
+    },
+    "sugarss": {
+      "name": "sugarss",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "postcss"
+      ],
+      "effects": [
+        "stylelint"
+      ],
+      "range": "<=2.0.0",
+      "nodes": [
+        "node_modules/@wordpress/scripts/node_modules/sugarss"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "svgo": {
+      "name": "svgo",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "css-select"
+      ],
+      "effects": [
+        "@svgr/plugin-svgo"
+      ],
+      "range": "1.0.0 - 1.3.2",
+      "nodes": [
+        "node_modules/@svgr/plugin-svgo/node_modules/svgo"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "tar-fs": {
+      "name": "tar-fs",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1109532,
+          "name": "tar-fs",
+          "dependency": "tar-fs",
+          "title": "tar-fs has a symlink validation bypass if destination directory is predictable with a specific tarball",
+          "url": "https://github.com/advisories/GHSA-vj76-c3g6-qr5v",
+          "severity": "high",
+          "cwe": [
+            "CWE-22",
+            "CWE-61"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=2.0.0 <2.1.4"
+        },
+        {
+          "source": 1109543,
+          "name": "tar-fs",
+          "dependency": "tar-fs",
+          "title": "tar-fs can extract outside the specified dir with a specific tarball",
+          "url": "https://github.com/advisories/GHSA-8cj5-5rvv-wf4v",
+          "severity": "high",
+          "cwe": [
+            "CWE-22"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=2.0.0 <2.1.3"
+        },
+        {
+          "source": 1109552,
+          "name": "tar-fs",
+          "dependency": "tar-fs",
+          "title": "tar-fs Vulnerable to Link Following and Path Traversal via Extracting a Crafted tar File",
+          "url": "https://github.com/advisories/GHSA-pq67-2wwv-3xjx",
+          "severity": "high",
+          "cwe": [
+            "CWE-22"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": ">=2.0.0 <2.1.2"
+        }
+      ],
+      "effects": [
+        "puppeteer-core"
+      ],
+      "range": "2.0.0 - 2.1.3",
+      "nodes": [
+        "node_modules/puppeteer-core/node_modules/tar-fs"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "wait-on": {
+      "name": "wait-on",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "axios"
+      ],
+      "effects": [
+        "jest-dev-server"
+      ],
+      "range": "5.0.0-rc.0 - 7.1.0",
+      "nodes": [
+        "node_modules/wait-on"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "ws": {
+      "name": "ws",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1098393,
+          "name": "ws",
+          "dependency": "ws",
+          "title": "ws affected by a DoS when handling a request with many HTTP headers",
+          "url": "https://github.com/advisories/GHSA-3h5v-q93c-6h6q",
+          "severity": "high",
+          "cwe": [
+            "CWE-476"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=7.0.0 <7.5.10"
+        }
+      ],
+      "effects": [
+        "puppeteer-core"
+      ],
+      "range": "7.0.0 - 7.5.9",
+      "nodes": [
+        "node_modules/puppeteer-core/node_modules/ws"
+      ],
+      "fixAvailable": {
+        "name": "@wordpress/scripts",
+        "version": "31.2.0",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 33,
+      "high": 16,
+      "critical": 0,
+      "total": 49
+    },
+    "dependencies": {
+      "prod": 290,
+      "dev": 2342,
+      "optional": 129,
+      "peer": 28,
+      "peerOptional": 0,
+      "total": 2631
+    }
+  }
+}

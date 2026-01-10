@@ -2,9 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-# CampaignPress Architecture Overview
+# Campaign Office Architecture Overview
 
-**Version:** 2.0.0 | **Status:** Freemium Political WordPress Theme + Campaign Operations Platform
+**Version:** 2.1.0 | **Status:** Premium Political WordPress Theme + Campaign Operations Platform
 
 ## Executive Summary
 
@@ -76,12 +76,11 @@ CampaignPress uses a **WordPress 6.9-native design system** with centralized des
 
 ### Design Documentation
 
-📚 **Complete documentation available:**
-- **`DESIGN_README.md`** - Master index (start here)
-- **`WP69_SUMMARY.md`** - Quick 5-minute overview
-- **`WP69_IMPLEMENTATION.md`** - Complete implementation guide
-- **`DESIGN_SYSTEM.md`** - Design philosophy and guidelines
-- **`DESIGN_BEFORE_AFTER.md`** - Visual transformation examples
+📚 **Complete documentation available in the `docs/` directory:**
+- **`DESIGN-REFERENCE.md`** - Complete design system and style guide.
+- **`GETTING-STARTED.md`** - General introduction and setup.
+- **`QUICKSTART.md`** - 5-minute setup guide.
+- **`DEVELOPER-GUIDE.md`** - Technical reference for developers.
 
 ### Design Tokens (theme.json)
 
@@ -706,9 +705,9 @@ campaign-office/
 3. Verify `theme.json` and `design-system-wp69.css` are present
 
 ### Design System Development
-- **Read:** `DESIGN_README.md` (master index)
-- **Quick Start:** `WP69_SUMMARY.md` (5 minutes)
-- **Implementation:** `WP69_IMPLEMENTATION.md` (complete guide)
+- **Read:** `docs/DESIGN-REFERENCE.md` (complete style guide)
+- **Quick Start:** `docs/QUICKSTART.md` (5 minutes)
+- **Implementation:** `docs/DEVELOPER-GUIDE.md` (technical details)
 - **Edit Design Tokens:** Modify `theme.json` for global changes
 - **Custom CSS:** Use WordPress CSS variables (`--wp--preset--*`)
 - **Block Patterns:** Create reusable layouts for campaigns

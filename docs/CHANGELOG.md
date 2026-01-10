@@ -5,7 +5,26 @@ All notable changes to CampaignPress will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2024-11-17
+## [2.1.0] - 2026-01-10
+
+### Added
+- Created `QUICKSTART.md` (now in `docs/`) - 5-minute setup guide.
+- Added self-hosted font installation guide.
+- Added high-resolution screenshot requirements documentation.
+
+### Fixed
+- Standardized license to GPL v2 or later across all files.
+- Removed Google Fonts preconnect for 100% GDPR compliance.
+- Fixed Vite build failure (`jsx-runtime` error).
+- Fixed missing block scripts in production ZIP.
+- Fixed critical CSS exclusion in build scripts.
+- Synchronized version dates across all documentation.
+
+### Changed
+- Moved all root documentation to `docs/` folder for better project organization.
+- Reorganized build scripts to ensure all required assets are included in production packages.
+
+## [2.0.0] - 2025-01-08
 
 ### 🎉 Major Release - Complete Campaign Management Platform
 

@@ -1,6 +1,7 @@
 # Campaign Website Design Documentation
 
 ## Overview
+
 This document describes the layout and design specifications for a political campaign website for a Georgetown City Council candidate. The design follows a Republican/conservative aesthetic with patriotic color schemes and professional typography.
 
 ---
@@ -8,6 +9,7 @@ This document describes the layout and design specifications for a political cam
 ## Design System
 
 ### Color Palette
+
 - **Primary Red**: `#d32f2f` to `#E81B23` (Republican Red)
 - **Primary Dark**: `#b71c1c` to `#c2161d` (Darker red for hover states)
 - **Secondary Navy**: `#1a237e` to `#003057` (Patriotic Navy Blue)
@@ -15,18 +17,21 @@ This document describes the layout and design specifications for a political cam
 - **Background Dark**: `#101622` to `#0a1120`
 
 ### Typography
+
 - **Display Font**: Public Sans (bold weights: 700, 800, 900)
 - **Body Font**: Noto Sans (weights: 400, 500, 700)
 - **Headings**: Black weight (900), tight tracking
 - **Body Text**: Regular weight (400), relaxed leading
 
 ### Border Radius
+
 - Default: `0.25rem`
 - Large: `0.5rem`
 - XL: `0.75rem`
 - Full: `9999px` (pills/badges)
 
 ### Spacing System
+
 - Container Max Width: `1200px` to `1280px`
 - Section Padding: `3rem` to `5rem` (vertical)
 - Component Gap: `1rem` to `2rem`
@@ -36,7 +41,9 @@ This document describes the layout and design specifications for a political cam
 ## Global Components
 
 ### Navigation Header
+
 **Layout**: Sticky header with backdrop blur
+
 - **Height**: 64px (h-16)
 - **Background**: White with 95% opacity, backdrop blur
 - **Border**: Bottom border with subtle gray
@@ -53,7 +60,9 @@ This document describes the layout and design specifications for a political cam
 - **Mobile**: Hamburger menu icon
 
 ### Footer
+
 **Layout**: Dark background with multi-column grid
+
 - **Background**: Dark navy/black (`#111318`)
 - **Grid**: 4 columns on desktop, stacked on mobile
 - **Sections**:
@@ -71,7 +80,9 @@ This document describes the layout and design specifications for a political cam
 ### 1. HOMEPAGE
 
 #### Hero Section
+
 **Layout**: Two-column grid (lg:grid-cols-2)
+
 - **Left Column** (Order 2 on mobile):
   - Badge: "Republican Candidate for City Council" in red pill badge
   - H1: 4xl to 6xl, black weight
@@ -90,14 +101,18 @@ This document describes the layout and design specifications for a political cam
     - Shadow and border
 
 #### Quote Section
+
 **Layout**: Centered container with light gray background
+
 - Max width: 960px
 - Large pull quote (2xl to 3xl)
 - Candidate signature image
 - Vertical padding: 3rem
 
 #### Key Priorities Section
+
 **Layout**: Three-column grid on desktop
+
 - **Section Header**:
   - Eyebrow text: "KEY PRIORITIES" in uppercase, red
   - H2: "Building a Stronger Community"
@@ -111,7 +126,9 @@ This document describes the layout and design specifications for a political cam
   - Icons: account_balance, local_police, domain
 
 #### Events Section
+
 **Layout**: List view with light background
+
 - **Section Header**: Title + "View Full Calendar" link
 - **Event Cards** (2 shown):
   - Flexbox row layout
@@ -122,7 +139,9 @@ This document describes the layout and design specifications for a political cam
   - RSVP button (outlined red)
 
 #### Map/Location Section
+
 **Layout**: Full-width background image with overlay
+
 - Height: 400px
 - Dark overlay (70% opacity)
 - Centered content:
@@ -132,7 +151,9 @@ This document describes the layout and design specifications for a political cam
   - "Find Your Precinct" button (white background)
 
 #### Newsletter Section
+
 **Layout**: Full-width red background
+
 - Max width: 800px container
 - Centered text content
 - Email form:
@@ -146,7 +167,9 @@ This document describes the layout and design specifications for a political cam
 ### 2. ABOUT [CANDIDATE'S NAME]
 
 #### Hero Section
+
 **Layout**: Two-column grid
+
 - **Left Column**:
   - Eyebrow: "DEDICATED TO SERVICE" with red line
   - H1: "A Voice for Georgetown Values"
@@ -158,7 +181,9 @@ This document describes the layout and design specifications for a political cam
   - Decorative gradient blobs in background
 
 #### Community Section
+
 **Layout**: Light background, centered content
+
 - **Intro Text**: Max width 3xl
 - **Feature Grid**: 2x2 grid of cards
   - Each card:
@@ -169,13 +194,17 @@ This document describes the layout and design specifications for a political cam
   - Topics: Family First, Business Owner, Conservative Values, Community Servant
 
 #### Quote Section
+
 **Layout**: Full-width gradient (red to dark red)
+
 - Centered quote with quotation marks
 - White text, italic
 - Attribution line
 
 #### Experience Timeline
+
 **Layout**: Vertical timeline with left border
+
 - **Section**: "KEY MILESTONES"
 - **Timeline Items**:
   - Border line on left (2px, red/20 opacity)
@@ -184,14 +213,18 @@ This document describes the layout and design specifications for a political cam
   - Final item has navy circle (current/2024)
 
 #### Photo Gallery
+
 **Layout**: Three-column grid
+
 - Equal height images (h-64)
 - Rounded corners
 - Hover overlay with caption
 - Captions: "Listening to residents", "4th of July Parade", "Supporting local growth"
 
 #### Testimonials Section
+
 **Layout**: Three-column grid
+
 - **Cards**:
   - Top border accent (4px red or navy)
   - Quote icon (watermark style)
@@ -202,7 +235,9 @@ This document describes the layout and design specifications for a political cam
     - Title (small, gray)
 
 #### CTA Section
+
 **Layout**: Dark background, horizontal layout
+
 - Text on left, buttons on right
 - Two buttons: "Volunteer" (red) + "Donate" (outlined)
 
@@ -211,17 +246,22 @@ This document describes the layout and design specifications for a political cam
 ### 3. CONTACT US
 
 #### Hero Section
+
 **Layout**: Centered text, light background
+
 - Badge: "CONTACT THE CAMPAIGN"
 - H1: "Let Your Voice Be Heard"
 - Description paragraph
 - Vertical padding: 3rem to 6rem
 
 #### Main Content Section
+
 **Layout**: Two-column grid (lg:grid-cols-2)
 
 ##### Left Column: Contact Form
+
 **Card**: White background, rounded (2xl), shadowed
+
 - **Form Fields**:
   - Grid layout for First/Last name (2 columns)
   - Full-width email
@@ -231,7 +271,9 @@ This document describes the layout and design specifications for a political cam
   - Submit button (red, full width)
 
 ##### Right Column: Contact Information
+
 **Sections**:
+
 1. **Direct Contacts** (3 cards):
    - Email card (mail icon)
    - Phone card (call icon)
@@ -253,7 +295,9 @@ This document describes the layout and design specifications for a political cam
 ### 4. ISSUES & VISION
 
 #### Hero Banner
+
 **Layout**: Full-width background image with gradient overlay
+
 - Gradient: Red to dark (85% to 95% opacity)
 - Min height: 480px
 - **Content** (centered):
@@ -262,10 +306,13 @@ This document describes the layout and design specifications for a political cam
   - Description text (white/95)
 
 #### Main Content Layout
+
 **Layout**: Sidebar + Main content
 
 ##### Sidebar (Desktop Only)
+
 **Sticky positioning**, width 256px
+
 - **Jump Links**:
   - Vertical nav with left border
   - Active link: Red border, red text
@@ -279,6 +326,7 @@ This document describes the layout and design specifications for a political cam
   - Contact button
 
 ##### Main Content Area
+
 **Sections** (scroll-mt-28 for anchor links):
 
 1. **Fiscal Responsibility**:
@@ -316,7 +364,9 @@ This document describes the layout and design specifications for a political cam
    - Bulleted list with red markers
 
 #### Vision Section
+
 **Layout**: Full-width white/light background
+
 - Centered content (max-w-960px)
 - Title: "Georgetown 2030"
 - Four-column icon grid:
@@ -324,7 +374,9 @@ This document describes the layout and design specifications for a political cam
   - Labels under each
 
 #### Final CTA
+
 **Layout**: Dark background with gradient blobs
+
 - Centered text
 - Two buttons (Donate + Volunteer)
 - Decorative blur effects in corners
@@ -334,7 +386,9 @@ This document describes the layout and design specifications for a political cam
 ### 5. NEWS & UPDATES
 
 #### Hero Section
+
 **Layout**: Full-width gradient background image
+
 - Gradient overlay (red to dark, 90% to 95%)
 - Min height: 400px
 - **Content** (centered):
@@ -344,14 +398,18 @@ This document describes the layout and design specifications for a political cam
   - Newsletter signup form (inline)
 
 #### Filter Bar
+
 **Layout**: Sticky below header (top-[65px])
+
 - Horizontal scrolling pill buttons
 - Active filter: Red background
 - Inactive: Gray background with hover effect
 - Filters: All, Press Releases, Events, Interviews, Policy Briefs
 
 #### Featured Story
+
 **Layout**: Large horizontal card
+
 - Two columns (3:2 ratio on desktop)
 - Left: Background image (min-h-300px)
   - Badge overlay: "PRESS RELEASE"
@@ -362,10 +420,13 @@ This document describes the layout and design specifications for a political cam
   - "Read Full Story" link with arrow
 
 #### Main Content Grid
+
 **Layout**: Two-column structure
 
 ##### Left Column: News Grid
+
 **Grid**: 2 columns on desktop
+
 - **News Cards** (4 shown):
   - Image top (h-48)
   - Content padding
@@ -379,6 +440,7 @@ This document describes the layout and design specifications for a political cam
 - **Load More Button**: Centered below grid
 
 ##### Right Column: Sidebar
+
 **Sections**:
 
 1. **Get Involved Card**:
@@ -403,7 +465,9 @@ This document describes the layout and design specifications for a political cam
 ### 6. GET INVOLVED (VOLUNTEER)
 
 #### Hero Section
+
 **Layout**: Full-width background image with gradient
+
 - Gradient: Red to dark (90% to 85% opacity)
 - Vertical padding: 5rem to 8rem
 - **Content** (max-w-3xl):
@@ -415,9 +479,11 @@ This document describes the layout and design specifications for a political cam
     - "Donate $25" (transparent with border)
 
 #### Main Content Layout
+
 **Layout**: Two-column grid (7:5 ratio)
 
 ##### Left Column: Information
+
 **Sections**:
 
 1. **Introduction**:
@@ -447,7 +513,9 @@ This document describes the layout and design specifications for a political cam
    - Hover: Background lightens
 
 ##### Right Column: Volunteer Form
+
 **Sticky Card** (top-24)
+
 - **Form Header**:
   - H3: "Join the Team"
   - Helper text
@@ -469,7 +537,9 @@ This document describes the layout and design specifications for a political cam
 ## Component Patterns
 
 ### Buttons
+
 **Primary Button**:
+
 - Background: Red
 - Text: White, bold
 - Padding: `px-6 py-3`
@@ -478,13 +548,16 @@ This document describes the layout and design specifications for a political cam
 - Shadow: Medium
 
 **Secondary Button**:
+
 - Background: Light gray or transparent
 - Border: 1px solid gray/red
 - Text: Dark gray or red
 - Hover: Background lightens
 
 ### Cards
+
 **Standard Card**:
+
 - Background: White
 - Border: 1px gray
 - Border radius: `xl`
@@ -493,21 +566,26 @@ This document describes the layout and design specifications for a political cam
 - Hover: Shadow increases to `md`
 
 **Feature Card**:
+
 - Border-left accent (4px)
 - Icon circle (48px)
 - Title + description
 - Hover: Lift transform
 
 ### Icons
+
 **Size**: 24px to 48px
 **Source**: Material Symbols Outlined
 **Common Icons**:
+
 - how_to_vote, local_police, account_balance
 - trending_up, traffic, storefront
 - mail, call, location_on, event
 
 ### Forms
+
 **Input Fields**:
+
 - Height: 44px to 48px
 - Border: 1px gray
 - Border radius: `lg`
@@ -515,6 +593,7 @@ This document describes the layout and design specifications for a political cam
 - Focus: Red ring, red border
 
 **Labels**:
+
 - Font: Bold, 14px
 - Color: Dark gray
 - Margin bottom: 0.375rem
@@ -524,6 +603,7 @@ This document describes the layout and design specifications for a political cam
 ## Responsive Breakpoints
 
 ### Mobile (< 768px)
+
 - Single column layouts
 - Stacked navigation (hamburger menu)
 - Full-width buttons
@@ -531,11 +611,13 @@ This document describes the layout and design specifications for a political cam
 - Smaller typography scales
 
 ### Tablet (768px - 1024px)
+
 - Two-column grids where applicable
 - Condensed spacing
 - Medium typography
 
 ### Desktop (> 1024px)
+
 - Multi-column layouts (3-4 columns)
 - Sidebar layouts appear
 - Maximum container width enforced
@@ -547,6 +629,7 @@ This document describes the layout and design specifications for a political cam
 ## Dark Mode Support
 
 All pages include dark mode variants using Tailwind's `dark:` prefix:
+
 - **Backgrounds**: Switch to dark navy/black
 - **Text**: White or light gray
 - **Borders**: Darker gray variants
@@ -558,22 +641,26 @@ All pages include dark mode variants using Tailwind's `dark:` prefix:
 ## Image Specifications
 
 ### Hero Images
+
 - Aspect ratio: 16:9 or 4:3
 - Resolution: Minimum 1920x1080
 - Format: JPEG or WebP
 - Optimization: Compressed for web
 
 ### Portrait Photos
+
 - Aspect ratio: 4:5 or 1:1
 - Resolution: Minimum 800x1000
 - Format: JPEG or WebP
 
 ### Thumbnail Images
+
 - Aspect ratio: 16:9
 - Resolution: 800x450
 - Format: JPEG or WebP
 
 ### Icons
+
 - Source: Material Symbols Outlined
 - CDN: Google Fonts
 - Fill: 0, Weight: 400
@@ -583,6 +670,7 @@ All pages include dark mode variants using Tailwind's `dark:` prefix:
 ## WordPress Implementation Notes
 
 ### Recommended Plugins
+
 - **Page Builder**: Elementor or Gutenberg blocks
 - **Forms**: Contact Form 7 or WPForms
 - **Events**: The Events Calendar
@@ -590,6 +678,7 @@ All pages include dark mode variants using Tailwind's `dark:` prefix:
 - **SEO**: Yoast SEO
 
 ### Custom Post Types
+
 1. **Events**
    - Title, Date, Time, Location
    - RSVP functionality
@@ -607,6 +696,7 @@ All pages include dark mode variants using Tailwind's `dark:` prefix:
    - Problem/Solution sections
 
 ### Theme Customization
+
 - Custom color scheme in theme customizer
 - Typography options for fonts
 - Header/footer template parts

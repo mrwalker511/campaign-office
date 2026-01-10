@@ -156,7 +156,7 @@ E2E tests require a running WordPress installation. Configure the base URL in `t
 
 ```javascript
 use: {
-  baseURL: process.env.WP_BASE_URL || 'http://localhost:8888',
+  baseURL: process.env.WP_BASE_URL || 'http://localhost:8881',
 }
 ```
 

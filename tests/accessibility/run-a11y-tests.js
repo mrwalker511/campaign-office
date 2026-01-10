@@ -6,19 +6,21 @@
  */
 
 import pa11y from 'pa11y';
-import { chromium } from 'playwright';
+
+// Get base URL from environment or use default
+const BASE_URL = process.env.WP_BASE_URL || process.env.SITE_URL || 'http://localhost:8881';
 
 const PAGES_TO_TEST = [
   {
-    url: 'http://localhost:8888', // Adjust to your local dev URL
+    url: BASE_URL,
     name: 'Home Page',
   },
   {
-    url: 'http://localhost:8888/sample-page',
+    url: `${BASE_URL}/sample-page`,
     name: 'Sample Page',
   },
   {
-    url: 'http://localhost:8888/blog',
+    url: `${BASE_URL}/blog`,
     name: 'Blog Archive',
   },
 ];

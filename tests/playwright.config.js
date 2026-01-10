@@ -33,7 +33,7 @@ export default defineConfig({
   /* Shared settings for all the projects below */
   use: {
     /* Base URL to use in actions like `await page.goto('/')` */
-    baseURL: process.env.WP_BASE_URL || 'http://localhost:8888',
+    baseURL: process.env.WP_BASE_URL || 'http://localhost:8881',
 
     /* Collect trace when retrying the failed test */
     trace: 'on-first-retry',
@@ -86,7 +86,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   // webServer: {
   //   command: 'npm run start',
-  //   url: 'http://localhost:8888',
+  //   url: 'http://localhost:8881',
   //   reuseExistingServer: !process.env.CI,
   // },
 });

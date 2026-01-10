@@ -5,7 +5,7 @@
  */
 
 import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
+import { injectAxe, checkA11y } from 'axe-playwright';
 
 test.describe('Home Page', () => {
   test('should load successfully', async ({ page }) => {
@@ -33,10 +33,10 @@ test.describe('Home Page', () => {
 
   test('should be accessible (a11y)', async ({ page }) => {
     await page.goto('/');
+    await injectAxe(page);
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-
-    expect(accessibilityScanResults.violations).toEqual([]);
+    // Check for accessibility violations
+    await checkA11y(page);
   });
 
   test('should have working search', async ({ page }) => {

@@ -787,6 +787,13 @@
       "postTypes": [
         "page"
       ]
+    },
+    {
+      "name": "page-contact",
+      "title": "Contact Page (Campaign Design)",
+      "postTypes": [
+        "page"
+      ]
     }
   ]
 }

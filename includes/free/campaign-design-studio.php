@@ -1039,14 +1039,27 @@ class CP_Campaign_Design_Studio {
             wp_send_json_error(array('message' => __('Post not found', 'campaign-office')));
         }
 
-        $content = $post->post_content;
+        // Get the actual rendered content (what would be displayed on the page)
+        $rendered_content = apply_filters('the_content', $post->post_content);
+        $raw_content = $post->post_content;
         $components = array();
 
         // Parse Gutenberg blocks
-        $blocks = parse_blocks($content);
+        $blocks = parse_blocks($raw_content);
 
         foreach ($blocks as $block) {
             if (empty($block['blockName'])) {
+                // Handle classic content (no block name)
+                if (!empty(trim($block['innerHTML'] ?? ''))) {
+                    $components[] = array(
+                        'type' => 'content',
+                        'variant' => 'default',
+                        'settings' => array(
+                            'content' => wp_strip_all_tags($block['innerHTML']),
+                        ),
+                        'html' => '<div class="cp-component cp-component-content"><div class="cp-content-wrapper">' . wp_kses_post($block['innerHTML']) . '</div></div>',
+                    );
+                }
                 continue;
             }
 
@@ -1056,23 +1069,48 @@ class CP_Campaign_Design_Studio {
             }
         }
 
-        // If no blocks found but content exists, create a generic content component
-        if (empty($components) && !empty(trim($content))) {
-            $components[] = array(
-                'type' => 'content',
-                'variant' => 'default',
-                'settings' => array(
-                    'content' => wp_strip_all_tags($content),
-                ),
-                'html' => '<div class="cp-component cp-component-content"><div class="cp-content-wrapper">' . wp_kses_post($content) . '</div></div>',
-            );
+        // If no blocks found but content exists, use the rendered content
+        if (empty($components) && !empty(trim($rendered_content))) {
+            // Split content by paragraphs or headings to create multiple components
+            $dom = new DOMDocument();
+            @$dom->loadHTML('<?xml encoding="UTF-8">' . $rendered_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $xpath = new DOMXPath($dom);
+            
+            // Find major content blocks (headers, sections, divs with class)
+            $major_elements = $xpath->query('//h1 | //h2 | //section | //div[@class]');
+            
+            if ($major_elements->length > 0) {
+                foreach ($major_elements as $element) {
+                    $element_html = $dom->saveHTML($element);
+                    if (strlen(strip_tags($element_html)) > 20) {
+                        $components[] = array(
+                            'type' => 'content',
+                            'variant' => 'default',
+                            'settings' => array(
+                                'content' => wp_strip_all_tags($element_html),
+                            ),
+                            'html' => '<div class="cp-component cp-component-content"><div class="cp-content-wrapper">' . wp_kses_post($element_html) . '</div></div>',
+                        );
+                    }
+                }
+            } else {
+                // Fallback: create single component with all content
+                $components[] = array(
+                    'type' => 'content',
+                    'variant' => 'default',
+                    'settings' => array(
+                        'content' => wp_strip_all_tags($rendered_content),
+                    ),
+                    'html' => '<div class="cp-component cp-component-content"><div class="cp-content-wrapper">' . wp_kses_post($rendered_content) . '</div></div>',
+                );
+            }
         }
 
         wp_send_json_success(array(
             'components' => $components,
             'message' => sprintf(
                 /* translators: %d is the number of components imported */
-                __('Imported %d components from page content', 'campaign-office'),
+                __('Successfully imported %d components from page content', 'campaign-office'),
                 count($components)
             ),
         ));
@@ -1088,6 +1126,20 @@ class CP_Campaign_Design_Studio {
         $block_name = $block['blockName'];
         $attrs = $block['attrs'] ?? array();
         $inner_html = $block['innerHTML'] ?? '';
+        
+        // If block has inner blocks, recursively process them
+        if (!empty($block['innerBlocks'])) {
+            foreach ($block['innerBlocks'] as $inner_block) {
+                if (!empty($inner_block['innerHTML'])) {
+                    $inner_html .= $inner_block['innerHTML'];
+                }
+            }
+        }
+        
+        // Render the block to get actual output if innerHTML is empty
+        if (empty(trim(strip_tags($inner_html))) && function_exists('render_block')) {
+            $inner_html = render_block($block);
+        }
 
         // Map Gutenberg blocks to Design Studio components
         switch ($block_name) {

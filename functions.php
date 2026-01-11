@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 /**
  * Define Constants
  */
-define('CAMPAIGNPRESS_VERSION', '2.0.0');
+define('CAMPAIGNPRESS_VERSION', '2.1.0');
 define('CAMPAIGNPRESS_THEME_DIR', get_template_directory());
 define('CAMPAIGNPRESS_THEME_URI', get_template_directory_uri());
 define('CAMPAIGNPRESS_INCLUDES_DIR', CAMPAIGNPRESS_THEME_DIR . '/includes');

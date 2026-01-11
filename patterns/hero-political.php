@@ -16,15 +16,15 @@
             <!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"constrained","contentSize":"700px","justifyContent":"left"}} -->
             <div class="wp-block-group alignwide">
                 <!-- wp:paragraph {"className":"cp-hero__badge","style":{"typography":{"fontSize":"0.75rem","fontWeight":"700","letterSpacing":"0.15em","textTransform":"uppercase"},"spacing":{"padding":{"top":"0.25rem","right":"1rem","bottom":"0.25rem","left":"1rem"},"margin":{"bottom":"1.5rem"}},"border":{"left":{"color":"var:preset|color|white","width":"4px"}}},"backgroundColor":"secondary","textColor":"white"} -->
-                <p class="cp-hero__badge has-white-color has-secondary-background-color has-text-color has-background" style="border-left-color:var(--wp--preset--color--white);border-left-width:4px;margin-bottom:1.5rem;padding-top:0.25rem;padding-right:1rem;padding-bottom:0.25rem;padding-left:1rem;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase"><?php esc_html_e( 'Official Campaign Site', 'campaign-office' ); ?></p>
+                <p class="cp-hero__badge has-white-color has-secondary-background-color has-text-color has-background" style="border-left-color:var(--wp--preset--color--white);border-left-width:4px;margin-bottom:1.5rem;padding-top:0.25rem;padding-right:1rem;padding-bottom:0.25rem;padding-left:1rem;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase"><?php esc_html_e( 'OFFICIAL CAMPAIGN SITE', 'campaign-office' ); ?></p>
                 <!-- /wp:paragraph -->
 
-                <!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"clamp(2.5rem, 5vw, 4.5rem)","fontWeight":"700","lineHeight":"1.1"},"spacing":{"margin":{"bottom":"1.5rem"}}},"textColor":"white","fontFamily":"display"} -->
-                <h1 class="wp-block-heading has-white-color has-text-color has-display-font-family" style="margin-bottom:1.5rem;font-size:clamp(2.5rem, 5vw, 4.5rem);font-weight:700;line-height:1.1"><?php esc_html_e( 'Restoring Faith', 'campaign-office' ); ?><br><em><?php esc_html_e( 'In America', 'campaign-office' ); ?></em></h1>
+                <!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"clamp(2.5rem, 6vw, 5rem)","fontWeight":"700","lineHeight":"1.1"},"spacing":{"margin":{"bottom":"1.5rem"}}},"textColor":"white","fontFamily":"display"} -->
+                <h1 class="wp-block-heading has-white-color has-text-color has-display-font-family" style="margin-bottom:1.5rem;font-size:clamp(2.5rem, 6vw, 5rem);font-weight:700;line-height:1.1"><?php esc_html_e( 'Restoring Faith', 'campaign-office' ); ?><br><em><?php esc_html_e( 'In America', 'campaign-office' ); ?></em></h1>
                 <!-- /wp:heading -->
 
-                <!-- wp:paragraph {"style":{"typography":{"fontSize":"1.25rem","fontWeight":"300","lineHeight":"1.6"},"spacing":{"margin":{"bottom":"2.5rem"}},"color":{"text":"rgba(255,255,255,0.8)"}}} -->
-                <p style="color:rgba(255,255,255,0.8);margin-bottom:2.5rem;font-size:1.25rem;font-weight:300;line-height:1.6"><?php esc_html_e( 'Join the movement dedicated to protecting our constitutional rights, strengthening our economy, and securing a brighter future for our families.', 'campaign-office' ); ?></p>
+                <!-- wp:paragraph {"style":{"typography":{"fontSize":"1.25rem","fontWeight":"400","lineHeight":"1.6"},"spacing":{"margin":{"bottom":"2.5rem"}},"color":{"text":"rgba(255,255,255,0.9)"}}} -->
+                <p style="color:rgba(255,255,255,0.9);margin-bottom:2.5rem;font-size:1.25rem;font-weight:400;line-height:1.6"><?php esc_html_e( 'Thomas Harrison is fighting to protect our constitutional rights, strengthen our economy, and secure a brighter future for our families.', 'campaign-office' ); ?></p>
                 <!-- /wp:paragraph -->
 
                 <!-- wp:buttons {"layout":{"type":"flex","flexWrap":"wrap"}} -->

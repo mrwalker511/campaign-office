@@ -1,5 +1,8 @@
 {
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",
@@ -17,6 +20,18 @@
     "jQuery": "readonly",
     "ajaxurl": "readonly",
     "cpPremium": "readonly",
+    "cpPremiumFeatures": "readonly",
+    "cpPremiumTemplates": "readonly",
+    "cpIconsBrowser": "readonly",
+    "cpFieldOps": "readonly",
+    "cpCompliance": "readonly",
+    "cpDonorManager": "readonly",
+    "cpVolunteerPortal": "readonly",
+    "cpVolunteerMatcher": "readonly",
+    "cpFEC": "readonly",
+    "cpCRM": "readonly",
+    "cpDesignStudio": "readonly",
+    "cpTemplateManager": "readonly",
     "campaignpress_vars": "readonly",
     "campaignpress_admin_notices": "readonly",
     "campaignpressAnalytics": "readonly",
@@ -38,6 +53,7 @@
   "rules": {
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
+    "react/no-unescaped-entities": "off",
     "no-unused-vars": "warn",
     "no-console": "off"
   }

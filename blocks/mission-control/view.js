@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Start countdown interval
-    const intervalId = setInterval(updateCountdown, 1000);
+    let intervalId = setInterval(updateCountdown, 1000);
 
     // Initial display update
     updateCountdown();

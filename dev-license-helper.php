@@ -96,7 +96,7 @@ add_filter('pre_http_request', function($preempt, $args, $url) {
 	if (strpos($url, '/update-check') !== false) {
 		// Define CAMPAIGNPRESS_VERSION if it's not already defined for testing purposes
 		if (!defined('CAMPAIGNPRESS_VERSION')) {
-			define('CAMPAIGNPRESS_VERSION', '1.0.0'); // Default version for mock
+			define('CAMPAIGNPRESS_VERSION', '2.1.0'); // Default version for mock
 		}
 		return array(
 			'response' => array(

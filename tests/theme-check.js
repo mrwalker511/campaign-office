@@ -108,7 +108,8 @@ function checkFunctions() {
   let allFunctionsPresent = true;
 
   REQUIRED_FUNCTIONS.forEach((func) => {
-    const regex = new RegExp(`${func}\\s*\\(`, 'i');
+    // Improved regex to avoid partial matches
+    const regex = new RegExp(`(?:<\\?php\\s+)?${func}\\s*\\(`, 'i');
     if (!regex.test(themeContent)) {
       console.log(`   ❌ Missing function call: ${func}()`);
       allFunctionsPresent = false;
@@ -189,21 +190,25 @@ function checkTextDomain() {
   const phpFiles = getAllPHPFiles(THEME_ROOT);
   let inconsistentDomains = false;
 
+  // Improved regex for extraction of text domain (second argument)
+  // Supports __, _e, esc_html__, esc_html_e, etc. and handles nested quotes.
+  const transRegex = /(?:__|esc_html__|esc_attr__|esc_html_e|esc_attr_e|_e)\s*\(\s*(['"])(?:(?!\1).|\\\1)*\1\s*,\s*(['"])(.+?)\2\s*\)/g;
+
   phpFiles.forEach((file) => {
     const content = fs.readFileSync(file, 'utf8');
-    const domainMatches = content.match(/__\(.+?,\s*['"](.+?)['"]\)/g);
+    let match;
 
-    if (domainMatches) {
-      domainMatches.forEach((match) => {
-        const domain = match.match(/['"](.+?)['"]\s*\)/);
-        if (domain && domain[1] !== textDomain) {
-          if (!inconsistentDomains) {
-            console.log('   ⚠️  Inconsistent text domains found:');
-            inconsistentDomains = true;
-          }
-          console.log(`      ${path.relative(THEME_ROOT, file)}: ${domain[1]}`);
+    // Reset regex state for each file
+    transRegex.lastIndex = 0;
+
+    while ((match = transRegex.exec(content)) !== null) {
+      if (match[3] !== textDomain) {
+        if (!inconsistentDomains) {
+          console.log('   ⚠️  Inconsistent text domains found:');
+          inconsistentDomains = true;
         }
-      });
+        console.log(`      ${path.relative(THEME_ROOT, file)}: ${match[3]}`);
+      }
     }
   });
 
@@ -222,8 +227,8 @@ function getAllPHPFiles(dir) {
     const fullPath = path.join(dir, item);
     const stat = fs.statSync(fullPath);
 
-    // Skip vendor and node_modules
-    if (item === 'vendor' || item === 'node_modules' || item === '.git') {
+    // Skip vendor and node_modules and lib
+    if (item === 'vendor' || item === 'node_modules' || item === '.git' || item === 'lib') {
       return;
     }
 

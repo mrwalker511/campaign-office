@@ -1,26 +1,12 @@
 # CampaignPress Font Strategy
 
-## ✅ System Fonts - No Files Needed!
+## ✅ Premium Typography: Playfair Display & Inter
 
-**CampaignPress now uses system fonts** for optimal performance, privacy, and user experience.
+**CampaignPress uses a premium font pairing** to ensure your campaign looks professional and authoritative:
+- **Playfair Display**: Used for headlines and display text (Traditional & Authoritative)
+- **Inter**: Used for body text and navigation (Modern & Highly Readable)
 
-## Why System Fonts?
-
-### Performance Benefits
-- **Zero load time** - Fonts are already on the user's device
-- **No external requests** - Faster initial page load
-- **No bandwidth usage** - Reduces data costs for mobile users
-- **Instant rendering** - No FOUT (Flash of Unstyled Text)
-
-### Privacy & Compliance
-- **100% GDPR compliant** - No external font CDN requests
-- **No tracking** - No third-party connections
-- **User privacy first** - No data shared with font providers
-
-### User Experience
-- **Familiar typography** - Uses fonts users are accustomed to
-- **Native feel** - Matches the operating system aesthetic
-- **Better readability** - Optimized for each platform
+These fonts are enqueued via Google Fonts by default in `functions.php`.
 
 ## Font Stack Details
 

@@ -96,9 +96,9 @@ All design tokens are managed in `theme.json` and automatically available in:
 - Semantic: `--wp--preset--color--success`, `warning`, `error`, `info`
 
 **Typography (3 font families):**
-- Display: `--wp--preset--font-family--display` (Bricolage Grotesque - Headlines)
-- Body: `--wp--preset--font-family--body` (Plus Jakarta Sans - Paragraphs)
-- Mono: `--wp--preset--font-family--mono` (JetBrains Mono - Numbers/Stats)
+- Display: `--wp--preset--font-family--display` (Playfair Display - Headlines)
+- Body: `--wp--preset--font-family--body` (Inter - Paragraphs)
+- Mono: `--wp--preset--font-family--mono` (System Monospace)
 
 **Font Sizes (8 fluid sizes):**
 - `--wp--preset--font-size--xs` → `--wp--preset--font-size--4-xl`

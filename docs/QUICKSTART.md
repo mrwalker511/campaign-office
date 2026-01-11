@@ -317,6 +317,13 @@ Use countdown blocks for events and donation deadlines to drive action.
 ### 7. A/B Test Donation CTAs
 Try different button text, colors, and placements to optimize donations.
 
+### 8. Local Development & Testing
+If you are developing locally and see a "License server not configured" notice, you can enable mock license responses by adding the following to your `wp-config.php`:
+```php
+require_once __DIR__ . '/wp-content/themes/campaign-office/dev-license-helper.php';
+```
+This will bypass external license checks and provide test keys (see the helper file for keys).
+
 ## 📚 Next Steps
 
 - **Read Full Documentation:** [campaignpress.com/docs](https://campaignpress.com/docs)
@@ -346,5 +353,5 @@ Need help? Contact support at [support@campaignpress.com](mailto:support@campaig
 ---
 
 **Last Updated:** 2025-01-08
-**Version:** 2.0.0
+**Version:** 2.1.0
 **Questions?** Check out [README.md](README.md) for more detailed information.

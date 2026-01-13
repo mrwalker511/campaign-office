@@ -118,7 +118,7 @@ class CP_Global_Styles_Enhanced {
             if (!isset($_POST['heading_font']) || !isset($_POST['body_font']) ||
                 !isset($_POST['primary_color']) || !isset($_POST['secondary_color']) ||
                 !isset($_POST['accent_color']) || !isset($_POST['container_width']) ||
-                !isset($_POST['section_padding'])) {
+                !isset($_POST['section_padding']) || !isset($_POST['element_spacing'])) {
                 echo '<div class="notice notice-error is-dismissible"><p>' .
                      esc_html__('Missing required fields. Please fill out all settings.', 'campaign-office') . '</p></div>';
                 return;
@@ -139,6 +139,7 @@ class CP_Global_Styles_Enhanced {
             $spacing = array(
                 'container_width' => absint($_POST['container_width']),
                 'section_padding' => sanitize_text_field(wp_unslash($_POST['section_padding'])),
+                'element_spacing' => sanitize_text_field(wp_unslash($_POST['element_spacing'])),
             );
 
             // Update options
@@ -193,25 +194,19 @@ class CP_Global_Styles_Enhanced {
                         <tr>
                             <th><?php esc_html_e('Heading Font', 'campaign-office'); ?></th>
                             <td>
-                                <select name="heading_font" class="regular-text">
-                                    <option value="Inter" <?php selected($typography['heading_font'], 'Inter'); ?>>Inter</option>
-                                    <option value="Roboto" <?php selected($typography['heading_font'], 'Roboto'); ?>>Roboto</option>
-                                    <option value="Poppins" <?php selected($typography['heading_font'], 'Poppins'); ?>>Poppins</option>
-                                    <option value="Montserrat" <?php selected($typography['heading_font'], 'Montserrat'); ?>>Montserrat</option>
-                                    <option value="Open Sans" <?php selected($typography['heading_font'], 'Open Sans'); ?>>Open Sans</option>
-                                </select>
+                                <?php
+                                $available_fonts = $this->get_available_fonts();
+                                echo $this->render_font_dropdown('heading_font', $typography['heading_font'], $available_fonts);
+                                ?>
                                 <p class="description"><?php esc_html_e('Font used for all headings (H1-H6)', 'campaign-office'); ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th><?php esc_html_e('Body Font', 'campaign-office'); ?></th>
                             <td>
-                                <select name="body_font" class="regular-text">
-                                    <option value="Inter" <?php selected($typography['body_font'], 'Inter'); ?>>Inter</option>
-                                    <option value="Open Sans" <?php selected($typography['body_font'], 'Open Sans'); ?>>Open Sans</option>
-                                    <option value="Lato" <?php selected($typography['body_font'], 'Lato'); ?>>Lato</option>
-                                    <option value="Roboto" <?php selected($typography['body_font'], 'Roboto'); ?>>Roboto</option>
-                                </select>
+                                <?php
+                                echo $this->render_font_dropdown('body_font', $typography['body_font'], $available_fonts);
+                                ?>
                                 <p class="description"><?php esc_html_e('Font used for body text and paragraphs', 'campaign-office'); ?></p>
                             </td>
                         </tr>
@@ -270,6 +265,17 @@ class CP_Global_Styles_Enhanced {
                                     <option value="extra-spacious" <?php selected($spacing['section_padding'], 'extra-spacious'); ?>><?php esc_html_e('Extra Spacious (8rem)', 'campaign-office'); ?></option>
                                 </select>
                                 <p class="description"><?php esc_html_e('Padding above and below content sections', 'campaign-office'); ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><?php esc_html_e('Element Spacing', 'campaign-office'); ?></th>
+                            <td>
+                                <select name="element_spacing" class="regular-text">
+                                    <option value="tight" <?php selected($spacing['element_spacing'], 'tight'); ?>><?php esc_html_e('Tight (8px)', 'campaign-office'); ?></option>
+                                    <option value="standard" <?php selected($spacing['element_spacing'], 'standard'); ?>><?php esc_html_e('Standard (16px)', 'campaign-office'); ?></option>
+                                    <option value="relaxed" <?php selected($spacing['element_spacing'], 'relaxed'); ?>><?php esc_html_e('Relaxed (24px)', 'campaign-office'); ?></option>
+                                </select>
+                                <p class="description"><?php esc_html_e('Spacing between elements inside sections', 'campaign-office'); ?></p>
                             </td>
                         </tr>
                     </table>
@@ -357,17 +363,16 @@ class CP_Global_Styles_Enhanced {
         $colors = get_option('cp_global_colors', array());
         $spacing = get_option('cp_global_spacing', array());
 
-        // Merge with defaults from theme.json
-        $theme_colors = $this->get_theme_json_colors();
+        // Merge with defaults from theme.json using the helper
         $typography = wp_parse_args($typography, array(
             'heading_font' => 'Inter',
             'body_font' => 'Inter',
         ));
 
         $colors = wp_parse_args($colors, array(
-            'primary' => $theme_colors['primary'] ?? '#0073aa',
-            'secondary' => $theme_colors['primary-700'] ?? '#005a87',
-            'accent' => $theme_colors['accent'] ?? '#d63638',
+            'primary' => CP_Theme_JSON_Helper::get_color('primary', '#0073aa'),
+            'secondary' => CP_Theme_JSON_Helper::get_color('primary-700', '#005a87'),
+            'accent' => CP_Theme_JSON_Helper::get_color('accent', '#d63638'),
         ));
 
         $spacing = wp_parse_args($spacing, array(
@@ -429,32 +434,14 @@ class CP_Global_Styles_Enhanced {
     }
 
     /**
-     * Get theme.json color values with fallback
-     * 
-     * @return array Theme colors indexed by slug
-     */
-    private function get_theme_json_colors() {
-        $theme_data = WP_Theme_JSON_Resolver::get_theme_data();
-        $settings = $theme_data->get_settings();
-        
-        $colors = array();
-        $palette = $settings['color']['palette']['theme'] ?? array();
-        
-        foreach ($palette as $color) {
-            $colors[$color['slug']] = $color['color'];
-        }
-        
-        return $colors;
-    }
-
-    /**
      * Map semantic padding names to rem values
      * 
      * @param string $padding Semantic padding name
      * @return string CSS rem value
      */
     private function map_padding_to_rems($padding) {
-        $map = array(
+        // Use centralized mapping via Theme JSON Helper
+        $spacing_map = array(
             'compact' => '3rem',
             'standard' => '4rem',
             'spacious' => '6rem',
@@ -463,7 +450,7 @@ class CP_Global_Styles_Enhanced {
             'relaxed' => '5rem',
         );
         
-        return $map[$padding] ?? '4rem';
+        return $spacing_map[$padding] ?? '4rem';
     }
 
     /**
@@ -473,15 +460,15 @@ class CP_Global_Styles_Enhanced {
      * @return string CSS rem value
      */
     private function map_element_spacing_to_rems($spacing) {
-        $map = array(
+        // Use centralized mapping
+        $element_map = array(
             'tight' => '0.5rem',       /* 8px */
             'standard' => '1rem',      /* 16px */
             'relaxed' => '1.5rem',     /* 24px */
-            'tight' => '0.5rem',       /* 8px */
             'compact' => '0.75rem',    /* 12px */
         );
         
-        return $map[$spacing] ?? '1rem';
+        return $element_map[$spacing] ?? '1rem';
     }
 
     /**
@@ -496,18 +483,70 @@ class CP_Global_Styles_Enhanced {
     }
 
     /**
-     * Sanitize typography settings
+     * Get available fonts from theme.json
+     * 
+     * @return array Array of font families with 'value' and 'label'
+     */
+    private function get_available_fonts() {
+        // Use the centralized Theme.json Helper
+        $all_fonts = CP_Theme_JSON_Helper::get_all_fonts();
+        $fonts = array();
+        
+        foreach ($all_fonts as $slug => $font_data) {
+            $fonts[] = array(
+                'value' => CP_Theme_JSON_Helper::extract_primary_font($font_data['fontFamily']),
+                'label' => $font_data['name'],
+                'slug' => $slug,
+            );
+        }
+        
+        return $fonts;
+    }
+
+    /**
+     * Render font selection dropdown
+     * 
+     * @param string $name Input name
+     * @param string $current Current value
+     * @param array $fonts Available fonts
+     * @return string HTML select element
+     */
+    private function render_font_dropdown($name, $current, $fonts) {
+        $html = '<select name="' . esc_attr($name) . '" class="regular-text">';
+        
+        foreach ($fonts as $font) {
+            $html .= '<option value="' . esc_attr($font['value']) . '" ' . 
+                     selected($current, $font['value'], false) . '>' . 
+                     esc_html($font['label']) . '</option>';
+        }
+        
+        $html .= '</select>';
+        return $html;
+    }
+
+    /**
+     * Sanitize typography settings (uses theme.json fonts)
      */
     public function sanitize_typography($input) {
         if (!is_array($input)) {
             return array();
         }
 
-        $valid_fonts = array('Inter', 'Roboto', 'Poppins', 'Montserrat', 'Open Sans', 'Lato');
+        // Get valid fonts from theme.json via helper
+        $all_fonts = CP_Theme_JSON_Helper::get_all_fonts();
+        $valid_fonts = array();
+        
+        foreach ($all_fonts as $slug => $font_data) {
+            $valid_fonts[] = CP_Theme_JSON_Helper::extract_primary_font($font_data['fontFamily']);
+        }
+        
+        // Add common fallbacks
+        $valid_fonts = array_merge($valid_fonts, array('Inter', 'Roboto', 'Open Sans', 'system-ui'));
+        $valid_fonts = array_unique($valid_fonts);
 
         return array(
-            'heading_font' => in_array($input['heading_font'] ?? '', $valid_fonts) ? $input['heading_font'] : 'Inter',
-            'body_font' => in_array($input['body_font'] ?? '', $valid_fonts) ? $input['body_font'] : 'Inter',
+            'heading_font' => in_array($input['heading_font'] ?? '', $valid_fonts, true) ? $input['heading_font'] : 'Inter',
+            'body_font' => in_array($input['body_font'] ?? '', $valid_fonts, true) ? $input['body_font'] : 'Inter',
         );
     }
 

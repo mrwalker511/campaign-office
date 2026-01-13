@@ -51,8 +51,8 @@ class CP_Global_Styles_Enhanced {
             'type' => 'array',
             'sanitize_callback' => array($this, 'sanitize_typography'),
             'default' => array(
-                'heading_font' => 'Inter',
-                'body_font' => 'Inter',
+                'heading_font' => __('Inter', 'campaign-office'),
+                'body_font' => __('Inter', 'campaign-office'),
             )
         ));
 
@@ -74,7 +74,22 @@ class CP_Global_Styles_Enhanced {
             'default' => array(
                 'container_width' => 1200,
                 'section_padding' => 'standard',
+                'element_spacing' => 'standard',
             )
+        ));
+
+        // Version tracking for cache busting
+        register_setting('cp_global_styles', 'cp_global_styles_version', array(
+            'type' => 'string',
+            'sanitize_callback' => 'sanitize_text_field',
+            'default' => '1.0.0',
+        ));
+
+        // Global styles enabled toggle
+        register_setting('cp_global_styles', 'cp_global_styles_enabled', array(
+            'type' => 'boolean',
+            'sanitize_callback' => 'rest_sanitize_boolean',
+            'default' => true,
         ));
     }
 
@@ -83,32 +98,70 @@ class CP_Global_Styles_Enhanced {
      */
     public function render_page() {
         // Check for form submission
-        if (isset($_POST['cp_global_styles_submit']) &&
-            check_admin_referer('cp_global_styles', 'cp_global_styles_nonce')) {
+        if (isset($_POST['cp_global_styles_submit'])) {
+            // Verify nonce
+            if (!isset($_POST['cp_global_styles_nonce']) || 
+                !wp_verify_nonce($_POST['cp_global_styles_nonce'], 'cp_global_styles')) {
+                echo '<div class="notice notice-error is-dismissible"><p>' .
+                     esc_html__('Security verification failed. Please try again.', 'campaign-office') . '</p></div>';
+                return;
+            }
 
-            // Save settings
+            // Check user capabilities
+            if (!current_user_can('edit_theme_options')) {
+                echo '<div class="notice notice-error is-dismissible"><p>' .
+                     esc_html__('You do not have permission to modify global styles.', 'campaign-office') . '</p></div>';
+                return;
+            }
+
+            // Verify all required fields are present
+            if (!isset($_POST['heading_font']) || !isset($_POST['body_font']) ||
+                !isset($_POST['primary_color']) || !isset($_POST['secondary_color']) ||
+                !isset($_POST['accent_color']) || !isset($_POST['container_width']) ||
+                !isset($_POST['section_padding']) || !isset($_POST['element_spacing'])) {
+                echo '<div class="notice notice-error is-dismissible"><p>' .
+                     esc_html__('Missing required fields. Please fill out all settings.', 'campaign-office') . '</p></div>';
+                return;
+            }
+
+            // Save settings using proper sanitization
             $typography = array(
-                'heading_font' => sanitize_text_field($_POST['heading_font'] ?? 'Inter'),
-                'body_font' => sanitize_text_field($_POST['body_font'] ?? 'Inter'),
+                'heading_font' => sanitize_text_field(wp_unslash($_POST['heading_font'])),
+                'body_font' => sanitize_text_field(wp_unslash($_POST['body_font'])),
             );
 
             $colors = array(
-                'primary' => sanitize_hex_color($_POST['primary_color'] ?? '#0073aa'),
-                'secondary' => sanitize_hex_color($_POST['secondary_color'] ?? '#005a87'),
-                'accent' => sanitize_hex_color($_POST['accent_color'] ?? '#d63638'),
+                'primary' => sanitize_hex_color(wp_unslash($_POST['primary_color'])),
+                'secondary' => sanitize_hex_color(wp_unslash($_POST['secondary_color'])),
+                'accent' => sanitize_hex_color(wp_unslash($_POST['accent_color'])),
             );
 
             $spacing = array(
-                'container_width' => absint($_POST['container_width'] ?? 1200),
-                'section_padding' => sanitize_text_field($_POST['section_padding'] ?? 'standard'),
+                'container_width' => absint($_POST['container_width']),
+                'section_padding' => sanitize_text_field(wp_unslash($_POST['section_padding'])),
+                'element_spacing' => sanitize_text_field(wp_unslash($_POST['element_spacing'])),
             );
 
-            update_option('cp_global_typography', $typography);
-            update_option('cp_global_colors', $colors);
-            update_option('cp_global_spacing', $spacing);
+            // Update options
+            $updated = true;
+            $updated = $updated && update_option('cp_global_typography', $typography);
+            $updated = $updated && update_option('cp_global_colors', $colors);
+            $updated = $updated && update_option('cp_global_spacing', $spacing);
 
-            echo '<div class="notice notice-success is-dismissible"><p>' .
-                 esc_html__('Global styles saved successfully!', 'campaign-office') . '</p></div>';
+            if ($updated) {
+                // Clear cache to regenerate CSS
+                delete_transient('cp_global_styles_css');
+                delete_post_meta_by_key('_cp_page_styles_cache');
+                
+                // Update version for cache busting
+                $this->increment_version();
+
+                echo '<div class="notice notice-success is-dismissible"><p>' .
+                     esc_html__('Global styles saved successfully!', 'campaign-office') . '</p></div>';
+            } else {
+                echo '<div class="notice notice-warning is-dismissible"><p>' .
+                     esc_html__('No changes were detected or there was an error saving.', 'campaign-office') . '</p></div>';
+            }
         }
 
         // Get current settings
@@ -141,25 +194,19 @@ class CP_Global_Styles_Enhanced {
                         <tr>
                             <th><?php esc_html_e('Heading Font', 'campaign-office'); ?></th>
                             <td>
-                                <select name="heading_font" class="regular-text">
-                                    <option value="Inter" <?php selected($typography['heading_font'], 'Inter'); ?>>Inter</option>
-                                    <option value="Roboto" <?php selected($typography['heading_font'], 'Roboto'); ?>>Roboto</option>
-                                    <option value="Poppins" <?php selected($typography['heading_font'], 'Poppins'); ?>>Poppins</option>
-                                    <option value="Montserrat" <?php selected($typography['heading_font'], 'Montserrat'); ?>>Montserrat</option>
-                                    <option value="Open Sans" <?php selected($typography['heading_font'], 'Open Sans'); ?>>Open Sans</option>
-                                </select>
+                                <?php
+                                $available_fonts = $this->get_available_fonts();
+                                echo $this->render_font_dropdown('heading_font', $typography['heading_font'], $available_fonts);
+                                ?>
                                 <p class="description"><?php esc_html_e('Font used for all headings (H1-H6)', 'campaign-office'); ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th><?php esc_html_e('Body Font', 'campaign-office'); ?></th>
                             <td>
-                                <select name="body_font" class="regular-text">
-                                    <option value="Inter" <?php selected($typography['body_font'], 'Inter'); ?>>Inter</option>
-                                    <option value="Open Sans" <?php selected($typography['body_font'], 'Open Sans'); ?>>Open Sans</option>
-                                    <option value="Lato" <?php selected($typography['body_font'], 'Lato'); ?>>Lato</option>
-                                    <option value="Roboto" <?php selected($typography['body_font'], 'Roboto'); ?>>Roboto</option>
-                                </select>
+                                <?php
+                                echo $this->render_font_dropdown('body_font', $typography['body_font'], $available_fonts);
+                                ?>
                                 <p class="description"><?php esc_html_e('Font used for body text and paragraphs', 'campaign-office'); ?></p>
                             </td>
                         </tr>
@@ -220,6 +267,17 @@ class CP_Global_Styles_Enhanced {
                                 <p class="description"><?php esc_html_e('Padding above and below content sections', 'campaign-office'); ?></p>
                             </td>
                         </tr>
+                        <tr>
+                            <th><?php esc_html_e('Element Spacing', 'campaign-office'); ?></th>
+                            <td>
+                                <select name="element_spacing" class="regular-text">
+                                    <option value="tight" <?php selected($spacing['element_spacing'], 'tight'); ?>><?php esc_html_e('Tight (8px)', 'campaign-office'); ?></option>
+                                    <option value="standard" <?php selected($spacing['element_spacing'], 'standard'); ?>><?php esc_html_e('Standard (16px)', 'campaign-office'); ?></option>
+                                    <option value="relaxed" <?php selected($spacing['element_spacing'], 'relaxed'); ?>><?php esc_html_e('Relaxed (24px)', 'campaign-office'); ?></option>
+                                </select>
+                                <p class="description"><?php esc_html_e('Spacing between elements inside sections', 'campaign-office'); ?></p>
+                            </td>
+                        </tr>
                     </table>
                 </div>
 
@@ -258,7 +316,7 @@ class CP_Global_Styles_Enhanced {
     }
 
     /**
-     * Output global styles to frontend
+     * Output global styles to frontend with caching
      */
     public function output_global_styles() {
         // Don't output in admin
@@ -266,25 +324,55 @@ class CP_Global_Styles_Enhanced {
             return;
         }
 
-        // Only output if we have global styles or page-specific styles
-        $typography = get_option('cp_global_typography');
-        $colors = get_option('cp_global_colors');
-        $spacing = get_option('cp_global_spacing');
-
-        if (!$typography && !$colors && !$spacing) {
+        // Only output if we have global styles enabled
+        $global_styles_enabled = get_option('cp_global_styles_enabled', true);
+        if (!$global_styles_enabled) {
             return;
         }
 
-        // Set defaults
+        // Get current version for cache busting
+        $version = get_option('cp_global_styles_version', '1.0');
+        
+        // Try to get cached CSS
+        $cache_key = 'cp_global_styles_css_' . $version;
+        $css = get_transient($cache_key);
+
+        // Generate CSS if cache is empty or stale
+        if (false === $css) {
+            $css = $this->generate_global_styles_css();
+            if (!empty($css)) {
+                // Cache for 24 hours
+                set_transient($cache_key, $css, DAY_IN_SECONDS);
+            }
+        }
+
+        // Output CSS
+        if (!empty($css)) {
+            echo '<style id="cp-global-styles-output" type="text/css">' . $css . '</style>';
+        }
+    }
+
+    /**
+     * Generate global styles CSS programmatically
+     * 
+     * @return string Generated CSS rules
+     */
+    private function generate_global_styles_css() {
+        // Get saved settings
+        $typography = get_option('cp_global_typography', array());
+        $colors = get_option('cp_global_colors', array());
+        $spacing = get_option('cp_global_spacing', array());
+
+        // Merge with defaults from theme.json using the helper
         $typography = wp_parse_args($typography, array(
             'heading_font' => 'Inter',
             'body_font' => 'Inter',
         ));
 
         $colors = wp_parse_args($colors, array(
-            'primary' => '#0073aa',
-            'secondary' => '#005a87',
-            'accent' => '#d63638',
+            'primary' => CP_Theme_JSON_Helper::get_color('primary', '#0073aa'),
+            'secondary' => CP_Theme_JSON_Helper::get_color('primary-700', '#005a87'),
+            'accent' => CP_Theme_JSON_Helper::get_color('accent', '#d63638'),
         ));
 
         $spacing = wp_parse_args($spacing, array(
@@ -292,80 +380,173 @@ class CP_Global_Styles_Enhanced {
             'section_padding' => 'standard',
         ));
 
-        // Map padding values to rem
-        $padding_map = array(
+        // Map semantic spacing values to rem units
+        $section_padding_rems = $this->map_padding_to_rems($spacing['section_padding']);
+        $element_spacing_rems = $this->map_element_spacing_to_rems($spacing['element_spacing'] ?? 'standard');
+
+        // Generate CSS using theme's variables
+        $css_rules = array(
+            ':root' => array(
+                '--cp-global-primary' => esc_attr($colors['primary']),
+                '--cp-global-secondary' => esc_attr($colors['secondary']),
+                '--cp-global-accent' => esc_attr($colors['accent']),
+                '--cp-global-container-width' => absint($spacing['container_width']) . 'px',
+                '--cp-global-section-padding' => esc_attr($section_padding_rems),
+                '--cp-global-element-spacing' => esc_attr($element_spacing_rems),
+            ),
+            'h1, h2, h3, h4, h5, h6' => array(
+                'font-family' => 'var(--cp-heading-font, ' . esc_attr($typography['heading_font']) . ')',
+            ),
+            'body' => array(
+                'font-family' => 'var(--cp-body-font, ' . esc_attr($typography['body_font']) . ')',
+            ),
+            '.site-container, .container, .wp-block-group__inner-container' => array(
+                'max-width' => 'var(--cp-global-container-width, ' . absint($spacing['container_width']) . 'px)',
+                'margin-left' => 'auto',
+                'margin-right' => 'auto',
+            ),
+            '.wp-block-button__link, .button, .btn-primary, .cp-button-primary' => array(
+                'background-color' => 'var(--cp-global-primary, ' . esc_attr($colors['primary']) . ')',
+                'border-color' => 'var(--cp-global-primary, ' . esc_attr($colors['primary']) . ')',
+            ),
+            '.wp-block-button__link:hover, .button:hover, .btn-primary:hover, .cp-button-primary:hover' => array(
+                'background-color' => 'var(--cp-global-secondary, ' . esc_attr($colors['secondary']) . ')',
+                'border-color' => 'var(--cp-global-secondary, ' . esc_attr($colors['secondary']) . ')',
+            ),
+            '.cp-section, section.wp-block-group' => array(
+                'padding-top' => 'var(--cp-global-section-padding, 4rem)',
+                'padding-bottom' => 'var(--cp-global-section-padding, 4rem)',
+            ),
+        );
+
+        // Convert array to CSS string
+        $css = '';
+        foreach ($css_rules as $selector => $properties) {
+            $css .= $selector . ' {' . "\n";
+            foreach ($properties as $property => $value) {
+                $css .= '    ' . $property . ': ' . $value . ';' . "\n";
+            }
+            $css .= '}' . "\n";
+        }
+
+        // Allow themes/plugins to add custom global styles
+        return apply_filters('cp_global_styles_css', $css, $typography, $colors, $spacing);
+    }
+
+    /**
+     * Map semantic padding names to rem values
+     * 
+     * @param string $padding Semantic padding name
+     * @return string CSS rem value
+     */
+    private function map_padding_to_rems($padding) {
+        // Use centralized mapping via Theme JSON Helper
+        $spacing_map = array(
             'compact' => '3rem',
             'standard' => '4rem',
             'spacious' => '6rem',
             'extra-spacious' => '8rem',
+            'tight' => '2rem',
+            'relaxed' => '5rem',
         );
-        $section_padding_rem = $padding_map[$spacing['section_padding']] ?? '4rem';
-
-        // Output styles
-        ?>
-        <style id="cp-global-styles-output">
-            :root {
-                --cp-heading-font: <?php echo esc_attr($typography['heading_font']); ?>, sans-serif;
-                --cp-body-font: <?php echo esc_attr($typography['body_font']); ?>, sans-serif;
-
-                --cp-global-primary: <?php echo esc_attr($colors['primary']); ?>;
-                --cp-global-secondary: <?php echo esc_attr($colors['secondary']); ?>;
-                --cp-global-accent: <?php echo esc_attr($colors['accent']); ?>;
-
-                --cp-global-container-width: <?php echo esc_attr($spacing['container_width']); ?>px;
-                --cp-global-section-padding: <?php echo esc_attr($section_padding_rem); ?>;
-            }
-
-            h1, h2, h3, h4, h5, h6 {
-                font-family: var(--cp-heading-font);
-            }
-
-            body {
-                font-family: var(--cp-body-font);
-            }
-
-            .site-container,
-            .container,
-            .wp-block-group__inner-container {
-                max-width: var(--cp-global-container-width);
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .wp-block-button__link,
-            .button,
-            .btn-primary {
-                background-color: var(--cp-global-primary);
-                border-color: var(--cp-global-primary);
-            }
-
-            .wp-block-button__link:hover,
-            .button:hover,
-            .btn-primary:hover {
-                background-color: var(--cp-global-secondary);
-                border-color: var(--cp-global-secondary);
-            }
-
-            .cp-section {
-                padding: var(--cp-global-section-padding) 1rem;
-            }
-        </style>
-        <?php
+        
+        return $spacing_map[$padding] ?? '4rem';
     }
 
     /**
-     * Sanitize typography settings
+     * Map element spacing names to rem values
+     * 
+     * @param string $spacing Semantic spacing name
+     * @return string CSS rem value
+     */
+    private function map_element_spacing_to_rems($spacing) {
+        // Use centralized mapping
+        $element_map = array(
+            'tight' => '0.5rem',       /* 8px */
+            'standard' => '1rem',      /* 16px */
+            'relaxed' => '1.5rem',     /* 24px */
+            'compact' => '0.75rem',    /* 12px */
+        );
+        
+        return $element_map[$spacing] ?? '1rem';
+    }
+
+    /**
+     * Increment the global styles version for cache busting
+     */
+    private function increment_version() {
+        $version = get_option('cp_global_styles_version', '1.0');
+        $version_parts = explode('.', $version);
+        $patch = isset($version_parts[2]) ? (int)$version_parts[2] + 1 : 1;
+        $new_version = $version_parts[0] . '.' . $version_parts[1] . '.' . $patch;
+        update_option('cp_global_styles_version', $new_version);
+    }
+
+    /**
+     * Get available fonts from theme.json
+     * 
+     * @return array Array of font families with 'value' and 'label'
+     */
+    private function get_available_fonts() {
+        // Use the centralized Theme.json Helper
+        $all_fonts = CP_Theme_JSON_Helper::get_all_fonts();
+        $fonts = array();
+        
+        foreach ($all_fonts as $slug => $font_data) {
+            $fonts[] = array(
+                'value' => CP_Theme_JSON_Helper::extract_primary_font($font_data['fontFamily']),
+                'label' => $font_data['name'],
+                'slug' => $slug,
+            );
+        }
+        
+        return $fonts;
+    }
+
+    /**
+     * Render font selection dropdown
+     * 
+     * @param string $name Input name
+     * @param string $current Current value
+     * @param array $fonts Available fonts
+     * @return string HTML select element
+     */
+    private function render_font_dropdown($name, $current, $fonts) {
+        $html = '<select name="' . esc_attr($name) . '" class="regular-text">';
+        
+        foreach ($fonts as $font) {
+            $html .= '<option value="' . esc_attr($font['value']) . '" ' . 
+                     selected($current, $font['value'], false) . '>' . 
+                     esc_html($font['label']) . '</option>';
+        }
+        
+        $html .= '</select>';
+        return $html;
+    }
+
+    /**
+     * Sanitize typography settings (uses theme.json fonts)
      */
     public function sanitize_typography($input) {
         if (!is_array($input)) {
             return array();
         }
 
-        $valid_fonts = array('Inter', 'Roboto', 'Poppins', 'Montserrat', 'Open Sans', 'Lato');
+        // Get valid fonts from theme.json via helper
+        $all_fonts = CP_Theme_JSON_Helper::get_all_fonts();
+        $valid_fonts = array();
+        
+        foreach ($all_fonts as $slug => $font_data) {
+            $valid_fonts[] = CP_Theme_JSON_Helper::extract_primary_font($font_data['fontFamily']);
+        }
+        
+        // Add common fallbacks
+        $valid_fonts = array_merge($valid_fonts, array('Inter', 'Roboto', 'Open Sans', 'system-ui'));
+        $valid_fonts = array_unique($valid_fonts);
 
         return array(
-            'heading_font' => in_array($input['heading_font'] ?? '', $valid_fonts) ? $input['heading_font'] : 'Inter',
-            'body_font' => in_array($input['body_font'] ?? '', $valid_fonts) ? $input['body_font'] : 'Inter',
+            'heading_font' => in_array($input['heading_font'] ?? '', $valid_fonts, true) ? $input['heading_font'] : 'Inter',
+            'body_font' => in_array($input['body_font'] ?? '', $valid_fonts, true) ? $input['body_font'] : 'Inter',
         );
     }
 

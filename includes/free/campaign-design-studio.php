@@ -454,15 +454,6 @@ class CP_Campaign_Design_Studio {
             'cp-design-templates',
             array($this, 'render_templates_page')
         );
-
-        $this->styles_page_hook = add_submenu_page(
-            'cp-design-studio',
-            __('Global Styles', 'campaign-office'),
-            __('Global Styles', 'campaign-office'),
-            'edit_pages',
-            'cp-global-styles',
-            array($this, 'render_global_styles_page')
-        );
     }
 
     /**

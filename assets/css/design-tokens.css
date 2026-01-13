@@ -1,0 +1,245 @@
+/**
+ * CampaignPress Design Tokens Bridge
+ * Maps WordPress theme.json tokens to theme-specific CSS variables
+ * Version: 2.1.0
+ */
+
+:root {
+  /* ============================================
+     COLOR TOKENS - Synced with theme.json
+     ============================================ */
+  
+  /* Primary Palette (9-shade system from theme.json) */
+  --cp-primary-50: var(--wp--preset--color--primary-50, #e6f0ff);
+  --cp-primary-100: var(--wp--preset--color--primary-100, #b3d4ff);
+  --cp-primary-200: var(--wp--preset--color--primary-200, #80b8ff);
+  --cp-primary-300: var(--wp--preset--color--primary-300, #4d9dff);
+  --cp-primary-400: var(--wp--preset--color--primary-400, #1a81ff);
+  --cp-primary-500: var(--wp--preset--color--primary, #14213d);
+  --cp-primary-600: var(--wp--preset--color--primary-600, #101b32);
+  --cp-primary-700: var(--wp--preset--color--primary-700, #0d1527);
+  --cp-primary-800: var(--wp--preset--color--primary-800, #0a101d);
+  --cp-primary-900: var(--wp--preset--color--primary-900, #060a12);
+  --cp-primary-dark: var(--wp--preset--color--primary-dark, #0d1527);
+  --cp-primary-text: var(--wp--preset--color--primary-text, #003d91);
+  
+  /* Accent Palette (9-shade system) */
+  --cp-accent-50: var(--wp--preset--color--accent-50, #fff4e6);
+  --cp-accent-100: var(--wp--preset--color--accent-100, #ffe0b3);
+  --cp-accent-200: var(--wp--preset--color--accent-200, #ffcc80);
+  --cp-accent-300: var(--wp--preset--color--accent-300, #ffb84d);
+  --cp-accent-400: var(--wp--preset--color--accent-400, #ffa41a);
+  --cp-accent-500: var(--wp--preset--color--accent, #ff8800);
+  --cp-accent-600: var(--wp--preset--color--accent-600, #e67a00);
+  --cp-accent-700: var(--wp--preset--color--accent-700, #cc6c00);
+  --cp-accent-800: var(--wp--preset--color--accent-800, #995100);
+  --cp-accent-900: var(--wp--preset--color--accent-900, #331a00);
+  --cp-accent-text: var(--wp--preset--color--accent-text, #cc6d00);
+  
+  /* Neutral Palette */
+  --cp-neutral-50: var(--wp--preset--color--neutral-50, #f8f9fa);
+  --cp-neutral-100: var(--wp--preset--color--neutral-100, #f1f3f5);
+  --cp-neutral-200: var(--wp--preset--color--neutral-200, #e9ecef);
+  --cp-neutral-300: var(--wp--preset--color--neutral-300, #dee2e6);
+  --cp-neutral-400: var(--wp--preset--color--neutral-400, #ced4da);
+  --cp-neutral-500: var(--wp--preset--color--neutral-500, #adb5bd);
+  --cp-neutral-600: var(--wp--preset--color--neutral-600, #6c757d);
+  --cp-neutral-700: var(--wp--preset--color--neutral-700, #495057);
+  --cp-neutral-800: var(--wp--preset--color--neutral-800, #343a40);
+  --cp-neutral-900: var(--wp--preset--color--neutral-900, #212529);
+  
+  /* Semantic Colors */
+  --cp-success: var(--wp--preset--color--success, #28a745);
+  --cp-warning: var(--wp--preset--color--warning, #ffc107);
+  --cp-error: var(--wp--preset--color--error, #dc3545);
+  --cp-info: var(--wp--preset--color--info, #17a2b8);
+  --cp-white: var(--wp--preset--color--white, #ffffff);
+  --cp-black: var(--wp--preset--color--black, #000000);
+  
+  /* Party Color Schemes (overrides applied via body class) */
+  --cp-republican-red: var(--wp--preset--color--republican-red, #C4232C);
+  --cp-republican-dark: var(--wp--preset--color--republican-dark, #9e1c23);
+  --cp-independent-teal: var(--wp--preset--color--independent-teal, #00b8d9);
+  --cp-independent-purple: var(--wp--preset--color--independent-purple, #6554c0);
+  --cp-gold: var(--wp--preset--color--gold, #BF9B30);
+  
+  /* ============================================
+     TYPOGRAPHY TOKENS
+     ============================================ */
+  
+  /* Font Families */
+  --cp-font-display: var(--wp--preset--font-family--display, 'Playfair Display', Georgia, 'Times New Roman', serif);
+  --cp-font-body: var(--wp--preset--font-family--body, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif);
+  --cp-font-mono: var(--wp--preset--font-family--mono, ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace);
+  
+  /* Fluid Font Sizes */
+  --cp-font-size-xs: var(--wp--preset--font-size--xs, 0.75rem);
+  --cp-font-size-sm: var(--wp--preset--font-size--sm, 0.875rem);
+  --cp-font-size-base: var(--wp--preset--font-size--base, 1rem);
+  --cp-font-size-lg: var(--wp--preset--font-size--lg, 1.125rem);
+  --cp-font-size-xl: var(--wp--preset--font-size--xl, 1.25rem);
+  --cp-font-size-2xl: var(--wp--preset--font-size--2-xl, 1.5rem);
+  --cp-font-size-3xl: var(--wp--preset--font-size--3-xl, 2rem);
+  --cp-font-size-4xl: var(--wp--preset--font-size--4-xl, 2.5rem);
+  
+  /* Font Weights */
+  --cp-font-weight-normal: 400;
+  --cp-font-weight-medium: 500;
+  --cp-font-weight-semibold: 600;
+  --cp-font-weight-bold: 700;
+  --cp-font-weight-extrabold: 800;
+  
+  /* Line Heights */
+  --cp-leading-none: 1;
+  --cp-leading-tight: 1.25;
+  --cp-leading-snug: 1.375;
+  --cp-leading-normal: 1.5;
+  --cp-leading-relaxed: 1.625;
+  --cp-leading-loose: 2;
+  
+  /* Letter Spacing */
+  --cp-tracking-tighter: -0.05em;
+  --cp-tracking-tight: -0.025em;
+  --cp-tracking-normal: 0;
+  --cp-tracking-wide: 0.025em;
+  --cp-tracking-wider: 0.4em;
+  --cp-tracking-widest: 0.1em;
+  
+  /* ============================================
+     SPACING TOKENS
+     ============================================ */
+  
+  /* 8px Grid System (from theme.json spacing scale) */
+  --cp-spacing-1: 0.25rem;  /* 4px */
+  --cp-spacing-2: 0.5rem;   /* 8px */
+  --cp-spacing-3: 0.75rem;  /* 12px */
+  --cp-spacing-4: 1rem;     /* 16px */
+  --cp-spacing-5: 1.25rem;  /* 20px */
+  --cp-spacing-6: 1.5rem;   /* 24px */
+  --cp-spacing-8: 2rem;     /* 32px */
+  --cp-spacing-10: 2.5rem;  /* 40px */
+  --cp-spacing-12: 3rem;    /* 48px */
+  --cp-spacing-16: 4rem;    /* 64px */
+  --cp-spacing-20: 5rem;    /* 80px */
+  --cp-spacing-24: 6rem;    /* 96px */
+  
+  /* Synonyms for common spacing needs */
+  --cp-spacing-sm: var(--cp-spacing-2);
+  --cp-spacing-md: var(--cp-spacing-4);
+  --cp-spacing-lg: var(--cp-spacing-6);
+  --cp-spacing-xl: var(--cp-spacing-8);
+  --cp-spacing-2xl: var(--cp-spacing-12);
+  
+  /* Semantic Spacing - Section Padding */
+  --cp-section-padding-compact: 3rem;
+  --cp-section-padding-standard: 4rem;
+  --cp-section-padding-spacious: 6rem;
+  --cp-section-padding-extra: 8rem;
+  
+  /* Semantic Spacing - Element Spacing */
+  --cp-element-spacing-tight: 0.5rem;
+  --cp-element-spacing-standard: 1rem;
+  --cp-element-spacing-relaxed: 1.5rem;
+  
+  /* ============================================
+     EFFECT TOKENS
+     ============================================ */
+  
+  /* Transitions - Campaign-specific cubic-bezier for momentum */
+  --cp-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Shadows (from theme.json presets) */
+  --cp-shadow-sm: var(--wp--preset--shadow--sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  --cp-shadow-md: var(--wp--preset--shadow--md, 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1));
+  --cp-shadow-lg: var(--wp--preset--shadow--lg, 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1));
+  --cp-shadow-xl: var(--wp--preset--shadow--xl, 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1));
+  --cp-shadow-2xl: var(--wp--preset--shadow--2-xl, 0 25px 50px -12px rgb(0 0 0 / 0.25));
+  --cp-shadow-inner: var(--wp--preset--shadow--inner, inset 0 2px 4px 0 rgb(0 0 0 / 0.05));
+  --cp-shadow-none: none;
+  
+  /* Border Radius Scale */
+  --cp-radius-none: 0;
+  --cp-radius-sm: 0.25rem;   /* 4px */
+  --cp-radius-md: 0.5rem;    /* 8px */
+  --cp-radius-lg: 0.75rem;   /* 12px */
+  --cp-radius-xl: 1rem;      /* 16px */
+  --cp-radius-full: 9999px;  /* Pill */
+  
+  /* Animation Settings (for JS interaction) */
+  --cp-animation-stagger: 0.2s;
+  --cp-animation-pulse-duration: 2s;
+  --cp-animation-duration-fast: 0.15s;
+  --cp-animation-duration-base: 0.25s;
+  --cp-animation-duration-slow: 0.35s;
+  
+  /* Opacity Scale */
+  --cp-opacity-0: 0;
+  --cp-opacity-25: 0.25;
+  --cp-opacity-50: 0.5;
+  --cp-opacity-75: 0.75;
+  --cp-opacity-100: 1;
+  
+  /* Z-Index Scale */
+  --cp-z-dropdown: 1000;
+  --cp-z-sticky: 1020;
+  --cp-z-fixed: 1030;
+  --cp-z-modal-overlay: 1040;
+  --cp-z-modal: 1050;
+  --cp-z-popover: 1060;
+  --cp-z-tooltip: 1070;
+  --cp-z-toast: 1080;
+}
+
+/* ============================================
+   BREAKPOINT TOKENS (WordPress doesn't natively support these yet)
+   ============================================ */
+
+/* Custom media queries for consistent responsive design */
+@custom-media --cp-breakpoint-sm (min-width: 640px);
+@custom-media --cp-breakpoint-md (min-width: 768px);
+@custom-media --cp-breakpoint-lg (min-width: 1024px);
+@custom-media --cp-breakpoint-xl (min-width: 1280px);
+@custom-media --cp-breakpoint-2xl (min-width: 1536px);
+
+/* Conventional breakpoint values as CSS variables for JS use */
+:root {
+  --cp-breakpoint-sm-value: 640px;
+  --cp-breakpoint-md-value: 768px;
+  --cp-breakpoint-lg-value: 1024px;
+  --cp-breakpoint-xl-value: 1280px;
+  --cp-breakpoint-2xl-value: 1536px;
+}
+
+/* Reduced Motion Support - WCAG AA Compliance */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cp-transition-fast: 0;
+    --cp-transition-base: 0;
+    --cp-transition-slow: 0;
+    --cp-animation-pulse-duration: 0;
+    --cp-animation-duration-fast: 0;
+    --cp-animation-duration-base: 0;
+    --cp-animation-duration-slow: 0;
+    --cp-animation-stagger: 0;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --cp-shadow-sm: 0 1px 0 0 currentColor;
+    --cp-shadow-md: 0 2px 0 0 currentColor;
+    --cp-shadow-lg: 0 3px 0 0 currentColor;
+    --cp-shadow-xl: 0 4px 0 0 currentColor;
+    --cp-shadow-2xl: 0 5px 0 0 currentColor;
+  }
+}

@@ -280,6 +280,33 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
+    // Design Tokens CSS - Bridges theme.json tokens to custom CSS variables
+    // Provides consistent --cp-* variables across the theme
+    $design_tokens_css = get_template_directory_uri() . '/assets/css/design-tokens.css';
+    if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/css/design-tokens.css')) {
+        $design_tokens_css = get_template_directory_uri() . '/assets/dist/css/design-tokens.css';
+    }
+    
+    wp_enqueue_style(
+        'campaignpress-design-tokens',
+        $design_tokens_css,
+        array('campaignpress-tailwind'),
+        CAMPAIGNPRESS_VERSION
+    );
+
+    // Animation System CSS - Orchestrated animations with token-based timing
+    $animations_css = get_template_directory_uri() . '/assets/css/animations.css';
+    if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/css/animations.css')) {
+        $animations_css = get_template_directory_uri() . '/assets/dist/css/animations.css';
+    }
+    
+    wp_enqueue_style(
+        'campaignpress-animations',
+        $animations_css,
+        array('campaignpress-design-tokens'),
+        CAMPAIGNPRESS_VERSION
+    );
+
     // Bootstrap 5 CSS (CDN by default, filterable)
     // NOTE: For WordPress.org submission, Bootstrap MUST be bundled locally.
     // For production/commercial use, download Bootstrap and place in /assets/vendor/bootstrap/

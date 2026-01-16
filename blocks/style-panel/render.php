@@ -20,6 +20,6 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
     'style' => $style_string
 ));
 ?>
-<div <?php echo $wrapper_attributes; ?>>
-    <?php echo $content; // Renders inner blocks ?>
+<div <?php echo wp_kses_data( $wrapper_attributes ); ?>>
+    <?php echo wp_kses_post( $content ); ?>
 </div>

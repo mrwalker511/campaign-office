@@ -11,7 +11,7 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
     'data-date' => esc_attr($target_date)
 ));
 ?>
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo wp_kses_data( $wrapper_attributes ); ?>>
     <?php if ($headline): ?>
         <h3 class="wp-block-campaignpress-countdown__title"><?php echo esc_html($headline); ?></h3>
     <?php endif; ?>

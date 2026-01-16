@@ -99,7 +99,7 @@ function campaignpress_get_heroicon( $icon, $style = 'outline', $args = array() 
  * @param array  $args Additional arguments.
  */
 function campaignpress_heroicon( $icon, $style = 'outline', $args = array() ) {
-	echo campaignpress_get_heroicon( $icon, $style, $args );
+	echo wp_kses( campaignpress_get_heroicon( $icon, $style, $args ), campaignpress_get_allowed_svg_tags() );
 }
 
 /**
@@ -242,7 +242,15 @@ function campaignpress_get_status_badge( $status, $text, $icon = '' ) {
  * @param string $icon Optional icon name.
  */
 function campaignpress_status_badge( $status, $text, $icon = '' ) {
-	echo campaignpress_get_status_badge( $status, $text, $icon );
+	$allowed_tags = array_merge(
+		campaignpress_get_allowed_svg_tags(),
+		array(
+			'span' => array(
+				'class' => true,
+			),
+		)
+	);
+	echo wp_kses( campaignpress_get_status_badge( $status, $text, $icon ), $allowed_tags );
 }
 
 /**
@@ -316,5 +324,101 @@ function campaignpress_get_ui_icon( $type, $args = array() ) {
  * @param array  $args Additional arguments.
  */
 function campaignpress_ui_icon( $type, $args = array() ) {
-	echo campaignpress_get_ui_icon( $type, $args );
+	echo wp_kses( campaignpress_get_ui_icon( $type, $args ), campaignpress_get_allowed_svg_tags() );
+}
+
+/**
+ * Get allowed SVG tags for wp_kses() escaping
+ *
+ * Returns an array of allowed HTML tags and attributes for SVG elements.
+ * Used for safely escaping SVG output from Heroicons.
+ *
+ * @return array Allowed SVG tags and attributes.
+ */
+function campaignpress_get_allowed_svg_tags() {
+	return array(
+		'svg'      => array(
+			'class'           => true,
+			'aria-hidden'     => true,
+			'aria-label'      => true,
+			'role'            => true,
+			'xmlns'           => true,
+			'width'           => true,
+			'height'          => true,
+			'viewbox'         => true,
+			'fill'            => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+			'stroke-linecap'  => true,
+			'stroke-linejoin' => true,
+			'data-slot'       => true,
+		),
+		'path'     => array(
+			'd'               => true,
+			'fill'            => true,
+			'fill-rule'       => true,
+			'clip-rule'       => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+			'stroke-linecap'  => true,
+			'stroke-linejoin' => true,
+		),
+		'circle'   => array(
+			'cx'              => true,
+			'cy'              => true,
+			'r'               => true,
+			'fill'            => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+		),
+		'ellipse'  => array(
+			'cx'              => true,
+			'cy'              => true,
+			'rx'              => true,
+			'ry'              => true,
+			'fill'            => true,
+			'stroke'          => true,
+		),
+		'line'     => array(
+			'x1'              => true,
+			'y1'              => true,
+			'x2'              => true,
+			'y2'              => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+		),
+		'polygon'  => array(
+			'points'          => true,
+			'fill'            => true,
+			'stroke'          => true,
+		),
+		'polyline' => array(
+			'points'          => true,
+			'fill'            => true,
+			'stroke'          => true,
+		),
+		'rect'     => array(
+			'x'               => true,
+			'y'               => true,
+			'width'           => true,
+			'height'          => true,
+			'rx'              => true,
+			'ry'              => true,
+			'fill'            => true,
+			'stroke'          => true,
+		),
+		'g'        => array(
+			'fill'            => true,
+			'stroke'          => true,
+			'transform'       => true,
+		),
+		'defs'     => array(),
+		'clippath' => array(
+			'id'              => true,
+		),
+		'use'      => array(
+			'href'            => true,
+			'xlink:href'      => true,
+		),
+	);
 }

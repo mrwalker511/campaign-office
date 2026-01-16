@@ -39,7 +39,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
 $form_id = 'cp-volunteer-form-' . wp_unique_id();
 ?>
 
-<div <?php echo $wrapper_attributes; ?> <?php echo $style_attr; ?>>
+<div <?php echo wp_kses_data( $wrapper_attributes ); ?> <?php echo wp_kses_data( $style_attr ); ?>>
     <?php if ( $title ) : ?>
         <h2 class="cp-volunteer-title"><?php echo esc_html( $title ); ?></h2>
     <?php endif; ?>

@@ -1,10 +1,10 @@
 === CampaignPress ===
 Contributors: campaignpress
-Tags: blog, politics, campaign, two-columns, left-sidebar, right-sidebar, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, flexible-header, footer-widgets, full-width-template, theme-options, threaded-comments, translation-ready
+Tags: blog, one-column, two-columns, left-sidebar, right-sidebar, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, footer-widgets, full-width-template, theme-options, threaded-comments, translation-ready, accessibility-ready, block-styles, wide-blocks
 Requires at least: 6.4
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ CampaignPress is a comprehensive WordPress theme built specifically for politica
 * **Comprehensive Theme Options Panel**: Centralized control for all customization in one place
 * **Demo Content Importer**: Get started quickly with pre-built sample content
 * **Responsive Design**: Works beautifully on all devices
-* **Accessibility Ready**: WCAG 2.0 AA compliant
+* **Accessibility Ready**: WCAG 2.1 AA compliant
 * **Multiple Layout Options**: Sidebar right, sidebar left, or full-width
 * **Color Scheme Presets**: Democrat Blue, Republican Red, Independent Purple, Green Party, and Neutral
 * **Social Media Integration**: Built-in social sharing and profile links
@@ -134,6 +134,16 @@ Yes! Each page and post has a "Layout Options" meta box in the editor where you 
 
 == Changelog ==
 
+= 2.1.0 - 2026-01-16 =
+* Security: Added proper escaping for all block render outputs
+* Security: Sanitized nonce and IP address inputs in functions.php
+* Compliance: Bundled Bootstrap 5.3 locally (removed CDN dependency)
+* Compliance: Removed Google Fonts CDN for GDPR privacy compliance
+* Compliance: Added LICENSE file (GPL v2 or later)
+* Compliance: Fixed WordPress.org theme tags to use only valid tags
+* Accessibility: Updated WCAG reference to 2.1 AA compliance
+* Added proper credits for Bootstrap and Heroicons in readme.txt
+
 = 2.0.0 - 2025-01-08 =
 * Major update: WordPress 6.9+ design system integration
 * Added comprehensive theme.json with 33 colors, fluid typography, and spacing system
@@ -170,6 +180,8 @@ Initial release of CampaignPress theme.
 * Underscores (_s) - https://underscores.me/ - GPLv2
 * Normalize.css - https://necolas.github.io/normalize.css/ - MIT License
 * Dashicons - Included with WordPress - GPLv2
+* Bootstrap 5.3 - https://getbootstrap.com/ - MIT License
+* Heroicons - https://heroicons.com/ - MIT License
 
 == License ==
 

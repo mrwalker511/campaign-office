@@ -48,7 +48,8 @@ class CP_Mega_Menu_Builder {
      * Add admin menu
      */
     public function add_admin_menu() {
-        add_theme_page(
+        add_submenu_page(
+            'cp-design-studio',
             __('Mega Menu', 'campaign-office'),
             __('Mega Menu', 'campaign-office'),
             'edit_theme_options',
@@ -363,7 +364,7 @@ class CP_Mega_Menu_Builder {
      * Enqueue admin assets
      */
     public function enqueue_admin_assets($hook) {
-        if ($hook !== 'nav-menus.php' && $hook !== 'toplevel_page_cp-mega-menu') {
+        if ($hook !== 'nav-menus.php' && $hook !== 'cp-design-studio_page_cp-mega-menu') {
             return;
         }
 

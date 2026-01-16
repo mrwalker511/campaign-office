@@ -231,6 +231,14 @@ class CampaignPress_Premium {
                 'required_license' => 'professional',
                 'icon' => 'dashicons-code-standards',
             ),
+            'design_studio_templates' => array(
+                'name' => __('Premium Design Templates', 'campaign-office'),
+                'description' => __('50+ professionally designed campaign page templates', 'campaign-office'),
+                'enabled' => true,
+                'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/design-studio/premium-templates-init.php',
+                'required_license' => 'professional',
+                'icon' => 'dashicons-layout',
+            ),
         ));
     }
 

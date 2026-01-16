@@ -1,0 +1,515 @@
+{
+  "template_key": "volunteer_hub",
+  "template_name": "Volunteer Hub",
+  "template_description": "Comprehensive volunteer recruitment and management landing page. Showcases opportunities, provides easy sign-up, highlights impact, and celebrates volunteer achievements. Perfect for building and mobilizing your volunteer base.",
+  "category": "landing_pages",
+  "campaign_type": "all",
+  "election_level": "all",
+  "tags": ["volunteer", "recruitment", "engagement", "grassroots", "activism", "organizing"],
+  "is_premium": true,
+  "featured": true,
+  "preview_image": "/assets/templates/previews/volunteer-hub.jpg",
+  "difficulty": "beginner",
+  "estimated_setup_time": "5 minutes",
+  "best_for": ["Volunteer Recruitment", "Grassroots Organizing", "Email Campaigns", "GOTV"],
+  "conversion_optimized": true,
+  "color_scheme": {
+    "primary": "#00a32a",
+    "secondary": "#008a20",
+    "accent": "#46b450",
+    "text": "#1e1e1e",
+    "background": "#ffffff"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "centered",
+      "order": 1,
+      "settings": {
+        "layout": "centered-with-image",
+        "headline": "Be the Change You Want to See",
+        "subheadline": "Join thousands of volunteers making a real difference in our community. Every action counts.",
+        "background_type": "image",
+        "background_image": "/assets/placeholders/volunteers-rally.jpg",
+        "overlay_opacity": 0.6,
+        "overlay_color": "#000000",
+        "text_color": "#ffffff",
+        "height": "70vh",
+        "buttons": [
+          {
+            "text": "Sign Up to Volunteer",
+            "style": "primary-large-green",
+            "action": "scroll-to-section",
+            "target": "signup-form",
+            "icon": "arrow-down",
+            "pulse": true
+          },
+          {
+            "text": "View Opportunities",
+            "style": "secondary-outline-white",
+            "action": "scroll-to-section",
+            "target": "opportunities",
+            "icon": "list"
+          }
+        ],
+        "stats_banner": {
+          "enabled": true,
+          "stats": [
+            {"label": "Active Volunteers", "value": "3,891"},
+            {"label": "Hours This Month", "value": "12,450"},
+            {"label": "Events Organized", "value": "127"}
+          ]
+        },
+        "animation": "fade-in"
+      }
+    },
+    {
+      "type": "volunteer",
+      "variant": "opportunities",
+      "order": 2,
+      "settings": {
+        "section_id": "opportunities",
+        "section_headline": "Find Your Way to Help",
+        "section_subheadline": "Whether you have 1 hour or 10, there's a perfect opportunity for you",
+        "background": "#ffffff",
+        "padding": "80px-0",
+        "layout": "card-grid",
+        "filter_by": ["time", "location", "skill", "virtual"],
+        "opportunities": [
+          {
+            "title": "Phone Banking",
+            "description": "Call voters from home or our office to discuss issues and get out the vote",
+            "icon": "📞",
+            "time_commitment": "2-4 hours/week",
+            "location": "Remote or HQ",
+            "skill_level": "No experience needed",
+            "spots_available": 50,
+            "volunteers_signed": 34,
+            "image": "/assets/placeholders/phone-banking-vol.jpg",
+            "virtual": true,
+            "training_provided": true,
+            "impact_statement": "Each shift reaches 50-100 voters",
+            "cta_text": "Sign Up",
+            "cta_link": "#signup-form"
+          },
+          {
+            "title": "Canvassing",
+            "description": "Walk neighborhoods and talk to voters face-to-face about the campaign",
+            "icon": "🚶",
+            "time_commitment": "Weekend mornings",
+            "location": "Various neighborhoods",
+            "skill_level": "Training provided",
+            "spots_available": 40,
+            "volunteers_signed": 28,
+            "image": "/assets/placeholders/canvassing-vol.jpg",
+            "virtual": false,
+            "training_provided": true,
+            "impact_statement": "Highest conversion rate for undecided voters",
+            "cta_text": "Join a Walk",
+            "cta_link": "#signup-form"
+          },
+          {
+            "title": "Event Support",
+            "description": "Help set up, greet attendees, and support at rallies and town halls",
+            "icon": "🎪",
+            "time_commitment": "3-5 hours per event",
+            "location": "Event venues",
+            "skill_level": "All welcome",
+            "spots_available": 30,
+            "volunteers_signed": 22,
+            "image": "/assets/placeholders/event-support.jpg",
+            "virtual": false,
+            "training_provided": false,
+            "impact_statement": "Make events run smoothly and professionally",
+            "cta_text": "Help at Events",
+            "cta_link": "#signup-form"
+          },
+          {
+            "title": "Social Media",
+            "description": "Amplify our message online, engage supporters, share content",
+            "icon": "📱",
+            "time_commitment": "30min-1hr daily",
+            "location": "From anywhere",
+            "skill_level": "Social media savvy",
+            "spots_available": 100,
+            "volunteers_signed": 67,
+            "image": "/assets/placeholders/social-media-vol.jpg",
+            "virtual": true,
+            "training_provided": true,
+            "impact_statement": "Expand our reach to thousands",
+            "cta_text": "Get Started",
+            "cta_link": "#signup-form"
+          },
+          {
+            "title": "Data Entry",
+            "description": "Help organize voter data and campaign information",
+            "icon": "💻",
+            "time_commitment": "Flexible",
+            "location": "Remote",
+            "skill_level": "Basic computer skills",
+            "spots_available": 25,
+            "volunteers_signed": 18,
+            "image": "/assets/placeholders/data-entry.jpg",
+            "virtual": true,
+            "training_provided": true,
+            "impact_statement": "Critical for targeting efforts",
+            "cta_text": "Help with Data",
+            "cta_link": "#signup-form"
+          },
+          {
+            "title": "Creative Team",
+            "description": "Design graphics, edit videos, create content for the campaign",
+            "icon": "🎨",
+            "time_commitment": "Project-based",
+            "location": "Remote",
+            "skill_level": "Design experience helpful",
+            "spots_available": 15,
+            "volunteers_signed": 11,
+            "image": "/assets/placeholders/creative-team.jpg",
+            "virtual": true,
+            "training_provided": false,
+            "impact_statement": "Professional campaign materials",
+            "cta_text": "Join Creative",
+            "cta_link": "#signup-form"
+          }
+        ],
+        "show_filter": true,
+        "show_availability_indicator": true,
+        "animation": "stagger-in"
+      }
+    },
+    {
+      "type": "testimonials",
+      "variant": "carousel",
+      "order": 3,
+      "settings": {
+        "section_headline": "Why Volunteers Love This Campaign",
+        "section_subheadline": "Hear from the real heroes of our movement",
+        "background": "#f8f9fa",
+        "padding": "60px-0",
+        "layout": "single-slide-carousel",
+        "autoplay": true,
+        "autoplay_speed": 6000,
+        "testimonials": [
+          {
+            "quote": "I started phone banking and now I'm leading a team of 20 volunteers. This campaign gave me purpose and an amazing community.",
+            "author": "Sarah M.",
+            "title": "Team Leader",
+            "location": "Springfield",
+            "hours_volunteered": "127 hours",
+            "image": "/assets/placeholders/volunteer-sarah.jpg",
+            "verified": true
+          },
+          {
+            "quote": "Never canvassed before but the training was great and now I look forward to it every weekend. We're really making a difference.",
+            "author": "James R.",
+            "title": "Canvasser",
+            "location": "Metro Area",
+            "hours_volunteered": "85 hours",
+            "image": "/assets/placeholders/volunteer-james.jpg",
+            "verified": true
+          },
+          {
+            "quote": "As a college student I can't donate much, but volunteering lets me contribute in a meaningful way. Plus I've made lifelong friends!",
+            "author": "Maria L.",
+            "title": "Student Volunteer",
+            "location": "University District",
+            "hours_volunteered": "62 hours",
+            "image": "/assets/placeholders/volunteer-maria.jpg",
+            "verified": true
+          },
+          {
+            "quote": "Managing social media from home fits perfectly with my schedule. I feel like I'm part of something bigger than myself.",
+            "author": "David C.",
+            "title": "Social Media Volunteer",
+            "location": "North Side",
+            "hours_volunteered": "94 hours",
+            "image": "/assets/placeholders/volunteer-david.jpg",
+            "verified": true
+          }
+        ],
+        "show_verified_badge": true,
+        "show_hours_badge": true,
+        "navigation_dots": true,
+        "navigation_arrows": true,
+        "animation": "slide"
+      }
+    },
+    {
+      "type": "stats",
+      "variant": "badges",
+      "order": 4,
+      "settings": {
+        "section_headline": "Volunteer Impact This Month",
+        "background": "#ffffff",
+        "padding": "60px-0",
+        "stats": [
+          {
+            "label": "Voters Contacted",
+            "value": "47,832",
+            "icon": "📊",
+            "color": "#00a32a",
+            "trend": "+12%",
+            "description": "Through phone and canvassing"
+          },
+          {
+            "label": "Events Held",
+            "value": "127",
+            "icon": "📅",
+            "color": "#008a20",
+            "trend": "+8%",
+            "description": "Across the district"
+          },
+          {
+            "label": "Social Reach",
+            "value": "385K",
+            "icon": "📱",
+            "color": "#46b450",
+            "trend": "+23%",
+            "description": "People reached on social media"
+          },
+          {
+            "label": "Volunteer Hours",
+            "value": "12,450",
+            "icon": "⏰",
+            "color": "#00a32a",
+            "trend": "+15%",
+            "description": "Combined volunteer effort"
+          }
+        ],
+        "layout": "4-column-badges",
+        "show_trends": true,
+        "animation": "count-up"
+      }
+    },
+    {
+      "type": "volunteer",
+      "variant": "leaderboard",
+      "order": 5,
+      "settings": {
+        "section_headline": "Top Volunteers This Month",
+        "section_subheadline": "Celebrating our most active supporters",
+        "background": "#f8f9fa",
+        "padding": "60px-0",
+        "layout": "leaderboard-table",
+        "show_top": 10,
+        "categories": ["Overall Hours", "Calls Made", "Doors Knocked", "Events Supported"],
+        "leaderboard_data": [
+          {"name": "Sarah M.", "hours": 127, "calls": 847, "doors": 423, "events": 8, "badge": "🏆"},
+          {"name": "James R.", "hours": 118, "calls": 652, "doors": 892, "events": 6, "badge": "🥈"},
+          {"name": "Maria L.", "hours": 94, "calls": 234, "doors": 156, "events": 12, "badge": "🥉"},
+          {"name": "David C.", "hours": 89, "calls": 0, "doors": 0, "events": 4, "badge": "⭐"},
+          {"name": "Jennifer K.", "hours": 76, "calls": 543, "doors": 287, "events": 5, "badge": "⭐"}
+        ],
+        "privacy_note": "Volunteer names shown with permission only",
+        "cta_text": "Join the Leaderboard!",
+        "cta_link": "#signup-form",
+        "gamification": true,
+        "animation": "slide-in-up"
+      }
+    },
+    {
+      "type": "cta",
+      "variant": "card",
+      "order": 6,
+      "settings": {
+        "section_id": "signup-form",
+        "layout": "form-card",
+        "headline": "Ready to Make a Difference?",
+        "subheadline": "Sign up now and we'll match you with the perfect volunteer opportunity",
+        "background": "#ffffff",
+        "padding": "80px-0",
+        "form": {
+          "enabled": true,
+          "fields": [
+            {"name": "name", "type": "text", "label": "Full Name", "required": true, "placeholder": "Your name"},
+            {"name": "email", "type": "email", "label": "Email", "required": true, "placeholder": "your@email.com"},
+            {"name": "phone", "type": "tel", "label": "Phone", "required": true, "placeholder": "(555) 123-4567"},
+            {"name": "zip", "type": "text", "label": "Zip Code", "required": true, "placeholder": "12345"},
+            {"name": "interests", "type": "checkbox-group", "label": "I'm interested in (select all that apply):", "required": true, "options": [
+              "Phone Banking",
+              "Canvassing",
+              "Event Support",
+              "Social Media",
+              "Data Entry",
+              "Creative Team",
+              "Other"
+            ]},
+            {"name": "availability", "type": "select", "label": "Time Commitment", "required": true, "options": [
+              "1-2 hours/week",
+              "3-5 hours/week",
+              "5-10 hours/week",
+              "10+ hours/week",
+              "Just special events"
+            ]},
+            {"name": "experience", "type": "radio", "label": "Campaign Experience", "required": false, "options": [
+              "First time volunteering",
+              "Some experience",
+              "Experienced volunteer"
+            ]},
+            {"name": "message", "type": "textarea", "label": "Questions or Comments", "required": false, "placeholder": "Tell us anything else..."}
+          ],
+          "submit_text": "Sign Me Up!",
+          "submit_style": "primary-large-green",
+          "success_message": "Thank you! We'll be in touch within 24 hours with your first opportunity.",
+          "redirect_url": "/thank-you-volunteer"
+        },
+        "trust_signals": [
+          {"icon": "🔒", "text": "Your info is safe and never sold"},
+          {"icon": "✅", "text": "Quick response - usually within 24hrs"},
+          {"icon": "💪", "text": "Flexible schedule - work when you can"}
+        ],
+        "animation": "scale-in"
+      }
+    },
+    {
+      "type": "faq",
+      "variant": "accordion",
+      "order": 7,
+      "settings": {
+        "section_headline": "Volunteer FAQs",
+        "background": "#f8f9fa",
+        "padding": "60px-0-80px",
+        "layout": "single-column",
+        "faqs": [
+          {
+            "question": "I've never volunteered before. Can I still help?",
+            "answer": "Absolutely! Most of our volunteers are first-timers. We provide full training for all activities and pair you with experienced volunteers when you start. Everyone begins somewhere!"
+          },
+          {
+            "question": "How much time do I need to commit?",
+            "answer": "As little or as much as you can! We have opportunities from 1 hour/week to full-time organizing. Even small contributions make a huge difference."
+          },
+          {
+            "question": "Are there virtual/remote opportunities?",
+            "answer": "Yes! Phone banking, social media, data entry, and creative work can all be done from home. Perfect if you have transportation or mobility constraints."
+          },
+          {
+            "question": "What if I can only help on weekends?",
+            "answer": "Perfect! Many volunteers are only available on weekends. We have canvassing, event support, and special projects specifically scheduled for weekends."
+          },
+          {
+            "question": "Will I have to do public speaking?",
+            "answer": "Only if you want to! Most volunteer roles involve one-on-one conversations or behind-the-scenes work. We'll never push you out of your comfort zone."
+          },
+          {
+            "question": "Can I volunteer with friends or family?",
+            "answer": "We encourage it! Group volunteering is more fun and effective. Sign up together and we'll keep you on the same teams."
+          },
+          {
+            "question": "What about childcare during volunteer activities?",
+            "answer": "We're working on childcare options for certain events. Let us know your needs when you sign up and we'll do our best to accommodate."
+          },
+          {
+            "question": "How do I track my volunteer hours?",
+            "answer": "We use a simple online system where you can log hours, see your impact stats, and track your progress on the leaderboard if you choose to participate."
+          }
+        ],
+        "default_open": 0,
+        "icon_style": "plus-minus",
+        "animation": "slide-down"
+      }
+    },
+    {
+      "type": "cta",
+      "variant": "banner",
+      "order": 8,
+      "settings": {
+        "layout": "centered",
+        "headline": "Every Volunteer Makes a Difference",
+        "subheadline": "Join us. The time to act is now.",
+        "background": "#00a32a",
+        "text_color": "#ffffff",
+        "padding": "60px-0",
+        "buttons": [
+          {
+            "text": "Sign Up to Volunteer",
+            "style": "white-solid",
+            "link": "#signup-form",
+            "icon": "heart",
+            "size": "large"
+          }
+        ],
+        "animation": "pulse"
+      }
+    }
+  ],
+  "custom_css": "/* Volunteer Hub Custom Styles */\n.cp-volunteer-hub {\n  font-family: 'Inter', -apple-system, sans-serif;\n}\n\n.cp-volunteer-hub .cp-opportunity-card {\n  transition: transform 0.3s, box-shadow 0.3s;\n}\n\n.cp-volunteer-hub .cp-opportunity-card:hover {\n  transform: translateY(-4px);\n  box-shadow: 0 8px 24px rgba(0, 163, 42, 0.2);\n}\n\n.cp-volunteer-hub .cp-spots-indicator {\n  background: linear-gradient(90deg, #00a32a 0%, #46b450 100%);\n  height: 4px;\n  border-radius: 2px;\n}\n\n.cp-volunteer-hub .cp-leaderboard-row:nth-child(1) { background: #fff9e6; }\n.cp-volunteer-hub .cp-leaderboard-row:nth-child(2) { background: #f5f5f5; }\n.cp-volunteer-hub .cp-leaderboard-row:nth-child(3) { background: #fff3e6; }",
+  "responsive_settings": {
+    "mobile": {
+      "hide_components": [],
+      "stack_order": "default",
+      "adjustments": {
+        "hero_stats_layout": "vertical",
+        "opportunities_columns": 1,
+        "stats_columns": 2,
+        "leaderboard_hide_columns": ["calls", "doors", "events"],
+        "form_layout": "stacked"
+      }
+    },
+    "tablet": {
+      "adjustments": {
+        "opportunities_columns": 2,
+        "stats_columns": 2,
+        "leaderboard_hide_columns": ["events"]
+      }
+    }
+  },
+  "seo": {
+    "title": "Volunteer - Join Our Campaign Team",
+    "description": "Make a real difference! Join thousands of volunteers helping to win this election. From phone banking to canvassing, find the perfect way to help.",
+    "keywords": ["volunteer", "campaign volunteer", "grassroots organizing", "political activism", "get involved", "make a difference"],
+    "og_image": "/assets/templates/og-volunteer-hub.jpg"
+  },
+  "integrations": {
+    "crm_sync": true,
+    "volunteer_management": "ngp_van",
+    "email_autoresponder": {
+      "enabled": true,
+      "template": "volunteer_welcome",
+      "delay": "immediate"
+    },
+    "calendar_sync": true,
+    "mobile_app": "campaign_connect"
+  },
+  "analytics": {
+    "conversion_goals": [
+      {"name": "volunteer_signup", "event": "form_submit"},
+      {"name": "opportunity_click", "event": "click"},
+      {"name": "time_on_page", "threshold": 120}
+    ]
+  },
+  "setup_instructions": [
+    "1. Update volunteer statistics with real campaign data",
+    "2. Add actual volunteer opportunities with correct details",
+    "3. Include real volunteer testimonials with photos",
+    "4. Configure volunteer management system integration (NGP VAN, etc.)",
+    "5. Set up email autoresponder for new sign-ups",
+    "6. Create leaderboard with opt-in system for privacy",
+    "7. Test form submission and CRM integration",
+    "8. Add calendar integration for event scheduling"
+  ],
+  "best_practices": [
+    "Respond to volunteer sign-ups within 24 hours",
+    "Keep opportunity descriptions specific and actionable",
+    "Update impact statistics weekly",
+    "Celebrate volunteer achievements publicly",
+    "Make sign-up process as simple as possible",
+    "Offer virtual options for accessibility",
+    "Provide clear training and support",
+    "Show appreciation regularly"
+  ],
+  "performance_benchmarks": {
+    "conversion_rate": "8-12%",
+    "average_time_on_page": "3-5 minutes",
+    "mobile_signups": "45-55%",
+    "return_visitors": "15-20%"
+  },
+  "credits": {
+    "designer": "CampaignPress Grassroots Team",
+    "based_on": "Top-performing volunteer recruitment pages",
+    "tested_with": "500+ campaigns",
+    "version": "1.0.0",
+    "last_updated": "2024-01-20"
+  }
+}

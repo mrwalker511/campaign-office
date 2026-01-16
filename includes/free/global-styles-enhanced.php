@@ -3,7 +3,7 @@
  * Enhanced Global Styles
  *
  * Global design system settings that apply across the entire website.
- * Works with theme.json and Gutenberg blocks for consistent styling.
+ * Works with Design Studio to provide consistent styling.
  *
  * @package CampaignPress
  * @since 2.0.0
@@ -32,10 +32,11 @@ class CP_Global_Styles_Enhanced {
      * Add admin menu page
      */
     public function add_admin_menu() {
-        add_theme_page(
+        add_submenu_page(
+            'cp-design-studio',
             __('Global Styles', 'campaign-office'),
             __('Global Styles', 'campaign-office'),
-            'edit_theme_options',
+            'edit_pages',
             'cp-global-styles-enhanced',
             array($this, 'render_page')
         );

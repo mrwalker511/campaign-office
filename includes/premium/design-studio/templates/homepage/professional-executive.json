@@ -1,0 +1,196 @@
+{
+  "template_key": "professional_executive",
+  "template_name": "Professional Executive",
+  "template_description": "Polished, executive-level homepage for experienced candidates running for Mayor, Governor, or other executive offices. Emphasizes leadership, experience, and competence.",
+  "category": "homepage",
+  "campaign_type": "all",
+  "election_level": "all",
+  "tags": ["executive", "mayor", "governor", "professional", "experienced", "leadership"],
+  "is_premium": true,
+  "featured": false,
+  "difficulty": "beginner",
+  "estimated_setup_time": "8 minutes",
+  "best_for": ["Mayor", "Governor", "Executive Positions", "Experienced Candidates"],
+  "color_scheme": {
+    "primary": "#003366",
+    "secondary": "#0066CC",
+    "accent": "#FFD700",
+    "text": "#1e1e1e",
+    "background": "#ffffff"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "split",
+      "order": 1,
+      "settings": {
+        "layout": "split-image-right",
+        "headline": "Proven Leadership for Our Future",
+        "subheadline": "20+ years of executive experience. A track record of results. Ready to lead on day one.",
+        "image": "/assets/placeholders/candidate-executive.jpg",
+        "background_color": "#ffffff",
+        "text_color": "#1e1e1e",
+        "buttons": [
+          {"text": "View Track Record", "style": "primary-large", "link": "#experience"},
+          {"text": "Priorities", "style": "secondary-outline", "link": "#priorities"}
+        ]
+      }
+    },
+    {
+      "type": "timeline",
+      "variant": "horizontal",
+      "order": 2,
+      "settings": {
+        "section_id": "experience",
+        "section_headline": "A Lifetime of Leadership",
+        "section_subheadline": "From the boardroom to public service",
+        "background": "#f8f9fa",
+        "items": [
+          {
+            "title": "CEO, Fortune 500",
+            "year": "2010-2018",
+            "icon": "💼",
+            "description": "Led company to record growth, created 5,000+ jobs"
+          },
+          {
+            "title": "State Appointee",
+            "year": "2018-2020",
+            "icon": "🏛️",
+            "description": "Served on Economic Development Board"
+          },
+          {
+            "title": "City Council",
+            "year": "2020-2024",
+            "icon": "⚖️",
+            "description": "Passed balanced budgets, reformed pension system"
+          },
+          {
+            "title": "Running for Mayor",
+            "year": "2024",
+            "icon": "🎯",
+            "description": "Ready to bring executive experience to City Hall"
+          }
+        ]
+      }
+    },
+    {
+      "type": "stats",
+      "variant": "counters",
+      "order": 3,
+      "settings": {
+        "background": "#003366",
+        "text_color": "#ffffff",
+        "section_headline": "Results That Matter",
+        "stats": [
+          {"label": "Jobs Created", "value": "5000", "suffix": "+", "icon": "💼"},
+          {"label": "Budgets Balanced", "value": "4", "icon": "💰"},
+          {"label": "Years Experience", "value": "20", "suffix": "+", "icon": "⭐"},
+          {"label": "Bipartisan Support", "value": "85", "suffix": "%", "icon": "🤝"}
+        ]
+      }
+    },
+    {
+      "type": "issues",
+      "variant": "grid",
+      "order": 4,
+      "settings": {
+        "section_id": "priorities",
+        "section_headline": "Executive Priorities",
+        "section_subheadline": "Solutions-oriented leadership for real challenges",
+        "layout": "3-column-grid",
+        "issues": [
+          {
+            "title": "Economic Growth",
+            "icon": "📈",
+            "summary": "Attract businesses, create jobs, grow tax base",
+            "cta_text": "Read Plan"
+          },
+          {
+            "title": "Public Safety",
+            "icon": "🚔",
+            "summary": "Support police, reduce crime, safe neighborhoods",
+            "cta_text": "Read Plan"
+          },
+          {
+            "title": "Infrastructure",
+            "icon": "🏗️",
+            "summary": "Fix roads, upgrade utilities, modernize city",
+            "cta_text": "Read Plan"
+          },
+          {
+            "title": "Education",
+            "icon": "🎓",
+            "summary": "Quality schools, better outcomes, workforce development",
+            "cta_text": "Read Plan"
+          },
+          {
+            "title": "Fiscal Management",
+            "icon": "💵",
+            "summary": "Balanced budgets, pension reform, financial stability",
+            "cta_text": "Read Plan"
+          },
+          {
+            "title": "Innovation",
+            "icon": "💡",
+            "summary": "Smart city technology, efficiency, modernization",
+            "cta_text": "Read Plan"
+          }
+        ]
+      }
+    },
+    {
+      "type": "testimonials",
+      "variant": "featured",
+      "order": 5,
+      "settings": {
+        "section_headline": "Endorsed by Leaders",
+        "featured_testimonial": {
+          "quote": "The most qualified candidate for Mayor I've seen in decades. Proven leader with real solutions.",
+          "author": "[Former Mayor]",
+          "title": "Mayor (1995-2003)"
+        },
+        "testimonials": [
+          {"quote": "Business-minded leader who gets results", "author": "Chamber of Commerce"},
+          {"quote": "Bipartisan problem solver", "author": "Civic Organization"},
+          {"quote": "Experience and integrity", "author": "Community Leader"}
+        ]
+      }
+    },
+    {
+      "type": "donation",
+      "variant": "tiers",
+      "order": 6,
+      "settings": {
+        "section_headline": "Invest in Leadership",
+        "tiers": [
+          {"amount": 50, "label": "Supporter"},
+          {"amount": 100, "label": "Advocate", "popular": true},
+          {"amount": 250, "label": "Leader"},
+          {"amount": 500, "label": "Executive Circle"},
+          {"amount": 1000, "label": "Maximum Impact"}
+        ]
+      }
+    },
+    {
+      "type": "cta",
+      "variant": "banner",
+      "order": 7,
+      "settings": {
+        "headline": "Ready for Day One Leadership",
+        "subheadline": "Experience. Results. Vision.",
+        "background": "linear-gradient(135deg, #003366 0%, #0066CC 100%)",
+        "text_color": "#ffffff",
+        "buttons": [
+          {"text": "Support Our Campaign", "style": "white-solid", "link": "/donate"},
+          {"text": "Learn More", "style": "white-outline", "link": "/about"}
+        ]
+      }
+    }
+  ],
+  "seo": {
+    "title": "{{Candidate Name}} for {{Office}} - Proven Leadership",
+    "description": "20+ years executive experience. Track record of results. Ready to lead on day one.",
+    "keywords": ["mayor", "governor", "executive", "leadership", "experience", "qualified"]
+  },
+  "credits": {"version": "1.0.0", "last_updated": "2024-01-24"}
+}

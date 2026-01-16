@@ -1,0 +1,81 @@
+{
+  "template_key": "team_introduction",
+  "template_name": "Team Introduction",
+  "template_description": "Campaign team and staff introduction page. Showcases the people behind the campaign and their roles.",
+  "category": "about_bio",
+  "campaign_type": "all",
+  "election_level": "all",
+  "tags": ["team", "staff", "about", "people", "organization"],
+  "is_premium": true,
+  "featured": false,
+  "difficulty": "beginner",
+  "estimated_setup_time": "10 minutes",
+  "color_scheme": {
+    "primary": "#2271b1"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "minimal",
+      "order": 1,
+      "settings": {
+        "headline": "Meet Our Team",
+        "subheadline": "The dedicated people working to win this campaign",
+        "height": "50vh"
+      }
+    },
+    {
+      "type": "team",
+      "variant": "grid",
+      "order": 2,
+      "settings": {
+        "section_headline": "Campaign Leadership",
+        "layout": "4-column-grid",
+        "team_members": [
+          {
+            "name": "[Candidate Name]",
+            "role": "Candidate",
+            "bio": "Running to serve our community",
+            "image": "/assets/placeholders/candidate.jpg",
+            "social": {"twitter": "@handle", "email": "candidate@campaign.com"}
+          },
+          {
+            "name": "[Campaign Manager]",
+            "role": "Campaign Manager",
+            "bio": "15 years political experience",
+            "image": "/assets/placeholders/manager.jpg"
+          },
+          {
+            "name": "[Communications Director]",
+            "role": "Communications Director",
+            "bio": "Former journalist, communications pro",
+            "image": "/assets/placeholders/comms.jpg"
+          },
+          {
+            "name": "[Field Director]",
+            "role": "Field Director",
+            "bio": "Grassroots organizing specialist",
+            "image": "/assets/placeholders/field.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "type": "cta",
+      "variant": "inline",
+      "order": 3,
+      "settings": {
+        "headline": "Join Our Team",
+        "buttons": [
+          {"text": "Work for the Campaign", "link": "/jobs"},
+          {"text": "Volunteer", "link": "/volunteer"}
+        ]
+      }
+    }
+  ],
+  "seo": {
+    "title": "Our Team - {{Candidate Name}} Campaign",
+    "description": "Meet the dedicated team working to elect {{candidate}}."
+  },
+  "credits": {"version": "1.0.0"}
+}

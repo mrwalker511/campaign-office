@@ -1,0 +1,87 @@
+{
+  "template_key": "policy_platform",
+  "template_name": "Policy Platform",
+  "template_description": "Comprehensive issues page showcasing detailed policy positions. Perfect for policy-focused campaigns.",
+  "category": "issues",
+  "campaign_type": "all",
+  "election_level": "all",
+  "tags": ["policy", "issues", "platform", "positions", "detailed"],
+  "is_premium": true,
+  "featured": true,
+  "difficulty": "intermediate",
+  "estimated_setup_time": "15 minutes",
+  "color_scheme": {
+    "primary": "#0073aa",
+    "secondary": "#005177"
+  },
+  "components": [
+    {
+      "type": "hero",
+      "variant": "minimal",
+      "order": 1,
+      "settings": {
+        "headline": "Our Policy Platform",
+        "subheadline": "Detailed solutions for the challenges facing our community",
+        "height": "50vh"
+      }
+    },
+    {
+      "type": "issues",
+      "variant": "tabs",
+      "order": 2,
+      "settings": {
+        "section_headline": "Comprehensive Policy Positions",
+        "layout": "tabbed",
+        "issues": [
+          {
+            "title": "Healthcare",
+            "icon": "🏥",
+            "summary": "Universal access to quality, affordable healthcare",
+            "details": "<h3>Our Healthcare Plan</h3><p>Every person deserves quality healthcare...</p><ul><li>Expand coverage</li><li>Lower prescription costs</li><li>Protect pre-existing conditions</li></ul>"
+          },
+          {
+            "title": "Education",
+            "icon": "🎓",
+            "summary": "Invest in students, teachers, and schools",
+            "details": "<h3>Education Investment</h3><p>Quality education is the foundation...</p>"
+          },
+          {
+            "title": "Economy",
+            "icon": "💼",
+            "summary": "Jobs, fair wages, and economic opportunity",
+            "details": "<h3>Economic Plan</h3><p>Build an economy that works for everyone...</p>"
+          },
+          {
+            "title": "Climate",
+            "icon": "🌍",
+            "summary": "Address climate crisis with bold action",
+            "details": "<h3>Climate Action</h3><p>Science-based solutions to protect our planet...</p>"
+          },
+          {
+            "title": "Justice",
+            "icon": "⚖️",
+            "summary": "Equal justice and criminal justice reform",
+            "details": "<h3>Justice Reform</h3><p>Fair and equal treatment under the law...</p>"
+          }
+        ]
+      }
+    },
+    {
+      "type": "cta",
+      "variant": "inline",
+      "order": 3,
+      "settings": {
+        "headline": "Support Our Platform",
+        "buttons": [
+          {"text": "Get Involved", "link": "/volunteer"},
+          {"text": "Download Full Platform (PDF)", "link": "/platform.pdf"}
+        ]
+      }
+    }
+  ],
+  "seo": {
+    "title": "Policy Platform - {{Candidate Name}}",
+    "description": "Detailed policy positions on healthcare, education, economy, climate, and justice."
+  },
+  "credits": {"version": "1.0.0"}
+}

@@ -70,7 +70,6 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/social-media-feeds.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-portal.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-communications.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/analytics-dashboard.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-design-studio.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-theme-json-helper.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/global-styles-enhanced.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/mega-menu-builder.php';

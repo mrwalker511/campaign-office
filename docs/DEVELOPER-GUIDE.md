@@ -400,48 +400,47 @@ if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/blocks/block-name/block.json')) {
 
 ## Design System
 
-### Tailwind CSS v4 Configuration
+> **Complete Reference:** See `DESIGN-REFERENCE.md` for the full style guide.
 
-**Config:** `tailwind.config.js`  
-**CSS Entry:** `assets/css/app.css`  
-**Build System:** Vite (`npm run build`)
+### Source of Truth
 
-### Design Tokens
+All design tokens are defined in `theme.json` and accessed via CSS variables:
 
-**Colors:**
 ```css
-bg-brand-900    /* Primary Dark */
-text-accent-600 /* Secondary Action */
-bg-neutral-50   /* Light Backgrounds */
+/* Colors */
+color: var(--wp--preset--color--primary);        /* #14213d Navy */
+background: var(--wp--preset--color--accent);    /* #ff8800 Orange */
+border-color: var(--wp--preset--color--neutral-300);
+
+/* Typography */
+font-family: var(--wp--preset--font-family--display);  /* Playfair Display */
+font-family: var(--wp--preset--font-family--body);     /* Inter */
+font-size: var(--wp--preset--font-size--2-xl);
+
+/* Spacing (8px grid) */
+padding: var(--wp--preset--spacing--8);  /* 32px */
+margin: var(--wp--preset--spacing--4);   /* 16px */
+
+/* Shadows */
+box-shadow: var(--wp--preset--shadow--md);
 ```
 
-**Typography:**
-```css
-font-serif      /* Headlines: Merriweather */
-font-sans       /* Body: Inter */
-```
+### PHP Access
 
-**Spacing:**
-Use standard Tailwind spacing (`p-4`, `m-8`) or extended grid gaps.
-
-### Layout Modules (Organisms)
-
-Located in `parts/organisms/`:
-
-| Module | File | Purpose |
-|--------|------|---------|
-| **Hero** | `parts/organisms/hero.php` | Full-width impact section with dual CTAs |
-| **Feature Grid** | `parts/organisms/feature-grid.php` | 3-column grid for policies/features |
-| **Content** | `parts/organisms/content-section.php` | Text-heavy section with optional sidebar |
-| **CTA** | `parts/organisms/cta.php` | High-conversion action band |
-| **Testimonials** | `parts/organisms/testimonials.php` | Social proof grid |
-
-Usage in templates:
 ```php
-<?php get_template_part('parts/organisms/hero'); ?>
-<?php get_template_part('parts/organisms/feature-grid'); ?>
-<?php get_template_part('parts/organisms/content-section'); ?>
+// Using the helper class
+$primary = CP_Theme_JSON_Helper::get_color('primary');
+$font = CP_Theme_JSON_Helper::get_font_family('display');
+$spacing = CP_Theme_JSON_Helper::get_spacing('8');
 ```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `theme.json` | Design token definitions |
+| `DESIGN-REFERENCE.md` | Complete style guide |
+| `includes/free/class-theme-json-helper.php` | PHP helper class |
 
 ### Development
 

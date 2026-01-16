@@ -62,100 +62,43 @@ tail -f wp-content/debug.log
 
 ---
 
-## DESIGN SYSTEM (WordPress 6.9+)
+## DESIGN SYSTEM
 
-**Status:** Production Ready | **Version:** 2.0.0 | **WordPress Required:** 6.9+
+> **Complete Reference:** See `docs/DESIGN-REFERENCE.md` for the full style guide.
 
-### Design System Architecture
+### Source of Truth
 
-CampaignPress uses a **WordPress 6.9-native design system** with centralized design tokens:
+All design tokens are defined in `theme.json`:
 
-- **`theme.json`** - Central configuration for all design tokens (colors, typography, spacing)
-- **`assets/css/design-system-wp69.css`** - Enhanced CSS using WordPress design tokens
-- **Block Editor Integration** - Full Gutenberg compatibility with visual design controls
+| Category | Tokens |
+|----------|--------|
+| **Colors** | Primary (#14213d Navy), Accent (#ff8800 Orange), Neutral grays, Semantic |
+| **Typography** | Playfair Display (headlines), Inter (body), System Monospace |
+| **Spacing** | 12 sizes on 8px grid (4px → 96px) |
+| **Shadows** | 6 presets (sm → 2-xl) |
 
-### Design Documentation
+### Quick Usage
 
-📚 **Complete documentation available in the `docs/` directory:**
-- **`DESIGN-REFERENCE.md`** - Complete design system and style guide.
-- **`GETTING-STARTED.md`** - General introduction and setup.
-- **`QUICKSTART.md`** - 5-minute setup guide.
-- **`DEVELOPER-GUIDE.md`** - Technical reference for developers.
-
-### Design Tokens (theme.json)
-
-All design tokens are managed in `theme.json` and automatically available in:
-- Block editor (visual controls)
-- CSS (via `--wp--preset--` variables)
-- PHP (via WordPress functions)
-
-**Color Palettes (33 colors):**
-- Primary shades: `--wp--preset--color--primary-50` → `--wp--preset--color--primary-900`
-- Accent shades: `--wp--preset--color--accent-50` → `--wp--preset--color--accent-900`
-- Neutral shades: `--wp--preset--color--neutral-50` → `--wp--preset--color--neutral-900`
-- Semantic: `--wp--preset--color--success`, `warning`, `error`, `info`
-
-**Typography (3 font families):**
-- Display: `--wp--preset--font-family--display` (Playfair Display - Headlines)
-- Body: `--wp--preset--font-family--body` (Inter - Paragraphs)
-- Mono: `--wp--preset--font-family--mono` (System Monospace)
-
-**Font Sizes (8 fluid sizes):**
-- `--wp--preset--font-size--xs` → `--wp--preset--font-size--4-xl`
-- Uses CSS clamp() for automatic mobile-to-desktop scaling
-
-**Spacing (12 preset sizes):**
-- `--wp--preset--spacing--1` (4px) → `--wp--preset--spacing--24` (96px)
-- Based on 8px grid system
-
-**Shadows (6 presets):**
-- `--wp--preset--shadow--sm` → `--wp--preset--shadow--2-xl`
-
-### Party Color Schemes
-
-Four political party themes available (switch via Customizer):
-
-1. **Democrat Blue** (default)
-   - Primary: #0053c3, Accent: #ff8800
-2. **Republican Red**
-   - Primary: #e81b23, Accent: #ffd700
-3. **Independent Purple**
-   - Primary: #6b3fa0, Accent: #00d9ff
-4. **Green Party**
-   - Primary: #17aa5c, Accent: #ffeb3b
-
-Apply via body class: `color-scheme-{party}`
-
-### Using Design Tokens in Code
-
-**In CSS:**
 ```css
 .my-component {
   color: var(--wp--preset--color--primary);
   font-family: var(--wp--preset--font-family--display);
-  font-size: var(--wp--preset--font-size--2-xl);
   padding: var(--wp--preset--spacing--8);
-  box-shadow: var(--wp--preset--shadow--lg);
 }
 ```
 
-**In Block Editor:**
-Users select from visual dropdowns (no coding required)
-
-**In PHP:**
 ```php
-// Get theme color
-$primary = wp_get_global_settings()['color']['palette']['theme'][5]['color'];
+// PHP helper
+$color = CP_Theme_JSON_Helper::get_color('primary');
 ```
 
-### Design Principles
+### Key Files
 
-✅ **Distinctive Typography** - Avoid generic fonts (Inter, Roboto, Arial)
-✅ **9-Shade Palettes** - Granular color control for hover states, backgrounds
-✅ **Sophisticated Animations** - Staggered reveals, pulse effects, hover lifts
-✅ **Accessibility First** - WCAG 2.1 AA compliant, reduced motion support
-✅ **Performance Optimized** - WordPress handles font loading, GPU-accelerated CSS
-✅ **Block Native** - Full integration with WordPress block editor
+| File | Purpose |
+|------|---------|
+| `theme.json` | Design token definitions (source of truth) |
+| `docs/DESIGN-REFERENCE.md` | Complete style guide |
+| `includes/free/class-theme-json-helper.php` | PHP helper for accessing tokens |
 
 ---
 
@@ -752,128 +695,32 @@ campaign-office/
 CampaignPress is a **modular, license-gated WordPress theme** designed to transform political campaign websites into comprehensive operations platforms. The architecture maintains a clear free/premium boundary while enabling sophisticated features like CRM, field operations, compliance tracking, and analytics for premium users.
 
 **Architectural Strengths:**
-- **WordPress 6.9-Native Design System** with theme.json and centralized design tokens
-- **Distinctive Professional Design** with Bricolage Grotesque, Plus Jakarta Sans, JetBrains Mono
-- **Block Editor Integration** - Full Gutenberg compatibility with visual design controls
-- **9-Shade Color Palettes** - 33 total colors for granular control
-- **4 Party Color Schemes** - Democrat Blue, Republican Red, Independent Purple, Green Party
-- **Accessibility Compliant** - WCAG 2.1 AA with reduced motion support
+- **WordPress theme.json Design System** with centralized design tokens
+- **Typography:** Playfair Display (headlines), Inter (body), System Monospace
+- **Colors:** Navy primary (#14213d), Orange accent (#ff8800), 9-shade palettes
+- **Block Editor Integration** - Full Gutenberg compatibility
+- **Accessibility Compliant** - WCAG 2.1 AA, reduced motion support
 - Clear module separation with single responsibility principle
 - Singleton pattern for major system components
 - Hook-based extensibility throughout the codebase
 - Built-in security (sanitization, escaping, nonces, prepared statements)
-- Comprehensive database schema (11 custom CRM tables, optimized indexes)
-- Developer tools (console, API tester, database inspector, data exporter)
-- Freemium license system with multiple tiers (Basic, Professional, Enterprise)
+- Comprehensive database schema (11 custom CRM tables)
+- Freemium license system (Basic, Professional, Enterprise tiers)
 
-**Design System Features:**
-- Fluid typography (automatic mobile-to-desktop scaling)
-- Sophisticated animations (staggered reveals, pulse effects, hover lifts)
-- Atmospheric backgrounds (layered gradients, animated effects)
-- Performance optimized (WordPress-managed fonts, GPU-accelerated CSS)
-- User-friendly (point-and-click design in block editor)
-
-**Version:** 2.0.0
-**WordPress Required:** 6.9+
+**Version:** 2.1.0
+**WordPress Required:** 6.4+
 **License:** GPLv3 or later
 **Theme Slug:** campaign-office
-**Last Updated:** December 6, 2025
 
 ---
 
-## DESIGN AESTHETICS & PHILOSOPHY
+## Design Guidelines
 
-**CampaignPress Design System Example:**
+> **Full style guide:** See `docs/DESIGN-REFERENCE.md`
 
-This theme implements the design philosophy outlined below. When making design decisions or adding features, follow these patterns established in the design system (see `DESIGN_SYSTEM.md` for complete details).
-
-### Typography Pattern (Already Implemented)
-✅ **Distinctive Font Choices:**
-- **Bricolage Grotesque** (headlines) - Bold, geometric, authoritative
-- **Plus Jakarta Sans** (body) - Modern, warm, readable
-- **JetBrains Mono** (data/stats) - Clean, precise, technical
-
-❌ **Avoid:** Inter, Roboto, Arial, Space Grotesk, system fonts
-
-### Color Pattern (Already Implemented)
-✅ **9-Shade Palettes:**
-- Primary: 50 → 900 (lightest to darkest)
-- Accent: 50 → 900 (complementary energy)
-- Neutral: 50 → 900 (grays for structure)
-- Dominant colors with sharp accents
-
-❌ **Avoid:** Flat single colors, purple gradients on white, timid palettes
-
-### Motion Pattern (Already Implemented)
-✅ **High-Impact Orchestrated Animations:**
-- **Staggered hero reveals** (0.2s delays: title → subtitle → tagline → CTA)
-- **Button pulse** (2s breathing animation)
-- **Card hover lifts** (translateY + scale transforms)
-- **Progress bar shine** (animated shimmer effect)
-
-❌ **Avoid:** Scattered micro-interactions, simultaneous animations
-
-### Background Pattern (Already Implemented)
-✅ **Layered Atmospheric Depth:**
-- **5 visual layers** on hero (image, gradient overlay, radial gradients, patterns, content)
-- **Animated gradient meshes** (20s subtle shift)
-- **Geometric patterns** (diagonal lines for texture)
-
-❌ **Avoid:** Solid flat colors, single gradients
-
-### WordPress 6.9 Design Token System
-When adding new components or features:
-
-1. **Use existing design tokens** from theme.json:
-   ```css
-   color: var(--wp--preset--color--primary);
-   font-family: var(--wp--preset--font-family--display);
-   font-size: var(--wp--preset--font-size--2-xl);
-   padding: var(--wp--preset--spacing--8);
-   box-shadow: var(--wp--preset--shadow--lg);
-   ```
-
-2. **Maintain consistency** with established patterns:
-   - Headings use Display font (Bricolage Grotesque)
-   - Body text uses Body font (Plus Jakarta Sans)
-   - Numbers/stats use Mono font (JetBrains Mono)
-   - Colors follow 9-shade system
-   - Spacing uses 8px grid (1-24)
-
-3. **Enhance, don't replace** existing design:
-   - Add new gradients to theme.json gradients array
-   - Add new colors as shades (50-900 pattern)
-   - Follow animation timing (fast: 150ms, base: 250ms, slow: 350ms)
-
-### General Design Principles
-
-**Do:**
-- Choose distinctive, contextual fonts (avoid generic choices)
-- Use CSS variables for consistency (WordPress `--wp--preset--*` pattern)
-- Create cohesive color palettes with dominant + accent pattern
-- Orchestrate animations with purpose and timing
-- Layer backgrounds for atmospheric depth
-- Think outside the box - make unexpected, delightful choices
-
-**Don't:**
-- Use overused fonts (Inter, Roboto, Arial, system fonts, Space Grotesk)
-- Default to clichéd color schemes (purple gradients on white)
-- Create predictable, cookie-cutter layouts
-- Add scattered animations without purpose
-- Use flat, solid color backgrounds
-
-**Context-Specific Design:**
-CampaignPress is a **political campaign theme** - designs should convey:
-- **Trust & Authority** (bold typography, professional colors)
-- **Energy & Momentum** (animations, gradients, dynamic effects)
-- **Accessibility** (WCAG AA, reduced motion support)
-- **Professionalism** (consistent design system, polished details)
-
----
-
-**When working with CampaignPress frontend code, always:**
-1. Reference the design system documentation (`DESIGN_SYSTEM.md`)
-2. Use WordPress 6.9 design tokens (`theme.json`)
-3. Maintain the distinctive aesthetic (avoid generic AI design patterns)
-4. Test accessibility and performance
-5. Follow the established patterns for typography, color, motion, and backgrounds
+When working with CampaignPress frontend code:
+1. Use design tokens from `theme.json` (not hardcoded values)
+2. Access tokens via `--wp--preset--*` CSS variables
+3. Use `CP_Theme_JSON_Helper` class in PHP
+4. Test accessibility and reduced motion support
+5. Follow established patterns for typography, color, and spacing

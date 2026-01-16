@@ -1,286 +1,195 @@
 # Design Reference
 
-**Complete design system and style guide for CampaignPress**
+**The authoritative style guide for CampaignPress**
 
-Version: 2.0.0 | Last Updated: December 28, 2025
+Version: 2.1.0 | Last Updated: January 2025
+
+> **Source of Truth:** All design tokens are defined in `theme.json`. This document reflects those values.
 
 ---
 
 ## Table of Contents
 
 1. [Design System Overview](#design-system-overview)
-2. [WordPress 6.9 Design Tokens](#wordpress-69-design-tokens)
-3. [Color System](#color-system)
-4. [Typography](#typography)
-5. [Spacing & Layout](#spacing--layout)
+2. [Color System](#color-system)
+3. [Typography](#typography)
+4. [Spacing & Layout](#spacing--layout)
+5. [Shadows](#shadows)
 6. [Components](#components)
-7. [Style Guide](#style-guide)
-8. [Design Enhancements](#design-enhancements)
+7. [Animations](#animations)
+8. [Accessibility](#accessibility)
+9. [Quick Reference](#quick-reference)
 
 ---
 
 ## Design System Overview
 
-CampaignPress 2.0 uses a **WordPress 6.9-native design system** with centralized design tokens in `theme.json`. This provides:
+CampaignPress uses a **WordPress theme.json-native design system**. All tokens are defined in `theme.json` and automatically available in:
 
-- **Consistency** across all components
-- **Block editor integration** with visual controls
-- **Theme switching** for party color schemes
-- **Performance** through WordPress-managed fonts
-- **Accessibility** built into the core system
+- **Block Editor** - Visual controls for colors, fonts, spacing
+- **CSS** - Via `--wp--preset--*` variables
+- **PHP** - Via `CP_Theme_JSON_Helper` class
 
 ### Design Philosophy
 
-**Distinctive, Not Generic:**
-- Avoid overused fonts (Inter, Roboto, Arial)
-- Use bold, memorable color palettes
-- Create sophisticated animations
-- Layer backgrounds for depth
-- Think political campaign energy
-
-**Context-Specific:**
-CampaignPress designs should convey:
-- **Trust & Authority** - Bold typography, professional colors
-- **Energy & Momentum** - Animations, gradients, dynamic effects
-- **Accessibility** - WCAG AA compliance, reduced motion support
+**Political Campaign Energy:**
+- **Trust & Authority** - Navy primary, professional typography
+- **Energy & Momentum** - Orange accents, dynamic animations
+- **Accessibility** - WCAG AA compliant, reduced motion support
 - **Professionalism** - Consistent system, polished details
-
----
-
-## WordPress 6.9 Design Tokens
-
-### Central Configuration: theme.json
-
-All design tokens are defined in `theme.json` and automatically available throughout WordPress:
-
-**Benefits:**
-- Change once, update everywhere
-- Block editor visual controls
-- CSS variables auto-generated
-- PHP access via WordPress functions
-- No build step required
-
-### Accessing Tokens
-
-**In CSS:**
-```css
-.my-component {
-    color: var(--wp--preset--color--primary);
-    font-family: var(--wp--preset--font-family--display);
-    font-size: var(--wp--preset--font-size--2-xl);
-    padding: var(--wp--preset--spacing--8);
-    box-shadow: var(--wp--preset--shadow--lg);
-}
-```
-
-**In Block Editor:**
-Users select from visual dropdowns - no coding required
-
-**In PHP:**
-```php
-$primary_color = wp_get_global_settings()['color']['palette']['theme'][5]['color'];
-```
 
 ---
 
 ## Color System
 
-### 33 Color Tokens (9-Shade Palettes)
+### Primary Palette (Navy Blue)
 
-**Primary Colors (Democrat Blue - Default):**
-- `primary-50`: #e6f0ff (lightest)
-- `primary-100`: #b3d4ff
-- `primary-200`: #80b8ff
-- `primary-300`: #4d9dff
-- `primary-400`: #1a81ff
-- `primary` (500): #0053c3 ⭐ Main brand color
-- `primary-600`: #004399
-- `primary-700`: #003270
-- `primary-800`: #002247
-- `primary-900`: #00111d (darkest)
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `primary-50` | #e6f0ff | Light backgrounds |
+| `primary-100` | #b3d4ff | Hover backgrounds |
+| `primary-200` | #80b8ff | Borders |
+| `primary-300` | #4d9dff | Accent borders |
+| `primary-400` | #1a81ff | Links (light mode) |
+| **`primary`** | **#14213d** | **Main brand color (Navy)** |
+| `primary-600` | #101b32 | Hover states |
+| `primary-700` | #0d1527 | Active states |
+| `primary-800` | #0a101d | Dark backgrounds |
+| `primary-900` | #060a12 | Darkest |
 
-**Accent Colors (Orange):**
-- `accent-50` → `accent-900`: #fff4e6 → #331a00
-- `accent` (500): #ff8800 ⭐ Calls-to-action, highlights
+### Accent Palette (Orange)
 
-**Neutral Colors (Grays):**
-- `neutral-50` → `neutral-900`: #f8f9fa → #111111
-- `neutral` (500): #6c757d ⭐ Text, borders
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `accent-50` | #fff4e6 | Light backgrounds |
+| `accent-100` | #ffe0b3 | Hover backgrounds |
+| `accent-200` | #ffcc80 | Borders |
+| `accent-300` | #ffb84d | Highlights |
+| `accent-400` | #ffa41a | Secondary CTAs |
+| **`accent`** | **#ff8800** | **CTAs, highlights** |
+| `accent-600` | #e67a00 | Hover states |
+| `accent-700` | #cc6c00 | Active states |
+| `accent-800` | #995100 | Dark accents |
+| `accent-900` | #331a00 | Darkest |
 
-**Semantic Colors:**
-- `success`: #28a745
-- `warning`: #ffc107
-- `error`: #dc3545
-- `info`: #17a2b8
+### Neutral Palette (Grays)
+
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `neutral-50` | #f8f9fa | Page backgrounds |
+| `neutral-100` | #f1f3f5 | Card backgrounds |
+| `neutral-200` | #e9ecef | Borders |
+| `neutral-300` | #dee2e6 | Dividers |
+| `neutral-400` | #ced4da | Disabled borders |
+| `neutral-500` | #adb5bd | Placeholder text |
+| `neutral-600` | #6c757d | Secondary text |
+| `neutral-700` | #495057 | Body text |
+| `neutral-800` | #343a40 | Headings |
+| `neutral-900` | #212529 | Primary text |
+
+### Semantic Colors
+
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `success` | #28a745 | Confirmations, completed |
+| `warning` | #ffc107 | Alerts, cautions |
+| `error` | #dc3545 | Errors, destructive |
+| `info` | #17a2b8 | Information |
 
 ### Party Color Schemes
 
-Switch entire site color scheme with body class:
+| Scheme | Primary | Secondary | Gradient |
+|--------|---------|-----------|----------|
+| **Democrat** | #14213d (Navy) | #ff8800 | `democrat-gradient` |
+| **Republican** | #C4232C (Red) | #ffd700 | `republican-gradient` |
+| **Independent** | #6554c0 (Purple) | #00b8d9 | `independent-gradient` |
 
-**1. Democrat Blue (Default)**
+### CSS Usage
+
 ```css
-/* No class needed */
-Primary: #0053c3
-Accent: #ff8800
+.my-component {
+    color: var(--wp--preset--color--primary);
+    background: var(--wp--preset--color--neutral-50);
+    border-color: var(--wp--preset--color--accent);
+}
 ```
-
-**2. Republican Red**
-```css
-body.color-scheme-republican
-Primary: #e81b23
-Accent: #ffd700
-```
-
-**3. Independent Purple**
-```css
-body.color-scheme-independent
-Primary: #6b3fa0
-Accent: #00d9ff
-```
-
-**4. Green Party**
-```css
-body.color-scheme-green
-Primary: #17aa5c
-Accent: #ffeb3b
-```
-
-### Color Usage Guidelines
-
-**Primary:**
-- Headers and navigation
-- Buttons and CTAs (primary style)
-- Links and accents
-- Hero sections background
-
-**Accent:**
-- Highlights and emphasis
-- Secondary CTAs
-- Hover states
-- Important metrics/stats
-
-**Neutral:**
-- Body text (900)
-- Backgrounds (50-100)
-- Borders (300-400)
-- Disabled states (500)
-
-**Semantic:**
-- `success` - Completed actions, confirmations
-- `warning` - Important notices, alerts
-- `error` - Form errors, critical issues
-- `info` - Informational messages
 
 ---
 
 ## Typography
 
-### Font Families (3 Distinctive Fonts)
+### Font Families
 
-**Display: Bricolage Grotesque**
-- **Usage:** Headlines, hero text, CTAs
-- **Character:** Bold, geometric, authoritative
-- **Example:** H1-H3 headings
+| Token | Font | Usage |
+|-------|------|-------|
+| `display` | Playfair Display | Headlines, hero text, H1-H3 |
+| `body` | Inter | Body copy, UI text, forms |
+| `mono` | System Monospace | Code, statistics, data |
 
+**CSS Usage:**
 ```css
-font-family: var(--wp--preset--font-family--display);
+h1 { font-family: var(--wp--preset--font-family--display); }
+p { font-family: var(--wp--preset--font-family--body); }
+code { font-family: var(--wp--preset--font-family--mono); }
 ```
 
-**Body: Plus Jakarta Sans**
-- **Usage:** Paragraphs, UI text, forms
-- **Character:** Modern, warm, highly readable
-- **Example:** Body copy, descriptions
+### Font Sizes (Fluid)
 
-```css
-font-family: var(--wp--preset--font-family--body);
-```
+All sizes use `clamp()` for automatic mobile-to-desktop scaling:
 
-**Mono: JetBrains Mono**
-- **Usage:** Numbers, statistics, code
-- **Character:** Clean, precise, technical
-- **Example:** Donation amounts, vote counts
+| Token | Min | Max | Usage |
+|-------|-----|-----|-------|
+| `xs` | 0.75rem (12px) | 0.875rem (14px) | Fine print |
+| `sm` | 0.875rem (14px) | 1rem (16px) | Captions |
+| `base` | 1rem (16px) | 1.125rem (18px) | Body text |
+| `lg` | 1.125rem (18px) | 1.375rem (22px) | Lead text |
+| `xl` | 1.25rem (20px) | 1.75rem (28px) | H4-H5 |
+| `2-xl` | 1.5rem (24px) | 2.25rem (36px) | H3 |
+| `3-xl` | 2rem (32px) | 3.5rem (56px) | H2 |
+| `4-xl` | 2.5rem (40px) | 5rem (80px) | H1 |
 
-```css
-font-family: var(--wp--preset--font-family--mono);
-```
-
-### Font Sizes (8 Fluid Sizes)
-
-Automatically scale from mobile to desktop using CSS `clamp()`:
-
-- `xs`: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem) - 12-14px
-- `sm`: clamp(0.875rem, 0.825rem + 0.25vw, 1rem) - 14-16px
-- `base`: clamp(1rem, 0.95rem + 0.25vw, 1.125rem) - 16-18px
-- `lg`: clamp(1.125rem, 1.05rem + 0.375vw, 1.25rem) - 18-20px
-- `xl`: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem) - 20-24px
-- `2-xl`: clamp(1.5rem, 1.35rem + 0.75vw, 1.875rem) - 24-30px
-- `3-xl`: clamp(1.875rem, 1.65rem + 1.125vw, 2.25rem) - 30-36px
-- `4-xl`: clamp(2.25rem, 1.95rem + 1.5vw, 3rem) - 36-48px
-
-**Usage:**
+**CSS Usage:**
 ```css
 h1 { font-size: var(--wp--preset--font-size--4-xl); }
 h2 { font-size: var(--wp--preset--font-size--3-xl); }
 h3 { font-size: var(--wp--preset--font-size--2-xl); }
 p { font-size: var(--wp--preset--font-size--base); }
-small { font-size: var(--wp--preset--font-size--sm); }
 ```
 
 ### Typography Scale
 
-```css
-/* Hero Section */
-.hero-title {
-    font-family: var(--wp--preset--font-family--display);
-    font-size: var(--wp--preset--font-size--4-xl);
-    font-weight: 700;
-    line-height: 1.1;
-}
-
-/* Subheadings */
-.section-title {
-    font-family: var(--wp--preset--font-family--display);
-    font-size: var(--wp--preset--font-size--2-xl);
-    font-weight: 600;
-}
-
-/* Body Text */
-.body-text {
-    font-family: var(--wp--preset--font-family--body);
-    font-size: var(--wp--preset--font-size--base);
-    line-height: 1.6;
-}
-
-/* Statistics */
-.stat-number {
-    font-family: var(--wp--preset--font-family--mono);
-    font-size: var(--wp--preset--font-size--3-xl);
-    font-weight: 700;
-}
-```
+| Element | Font | Size | Weight | Line Height |
+|---------|------|------|--------|-------------|
+| H1 | Display | 4-xl | 800 | 1.2 |
+| H2 | Display | 3-xl | 700 | 1.2 |
+| H3 | Display | 2-xl | 700 | 1.2 |
+| H4 | Display | xl | 600 | 1.2 |
+| H5 | Display | lg | 600 | 1.2 |
+| H6 | Display | base | 600 | 1.2 |
+| Body | Body | base | 400 | 1.75 |
 
 ---
 
 ## Spacing & Layout
 
-### Spacing Scale (12 Presets)
+### Spacing Scale (8px Grid)
 
-Based on 8px grid system:
+| Token | Size | Pixels | Usage |
+|-------|------|--------|-------|
+| `1` | 0.25rem | 4px | Tiny gaps |
+| `2` | 0.5rem | 8px | Small spacing |
+| `3` | 0.75rem | 12px | Compact |
+| `4` | 1rem | 16px | Base unit |
+| `5` | 1.25rem | 20px | Medium |
+| `6` | 1.5rem | 24px | Section padding |
+| `8` | 2rem | 32px | Large gaps |
+| `10` | 2.5rem | 40px | Section spacing |
+| `12` | 3rem | 48px | Large sections |
+| `16` | 4rem | 64px | Hero padding |
+| `20` | 5rem | 80px | Major sections |
+| `24` | 6rem | 96px | Hero sections |
 
-- `1`: 4px - Tiny gaps
-- `2`: 8px - Small spacing
-- `3`: 12px
-- `4`: 16px - Base unit
-- `5`: 20px
-- `6`: 24px - Section padding
-- `8`: 32px
-- `10`: 40px
-- `12`: 48px - Large sections
-- `16`: 64px
-- `20`: 80px
-- `24`: 96px - Hero sections
-
-**Usage:**
+**CSS Usage:**
 ```css
 .card {
     padding: var(--wp--preset--spacing--6);
@@ -289,56 +198,45 @@ Based on 8px grid system:
 }
 ```
 
-### Shadow System (6 Presets)
+### Layout Sizes
 
-- `sm`: 0 1px 2px rgba(0,0,0,0.05)
-- `base`: 0 1px 3px rgba(0,0,0,0.1)
-- `md`: 0 4px 6px rgba(0,0,0,0.1)
-- `lg`: 0 10px 15px rgba(0,0,0,0.1)
-- `xl`: 0 20px 25px rgba(0,0,0,0.1)
-- `2-xl`: 0 25px 50px rgba(0,0,0,0.25)
+| Property | Value | Usage |
+|----------|-------|-------|
+| Content Width | 800px | Blog posts, articles |
+| Wide Width | 1200px | Full-width sections |
+| Block Gap | 1.5rem | Default spacing between blocks |
 
-**Usage:**
+### Border Radius
+
+| Token | Size | Usage |
+|-------|------|-------|
+| `sm` | 0.25rem | Small elements |
+| `md` | 0.5rem | Buttons, inputs |
+| `lg` | 0.75rem | Cards |
+| `xl` | 1rem | Modals |
+| `2xl` | 1.5rem | Large cards |
+| `full` | 9999px | Pills, avatars |
+
+---
+
+## Shadows
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `sm` | 0 1px 2px rgba(0,0,0,0.05) | Subtle elevation |
+| `md` | 0 4px 6px rgba(0,0,0,0.1) | Cards |
+| `lg` | 0 10px 15px rgba(0,0,0,0.1) | Hover states |
+| `xl` | 0 20px 25px rgba(0,0,0,0.1) | Modals |
+| `2-xl` | 0 25px 50px rgba(0,0,0,0.25) | Popovers |
+| `inner` | inset 0 2px 4px rgba(0,0,0,0.05) | Pressed states |
+
+**CSS Usage:**
 ```css
 .card {
     box-shadow: var(--wp--preset--shadow--md);
 }
-
 .card:hover {
     box-shadow: var(--wp--preset--shadow--lg);
-}
-
-.modal {
-    box-shadow: var(--wp--preset--shadow--2-xl);
-}
-```
-
-### Layout Patterns
-
-**Container:**
-```css
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--wp--preset--spacing--6);
-}
-```
-
-**Grid:**
-```css
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--wp--preset--spacing--8);
-}
-```
-
-**Flexbox:**
-```css
-.flex-row {
-    display: flex;
-    gap: var(--wp--preset--spacing--4);
-    align-items: center;
 }
 ```
 
@@ -352,21 +250,19 @@ Based on 8px grid system:
 ```css
 .btn-primary {
     background: var(--wp--preset--color--primary);
-    color: white;
-    font-family: var(--wp--preset--font-family--display);
+    color: var(--wp--preset--color--white);
+    font-family: var(--wp--preset--font-family--body);
     font-size: var(--wp--preset--font-size--base);
     font-weight: 600;
-    padding: var(--wp--preset--spacing--4) var(--wp--preset--spacing--8);
-    border-radius: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
     border: none;
     cursor: pointer;
-    transition: all 250ms ease;
 }
 
 .btn-primary:hover {
-    background: var(--wp--preset--color--primary-600);
-    transform: translateY(-2px);
-    box-shadow: var(--wp--preset--shadow--lg);
+    background: var(--wp--preset--color--primary-700);
 }
 ```
 
@@ -375,7 +271,6 @@ Based on 8px grid system:
 .btn-accent {
     background: var(--wp--preset--color--accent);
     color: var(--wp--preset--color--neutral-900);
-    /* Same structure as primary */
 }
 ```
 
@@ -383,22 +278,15 @@ Based on 8px grid system:
 
 ```css
 .card {
-    background: white;
-    border-radius: 12px;
+    background: var(--wp--preset--color--white);
     padding: var(--wp--preset--spacing--8);
     box-shadow: var(--wp--preset--shadow--md);
-    transition: all 250ms ease;
+    transition: transform 250ms ease, box-shadow 250ms ease;
 }
 
 .card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: var(--wp--preset--shadow--xl);
-}
-
-.card-title {
-    font-family: var(--wp--preset--font-family--display);
-    font-size: var(--wp--preset--font-size--xl);
-    margin-bottom: var(--wp--preset--spacing--4);
+    transform: translateY(-4px);
+    box-shadow: var(--wp--preset--shadow--lg);
 }
 ```
 
@@ -410,7 +298,6 @@ Based on 8px grid system:
     font-size: var(--wp--preset--font-size--base);
     padding: var(--wp--preset--spacing--3) var(--wp--preset--spacing--4);
     border: 2px solid var(--wp--preset--color--neutral-300);
-    border-radius: 6px;
     transition: border-color 250ms ease;
 }
 
@@ -421,107 +308,32 @@ Based on 8px grid system:
 }
 ```
 
-### Progress Bars
-
-```css
-.progress-bar {
-    background: var(--wp--preset--color--neutral-200);
-    border-radius: 999px;
-    height: 24px;
-    overflow: hidden;
-    position: relative;
-}
-
-.progress-bar-fill {
-    background: linear-gradient(
-        90deg,
-        var(--wp--preset--color--primary) 0%,
-        var(--wp--preset--color--primary-400) 100%
-    );
-    height: 100%;
-    transition: width 500ms ease;
-    position: relative;
-}
-
-.progress-bar-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.3),
-        transparent
-    );
-    animation: shine 2s infinite;
-}
-
-@keyframes shine {
-    to { left: 100%; }
-}
-```
-
 ---
 
 ## Animations
 
 ### Timing
 
-**Standard Durations:**
-- `fast`: 150ms - Micro-interactions
-- `base`: 250ms - Buttons, hovers
-- `slow`: 350ms - Modals, transitions
-- `slower`: 500ms - Page transitions
+| Token | Duration | Usage |
+|-------|----------|-------|
+| `fast` | 150ms | Micro-interactions |
+| `base` | 250ms | Buttons, hovers |
+| `slow` | 350ms | Modals, panels |
+| `bounce` | 500ms | Playful effects |
 
-**Easing Functions:**
-- `ease-out`: Fast start, slow end (hover in)
-- `ease-in`: Slow start, fast end (hover out)
-- `ease-in-out`: Smooth both ends (modals)
+All use `cubic-bezier(0.4, 0, 0.2, 1)` easing.
 
-### Animation Patterns
+### Common Patterns
 
 **Staggered Hero Reveal:**
 ```css
-.hero-title {
-    animation: fadeInUp 600ms ease-out 0ms both;
-}
-
-.hero-subtitle {
-    animation: fadeInUp 600ms ease-out 200ms both;
-}
-
-.hero-cta {
-    animation: fadeInUp 600ms ease-out 400ms both;
-}
+.hero-title { animation: fadeInUp 600ms ease-out 0ms both; }
+.hero-subtitle { animation: fadeInUp 600ms ease-out 200ms both; }
+.hero-cta { animation: fadeInUp 600ms ease-out 400ms both; }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-```
-
-**Button Pulse:**
-```css
-.btn-pulse {
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        box-shadow: 0 0 0 0 var(--wp--preset--color--accent);
-    }
-    50% {
-        box-shadow: 0 0 0 10px transparent;
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 ```
 
@@ -530,24 +342,30 @@ Based on 8px grid system:
 .card {
     transition: transform 250ms ease-out, box-shadow 250ms ease-out;
 }
-
 .card:hover {
     transform: translateY(-4px) scale(1.02);
     box-shadow: var(--wp--preset--shadow--xl);
 }
 ```
 
+**Button Pulse:**
+```css
+.btn-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--wp--preset--color--accent); }
+    50% { box-shadow: 0 0 0 10px transparent; }
+}
+```
+
 ### Reduced Motion
 
 Always respect user preferences:
-
 ```css
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
         animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
 }
@@ -555,36 +373,14 @@ Always respect user preferences:
 
 ---
 
-## Style Guide
+## Accessibility
 
-### Writing Style
+### Color Contrast
 
-**Headlines:**
-- Active voice
-- Action-oriented
-- 60 characters or less
-- Examples: "Join Our Movement", "Make Your Voice Heard"
+All color combinations meet WCAG 2.1 AA standards (4.5:1 minimum).
 
-**Body Copy:**
-- Clear and concise
-- Conversational but professional
-- Short paragraphs (2-3 sentences)
-- Bulleted lists for scanability
+### Focus States
 
-**CTAs:**
-- Command verbs
-- Create urgency
-- Specific actions
-- Examples: "Donate Now", "Get Involved", "Sign Up Today"
-
-### Accessibility
-
-**Color Contrast:**
-- WCAG 2.1 AA minimum (4.5:1 for text)
-- AAA preferred (7:1 for text)
-- Test all color combinations
-
-**Focus States:**
 ```css
 :focus-visible {
     outline: 3px solid var(--wp--preset--color--accent);
@@ -592,47 +388,20 @@ Always respect user preferences:
 }
 ```
 
-**Screen Readers:**
+### Screen Readers
+
 ```html
-<button aria-label="Close modal">
-    <span aria-hidden="true">×</span>
+<button aria-label="Close dialog">
+    <span aria-hidden="true">&times;</span>
 </button>
 ```
 
-**Keyboard Navigation:**
+### Keyboard Navigation
+
 - All interactive elements focusable
 - Logical tab order
 - Skip links for navigation
-
----
-
-## Design Enhancements
-
-### Planned Improvements
-
-**Phase 1: Component Library (Q1 2026)**
-- Standardized component documentation
-- Storybook integration
-- Reusable React components
-- Design token browser
-
-**Phase 2: Advanced Animations (Q2 2026)**
-- Scroll-triggered animations
-- Parallax effects
-- Loading state animations
-- Transition choreography
-
-**Phase 3: Theme Customization (Q3 2026)**
-- Visual theme builder
-- Custom color scheme creator
-- Font pairing suggestions
-- Layout template library
-
-**Phase 4: Accessibility Enhancements (Q4 2026)**
-- High contrast mode
-- Dyslexia-friendly fonts
-- Adjustable font sizes
-- Enhanced keyboard navigation
+- Visible focus indicators
 
 ---
 
@@ -640,7 +409,7 @@ Always respect user preferences:
 
 ### Most Common Patterns
 
-**Section Spacing:**
+**Section:**
 ```css
 .section {
     padding: var(--wp--preset--spacing--16) 0;
@@ -657,44 +426,52 @@ h2 {
 }
 ```
 
-**Button:**
+**Container:**
 ```css
-.btn {
-    background: var(--wp--preset--color--accent);
-    color: white;
-    font-family: var(--wp--preset--font-family--display);
-    font-weight: 600;
-    padding: var(--wp--preset--spacing--4) var(--wp--preset--spacing--8);
-    border-radius: 8px;
-    transition: all 250ms ease-out;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--wp--preset--spacing--6);
 }
 ```
 
-**Card:**
-```css
-.card {
-    background: white;
-    padding: var(--wp--preset--spacing--8);
-    border-radius: 12px;
-    box-shadow: var(--wp--preset--shadow--md);
-}
+### PHP Helper Class
+
+```php
+// Get color
+$primary = CP_Theme_JSON_Helper::get_color('primary');
+
+// Get font family
+$display_font = CP_Theme_JSON_Helper::get_font_family('display');
+
+// Get spacing
+$spacing = CP_Theme_JSON_Helper::get_spacing('8');
+
+// Get all colors
+$colors = CP_Theme_JSON_Helper::get_all_colors();
 ```
 
 ---
 
-## Resources
+## Files
 
-**Files:**
-- `theme.json` - Design token definitions
-- `assets/css/design-system-wp69.css` - Enhanced CSS
-- `docs/CLAUDE.md` - Architecture overview with design system section
+| File | Purpose |
+|------|---------|
+| `theme.json` | Source of truth for all design tokens |
+| `assets/css/design-tokens.css` | CSS variable bridge (`--cp-*` aliases) |
+| `assets/css/animations.css` | Animation keyframes and utilities |
+| `includes/free/class-theme-json-helper.php` | PHP helper for accessing tokens |
 
-**External:**
+---
+
+## External Resources
+
 - [WordPress Theme JSON Reference](https://developer.wordpress.org/block-editor/reference-guides/theme-json-reference/)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [Color Contrast Checker](https://webaim.org/resources/contrastchecker/)
 
 ---
 
-**Last Updated:** December 28, 2025
-**Version:** 2.0.0
+**Version:** 2.1.0
+**Last Updated:** January 2025
+**Source of Truth:** `theme.json`

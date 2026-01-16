@@ -296,10 +296,10 @@ wp_enqueue_script('my-menu', $url, array('hoverIntent'), '1.0.0', true);
 
 **Handle**: `wp-color-picker`
 **Description**: WordPress color picker (Iris)
-**Currently Used**: Mega Menu Builder, Design Studio
+**Currently Used**: Design Studio
 
 ```php
-// Already correctly implemented in mega-menu-builder.php (line 365)
+// Example usage in admin scripts
 wp_enqueue_style('wp-color-picker');
 wp_enqueue_script('my-script', $url, array('wp-color-picker'), '1.0.0', true);
 ```

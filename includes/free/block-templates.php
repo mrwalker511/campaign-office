@@ -160,5 +160,39 @@ function campaignpress_register_block_templates() {
             )),
         );
     }
+
+    // Endorsements Template
+    $endorsement_obj = get_post_type_object('cp_endorsement');
+    if ($endorsement_obj) {
+        $endorsement_obj->template = array(
+            array('core/paragraph', array(
+                'content' => '<strong>' . __('Endorser Information', 'campaign-office') . '</strong>',
+                'fontSize' => 'lg',
+            )),
+            array('core/paragraph', array(
+                'placeholder' => __('Title/Position and Organization (use the Endorsement Details box on the right)', 'campaign-office'),
+                'className' => 'endorsement-subtitle',
+            )),
+            array('core/quote', array(
+                'placeholder' => __('"I am proud to endorse [Candidate Name] because..."', 'campaign-office'),
+                'className' => 'endorsement-quote',
+            )),
+            array('core/heading', array(
+                'level' => 3,
+                'content' => __('Why This Matters', 'campaign-office'),
+            )),
+            array('core/paragraph', array(
+                'placeholder' => __('Explain why this endorsement is significant for the campaign...', 'campaign-office'),
+            )),
+            array('core/separator'),
+            array('core/heading', array(
+                'level' => 4,
+                'content' => __('About the Endorser', 'campaign-office'),
+            )),
+            array('core/paragraph', array(
+                'placeholder' => __('Background information about the endorser or organization...', 'campaign-office'),
+            )),
+        );
+    }
 }
 add_action('init', 'campaignpress_register_block_templates', 20); // Run after post types are registered

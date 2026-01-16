@@ -482,3 +482,121 @@ function campaignpress_display_event_details($post_id = null) {
     </div>
     <?php
 }
+
+/**
+ * Display endorser details
+ *
+ * @param int $post_id Endorsement post ID
+ */
+function campaignpress_display_endorser_details($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $endorser_title = get_post_meta($post_id, '_cp_endorser_title', true);
+    $endorser_organization = get_post_meta($post_id, '_cp_endorser_organization', true);
+
+    if (!$endorser_title && !$endorser_organization) {
+        return;
+    }
+
+    echo '<div class="campaignpress-endorser-details" style="text-align:center;margin-bottom:2rem;color:var(--wp--preset--color--text);">';
+    if ($endorser_title) {
+        echo '<p style="font-size:1.1rem;font-weight:600;margin:0.5rem 0;">' . esc_html($endorser_title) . '</p>';
+    }
+    if ($endorser_organization) {
+        echo '<p style="font-size:1rem;opacity:0.8;margin:0.5rem 0;">' . esc_html($endorser_organization) . '</p>';
+    }
+    echo '</div>';
+}
+
+/**
+ * Inject endorser details into single endorsement content
+ */
+function campaignpress_inject_endorser_details($content) {
+    if (get_post_type() !== 'cp_endorsement') {
+        return $content;
+    }
+
+    if (!is_single()) {
+        return $content;
+    }
+
+    ob_start();
+    campaignpress_display_endorser_details();
+    $endorser_details = ob_get_clean();
+
+    return $endorser_details . $content;
+}
+add_filter('the_content', 'campaignpress_inject_endorser_details', 9);
+
+/**
+ * Display team member details
+ *
+ * @param int $post_id Team member post ID
+ */
+function campaignpress_display_team_details($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $team_position = get_post_meta($post_id, '_cp_team_position', true);
+    $team_email = get_post_meta($post_id, '_cp_team_email', true);
+    $team_phone = get_post_meta($post_id, '_cp_team_phone', true);
+
+    if (!$team_position && !$team_email && !$team_phone) {
+        return;
+    }
+
+    echo '<div class="campaignpress-team-details" style="margin-bottom:2rem;padding:1.5rem;background:var(--wp--preset--color--neutral-50);border-radius:0.5rem;">';
+    if ($team_position) {
+        echo '<p style="font-size:1.1rem;font-weight:600;margin:0.5rem 0;"><span class="dashicons dashicons-businessperson" style="margin-right:0.5rem;"></span>' . esc_html($team_position) . '</p>';
+    }
+    if ($team_email) {
+        echo '<p style="font-size:1rem;margin:0.5rem 0;"><span class="dashicons dashicons-email" style="margin-right:0.5rem;"></span>' . esc_html($team_email) . '</p>';
+    }
+    if ($team_phone) {
+        echo '<p style="font-size:1rem;margin:0.5rem 0;"><span class="dashicons dashicons-phone" style="margin-right:0.5rem;"></span>' . esc_html($team_phone) . '</p>';
+    }
+    echo '</div>';
+}
+
+/**
+ * Inject team member details into single team content
+ */
+function campaignpress_inject_team_details($content) {
+    if (get_post_type() !== 'cp_team') {
+        return $content;
+    }
+
+    if (!is_single()) {
+        return $content;
+    }
+
+    ob_start();
+    campaignpress_display_team_details();
+    $team_details = ob_get_clean();
+
+    return $team_details . $content;
+}
+add_filter('the_content', 'campaignpress_inject_team_details', 9);
+
+/**
+ * Inject event details into single event content
+ */
+function campaignpress_inject_event_details($content) {
+    if (get_post_type() !== 'cp_event') {
+        return $content;
+    }
+
+    if (!is_single()) {
+        return $content;
+    }
+
+    ob_start();
+    campaignpress_display_event_details();
+    $event_details = ob_get_clean();
+
+    return $event_details . $content;
+}
+add_filter('the_content', 'campaignpress_inject_event_details', 8);

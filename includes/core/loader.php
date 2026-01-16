@@ -53,6 +53,7 @@ if (class_exists('CampaignPress_Contact_Manager')) {
 // Load Free Features (Legacy functional style)
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/font-preconnect.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-bootstrap-navwalker.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/admin-dashboard-fixes.php';
 // Custom post types - provides fallback if Campaign Office Core plugin is not active
 if (!class_exists('Campaign_Office_Core')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';

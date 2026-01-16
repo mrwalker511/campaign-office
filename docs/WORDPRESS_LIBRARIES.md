@@ -361,35 +361,23 @@ wp_enqueue_script('twemoji');
 
 **⚠️ WordPress does NOT include Chart.js or similar libraries by default**
 
-### Current Implementation (Can Be Optimized)
+### Current Implementation (Self-Hosted)
 
-**File**: `includes/premium/analytics/analytics-init.php` (Line 115-121)
+**File**: `includes/premium/analytics/analytics-init.php`
 
 ```php
-// Currently loading from CDN
-wp_enqueue_script(
-    'chartjs',
-    'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
-    array(),
-    '4.4.0',
-    true
+// Bundled locally for WordPress.org compliance
+$chartjs_url = apply_filters(
+    'campaignpress_chartjs_url',
+    get_template_directory_uri() . '/assets/vendor/chartjs/chart.umd.min.js'
 );
+wp_enqueue_script('chartjs', $chartjs_url, array(), '4.4.0', true);
 ```
 
-### Optimization Options:
-
-1. **Self-host Chart.js** (Recommended)
-   - Download Chart.js to `/assets/vendor/chart.js/`
-   - Enqueue from local file
-   - Better performance, GDPR compliance
-
-2. **Use Google Charts** (Alternative)
-   - Free, no download needed
-   - Different API
-
-3. **Use WordPress Dashicons + SVG** (Lightweight)
-   - For simple charts, create SVG-based solutions
-   - No external library needed
+### Self-hosting Chart.js (Active)
+- ✅ Downloaded to `/assets/vendor/chartjs/`
+- ✅ Enqueued from local file
+- ✅ Better performance, GDPR compliance
 
 ---
 
@@ -397,26 +385,22 @@ wp_enqueue_script(
 
 **⚠️ WordPress does NOT include Leaflet or Google Maps by default**
 
-### Current Implementation (Can Be Optimized)
+### Current Implementation (Self-Hosted)
 
-**File**: `includes/premium/analytics/analytics-init.php` (Line 124-130)
+**File**: `includes/premium/analytics/analytics-init.php`
 
 ```php
-// Currently loading from CDN
-wp_enqueue_script(
-    'leaflet',
-    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
-    array(),
-    '1.9.4',
-    true
+// Bundled locally for WordPress.org compliance
+$leaflet_js_url = apply_filters(
+    'campaignpress_leaflet_js_url',
+    get_template_directory_uri() . '/assets/vendor/leaflet/leaflet.js'
 );
+wp_enqueue_script('leaflet', $leaflet_js_url, array(), '1.9.4', true);
 ```
 
-### Optimization Options:
-
-1. **Self-host Leaflet** (Recommended)
-   - Download to `/assets/vendor/leaflet/`
-   - Better performance, offline capability
+### Self-hosting Leaflet (Active)
+- ✅ Downloaded to `/assets/vendor/leaflet/`
+- ✅ Better performance, offline capability
 
 2. **Use Google Maps API**
    - Requires API key
@@ -524,8 +508,8 @@ add_action('wp_footer', function() {
 
 ### ⚠️ Can Be Optimized
 
-1. **Chart.js** - Currently CDN, should self-host
-2. **Leaflet** - Currently CDN, should self-host
+1. **Chart.js** - Self-hosted in `/assets/vendor/chartjs/`
+2. **Leaflet** - Self-hosted in `/assets/vendor/leaflet/`
 3. **React/ReactDOM** - Currently bundled in Vite build, should use wp-element
 
 ### ✅ Not Needed (Not Using)

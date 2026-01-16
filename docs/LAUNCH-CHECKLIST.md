@@ -31,21 +31,11 @@ This document outlines the remaining tasks to get CampaignPress to 100% launch-r
 
 ---
 
-### 2. **CDN Dependencies** (Critical for WordPress.org)
-**Status:** ⚠️ Needs attention for WordPress.org submission
-**Impact:** BLOCKS WordPress.org submission
+### 2. **CDN Dependencies** (Complete)
+**Status:** ✅ Bundled locally for WordPress.org compliance
+**Impact:** Resolved
 
-#### Current CDN Resources:
-1. **Bootstrap 5.3.0** (jsdelivr.net)
-   - CSS: ~150KB minified
-   - JS: ~60KB minified
-
-2. **Chart.js 4.4.0** (jsdelivr.net) - Premium features
-   - ~200KB minified
-
-3. **Leaflet 1.9.4** (unpkg.com) - Premium features
-   - JS: ~150KB
-   - CSS: ~15KB
+Bootstrap 5, Chart.js, and Leaflet are now bundled in `/assets/vendor/`.
 
 #### Options:
 
@@ -214,7 +204,7 @@ composer run phpcs:theme
 **Timeline:** 3-4 weeks (includes review time)
 
 1. ✅ Complete Path 1
-2. ⬜ Bundle Bootstrap, Chart.js, Leaflet locally
+2. [x] Bundle Bootstrap, Chart.js, Leaflet locally
 3. ⬜ Remove premium features (or split into plugin)
 4. ⬜ Run Theme Check plugin
 5. ⬜ Submit for review

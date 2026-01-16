@@ -111,27 +111,39 @@ function campaignpress_analytics_enqueue_assets( $hook ) {
 		return;
 	}
 
-	// Chart.js for data visualization
+	// Chart.js for data visualization (bundled locally for WordPress.org compliance)
+	$chartjs_url = apply_filters(
+		'campaignpress_chartjs_url',
+		get_template_directory_uri() . '/assets/vendor/chartjs/chart.umd.min.js'
+	);
 	wp_enqueue_script(
 		'chartjs',
-		'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+		$chartjs_url,
 		array(),
 		'4.4.0',
 		true
 	);
 
-	// Leaflet for geographic maps
+	// Leaflet for geographic maps (bundled locally for WordPress.org compliance)
+	$leaflet_js_url = apply_filters(
+		'campaignpress_leaflet_js_url',
+		get_template_directory_uri() . '/assets/vendor/leaflet/leaflet.js'
+	);
 	wp_enqueue_script(
 		'leaflet',
-		'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+		$leaflet_js_url,
 		array(),
 		'1.9.4',
 		true
 	);
 
+	$leaflet_css_url = apply_filters(
+		'campaignpress_leaflet_css_url',
+		get_template_directory_uri() . '/assets/vendor/leaflet/leaflet.css'
+	);
 	wp_enqueue_style(
 		'leaflet',
-		'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+		$leaflet_css_url,
 		array(),
 		'1.9.4'
 	);

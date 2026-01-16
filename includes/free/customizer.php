@@ -579,7 +579,7 @@ function campaignpress_customize_preview_js() {
     wp_enqueue_script(
         'campaignpress-customizer',
         CAMPAIGNPRESS_ASSETS_URI . '/js/customizer.js',
-        array('customize-preview'),
+        array('customize-preview', 'jquery'),
         CAMPAIGNPRESS_VERSION,
         true
     );

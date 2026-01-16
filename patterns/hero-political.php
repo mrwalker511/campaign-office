@@ -20,7 +20,7 @@
                 <!-- /wp:paragraph -->
 
                 <!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"clamp(2.5rem, 6vw, 5rem)","fontWeight":"700","lineHeight":"1.1"},"spacing":{"margin":{"bottom":"1.5rem"}}},"textColor":"white","fontFamily":"display"} -->
-                <h1 class="wp-block-heading has-white-color has-text-color has-display-font-family" style="margin-bottom:1.5rem;font-size:clamp(2.5rem, 6vw, 5rem);font-weight:700;line-height:1.1"><?php esc_html_e( 'Restoring Faith', 'campaign-office' ); ?><br><em><?php esc_html_e( 'In America', 'campaign-office' ); ?></em></h1>
+                <h1 class="wp-block-heading has-white-color has-text-color has-display-font-family" style="margin-bottom:1.5rem;font-size:clamp(2.5rem, 6vw, 5rem);font-weight:700;line-height:1.1"><?php esc_html_e( 'Restoring Faith', 'campaign-office' ); ?> <br><span class="italic font-normal" style="font-style:italic;font-weight:400"><?php esc_html_e( 'In America', 'campaign-office' ); ?></span></h1>
                 <!-- /wp:heading -->
 
                 <!-- wp:paragraph {"style":{"typography":{"fontSize":"1.25rem","fontWeight":"400","lineHeight":"1.6"},"spacing":{"margin":{"bottom":"2.5rem"}},"color":{"text":"rgba(255,255,255,0.9)"}}} -->

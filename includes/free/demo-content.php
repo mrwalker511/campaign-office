@@ -1562,22 +1562,25 @@ class CampaignPress_Demo_Content {
 <!-- /wp:paragraph -->',
             ),
             array(
+                'title' => 'Volunteer Portal',
+                'slug' => 'volunteer-portal',
+                'content' => '[cp_volunteer_portal]',
+            ),
+            array(
                 'title' => 'Donate',
                 'slug' => 'donate',
-                'content' => '<!-- wp:heading {"level":1} -->
-<h1>Donate to Our Campaign</h1>
+                'content' => '<!-- wp:heading {"textAlign":"center"} -->
+<h2 class="has-text-align-center">' . __('Fuel Our Movement', 'campaign-office') . '</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph -->
-<p>Your contribution will help us reach more voters, organize more events, and spread our message of positive change. Thank you for your support!</p>
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">' . __('Your contribution helps us reach more voters and spread our message of hope.', 'campaign-office') . '</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:shortcode -->
-[cp_donation_button processor="actblue" text="Donate via ActBlue" style="primary" size="large"]
-<!-- /wp:shortcode -->
+[cp_donation_button processor="actblue" text="' . __('Donate via ActBlue', 'campaign-office') . '" style="primary" size="large"]
 
 <!-- wp:paragraph -->
-<p><small>Contributions are not tax deductible. Federal law requires us to use our best efforts to collect and report the name, mailing address, occupation and name of employer of individuals whose contributions exceed $200 in an election cycle.</small></p>
+<p><small>' . __('Contributions are not tax deductible. Federal law requires us to use our best efforts to collect and report the name, mailing address, occupation and name of employer of individuals whose contributions exceed $200 in an election cycle.', 'campaign-office') . '</small></p>
 <!-- /wp:paragraph -->',
             ),
             array(

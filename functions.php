@@ -225,6 +225,82 @@ function campaignpress_setup() {
 
     // Disable default block patterns (we'll create custom ones)
     remove_theme_support('core-block-patterns');
+
+    // Add support for Starter Content
+    add_theme_support('starter-content', array(
+        'widgets' => array(
+            'main-sidebar' => array(
+                'text_about' => array(
+                    'text',
+                    array(
+                        'title' => __('About the Campaign', 'campaign-office'),
+                        'text'  => __('Fighting for a better future for our community. Join our movement today.', 'campaign-office'),
+                    ),
+                ),
+            ),
+        ),
+        'posts' => array(
+            'home' => array(
+                'post_type' => 'page',
+                'post_title' => __('Home', 'campaign-office'),
+                'post_content' => '<!-- wp:pattern {"slug":"campaignpress/hero-section"} /--> <!-- wp:pattern {"slug":"campaignpress/issue-card"} /--> <!-- wp:pattern {"slug":"campaignpress/donation-cta"} /-->',
+                'template' => 'front-page.html',
+            ),
+            'about' => array(
+                'post_type' => 'page',
+                'post_title' => __('About Marcus', 'campaign-office'),
+                'post_content' => '<!-- wp:heading --><h2>' . __('Meet the Candidate', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('I was born and raised in this community...', 'campaign-office') . '</p><!-- /wp:paragraph -->',
+            ),
+            'contact' => array(
+                'post_type' => 'page',
+                'post_title' => __('Contact', 'campaign-office'),
+                'post_content' => '<!-- wp:heading --><h2>' . __('Get in Touch', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('Email: info@campaign.test', 'campaign-office') . '</p><!-- /wp:paragraph -->',
+            ),
+            'volunteer' => array(
+                'post_type' => 'page',
+                'post_title' => __('Volunteer', 'campaign-office'),
+                'post_content' => '<!-- wp:heading --><h2>' . __('Join Our Team', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('Sign up to volunteer today.', 'campaign-office') . '</p><!-- /wp:paragraph -->',
+            ),
+            'donate' => array(
+                'post_type' => 'page',
+                'post_title' => __('Donate', 'campaign-office'),
+                'post_content' => '<!-- wp:heading {"textAlign":"center"} --><h2 class="has-text-align-center">' . __('Fuel Our Movement', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph {"align":"center"} --><p class="has-text-align-center">' . __('Your contribution helps us reach more voters and spread our message of hope.', 'campaign-office') . '</p><!-- /wp:paragraph --> [cp_donation_button processor="actblue" text="' . __('Donate via ActBlue', 'campaign-office') . '" style="primary" size="large"]',
+            ),
+            'volunteer-dashboard' => array(
+                'post_type' => 'page',
+                'post_title' => __('Volunteer Portal', 'campaign-office'),
+                'post_content' => '[cp_volunteer_portal]',
+            ),
+            'events' => array(
+                'post_type' => 'page',
+                'post_title' => __('Events', 'campaign-office'),
+                'post_content' => '<!-- wp:heading --><h2>' . __('Join Us at an Upcoming Event', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:query {"query":{"postType":"cp_event"}} --><div class="wp-block-query"><!-- wp:post-template --> <!-- wp:post-title {"isLink":true} /--> <!-- wp:post-excerpt /--> <!-- /wp:post-template --></div><!-- /wp:query -->',
+            ),
+            'press-releases' => array(
+                'post_type' => 'page',
+                'post_title' => __('News', 'campaign-office'),
+            ),
+        ),
+        'options' => array(
+            'show_on_front' => 'page',
+            'page_on_front' => '{{home}}',
+            'page_for_posts' => '{{press-releases}}',
+        ),
+        'nav_menus' => array(
+            'primary' => array(
+                'name' => __('Primary Menu', 'campaign-office'),
+                'items' => array(
+                    'link_home',
+                    'page_about',
+                    'page_events',
+                    'page_volunteer',
+                    'page_volunteer-dashboard',
+                    'page_donate',
+                    'page_contact',
+                ),
+            ),
+        ),
+    ));
 }
 add_action('after_setup_theme', 'campaignpress_setup');
 
@@ -745,6 +821,11 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-tags.php';
  * Heroicons helper functions
  */
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/heroicons.php';
+
+/**
+ * Block Templates for CPTs
+ */
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/block-templates.php';
 
 /**
  * Heroicons browser admin page

@@ -64,7 +64,7 @@ if ( ! empty( $filter_by_category ) ) {
 $events_query = new WP_Query( $args );
 ?>
 
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo wp_kses_data( $wrapper_attributes ); ?>>
     <?php if ( $title ) : ?>
         <h2 class="cp-events-title"><?php echo esc_html( $title ); ?></h2>
     <?php endif; ?>
@@ -122,7 +122,7 @@ $events_query = new WP_Query( $args );
                         </div>
 
                         <div class="cp-event-excerpt">
-                            <?php echo wp_trim_words( get_the_excerpt(), 20 ); ?>
+                            <?php echo esc_html( wp_trim_words( get_the_excerpt(), 20 ) ); ?>
                         </div>
 
                         <?php if ( $show_rsvp_button ) : ?>

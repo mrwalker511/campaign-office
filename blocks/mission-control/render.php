@@ -24,13 +24,13 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
     'data-date' => $valid_date ? esc_attr($election_date) : ''
 ));
 ?>
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo wp_kses_data( $wrapper_attributes ); ?>>
     <div class="cp-mc-dashboard">
         <!-- Weather Module -->
         <div class="cp-mc-module cp-mc-weather" role="region" aria-label="<?php esc_attr_e('Weather Information', 'campaign-office'); ?>">
             <h4 class="cp-mc-label"><?php echo esc_html($city); ?></h4>
             <div class="cp-weather-display">
-                <?php echo campaignpress_get_heroicon('cloud', 'outline', array('aria-hidden' => 'true', 'class' => 'heroicon-lg')); ?>
+                <?php echo wp_kses( campaignpress_get_heroicon('cloud', 'outline', array('aria-hidden' => 'true', 'class' => 'heroicon-lg')), campaignpress_get_allowed_svg_tags() ); ?>
                 <span class="cp-temp">72°F</span>
             </div>
             <p class="cp-weather-desc"><?php esc_html_e('Perfect canvassing weather', 'campaign-office'); ?></p>

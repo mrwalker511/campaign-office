@@ -60,12 +60,12 @@ if (empty($icon_svg)) {
 }
 ?>
 
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo wp_kses_data($wrapper_attributes); ?>>
 	<?php if (!empty($link_url)) : ?>
 		<a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>" rel="noopener">
-			<?php echo $icon_svg; ?>
+			<?php echo wp_kses($icon_svg, campaignpress_get_allowed_svg_tags()); ?>
 		</a>
 	<?php else : ?>
-		<?php echo $icon_svg; ?>
+		<?php echo wp_kses($icon_svg, campaignpress_get_allowed_svg_tags()); ?>
 	<?php endif; ?>
 </div>

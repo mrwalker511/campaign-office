@@ -42,7 +42,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
 ) );
 ?>
 
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo wp_kses_data( $wrapper_attributes ); ?>>
     <?php if ( $title ) : ?>
         <h3 class="cp-progress-title"><?php echo esc_html( $title ); ?></h3>
     <?php endif; ?>

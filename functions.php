@@ -147,9 +147,9 @@ function campaignpress_core_plugin_notice() {
             <?php echo wp_kses_post($message); ?>
         </p>
         <p>
-            <?php echo $button; ?>
+            <?php echo wp_kses_post($button); ?>
             <a href="<?php echo esc_url($dismiss_url); ?>" class="button">
-                <?php _e('Dismiss', 'campaign-office'); ?>
+                <?php esc_html_e('Dismiss', 'campaign-office'); ?>
             </a>
         </p>
         <p>
@@ -166,7 +166,8 @@ function campaignpress_core_plugin_notice() {
  */
 function campaignpress_handle_notice_dismissal() {
     if (isset($_GET['campaignpress_dismiss_notice']) && isset($_GET['nonce'])) {
-        if (wp_verify_nonce($_GET['nonce'], 'campaignpress_dismiss_notice')) {
+        $nonce = sanitize_text_field(wp_unslash($_GET['nonce']));
+        if (wp_verify_nonce($nonce, 'campaignpress_dismiss_notice')) {
             update_user_meta(get_current_user_id(), 'campaignpress_dismiss_plugin_notice', 'yes');
             wp_safe_redirect(remove_query_arg(array('campaignpress_dismiss_notice', 'nonce')));
             exit;
@@ -315,16 +316,8 @@ add_action('after_setup_theme', 'campaignpress_setup');
 function campaignpress_scripts() {
 
     // Self-hosted fonts (GDPR compliant)
-    // Fonts are preloaded in wp_head via includes/free/font-preconnect.php
-    // @font-face declarations are in theme.json
-
-    // Google Fonts - Playfair Display and Inter
-    wp_enqueue_style(
-        'campaignpress-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap',
-        array(),
-        null
-    );
+    // Fonts are defined in theme.json using system font stacks
+    // No external font requests for privacy compliance
 
     // Theme stylesheet (minimal, theme.json handles most styling)
     wp_enqueue_style(
@@ -383,19 +376,12 @@ function campaignpress_scripts() {
         CAMPAIGNPRESS_VERSION
     );
 
-    // Bootstrap 5 CSS (CDN by default, filterable)
-    // NOTE: For WordPress.org submission, Bootstrap MUST be bundled locally.
-    // For production/commercial use, download Bootstrap and place in /assets/vendor/bootstrap/
-    // Then use the filter below to switch to local files.
-    //
-    // To use local version, add to child theme or wp-config.php:
-    // add_filter('campaignpress_bootstrap_css_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'; });
-    // add_filter('campaignpress_bootstrap_js_url', function() { return get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'; });
-    //
-    // Download Bootstrap: https://getbootstrap.com/docs/5.3/getting-started/download/
+    // Bootstrap 5 CSS (bundled locally for WordPress.org compliance)
+    // Use filter to override with CDN if needed for development:
+    // add_filter('campaignpress_bootstrap_css_url', function() { return 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'; });
     $bootstrap_css_url = apply_filters(
         'campaignpress_bootstrap_css_url',
-        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
+        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.min.css'
     );
     wp_enqueue_style(
         'bootstrap',
@@ -404,10 +390,10 @@ function campaignpress_scripts() {
         '5.3.0'
     );
 
-    // Bootstrap 5 JS Bundle (CDN by default, filterable)
+    // Bootstrap 5 JS Bundle (bundled locally for WordPress.org compliance)
     $bootstrap_js_url = apply_filters(
         'campaignpress_bootstrap_js_url',
-        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'
+        get_template_directory_uri() . '/assets/vendor/bootstrap/bootstrap.bundle.min.js'
     );
     wp_enqueue_script(
         'bootstrap-bundle',
@@ -579,8 +565,8 @@ add_action('delete_post', 'campaignpress_clear_homepage_cache');
  * @return bool True if rate limit exceeded, false otherwise
  */
 function campaignpress_is_rate_limited($action, $max_requests = 5, $time_window = 3600) {
-    // Get user identifier (IP address)
-    $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    // Get user identifier (IP address) with proper sanitization
+    $user_ip = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '';
 
     // Create transient key based on action and IP
     $transient_key = 'cp_rate_limit_' . md5($action . $user_ip);

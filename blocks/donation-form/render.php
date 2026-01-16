@@ -42,7 +42,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
 ) );
 ?>
 
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo wp_kses_data( $wrapper_attributes ); ?>>
     <?php if ( $heading ) : ?>
         <h2 class="cp-donation-heading"><?php echo esc_html( $heading ); ?></h2>
     <?php endif; ?>

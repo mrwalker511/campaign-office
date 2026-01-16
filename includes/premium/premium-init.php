@@ -38,6 +38,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Load local configuration file
+// This file allows easy configuration of license server and other settings
+// without modifying core files
+$config_file = CAMPAIGNPRESS_INCLUDES_DIR . '/premium/config.php';
+if (file_exists($config_file)) {
+    require_once $config_file;
+}
+
 /**
  * Main CampaignPress Premium Class
  *
@@ -60,6 +68,7 @@ class CampaignPress_Premium {
      *
      * Note: This URL must be configured to point to your license server.
      * Use the 'campaignpress_license_server_url' filter to override this value.
+     * Or configure it in /includes/premium/config.php
      *
      * @var string
      */
@@ -67,6 +76,9 @@ class CampaignPress_Premium {
 
     /**
      * Grace period in days for expired licenses
+     *
+     * Note: Can be overridden by CAMPAIGNPRESS_GRACE_PERIOD_DAYS constant
+     * in /includes/premium/config.php
      *
      * @var int
      */
@@ -775,7 +787,24 @@ class CampaignPress_Premium {
      */
     private function validate_license_key($license_key, $license_email) {
         // Development mode bypass
-        if ($this->dev_mode && defined('CAMPAIGNPRESS_DEV_LICENSE_BYPASS') && CAMPAIGNPRESS_DEV_LICENSE_BYPASS) {
+        if ($this->dev_mode) {
+            // Check if mock server is enabled
+            $mock_server_enabled = defined('CAMPAIGNPRESS_MOCK_LICENSE_SERVER') && CAMPAIGNPRESS_MOCK_LICENSE_SERVER;
+
+            if ($mock_server_enabled) {
+                // Return mock validation
+                return array(
+                    'success' => true,
+                    'message' => __('Development mode (mock server) - license validation bypassed', 'campaign-office'),
+                    'data' => array(
+                        'license_type' => 'professional',
+                        'expiry_date' => date('Y-m-d', strtotime('+1 year')),
+                        'site_limit' => 5,
+                    ),
+                );
+            }
+
+            // Regular dev mode bypass
             return array(
                 'success' => true,
                 'message' => __('Development mode - license validation bypassed', 'campaign-office'),
@@ -787,30 +816,50 @@ class CampaignPress_Premium {
             );
         }
 
-        // Allow customization of license server URL via filter
-        $license_server_url = apply_filters('campaignpress_license_server_url', self::LICENSE_SERVER);
+        // Get license server URL - prioritize configured constant, then filter, then default
+        $license_server_url = self::LICENSE_SERVER;
+        if (defined('CAMPAIGNPRESS_LICENSE_SERVER_URL')) {
+            $license_server_url = CAMPAIGNPRESS_LICENSE_SERVER_URL;
+        }
+        $license_server_url = apply_filters('campaignpress_license_server_url', $license_server_url);
 
         // Check if mock license server is enabled (for testing without real server)
-        $mock_server_enabled = apply_filters('campaignpress_mock_license_server_enabled', false);
+        $mock_server_enabled = defined('CAMPAIGNPRESS_MOCK_LICENSE_SERVER') && CAMPAIGNPRESS_MOCK_LICENSE_SERVER;
+        $mock_server_enabled = apply_filters('campaignpress_mock_license_server_enabled', $mock_server_enabled);
 
         // Check if license server is configured (skip check in dev mode or when mock server is active)
-        if (!$this->dev_mode && !$mock_server_enabled && $license_server_url === self::LICENSE_SERVER && self::LICENSE_SERVER === 'https://api.campaignpress.com/v1/') {
+        // Allow the default URL if it's been overridden via filter or config
+        $is_default_url = ($license_server_url === self::LICENSE_SERVER && self::LICENSE_SERVER === 'https://api.campaignpress.com/v1/');
+        $has_custom_config = defined('CAMPAIGNPRESS_LICENSE_SERVER_URL') || has_filter('campaignpress_license_server_url');
+
+        if (!$mock_server_enabled && $is_default_url && !$has_custom_config) {
             return array(
                 'success' => false,
-                'message' => __('License server not configured. Please set up your license server or use the campaignpress_license_server_url filter.', 'campaign-office'),
+                'message' => __('License server not configured. Please configure the license server URL in /includes/premium/config.php or use the campaignpress_license_server_url filter.', 'campaign-office'),
             );
+        }
+
+        // Get timeout from config or use default
+        $timeout = defined('CAMPAIGNPRESS_LICENSE_TIMEOUT') ? CAMPAIGNPRESS_LICENSE_TIMEOUT : 15;
+
+        // Prepare request body
+        $body = array(
+            'license_key' => $license_key,
+            'email' => $license_email,
+            'domain' => home_url(),
+            'product' => 'campaign-office',
+            'version' => self::VERSION,
+        );
+
+        // Add API key if configured
+        if (defined('CAMPAIGNPRESS_LICENSE_API_KEY') && !empty(CAMPAIGNPRESS_LICENSE_API_KEY)) {
+            $body['api_key'] = CAMPAIGNPRESS_LICENSE_API_KEY;
         }
 
         // Make API request to license server
         $response = wp_remote_post($license_server_url . 'validate', array(
-            'timeout' => 15,
-            'body' => array(
-                'license_key' => $license_key,
-                'email' => $license_email,
-                'domain' => home_url(),
-                'product' => 'campaign-office',
-                'version' => self::VERSION,
-            ),
+            'timeout' => $timeout,
+            'body' => $body,
         ));
 
         if (is_wp_error($response)) {

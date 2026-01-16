@@ -58,6 +58,7 @@ tests/
 ### Prerequisites
 
 1. **Install Dependencies**:
+
    ```bash
    npm install
    composer install
@@ -65,11 +66,13 @@ tests/
 
 2. **Environment Configuration**:
    Copy `.env.example` to `.env` and set your WordPress URL:
+
    ```bash
    cp .env.example .env
    ```
 
    Edit `.env` and set:
+
    ```bash
    WP_BASE_URL=http://localhost:8881
    ```
@@ -80,6 +83,7 @@ tests/
    - Your custom WordPress installation URL
 
 3. **WordPress Test Library** (for PHP tests):
+
    ```bash
    bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost latest
    ```
@@ -87,6 +91,7 @@ tests/
 ## Test Types
 
 ### PHP Tests
+
 - **Unit**: `tests/unit/` - Test individual PHP functions and classes
   - Core functions
   - Custom post types
@@ -104,10 +109,12 @@ tests/
   - FEC compliance
 
 ### JavaScript Tests
+
 - **Unit**: `tests/javascript/__tests__/` - Test React components and JS functions
 - **E2E**: `tests/e2e/` - Browser automation tests
 
 ### Quality Tests
+
 - **Accessibility**: `tests/accessibility/` - WCAG 2.1 AA compliance
 - **Performance**: `tests/performance/` - Lighthouse, Web Vitals
 - **Theme Check**: `tests/theme-check.js` - WordPress standards
@@ -145,10 +152,10 @@ npm run test:performance  # Performance
 npm run test:lint         # All linters
 ```
 
-
 ## Writing Tests
 
 ### PHP Test Example
+
 ```php
 <?php
 // tests/unit/test-my-feature.php
@@ -163,6 +170,7 @@ class Test_My_Feature extends WP_UnitTestCase {
 ```
 
 ### JavaScript Test Example
+
 ```javascript
 // tests/javascript/__tests__/my-test.js
 test('my test', () => {
@@ -176,6 +184,7 @@ test('my test', () => {
 
 **Problem**: Tests timeout or fail to connect
 **Solution**:
+
 - Ensure WordPress is running at the URL specified in `.env`
 - Test the URL in your browser first
 - Check that the WordPress site is accessible (not password protected)
@@ -184,6 +193,7 @@ test('my test', () => {
 
 **Problem**: E2E tests fail with "page not found" errors
 **Solution**:
+
 - Verify `WP_BASE_URL` is set correctly in `.env`
 - Run `npx playwright install` to install browsers
 - Use `npm run test:e2e:headed` to see what's happening
@@ -192,16 +202,20 @@ test('my test', () => {
 
 **Problem**: "WordPress test library not found"
 **Solution**:
+
 - Run the WordPress test installer:
+
   ```bash
   bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost latest
   ```
+
 - Or set `WP_TESTS_DIR` environment variable to your WordPress test library location
 
 ### Lighthouse/Performance Tests Fail
 
 **Problem**: Chrome won't launch or tests timeout
 **Solution**:
+
 - Ensure Google Chrome is installed
 - Close other Chrome instances
 - Try increasing timeout in `tests/performance/run-performance-tests.js`
@@ -210,6 +224,7 @@ test('my test', () => {
 
 **Problem**: Module import errors or configuration issues
 **Solution**:
+
 - Clear Jest cache: `npx jest --clearCache`
 - Reinstall dependencies: `rm -rf node_modules && npm install`
 - Check that `tests/jest.config.js` paths are correct
@@ -225,6 +240,7 @@ test('my test', () => {
 ## Best Practices
 
 1. **Always run tests before committing**:
+
    ```bash
    npm run test:all
    ```
@@ -238,6 +254,7 @@ test('my test', () => {
 5. **Mock external dependencies**: Don't make real API calls in tests
 
 6. **Check coverage**: Aim for >80% code coverage
+
    ```bash
    npm run test:js:coverage
    ```
@@ -245,6 +262,7 @@ test('my test', () => {
 ## Documentation
 
 For more detailed documentation, see:
+
 - **[Full Testing Guide: TESTING.md](../TESTING.md)** - Comprehensive testing documentation
 - **[E2E Test Details: tests/e2e/README.md](./e2e/README.md)** - End-to-end test coverage
 - **[Theme Development: CLAUDE.md](../CLAUDE.md)** - Theme architecture and development guide

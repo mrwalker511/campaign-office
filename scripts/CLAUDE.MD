@@ -149,7 +149,6 @@ FREE TIER (includes/free/)
 ├── demo-content.php            # Demo content importer
 ├── volunteer-management.php    # Volunteer signup
 ├── event-management.php        # Event handling
-├── mega-menu-builder.php       # Navigation builder
 ├── customizer.php              # Theme customizer
 ├── heroicons.php               # Icon system
 └── template-tags.php           # Template helpers

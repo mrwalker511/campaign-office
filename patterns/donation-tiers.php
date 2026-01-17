@@ -2,18 +2,18 @@
 /**
  * Title: Donation Tiers
  * Slug: campaignpress/donation-tiers
- * Categories: campaign-office, call-to-action
+    * Categories: campaignpress, call-to-action
  * Keywords: donate, fundraising, money
  */
 ?>
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12"}}},"backgroundColor":"neutral-100","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull has-neutral-100-background-color has-background" style="padding-top:var(--wp--preset--spacing--12);padding-bottom:var(--wp--preset--spacing--12)">
     <!-- wp:heading {"textAlign":"center","level":2} -->
-    <h2 class="wp-block-heading has-text-align-center"><?php esc_html_e( 'Support Our Campaign', 'campaign-office' ); ?></h2>
+    <h2 class="wp-block-heading has-text-align-center"><?php esc_html_e( 'Support Our Campaign', 'campaignpress' ); ?></h2>
     <!-- /wp:heading -->
 
     <!-- wp:paragraph {"align":"center"} -->
-    <p class="has-text-align-center"><?php esc_html_e( 'Your contribution helps us reach more voters.', 'campaign-office' ); ?></p>
+    <p class="has-text-align-center"><?php esc_html_e( 'Your contribution helps us reach more voters.', 'campaignpress' ); ?></p>
     <!-- /wp:paragraph -->
 
     <!-- wp:columns {"style":{"spacing":{"blockGap":"2rem"}}} -->
@@ -24,10 +24,10 @@
             <h3 class="wp-block-heading has-text-align-center">$25</h3>
             <!-- /wp:heading -->
             <!-- wp:paragraph {"align":"center"} -->
-            <p class="has-text-align-center"><?php esc_html_e( 'Grassroots Supporter', 'campaign-office' ); ?></p>
+            <p class="has-text-align-center"><?php esc_html_e( 'Grassroots Supporter', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
             <!-- wp:button {"width":100,"className":"is-style-outline"} -->
-            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Donate $25', 'campaign-office' ); ?></a></div>
+            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Donate $25', 'campaignpress' ); ?></a></div>
             <!-- /wp:button -->
         </div>
         <!-- /wp:column -->
@@ -38,10 +38,10 @@
             <h3 class="wp-block-heading has-text-align-center has-primary-color has-text-color">$50</h3>
             <!-- /wp:heading -->
             <!-- wp:paragraph {"align":"center"} -->
-            <p class="has-text-align-center"><?php esc_html_e( 'Campaign Friend', 'campaign-office' ); ?></p>
+            <p class="has-text-align-center"><?php esc_html_e( 'Campaign Friend', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
             <!-- wp:button {"width":100,"className":"is-style-fill"} -->
-            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-fill"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Donate $50', 'campaign-office' ); ?></a></div>
+            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-fill"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Donate $50', 'campaignpress' ); ?></a></div>
             <!-- /wp:button -->
         </div>
         <!-- /wp:column -->
@@ -52,10 +52,10 @@
             <h3 class="wp-block-heading has-text-align-center">$100</h3>
             <!-- /wp:heading -->
             <!-- wp:paragraph {"align":"center"} -->
-            <p class="has-text-align-center"><?php esc_html_e( 'Key Contributor', 'campaign-office' ); ?></p>
+            <p class="has-text-align-center"><?php esc_html_e( 'Key Contributor', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
             <!-- wp:button {"width":100,"className":"is-style-outline"} -->
-            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Donate $100', 'campaign-office' ); ?></a></div>
+            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Donate $100', 'campaignpress' ); ?></a></div>
             <!-- /wp:button -->
         </div>
         <!-- /wp:column -->
@@ -66,10 +66,10 @@
             <h3 class="wp-block-heading has-text-align-center">$250+</h3>
             <!-- /wp:heading -->
             <!-- wp:paragraph {"align":"center"} -->
-            <p class="has-text-align-center"><?php esc_html_e( 'Champion', 'campaign-office' ); ?></p>
+            <p class="has-text-align-center"><?php esc_html_e( 'Champion', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
              <!-- wp:button {"width":100,"className":"is-style-outline"} -->
-            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Other Amount', 'campaign-office' ); ?></a></div>
+            <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Other Amount', 'campaignpress' ); ?></a></div>
             <!-- /wp:button -->
         </div>
         <!-- /wp:column -->

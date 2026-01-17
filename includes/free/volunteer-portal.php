@@ -226,8 +226,8 @@ class CP_Volunteer_Portal {
     public function add_admin_menu() {
         add_submenu_page(
             'edit.php?post_type=cp_volunteer',
-            __('Volunteer Portal', 'campaign-office'),
-            __('Portal', 'campaign-office'),
+            __('Volunteer Portal', 'campaignpress'),
+            __('Portal', 'campaignpress'),
             'edit_posts',
             'cp-volunteer-portal',
             array($this, 'render_admin_portal_page')
@@ -235,8 +235,8 @@ class CP_Volunteer_Portal {
 
         add_submenu_page(
             'edit.php?post_type=cp_volunteer',
-            __('Manage Shifts', 'campaign-office'),
-            __('Shifts', 'campaign-office'),
+            __('Manage Shifts', 'campaignpress'),
+            __('Shifts', 'campaignpress'),
             'edit_posts',
             'cp-volunteer-shifts',
             array($this, 'render_admin_shifts_page')
@@ -244,8 +244,8 @@ class CP_Volunteer_Portal {
 
         add_submenu_page(
             'edit.php?post_type=cp_volunteer',
-            __('Volunteer Hours', 'campaign-office'),
-            __('Hours', 'campaign-office'),
+            __('Volunteer Hours', 'campaignpress'),
+            __('Hours', 'campaignpress'),
             'edit_posts',
             'cp-volunteer-hours',
             array($this, 'render_admin_hours_page')
@@ -264,9 +264,9 @@ class CP_Volunteer_Portal {
         if (!empty($_GET['cpvp_login'])) {
             $status = sanitize_text_field(wp_unslash($_GET['cpvp_login']));
             if ($status === 'success') {
-                $login_notice = '<div class="cp-form-message success">' . esc_html__('Login successful.', 'campaign-office') . '</div>';
+                $login_notice = '<div class="cp-form-message success">' . esc_html__('Login successful.', 'campaignpress') . '</div>';
             } elseif ($status === 'invalid') {
-                $login_notice = '<div class="cp-form-message error">' . esc_html__('That login link is invalid or has expired. Please request a new one.', 'campaign-office') . '</div>';
+                $login_notice = '<div class="cp-form-message error">' . esc_html__('That login link is invalid or has expired. Please request a new one.', 'campaignpress') . '</div>';
             }
         }
 
@@ -297,19 +297,19 @@ class CP_Volunteer_Portal {
                     <?php wp_nonce_field('cp_volunteer_login', 'cp_volunteer_login_nonce'); ?>
                     <input type="hidden" name="redirect_to" value="<?php echo esc_url($redirect_to); ?>">
                     <div class="form-field">
-                        <label for="volunteer_email"><?php esc_html_e('Email Address', 'campaign-office'); ?></label>
+                        <label for="volunteer_email"><?php esc_html_e('Email Address', 'campaignpress'); ?></label>
                         <input type="email" id="volunteer_email" name="volunteer_email" required class="cp-input">
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="cp-button cp-button-primary">
-                            <?php esc_html_e('Send Login Link', 'campaign-office'); ?>
+                            <?php esc_html_e('Send Login Link', 'campaignpress'); ?>
                         </button>
                     </div>
                     <div class="cp-login-message" style="display:none;"></div>
                 </form>
                 <p class="cp-login-note">
-                    <?php esc_html_e('New volunteer?', 'campaign-office'); ?>
-                    <a href="#signup"><?php esc_html_e('Sign up here', 'campaign-office'); ?></a>
+                    <?php esc_html_e('New volunteer?', 'campaignpress'); ?>
+                    <a href="#signup"><?php esc_html_e('Sign up here', 'campaignpress'); ?></a>
                 </p>
             </div>
         </div>
@@ -324,7 +324,7 @@ class CP_Volunteer_Portal {
         $volunteer_id = $this->get_current_volunteer_id();
 
         if (!$volunteer_id) {
-            return '<p>' . esc_html__('Please log in to access your volunteer dashboard.', 'campaign-office') . '</p>';
+            return '<p>' . esc_html__('Please log in to access your volunteer dashboard.', 'campaignpress') . '</p>';
         }
 
         $volunteer = $this->get_volunteer($volunteer_id);
@@ -342,8 +342,8 @@ class CP_Volunteer_Portal {
             <!-- Header -->
             <div class="cp-dashboard-header">
                 <div class="cp-volunteer-info">
-                    <h2><?php printf(esc_html__('Welcome, %s!', 'campaign-office'), esc_html($volunteer->first_name)); ?></h2>
-                    <p class="cp-volunteer-role"><?php esc_html_e('Active Volunteer', 'campaign-office'); ?></p>
+                    <h2><?php printf(esc_html__('Welcome, %s!', 'campaignpress'), esc_html($volunteer->first_name)); ?></h2>
+                    <p class="cp-volunteer-role"><?php esc_html_e('Active Volunteer', 'campaignpress'); ?></p>
                 </div>
                 <div class="cp-dashboard-actions">
                     <button class="cp-button cp-button-secondary" onclick="location.reload()">

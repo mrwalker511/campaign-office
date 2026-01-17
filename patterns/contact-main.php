@@ -13,11 +13,11 @@
         <!-- wp:column {"width":"65%"} -->
         <div class="wp-block-column" style="flex-basis:65%">
             <!-- wp:paragraph {"className":"cp-section__label","style":{"typography":{"fontWeight":"700"}}} -->
-            <p class="cp-section__label" style="font-weight:700"><?php esc_html_e( 'SEND A MESSAGE', 'campaign-office' ); ?></p>
+            <p class="cp-section__label" style="font-weight:700"><?php esc_html_e( 'SEND A MESSAGE', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
 
             <!-- wp:heading {"level":2,"className":"cp-section__title cp-mb-4"} -->
-            <h2 class="wp-block-heading cp-section__title cp-mb-4"><?php esc_html_e( 'We\'re Here to Listen', 'campaign-office' ); ?></h2>
+            <h2 class="wp-block-heading cp-section__title cp-mb-4"><?php esc_html_e( 'We\'re Here to Listen', 'campaignpress' ); ?></h2>
             <!-- /wp:heading -->
 
             <!-- wp:group {"className":"cp-contact-form"} -->
@@ -26,7 +26,7 @@
                 <div class="wp-block-columns">
                     <!-- wp:column -->
                     <div class="wp-block-column">
-                        <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Full Name *', 'campaign-office' ); ?></p><!-- /wp:paragraph -->
+                        <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Full Name *', 'campaignpress' ); ?></p><!-- /wp:paragraph -->
                         <!-- wp:html -->
                         <input type="text" class="form-control" placeholder="John Smith">
                         <!-- /wp:html -->
@@ -34,7 +34,7 @@
                     <!-- /wp:column -->
                     <!-- wp:column -->
                     <div class="wp-block-column">
-                        <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Email Address *', 'campaign-office' ); ?></p><!-- /wp:paragraph -->
+                        <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Email Address *', 'campaignpress' ); ?></p><!-- /wp:paragraph -->
                         <!-- wp:html -->
                         <input type="email" class="form-control" placeholder="john@example.com">
                         <!-- /wp:html -->
@@ -47,7 +47,7 @@
                 <div class="wp-block-columns">
                     <!-- wp:column -->
                     <div class="wp-block-column">
-                        <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Phone Number', 'campaign-office' ); ?></p><!-- /wp:paragraph -->
+                        <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Phone Number', 'campaignpress' ); ?></p><!-- /wp:paragraph -->
                         <!-- wp:html -->
                         <input type="tel" class="form-control" placeholder="(555) 123-4567">
                         <!-- /wp:html -->
@@ -55,13 +55,13 @@
                     <!-- /wp:column -->
                     <!-- wp:column -->
                     <div class="wp-block-column">
-                        <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Subject *', 'campaign-office' ); ?></p><!-- /wp:paragraph -->
+                        <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Subject *', 'campaignpress' ); ?></p><!-- /wp:paragraph -->
                         <!-- wp:html -->
                         <select class="form-control">
-                            <option><?php esc_html_e( 'Select a topic...', 'campaign-office' ); ?></option>
-                            <option><?php esc_html_e( 'Volunteering', 'campaign-office' ); ?></option>
-                            <option><?php esc_html_e( 'Donations', 'campaign-office' ); ?></option>
-                            <option><?php esc_html_e( 'General Inquiry', 'campaign-office' ); ?></option>
+                            <option><?php esc_html_e( 'Select a topic...', 'campaignpress' ); ?></option>
+                            <option><?php esc_html_e( 'Volunteering', 'campaignpress' ); ?></option>
+                            <option><?php esc_html_e( 'Donations', 'campaignpress' ); ?></option>
+                            <option><?php esc_html_e( 'General Inquiry', 'campaignpress' ); ?></option>
                         </select>
                         <!-- /wp:html -->
                     </div>
@@ -69,7 +69,7 @@
                 </div>
                 <!-- /wp:columns -->
 
-                <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Your Message *', 'campaign-office' ); ?></p><!-- /wp:paragraph -->
+                <!-- wp:paragraph {"className":"form-label"} --><p class="form-label"><?php esc_html_e( 'Your Message *', 'campaignpress' ); ?></p><!-- /wp:paragraph -->
                 <!-- wp:html -->
                 <textarea class="form-control" style="height: 150px" placeholder="Tell us what's on your mind..."></textarea>
                 <!-- /wp:html -->
@@ -78,13 +78,13 @@
                 <div class="wp-block-group cp-mb-4" style="margin-bottom:1.5rem">
                     <!-- wp:html -->
                     <input type="checkbox" id="keep-updated" style="margin-right: 10px; width: 18px; height: 18px; cursor: pointer;">
-                    <label for="keep-updated" style="font-size: 0.875rem; color: var(--ds-text-muted); cursor: pointer;"><?php esc_html_e( 'Keep me updated on campaign news, events, and ways to get involved.', 'campaign-office' ); ?></label>
+                    <label for="keep-updated" style="font-size: 0.875rem; color: var(--ds-text-muted); cursor: pointer;"><?php esc_html_e( 'Keep me updated on campaign news, events, and ways to get involved.', 'campaignpress' ); ?></label>
                     <!-- /wp:html -->
                 </div>
                 <!-- /wp:group -->
 
                 <!-- wp:button {"backgroundColor":"secondary","className":"is-style-fill","style":{"typography":{"fontWeight":"700"}}} -->
-                <div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button has-secondary-background-color has-background" style="font-weight:700"><span class="icon" style="margin-right: 10px;">✈</span><?php esc_html_e( 'Send Message', 'campaign-office' ); ?></a></div>
+                <div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button has-secondary-background-color has-background" style="font-weight:700"><span class="icon" style="margin-right: 10px;">✈</span><?php esc_html_e( 'Send Message', 'campaignpress' ); ?></a></div>
                 <!-- /wp:button -->
             </div>
             <!-- /wp:group -->
@@ -94,12 +94,12 @@
         <!-- wp:column {"width":"35%"} -->
         <div class="wp-block-column" style="flex-basis:35%">
             <!-- wp:paragraph {"className":"cp-section__label","style":{"spacing":{"margin":{"bottom":"1rem"}},"typography":{"color":"var:preset|color|neutral-400"}}} -->
-            <p class="cp-section__label" style="margin-bottom:1rem;color:var(--wp--preset--color--neutral-400)"><?php esc_html_e( 'OUR OFFICES', 'campaign-office' ); ?></p>
+            <p class="cp-section__label" style="margin-bottom:1rem;color:var(--wp--preset--color--neutral-400)"><?php esc_html_e( 'OUR OFFICES', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
 
             <!-- wp:group {"className":"cp-contact-card"} -->
             <div class="wp-block-group cp-contact-card">
-                <!-- wp:paragraph {"className":"cp-contact-card__title"} --><p class="cp-contact-card__title"><?php esc_html_e( 'Campaign Headquarters', 'campaign-office' ); ?></p><!-- /wp:paragraph -->
+                <!-- wp:paragraph {"className":"cp-contact-card__title"} --><p class="cp-contact-card__title"><?php esc_html_e( 'Campaign Headquarters', 'campaignpress' ); ?></p><!-- /wp:paragraph -->
                 <!-- wp:group {"className":"cp-contact-info"} -->
                 <div class="wp-block-group cp-contact-info">
                     <!-- wp:paragraph {"className":"icon"} --><p class="icon">📍</p><!-- /wp:paragraph -->
@@ -123,7 +123,7 @@
 
             <!-- wp:group {"className":"cp-contact-card"} -->
             <div class="wp-block-group cp-contact-card">
-                <!-- wp:paragraph {"className":"cp-contact-card__title"} --><p class="cp-contact-card__title"><?php esc_html_e( 'Downtown Office', 'campaign-office' ); ?></p><!-- /wp:paragraph -->
+                <!-- wp:paragraph {"className":"cp-contact-card__title"} --><p class="cp-contact-card__title"><?php esc_html_e( 'Downtown Office', 'campaignpress' ); ?></p><!-- /wp:paragraph -->
                 <!-- wp:group {"className":"cp-contact-info"} -->
                 <div class="wp-block-group cp-contact-info">
                     <!-- wp:paragraph {"className":"icon"} --><p class="icon">📍</p><!-- /wp:paragraph -->
@@ -148,7 +148,7 @@
             <!-- wp:group {"className":"cp-contact-card","style":{"backgroundColor":"neutral-50","border":{"width":"0px"}}} -->
             <div class="wp-block-group cp-contact-card has-neutral-50-background-color has-background" style="border-width:0px; border-left: none;">
                 <!-- wp:paragraph {"className":"cp-section__label","style":{"spacing":{"margin":{"bottom":"1rem"}},"typography":{"color":"var:preset|color|neutral-400"}}} -->
-                <p class="cp-section__label" style="margin-bottom:1rem;color:var(--wp--preset--color--neutral-400)"><?php esc_html_e( 'QUICK CONTACT', 'campaign-office' ); ?></p>
+                <p class="cp-section__label" style="margin-bottom:1rem;color:var(--wp--preset--color--neutral-400)"><?php esc_html_e( 'QUICK CONTACT', 'campaignpress' ); ?></p>
                 <!-- /wp:paragraph -->
                 <!-- wp:group {"className":"cp-contact-info"} -->
                 <div class="wp-block-group cp-contact-info">
@@ -167,7 +167,7 @@
 
             <!-- wp:group {"className":"cp-social-box"} -->
             <div class="wp-block-group cp-social-box">
-                <!-- wp:paragraph {"className":"cp-social-box__title"} --><p class="cp-social-box__title"><?php esc_html_e( 'FOLLOW THE CAMPAIGN', 'campaign-office' ); ?></p><!-- /wp:paragraph -->
+                <!-- wp:paragraph {"className":"cp-social-box__title"} --><p class="cp-social-box__title"><?php esc_html_e( 'FOLLOW THE CAMPAIGN', 'campaignpress' ); ?></p><!-- /wp:paragraph -->
                 <!-- wp:group {"className":"cp-social-icons"} -->
                 <div class="wp-block-group cp-social-icons">
                     <!-- wp:html -->

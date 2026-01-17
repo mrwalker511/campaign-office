@@ -20,12 +20,12 @@
                 <?php esc_html_e( 'Volunteer With Us', 'campaignpress' ); ?>
             </a>
             <a href="#donate" class="cp-btn cp-btn--dark">
-                <?php esc_html_e( 'Donate Now', 'campaign-office' ); ?>
+                <?php esc_html_e( 'Donate Now', 'campaignpress' ); ?>
             </a>
         </div>
         
         <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin-top: 1.5rem;">
-            <?php esc_html_e( 'Join 1,200+ supporters in our district.', 'campaign-office' ); ?>
+            <?php esc_html_e( 'Join 1,200+ supporters in our district.', 'campaignpress' ); ?>
         </p>
     </div>
 </section>

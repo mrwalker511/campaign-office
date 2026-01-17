@@ -22,8 +22,8 @@ if (!defined('ABSPATH')) {
  */
 function cp_register_campaign_data_menu() {
     add_menu_page(
-        __('Campaign Data', 'campaign-office'),           // Page title
-        __('Campaign Data', 'campaign-office'),           // Menu title
+        __('Campaign Data', 'campaignpress'),           // Page title
+        __('Campaign Data', 'campaignpress'),           // Menu title
         'edit_posts',                                    // Capability
         'campaign-data-main',                            // Menu slug
         'cp_campaign_data_main_page',                   // Callback function
@@ -78,7 +78,7 @@ function cp_campaign_data_main_page() {
     ?>
     <div class="wrap campaignpress-dashboard">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-        <p class="description"><?php _e('Manage all your campaign data from this central hub.', 'campaign-office'); ?></p>
+        <p class="description"><?php _e('Manage all your campaign data from this central hub.', 'campaignpress'); ?></p>
         
         <!-- Stats Overview -->
         <div class="campaignpress-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
@@ -88,7 +88,7 @@ function cp_campaign_data_main_page() {
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 32px; font-weight: bold; color: #2271b1;"><?php echo number_format($issues_count); ?></div>
-                        <div style="color: #646970; font-size: 14px;"><?php _e('Issues', 'campaign-office'); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Issues', 'campaignpress'); ?></div>
                     </div>
                     <span class="dashicons dashicons-flag" style="font-size: 48px; color: #2271b1; opacity: 0.3;"></span>
                 </div>
@@ -99,7 +99,7 @@ function cp_campaign_data_main_page() {
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 32px; font-weight: bold; color: #00a32a;"><?php echo number_format($events_count); ?></div>
-                        <div style="color: #646970; font-size: 14px;"><?php _e('Events', 'campaign-office'); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Events', 'campaignpress'); ?></div>
                     </div>
                     <span class="dashicons dashicons-calendar-alt" style="font-size: 48px; color: #00a32a; opacity: 0.3;"></span>
                 </div>
@@ -110,7 +110,7 @@ function cp_campaign_data_main_page() {
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 32px; font-weight: bold; color: #d63638;"><?php echo number_format($endorsements_count); ?></div>
-                        <div style="color: #646970; font-size: 14px;"><?php _e('Endorsements', 'campaign-office'); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Endorsements', 'campaignpress'); ?></div>
                     </div>
                     <span class="dashicons dashicons-thumbs-up" style="font-size: 48px; color: #d63638; opacity: 0.3;"></span>
                 </div>
@@ -121,7 +121,7 @@ function cp_campaign_data_main_page() {
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 32px; font-weight: bold; color: #9b51e0;"><?php echo number_format($team_count); ?></div>
-                        <div style="color: #646970; font-size: 14px;"><?php _e('Team Members', 'campaign-office'); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Team Members', 'campaignpress'); ?></div>
                     </div>
                     <span class="dashicons dashicons-groups" style="font-size: 48px; color: #9b51e0; opacity: 0.3;"></span>
                 </div>
@@ -132,7 +132,7 @@ function cp_campaign_data_main_page() {
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 32px; font-weight: bold; color: #f0b849;"><?php echo number_format($volunteers_count); ?></div>
-                        <div style="color: #646970; font-size: 14px;"><?php _e('Volunteers', 'campaign-office'); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Volunteers', 'campaignpress'); ?></div>
                     </div>
                     <span class="dashicons dashicons-heart" style="font-size: 48px; color: #f0b849; opacity: 0.3;"></span>
                 </div>
@@ -143,7 +143,7 @@ function cp_campaign_data_main_page() {
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 32px; font-weight: bold; color: #00ba37;">$<?php echo number_format($total_donations, 0); ?></div>
-                        <div style="color: #646970; font-size: 14px;"><?php echo number_format($donation_count); ?> <?php _e('Donations', 'campaign-office'); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php echo number_format($donation_count); ?> <?php _e('Donations', 'campaignpress'); ?></div>
                     </div>
                     <span class="dashicons dashicons-money-alt" style="font-size: 48px; color: #00ba37; opacity: 0.3;"></span>
                 </div>
@@ -154,7 +154,7 @@ function cp_campaign_data_main_page() {
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="font-size: 32px; font-weight: bold; color: #3498db;"><?php echo number_format($press_count); ?></div>
-                        <div style="color: #646970; font-size: 14px;"><?php _e('Press Releases', 'campaign-office'); ?></div>
+                        <div style="color: #646970; font-size: 14px;"><?php _e('Press Releases', 'campaignpress'); ?></div>
                     </div>
                     <span class="dashicons dashicons-media-document" style="font-size: 48px; color: #3498db; opacity: 0.3;"></span>
                 </div>

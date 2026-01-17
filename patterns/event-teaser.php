@@ -25,17 +25,17 @@
             <!-- /wp:paragraph -->
 
             <!-- wp:heading {"level":3,"style":{"spacing":{"margin":{"top":"0.5rem","bottom":"0.5rem"}}}} -->
-            <h3 class="wp-block-heading" style="margin-top:0.5rem;margin-bottom:0.5rem"><?php esc_html_e( 'Town Hall Meeting', 'campaign-office' ); ?></h3>
+            <h3 class="wp-block-heading" style="margin-top:0.5rem;margin-bottom:0.5rem"><?php esc_html_e( 'Town Hall Meeting', 'campaignpress' ); ?></h3>
             <!-- /wp:heading -->
 
             <!-- wp:paragraph {"style":{"color":{"text":"var:preset|color|neutral-600"}}} -->
-            <p class="has-text-color" style="color:var(--wp--preset--color--neutral-600)"><?php esc_html_e( 'Join us for an open discussion about local issues.', 'campaign-office' ); ?></p>
+            <p class="has-text-color" style="color:var(--wp--preset--color--neutral-600)"><?php esc_html_e( 'Join us for an open discussion about local issues.', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
 
             <!-- wp:buttons -->
             <div class="wp-block-buttons">
                 <!-- wp:button {"className":"is-style-outline","style":{"spacing":{"padding":{"top":"0.5rem","bottom":"0.5rem","left":"1.5rem","right":"1.5rem"}}}} -->
-                <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" style="padding-top:0.5rem;padding-right:1.5rem;padding-bottom:0.5rem;padding-left:1.5rem"><?php esc_html_e( 'RSVP', 'campaign-office' ); ?></a></div>
+                <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" style="padding-top:0.5rem;padding-right:1.5rem;padding-bottom:0.5rem;padding-left:1.5rem"><?php esc_html_e( 'RSVP', 'campaignpress' ); ?></a></div>
                 <!-- /wp:button -->
             </div>
             <!-- /wp:buttons -->

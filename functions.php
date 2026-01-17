@@ -250,36 +250,36 @@ function campaignpress_setup() {
             'about' => array(
                 'post_type' => 'page',
                 'post_title' => __('About Marcus', 'campaignpress'),
-                'post_content' => '<!-- wp:heading --><h2>' . __('Meet the Candidate', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('I was born and raised in this community...', 'campaign-office') . '</p><!-- /wp:paragraph -->',
+                'post_content' => '<!-- wp:heading --><h2>' . __('Meet the Candidate', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('I was born and raised in this community...', 'campaignpress') . '</p><!-- /wp:paragraph -->',
             ),
             'contact' => array(
                 'post_type' => 'page',
-                'post_title' => __('Contact', 'campaign-office'),
-                'post_content' => '<!-- wp:heading --><h2>' . __('Get in Touch', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('Email: info@campaign.test', 'campaign-office') . '</p><!-- /wp:paragraph -->',
+                'post_title' => __('Contact', 'campaignpress'),
+                'post_content' => '<!-- wp:heading --><h2>' . __('Get in Touch', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('Email: info@campaign.test', 'campaignpress') . '</p><!-- /wp:paragraph -->',
             ),
             'volunteer' => array(
                 'post_type' => 'page',
-                'post_title' => __('Volunteer', 'campaign-office'),
-                'post_content' => '<!-- wp:heading --><h2>' . __('Join Our Team', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('Sign up to volunteer today.', 'campaign-office') . '</p><!-- /wp:paragraph -->',
+                'post_title' => __('Volunteer', 'campaignpress'),
+                'post_content' => '<!-- wp:heading --><h2>' . __('Join Our Team', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('Sign up to volunteer today.', 'campaignpress') . '</p><!-- /wp:paragraph -->',
             ),
             'donate' => array(
                 'post_type' => 'page',
-                'post_title' => __('Donate', 'campaign-office'),
-                'post_content' => '<!-- wp:heading {"textAlign":"center"} --><h2 class="has-text-align-center">' . __('Fuel Our Movement', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph {"align":"center"} --><p class="has-text-align-center">' . __('Your contribution helps us reach more voters and spread our message of hope.', 'campaign-office') . '</p><!-- /wp:paragraph --> [cp_donation_button processor="actblue" text="' . __('Donate via ActBlue', 'campaign-office') . '" style="primary" size="large"]',
+                'post_title' => __('Donate', 'campaignpress'),
+                'post_content' => '<!-- wp:heading {"textAlign":"center"} --><h2 class="has-text-align-center">' . __('Fuel Our Movement', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:paragraph {"align":"center"} --><p class="has-text-align-center">' . __('Your contribution helps us reach more voters and spread our message of hope.', 'campaignpress') . '</p><!-- /wp:paragraph --> [cp_donation_button processor="actblue" text="' . __('Donate via ActBlue', 'campaignpress') . '" style="primary" size="large"]',
             ),
             'volunteer-dashboard' => array(
                 'post_type' => 'page',
-                'post_title' => __('Volunteer Portal', 'campaign-office'),
+                'post_title' => __('Volunteer Portal', 'campaignpress'),
                 'post_content' => '[cp_volunteer_portal]',
             ),
             'events' => array(
                 'post_type' => 'page',
-                'post_title' => __('Events', 'campaign-office'),
-                'post_content' => '<!-- wp:heading --><h2>' . __('Join Us at an Upcoming Event', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:query {"query":{"postType":"cp_event"}} --><div class="wp-block-query"><!-- wp:post-template --> <!-- wp:post-title {"isLink":true} /--> <!-- wp:post-excerpt /--> <!-- /wp:post-template --></div><!-- /wp:query -->',
+                'post_title' => __('Events', 'campaignpress'),
+                'post_content' => '<!-- wp:heading --><h2>' . __('Join Us at an Upcoming Event', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:query {"query":{"postType":"cp_event"}} --><div class="wp-block-query"><!-- wp:post-template --> <!-- wp:post-title {"isLink":true} /--> <!-- wp:post-excerpt /--> <!-- /wp:post-template --></div><!-- /wp:query -->',
             ),
             'press-releases' => array(
                 'post_type' => 'page',
-                'post_title' => __('News', 'campaign-office'),
+                'post_title' => __('News', 'campaignpress'),
             ),
         ),
         'options' => array(
@@ -289,7 +289,7 @@ function campaignpress_setup() {
         ),
         'nav_menus' => array(
             'primary' => array(
-                'name' => __('Primary Menu', 'campaign-office'),
+                'name' => __('Primary Menu', 'campaignpress'),
                 'items' => array(
                     'link_home',
                     'page_about',
@@ -444,9 +444,9 @@ function campaignpress_scripts() {
     wp_localize_script('campaignpress-main', 'campaignpress_vars', array(
         'ajax_url'         => admin_url('admin-ajax.php'),
         'nonce'            => wp_create_nonce('campaignpress_nonce'),
-        'countdown_ended'  => __('Event has ended', 'campaign-office'),
-        'day_singular'     => __('Day', 'campaign-office'),
-        'day_plural'       => __('Days', 'campaign-office'),
+        'countdown_ended'  => __('Event has ended', 'campaignpress'),
+        'day_singular'     => __('Day', 'campaignpress'),
+        'day_plural'       => __('Days', 'campaignpress'),
         'debug'            => defined('WP_DEBUG') && WP_DEBUG,
     ));
 }
@@ -733,8 +733,8 @@ require_once get_template_directory() . '/includes/block-patterns.php';
  */
 function campaignpress_register_block_pattern_category() {
     register_block_pattern_category(
-        'campaign-office',
-        array('label' => __('CampaignPress', 'campaign-office'))
+        'campaignpress',
+        array('label' => __('CampaignPress', 'campaignpress'))
     );
 }
 add_action('init', 'campaignpress_register_block_pattern_category');
@@ -781,9 +781,9 @@ add_filter('body_class', 'campaignpress_primary_menu_layout_body_class');
  */
 function campaignpress_widgets_init() {
     register_sidebar(array(
-        'name'          => __('Main Sidebar', 'campaign-office'),
-        'id'            => 'main-sidebar',
-        'description'   => __('Widgets added here will appear in the sidebar of classic-compatible pages.', 'campaign-office'),
+        'name'          => __('Main Sidebar', 'campaignpress'),
+        'id'            => 'primary-sidebar',
+        'description'   => __('Widgets added here will appear in the sidebar of classic-compatible pages.', 'campaignpress'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget'  => '</section>',
         'before_title'  => '<h2 class="widget-title">',

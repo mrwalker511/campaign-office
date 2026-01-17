@@ -61,10 +61,10 @@ function campaignpress_event_details() {
                     }
 
                     if ($time_obj) {
-                        echo ' ' . esc_html__('at', 'campaign-office') . ' ' . esc_html($time_obj->format(get_option('time_format')));
+                        echo ' ' . esc_html__('at', 'campaignpress') . ' ' . esc_html($time_obj->format(get_option('time_format')));
                     } else {
                         // Fallback for other formats
-                        echo ' ' . esc_html__('at', 'campaign-office') . ' ' . esc_html(date_i18n(get_option('time_format'), strtotime($event_time)));
+                        echo ' ' . esc_html__('at', 'campaignpress') . ' ' . esc_html(date_i18n(get_option('time_format'), strtotime($event_time)));
                     }
                 }
                 ?>
@@ -97,7 +97,7 @@ function campaignpress_event_details() {
         <?php if ($event_rsvp_link) : ?>
             <div class="cp-event-rsvp">
                 <a href="<?php echo esc_url($event_rsvp_link); ?>" class="cp-button cp-button-primary" target="_blank" rel="noopener">
-                    <?php esc_html_e('RSVP Now', 'campaign-office'); ?>
+                    <?php esc_html_e('RSVP Now', 'campaignpress'); ?>
                 </a>
             </div>
         <?php endif; ?>
@@ -124,7 +124,7 @@ function campaignpress_posted_on() {
 
     $posted_on = sprintf(
         /* translators: %s: post date. */
-        esc_html_x('Posted on %s', 'post date', 'campaign-office'),
+        esc_html_x('Posted on %s', 'post date', 'campaignpress'),
         '<a href="' . esc_url(get_permalink()) . '" rel="bookmark">' . $time_string . '</a>'
     );
 
@@ -137,7 +137,7 @@ function campaignpress_posted_on() {
 function campaignpress_posted_by() {
     $byline = sprintf(
         /* translators: %s: post author. */
-        esc_html_x('by %s', 'post author', 'campaign-office'),
+        esc_html_x('by %s', 'post author', 'campaignpress'),
         '<span class="author vcard"><a class="url fn n" href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '">' . esc_html(get_the_author()) . '</a></span>'
     );
 
@@ -151,17 +151,17 @@ function campaignpress_entry_footer() {
     // Hide category and tag text for pages.
     if ('post' === get_post_type()) {
         /* translators: used between list items, there is a space after the comma */
-        $categories_list = get_the_category_list(esc_html__(', ', 'campaign-office'));
+        $categories_list = get_the_category_list(esc_html__(', ', 'campaignpress'));
         if ($categories_list) {
             /* translators: 1: list of categories. */
-            printf('<span class="cat-links">' . esc_html__('Posted in %1$s', 'campaign-office') . '</span>', $categories_list);
+            printf('<span class="cat-links">' . esc_html__('Posted in %1$s', 'campaignpress') . '</span>', $categories_list);
         }
 
         /* translators: used between list items, there is a space after the comma */
-        $tags_list = get_the_tag_list('', esc_html_x(', ', 'list item separator', 'campaign-office'));
+        $tags_list = get_the_tag_list('', esc_html_x(', ', 'list item separator', 'campaignpress'));
         if ($tags_list) {
             /* translators: 1: list of tags. */
-            printf('<span class="tags-links">' . esc_html__('Tagged %1$s', 'campaign-office') . '</span>', $tags_list);
+            printf('<span class="tags-links">' . esc_html__('Tagged %1$s', 'campaignpress') . '</span>', $tags_list);
         }
     }
 
@@ -171,7 +171,7 @@ function campaignpress_entry_footer() {
             sprintf(
                 wp_kses(
                     /* translators: %s: post title */
-                    __('Leave a Comment<span class="screen-reader-text"> on %s</span>', 'campaign-office'),
+                    __('Leave a Comment<span class="screen-reader-text"> on %s</span>', 'campaignpress'),
                     array(
                         'span' => array(
                             'class' => array(),
@@ -188,7 +188,7 @@ function campaignpress_entry_footer() {
         sprintf(
             wp_kses(
                 /* translators: %s: Name of current post. Only visible to screen readers */
-                __('Edit <span class="screen-reader-text">%s</span>', 'campaign-office'),
+                __('Edit <span class="screen-reader-text">%s</span>', 'campaignpress'),
                 array(
                     'span' => array(
                         'class' => array(),
@@ -239,27 +239,27 @@ function campaignpress_social_links() {
     echo '<div class="cp-social-links social-links">';
 
     if ($social_urls['facebook']) {
-        echo '<a href="' . esc_url($social_urls['facebook']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Facebook', 'campaign-office') . '">';
+        echo '<a href="' . esc_url($social_urls['facebook']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Facebook', 'campaignpress') . '">';
         echo campaignpress_get_social_heroicon('facebook', array('aria-hidden' => 'true'));
         echo '</a>';
     }
     if ($social_urls['twitter']) {
-        echo '<a href="' . esc_url($social_urls['twitter']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Twitter', 'campaign-office') . '">';
+        echo '<a href="' . esc_url($social_urls['twitter']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Twitter', 'campaignpress') . '">';
         echo campaignpress_get_social_heroicon('twitter', array('aria-hidden' => 'true'));
         echo '</a>';
     }
     if ($social_urls['instagram']) {
-        echo '<a href="' . esc_url($social_urls['instagram']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Instagram', 'campaign-office') . '">';
+        echo '<a href="' . esc_url($social_urls['instagram']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('Instagram', 'campaignpress') . '">';
         echo campaignpress_get_social_heroicon('instagram', array('aria-hidden' => 'true'));
         echo '</a>';
     }
     if ($social_urls['youtube']) {
-        echo '<a href="' . esc_url($social_urls['youtube']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('YouTube', 'campaign-office') . '">';
+        echo '<a href="' . esc_url($social_urls['youtube']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('YouTube', 'campaignpress') . '">';
         echo campaignpress_get_social_heroicon('youtube', array('aria-hidden' => 'true'));
         echo '</a>';
     }
     if ($social_urls['linkedin']) {
-        echo '<a href="' . esc_url($social_urls['linkedin']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('LinkedIn', 'campaign-office') . '">';
+        echo '<a href="' . esc_url($social_urls['linkedin']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr__('LinkedIn', 'campaignpress') . '">';
         echo campaignpress_get_social_heroicon('linkedin', array('aria-hidden' => 'true'));
         echo '</a>';
     }
@@ -268,7 +268,7 @@ function campaignpress_social_links() {
 }
 
 function campaignpress_disclaimer_shortcode() {
-    $default = __('Paid for by Friends of the Candidate', 'campaign-office');
+    $default = __('Paid for by Friends of the Candidate', 'campaignpress');
     $disclaimer = get_theme_mod('campaignpress_disclaimer_text', $default);
     $disclaimer = trim((string) $disclaimer);
 

@@ -85,7 +85,7 @@ class CampaignPress_Contact_Manager {
         global $wpdb;
 
         if ( empty( $data['email'] ) && empty( $data['first_name'] ) && empty( $data['last_name'] ) ) {
-            return new WP_Error( 'missing_data', __( 'Email or Name is required to identify a contact.', 'campaign-office' ) );
+            return new WP_Error( 'missing_data', __( 'Email or Name is required to identify a contact.', 'campaignpress' ) );
         }
 
         // Try to find by email first
@@ -134,7 +134,7 @@ class CampaignPress_Contact_Manager {
         $result = $wpdb->insert( $this->table_name, $insert_data );
 
         if ( false === $result ) {
-            return new WP_Error( 'db_error', __( 'Failed to create contact record.', 'campaign-office' ) );
+            return new WP_Error( 'db_error', __( 'Failed to create contact record.', 'campaignpress' ) );
         }
 
         return (int) $wpdb->insert_id;
@@ -148,12 +148,12 @@ class CampaignPress_Contact_Manager {
      */
     public function get_contact( $id ) {
         $cache_key = 'cp_contact_' . $id;
-        $contact = wp_cache_get( $cache_key, 'campaign-office' );
+        $contact = wp_cache_get( $cache_key, 'campaignpress' );
 
         if ( false === $contact ) {
             global $wpdb;
             $contact = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE id = %d", $id ) );
-            wp_cache_set( $cache_key, $contact, 'campaign-office', HOUR_IN_SECONDS );
+            wp_cache_set( $cache_key, $contact, 'campaignpress', HOUR_IN_SECONDS );
         }
 
         return $contact;
@@ -192,7 +192,7 @@ class CampaignPress_Contact_Manager {
         );
 
         if ( false !== $result ) {
-            wp_cache_delete( 'cp_contact_' . $id, 'campaign-office' );
+            wp_cache_delete( 'cp_contact_' . $id, 'campaignpress' );
             return true;
         }
 

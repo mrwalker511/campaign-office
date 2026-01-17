@@ -18,9 +18,9 @@ function campaignpress_register_block_patterns() {
     register_block_pattern(
         'campaignpress/hero-section',
         array(
-            'title'       => __('Campaign Hero Section', 'campaign-office'),
-            'description' => __('Full-width hero with heading, tagline, and CTA buttons', 'campaign-office'),
-            'categories'  => array('campaign-office'),
+            'title'       => __('Campaign Hero Section', 'campaignpress'),
+            'description' => __('Full-width hero with heading, tagline, and CTA buttons', 'campaignpress'),
+            'categories'  => array('campaignpress'),
             'content'     => '<!-- wp:cover {"url":"' . get_template_directory_uri() . '/assets/images/hero-placeholder.jpg","dimRatio":50,"overlayColor":"primary-900","className":"is-style-campaign-hero"} -->
                 <div class="wp-block-cover is-style-campaign-hero">
                     <span aria-hidden="true" class="wp-block-cover__background has-primary-900-background-color has-background-dim"></span>
@@ -54,9 +54,9 @@ function campaignpress_register_block_patterns() {
     register_block_pattern(
         'campaignpress/issue-card',
         array(
-            'title'       => __('Issue Position Card', 'campaign-office'),
-            'description' => __('Highlight a policy position with icon and description', 'campaign-office'),
-            'categories'  => array('campaign-office'),
+            'title'       => __('Issue Position Card', 'campaignpress'),
+            'description' => __('Highlight a policy position with icon and description', 'campaignpress'),
+            'categories'  => array('campaignpress'),
             'content'     => '<!-- wp:group {"className":"is-style-issue-card","layout":{"type":"constrained"}} -->
                 <div class="wp-block-group is-style-issue-card">
                     <!-- wp:paragraph {"fontSize":"4-xl"} -->
@@ -79,9 +79,9 @@ function campaignpress_register_block_patterns() {
     register_block_pattern(
         'campaignpress/team-grid',
         array(
-            'title'       => __('Team Member Grid', 'campaign-office'),
-            'description' => __('A 3-column grid displaying team members with photos and bios.', 'campaign-office'),
-            'categories'  => array('campaign-office'),
+            'title'       => __('Team Member Grid', 'campaignpress'),
+            'description' => __('A 3-column grid displaying team members with photos and bios.', 'campaignpress'),
+            'categories'  => array('campaignpress'),
             'content'     => '<!-- wp:group {"layout":{"type":"constrained"}} -->
                 <div class="wp-block-group">
                     <!-- wp:heading {"textAlign":"center","level":2} -->
@@ -142,9 +142,9 @@ function campaignpress_register_block_patterns() {
     register_block_pattern(
         'campaignpress/donation-cta',
         array(
-            'title'       => __('Donation Call to Action', 'campaign-office'),
-            'description' => __('A prominent section asking for donations.', 'campaign-office'),
-            'categories'  => array('campaign-office'),
+            'title'       => __('Donation Call to Action', 'campaignpress'),
+            'description' => __('A prominent section asking for donations.', 'campaignpress'),
+            'categories'  => array('campaignpress'),
             'content'     => '<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"primary","textColor":"white","layout":{"type":"constrained"}} -->
                 <div class="wp-block-group has-white-color has-primary-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--12);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--12);padding-left:var(--wp--preset--spacing--6)">
                     <!-- wp:heading {"textAlign":"center","fontSize":"3-xl"} -->
@@ -180,9 +180,9 @@ function campaignpress_register_block_patterns() {
     register_block_pattern(
         'campaignpress/event-highlight',
         array(
-            'title'       => __('Event Highlight', 'campaign-office'),
-            'description' => __('Highlight an upcoming event.', 'campaign-office'),
-            'categories'  => array('campaign-office'),
+            'title'       => __('Event Highlight', 'campaignpress'),
+            'description' => __('Highlight an upcoming event.', 'campaignpress'),
+            'categories'  => array('campaignpress'),
             'content'     => '<!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":"var:preset|spacing|8"}}} -->
                 <div class="wp-block-columns are-vertically-aligned-center">
                     <!-- wp:column {"verticalAlignment":"center","width":"40%"} -->
@@ -236,9 +236,9 @@ function campaignpress_register_block_patterns() {
     register_block_pattern(
         'campaignpress/newsletter-signup',
         array(
-            'title'       => __('Newsletter Signup', 'campaign-office'),
-            'description' => __('A simple signup form layout.', 'campaign-office'),
-            'categories'  => array('campaign-office'),
+            'title'       => __('Newsletter Signup', 'campaignpress'),
+            'description' => __('A simple signup form layout.', 'campaignpress'),
+            'categories'  => array('campaignpress'),
             'content'     => '<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}}},"backgroundColor":"neutral-100","layout":{"type":"constrained"}} -->
                 <div class="wp-block-group alignfull has-neutral-100-background-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10)">
                     <!-- wp:columns {"verticalAlignment":"center"} -->
@@ -279,9 +279,9 @@ function campaignpress_register_block_patterns() {
     register_block_pattern(
         'campaignpress/testimonial-card',
         array(
-            'title'       => __('Testimonial Card', 'campaign-office'),
-            'description' => __('A styled quote block for endorsements.', 'campaign-office'),
-            'categories'  => array('campaign-office'),
+            'title'       => __('Testimonial Card', 'campaignpress'),
+            'description' => __('A styled quote block for endorsements.', 'campaignpress'),
+            'categories'  => array('campaignpress'),
             'content'     => '<!-- wp:group {"style":{"border":{"width":"1px","radius":"var:preset|custom|borderRadius|lg"}},"borderColor":"neutral-300","backgroundColor":"white","layout":{"type":"constrained"}} -->
                 <div class="wp-block-group has-border-color has-neutral-300-border-color has-white-background-color has-background" style="border-width:1px;border-radius:var(--wp--preset--custom--border-radius--lg)">
                     <!-- wp:quote {"className":"is-style-plain"} -->

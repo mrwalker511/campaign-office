@@ -80,7 +80,7 @@ function cp_verify_ajax_nonce() {
     $nonce = isset($_REQUEST['nonce']) ? $_REQUEST['nonce'] : '';
     if (!wp_verify_nonce($nonce, 'cp_premium_nonce')) {
         wp_send_json_error(array(
-            'message' => __('Security check failed. Please refresh the page and try again.', 'campaign-office')
+            'message' => __('Security check failed. Please refresh the page and try again.', 'campaignpress')
         ));
     }
 }

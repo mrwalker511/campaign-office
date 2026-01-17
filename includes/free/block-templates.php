@@ -22,21 +22,21 @@ function campaignpress_register_block_templates() {
     if ($volunteer_obj) {
         $volunteer_obj->template = array(
             array('core/paragraph', array(
-                'placeholder' => __('Describe this volunteer opportunity...', 'campaign-office'),
+                'placeholder' => __('Describe this volunteer opportunity...', 'campaignpress'),
             )),
             array('core/heading', array(
                 'level' => 3,
-                'content' => __('Responsibilities', 'campaign-office'),
+                'content' => __('Responsibilities', 'campaignpress'),
             )),
             array('core/list', array(
-                'placeholder' => __('List the responsibilities...', 'campaign-office'),
+                'placeholder' => __('List the responsibilities...', 'campaignpress'),
             )),
             array('core/heading', array(
                 'level' => 3,
-                'content' => __('Requirements', 'campaign-office'),
+                'content' => __('Requirements', 'campaignpress'),
             )),
             array('core/list', array(
-                'placeholder' => __('List the requirements...', 'campaign-office'),
+                'placeholder' => __('List the requirements...', 'campaignpress'),
             )),
             array('core/group', array(
                 'backgroundColor' => 'neutral-50',
@@ -44,16 +44,16 @@ function campaignpress_register_block_templates() {
             ), array(
                 array('core/heading', array(
                     'level' => 3,
-                    'content' => __('Ready to Apply?', 'campaign-office'),
+                    'content' => __('Ready to Apply?', 'campaignpress'),
                 )),
                 array('core/paragraph', array(
-                    'content' => __('If you are ready to make a difference, click the button below to sign up.', 'campaign-office'),
+                    'content' => __('If you are ready to make a difference, click the button below to sign up.', 'campaignpress'),
                 )),
                 array('core/buttons', array(
                     'layout' => array('type' => 'flex', 'justifyContent' => 'center'),
                 ), array(
                     array('core/button', array(
-                        'text' => __('Sign Up Now', 'campaign-office'),
+                        'text' => __('Sign Up Now', 'campaignpress'),
                     )),
                 )),
             )),
@@ -65,33 +65,33 @@ function campaignpress_register_block_templates() {
     if ($press_obj) {
         $press_obj->template = array(
             array('core/paragraph', array(
-                'content' => '<strong>' . __('FOR IMMEDIATE RELEASE', 'campaign-office') . '</strong>',
+                'content' => '<strong>' . __('FOR IMMEDIATE RELEASE', 'campaignpress') . '</strong>',
             )),
             array('core/paragraph', array(
                 'placeholder' => 'CITY, State — Date of release',
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Lead paragraph: Start with a strong hook that summarizes the news.', 'campaign-office'),
+                'placeholder' => __('Lead paragraph: Start with a strong hook that summarizes the news.', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Body content: Provide more details about the announcement.', 'campaign-office'),
+                'placeholder' => __('Body content: Provide more details about the announcement.', 'campaignpress'),
             )),
             array('core/quote', array(
-                'placeholder' => __('Insert a quote from the candidate or spokesperson.', 'campaign-office'),
+                'placeholder' => __('Insert a quote from the candidate or spokesperson.', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Closing details: Final information or call to action.', 'campaign-office'),
+                'placeholder' => __('Closing details: Final information or call to action.', 'campaignpress'),
             )),
             array('core/separator'),
             array('core/heading', array(
                 'level' => 4,
-                'content' => __('About the Campaign', 'campaign-office'),
+                'content' => __('About the Campaign', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Short boilerplate about the candidate and campaign mission.', 'campaign-office'),
+                'placeholder' => __('Short boilerplate about the candidate and campaign mission.', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'content' => '<strong>' . __('Media Contact:', 'campaign-office') . '</strong><br>' . __('Name', 'campaign-office') . '<br>press@campaign.test<br>(555) 123-4567',
+                'content' => '<strong>' . __('Media Contact:', 'campaignpress') . '</strong><br>' . __('Name', 'campaignpress') . '<br>press@campaign.test<br>(555) 123-4567',
             )),
         );
     }
@@ -101,25 +101,25 @@ function campaignpress_register_block_templates() {
     if ($issue_obj) {
         $issue_obj->template = array(
             array('core/paragraph', array(
-                'placeholder' => __('Brief summary of the issue and why it matters.', 'campaign-office'),
+                'placeholder' => __('Brief summary of the issue and why it matters.', 'campaignpress'),
                 'fontSize' => 'lg',
             )),
             array('core/heading', array(
                 'level' => 2,
-                'content' => __('The Problem', 'campaign-office'),
+                'content' => __('The Problem', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Describe the current challenges facing our community regarding this issue.', 'campaign-office'),
+                'placeholder' => __('Describe the current challenges facing our community regarding this issue.', 'campaignpress'),
             )),
             array('core/heading', array(
                 'level' => 2,
-                'content' => __('Our Solution', 'campaign-office'),
+                'content' => __('Our Solution', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Detail our plan to address these challenges and improve outcomes.', 'campaign-office'),
+                'placeholder' => __('Detail our plan to address these challenges and improve outcomes.', 'campaignpress'),
             )),
             array('core/list', array(
-                'placeholder' => __('Key policy points...', 'campaign-office'),
+                'placeholder' => __('Key policy points...', 'campaignpress'),
             )),
         );
     }
@@ -129,17 +129,17 @@ function campaignpress_register_block_templates() {
     if ($event_obj) {
         $event_obj->template = array(
             array('core/paragraph', array(
-                'placeholder' => __('Description of the event...', 'campaign-office'),
+                'placeholder' => __('Description of the event...', 'campaignpress'),
             )),
             array('core/group', array(
                 'layout' => array('type' => 'flex', 'flexWrap' => 'nowrap'),
             ), array(
-                array('core/paragraph', array('content' => '<strong>' . __('Date:', 'campaign-office') . '</strong> [Event Date]')),
-                array('core/paragraph', array('content' => '<strong>' . __('Time:', 'campaign-office') . '</strong> [Event Time]')),
+                array('core/paragraph', array('content' => '<strong>' . __('Date:', 'campaignpress') . '</strong> [Event Date]')),
+                array('core/paragraph', array('content' => '<strong>' . __('Time:', 'campaignpress') . '</strong> [Event Time]')),
             )),
-            array('core/paragraph', array('content' => '<strong>' . __('Location:', 'campaign-office') . '</strong> [Event Location]')),
+            array('core/paragraph', array('content' => '<strong>' . __('Location:', 'campaignpress') . '</strong> [Event Location]')),
             array('core/buttons', array(), array(
-                array('core/button', array('text' => __('RSVP for this Event', 'campaign-office'))),
+                array('core/button', array('text' => __('RSVP for this Event', 'campaignpress'))),
             )),
         );
     }
@@ -149,14 +149,14 @@ function campaignpress_register_block_templates() {
     if ($team_obj) {
         $team_obj->template = array(
             array('core/paragraph', array(
-                'placeholder' => __('Biography and background of the team member...', 'campaign-office'),
+                'placeholder' => __('Biography and background of the team member...', 'campaignpress'),
             )),
             array('core/heading', array(
                 'level' => 4,
-                'content' => __('Contact Information', 'campaign-office'),
+                'content' => __('Contact Information', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Email, phone, or social media links...', 'campaign-office'),
+                'placeholder' => __('Email, phone, or social media links...', 'campaignpress'),
             )),
         );
     }
@@ -166,31 +166,31 @@ function campaignpress_register_block_templates() {
     if ($endorsement_obj) {
         $endorsement_obj->template = array(
             array('core/paragraph', array(
-                'content' => '<strong>' . __('Endorser Information', 'campaign-office') . '</strong>',
+                'content' => '<strong>' . __('Endorser Information', 'campaignpress') . '</strong>',
                 'fontSize' => 'lg',
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Title/Position and Organization (use the Endorsement Details box on the right)', 'campaign-office'),
+                'placeholder' => __('Title/Position and Organization (use the Endorsement Details box on the right)', 'campaignpress'),
                 'className' => 'endorsement-subtitle',
             )),
             array('core/quote', array(
-                'placeholder' => __('"I am proud to endorse [Candidate Name] because..."', 'campaign-office'),
+                'placeholder' => __('"I am proud to endorse [Candidate Name] because..."', 'campaignpress'),
                 'className' => 'endorsement-quote',
             )),
             array('core/heading', array(
                 'level' => 3,
-                'content' => __('Why This Matters', 'campaign-office'),
+                'content' => __('Why This Matters', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Explain why this endorsement is significant for the campaign...', 'campaign-office'),
+                'placeholder' => __('Explain why this endorsement is significant for the campaign...', 'campaignpress'),
             )),
             array('core/separator'),
             array('core/heading', array(
                 'level' => 4,
-                'content' => __('About the Endorser', 'campaign-office'),
+                'content' => __('About the Endorser', 'campaignpress'),
             )),
             array('core/paragraph', array(
-                'placeholder' => __('Background information about the endorser or organization...', 'campaign-office'),
+                'placeholder' => __('Background information about the endorser or organization...', 'campaignpress'),
             )),
         );
     }

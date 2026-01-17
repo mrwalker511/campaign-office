@@ -154,8 +154,8 @@ class CP_Donation_Enhancements {
      */
     public function add_admin_menu() {
         add_theme_page(
-            __('Donation Settings', 'campaign-office'),
-            __('Donation Settings', 'campaign-office'),
+            __('Donation Settings', 'campaignpress'),
+            __('Donation Settings', 'campaignpress'),
             'manage_options',
             'cp-donation-settings',
             array($this, 'render_admin_page')
@@ -220,7 +220,7 @@ class CP_Donation_Enhancements {
         register_setting('cp_donation_settings', 'cp_button_text', array(
             'type'              => 'string',
             'sanitize_callback' => 'sanitize_text_field',
-            'default'           => __('Donate Now', 'campaign-office'),
+            'default'           => __('Donate Now', 'campaignpress'),
         ));
 
         register_setting('cp_donation_settings', 'cp_button_style', array(
@@ -261,11 +261,11 @@ class CP_Donation_Enhancements {
         if (isset($_POST['cp_donation_settings_submit'])) {
             if (!isset($_POST['cp_donation_settings_nonce']) ||
                 !wp_verify_nonce($_POST['cp_donation_settings_nonce'], 'cp_donation_settings')) {
-                wp_die(__('Security check failed', 'campaign-office'));
+                wp_die(__('Security check failed', 'campaignpress'));
             }
 
             echo '<div class="notice notice-success is-dismissible"><p>' .
-                esc_html__('Settings saved successfully.', 'campaign-office') . '</p></div>';
+                esc_html__('Settings saved successfully.', 'campaignpress') . '</p></div>';
         }
 
         // Get current values
@@ -276,7 +276,7 @@ class CP_Donation_Enhancements {
         $show_fec_notice = get_option('cp_show_fec_notice', true);
         $enable_analytics = get_option('cp_enable_analytics', true);
         $contribution_limit = get_option('cp_contribution_limit', 3300);
-        $button_text = get_option('cp_button_text', __('Donate Now', 'campaign-office'));
+        $button_text = get_option('cp_button_text', __('Donate Now', 'campaignpress'));
         $button_style = get_option('cp_button_style', 'primary');
         $button_size = get_option('cp_button_size', 'large');
 
@@ -286,8 +286,8 @@ class CP_Donation_Enhancements {
 
             <div class="notice notice-info">
                 <p>
-                    <strong><?php esc_html_e('Donation Enhancement Features:', 'campaign-office'); ?></strong>
-                    <?php esc_html_e('Configure your donation buttons, payment processors, and compliance settings.', 'campaign-office'); ?>
+                    <strong><?php esc_html_e('Donation Enhancement Features:', 'campaignpress'); ?></strong>
+                    <?php esc_html_e('Configure your donation buttons, payment processors, and compliance settings.', 'campaignpress'); ?>
                 </p>
             </div>
 
@@ -297,11 +297,11 @@ class CP_Donation_Enhancements {
                 wp_nonce_field('cp_donation_settings', 'cp_donation_settings_nonce');
                 ?>
 
-                <h2><?php esc_html_e('Payment Processor Settings', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Payment Processor Settings', 'campaignpress'); ?></h2>
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="cp_default_processor"><?php esc_html_e('Default Processor', 'campaign-office'); ?></label>
+                            <label for="cp_default_processor"><?php esc_html_e('Default Processor', 'campaignpress'); ?></label>
                         </th>
                         <td>
                             <select name="cp_default_processor" id="cp_default_processor" class="regular-text">
@@ -311,13 +311,13 @@ class CP_Donation_Enhancements {
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                            <p class="description"><?php esc_html_e('Select your primary payment processor.', 'campaign-office'); ?></p>
+                            <p class="description"><?php esc_html_e('Select your primary payment processor.', 'campaignpress'); ?></p>
                         </td>
                     </tr>
                 </table>
 
                 <?php foreach ($this->processors as $key => $processor) : ?>
-                    <h3><?php echo esc_html($processor['name']); ?> <?php esc_html_e('Configuration', 'campaign-office'); ?></h3>
+                    <h3><?php echo esc_html($processor['name']); ?> <?php esc_html_e('Configuration', 'campaignpress'); ?></h3>
                     <table class="form-table">
                         <?php foreach ($processor['fields'] as $field) : ?>
                             <tr>
@@ -335,7 +335,7 @@ class CP_Donation_Enhancements {
                                     <p class="description">
                                         <?php
                                         printf(
-                                            esc_html__('Enter your %s for %s', 'campaign-office'),
+                                            esc_html__('Enter your %s for %s', 'campaignpress'),
                                             esc_html($field),
                                             esc_html($processor['name'])
                                         );
@@ -347,11 +347,11 @@ class CP_Donation_Enhancements {
                     </table>
                 <?php endforeach; ?>
 
-                <h2><?php esc_html_e('Donation Amount Settings', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Donation Amount Settings', 'campaignpress'); ?></h2>
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="cp_donation_amounts"><?php esc_html_e('Quick Amounts', 'campaign-office'); ?></label>
+                            <label for="cp_donation_amounts"><?php esc_html_e('Quick Amounts', 'campaignpress'); ?></label>
                         </th>
                         <td>
                             <input type="text"
@@ -360,29 +360,29 @@ class CP_Donation_Enhancements {
                                    value="<?php echo esc_attr($donation_amounts); ?>"
                                    class="regular-text">
                             <p class="description">
-                                <?php esc_html_e('Enter comma-separated amounts (e.g., 25,50,100,250,500)', 'campaign-office'); ?>
+                                <?php esc_html_e('Enter comma-separated amounts (e.g., 25,50,100,250,500)', 'campaignpress'); ?>
                             </p>
                         </td>
                     </tr>
                 </table>
 
-                <h2><?php esc_html_e('Recurring Donation Settings', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Recurring Donation Settings', 'campaignpress'); ?></h2>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php esc_html_e('Enable Recurring Donations', 'campaign-office'); ?></th>
+                        <th scope="row"><?php esc_html_e('Enable Recurring Donations', 'campaignpress'); ?></th>
                         <td>
                             <label>
                                 <input type="checkbox"
                                        name="cp_enable_recurring"
                                        value="1"
                                        <?php checked($enable_recurring, true); ?>>
-                                <?php esc_html_e('Allow donors to set up recurring donations', 'campaign-office'); ?>
+                                <?php esc_html_e('Allow donors to set up recurring donations', 'campaignpress'); ?>
                             </label>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="cp_default_frequency"><?php esc_html_e('Default Frequency', 'campaign-office'); ?></label>
+                            <label for="cp_default_frequency"><?php esc_html_e('Default Frequency', 'campaignpress'); ?></label>
                         </th>
                         <td>
                             <select name="cp_default_frequency" id="cp_default_frequency">
@@ -396,11 +396,11 @@ class CP_Donation_Enhancements {
                     </tr>
                 </table>
 
-                <h2><?php esc_html_e('Button Customization', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Button Customization', 'campaignpress'); ?></h2>
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="cp_button_text"><?php esc_html_e('Button Text', 'campaign-office'); ?></label>
+                            <label for="cp_button_text"><?php esc_html_e('Button Text', 'campaignpress'); ?></label>
                         </th>
                         <td>
                             <input type="text"
@@ -412,48 +412,48 @@ class CP_Donation_Enhancements {
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="cp_button_style"><?php esc_html_e('Button Style', 'campaign-office'); ?></label>
+                            <label for="cp_button_style"><?php esc_html_e('Button Style', 'campaignpress'); ?></label>
                         </th>
                         <td>
                             <select name="cp_button_style" id="cp_button_style">
-                                <option value="primary" <?php selected($button_style, 'primary'); ?>><?php esc_html_e('Primary', 'campaign-office'); ?></option>
-                                <option value="secondary" <?php selected($button_style, 'secondary'); ?>><?php esc_html_e('Secondary', 'campaign-office'); ?></option>
-                                <option value="success" <?php selected($button_style, 'success'); ?>><?php esc_html_e('Success', 'campaign-office'); ?></option>
-                                <option value="danger" <?php selected($button_style, 'danger'); ?>><?php esc_html_e('Danger', 'campaign-office'); ?></option>
+                                <option value="primary" <?php selected($button_style, 'primary'); ?>><?php esc_html_e('Primary', 'campaignpress'); ?></option>
+                                <option value="secondary" <?php selected($button_style, 'secondary'); ?>><?php esc_html_e('Secondary', 'campaignpress'); ?></option>
+                                <option value="success" <?php selected($button_style, 'success'); ?>><?php esc_html_e('Success', 'campaignpress'); ?></option>
+                                <option value="danger" <?php selected($button_style, 'danger'); ?>><?php esc_html_e('Danger', 'campaignpress'); ?></option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="cp_button_size"><?php esc_html_e('Button Size', 'campaign-office'); ?></label>
+                            <label for="cp_button_size"><?php esc_html_e('Button Size', 'campaignpress'); ?></label>
                         </th>
                         <td>
                             <select name="cp_button_size" id="cp_button_size">
-                                <option value="small" <?php selected($button_size, 'small'); ?>><?php esc_html_e('Small', 'campaign-office'); ?></option>
-                                <option value="medium" <?php selected($button_size, 'medium'); ?>><?php esc_html_e('Medium', 'campaign-office'); ?></option>
-                                <option value="large" <?php selected($button_size, 'large'); ?>><?php esc_html_e('Large', 'campaign-office'); ?></option>
+                                <option value="small" <?php selected($button_size, 'small'); ?>><?php esc_html_e('Small', 'campaignpress'); ?></option>
+                                <option value="medium" <?php selected($button_size, 'medium'); ?>><?php esc_html_e('Medium', 'campaignpress'); ?></option>
+                                <option value="large" <?php selected($button_size, 'large'); ?>><?php esc_html_e('Large', 'campaignpress'); ?></option>
                             </select>
                         </td>
                     </tr>
                 </table>
 
-                <h2><?php esc_html_e('FEC Compliance & Analytics', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('FEC Compliance & Analytics', 'campaignpress'); ?></h2>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php esc_html_e('Show FEC Compliance Notice', 'campaign-office'); ?></th>
+                        <th scope="row"><?php esc_html_e('Show FEC Compliance Notice', 'campaignpress'); ?></th>
                         <td>
                             <label>
                                 <input type="checkbox"
                                        name="cp_show_fec_notice"
                                        value="1"
                                        <?php checked($show_fec_notice, true); ?>>
-                                <?php esc_html_e('Display federal contribution limits and compliance information', 'campaign-office'); ?>
+                                <?php esc_html_e('Display federal contribution limits and compliance information', 'campaignpress'); ?>
                             </label>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="cp_contribution_limit"><?php esc_html_e('Contribution Limit', 'campaign-office'); ?></label>
+                            <label for="cp_contribution_limit"><?php esc_html_e('Contribution Limit', 'campaignpress'); ?></label>
                         </th>
                         <td>
                             <input type="number"
@@ -462,63 +462,63 @@ class CP_Donation_Enhancements {
                                    value="<?php echo esc_attr($contribution_limit); ?>"
                                    class="small-text">
                             <p class="description">
-                                <?php esc_html_e('Federal individual contribution limit per election cycle (e.g., $3,300 for 2024)', 'campaign-office'); ?>
+                                <?php esc_html_e('Federal individual contribution limit per election cycle (e.g., $3,300 for 2024)', 'campaignpress'); ?>
                             </p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php esc_html_e('Enable Analytics Tracking', 'campaign-office'); ?></th>
+                        <th scope="row"><?php esc_html_e('Enable Analytics Tracking', 'campaignpress'); ?></th>
                         <td>
                             <label>
                                 <input type="checkbox"
                                        name="cp_enable_analytics"
                                        value="1"
                                        <?php checked($enable_analytics, true); ?>>
-                                <?php esc_html_e('Track donation button clicks for Google Analytics goals', 'campaign-office'); ?>
+                                <?php esc_html_e('Track donation button clicks for Google Analytics goals', 'campaignpress'); ?>
                             </label>
                             <p class="description">
-                                <?php esc_html_e('Sends events to Google Analytics when donation buttons are clicked. Requires GA integration.', 'campaign-office'); ?>
+                                <?php esc_html_e('Sends events to Google Analytics when donation buttons are clicked. Requires GA integration.', 'campaignpress'); ?>
                             </p>
                         </td>
                     </tr>
                 </table>
 
-                <?php submit_button(__('Save Donation Settings', 'campaign-office')); ?>
+                <?php submit_button(__('Save Donation Settings', 'campaignpress')); ?>
             </form>
 
             <div class="card">
-                <h2><?php esc_html_e('Shortcode Usage', 'campaign-office'); ?></h2>
-                <p><?php esc_html_e('Use the following shortcode to add donation buttons to your content:', 'campaign-office'); ?></p>
+                <h2><?php esc_html_e('Shortcode Usage', 'campaignpress'); ?></h2>
+                <p><?php esc_html_e('Use the following shortcode to add donation buttons to your content:', 'campaignpress'); ?></p>
                 <pre><code>[cp_donation_button processor="actblue" amounts="25,50,100,250" frequency="monthly"]</code></pre>
 
-                <h3><?php esc_html_e('Shortcode Parameters:', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Shortcode Parameters:', 'campaignpress'); ?></h3>
                 <ul style="list-style: disc; margin-left: 2em;">
-                    <li><strong>processor</strong> - <?php esc_html_e('Payment processor (actblue, winred, paypal, stripe, square, donorbox)', 'campaign-office'); ?></li>
-                    <li><strong>amounts</strong> - <?php esc_html_e('Comma-separated quick amounts', 'campaign-office'); ?></li>
-                    <li><strong>frequency</strong> - <?php esc_html_e('Default frequency (once, monthly, quarterly, annually)', 'campaign-office'); ?></li>
-                    <li><strong>text</strong> - <?php esc_html_e('Custom button text', 'campaign-office'); ?></li>
-                    <li><strong>style</strong> - <?php esc_html_e('Button style (primary, secondary, success, danger)', 'campaign-office'); ?></li>
+                    <li><strong>processor</strong> - <?php esc_html_e('Payment processor (actblue, winred, paypal, stripe, square, donorbox)', 'campaignpress'); ?></li>
+                    <li><strong>amounts</strong> - <?php esc_html_e('Comma-separated quick amounts', 'campaignpress'); ?></li>
+                    <li><strong>frequency</strong> - <?php esc_html_e('Default frequency (once, monthly, quarterly, annually)', 'campaignpress'); ?></li>
+                    <li><strong>text</strong> - <?php esc_html_e('Custom button text', 'campaignpress'); ?></li>
+                    <li><strong>style</strong> - <?php esc_html_e('Button style (primary, secondary, success, danger)', 'campaignpress'); ?></li>
                 </ul>
 
-                <h3><?php esc_html_e('Google Analytics Integration:', 'campaign-office'); ?></h3>
-                <p><?php esc_html_e('To track donations in Google Analytics:', 'campaign-office'); ?></p>
+                <h3><?php esc_html_e('Google Analytics Integration:', 'campaignpress'); ?></h3>
+                <p><?php esc_html_e('To track donations in Google Analytics:', 'campaignpress'); ?></p>
                 <ol style="margin-left: 2em;">
-                    <li><?php esc_html_e('Enable "Analytics Tracking" above', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Ensure Google Analytics is installed on your site', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Create a goal in GA4 for the event "donation_click"', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Monitor your donation conversion rates in GA4 reports', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('Enable "Analytics Tracking" above', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Ensure Google Analytics is installed on your site', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Create a goal in GA4 for the event "donation_click"', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Monitor your donation conversion rates in GA4 reports', 'campaignpress'); ?></li>
                 </ol>
             </div>
 
             <div class="card">
-                <h2><?php esc_html_e('FEC Compliance Best Practices', 'campaign-office'); ?></h2>
-                <p><?php esc_html_e('Federal campaigns must comply with FEC regulations:', 'campaign-office'); ?></p>
+                <h2><?php esc_html_e('FEC Compliance Best Practices', 'campaignpress'); ?></h2>
+                <p><?php esc_html_e('Federal campaigns must comply with FEC regulations:', 'campaignpress'); ?></p>
                 <ul style="list-style: disc; margin-left: 2em;">
-                    <li><?php esc_html_e('Individual contribution limits apply per election cycle', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Collect donor name, address, occupation, and employer for contributions over $200', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Display contribution limits prominently on donation pages', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Maintain accurate records of all contributions', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Consult with your campaign treasurer for specific requirements', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('Individual contribution limits apply per election cycle', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Collect donor name, address, occupation, and employer for contributions over $200', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Display contribution limits prominently on donation pages', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Maintain accurate records of all contributions', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Consult with your campaign treasurer for specific requirements', 'campaignpress'); ?></li>
                 </ul>
             </div>
         </div>
@@ -535,8 +535,8 @@ class CP_Donation_Enhancements {
         // Check for HTTPS - required for PCI compliance when handling donations
         if (!is_ssl() && !is_admin()) {
             return '<div class="cp-donation-error" style="background: #fff3cd; border: 1px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">' .
-                   '<strong>' . esc_html__('Security Warning:', 'campaign-office') . '</strong> ' .
-                   esc_html__('Donation forms require HTTPS (SSL certificate) for secure payment processing and PCI compliance. Please enable HTTPS on this site.', 'campaign-office') .
+                   '<strong>' . esc_html__('Security Warning:', 'campaignpress') . '</strong> ' .
+                   esc_html__('Donation forms require HTTPS (SSL certificate) for secure payment processing and PCI compliance. Please enable HTTPS on this site.', 'campaignpress') .
                    '</div>';
         }
 
@@ -544,7 +544,7 @@ class CP_Donation_Enhancements {
             'processor' => get_option('cp_default_processor', 'actblue'),
             'amounts'   => get_option('cp_donation_amounts', implode(',', $this->default_amounts)),
             'frequency' => get_option('cp_default_frequency', 'once'),
-            'text'      => get_option('cp_button_text', __('Donate Now', 'campaign-office')),
+            'text'      => get_option('cp_button_text', __('Donate Now', 'campaignpress')),
             'style'     => get_option('cp_button_style', 'primary'),
             'size'      => get_option('cp_button_size', 'large'),
         ), $atts, 'cp_donation_button');
@@ -552,13 +552,13 @@ class CP_Donation_Enhancements {
         // Get processor configuration
         $processor = $this->get_processor_config($atts['processor']);
         if (!$processor) {
-            return '<p class="cp-donation-error">' . esc_html__('Invalid payment processor selected.', 'campaign-office') . '</p>';
+            return '<p class="cp-donation-error">' . esc_html__('Invalid payment processor selected.', 'campaignpress') . '</p>';
         }
 
         // Get donation URL
         $donation_url = $this->get_donation_url($atts['processor']);
         if (!$donation_url) {
-            return '<p class="cp-donation-error">' . esc_html__('Donation URL not configured.', 'campaign-office') . '</p>';
+            return '<p class="cp-donation-error">' . esc_html__('Donation URL not configured.', 'campaignpress') . '</p>';
         }
 
         // Parse amounts
@@ -571,7 +571,7 @@ class CP_Donation_Enhancements {
         <div class="cp-donation-widget" data-processor="<?php echo esc_attr($atts['processor']); ?>">
             <?php if (get_option('cp_enable_recurring', true)) : ?>
                 <div class="cp-donation-frequency">
-                    <label><?php esc_html_e('Donation Frequency:', 'campaign-office'); ?></label>
+                    <label><?php esc_html_e('Donation Frequency:', 'campaignpress'); ?></label>
                     <div class="cp-frequency-buttons">
                         <?php foreach ($this->frequencies as $key => $label) : ?>
                             <button type="button"
@@ -585,7 +585,7 @@ class CP_Donation_Enhancements {
             <?php endif; ?>
 
             <div class="cp-donation-amounts">
-                <label><?php esc_html_e('Select Amount:', 'campaign-office'); ?></label>
+                <label><?php esc_html_e('Select Amount:', 'campaignpress'); ?></label>
                 <div class="cp-amount-buttons">
                     <?php foreach ($amounts as $amount) : ?>
                         <button type="button"
@@ -595,15 +595,15 @@ class CP_Donation_Enhancements {
                         </button>
                     <?php endforeach; ?>
                     <button type="button" class="cp-amount-btn" data-amount="custom">
-                        <?php esc_html_e('Custom', 'campaign-office'); ?>
+                        <?php esc_html_e('Custom', 'campaignpress'); ?>
                     </button>
                 </div>
                 <div class="cp-custom-amount-wrapper" style="display: none;">
-                    <label for="cp-custom-amount"><?php esc_html_e('Enter Amount:', 'campaign-office'); ?></label>
+                    <label for="cp-custom-amount"><?php esc_html_e('Enter Amount:', 'campaignpress'); ?></label>
                     <input type="number"
                            id="cp-custom-amount"
                            class="cp-custom-amount-input"
-                           placeholder="<?php esc_attr_e('Enter amount', 'campaign-office'); ?>"
+                           placeholder="<?php esc_attr_e('Enter amount', 'campaignpress'); ?>"
                            min="1"
                            step="1">
                 </div>
@@ -624,7 +624,7 @@ class CP_Donation_Enhancements {
                     <p class="cp-small-text">
                         <?php
                         printf(
-                            esc_html__('Contributions are not tax-deductible. Federal law requires us to use our best efforts to collect and report the name, mailing address, occupation, and employer for individuals whose contributions exceed $200 in an election cycle. The maximum amount an individual may contribute is $%s per election.', 'campaign-office'),
+                            esc_html__('Contributions are not tax-deductible. Federal law requires us to use our best efforts to collect and report the name, mailing address, occupation, and employer for individuals whose contributions exceed $200 in an election cycle. The maximum amount an individual may contribute is $%s per election.', 'campaignpress'),
                             esc_html(number_format(get_option('cp_contribution_limit', 3300)))
                         );
                         ?>
@@ -673,7 +673,7 @@ class CP_Donation_Enhancements {
         $url = add_query_arg(array(
             'source'   => 'website',
             'refcode'  => get_the_ID(),
-            'utm_source' => 'campaign-office',
+            'utm_source' => 'campaignpress',
             'utm_medium' => 'donation_button',
         ), $url);
 
@@ -689,7 +689,7 @@ class CP_Donation_Enhancements {
         foreach ($post_types as $post_type) {
             add_meta_box(
                 'cp_donation_cta',
-                __('Donation Call-to-Action', 'campaign-office'),
+                __('Donation Call-to-Action', 'campaignpress'),
                 array($this, 'render_donation_meta_box'),
                 $post_type,
                 'side',
@@ -716,18 +716,18 @@ class CP_Donation_Enhancements {
                        name="cp_show_donation_cta"
                        value="1"
                        <?php checked($show_cta, '1'); ?>>
-                <?php esc_html_e('Show donation CTA at end of content', 'campaign-office'); ?>
+                <?php esc_html_e('Show donation CTA at end of content', 'campaignpress'); ?>
             </label>
         </p>
         <p>
             <label for="cp_donation_custom_text">
-                <?php esc_html_e('Custom CTA Text (optional):', 'campaign-office'); ?>
+                <?php esc_html_e('Custom CTA Text (optional):', 'campaignpress'); ?>
             </label>
             <textarea name="cp_donation_custom_text"
                       id="cp_donation_custom_text"
                       rows="3"
                       class="widefat"
-                      placeholder="<?php esc_attr_e('Help us continue this work...', 'campaign-office'); ?>"><?php echo esc_textarea($custom_text); ?></textarea>
+                      placeholder="<?php esc_attr_e('Help us continue this work...', 'campaignpress'); ?>"><?php echo esc_textarea($custom_text); ?></textarea>
         </p>
         <?php
     }
@@ -1132,9 +1132,9 @@ class CP_Donation_Enhancements {
             ?>
             <div class="notice notice-error">
                 <p>
-                    <strong><?php esc_html_e('CRITICAL SECURITY WARNING:', 'campaign-office'); ?></strong>
-                    <?php esc_html_e('Your site is not using HTTPS. Donation forms will NOT display until you enable SSL/HTTPS. This is required for PCI compliance and secure payment processing.', 'campaign-office'); ?>
-                    <a href="https://wordpress.org/support/article/https-for-wordpress/" target="_blank"><?php esc_html_e('Learn how to enable HTTPS', 'campaign-office'); ?></a>
+                    <strong><?php esc_html_e('CRITICAL SECURITY WARNING:', 'campaignpress'); ?></strong>
+                    <?php esc_html_e('Your site is not using HTTPS. Donation forms will NOT display until you enable SSL/HTTPS. This is required for PCI compliance and secure payment processing.', 'campaignpress'); ?>
+                    <a href="https://wordpress.org/support/article/https-for-wordpress/" target="_blank"><?php esc_html_e('Learn how to enable HTTPS', 'campaignpress'); ?></a>
                 </p>
             </div>
             <?php
@@ -1165,10 +1165,10 @@ class CP_Donation_Enhancements {
             ?>
             <div class="notice notice-warning">
                 <p>
-                    <strong><?php esc_html_e('Configuration Required:', 'campaign-office'); ?></strong>
+                    <strong><?php esc_html_e('Configuration Required:', 'campaignpress'); ?></strong>
                     <?php
                     printf(
-                        esc_html__('Please configure your %s settings below to enable donation buttons.', 'campaign-office'),
+                        esc_html__('Please configure your %s settings below to enable donation buttons.', 'campaignpress'),
                         esc_html($processor['name'])
                     );
                     ?>

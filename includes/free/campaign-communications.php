@@ -174,8 +174,8 @@ class CP_Campaign_Communications {
      */
     public function add_admin_menu() {
         add_menu_page(
-            __('Communications', 'campaign-office'),
-            __('Communications', 'campaign-office'),
+            __('Communications', 'campaignpress'),
+            __('Communications', 'campaignpress'),
             'edit_posts',
             'cp-communications',
             array($this, 'render_campaigns_page'),
@@ -185,8 +185,8 @@ class CP_Campaign_Communications {
 
         add_submenu_page(
             'cp-communications',
-            __('Campaigns', 'campaign-office'),
-            __('Campaigns', 'campaign-office'),
+            __('Campaigns', 'campaignpress'),
+            __('Campaigns', 'campaignpress'),
             'edit_posts',
             'cp-communications',
             array($this, 'render_campaigns_page')
@@ -194,8 +194,8 @@ class CP_Campaign_Communications {
 
         add_submenu_page(
             'cp-communications',
-            __('Subscribers', 'campaign-office'),
-            __('Subscribers', 'campaign-office'),
+            __('Subscribers', 'campaignpress'),
+            __('Subscribers', 'campaignpress'),
             'edit_posts',
             'cp-subscribers',
             array($this, 'render_subscribers_page')
@@ -203,8 +203,8 @@ class CP_Campaign_Communications {
 
         add_submenu_page(
             'cp-communications',
-            __('Settings', 'campaign-office'),
-            __('Settings', 'campaign-office'),
+            __('Settings', 'campaignpress'),
+            __('Settings', 'campaignpress'),
             'manage_options',
             'cp-communications-settings',
             array($this, 'render_settings_page')
@@ -254,7 +254,7 @@ class CP_Campaign_Communications {
         $sender_email = get_option('cp_default_sender_email', '');
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Communications Settings', 'campaign-office'); ?></h1>
+            <h1><?php esc_html_e('Communications Settings', 'campaignpress'); ?></h1>
 
             <?php settings_errors('cp_communications'); ?>
 
@@ -265,12 +265,12 @@ class CP_Campaign_Communications {
                 <div class="card" style="max-width: 800px; margin-top: 20px;">
                     <h2>
                         <span class="dashicons dashicons-smartphone"></span>
-                        <?php esc_html_e('Twilio SMS Integration', 'campaign-office'); ?>
+                        <?php esc_html_e('Twilio SMS Integration', 'campaignpress'); ?>
                     </h2>
                     <p class="description">
                         <?php
                         printf(
-                            esc_html__('Send mass SMS campaigns to supporters. Get your API credentials from %s', 'campaign-office'),
+                            esc_html__('Send mass SMS campaigns to supporters. Get your API credentials from %s', 'campaignpress'),
                             '<a href="https://www.twilio.com/console" target="_blank">Twilio Console</a>'
                         );
                         ?>
@@ -279,18 +279,18 @@ class CP_Campaign_Communications {
                     <table class="form-table">
                         <tr>
                             <th scope="row">
-                                <?php esc_html_e('Enable SMS', 'campaign-office'); ?>
+                                <?php esc_html_e('Enable SMS', 'campaignpress'); ?>
                             </th>
                             <td>
                                 <label>
                                     <input type="checkbox" name="cp_sms_enabled" value="1" <?php checked($sms_enabled, 1); ?>>
-                                    <?php esc_html_e('Enable Twilio SMS campaigns', 'campaign-office'); ?>
+                                    <?php esc_html_e('Enable Twilio SMS campaigns', 'campaignpress'); ?>
                                 </label>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="cp_twilio_account_sid"><?php esc_html_e('Account SID', 'campaign-office'); ?></label>
+                                <label for="cp_twilio_account_sid"><?php esc_html_e('Account SID', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="text" id="cp_twilio_account_sid" name="cp_twilio_account_sid"
@@ -299,7 +299,7 @@ class CP_Campaign_Communications {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="cp_twilio_auth_token"><?php esc_html_e('Auth Token', 'campaign-office'); ?></label>
+                                <label for="cp_twilio_auth_token"><?php esc_html_e('Auth Token', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="password" id="cp_twilio_auth_token" name="cp_twilio_auth_token"
@@ -308,12 +308,12 @@ class CP_Campaign_Communications {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="cp_twilio_phone_number"><?php esc_html_e('Phone Number', 'campaign-office'); ?></label>
+                                <label for="cp_twilio_phone_number"><?php esc_html_e('Phone Number', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="tel" id="cp_twilio_phone_number" name="cp_twilio_phone_number"
                                        value="<?php echo esc_attr($twilio_phone); ?>" class="regular-text">
-                                <p class="description"><?php esc_html_e('Format: +1234567890', 'campaign-office'); ?></p>
+                                <p class="description"><?php esc_html_e('Format: +1234567890', 'campaignpress'); ?></p>
                             </td>
                         </tr>
                     </table>
@@ -321,7 +321,7 @@ class CP_Campaign_Communications {
                     <?php if ($sms_enabled && $twilio_sid && $twilio_token) : ?>
                         <p>
                             <button type="button" class="button" id="cp-test-sms-btn">
-                                <?php esc_html_e('Send Test SMS', 'campaign-office'); ?>
+                                <?php esc_html_e('Send Test SMS', 'campaignpress'); ?>
                             </button>
                             <input type="tel" id="cp-test-phone" placeholder="+1234567890" class="regular-text">
                         </p>
@@ -333,12 +333,12 @@ class CP_Campaign_Communications {
                 <div class="card" style="max-width: 800px; margin-top: 20px;">
                     <h2>
                         <span class="dashicons dashicons-email"></span>
-                        <?php esc_html_e('Mailchimp Integration', 'campaign-office'); ?>
+                        <?php esc_html_e('Mailchimp Integration', 'campaignpress'); ?>
                     </h2>
                     <p class="description">
                         <?php
                         printf(
-                            esc_html__('Sync subscribers with Mailchimp. Get your API key from %s', 'campaign-office'),
+                            esc_html__('Sync subscribers with Mailchimp. Get your API key from %s', 'campaignpress'),
                             '<a href="https://admin.mailchimp.com/account/api/" target="_blank">Mailchimp</a>'
                         );
                         ?>
@@ -347,18 +347,18 @@ class CP_Campaign_Communications {
                     <table class="form-table">
                         <tr>
                             <th scope="row">
-                                <?php esc_html_e('Enable Mailchimp', 'campaign-office'); ?>
+                                <?php esc_html_e('Enable Mailchimp', 'campaignpress'); ?>
                             </th>
                             <td>
                                 <label>
                                     <input type="checkbox" name="cp_mailchimp_enabled" value="1" <?php checked($mailchimp_enabled, 1); ?>>
-                                    <?php esc_html_e('Sync subscribers with Mailchimp', 'campaign-office'); ?>
+                                    <?php esc_html_e('Sync subscribers with Mailchimp', 'campaignpress'); ?>
                                 </label>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="cp_mailchimp_api_key"><?php esc_html_e('API Key', 'campaign-office'); ?></label>
+                                <label for="cp_mailchimp_api_key"><?php esc_html_e('API Key', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="password" id="cp_mailchimp_api_key" name="cp_mailchimp_api_key"
@@ -367,7 +367,7 @@ class CP_Campaign_Communications {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="cp_mailchimp_list_id"><?php esc_html_e('Audience ID', 'campaign-office'); ?></label>
+                                <label for="cp_mailchimp_list_id"><?php esc_html_e('Audience ID', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="text" id="cp_mailchimp_list_id" name="cp_mailchimp_list_id"
@@ -379,12 +379,12 @@ class CP_Campaign_Communications {
 
                 <!-- General Settings -->
                 <div class="card" style="max-width: 800px; margin-top: 20px;">
-                    <h2><?php esc_html_e('General Settings', 'campaign-office'); ?></h2>
+                    <h2><?php esc_html_e('General Settings', 'campaignpress'); ?></h2>
 
                     <table class="form-table">
                         <tr>
                             <th scope="row">
-                                <label for="cp_default_sender_name"><?php esc_html_e('Sender Name', 'campaign-office'); ?></label>
+                                <label for="cp_default_sender_name"><?php esc_html_e('Sender Name', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="text" id="cp_default_sender_name" name="cp_default_sender_name"
@@ -393,7 +393,7 @@ class CP_Campaign_Communications {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="cp_default_sender_email"><?php esc_html_e('Sender Email', 'campaign-office'); ?></label>
+                                <label for="cp_default_sender_email"><?php esc_html_e('Sender Email', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="email" id="cp_default_sender_email" name="cp_default_sender_email"
@@ -402,12 +402,12 @@ class CP_Campaign_Communications {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <?php esc_html_e('Double Opt-in', 'campaign-office'); ?>
+                                <?php esc_html_e('Double Opt-in', 'campaignpress'); ?>
                             </th>
                             <td>
                                 <label>
                                     <input type="checkbox" name="cp_enable_double_optin" value="1" <?php checked(get_option('cp_enable_double_optin'), 1); ?>>
-                                    <?php esc_html_e('Require email confirmation for new subscribers', 'campaign-office'); ?>
+                                    <?php esc_html_e('Require email confirmation for new subscribers', 'campaignpress'); ?>
                                 </label>
                             </td>
                         </tr>
@@ -423,11 +423,11 @@ class CP_Campaign_Communications {
             $('#cp-test-sms-btn').click(function() {
                 var phone = $('#cp-test-phone').val();
                 if (!phone) {
-                    alert('<?php esc_js_e('Please enter a phone number', 'campaign-office'); ?>');
+                    alert('<?php esc_js_e('Please enter a phone number', 'campaignpress'); ?>');
                     return;
                 }
 
-                $(this).prop('disabled', true).text('<?php esc_js_e('Sending...', 'campaign-office'); ?>');
+                $(this).prop('disabled', true).text('<?php esc_js_e('Sending...', 'campaignpress'); ?>');
 
                 $.ajax({
                     url: ajaxurl,
@@ -442,7 +442,7 @@ class CP_Campaign_Communications {
                             '<div class="notice notice-' + (response.success ? 'success' : 'error') + '"><p>' +
                             response.data.message + '</p></div>'
                         );
-                        $('#cp-test-sms-btn').prop('disabled', false).text('<?php esc_js_e('Send Test SMS', 'campaign-office'); ?>');
+                        $('#cp-test-sms-btn').prop('disabled', false).text('<?php esc_js_e('Send Test SMS', 'campaignpress'); ?>');
                     }
                 });
             });
@@ -466,9 +466,9 @@ class CP_Campaign_Communications {
         ?>
         <div class="wrap">
             <h1>
-                <?php esc_html_e('Communication Campaigns', 'campaign-office'); ?>
+                <?php esc_html_e('Communication Campaigns', 'campaignpress'); ?>
                 <a href="#" class="page-title-action" id="cp-new-campaign-btn">
-                    <?php esc_html_e('New Campaign', 'campaign-office'); ?>
+                    <?php esc_html_e('New Campaign', 'campaignpress'); ?>
                 </a>
             </h1>
 
@@ -483,39 +483,39 @@ class CP_Campaign_Communications {
                 ?>
                 <div class="cp-stat-card" style="background: #fff; padding: 1.5rem; border-left: 4px solid #0073aa;">
                     <div style="font-size: 2rem; font-weight: 700; color: #0073aa;"><?php echo esc_html($total_campaigns); ?></div>
-                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Total Campaigns', 'campaign-office'); ?></div>
+                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Total Campaigns', 'campaignpress'); ?></div>
                 </div>
                 <div class="cp-stat-card" style="background: #fff; padding: 1.5rem; border-left: 4px solid #00a32a;">
                     <div style="font-size: 2rem; font-weight: 700; color: #00a32a;"><?php echo esc_html(number_format($total_sent ?? 0)); ?></div>
-                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Messages Sent', 'campaign-office'); ?></div>
+                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Messages Sent', 'campaignpress'); ?></div>
                 </div>
                 <div class="cp-stat-card" style="background: #fff; padding: 1.5rem; border-left: 4px solid #d63638;">
                     <div style="font-size: 2rem; font-weight: 700; color: #d63638;"><?php echo esc_html(number_format($total_delivered ?? 0)); ?></div>
-                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Delivered', 'campaign-office'); ?></div>
+                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Delivered', 'campaignpress'); ?></div>
                 </div>
                 <div class="cp-stat-card" style="background: #fff; padding: 1.5rem; border-left: 4px solid #dba617;">
                     <div style="font-size: 2rem; font-weight: 700; color: #dba617;"><?php echo esc_html(number_format($avg_open_rate ?? 0, 1)); ?>%</div>
-                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Avg. Open Rate', 'campaign-office'); ?></div>
+                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Avg. Open Rate', 'campaignpress'); ?></div>
                 </div>
             </div>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Campaign', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Type', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Sent', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Delivered', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Opened', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Date', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Campaign', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Type', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Sent', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Delivered', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Opened', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Date', 'campaignpress'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($campaigns)) : ?>
                         <tr>
                             <td colspan="7" style="text-align: center; padding: 2rem;">
-                                <?php esc_html_e('No campaigns yet. Create your first campaign to get started!', 'campaign-office'); ?>
+                                <?php esc_html_e('No campaigns yet. Create your first campaign to get started!', 'campaignpress'); ?>
                             </td>
                         </tr>
                     <?php else : ?>
@@ -524,9 +524,9 @@ class CP_Campaign_Communications {
                                 <td><strong><?php echo esc_html($campaign->name); ?></strong></td>
                                 <td>
                                     <?php if ($campaign->type === 'sms') : ?>
-                                        <span class="dashicons dashicons-smartphone"></span> <?php esc_html_e('SMS', 'campaign-office'); ?>
+                                        <span class="dashicons dashicons-smartphone"></span> <?php esc_html_e('SMS', 'campaignpress'); ?>
                                     <?php else : ?>
-                                        <span class="dashicons dashicons-email"></span> <?php esc_html_e('Email', 'campaign-office'); ?>
+                                        <span class="dashicons dashicons-email"></span> <?php esc_html_e('Email', 'campaignpress'); ?>
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -580,32 +580,32 @@ class CP_Campaign_Communications {
 
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Subscribers', 'campaign-office'); ?></h1>
+            <h1><?php esc_html_e('Subscribers', 'campaignpress'); ?></h1>
 
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0;">
                 <div style="background: #fff; padding: 1.5rem; border-left: 4px solid #0073aa;">
                     <div style="font-size: 2rem; font-weight: 700; color: #0073aa;"><?php echo esc_html(number_format($total_subscribers)); ?></div>
-                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Total Subscribers', 'campaign-office'); ?></div>
+                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Total Subscribers', 'campaignpress'); ?></div>
                 </div>
                 <div style="background: #fff; padding: 1.5rem; border-left: 4px solid #00a32a;">
                     <div style="font-size: 2rem; font-weight: 700; color: #00a32a;"><?php echo esc_html(number_format($email_subscribers)); ?></div>
-                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Email Subscribers', 'campaign-office'); ?></div>
+                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('Email Subscribers', 'campaignpress'); ?></div>
                 </div>
                 <div style="background: #fff; padding: 1.5rem; border-left: 4px solid #dba617;">
                     <div style="font-size: 2rem; font-weight: 700; color: #dba617;"><?php echo esc_html(number_format($sms_subscribers)); ?></div>
-                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('SMS Subscribers', 'campaign-office'); ?></div>
+                    <div style="color: #666; font-size: 0.875rem;"><?php esc_html_e('SMS Subscribers', 'campaignpress'); ?></div>
                 </div>
             </div>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Name', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Email', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Phone', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Type', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Subscribed', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Date', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Name', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Email', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Phone', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Type', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Subscribed', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Date', 'campaignpress'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -638,7 +638,7 @@ class CP_Campaign_Communications {
     public function render_subscribe_form($atts) {
         $atts = shortcode_atts(array(
             'type' => 'both',
-            'title' => __('Stay Connected', 'campaign-office'),
+            'title' => __('Stay Connected', 'campaignpress'),
         ), $atts, 'cp_subscribe_form');
 
         ob_start();
@@ -648,25 +648,25 @@ class CP_Campaign_Communications {
             <form class="cp-subscribe-form">
                 <?php wp_nonce_field('cp_subscribe', 'cp_subscribe_nonce'); ?>
                 <div class="form-row">
-                    <input type="text" name="first_name" placeholder="<?php esc_attr_e('First Name', 'campaign-office'); ?>" required class="cp-input">
-                    <input type="text" name="last_name" placeholder="<?php esc_attr_e('Last Name', 'campaign-office'); ?>" required class="cp-input">
+                    <input type="text" name="first_name" placeholder="<?php esc_attr_e('First Name', 'campaignpress'); ?>" required class="cp-input">
+                    <input type="text" name="last_name" placeholder="<?php esc_attr_e('Last Name', 'campaignpress'); ?>" required class="cp-input">
                 </div>
                 <?php if (in_array($atts['type'], array('both', 'email'), true)) : ?>
                     <div class="form-field">
-                        <input type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'campaign-office'); ?>" required class="cp-input">
+                        <input type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'campaignpress'); ?>" required class="cp-input">
                     </div>
                 <?php endif; ?>
                 <?php if (in_array($atts['type'], array('both', 'sms'), true)) : ?>
                     <div class="form-field">
-                        <input type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'campaign-office'); ?>" class="cp-input">
+                        <input type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'campaignpress'); ?>" class="cp-input">
                     </div>
                 <?php endif; ?>
                 <div class="form-field">
-                    <input type="text" name="zip" placeholder="<?php esc_attr_e('ZIP Code', 'campaign-office'); ?>" class="cp-input">
+                    <input type="text" name="zip" placeholder="<?php esc_attr_e('ZIP Code', 'campaignpress'); ?>" class="cp-input">
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="cp-button cp-button-primary">
-                        <?php esc_html_e('Subscribe', 'campaign-office'); ?>
+                        <?php esc_html_e('Subscribe', 'campaignpress'); ?>
                     </button>
                 </div>
                 <div class="cp-form-message" style="display:none; margin-top: 1rem; padding: 0.75rem; border-radius: 4px;"></div>
@@ -683,10 +683,10 @@ class CP_Campaign_Communications {
         ob_start();
         ?>
         <div class="cp-unsubscribe-wrapper">
-            <p><?php esc_html_e('To unsubscribe from our communications, please enter your email address below.', 'campaign-office'); ?></p>
+            <p><?php esc_html_e('To unsubscribe from our communications, please enter your email address below.', 'campaignpress'); ?></p>
             <form class="cp-unsubscribe-form">
-                <input type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'campaign-office'); ?>" required class="cp-input">
-                <button type="submit" class="cp-button"><?php esc_html_e('Unsubscribe', 'campaign-office'); ?></button>
+                <input type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'campaignpress'); ?>" required class="cp-input">
+                <button type="submit" class="cp-button"><?php esc_html_e('Unsubscribe', 'campaignpress'); ?></button>
             </form>
         </div>
         <?php
@@ -701,17 +701,17 @@ class CP_Campaign_Communications {
         check_ajax_referer('cp_test_sms');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied', 'campaignpress')));
         }
 
         $phone = sanitize_text_field($_POST['phone']);
 
-        $result = $this->send_sms($phone, __('This is a test message from CampaignPress. Your SMS integration is working correctly!', 'campaign-office'));
+        $result = $this->send_sms($phone, __('This is a test message from CampaignPress. Your SMS integration is working correctly!', 'campaignpress'));
 
         if ($result['success']) {
-            wp_send_json_success(array('message' => __('Test SMS sent successfully!', 'campaign-office')));
+            wp_send_json_success(array('message' => __('Test SMS sent successfully!', 'campaignpress')));
         } else {
-            wp_send_json_error(array('message' => __('Failed to send SMS: ', 'campaign-office') . $result['error']));
+            wp_send_json_error(array('message' => __('Failed to send SMS: ', 'campaignpress') . $result['error']));
         }
     }
 
@@ -720,7 +720,7 @@ class CP_Campaign_Communications {
 
         // Rate limiting: 3 subscriptions per hour per IP
         if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('subscribe', 3, 3600)) {
-            wp_send_json_error(array('message' => __('Too many subscription attempts. Please try again later.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Too many subscription attempts. Please try again later.', 'campaignpress')));
         }
 
         global $wpdb;
@@ -744,7 +744,7 @@ class CP_Campaign_Communications {
             $sync_result = $this->sync_to_mailchimp($data);
             if (!$sync_result) {
                 // Subscription saved locally but Mailchimp sync failed
-                $mailchimp_warning = ' ' . __('Note: Email added to local list, but sync with Mailchimp failed. Please check your Mailchimp settings.', 'campaign-office');
+                $mailchimp_warning = ' ' . __('Note: Email added to local list, but sync with Mailchimp failed. Please check your Mailchimp settings.', 'campaignpress');
 
                 // Store failed sync for admin notification
                 $failed_syncs = get_option('cp_mailchimp_failed_syncs', array());
@@ -758,7 +758,7 @@ class CP_Campaign_Communications {
             }
         }
 
-        wp_send_json_success(array('message' => __('Thank you for subscribing!', 'campaign-office') . $mailchimp_warning));
+        wp_send_json_success(array('message' => __('Thank you for subscribing!', 'campaignpress') . $mailchimp_warning));
     }
 
     /**
@@ -858,19 +858,19 @@ class CP_Campaign_Communications {
         check_ajax_referer('cp_campaign_nonce_action', 'nonce');
 
         if (!current_user_can('edit_posts')) {
-            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied', 'campaignpress')));
         }
 
         $campaign_id = isset($_POST['campaign_id']) ? absint($_POST['campaign_id']) : 0;
         if (!$campaign_id) {
-            wp_send_json_error(array('message' => __('Invalid campaign ID', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Invalid campaign ID', 'campaignpress')));
         }
 
         global $wpdb;
         $campaign = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->campaigns_table} WHERE id = %d", $campaign_id));
 
         if (!$campaign) {
-            wp_send_json_error(array('message' => __('Campaign not found', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Campaign not found', 'campaignpress')));
         }
 
         // Mark as sending
@@ -882,19 +882,19 @@ class CP_Campaign_Communications {
         // Placeholder: In a real implementation, this would trigger a background process or cron job
         // to actually send the emails/SMS to all subscribers in the target audience.
 
-        wp_send_json_success(array('message' => __('Campaign sending started!', 'campaign-office')));
+        wp_send_json_success(array('message' => __('Campaign sending started!', 'campaignpress')));
     }
 
     public function ajax_get_campaign_stats() {
         check_ajax_referer('cp_campaign_nonce_action', 'nonce');
 
         if (!current_user_can('edit_posts')) {
-            wp_send_json_error(array('message' => __('Permission denied', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied', 'campaignpress')));
         }
 
         $campaign_id = isset($_POST['campaign_id']) ? absint($_POST['campaign_id']) : 0;
         if (!$campaign_id) {
-            wp_send_json_error(array('message' => __('Invalid campaign ID', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Invalid campaign ID', 'campaignpress')));
         }
 
         global $wpdb;
@@ -904,7 +904,7 @@ class CP_Campaign_Communications {
         ), ARRAY_A);
 
         if (!$stats) {
-            wp_send_json_error(array('message' => __('Stats not found', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Stats not found', 'campaignpress')));
         }
 
         wp_send_json_success($stats);

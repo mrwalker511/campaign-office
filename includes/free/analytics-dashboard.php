@@ -59,8 +59,8 @@ class CP_Analytics_Dashboard {
         }
 
         add_menu_page(
-            __('Analytics', 'campaign-office'),
-            __('Analytics', 'campaign-office'),
+            __('Analytics', 'campaignpress'),
+            __('Analytics', 'campaignpress'),
             'manage_options',
             'cp-analytics',
             array($this, 'render_dashboard_page'),
@@ -70,8 +70,8 @@ class CP_Analytics_Dashboard {
 
         add_submenu_page(
             'cp-analytics',
-            __('Dashboard', 'campaign-office'),
-            __('Dashboard', 'campaign-office'),
+            __('Dashboard', 'campaignpress'),
+            __('Dashboard', 'campaignpress'),
             'edit_posts',
             'cp-analytics',
             array($this, 'render_dashboard_page')
@@ -79,8 +79,8 @@ class CP_Analytics_Dashboard {
 
         add_submenu_page(
             'cp-analytics',
-            __('Reports', 'campaign-office'),
-            __('Reports', 'campaign-office'),
+            __('Reports', 'campaignpress'),
+            __('Reports', 'campaignpress'),
             'edit_posts',
             'cp-analytics-reports',
             array($this, 'render_reports_page')
@@ -96,17 +96,17 @@ class CP_Analytics_Dashboard {
         ?>
         <div class="wrap cp-analytics-dashboard">
             <h1>
-                <?php esc_html_e('Campaign Analytics Dashboard', 'campaign-office'); ?>
+                <?php esc_html_e('Campaign Analytics Dashboard', 'campaignpress'); ?>
                 <select id="cp-analytics-period" class="cp-period-selector" style="margin-left: 1rem;">
-                    <option value="7" <?php selected($period, '7'); ?>><?php esc_html_e('Last 7 Days', 'campaign-office'); ?></option>
-                    <option value="30" <?php selected($period, '30'); ?>><?php esc_html_e('Last 30 Days', 'campaign-office'); ?></option>
-                    <option value="90" <?php selected($period, '90'); ?>><?php esc_html_e('Last 90 Days', 'campaign-office'); ?></option>
-                    <option value="365" <?php selected($period, '365'); ?>><?php esc_html_e('Last Year', 'campaign-office'); ?></option>
-                    <option value="all" <?php selected($period, 'all'); ?>><?php esc_html_e('All Time', 'campaign-office'); ?></option>
+                    <option value="7" <?php selected($period, '7'); ?>><?php esc_html_e('Last 7 Days', 'campaignpress'); ?></option>
+                    <option value="30" <?php selected($period, '30'); ?>><?php esc_html_e('Last 30 Days', 'campaignpress'); ?></option>
+                    <option value="90" <?php selected($period, '90'); ?>><?php esc_html_e('Last 90 Days', 'campaignpress'); ?></option>
+                    <option value="365" <?php selected($period, '365'); ?>><?php esc_html_e('Last Year', 'campaignpress'); ?></option>
+                    <option value="all" <?php selected($period, 'all'); ?>><?php esc_html_e('All Time', 'campaignpress'); ?></option>
                 </select>
                 <button class="button" id="cp-export-analytics-btn" style="margin-left: 1rem;">
                     <span class="dashicons dashicons-download"></span>
-                    <?php esc_html_e('Export Report', 'campaign-office'); ?>
+                    <?php esc_html_e('Export Report', 'campaignpress'); ?>
                 </button>
             </h1>
 
@@ -118,7 +118,7 @@ class CP_Analytics_Dashboard {
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <div>
                             <div style="font-size: 0.875rem; opacity: 0.9; margin-bottom: 0.5rem;">
-                                <?php esc_html_e('Total Volunteers', 'campaign-office'); ?>
+                                <?php esc_html_e('Total Volunteers', 'campaignpress'); ?>
                             </div>
                             <div style="font-size: 2.5rem; font-weight: 700;">
                                 <?php echo esc_html(number_format($metrics['volunteers']['total'])); ?>
@@ -132,7 +132,7 @@ class CP_Analytics_Dashboard {
                                 <span style="color: <?php echo esc_attr($color); ?>">
                                     <?php echo $arrow . ' ' . esc_html(abs($change)) . '%'; ?>
                                 </span>
-                                <?php esc_html_e('vs last period', 'campaign-office'); ?>
+                                <?php esc_html_e('vs last period', 'campaignpress'); ?>
                             </div>
                         </div>
                         <div style="font-size: 3rem; opacity: 0.3;">👥</div>
@@ -144,7 +144,7 @@ class CP_Analytics_Dashboard {
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <div>
                             <div style="font-size: 0.875rem; opacity: 0.9; margin-bottom: 0.5rem;">
-                                <?php esc_html_e('Volunteer Hours', 'campaign-office'); ?>
+                                <?php esc_html_e('Volunteer Hours', 'campaignpress'); ?>
                             </div>
                             <div style="font-size: 2.5rem; font-weight: 700;">
                                 <?php echo esc_html(number_format($metrics['hours']['total'], 1)); ?>
@@ -157,7 +157,7 @@ class CP_Analytics_Dashboard {
                                 <span style="color: #4ade80;">
                                     <?php echo $arrow . ' ' . esc_html(abs($change)) . '%'; ?>
                                 </span>
-                                <?php esc_html_e('vs last period', 'campaign-office'); ?>
+                                <?php esc_html_e('vs last period', 'campaignpress'); ?>
                             </div>
                         </div>
                         <div style="font-size: 3rem; opacity: 0.3;">⏰</div>
@@ -169,14 +169,14 @@ class CP_Analytics_Dashboard {
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <div>
                             <div style="font-size: 0.875rem; opacity: 0.9; margin-bottom: 0.5rem;">
-                                <?php esc_html_e('Event Attendance', 'campaign-office'); ?>
+                                <?php esc_html_e('Event Attendance', 'campaignpress'); ?>
                             </div>
                             <div style="font-size: 2.5rem; font-weight: 700;">
                                 <?php echo esc_html(number_format($metrics['events']['attendance'])); ?>
                             </div>
                             <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem;">
                                 <?php echo esc_html($metrics['events']['total_events']); ?>
-                                <?php esc_html_e('events held', 'campaign-office'); ?>
+                                <?php esc_html_e('events held', 'campaignpress'); ?>
                             </div>
                         </div>
                         <div style="font-size: 3rem; opacity: 0.3;">📅</div>
@@ -188,14 +188,14 @@ class CP_Analytics_Dashboard {
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <div>
                             <div style="font-size: 0.875rem; opacity: 0.9; margin-bottom: 0.5rem;">
-                                <?php esc_html_e('Email Subscribers', 'campaign-office'); ?>
+                                <?php esc_html_e('Email Subscribers', 'campaignpress'); ?>
                             </div>
                             <div style="font-size: 2.5rem; font-weight: 700;">
                                 <?php echo esc_html(number_format($metrics['subscribers']['email'])); ?>
                             </div>
                             <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem;">
                                 <?php echo esc_html(number_format($metrics['subscribers']['sms'])); ?>
-                                <?php esc_html_e('SMS subscribers', 'campaign-office'); ?>
+                                <?php esc_html_e('SMS subscribers', 'campaignpress'); ?>
                             </div>
                         </div>
                         <div style="font-size: 3rem; opacity: 0.3;">📧</div>
@@ -209,7 +209,7 @@ class CP_Analytics_Dashboard {
 
                 <!-- Volunteer Growth Chart -->
                 <div class="cp-chart-card" style="background: #fff; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <h3><?php esc_html_e('Volunteer Growth', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Volunteer Growth', 'campaignpress'); ?></h3>
                     <div id="cp-volunteer-growth-chart" style="height: 300px;">
                         <?php echo $this->render_volunteer_growth_chart($period); ?>
                     </div>
@@ -217,7 +217,7 @@ class CP_Analytics_Dashboard {
 
                 <!-- Top Volunteers -->
                 <div class="cp-chart-card" style="background: #fff; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <h3><?php esc_html_e('Top Volunteers', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Top Volunteers', 'campaignpress'); ?></h3>
                     <?php echo $this->render_top_volunteers(5); ?>
                 </div>
 
@@ -228,13 +228,13 @@ class CP_Analytics_Dashboard {
 
                 <!-- Recent Events -->
                 <div class="cp-table-card" style="background: #fff; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <h3><?php esc_html_e('Recent Events', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Recent Events', 'campaignpress'); ?></h3>
                     <?php echo $this->render_recent_events(5); ?>
                 </div>
 
                 <!-- Campaign Performance -->
                 <div class="cp-table-card" style="background: #fff; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <h3><?php esc_html_e('Campaign Performance', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Campaign Performance', 'campaignpress'); ?></h3>
                     <?php echo $this->render_campaign_performance(5); ?>
                 </div>
 
@@ -242,7 +242,7 @@ class CP_Analytics_Dashboard {
 
             <!-- Geographic Distribution -->
             <div class="cp-map-card" style="background: #fff; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 2rem;">
-                <h3><?php esc_html_e('Volunteer Distribution by ZIP Code', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Volunteer Distribution by ZIP Code', 'campaignpress'); ?></h3>
                 <?php echo $this->render_geographic_distribution(); ?>
             </div>
 
@@ -270,42 +270,42 @@ class CP_Analytics_Dashboard {
     public function render_reports_page() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Analytics Reports', 'campaign-office'); ?></h1>
+            <h1><?php esc_html_e('Analytics Reports', 'campaignpress'); ?></h1>
 
             <div class="card" style="max-width: 800px; margin-top: 2rem;">
-                <h2><?php esc_html_e('Generate Custom Reports', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Generate Custom Reports', 'campaignpress'); ?></h2>
 
                 <form method="post" action="" style="display: grid; gap: 1rem;">
                     <div>
-                        <label><strong><?php esc_html_e('Report Type', 'campaign-office'); ?></strong></label><br>
+                        <label><strong><?php esc_html_e('Report Type', 'campaignpress'); ?></strong></label><br>
                         <select name="report_type" style="margin-top: 0.5rem;">
-                            <option value="volunteer"><?php esc_html_e('Volunteer Activity Report', 'campaign-office'); ?></option>
-                            <option value="events"><?php esc_html_e('Events Report', 'campaign-office'); ?></option>
-                            <option value="communications"><?php esc_html_e('Communications Report', 'campaign-office'); ?></option>
-                            <option value="overview"><?php esc_html_e('Campaign Overview', 'campaign-office'); ?></option>
+                            <option value="volunteer"><?php esc_html_e('Volunteer Activity Report', 'campaignpress'); ?></option>
+                            <option value="events"><?php esc_html_e('Events Report', 'campaignpress'); ?></option>
+                            <option value="communications"><?php esc_html_e('Communications Report', 'campaignpress'); ?></option>
+                            <option value="overview"><?php esc_html_e('Campaign Overview', 'campaignpress'); ?></option>
                         </select>
                     </div>
 
                     <div>
-                        <label><strong><?php esc_html_e('Date Range', 'campaign-office'); ?></strong></label><br>
+                        <label><strong><?php esc_html_e('Date Range', 'campaignpress'); ?></strong></label><br>
                         <input type="date" name="start_date" style="margin-top: 0.5rem;">
                         <span> — </span>
                         <input type="date" name="end_date">
                     </div>
 
                     <div>
-                        <label><strong><?php esc_html_e('Export Format', 'campaign-office'); ?></strong></label><br>
+                        <label><strong><?php esc_html_e('Export Format', 'campaignpress'); ?></strong></label><br>
                         <select name="export_format" style="margin-top: 0.5rem;">
-                            <option value="pdf"><?php esc_html_e('PDF', 'campaign-office'); ?></option>
-                            <option value="csv"><?php esc_html_e('CSV (Excel)', 'campaign-office'); ?></option>
-                            <option value="html"><?php esc_html_e('HTML', 'campaign-office'); ?></option>
+                            <option value="pdf"><?php esc_html_e('PDF', 'campaignpress'); ?></option>
+                            <option value="csv"><?php esc_html_e('CSV (Excel)', 'campaignpress'); ?></option>
+                            <option value="html"><?php esc_html_e('HTML', 'campaignpress'); ?></option>
                         </select>
                     </div>
 
                     <div>
                         <button type="submit" class="button button-primary">
                             <span class="dashicons dashicons-download" style="margin-top: 3px;"></span>
-                            <?php esc_html_e('Generate Report', 'campaign-office'); ?>
+                            <?php esc_html_e('Generate Report', 'campaignpress'); ?>
                         </button>
                     </div>
                 </form>
@@ -313,20 +313,20 @@ class CP_Analytics_Dashboard {
 
             <!-- Recent Reports -->
             <div class="card" style="max-width: 800px; margin-top: 2rem;">
-                <h2><?php esc_html_e('Recent Reports', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Recent Reports', 'campaignpress'); ?></h2>
                 <table class="wp-list-table widefat fixed striped">
                     <thead>
                         <tr>
-                            <th><?php esc_html_e('Report', 'campaign-office'); ?></th>
-                            <th><?php esc_html_e('Type', 'campaign-office'); ?></th>
-                            <th><?php esc_html_e('Date Generated', 'campaign-office'); ?></th>
-                            <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
+                            <th><?php esc_html_e('Report', 'campaignpress'); ?></th>
+                            <th><?php esc_html_e('Type', 'campaignpress'); ?></th>
+                            <th><?php esc_html_e('Date Generated', 'campaignpress'); ?></th>
+                            <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td colspan="4" style="text-align: center; padding: 2rem; color: #999;">
-                                <?php esc_html_e('No reports generated yet.', 'campaign-office'); ?>
+                                <?php esc_html_e('No reports generated yet.', 'campaignpress'); ?>
                             </td>
                         </tr>
                     </tbody>
@@ -371,9 +371,9 @@ class CP_Analytics_Dashboard {
         ?>
         <div style="text-align: center; padding: 3rem; color: #999;">
             <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
-            <p><?php esc_html_e('Chart visualization coming soon.', 'campaign-office'); ?></p>
+            <p><?php esc_html_e('Chart visualization coming soon.', 'campaignpress'); ?></p>
             <p class="description">
-                <?php esc_html_e('Integration with Chart.js or Google Charts for beautiful data visualization.', 'campaign-office'); ?>
+                <?php esc_html_e('Integration with Chart.js or Google Charts for beautiful data visualization.', 'campaignpress'); ?>
             </p>
         </div>
         <?php
@@ -405,7 +405,7 @@ class CP_Analytics_Dashboard {
         }
 
         if (empty($top_volunteers)) {
-            return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No volunteer hours logged yet.', 'campaign-office') . '</p>';
+            return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No volunteer hours logged yet.', 'campaignpress') . '</p>';
         }
 
         ob_start();
@@ -452,7 +452,7 @@ class CP_Analytics_Dashboard {
         $events = new WP_Query($args);
 
         if (!$events->have_posts()) {
-            return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No events yet.', 'campaign-office') . '</p>';
+            return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No events yet.', 'campaignpress') . '</p>';
         }
 
         ob_start();
@@ -499,7 +499,7 @@ class CP_Analytics_Dashboard {
         ", $limit));
 
         if (empty($campaigns)) {
-            return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No campaigns sent yet.', 'campaign-office') . '</p>';
+            return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No campaigns sent yet.', 'campaignpress') . '</p>';
         }
 
         ob_start();
@@ -559,7 +559,7 @@ class CP_Analytics_Dashboard {
         }
 
         if (empty($distribution)) {
-            return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No geographic data available yet.', 'campaign-office') . '</p>';
+            return '<p style="text-align: center; color: #999; padding: 2rem;">' . esc_html__('No geographic data available yet.', 'campaignpress') . '</p>';
         }
 
         ob_start();
@@ -567,9 +567,9 @@ class CP_Analytics_Dashboard {
         <table class="wp-list-table widefat striped">
             <thead>
                 <tr>
-                    <th><?php esc_html_e('ZIP Code', 'campaign-office'); ?></th>
-                    <th><?php esc_html_e('Volunteers', 'campaign-office'); ?></th>
-                    <th><?php esc_html_e('Distribution', 'campaign-office'); ?></th>
+                    <th><?php esc_html_e('ZIP Code', 'campaignpress'); ?></th>
+                    <th><?php esc_html_e('Volunteers', 'campaignpress'); ?></th>
+                    <th><?php esc_html_e('Distribution', 'campaignpress'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -609,15 +609,15 @@ class CP_Analytics_Dashboard {
         switch ($atts['metric']) {
             case 'volunteers':
                 $value = $metrics['volunteers']['total'];
-                $label = $atts['label'] ?: __('Total Volunteers', 'campaign-office');
+                $label = $atts['label'] ?: __('Total Volunteers', 'campaignpress');
                 break;
             case 'hours':
                 $value = number_format($metrics['hours']['total'], 1);
-                $label = $atts['label'] ?: __('Volunteer Hours', 'campaign-office');
+                $label = $atts['label'] ?: __('Volunteer Hours', 'campaignpress');
                 break;
             case 'events':
                 $value = $metrics['events']['total_events'];
-                $label = $atts['label'] ?: __('Events Held', 'campaign-office');
+                $label = $atts['label'] ?: __('Events Held', 'campaignpress');
                 break;
         }
 
@@ -646,19 +646,19 @@ class CP_Analytics_Dashboard {
         <div class="cp-campaign-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
             <div style="background: #667eea; color: #fff; padding: 1.5rem; border-radius: 0.5rem; text-align: center;">
                 <div style="font-size: 2rem; font-weight: 700;"><?php echo esc_html(number_format($metrics['volunteers']['total'])); ?></div>
-                <div style="opacity: 0.9;"><?php esc_html_e('Volunteers', 'campaign-office'); ?></div>
+                <div style="opacity: 0.9;"><?php esc_html_e('Volunteers', 'campaignpress'); ?></div>
             </div>
             <div style="background: #f093fb; color: #fff; padding: 1.5rem; border-radius: 0.5rem; text-align: center;">
                 <div style="font-size: 2rem; font-weight: 700;"><?php echo esc_html(number_format($metrics['hours']['total'], 1)); ?></div>
-                <div style="opacity: 0.9;"><?php esc_html_e('Hours Logged', 'campaign-office'); ?></div>
+                <div style="opacity: 0.9;"><?php esc_html_e('Hours Logged', 'campaignpress'); ?></div>
             </div>
             <div style="background: #4facfe; color: #fff; padding: 1.5rem; border-radius: 0.5rem; text-align: center;">
                 <div style="font-size: 2rem; font-weight: 700;"><?php echo esc_html(number_format($metrics['events']['attendance'])); ?></div>
-                <div style="opacity: 0.9;"><?php esc_html_e('Event Attendees', 'campaign-office'); ?></div>
+                <div style="opacity: 0.9;"><?php esc_html_e('Event Attendees', 'campaignpress'); ?></div>
             </div>
             <div style="background: #43e97b; color: #fff; padding: 1.5rem; border-radius: 0.5rem; text-align: center;">
                 <div style="font-size: 2rem; font-weight: 700;"><?php echo esc_html(number_format($metrics['subscribers']['email'])); ?></div>
-                <div style="opacity: 0.9;"><?php esc_html_e('Subscribers', 'campaign-office'); ?></div>
+                <div style="opacity: 0.9;"><?php esc_html_e('Subscribers', 'campaignpress'); ?></div>
             </div>
         </div>
         <?php
@@ -680,7 +680,7 @@ class CP_Analytics_Dashboard {
         check_ajax_referer('cp_analytics_nonce');
 
         // Export logic would go here
-        wp_send_json_success(array('message' => __('Report generated successfully', 'campaign-office')));
+        wp_send_json_success(array('message' => __('Report generated successfully', 'campaignpress')));
     }
 
     /**

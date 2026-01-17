@@ -65,10 +65,10 @@ add_filter('excerpt_more', 'campaignpress_excerpt_more');
  */
 function campaignpress_custom_image_sizes($sizes) {
     return array_merge($sizes, array(
-        'campaignpress-candidate-headshot' => __('Candidate Headshot', 'campaign-office'),
-        'campaignpress-team-member' => __('Team Member', 'campaign-office'),
-        'campaignpress-endorsement' => __('Endorsement Photo', 'campaign-office'),
-        'campaignpress-event-hero' => __('Event Hero', 'campaign-office'),
+        'campaignpress-candidate-headshot' => __('Candidate Headshot', 'campaignpress'),
+        'campaignpress-team-member' => __('Team Member', 'campaignpress'),
+        'campaignpress-endorsement' => __('Endorsement Photo', 'campaignpress'),
+        'campaignpress-event-hero' => __('Event Hero', 'campaignpress'),
     ));
 }
 add_filter('image_size_names_choose', 'campaignpress_custom_image_sizes');
@@ -164,7 +164,7 @@ function campaignpress_add_layout_meta_box() {
     foreach ($post_types as $post_type) {
         add_meta_box(
             'campaignpress_layout_meta_box',
-            __('Layout Options', 'campaign-office'),
+            __('Layout Options', 'campaignpress'),
             'campaignpress_layout_meta_box_callback',
             $post_type,
             'side',
@@ -186,14 +186,14 @@ function campaignpress_layout_meta_box_callback($post) {
     }
 
     $layouts = array(
-        'default' => __('Default (Theme Setting)', 'campaign-office'),
-        'sidebar-right' => __('Sidebar Right', 'campaign-office'),
-        'sidebar-left' => __('Sidebar Left', 'campaign-office'),
-        'no-sidebar' => __('No Sidebar (Full Width)', 'campaign-office'),
+        'default' => __('Default (Theme Setting)', 'campaignpress'),
+        'sidebar-right' => __('Sidebar Right', 'campaignpress'),
+        'sidebar-left' => __('Sidebar Left', 'campaignpress'),
+        'no-sidebar' => __('No Sidebar (Full Width)', 'campaignpress'),
     );
     ?>
     <p>
-        <label for="campaignpress_layout"><strong><?php esc_html_e('Page Layout:', 'campaign-office'); ?></strong></label><br>
+        <label for="campaignpress_layout"><strong><?php esc_html_e('Page Layout:', 'campaignpress'); ?></strong></label><br>
         <select id="campaignpress_layout" name="campaignpress_layout" style="width: 100%;">
             <?php foreach ($layouts as $layout_value => $layout_label) : ?>
                 <option value="<?php echo esc_attr($layout_value); ?>" <?php selected($current_layout, $layout_value); ?>>
@@ -238,7 +238,7 @@ add_action('save_post', 'campaignpress_save_layout_meta');
 function campaignpress_add_hero_video_meta_box() {
     add_meta_box(
         'campaignpress_hero_video_meta_box',
-        __('Hero Video Overlay', 'campaign-office'),
+        __('Hero Video Overlay', 'campaignpress'),
         'campaignpress_hero_video_meta_box_callback',
         'page',
         'normal',
@@ -265,41 +265,41 @@ function campaignpress_hero_video_meta_box_callback($post) {
         <p>
             <label for="campaignpress_show_hero">
                 <input type="checkbox" id="campaignpress_show_hero" name="campaignpress_show_hero" value="1" <?php checked($show_hero, '1'); ?>>
-                <strong><?php esc_html_e('Display Hero Section', 'campaign-office'); ?></strong>
+                <strong><?php esc_html_e('Display Hero Section', 'campaignpress'); ?></strong>
             </label>
             <br>
-            <span class="description"><?php esc_html_e('Show the hero section with video or image background on this page.', 'campaign-office'); ?></span>
+            <span class="description"><?php esc_html_e('Show the hero section with video or image background on this page.', 'campaignpress'); ?></span>
         </p>
 
         <p>
             <label for="campaignpress_hero_video_url">
-                <strong><?php esc_html_e('Hero Video URL', 'campaign-office'); ?></strong>
+                <strong><?php esc_html_e('Hero Video URL', 'campaignpress'); ?></strong>
             </label><br>
             <input type="url" id="campaignpress_hero_video_url" name="campaignpress_hero_video_url" value="<?php echo esc_url($video_url); ?>" class="widefat" placeholder="https://example.com/video.mp4">
-            <span class="description"><?php esc_html_e('Enter the URL of your hero video. If left empty, the featured image will be used instead. Recommended formats: MP4, WebM', 'campaign-office'); ?></span>
+            <span class="description"><?php esc_html_e('Enter the URL of your hero video. If left empty, the featured image will be used instead. Recommended formats: MP4, WebM', 'campaignpress'); ?></span>
         </p>
 
         <p>
             <label for="campaignpress_hero_video_type">
-                <strong><?php esc_html_e('Video MIME Type', 'campaign-office'); ?></strong>
+                <strong><?php esc_html_e('Video MIME Type', 'campaignpress'); ?></strong>
             </label><br>
             <select id="campaignpress_hero_video_type" name="campaignpress_hero_video_type" class="widefat">
                 <option value="video/mp4" <?php selected($video_type, 'video/mp4'); ?>>MP4 (video/mp4)</option>
                 <option value="video/webm" <?php selected($video_type, 'video/webm'); ?>>WebM (video/webm)</option>
                 <option value="video/ogg" <?php selected($video_type, 'video/ogg'); ?>>OGG (video/ogg)</option>
             </select>
-            <span class="description"><?php esc_html_e('Select the video format type.', 'campaign-office'); ?></span>
+            <span class="description"><?php esc_html_e('Select the video format type.', 'campaignpress'); ?></span>
         </p>
 
         <div class="notice notice-info inline">
             <p>
-                <strong><?php esc_html_e('Tips for best results:', 'campaign-office'); ?></strong>
+                <strong><?php esc_html_e('Tips for best results:', 'campaignpress'); ?></strong>
             </p>
             <ul style="margin-left: 20px; list-style-type: disc;">
-                <li><?php esc_html_e('Keep video files under 5MB for faster loading', 'campaign-office'); ?></li>
-                <li><?php esc_html_e('Use compressed, web-optimized video formats', 'campaign-office'); ?></li>
-                <li><?php esc_html_e('Video will autoplay, loop, and be muted by default', 'campaign-office'); ?></li>
-                <li><?php esc_html_e('Always set a featured image as a fallback', 'campaign-office'); ?></li>
+                <li><?php esc_html_e('Keep video files under 5MB for faster loading', 'campaignpress'); ?></li>
+                <li><?php esc_html_e('Use compressed, web-optimized video formats', 'campaignpress'); ?></li>
+                <li><?php esc_html_e('Video will autoplay, loop, and be muted by default', 'campaignpress'); ?></li>
+                <li><?php esc_html_e('Always set a featured image as a fallback', 'campaignpress'); ?></li>
             </ul>
         </div>
     </div>
@@ -439,11 +439,11 @@ function campaignpress_display_event_details($post_id = null) {
         <?php if ($datetime['date']) : ?>
             <div class="event-date">
                 <span class="dashicons dashicons-calendar-alt"></span>
-                <strong><?php esc_html_e('Date:', 'campaign-office'); ?></strong>
+                <strong><?php esc_html_e('Date:', 'campaignpress'); ?></strong>
                 <time datetime="<?php echo esc_attr($datetime['datetime']); ?>">
                     <?php echo esc_html($datetime['date']); ?>
                     <?php if ($datetime['time']) : ?>
-                        <?php esc_html_e('at', 'campaign-office'); ?> <?php echo esc_html($datetime['time']); ?>
+                        <?php esc_html_e('at', 'campaignpress'); ?> <?php echo esc_html($datetime['time']); ?>
                     <?php endif; ?>
                 </time>
             </div>
@@ -452,7 +452,7 @@ function campaignpress_display_event_details($post_id = null) {
         <?php if ($location['name'] || $location['address']) : ?>
             <div class="event-location">
                 <span class="dashicons dashicons-location"></span>
-                <strong><?php esc_html_e('Location:', 'campaign-office'); ?></strong>
+                <strong><?php esc_html_e('Location:', 'campaignpress'); ?></strong>
                 <address>
                     <?php if ($location['name']) : ?>
                         <div class="location-name"><?php echo esc_html($location['name']); ?></div>
@@ -475,7 +475,7 @@ function campaignpress_display_event_details($post_id = null) {
         <?php if ($rsvp_link) : ?>
             <div class="event-rsvp">
                 <a href="<?php echo esc_url($rsvp_link); ?>" class="button button-primary" target="_blank" rel="noopener">
-                    <?php esc_html_e('RSVP for this Event', 'campaign-office'); ?>
+                    <?php esc_html_e('RSVP for this Event', 'campaignpress'); ?>
                 </a>
             </div>
         <?php endif; ?>

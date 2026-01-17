@@ -73,7 +73,7 @@ class CP_Translation_Support {
      */
     public function load_textdomain() {
         // Load theme translations
-        load_theme_textdomain('campaign-office', CAMPAIGNPRESS_THEME_DIR . '/languages');
+        load_theme_textdomain('campaignpress', CAMPAIGNPRESS_THEME_DIR . '/languages');
 
         // Register theme with WPML
         if (function_exists('wpml_get_current_language')) {
@@ -177,8 +177,8 @@ class CP_Translation_Support {
         // Register theme option strings
         pll_register_string('candidate_name', get_theme_mod('campaignpress_candidate_name', ''), 'CampaignPress');
         pll_register_string('campaign_tagline', get_theme_mod('campaignpress_tagline', ''), 'CampaignPress');
-        pll_register_string('donation_button_text', __('Donate Now', 'campaign-office'), 'CampaignPress');
-        pll_register_string('volunteer_button_text', __('Get Involved', 'campaign-office'), 'CampaignPress');
+        pll_register_string('donation_button_text', __('Donate Now', 'campaignpress'), 'CampaignPress');
+        pll_register_string('volunteer_button_text', __('Get Involved', 'campaignpress'), 'CampaignPress');
     }
 
     /**
@@ -243,7 +243,7 @@ class CP_Translation_Support {
         $active_plugin = $this->get_active_translation_plugin();
 
         if (!$active_plugin) {
-            return '<p class="cp-no-translation">' . esc_html__('No translation plugin detected.', 'campaign-office') . '</p>';
+            return '<p class="cp-no-translation">' . esc_html__('No translation plugin detected.', 'campaignpress') . '</p>';
         }
 
         ob_start();
@@ -398,12 +398,12 @@ class CP_Translation_Support {
         ?>
         <div class="notice notice-info is-dismissible">
             <p>
-                <strong><?php esc_html_e('CampaignPress Multi-Language Support', 'campaign-office'); ?></strong><br>
-                <?php esc_html_e('Running a bilingual or multilingual campaign? CampaignPress supports WPML, Polylang, and TranslatePress for seamless translation.', 'campaign-office'); ?>
+                <strong><?php esc_html_e('CampaignPress Multi-Language Support', 'campaignpress'); ?></strong><br>
+                <?php esc_html_e('Running a bilingual or multilingual campaign? CampaignPress supports WPML, Polylang, and TranslatePress for seamless translation.', 'campaignpress'); ?>
             </p>
             <p>
-                <a href="<?php echo esc_url(admin_url('plugin-install.php?s=wpml&tab=search')); ?>" class="button"><?php esc_html_e('Install Translation Plugin', 'campaign-office'); ?></a>
-                <a href="#" class="button-secondary cp-dismiss-translation-notice"><?php esc_html_e('Dismiss', 'campaign-office'); ?></a>
+                <a href="<?php echo esc_url(admin_url('plugin-install.php?s=wpml&tab=search')); ?>" class="button"><?php esc_html_e('Install Translation Plugin', 'campaignpress'); ?></a>
+                <a href="#" class="button-secondary cp-dismiss-translation-notice"><?php esc_html_e('Dismiss', 'campaignpress'); ?></a>
             </p>
         </div>
 
@@ -434,8 +434,8 @@ class CP_Language_Switcher_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'cp_language_switcher',
-            __('CampaignPress Language Switcher', 'campaign-office'),
-            array('description' => __('Display language switcher for multilingual campaigns', 'campaign-office'))
+            __('CampaignPress Language Switcher', 'campaignpress'),
+            array('description' => __('Display language switcher for multilingual campaigns', 'campaignpress'))
         );
     }
 
@@ -465,29 +465,29 @@ class CP_Language_Switcher_Widget extends WP_Widget {
      * Widget form
      */
     public function form($instance) {
-        $title = isset($instance['title']) ? $instance['title'] : __('Languages', 'campaign-office');
+        $title = isset($instance['title']) ? $instance['title'] : __('Languages', 'campaignpress');
         $type = isset($instance['type']) ? $instance['type'] : 'dropdown';
         $show_names = isset($instance['show_names']) ? $instance['show_names'] : 'yes';
         $show_flags = isset($instance['show_flags']) ? $instance['show_flags'] : 'yes';
         ?>
         <p>
-            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_html_e('Title:', 'campaign-office'); ?></label>
+            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_html_e('Title:', 'campaignpress'); ?></label>
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text" value="<?php echo esc_attr($title); ?>">
         </p>
         <p>
-            <label for="<?php echo esc_attr($this->get_field_id('type')); ?>"><?php esc_html_e('Type:', 'campaign-office'); ?></label>
+            <label for="<?php echo esc_attr($this->get_field_id('type')); ?>"><?php esc_html_e('Type:', 'campaignpress'); ?></label>
             <select class="widefat" id="<?php echo esc_attr($this->get_field_id('type')); ?>" name="<?php echo esc_attr($this->get_field_name('type')); ?>">
-                <option value="dropdown" <?php selected($type, 'dropdown'); ?>><?php esc_html_e('Dropdown', 'campaign-office'); ?></option>
-                <option value="flags" <?php selected($type, 'flags'); ?>><?php esc_html_e('Flags', 'campaign-office'); ?></option>
+                <option value="dropdown" <?php selected($type, 'dropdown'); ?>><?php esc_html_e('Dropdown', 'campaignpress'); ?></option>
+                <option value="flags" <?php selected($type, 'flags'); ?>><?php esc_html_e('Flags', 'campaignpress'); ?></option>
             </select>
         </p>
         <p>
             <input type="checkbox" id="<?php echo esc_attr($this->get_field_id('show_names')); ?>" name="<?php echo esc_attr($this->get_field_name('show_names')); ?>" value="yes" <?php checked($show_names, 'yes'); ?>>
-            <label for="<?php echo esc_attr($this->get_field_id('show_names')); ?>"><?php esc_html_e('Show language names', 'campaign-office'); ?></label>
+            <label for="<?php echo esc_attr($this->get_field_id('show_names')); ?>"><?php esc_html_e('Show language names', 'campaignpress'); ?></label>
         </p>
         <p>
             <input type="checkbox" id="<?php echo esc_attr($this->get_field_id('show_flags')); ?>" name="<?php echo esc_attr($this->get_field_name('show_flags')); ?>" value="yes" <?php checked($show_flags, 'yes'); ?>>
-            <label for="<?php echo esc_attr($this->get_field_id('show_flags')); ?>"><?php esc_html_e('Show flags', 'campaign-office'); ?></label>
+            <label for="<?php echo esc_attr($this->get_field_id('show_flags')); ?>"><?php esc_html_e('Show flags', 'campaignpress'); ?></label>
         </p>
         <?php
     }

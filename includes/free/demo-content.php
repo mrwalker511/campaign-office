@@ -34,8 +34,8 @@ class CampaignPress_Demo_Content {
      */
     public function add_admin_menu() {
         add_theme_page(
-            __('CampaignPress Demo Content', 'campaign-office'),
-            __('Demo Content', 'campaign-office'),
+            __('CampaignPress Demo Content', 'campaignpress'),
+            __('Demo Content', 'campaignpress'),
             'manage_options',
             'campaignpress-demo',
             array($this, 'render_admin_page')
@@ -60,10 +60,10 @@ class CampaignPress_Demo_Content {
             'nonce' => wp_create_nonce('cp_demo_import_ajax'),
             'redirect_url' => admin_url('themes.php?page=campaignpress-demo'),
             'strings' => array(
-                'starting' => __('Starting demo import…', 'campaign-office'),
-                'working' => __('Importing demo content…', 'campaign-office'),
-                'complete' => __('Import complete. Redirecting…', 'campaign-office'),
-                'error' => __('Demo import failed.', 'campaign-office'),
+                'starting' => __('Starting demo import…', 'campaignpress'),
+                'working' => __('Importing demo content…', 'campaignpress'),
+                'complete' => __('Import complete. Redirecting…', 'campaignpress'),
+                'error' => __('Demo import failed.', 'campaignpress'),
             ),
         ));
     }
@@ -267,42 +267,42 @@ class CampaignPress_Demo_Content {
         $demo_exists = (bool) get_option('campaignpress_demo_imported', false) || $demo_in_progress || !empty($demo_ids);
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('CampaignPress Demo Content', 'campaign-office'); ?></h1>
+            <h1><?php esc_html_e('CampaignPress Demo Content', 'campaignpress'); ?></h1>
 
             <?php if (!empty($_GET['imported']) && sanitize_key($_GET['imported']) === '1') : ?>
                 <div class="notice notice-success is-dismissible">
-                    <p><?php esc_html_e('Demo content imported successfully!', 'campaign-office'); ?></p>
+                    <p><?php esc_html_e('Demo content imported successfully!', 'campaignpress'); ?></p>
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($_GET['deleted']) && sanitize_key($_GET['deleted']) === '1') : ?>
                 <div class="notice notice-success is-dismissible">
-                    <p><?php esc_html_e('Demo content deleted successfully!', 'campaign-office'); ?></p>
+                    <p><?php esc_html_e('Demo content deleted successfully!', 'campaignpress'); ?></p>
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($_GET['import_error']) && sanitize_key($_GET['import_error']) === '1') : ?>
                 <div class="notice notice-error is-dismissible">
-                    <p><?php esc_html_e('Demo content import failed. Please check error logs or try again.', 'campaign-office'); ?></p>
+                    <p><?php esc_html_e('Demo content import failed. Please check error logs or try again.', 'campaignpress'); ?></p>
                 </div>
             <?php endif; ?>
 
             <div class="card" style="max-width: 800px;">
-                <h2><?php esc_html_e('Sample Campaign Content', 'campaign-office'); ?></h2>
-                <p><?php esc_html_e('This will create sample content to help you see how CampaignPress works. Perfect for testing and demonstrations.', 'campaign-office'); ?></p>
+                <h2><?php esc_html_e('Sample Campaign Content', 'campaignpress'); ?></h2>
+                <p><?php esc_html_e('This will create sample content to help you see how CampaignPress works. Perfect for testing and demonstrations.', 'campaignpress'); ?></p>
 
-                <h3><?php esc_html_e('Content to be created:', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Content to be created:', 'campaignpress'); ?></h3>
                 <ul style="list-style: disc; margin-left: 20px;">
-                    <li><?php esc_html_e('6 Policy Issues (Healthcare, Education, Environment, Economy, Justice, Infrastructure)', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('4 Campaign Events (Town Hall, Fundraiser, Rally, Debate)', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('8 Endorsements (Officials, Organizations, Community Leaders)', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('5 Team Members (Campaign Manager, Finance Director, etc.)', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('4 Volunteer Opportunities (Canvassing, Phone Banking, etc.)', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('5 Press Releases (Campaign Launch, Policy Announcements)', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Sample homepage with CampaignPress blocks', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('About page with candidate bio', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('3 Navigation Menus (Primary, Footer, Social)', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Complete Theme Options populated with sample campaign data', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('6 Policy Issues (Healthcare, Education, Environment, Economy, Justice, Infrastructure)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('4 Campaign Events (Town Hall, Fundraiser, Rally, Debate)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('8 Endorsements (Officials, Organizations, Community Leaders)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('5 Team Members (Campaign Manager, Finance Director, etc.)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('4 Volunteer Opportunities (Canvassing, Phone Banking, etc.)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('5 Press Releases (Campaign Launch, Policy Announcements)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Sample homepage with CampaignPress blocks', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('About page with candidate bio', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('3 Navigation Menus (Primary, Footer, Social)', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Complete Theme Options populated with sample campaign data', 'campaignpress'); ?></li>
                 </ul>
 
                 <?php if (!$demo_exists) : ?>
@@ -311,11 +311,11 @@ class CampaignPress_Demo_Content {
                         <?php wp_nonce_field('cp_import_demo', 'cp_demo_nonce'); ?>
                         <p>
                             <button type="submit" class="button button-primary button-hero" id="cp-import-demo-button">
-                                <?php esc_html_e('Import Demo Content', 'campaign-office'); ?>
+                                <?php esc_html_e('Import Demo Content', 'campaignpress'); ?>
                             </button>
                         </p>
                         <p class="description">
-                            <?php esc_html_e('This creates sample content. You can delete it anytime.', 'campaign-office'); ?>
+                            <?php esc_html_e('This creates sample content. You can delete it anytime.', 'campaignpress'); ?>
                         </p>
                     </form>
 
@@ -327,14 +327,14 @@ class CampaignPress_Demo_Content {
                     </div>
                 <?php else : ?>
                     <div class="notice notice-info inline">
-                        <p><?php esc_html_e('Demo content is currently installed.', 'campaign-office'); ?></p>
+                        <p><?php esc_html_e('Demo content is currently installed.', 'campaignpress'); ?></p>
                     </div>
                     <div style="display: flex; gap: 10px; margin-top: 16px;">
                         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" id="cp-delete-demo-form">
                             <input type="hidden" name="action" value="cp_delete_demo">
                             <?php wp_nonce_field('cp_delete_demo', 'cp_demo_nonce'); ?>
                             <button type="submit" class="button button-secondary">
-                                <?php esc_html_e('Delete Demo Content', 'campaign-office'); ?>
+                                <?php esc_html_e('Delete Demo Content', 'campaignpress'); ?>
                             </button>
                         </form>
 
@@ -342,8 +342,8 @@ class CampaignPress_Demo_Content {
                             <input type="hidden" name="action" value="cp_import_demo">
                             <input type="hidden" name="force" value="1">
                             <?php wp_nonce_field('cp_import_demo', 'cp_demo_nonce'); ?>
-                            <button type="submit" class="button button-secondary" onclick="return confirm('<?php echo esc_js(__('Force re-import will overwrite existing demo content settings but may create duplicate posts. Are you sure?', 'campaign-office')); ?>');">
-                                <?php esc_html_e('Force Re-import', 'campaign-office'); ?>
+                            <button type="submit" class="button button-secondary" onclick="return confirm('<?php echo esc_js(__('Force re-import will overwrite existing demo content settings but may create duplicate posts. Are you sure?', 'campaignpress')); ?>');">
+                                <?php esc_html_e('Force Re-import', 'campaignpress'); ?>
                             </button>
                         </form>
                     </div>
@@ -357,7 +357,7 @@ class CampaignPress_Demo_Content {
 
                     <script>
                     document.getElementById('cp-delete-demo-form').addEventListener('submit', function(e) {
-                        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete all demo content? This cannot be undone.', 'campaign-office')); ?>')) {
+                        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete all demo content? This cannot be undone.', 'campaignpress')); ?>')) {
                             e.preventDefault();
                         }
                     });
@@ -372,16 +372,16 @@ class CampaignPress_Demo_Content {
         check_ajax_referer('cp_demo_import_ajax', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Insufficient permissions', 'campaignpress')));
         }
 
         if (get_option('campaignpress_demo_imported', false) && empty($_POST['force'])) {
-            wp_send_json_error(array('message' => __('Demo content is already installed. Delete it first to re-import.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Demo content is already installed. Delete it first to re-import.', 'campaignpress')));
         }
 
         $existing_ids = get_option('campaignpress_demo_post_ids', array());
         if (!empty($existing_ids) && empty($_POST['force'])) {
-            wp_send_json_error(array('message' => __('Demo content already exists. Delete it first to re-import.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Demo content already exists. Delete it first to re-import.', 'campaignpress')));
         }
 
         $pages = $this->get_demo_pages_data();
@@ -414,7 +414,7 @@ class CampaignPress_Demo_Content {
         wp_send_json_success(array(
             'completed_steps' => 0,
             'total_steps' => $total_steps,
-            'message' => __('Starting demo import…', 'campaign-office'),
+            'message' => __('Starting demo import…', 'campaignpress'),
         ));
     }
 
@@ -422,14 +422,14 @@ class CampaignPress_Demo_Content {
         check_ajax_referer('cp_demo_import_ajax', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Insufficient permissions', 'campaignpress')));
         }
 
         $state_key = $this->get_import_state_key();
         $state = get_transient($state_key);
 
         if (!is_array($state) || empty($state['step'])) {
-            wp_send_json_error(array('message' => __('Demo import session expired. Please try again.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Demo import session expired. Please try again.', 'campaignpress')));
         }
 
         @set_time_limit(60);
@@ -444,49 +444,49 @@ class CampaignPress_Demo_Content {
                 case 'precreate_taxonomies':
                     $this->precreate_taxonomies();
                     $state['step'] = 'issues';
-                    $message = __('Preparing taxonomies…', 'campaign-office');
+                    $message = __('Preparing taxonomies…', 'campaignpress');
                     break;
 
                 case 'issues':
                     $state['demo_post_ids']['issues'] = $this->import_issues();
                     $state['step'] = 'events';
-                    $message = __('Importing issues…', 'campaign-office');
+                    $message = __('Importing issues…', 'campaignpress');
                     break;
 
                 case 'events':
                     $state['demo_post_ids']['events'] = $this->import_events();
                     $state['step'] = 'endorsements';
-                    $message = __('Importing events…', 'campaign-office');
+                    $message = __('Importing events…', 'campaignpress');
                     break;
 
                 case 'endorsements':
                     $state['demo_post_ids']['endorsements'] = $this->import_endorsements();
                     $state['step'] = 'team';
-                    $message = __('Importing endorsements…', 'campaign-office');
+                    $message = __('Importing endorsements…', 'campaignpress');
                     break;
 
                 case 'team':
                     $state['demo_post_ids']['team'] = $this->import_team();
                     $state['step'] = 'volunteers';
-                    $message = __('Importing team members…', 'campaign-office');
+                    $message = __('Importing team members…', 'campaignpress');
                     break;
 
                 case 'volunteers':
                     $state['demo_post_ids']['volunteers'] = $this->import_volunteers();
                     $state['step'] = 'press_releases';
-                    $message = __('Importing volunteer opportunities…', 'campaign-office');
+                    $message = __('Importing volunteer opportunities…', 'campaignpress');
                     break;
 
                 case 'press_releases':
                     $state['demo_post_ids']['press_releases'] = $this->import_press_releases();
                     $state['step'] = 'blog_posts';
-                    $message = __('Importing press releases…', 'campaign-office');
+                    $message = __('Importing press releases…', 'campaignpress');
                     break;
 
                 case 'blog_posts':
                     $state['demo_post_ids']['blog_posts'] = $this->import_blog_posts();
                     $state['step'] = 'pages';
-                    $message = __('Importing blog posts…', 'campaign-office');
+                    $message = __('Importing blog posts…', 'campaignpress');
                     break;
 
                 case 'pages':
@@ -514,7 +514,7 @@ class CampaignPress_Demo_Content {
                         }
 
                         $state['step'] = 'menus';
-                        $message = __('Configuring homepage…', 'campaign-office');
+                        $message = __('Configuring homepage…', 'campaignpress');
                         break;
                     }
 
@@ -539,7 +539,7 @@ class CampaignPress_Demo_Content {
                     $state['demo_post_ids']['pages'][$page_data['slug']] = $page_id;
                     $state['pages_index'] = $index + 1;
                     $message = sprintf(
-                        __('Importing pages… (%d/%d)', 'campaign-office'),
+                        __('Importing pages… (%d/%d)', 'campaignpress'),
                         min($state['pages_index'], count($pages)),
                         count($pages)
                     );
@@ -548,13 +548,13 @@ class CampaignPress_Demo_Content {
                 case 'menus':
                     $state['demo_post_ids']['menus'] = $this->import_menus($state['demo_post_ids']['pages']);
                     $state['step'] = 'theme_options';
-                    $message = __('Creating menus…', 'campaign-office');
+                    $message = __('Creating menus…', 'campaignpress');
                     break;
 
                 case 'theme_options':
                     $this->populate_theme_options();
                     $state['step'] = 'finalize';
-                    $message = __('Applying theme settings…', 'campaign-office');
+                    $message = __('Applying theme settings…', 'campaignpress');
                     break;
 
                 case 'finalize':
@@ -563,7 +563,7 @@ class CampaignPress_Demo_Content {
                     delete_option('campaignpress_demo_import_in_progress');
                     delete_transient($state_key);
                     $done = true;
-                    $message = __('Import complete.', 'campaign-office');
+                    $message = __('Import complete.', 'campaignpress');
                     break;
 
                 default:
@@ -576,7 +576,7 @@ class CampaignPress_Demo_Content {
             delete_transient($state_key);
             delete_option('campaignpress_demo_import_in_progress');
             
-            $error_message = __('Demo import failed. ', 'campaign-office');
+            $error_message = __('Demo import failed. ', 'campaignpress');
             $error_message .= $e->getMessage();
             
             wp_send_json_error(array('message' => $error_message));
@@ -610,12 +610,12 @@ class CampaignPress_Demo_Content {
 
         // Check nonce
         if (!isset($_POST['cp_demo_nonce']) || !wp_verify_nonce($_POST['cp_demo_nonce'], 'cp_import_demo')) {
-            wp_die(__('Security check failed', 'campaign-office'));
+            wp_die(__('Security check failed', 'campaignpress'));
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('Insufficient permissions', 'campaign-office'));
+            wp_die(__('Insufficient permissions', 'campaignpress'));
         }
 
         $force = !empty($_POST['force']) || !empty($_GET['force']);
@@ -711,12 +711,12 @@ class CampaignPress_Demo_Content {
     public function handle_delete() {
         // Check nonce
         if (!isset($_POST['cp_demo_nonce']) || !wp_verify_nonce($_POST['cp_demo_nonce'], 'cp_delete_demo')) {
-            wp_die(__('Security check failed', 'campaign-office'));
+            wp_die(__('Security check failed', 'campaignpress'));
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('Insufficient permissions', 'campaign-office'));
+            wp_die(__('Insufficient permissions', 'campaignpress'));
         }
 
         // Get demo post IDs
@@ -1570,17 +1570,17 @@ class CampaignPress_Demo_Content {
                 'title' => 'Donate',
                 'slug' => 'donate',
                 'content' => '<!-- wp:heading {"textAlign":"center"} -->
-<h2 class="has-text-align-center">' . __('Fuel Our Movement', 'campaign-office') . '</h2>
+<h2 class="has-text-align-center">' . __('Fuel Our Movement', 'campaignpress') . '</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">' . __('Your contribution helps us reach more voters and spread our message of hope.', 'campaign-office') . '</p>
+<p class="has-text-align-center">' . __('Your contribution helps us reach more voters and spread our message of hope.', 'campaignpress') . '</p>
 <!-- /wp:paragraph -->
 
-[cp_donation_button processor="actblue" text="' . __('Donate via ActBlue', 'campaign-office') . '" style="primary" size="large"]
+[cp_donation_button processor="actblue" text="' . __('Donate via ActBlue', 'campaignpress') . '" style="primary" size="large"]
 
 <!-- wp:paragraph -->
-<p><small>' . __('Contributions are not tax deductible. Federal law requires us to use our best efforts to collect and report the name, mailing address, occupation and name of employer of individuals whose contributions exceed $200 in an election cycle.', 'campaign-office') . '</small></p>
+<p><small>' . __('Contributions are not tax deductible. Federal law requires us to use our best efforts to collect and report the name, mailing address, occupation and name of employer of individuals whose contributions exceed $200 in an election cycle.', 'campaignpress') . '</small></p>
 <!-- /wp:paragraph -->',
             ),
             array(

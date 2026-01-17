@@ -55,7 +55,7 @@ function campaignpress_customize_register($wp_customize) {
      */
     if (!$wp_customize->get_section('colors')) {
         $wp_customize->add_section('colors', array(
-            'title'    => __('Colors', 'campaign-office'),
+            'title'    => __('Colors', 'campaignpress'),
             'priority' => 30,
         ));
     }
@@ -67,16 +67,16 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_color_scheme', array(
-        'label'       => __('Party Color Scheme', 'campaign-office'),
-        'description' => __('Applies a preset palette across the site.', 'campaign-office'),
+        'label'       => __('Party Color Scheme', 'campaignpress'),
+        'description' => __('Applies a preset palette across the site.', 'campaignpress'),
         'section'     => 'colors',
         'type'        => 'select',
         'choices'     => array(
-            'democrat-blue'      => __('Democrat Blue', 'campaign-office'),
-            'republican-red'     => __('Republican Red', 'campaign-office'),
-            'independent-purple' => __('Independent Purple', 'campaign-office'),
-            'green-party'        => __('Green Party', 'campaign-office'),
-            'neutral'            => __('Neutral', 'campaign-office'),
+            'democrat-blue'      => __('Democrat Blue', 'campaignpress'),
+            'republican-red'     => __('Republican Red', 'campaignpress'),
+            'independent-purple' => __('Independent Purple', 'campaignpress'),
+            'green-party'        => __('Green Party', 'campaignpress'),
+            'neutral'            => __('Neutral', 'campaignpress'),
         ),
     ));
 
@@ -88,8 +88,8 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'campaignpress_primary_color', array(
-        'label'       => __('Primary Color Override', 'campaign-office'),
-        'description' => __('Overrides the theme primary color (useful for matching your logo).', 'campaign-office'),
+        'label'       => __('Primary Color Override', 'campaignpress'),
+        'description' => __('Overrides the theme primary color (useful for matching your logo).', 'campaignpress'),
         'section'     => 'colors',
     )));
 
@@ -100,21 +100,21 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'campaignpress_secondary_color', array(
-        'label'       => __('Accent Color Override', 'campaign-office'),
-        'description' => __('Overrides the theme accent color.', 'campaign-office'),
+        'label'       => __('Accent Color Override', 'campaignpress'),
+        'description' => __('Overrides the theme accent color.', 'campaignpress'),
         'section'     => 'colors',
     )));
 
     // Footer compliance disclaimer text.
     $wp_customize->add_setting('campaignpress_disclaimer_text', array(
-        'default'           => __('Paid for by Friends of the Candidate', 'campaign-office'),
+        'default'           => __('Paid for by Friends of the Candidate', 'campaignpress'),
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'postMessage',
     ));
 
     $wp_customize->add_control('campaignpress_disclaimer_text', array(
-        'label'       => __('"Paid for by" Disclaimer', 'campaign-office'),
-        'description' => __('Shown in the footer (use for campaign compliance).', 'campaign-office'),
+        'label'       => __('"Paid for by" Disclaimer', 'campaignpress'),
+        'description' => __('Shown in the footer (use for campaign compliance).', 'campaignpress'),
         'section'     => 'title_tagline',
         'type'        => 'text',
     ));
@@ -123,7 +123,7 @@ function campaignpress_customize_register($wp_customize) {
      * Navigation
      */
     $wp_customize->add_section('campaignpress_navigation', array(
-        'title'    => __('Navigation', 'campaign-office'),
+        'title'    => __('Navigation', 'campaignpress'),
         'priority' => 36,
     ));
 
@@ -134,13 +134,13 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_primary_menu_layout', array(
-        'label'       => __('Primary Menu Layout', 'campaign-office'),
-        'description' => __('Controls whether the header menu is inline or stacked vertically.', 'campaign-office'),
+        'label'       => __('Primary Menu Layout', 'campaignpress'),
+        'description' => __('Controls whether the header menu is inline or stacked vertically.', 'campaignpress'),
         'section'     => 'campaignpress_navigation',
         'type'        => 'radio',
         'choices'     => array(
-            'inline'   => __('Inline (Horizontal)', 'campaign-office'),
-            'vertical' => __('Vertical (Stacked)', 'campaign-office'),
+            'inline'   => __('Inline (Horizontal)', 'campaignpress'),
+            'vertical' => __('Vertical (Stacked)', 'campaignpress'),
         ),
     ));
 
@@ -148,7 +148,7 @@ function campaignpress_customize_register($wp_customize) {
      * Layout Section
      */
     $wp_customize->add_section('campaignpress_layout', array(
-        'title'    => __('Layout Options', 'campaign-office'),
+        'title'    => __('Layout Options', 'campaignpress'),
         'priority' => 35,
     ));
 
@@ -159,13 +159,13 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_homepage_layout', array(
-        'label'    => __('Homepage Layout', 'campaign-office'),
+        'label'    => __('Homepage Layout', 'campaignpress'),
         'section'  => 'campaignpress_layout',
         'type'     => 'select',
         'choices'  => array(
-            'classic'      => __('Classic Candidate', 'campaign-office'),
-            'modern'       => __('Modern Progressive', 'campaign-office'),
-            'traditional'  => __('Conservative Traditional', 'campaign-office'),
+            'classic'      => __('Classic Candidate', 'campaignpress'),
+            'modern'       => __('Modern Progressive', 'campaignpress'),
+            'traditional'  => __('Conservative Traditional', 'campaignpress'),
         ),
     ));
 
@@ -176,13 +176,13 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_layout', array(
-        'label'    => __('General Layout', 'campaign-office'),
+        'label'    => __('General Layout', 'campaignpress'),
         'section'  => 'campaignpress_layout',
         'type'     => 'select',
         'choices'  => array(
-            'default'      => __('Default (Sidebar Right)', 'campaign-office'),
-            'left-sidebar' => __('Sidebar Left', 'campaign-office'),
-            'no-sidebar'   => __('No Sidebar (Full Width)', 'campaign-office'),
+            'default'      => __('Default (Sidebar Right)', 'campaignpress'),
+            'left-sidebar' => __('Sidebar Left', 'campaignpress'),
+            'no-sidebar'   => __('No Sidebar (Full Width)', 'campaignpress'),
         ),
     ));
 
@@ -190,8 +190,8 @@ function campaignpress_customize_register($wp_customize) {
      * Social Media Section
      */
     $wp_customize->add_section('campaignpress_social_media', array(
-        'title'       => __('Social Media Links', 'campaign-office'),
-        'description' => __('Enter your social media profile URLs', 'campaign-office'),
+        'title'       => __('Social Media Links', 'campaignpress'),
+        'description' => __('Enter your social media profile URLs', 'campaignpress'),
         'priority'    => 40,
     ));
 
@@ -202,7 +202,7 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_facebook_url', array(
-        'label'   => __('Facebook URL', 'campaign-office'),
+        'label'   => __('Facebook URL', 'campaignpress'),
         'section' => 'campaignpress_social_media',
         'type'    => 'url',
     ));
@@ -214,7 +214,7 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_twitter_url', array(
-        'label'   => __('Twitter URL', 'campaign-office'),
+        'label'   => __('Twitter URL', 'campaignpress'),
         'section' => 'campaignpress_social_media',
         'type'    => 'url',
     ));
@@ -226,7 +226,7 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_instagram_url', array(
-        'label'   => __('Instagram URL', 'campaign-office'),
+        'label'   => __('Instagram URL', 'campaignpress'),
         'section' => 'campaignpress_social_media',
         'type'    => 'url',
     ));
@@ -238,7 +238,7 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_youtube_url', array(
-        'label'   => __('YouTube URL', 'campaign-office'),
+        'label'   => __('YouTube URL', 'campaignpress'),
         'section' => 'campaignpress_social_media',
         'type'    => 'url',
     ));
@@ -250,7 +250,7 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_linkedin_url', array(
-        'label'   => __('LinkedIn URL', 'campaign-office'),
+        'label'   => __('LinkedIn URL', 'campaignpress'),
         'section' => 'campaignpress_social_media',
         'type'    => 'url',
     ));
@@ -259,7 +259,7 @@ function campaignpress_customize_register($wp_customize) {
      * Campaign Information Section
      */
     $wp_customize->add_section('campaignpress_campaign_info', array(
-        'title'    => __('Campaign Information', 'campaign-office'),
+        'title'    => __('Campaign Information', 'campaignpress'),
         'priority' => 45,
     ));
 
@@ -270,7 +270,7 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_candidate_name', array(
-        'label'   => __('Candidate Name', 'campaign-office'),
+        'label'   => __('Candidate Name', 'campaignpress'),
         'section' => 'campaignpress_campaign_info',
         'type'    => 'text',
     ));
@@ -282,10 +282,10 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_office_seeking', array(
-        'label'       => __('Office Seeking', 'campaign-office'),
+        'label'       => __('Office Seeking', 'campaignpress'),
         'section'     => 'campaignpress_campaign_info',
         'type'        => 'text',
-        'description' => __('e.g., "City Council", "State Senate District 12", "U.S. Congress"', 'campaign-office'),
+        'description' => __('e.g., "City Council", "State Senate District 12", "U.S. Congress"', 'campaignpress'),
     ));
 
     // Campaign tagline
@@ -295,7 +295,7 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_campaign_tagline', array(
-        'label'   => __('Campaign Tagline', 'campaign-office'),
+        'label'   => __('Campaign Tagline', 'campaignpress'),
         'section' => 'campaignpress_campaign_info',
         'type'    => 'text',
     ));
@@ -307,18 +307,18 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_donation_url', array(
-        'label'       => __('Donation Page URL', 'campaign-office'),
+        'label'       => __('Donation Page URL', 'campaignpress'),
         'section'     => 'campaignpress_campaign_info',
         'type'        => 'url',
-        'description' => __('Link to ActBlue, WinRed, or other donation processor', 'campaign-office'),
+        'description' => __('Link to ActBlue, WinRed, or other donation processor', 'campaignpress'),
     ));
 
     /**
      * Hero Section
      */
     $wp_customize->add_section('campaignpress_hero', array(
-        'title'       => __('Hero Section', 'campaign-office'),
-        'description' => __('Customize your homepage hero section background and overlay.', 'campaign-office'),
+        'title'       => __('Hero Section', 'campaignpress'),
+        'description' => __('Customize your homepage hero section background and overlay.', 'campaignpress'),
         'priority'    => 37,
     ));
 
@@ -330,13 +330,13 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_hero_media_type', array(
-        'label'       => __('Background Media Type', 'campaign-office'),
-        'description' => __('Choose between an image or video background.', 'campaign-office'),
+        'label'       => __('Background Media Type', 'campaignpress'),
+        'description' => __('Choose between an image or video background.', 'campaignpress'),
         'section'     => 'campaignpress_hero',
         'type'        => 'radio',
         'choices'     => array(
-            'image' => __('Image', 'campaign-office'),
-            'video' => __('Video', 'campaign-office'),
+            'image' => __('Image', 'campaignpress'),
+            'video' => __('Video', 'campaignpress'),
         ),
     ));
 
@@ -348,8 +348,8 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'campaignpress_hero_image', array(
-        'label'       => __('Hero Background Image', 'campaign-office'),
-        'description' => __('Upload or select an image for the hero section background.', 'campaign-office'),
+        'label'       => __('Hero Background Image', 'campaignpress'),
+        'description' => __('Upload or select an image for the hero section background.', 'campaignpress'),
         'section'     => 'campaignpress_hero',
     )));
 
@@ -361,8 +361,8 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_hero_video', array(
-        'label'       => __('Hero Background Video URL', 'campaign-office'),
-        'description' => __('Enter the URL for a self-hosted video file (MP4 recommended).', 'campaign-office'),
+        'label'       => __('Hero Background Video URL', 'campaignpress'),
+        'description' => __('Enter the URL for a self-hosted video file (MP4 recommended).', 'campaignpress'),
         'section'     => 'campaignpress_hero',
         'type'        => 'url',
     ));
@@ -375,8 +375,8 @@ function campaignpress_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('campaignpress_hero_overlay_opacity', array(
-        'label'       => __('Overlay Opacity', 'campaign-office'),
-        'description' => __('Adjust the darkness of the overlay (0 = transparent, 100 = fully dark). Recommended: 40-60% for optimal text readability.', 'campaign-office'),
+        'label'       => __('Overlay Opacity', 'campaignpress'),
+        'description' => __('Adjust the darkness of the overlay (0 = transparent, 100 = fully dark). Recommended: 40-60% for optimal text readability.', 'campaignpress'),
         'section'     => 'campaignpress_hero',
         'type'        => 'range',
         'input_attrs' => array(

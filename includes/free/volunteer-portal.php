@@ -291,7 +291,7 @@ class CP_Volunteer_Portal {
             <div class="cp-volunteer-login-box">
                 <h2><?php esc_html_e('Volunteer Login', 'campaignpress'); ?></h2>
                 <p class="description">
-                    <?php esc_html_e('Enter your email address and we’ll send you a secure login link.', 'campaign-office'); ?>
+                    <?php esc_html_e('Enter your email address and we’ll send you a secure login link.', 'campaignpress'); ?>
                 </p>
                 <form class="cp-volunteer-login-form" id="cp-volunteer-login-form">
                     <?php wp_nonce_field('cp_volunteer_login', 'cp_volunteer_login_nonce'); ?>
@@ -347,10 +347,10 @@ class CP_Volunteer_Portal {
                 </div>
                 <div class="cp-dashboard-actions">
                     <button class="cp-button cp-button-secondary" onclick="location.reload()">
-                        <?php esc_html_e('Refresh', 'campaign-office'); ?>
+                        <?php esc_html_e('Refresh', 'campaignpress'); ?>
                     </button>
                     <button class="cp-button cp-button-ghost" onclick="cpVolunteerLogout()">
-                        <?php esc_html_e('Logout', 'campaign-office'); ?>
+                        <?php esc_html_e('Logout', 'campaignpress'); ?>
                     </button>
                 </div>
             </div>
@@ -361,28 +361,28 @@ class CP_Volunteer_Portal {
                     <div class="cp-stat-icon">⏰</div>
                     <div class="cp-stat-content">
                         <div class="cp-stat-value"><?php echo esc_html(number_format($stats['total_hours'], 1)); ?></div>
-                        <div class="cp-stat-label"><?php esc_html_e('Hours Logged', 'campaign-office'); ?></div>
+                        <div class="cp-stat-label"><?php esc_html_e('Hours Logged', 'campaignpress'); ?></div>
                     </div>
                 </div>
                 <div class="cp-stat-card">
                     <div class="cp-stat-icon">📅</div>
                     <div class="cp-stat-content">
                         <div class="cp-stat-value"><?php echo esc_html($stats['shifts_completed']); ?></div>
-                        <div class="cp-stat-label"><?php esc_html_e('Shifts Completed', 'campaign-office'); ?></div>
+                        <div class="cp-stat-label"><?php esc_html_e('Shifts Completed', 'campaignpress'); ?></div>
                     </div>
                 </div>
                 <div class="cp-stat-card">
                     <div class="cp-stat-icon">🎯</div>
                     <div class="cp-stat-content">
                         <div class="cp-stat-value"><?php echo esc_html($stats['upcoming_shifts']); ?></div>
-                        <div class="cp-stat-label"><?php esc_html_e('Upcoming Shifts', 'campaign-office'); ?></div>
+                        <div class="cp-stat-label"><?php esc_html_e('Upcoming Shifts', 'campaignpress'); ?></div>
                     </div>
                 </div>
                 <div class="cp-stat-card">
                     <div class="cp-stat-icon">🏆</div>
                     <div class="cp-stat-content">
                         <div class="cp-stat-value">#<?php echo esc_html($stats['rank']); ?></div>
-                        <div class="cp-stat-label"><?php esc_html_e('Volunteer Rank', 'campaign-office'); ?></div>
+                        <div class="cp-stat-label"><?php esc_html_e('Volunteer Rank', 'campaignpress'); ?></div>
                     </div>
                 </div>
             </div>
@@ -390,25 +390,25 @@ class CP_Volunteer_Portal {
             <!-- Tabs -->
             <div class="cp-dashboard-tabs">
                 <button class="cp-tab-button active" data-tab="upcoming">
-                    <?php esc_html_e('Upcoming Shifts', 'campaign-office'); ?>
+                    <?php esc_html_e('Upcoming Shifts', 'campaignpress'); ?>
                 </button>
                 <button class="cp-tab-button" data-tab="available">
-                    <?php esc_html_e('Available Shifts', 'campaign-office'); ?>
+                    <?php esc_html_e('Available Shifts', 'campaignpress'); ?>
                 </button>
                 <button class="cp-tab-button" data-tab="hours">
-                    <?php esc_html_e('Log Hours', 'campaign-office'); ?>
+                    <?php esc_html_e('Log Hours', 'campaignpress'); ?>
                 </button>
                 <button class="cp-tab-button" data-tab="profile">
-                    <?php esc_html_e('Profile', 'campaign-office'); ?>
+                    <?php esc_html_e('Profile', 'campaignpress'); ?>
                 </button>
             </div>
 
             <!-- Tab Content -->
             <div class="cp-tab-content active" data-tab-content="upcoming">
-                <h3><?php esc_html_e('Your Upcoming Shifts', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Your Upcoming Shifts', 'campaignpress'); ?></h3>
                 <?php if (empty($upcoming_shifts)) : ?>
                     <p class="cp-empty-state">
-                        <?php esc_html_e('You have no upcoming shifts. Browse available shifts to sign up!', 'campaign-office'); ?>
+                        <?php esc_html_e('You have no upcoming shifts. Browse available shifts to sign up!', 'campaignpress'); ?>
                     </p>
                 <?php else : ?>
                     <div class="cp-shifts-list">
@@ -431,7 +431,7 @@ class CP_Volunteer_Portal {
                                 </div>
                                 <div class="cp-shift-actions">
                                     <button class="cp-button cp-button-small cp-button-secondary">
-                                        <?php esc_html_e('Details', 'campaign-office'); ?>
+                                        <?php esc_html_e('Details', 'campaignpress'); ?>
                                     </button>
                                 </div>
                             </div>
@@ -441,19 +441,19 @@ class CP_Volunteer_Portal {
             </div>
 
             <div class="cp-tab-content" data-tab-content="available">
-                <h3><?php esc_html_e('Available Volunteer Shifts', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Available Volunteer Shifts', 'campaignpress'); ?></h3>
                 <div id="cp-available-shifts-container">
                     <?php echo $this->render_available_shifts(); ?>
                 </div>
             </div>
 
             <div class="cp-tab-content" data-tab-content="hours">
-                <h3><?php esc_html_e('Log Volunteer Hours', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Log Volunteer Hours', 'campaignpress'); ?></h3>
                 <?php echo $this->render_log_hours_form($volunteer_id); ?>
             </div>
 
             <div class="cp-tab-content" data-tab-content="profile">
-                <h3><?php esc_html_e('Volunteer Profile', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Volunteer Profile', 'campaignpress'); ?></h3>
                 <?php echo $this->render_profile_form($volunteer); ?>
             </div>
         </div>
@@ -477,7 +477,7 @@ class CP_Volunteer_Portal {
         ");
 
         if (empty($shifts)) {
-            return '<p class="cp-empty-state">' . esc_html__('No available shifts at this time. Check back soon!', 'campaign-office') . '</p>';
+            return '<p class="cp-empty-state">' . esc_html__('No available shifts at this time. Check back soon!', 'campaignpress') . '</p>';
         }
 
         ob_start();
@@ -504,12 +504,12 @@ class CP_Volunteer_Portal {
                         <?php endif; ?>
                         <p class="cp-shift-capacity">
                             <span class="dashicons dashicons-groups"></span>
-                            <?php printf(esc_html__('%d / %d spots filled', 'campaign-office'), $shift->filled, $shift->capacity); ?>
+                            <?php printf(esc_html__('%d / %d spots filled', 'campaignpress'), $shift->filled, $shift->capacity); ?>
                         </p>
                     </div>
                     <div class="cp-shift-footer">
                         <button class="cp-button cp-button-primary cp-signup-shift-btn" data-shift-id="<?php echo esc_attr($shift->id); ?>">
-                            <?php esc_html_e('Sign Up', 'campaign-office'); ?>
+                            <?php esc_html_e('Sign Up', 'campaignpress'); ?>
                         </button>
                     </div>
                 </div>
@@ -531,40 +531,40 @@ class CP_Volunteer_Portal {
 
             <div class="form-row">
                 <div class="form-field">
-                    <label for="activity"><?php esc_html_e('Activity', 'campaign-office'); ?></label>
+                    <label for="activity"><?php esc_html_e('Activity', 'campaignpress'); ?></label>
                     <select id="activity" name="activity" required class="cp-input">
-                        <option value=""><?php esc_html_e('Select activity...', 'campaign-office'); ?></option>
-                        <option value="Canvassing"><?php esc_html_e('Canvassing', 'campaign-office'); ?></option>
-                        <option value="Phone Banking"><?php esc_html_e('Phone Banking', 'campaign-office'); ?></option>
-                        <option value="Event Support"><?php esc_html_e('Event Support', 'campaign-office'); ?></option>
-                        <option value="Data Entry"><?php esc_html_e('Data Entry', 'campaign-office'); ?></option>
-                        <option value="Social Media"><?php esc_html_e('Social Media', 'campaign-office'); ?></option>
-                        <option value="Other"><?php esc_html_e('Other', 'campaign-office'); ?></option>
+                        <option value=""><?php esc_html_e('Select activity...', 'campaignpress'); ?></option>
+                        <option value="Canvassing"><?php esc_html_e('Canvassing', 'campaignpress'); ?></option>
+                        <option value="Phone Banking"><?php esc_html_e('Phone Banking', 'campaignpress'); ?></option>
+                        <option value="Event Support"><?php esc_html_e('Event Support', 'campaignpress'); ?></option>
+                        <option value="Data Entry"><?php esc_html_e('Data Entry', 'campaignpress'); ?></option>
+                        <option value="Social Media"><?php esc_html_e('Social Media', 'campaignpress'); ?></option>
+                        <option value="Other"><?php esc_html_e('Other', 'campaignpress'); ?></option>
                     </select>
                 </div>
                 <div class="form-field">
-                    <label for="activity_date"><?php esc_html_e('Date', 'campaign-office'); ?></label>
+                    <label for="activity_date"><?php esc_html_e('Date', 'campaignpress'); ?></label>
                     <input type="date" id="activity_date" name="activity_date" required class="cp-input" max="<?php echo esc_attr(gmdate('Y-m-d')); ?>">
                 </div>
                 <div class="form-field">
-                    <label for="hours"><?php esc_html_e('Hours', 'campaign-office'); ?></label>
+                    <label for="hours"><?php esc_html_e('Hours', 'campaignpress'); ?></label>
                     <input type="number" id="hours" name="hours" step="0.5" min="0.5" max="24" required class="cp-input">
                 </div>
             </div>
             <div class="form-field">
-                <label for="notes"><?php esc_html_e('Notes (optional)', 'campaign-office'); ?></label>
+                <label for="notes"><?php esc_html_e('Notes (optional)', 'campaignpress'); ?></label>
                 <textarea id="notes" name="notes" rows="3" class="cp-input"></textarea>
             </div>
             <div class="form-actions">
                 <button type="submit" class="cp-button cp-button-primary">
-                    <?php esc_html_e('Log Hours', 'campaign-office'); ?>
+                    <?php esc_html_e('Log Hours', 'campaignpress'); ?>
                 </button>
             </div>
             <div class="cp-form-message" style="display:none;"></div>
         </form>
 
         <div class="cp-recent-hours" style="margin-top: 2rem;">
-            <h4><?php esc_html_e('Recent Activity', 'campaign-office'); ?></h4>
+            <h4><?php esc_html_e('Recent Activity', 'campaignpress'); ?></h4>
             <?php echo $this->render_volunteer_hours_list($volunteer_id); ?>
         </div>
         <?php
@@ -585,7 +585,7 @@ class CP_Volunteer_Portal {
         ", $volunteer_id, $limit));
 
         if (empty($hours)) {
-            return '<p class="cp-empty-state">' . esc_html__('No hours logged yet.', 'campaign-office') . '</p>';
+            return '<p class="cp-empty-state">' . esc_html__('No hours logged yet.', 'campaignpress') . '</p>';
         }
 
         ob_start();
@@ -593,10 +593,10 @@ class CP_Volunteer_Portal {
         <table class="cp-hours-table">
             <thead>
                 <tr>
-                    <th><?php esc_html_e('Date', 'campaign-office'); ?></th>
-                    <th><?php esc_html_e('Activity', 'campaign-office'); ?></th>
-                    <th><?php esc_html_e('Hours', 'campaign-office'); ?></th>
-                    <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
+                    <th><?php esc_html_e('Date', 'campaignpress'); ?></th>
+                    <th><?php esc_html_e('Activity', 'campaignpress'); ?></th>
+                    <th><?php esc_html_e('Hours', 'campaignpress'); ?></th>
+                    <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -607,9 +607,9 @@ class CP_Volunteer_Portal {
                         <td><?php echo esc_html(number_format($hour->hours, 1)); ?></td>
                         <td>
                             <?php if ($hour->verified) : ?>
-                                <span class="cp-badge cp-badge-success"><?php esc_html_e('Verified', 'campaign-office'); ?></span>
+                                <span class="cp-badge cp-badge-success"><?php esc_html_e('Verified', 'campaignpress'); ?></span>
                             <?php else : ?>
-                                <span class="cp-badge cp-badge-pending"><?php esc_html_e('Pending', 'campaign-office'); ?></span>
+                                <span class="cp-badge cp-badge-pending"><?php esc_html_e('Pending', 'campaignpress'); ?></span>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -632,37 +632,37 @@ class CP_Volunteer_Portal {
 
             <div class="form-row">
                 <div class="form-field">
-                    <label for="first_name"><?php esc_html_e('First Name', 'campaign-office'); ?></label>
+                    <label for="first_name"><?php esc_html_e('First Name', 'campaignpress'); ?></label>
                     <input type="text" id="first_name" name="first_name" value="<?php echo esc_attr($volunteer->first_name); ?>" class="cp-input">
                 </div>
                 <div class="form-field">
-                    <label for="last_name"><?php esc_html_e('Last Name', 'campaign-office'); ?></label>
+                    <label for="last_name"><?php esc_html_e('Last Name', 'campaignpress'); ?></label>
                     <input type="text" id="last_name" name="last_name" value="<?php echo esc_attr($volunteer->last_name); ?>" class="cp-input">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-field">
-                    <label for="email"><?php esc_html_e('Email', 'campaign-office'); ?></label>
+                    <label for="email"><?php esc_html_e('Email', 'campaignpress'); ?></label>
                     <input type="email" id="email" name="email" value="<?php echo esc_attr($volunteer->email); ?>" class="cp-input">
                 </div>
                 <div class="form-field">
-                    <label for="phone"><?php esc_html_e('Phone', 'campaign-office'); ?></label>
+                    <label for="phone"><?php esc_html_e('Phone', 'campaignpress'); ?></label>
                     <input type="tel" id="phone" name="phone" value="<?php echo esc_attr($volunteer->phone); ?>" class="cp-input">
                 </div>
             </div>
             <div class="form-field">
-                <label for="skills"><?php esc_html_e('Skills & Interests', 'campaign-office'); ?></label>
+                <label for="skills"><?php esc_html_e('Skills & Interests', 'campaignpress'); ?></label>
                 <textarea id="skills" name="skills" rows="3" class="cp-input"><?php echo esc_textarea($volunteer->skills); ?></textarea>
-                <p class="description"><?php esc_html_e('What skills or interests do you have that could help the campaign?', 'campaign-office'); ?></p>
+                <p class="description"><?php esc_html_e('What skills or interests do you have that could help the campaign?', 'campaignpress'); ?></p>
             </div>
             <div class="form-field">
-                <label for="availability"><?php esc_html_e('Availability', 'campaign-office'); ?></label>
+                <label for="availability"><?php esc_html_e('Availability', 'campaignpress'); ?></label>
                 <textarea id="availability" name="availability" rows="2" class="cp-input"><?php echo esc_textarea($volunteer->availability); ?></textarea>
-                <p class="description"><?php esc_html_e('When are you generally available to volunteer?', 'campaign-office'); ?></p>
+                <p class="description"><?php esc_html_e('When are you generally available to volunteer?', 'campaignpress'); ?></p>
             </div>
             <div class="form-actions">
                 <button type="submit" class="cp-button cp-button-primary">
-                    <?php esc_html_e('Update Profile', 'campaign-office'); ?>
+                    <?php esc_html_e('Update Profile', 'campaignpress'); ?>
                 </button>
             </div>
             <div class="cp-form-message" style="display:none;"></div>
@@ -723,20 +723,20 @@ class CP_Volunteer_Portal {
         }
 
         if (empty($leaderboard)) {
-            return '<p class="cp-empty-state">' . esc_html__('No volunteer activity yet.', 'campaign-office') . '</p>';
+            return '<p class="cp-empty-state">' . esc_html__('No volunteer activity yet.', 'campaignpress') . '</p>';
         }
 
         ob_start();
         ?>
         <div class="cp-volunteer-leaderboard">
-            <h3><?php esc_html_e('Top Volunteers', 'campaign-office'); ?></h3>
+            <h3><?php esc_html_e('Top Volunteers', 'campaignpress'); ?></h3>
             <table class="cp-leaderboard-table">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Rank', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Volunteer', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Hours', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Activities', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Rank', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Volunteer', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Hours', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Activities', 'campaignpress'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -836,7 +836,7 @@ class CP_Volunteer_Portal {
 
     private function create_portal_token_record($volunteer_id, $token_type, $ttl_seconds) {
         if (!$this->tokens_table_exists()) {
-            return new WP_Error('missing_tokens_table', __('Volunteer portal authentication is not available yet. Please try again later.', 'campaign-office'));
+            return new WP_Error('missing_tokens_table', __('Volunteer portal authentication is not available yet. Please try again later.', 'campaignpress'));
         }
 
         global $wpdb;
@@ -857,7 +857,7 @@ class CP_Volunteer_Portal {
         ));
 
         if (false === $result) {
-            return new WP_Error('token_create_failed', __('Unable to create login token. Please try again.', 'campaign-office'));
+            return new WP_Error('token_create_failed', __('Unable to create login token. Please try again.', 'campaignpress'));
         }
 
         return $token;
@@ -865,7 +865,7 @@ class CP_Volunteer_Portal {
 
     private function consume_login_token_and_start_session($login_token) {
         if (!$this->tokens_table_exists()) {
-            return new WP_Error('missing_tokens_table', __('Volunteer portal authentication is not available yet. Please try again later.', 'campaign-office'));
+            return new WP_Error('missing_tokens_table', __('Volunteer portal authentication is not available yet. Please try again later.', 'campaignpress'));
         }
 
         global $wpdb;
@@ -880,7 +880,7 @@ class CP_Volunteer_Portal {
         ));
 
         if (!$row) {
-            return new WP_Error('invalid_token', __('Invalid login token.', 'campaign-office'));
+            return new WP_Error('invalid_token', __('Invalid login token.', 'campaignpress'));
         }
 
         $now = current_time('timestamp', true);
@@ -888,7 +888,7 @@ class CP_Volunteer_Portal {
 
         if ($expires_ts < $now) {
             $wpdb->update($this->tokens_table, array('consumed' => 1), array('id' => absint($row->id)));
-            return new WP_Error('expired_token', __('Login token expired.', 'campaign-office'));
+            return new WP_Error('expired_token', __('Login token expired.', 'campaignpress'));
         }
 
         // Mark login token consumed
@@ -994,7 +994,7 @@ class CP_Volunteer_Portal {
     private function get_volunteer_stats($volunteer_id) {
         // Check object cache first
         $cache_key = 'cp_volunteer_stats_' . $volunteer_id;
-        $stats = wp_cache_get($cache_key, 'campaign-office');
+        $stats = wp_cache_get($cache_key, 'campaignpress');
         if (false !== $stats) {
             return $stats;
         }
@@ -1033,7 +1033,7 @@ class CP_Volunteer_Portal {
         );
 
         // Cache for 1 hour
-        wp_cache_set($cache_key, $stats, 'campaign-office', HOUR_IN_SECONDS);
+        wp_cache_set($cache_key, $stats, 'campaignpress', HOUR_IN_SECONDS);
 
         return $stats;
     }
@@ -1061,12 +1061,12 @@ class CP_Volunteer_Portal {
 
         // Rate limiting: 5 login requests per hour per IP
         if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_portal_login', 5, 3600)) {
-            wp_send_json_error(array('message' => __('Too many login attempts. Please try again later.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Too many login attempts. Please try again later.', 'campaignpress')));
         }
 
         $email = isset($_POST['volunteer_email']) ? sanitize_email($_POST['volunteer_email']) : '';
         if (empty($email)) {
-            wp_send_json_error(array('message' => __('Please enter a valid email address.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please enter a valid email address.', 'campaignpress')));
         }
 
         $redirect_to = isset($_POST['redirect_to']) ? esc_url_raw($_POST['redirect_to']) : '';
@@ -1075,7 +1075,7 @@ class CP_Volunteer_Portal {
         $volunteer = $this->find_volunteer_by_email($email);
 
         // Always return a generic response to avoid email enumeration.
-        $generic_message = __('If that email address is in our system, we’ll send a login link.', 'campaign-office');
+        $generic_message = __('If that email address is in our system, we’ll send a login link.', 'campaignpress');
 
         if (!$volunteer) {
             wp_send_json_success(array('message' => $generic_message));
@@ -1089,9 +1089,9 @@ class CP_Volunteer_Portal {
         $login_url = add_query_arg('cpvp_token', $login_token, $redirect_to);
 
         $site_name = wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES);
-        $subject = sprintf(__('Your Volunteer Portal login link for %s', 'campaign-office'), $site_name);
+        $subject = sprintf(__('Your Volunteer Portal login link for %s', 'campaignpress'), $site_name);
         $message = sprintf(
-            __("Use the link below to access your volunteer portal. This link expires in 15 minutes:\n\n%s\n\nIf you did not request this email, you can ignore it.", 'campaign-office'),
+            __("Use the link below to access your volunteer portal. This link expires in 15 minutes:\n\n%s\n\nIf you did not request this email, you can ignore it.", 'campaignpress'),
             esc_url_raw($login_url)
         );
 
@@ -1105,7 +1105,7 @@ class CP_Volunteer_Portal {
 
         if (!$this->tokens_table_exists()) {
             $this->clear_cookie('cp_volunteer_session');
-            wp_send_json_success(array('message' => __('Logged out.', 'campaign-office')));
+            wp_send_json_success(array('message' => __('Logged out.', 'campaignpress')));
         }
 
         $session_token = $this->get_cookie_value('cp_volunteer_session');
@@ -1122,7 +1122,7 @@ class CP_Volunteer_Portal {
 
         $this->clear_cookie('cp_volunteer_session');
 
-        wp_send_json_success(array('message' => __('Logged out.', 'campaign-office')));
+        wp_send_json_success(array('message' => __('Logged out.', 'campaignpress')));
     }
 
     public function ajax_signup_shift() {
@@ -1130,18 +1130,18 @@ class CP_Volunteer_Portal {
 
         // Rate limiting: 10 signups per hour per IP
         if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_signup_shift', 10, 3600)) {
-            wp_send_json_error(array('message' => __('Too many signup attempts. Please try again later.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Too many signup attempts. Please try again later.', 'campaignpress')));
         }
 
         $volunteer_id = $this->get_current_volunteer_id();
         $shift_id = isset($_POST['shift_id']) ? absint($_POST['shift_id']) : 0;
 
         if (!$volunteer_id) {
-            wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please log in first.', 'campaignpress')));
         }
 
         if (!$shift_id) {
-            wp_send_json_error(array('message' => __('Invalid shift.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Invalid shift.', 'campaignpress')));
         }
 
         global $wpdb;
@@ -1153,7 +1153,7 @@ class CP_Volunteer_Portal {
         ", $volunteer_id, $shift_id));
 
         if ($existing) {
-            wp_send_json_error(array('message' => __('You are already signed up for this shift.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('You are already signed up for this shift.', 'campaignpress')));
         }
 
         // Insert assignment
@@ -1164,13 +1164,13 @@ class CP_Volunteer_Portal {
         ));
 
         if (false === $inserted) {
-            wp_send_json_error(array('message' => __('Failed to sign up for this shift. Please try again.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Failed to sign up for this shift. Please try again.', 'campaignpress')));
         }
 
         // Update shift filled count
         $wpdb->query($wpdb->prepare("UPDATE {$this->shifts_table} SET filled = filled + 1 WHERE id = %d", $shift_id));
 
-        wp_send_json_success(array('message' => __('Successfully signed up for shift!', 'campaign-office')));
+        wp_send_json_success(array('message' => __('Successfully signed up for shift!', 'campaignpress')));
     }
 
     public function ajax_log_hours() {
@@ -1178,12 +1178,12 @@ class CP_Volunteer_Portal {
 
         // Rate limiting: 5 log attempts per hour per IP
         if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_log_hours', 5, 3600)) {
-            wp_send_json_error(array('message' => __('Too many attempts to log hours. Please try again later.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Too many attempts to log hours. Please try again later.', 'campaignpress')));
         }
 
         $volunteer_id = $this->get_current_volunteer_id();
         if (!$volunteer_id) {
-            wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please log in first.', 'campaignpress')));
         }
 
         $activity = isset($_POST['activity']) ? sanitize_text_field($_POST['activity']) : '';
@@ -1192,15 +1192,15 @@ class CP_Volunteer_Portal {
         $notes = isset($_POST['notes']) ? sanitize_textarea_field($_POST['notes']) : '';
 
         if (empty($activity) || empty($activity_date) || $hours <= 0) {
-            wp_send_json_error(array('message' => __('Please complete all required fields.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please complete all required fields.', 'campaignpress')));
         }
 
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $activity_date)) {
-            wp_send_json_error(array('message' => __('Please provide a valid date.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please provide a valid date.', 'campaignpress')));
         }
 
         if ($hours > 24) {
-            wp_send_json_error(array('message' => __('Please enter a valid number of hours.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please enter a valid number of hours.', 'campaignpress')));
         }
 
         global $wpdb;
@@ -1213,10 +1213,10 @@ class CP_Volunteer_Portal {
         ));
 
         if (false === $inserted) {
-            wp_send_json_error(array('message' => __('Failed to log hours. Please try again.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Failed to log hours. Please try again.', 'campaignpress')));
         }
 
-        wp_send_json_success(array('message' => __('Hours logged successfully!', 'campaign-office')));
+        wp_send_json_success(array('message' => __('Hours logged successfully!', 'campaignpress')));
     }
 
     public function ajax_update_profile() {
@@ -1224,12 +1224,12 @@ class CP_Volunteer_Portal {
 
         // Rate limiting: 3 profile updates per hour per IP
         if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('volunteer_update_profile', 3, 3600)) {
-            wp_send_json_error(array('message' => __('Too many profile updates. Please try again later.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Too many profile updates. Please try again later.', 'campaignpress')));
         }
 
         $volunteer_id = $this->get_current_volunteer_id();
         if (!$volunteer_id) {
-            wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please log in first.', 'campaignpress')));
         }
 
         $first_name = isset($_POST['first_name']) ? sanitize_text_field($_POST['first_name']) : '';
@@ -1240,7 +1240,7 @@ class CP_Volunteer_Portal {
         $availability = isset($_POST['availability']) ? sanitize_textarea_field($_POST['availability']) : '';
 
         if (empty($email)) {
-            wp_send_json_error(array('message' => __('Please provide a valid email address.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please provide a valid email address.', 'campaignpress')));
         }
 
         global $wpdb;
@@ -1248,7 +1248,7 @@ class CP_Volunteer_Portal {
 
         $volunteer = $this->get_volunteer($volunteer_id);
         if (!$volunteer) {
-            wp_send_json_error(array('message' => __('Volunteer record not found.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Volunteer record not found.', 'campaignpress')));
         }
 
         if ($this->volunteers_table_has_column('contact_id') && !empty($volunteer->contact_id)) {
@@ -1262,7 +1262,7 @@ class CP_Volunteer_Portal {
             ));
 
             if ($existing_contact_id) {
-                wp_send_json_error(array('message' => __('That email address is already in use.', 'campaign-office')));
+                wp_send_json_error(array('message' => __('That email address is already in use.', 'campaignpress')));
             }
 
             $updated_contact = $wpdb->update(
@@ -1286,7 +1286,7 @@ class CP_Volunteer_Portal {
             );
 
             if ($updated_contact === false || $updated_volunteer === false) {
-                wp_send_json_error(array('message' => __('Failed to update profile. Please try again.', 'campaign-office')));
+                wp_send_json_error(array('message' => __('Failed to update profile. Please try again.', 'campaignpress')));
             }
         } else {
             $update_data = array(
@@ -1314,11 +1314,11 @@ class CP_Volunteer_Portal {
             );
 
             if ($updated === false) {
-                wp_send_json_error(array('message' => __('Failed to update profile. Please try again.', 'campaign-office')));
+                wp_send_json_error(array('message' => __('Failed to update profile. Please try again.', 'campaignpress')));
             }
         }
 
-        wp_send_json_success(array('message' => __('Profile updated successfully!', 'campaign-office')));
+        wp_send_json_success(array('message' => __('Profile updated successfully!', 'campaignpress')));
     }
 
     public function ajax_get_shifts() {
@@ -1326,7 +1326,7 @@ class CP_Volunteer_Portal {
 
         $volunteer_id = $this->get_current_volunteer_id();
         if (!$volunteer_id) {
-            wp_send_json_error(array('message' => __('Please log in first.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Please log in first.', 'campaignpress')));
         }
 
         $shifts = $this->render_available_shifts();
@@ -1339,9 +1339,9 @@ class CP_Volunteer_Portal {
     public function render_admin_portal_page() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Volunteer Portal Settings', 'campaign-office'); ?></h1>
-            <p><?php esc_html_e('Configure volunteer portal settings and view portal analytics.', 'campaign-office'); ?></p>
-            <p><strong><?php esc_html_e('Portal URL:', 'campaign-office'); ?></strong> Add [cp_volunteer_portal] shortcode to any page</p>
+            <h1><?php esc_html_e('Volunteer Portal Settings', 'campaignpress'); ?></h1>
+            <p><?php esc_html_e('Configure volunteer portal settings and view portal analytics.', 'campaignpress'); ?></p>
+            <p><strong><?php esc_html_e('Portal URL:', 'campaignpress'); ?></strong> Add [cp_volunteer_portal] shortcode to any page</p>
         </div>
         <?php
     }
@@ -1349,8 +1349,8 @@ class CP_Volunteer_Portal {
     public function render_admin_shifts_page() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Manage Volunteer Shifts', 'campaign-office'); ?></h1>
-            <p><?php esc_html_e('Create and manage volunteer shift opportunities.', 'campaign-office'); ?></p>
+            <h1><?php esc_html_e('Manage Volunteer Shifts', 'campaignpress'); ?></h1>
+            <p><?php esc_html_e('Create and manage volunteer shift opportunities.', 'campaignpress'); ?></p>
         </div>
         <?php
     }
@@ -1358,8 +1358,8 @@ class CP_Volunteer_Portal {
     public function render_admin_hours_page() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Volunteer Hours', 'campaign-office'); ?></h1>
-            <p><?php esc_html_e('Review and verify volunteer hours.', 'campaign-office'); ?></p>
+            <h1><?php esc_html_e('Volunteer Hours', 'campaignpress'); ?></h1>
+            <p><?php esc_html_e('Review and verify volunteer hours.', 'campaignpress'); ?></p>
         </div>
         <?php
     }
@@ -1397,9 +1397,9 @@ class CP_Volunteer_Portal {
             wp_localize_script('cp-volunteer-portal', 'cp_volunteer_portal_vars', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('campaignpress_volunteer_portal'),
-                'login_error' => __('An error occurred. Please try again.', 'campaign-office'),
-                'hours_error' => __('An error occurred. Please try again.', 'campaign-office'),
-                'profile_error' => __('An error occurred. Please try again.', 'campaign-office'),
+                'login_error' => __('An error occurred. Please try again.', 'campaignpress'),
+                'hours_error' => __('An error occurred. Please try again.', 'campaignpress'),
+                'profile_error' => __('An error occurred. Please try again.', 'campaignpress'),
             ));
         } else {
             // Fallback to inline scripts if file doesn't exist

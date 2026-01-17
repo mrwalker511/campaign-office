@@ -67,13 +67,13 @@ class CP_Accessibility {
     public function add_skip_links() {
         ?>
         <a class="skip-link screen-reader-text" href="#main-content">
-            <?php esc_html_e('Skip to main content', 'campaign-office'); ?>
+            <?php esc_html_e('Skip to main content', 'campaignpress'); ?>
         </a>
         <a class="skip-link screen-reader-text" href="#primary-navigation">
-            <?php esc_html_e('Skip to navigation', 'campaign-office'); ?>
+            <?php esc_html_e('Skip to navigation', 'campaignpress'); ?>
         </a>
         <a class="skip-link screen-reader-text" href="#footer">
-            <?php esc_html_e('Skip to footer', 'campaign-office'); ?>
+            <?php esc_html_e('Skip to footer', 'campaignpress'); ?>
         </a>
         <?php
     }
@@ -113,7 +113,7 @@ class CP_Accessibility {
      * @return string ARIA attributes
      */
     public function add_next_posts_link_aria() {
-        return 'aria-label="' . esc_attr__('Next page', 'campaign-office') . '"';
+        return 'aria-label="' . esc_attr__('Next page', 'campaignpress') . '"';
     }
 
     /**
@@ -122,7 +122,7 @@ class CP_Accessibility {
      * @return string ARIA attributes
      */
     public function add_prev_posts_link_aria() {
-        return 'aria-label="' . esc_attr__('Previous page', 'campaign-office') . '"';
+        return 'aria-label="' . esc_attr__('Previous page', 'campaignpress') . '"';
     }
 
     /**
@@ -415,27 +415,27 @@ class CP_Accessibility {
         // Add required indicator
         $defaults['comment_field'] = str_replace(
             '<textarea',
-            '<textarea aria-required="true" aria-label="' . esc_attr__('Comment', 'campaign-office') . '"',
+            '<textarea aria-required="true" aria-label="' . esc_attr__('Comment', 'campaignpress') . '"',
             $defaults['comment_field']
         );
 
         // Add ARIA labels to fields
         $defaults['fields']['author'] = str_replace(
             'type="text"',
-            'type="text" aria-required="true" aria-label="' . esc_attr__('Name', 'campaign-office') . '"',
+            'type="text" aria-required="true" aria-label="' . esc_attr__('Name', 'campaignpress') . '"',
             $defaults['fields']['author']
         );
 
         $defaults['fields']['email'] = str_replace(
             'type="email"',
-            'type="email" aria-required="true" aria-label="' . esc_attr__('Email', 'campaign-office') . '"',
+            'type="email" aria-required="true" aria-label="' . esc_attr__('Email', 'campaignpress') . '"',
             $defaults['fields']['email']
         );
 
         if (isset($defaults['fields']['url'])) {
             $defaults['fields']['url'] = str_replace(
                 'type="url"',
-                'type="url" aria-label="' . esc_attr__('Website', 'campaign-office') . '"',
+                'type="url" aria-label="' . esc_attr__('Website', 'campaignpress') . '"',
                 $defaults['fields']['url']
             );
         }
@@ -450,8 +450,8 @@ class CP_Accessibility {
      */
     public function add_accessibility_admin_page() {
         add_theme_page(
-            __('Accessibility Settings', 'campaign-office'),
-            __('Accessibility', 'campaign-office'),
+            __('Accessibility Settings', 'campaignpress'),
+            __('Accessibility', 'campaignpress'),
             'manage_options',
             'cp-accessibility',
             array($this, 'render_accessibility_admin_page')
@@ -478,7 +478,7 @@ class CP_Accessibility {
             update_option('cp_accessibility_focus_styles', isset($_POST['focus_styles']) ? 1 : 0);
             update_option('cp_accessibility_aria_labels', isset($_POST['aria_labels']) ? 1 : 0);
 
-            echo '<div class="notice notice-success"><p>' . esc_html__('Settings saved successfully.', 'campaign-office') . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . esc_html__('Settings saved successfully.', 'campaignpress') . '</p></div>';
         }
 
         $skip_links = get_option('cp_accessibility_skip_links', 1);
@@ -489,21 +489,21 @@ class CP_Accessibility {
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
             <div class="card">
-                <h2><?php esc_html_e('WCAG 2.1 AA Compliance', 'campaign-office'); ?></h2>
-                <p><?php esc_html_e('CampaignPress includes comprehensive accessibility features to ensure your campaign website is accessible to all users.', 'campaign-office'); ?></p>
+                <h2><?php esc_html_e('WCAG 2.1 AA Compliance', 'campaignpress'); ?></h2>
+                <p><?php esc_html_e('CampaignPress includes comprehensive accessibility features to ensure your campaign website is accessible to all users.', 'campaignpress'); ?></p>
 
-                <h3><?php esc_html_e('Active Features:', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Active Features:', 'campaignpress'); ?></h3>
                 <ul style="list-style: disc; margin-left: 2em;">
-                    <li><?php esc_html_e('Skip links for keyboard navigation', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('ARIA labels and landmarks', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Enhanced focus management', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Screen reader text helpers', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Keyboard navigation support', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Alt text enforcement for images', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Form label associations', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Color contrast validation', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('Reduced motion support', 'campaign-office'); ?></li>
-                    <li><?php esc_html_e('High contrast mode support', 'campaign-office'); ?></li>
+                    <li><?php esc_html_e('Skip links for keyboard navigation', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('ARIA labels and landmarks', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Enhanced focus management', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Screen reader text helpers', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Keyboard navigation support', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Alt text enforcement for images', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Form label associations', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Color contrast validation', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('Reduced motion support', 'campaignpress'); ?></li>
+                    <li><?php esc_html_e('High contrast mode support', 'campaignpress'); ?></li>
                 </ul>
             </div>
 
@@ -512,40 +512,40 @@ class CP_Accessibility {
 
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php esc_html_e('Skip Links', 'campaign-office'); ?></th>
+                        <th scope="row"><?php esc_html_e('Skip Links', 'campaignpress'); ?></th>
                         <td>
                             <label>
                                 <input type="checkbox" name="skip_links" value="1" <?php checked($skip_links, 1); ?>>
-                                <?php esc_html_e('Enable skip links for keyboard navigation', 'campaign-office'); ?>
+                                <?php esc_html_e('Enable skip links for keyboard navigation', 'campaignpress'); ?>
                             </label>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php esc_html_e('Focus Styles', 'campaign-office'); ?></th>
+                        <th scope="row"><?php esc_html_e('Focus Styles', 'campaignpress'); ?></th>
                         <td>
                             <label>
                                 <input type="checkbox" name="focus_styles" value="1" <?php checked($focus_styles, 1); ?>>
-                                <?php esc_html_e('Enable enhanced focus styles', 'campaign-office'); ?>
+                                <?php esc_html_e('Enable enhanced focus styles', 'campaignpress'); ?>
                             </label>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php esc_html_e('ARIA Labels', 'campaign-office'); ?></th>
+                        <th scope="row"><?php esc_html_e('ARIA Labels', 'campaignpress'); ?></th>
                         <td>
                             <label>
                                 <input type="checkbox" name="aria_labels" value="1" <?php checked($aria_labels, 1); ?>>
-                                <?php esc_html_e('Enable ARIA labels and landmarks', 'campaign-office'); ?>
+                                <?php esc_html_e('Enable ARIA labels and landmarks', 'campaignpress'); ?>
                             </label>
                         </td>
                     </tr>
                 </table>
 
-                <?php submit_button(__('Save Settings', 'campaign-office')); ?>
+                <?php submit_button(__('Save Settings', 'campaignpress')); ?>
             </form>
 
             <div class="card">
-                <h2><?php esc_html_e('Testing Tools', 'campaign-office'); ?></h2>
-                <p><?php esc_html_e('Recommended accessibility testing tools:', 'campaign-office'); ?></p>
+                <h2><?php esc_html_e('Testing Tools', 'campaignpress'); ?></h2>
+                <p><?php esc_html_e('Recommended accessibility testing tools:', 'campaignpress'); ?></p>
                 <ul style="list-style: disc; margin-left: 2em;">
                     <li><strong>WAVE:</strong> <a href="https://wave.webaim.org/" target="_blank">https://wave.webaim.org/</a></li>
                     <li><strong>axe DevTools:</strong> Browser extension for automated testing</li>
@@ -555,8 +555,8 @@ class CP_Accessibility {
             </div>
 
             <div class="card">
-                <h2><?php esc_html_e('Helper Functions', 'campaign-office'); ?></h2>
-                <p><?php esc_html_e('Use these functions in your templates:', 'campaign-office'); ?></p>
+                <h2><?php esc_html_e('Helper Functions', 'campaignpress'); ?></h2>
+                <p><?php esc_html_e('Use these functions in your templates:', 'campaignpress'); ?></p>
                 <pre style="background: #f5f5f5; padding: 15px; border-left: 4px solid #0073aa;">
 // Add screen reader text
 cp_screen_reader_text( 'Text for screen readers only' );
@@ -580,7 +580,7 @@ cp_required_field_indicator();
     public function add_accessibility_dashboard_widget() {
         wp_add_dashboard_widget(
             'cp_accessibility_dashboard',
-            __('Accessibility Status', 'campaign-office'),
+            __('Accessibility Status', 'campaignpress'),
             array($this, 'render_accessibility_dashboard_widget')
         );
     }
@@ -591,30 +591,30 @@ cp_required_field_indicator();
     public function render_accessibility_dashboard_widget() {
         ?>
         <div class="cp-accessibility-dashboard">
-            <p><strong><?php esc_html_e('WCAG 2.1 AA Compliance Status', 'campaign-office'); ?></strong></p>
+            <p><strong><?php esc_html_e('WCAG 2.1 AA Compliance Status', 'campaignpress'); ?></strong></p>
 
             <ul style="list-style: none; padding: 0;">
                 <li style="margin-bottom: 8px;">
                     <span style="color: #46b450;">✓</span>
-                    <?php esc_html_e('Skip links enabled', 'campaign-office'); ?>
+                    <?php esc_html_e('Skip links enabled', 'campaignpress'); ?>
                 </li>
                 <li style="margin-bottom: 8px;">
                     <span style="color: #46b450;">✓</span>
-                    <?php esc_html_e('ARIA labels active', 'campaign-office'); ?>
+                    <?php esc_html_e('ARIA labels active', 'campaignpress'); ?>
                 </li>
                 <li style="margin-bottom: 8px;">
                     <span style="color: #46b450;">✓</span>
-                    <?php esc_html_e('Keyboard navigation supported', 'campaign-office'); ?>
+                    <?php esc_html_e('Keyboard navigation supported', 'campaignpress'); ?>
                 </li>
                 <li style="margin-bottom: 8px;">
                     <span style="color: #46b450;">✓</span>
-                    <?php esc_html_e('Focus management enabled', 'campaign-office'); ?>
+                    <?php esc_html_e('Focus management enabled', 'campaignpress'); ?>
                 </li>
             </ul>
 
             <p>
                 <a href="<?php echo esc_url(admin_url('themes.php?page=cp-accessibility')); ?>" class="button">
-                    <?php esc_html_e('Manage Settings', 'campaign-office'); ?>
+                    <?php esc_html_e('Manage Settings', 'campaignpress'); ?>
                 </a>
             </p>
         </div>
@@ -645,7 +645,7 @@ cp_required_field_indicator();
                 <p>
                     <?php
                     printf(
-                        esc_html__('Color contrast ratio (%.2f:1) may not meet WCAG AA standards (4.5:1 required). Consider adjusting your theme colors.', 'campaign-office'),
+                        esc_html__('Color contrast ratio (%.2f:1) may not meet WCAG AA standards (4.5:1 required). Consider adjusting your theme colors.', 'campaignpress'),
                         $contrast_ratio
                     );
                     ?>
@@ -726,7 +726,7 @@ function cp_get_screen_reader_text($text) {
  * @return string|void Required indicator HTML
  */
 function cp_required_field_indicator($echo = true) {
-    $html = '<span class="required-indicator" aria-label="' . esc_attr__('required', 'campaign-office') . '">*</span>';
+    $html = '<span class="required-indicator" aria-label="' . esc_attr__('required', 'campaignpress') . '">*</span>';
 
     if ($echo) {
         echo $html;

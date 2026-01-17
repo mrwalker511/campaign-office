@@ -94,8 +94,8 @@ class CP_Social_Media_Feeds {
      */
     public function add_admin_menu() {
         add_theme_page(
-            __('Social Media Feeds', 'campaign-office'),
-            __('Social Media', 'campaign-office'),
+            __('Social Media Feeds', 'campaignpress'),
+            __('Social Media', 'campaignpress'),
             'manage_options',
             'cp-social-feeds',
             array($this, 'render_admin_page')
@@ -138,9 +138,9 @@ class CP_Social_Media_Feeds {
         $share_position = get_option('cp_share_position', 'bottom');
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Social Media Feeds', 'campaign-office'); ?></h1>
+            <h1><?php esc_html_e('Social Media Feeds', 'campaignpress'); ?></h1>
             <p class="description">
-                <?php esc_html_e('Configure your social media feeds to display Instagram photos, Twitter timeline, and Facebook posts on your campaign site.', 'campaign-office'); ?>
+                <?php esc_html_e('Configure your social media feeds to display Instagram photos, Twitter timeline, and Facebook posts on your campaign site.', 'campaignpress'); ?>
             </p>
 
             <?php settings_errors('cp_social_feeds'); ?>
@@ -152,30 +152,30 @@ class CP_Social_Media_Feeds {
                 <div class="card" style="max-width: 800px; margin-top: 20px;">
                     <h2>
                         <span class="dashicons dashicons-instagram" style="color: #E4405F;"></span>
-                        <?php esc_html_e('Instagram Feed', 'campaign-office'); ?>
+                        <?php esc_html_e('Instagram Feed', 'campaignpress'); ?>
                     </h2>
                     <table class="form-table">
                         <tr>
                             <th scope="row">
-                                <label for="cp_instagram_username"><?php esc_html_e('Instagram Username', 'campaign-office'); ?></label>
+                                <label for="cp_instagram_username"><?php esc_html_e('Instagram Username', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="text" id="cp_instagram_username" name="cp_instagram_username"
                                        value="<?php echo esc_attr($instagram_username); ?>" class="regular-text" />
                                 <p class="description">
-                                    <?php esc_html_e('Your Instagram username (without @)', 'campaign-office'); ?>
+                                    <?php esc_html_e('Your Instagram username (without @)', 'campaignpress'); ?>
                                 </p>
                             </td>
                         </tr>
                     </table>
 
-                    <h3><?php esc_html_e('Usage', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Usage', 'campaignpress'); ?></h3>
                     <p>
                         <code>[cp_instagram_feed]</code><br>
                         <code>[cp_instagram_feed posts="6" columns="3"]</code>
                     </p>
                     <p class="description">
-                        <?php esc_html_e('Note: For best results, embed your Instagram profile using the built-in WordPress Instagram block or a plugin like "Smash Balloon Instagram Feed".', 'campaign-office'); ?>
+                        <?php esc_html_e('Note: For best results, embed your Instagram profile using the built-in WordPress Instagram block or a plugin like "Smash Balloon Instagram Feed".', 'campaignpress'); ?>
                     </p>
                 </div>
 
@@ -183,24 +183,24 @@ class CP_Social_Media_Feeds {
                 <div class="card" style="max-width: 800px; margin-top: 20px;">
                     <h2>
                         <span class="dashicons dashicons-twitter" style="color: #1DA1F2;"></span>
-                        <?php esc_html_e('Twitter/X Timeline', 'campaign-office'); ?>
+                        <?php esc_html_e('Twitter/X Timeline', 'campaignpress'); ?>
                     </h2>
                     <table class="form-table">
                         <tr>
                             <th scope="row">
-                                <label for="cp_twitter_username"><?php esc_html_e('Twitter/X Username', 'campaign-office'); ?></label>
+                                <label for="cp_twitter_username"><?php esc_html_e('Twitter/X Username', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="text" id="cp_twitter_username" name="cp_twitter_username"
                                        value="<?php echo esc_attr($twitter_username); ?>" class="regular-text" />
                                 <p class="description">
-                                    <?php esc_html_e('Your Twitter/X username (without @)', 'campaign-office'); ?>
+                                    <?php esc_html_e('Your Twitter/X username (without @)', 'campaignpress'); ?>
                                 </p>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="cp_twitter_widget_id"><?php esc_html_e('Twitter Widget ID', 'campaign-office'); ?></label>
+                                <label for="cp_twitter_widget_id"><?php esc_html_e('Twitter Widget ID', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="text" id="cp_twitter_widget_id" name="cp_twitter_widget_id"
@@ -208,7 +208,7 @@ class CP_Social_Media_Feeds {
                                 <p class="description">
                                     <?php
                                     printf(
-                                        esc_html__('Create a timeline widget at %s and paste the Widget ID here.', 'campaign-office'),
+                                        esc_html__('Create a timeline widget at %s and paste the Widget ID here.', 'campaignpress'),
                                         '<a href="https://publish.twitter.com/" target="_blank">publish.twitter.com</a>'
                                     );
                                     ?>
@@ -217,7 +217,7 @@ class CP_Social_Media_Feeds {
                         </tr>
                     </table>
 
-                    <h3><?php esc_html_e('Usage', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Usage', 'campaignpress'); ?></h3>
                     <p>
                         <code>[cp_twitter_timeline]</code><br>
                         <code>[cp_twitter_timeline height="500" theme="light"]</code>
@@ -228,24 +228,24 @@ class CP_Social_Media_Feeds {
                 <div class="card" style="max-width: 800px; margin-top: 20px;">
                     <h2>
                         <span class="dashicons dashicons-facebook" style="color: #1877F2;"></span>
-                        <?php esc_html_e('Facebook Page Feed', 'campaign-office'); ?>
+                        <?php esc_html_e('Facebook Page Feed', 'campaignpress'); ?>
                     </h2>
                     <table class="form-table">
                         <tr>
                             <th scope="row">
-                                <label for="cp_facebook_page_url"><?php esc_html_e('Facebook Page URL', 'campaign-office'); ?></label>
+                                <label for="cp_facebook_page_url"><?php esc_html_e('Facebook Page URL', 'campaignpress'); ?></label>
                             </th>
                             <td>
                                 <input type="url" id="cp_facebook_page_url" name="cp_facebook_page_url"
                                        value="<?php echo esc_attr($facebook_page_url); ?>" class="regular-text" />
                                 <p class="description">
-                                    <?php esc_html_e('Full URL to your Facebook Page', 'campaign-office'); ?>
+                                    <?php esc_html_e('Full URL to your Facebook Page', 'campaignpress'); ?>
                                 </p>
                             </td>
                         </tr>
                     </table>
 
-                    <h3><?php esc_html_e('Usage', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Usage', 'campaignpress'); ?></h3>
                     <p>
                         <code>[cp_facebook_feed]</code><br>
                         <code>[cp_facebook_feed width="500" height="600" show_posts="true"]</code>
@@ -256,24 +256,24 @@ class CP_Social_Media_Feeds {
                 <div class="card" style="max-width: 800px; margin-top: 20px;">
                     <h2>
                         <span class="dashicons dashicons-share"></span>
-                        <?php esc_html_e('Social Share Buttons', 'campaign-office'); ?>
+                        <?php esc_html_e('Social Share Buttons', 'campaignpress'); ?>
                     </h2>
                     <table class="form-table">
                         <tr>
                             <th scope="row">
-                                <?php esc_html_e('Auto-add Share Buttons', 'campaign-office'); ?>
+                                <?php esc_html_e('Auto-add Share Buttons', 'campaignpress'); ?>
                             </th>
                             <td>
                                 <label>
                                     <input type="checkbox" name="cp_enable_auto_share"
                                            value="1" <?php checked($enable_auto_share, 1); ?> />
-                                    <?php esc_html_e('Automatically add social share buttons to posts', 'campaign-office'); ?>
+                                    <?php esc_html_e('Automatically add social share buttons to posts', 'campaignpress'); ?>
                                 </label>
                             </td>
                         </tr>
                     </table>
 
-                    <h3><?php esc_html_e('Usage', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Usage', 'campaignpress'); ?></h3>
                     <p>
                         <code>[cp_social_share]</code><br>
                         <code>[cp_social_share platforms="facebook,twitter,email" style="buttons"]</code>
@@ -325,8 +325,8 @@ class CP_Social_Media_Feeds {
             <p class="cp-feed-note">
                 <?php
                 printf(
-                    esc_html__('Embed your Instagram feed using the %s or a plugin like Smash Balloon Instagram Feed for live updates.', 'campaign-office'),
-                    '<a href="https://wordpress.org/support/article/embeds/#instagram" target="_blank">' . esc_html__('WordPress Instagram block', 'campaign-office') . '</a>'
+                    esc_html__('Embed your Instagram feed using the %s or a plugin like Smash Balloon Instagram Feed for live updates.', 'campaignpress'),
+                    '<a href="https://wordpress.org/support/article/embeds/#instagram" target="_blank">' . esc_html__('WordPress Instagram block', 'campaignpress') . '</a>'
                 );
                 ?>
             </p>
@@ -363,7 +363,7 @@ class CP_Social_Media_Feeds {
                href="https://twitter.com/<?php echo esc_attr($username); ?>?ref_src=twsrc%5Etfw">
                 <?php
                 printf(
-                    esc_html__('Tweets by %s', 'campaign-office'),
+                    esc_html__('Tweets by %s', 'campaignpress'),
                     esc_html($username)
                 );
                 ?>
@@ -404,7 +404,7 @@ class CP_Social_Media_Feeds {
                  data-show-facepile="<?php echo esc_attr($atts['show_facepile']); ?>">
                 <blockquote cite="<?php echo esc_attr($page_url); ?>" class="fb-xfbml-parse-ignore">
                     <a href="<?php echo esc_attr($page_url); ?>">
-                        <?php esc_html_e('Facebook', 'campaign-office'); ?>
+                        <?php esc_html_e('Facebook', 'campaignpress'); ?>
                     </a>
                 </blockquote>
             </div>
@@ -431,7 +431,7 @@ class CP_Social_Media_Feeds {
         ob_start();
         ?>
         <div class="cp-social-share cp-social-share-<?php echo esc_attr($atts['style']); ?>">
-            <span class="cp-share-label"><?php esc_html_e('Share:', 'campaign-office'); ?></span>
+            <span class="cp-share-label"><?php esc_html_e('Share:', 'campaignpress'); ?></span>
             <?php foreach ($platforms as $platform) : ?>
                 <?php
                 $share_links = array(
@@ -583,10 +583,10 @@ class CP_Social_Media_Feeds {
         $settings_url = admin_url('themes.php?page=' . $settings_page);
         return sprintf(
             '<div class="cp-setup-notice"><p><strong>%s:</strong> %s <a href="%s">%s</a></p></div>',
-            esc_html__('Setup Required', 'campaign-office'),
-            sprintf(esc_html__('Please configure your %s settings to display this feed.', 'campaign-office'), esc_html($platform)),
+            esc_html__('Setup Required', 'campaignpress'),
+            sprintf(esc_html__('Please configure your %s settings to display this feed.', 'campaignpress'), esc_html($platform)),
             esc_url($settings_url),
-            esc_html__('Go to Settings', 'campaign-office')
+            esc_html__('Go to Settings', 'campaignpress')
         );
     }
 }

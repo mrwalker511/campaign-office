@@ -26,17 +26,17 @@ function campaignpress_register_custom_post_types() {
     // Issues
     register_post_type('cp_issue', array(
         'labels' => array(
-            'name' => __('Issues', 'campaign-office'),
-            'singular_name' => __('Issue', 'campaign-office'),
-            'menu_name' => __('Issues', 'campaign-office'),
-            'add_new' => __('Add New', 'campaign-office'),
-            'add_new_item' => __('Add New Issue', 'campaign-office'),
-            'edit_item' => __('Edit Issue', 'campaign-office'),
-            'new_item' => __('New Issue', 'campaign-office'),
-            'view_item' => __('View Issue', 'campaign-office'),
-            'search_items' => __('Search Issues', 'campaign-office'),
-            'not_found' => __('No issues found', 'campaign-office'),
-            'not_found_in_trash' => __('No issues found in trash', 'campaign-office'),
+            'name' => __('Issues', 'campaignpress'),
+            'singular_name' => __('Issue', 'campaignpress'),
+            'menu_name' => __('Issues', 'campaignpress'),
+            'add_new' => __('Add New', 'campaignpress'),
+            'add_new_item' => __('Add New Issue', 'campaignpress'),
+            'edit_item' => __('Edit Issue', 'campaignpress'),
+            'new_item' => __('New Issue', 'campaignpress'),
+            'view_item' => __('View Issue', 'campaignpress'),
+            'search_items' => __('Search Issues', 'campaignpress'),
+            'not_found' => __('No issues found', 'campaignpress'),
+            'not_found_in_trash' => __('No issues found in trash', 'campaignpress'),
         ),
         'public' => true,
         'has_archive' => true,
@@ -51,17 +51,17 @@ function campaignpress_register_custom_post_types() {
     // Events
     register_post_type('cp_event', array(
         'labels' => array(
-            'name' => __('Events', 'campaign-office'),
-            'singular_name' => __('Event', 'campaign-office'),
-            'menu_name' => __('Events', 'campaign-office'),
-            'add_new' => __('Add New', 'campaign-office'),
-            'add_new_item' => __('Add New Event', 'campaign-office'),
-            'edit_item' => __('Edit Event', 'campaign-office'),
-            'new_item' => __('New Event', 'campaign-office'),
-            'view_item' => __('View Event', 'campaign-office'),
-            'search_items' => __('Search Events', 'campaign-office'),
-            'not_found' => __('No events found', 'campaign-office'),
-            'not_found_in_trash' => __('No events found in trash', 'campaign-office'),
+            'name' => __('Events', 'campaignpress'),
+            'singular_name' => __('Event', 'campaignpress'),
+            'menu_name' => __('Events', 'campaignpress'),
+            'add_new' => __('Add New', 'campaignpress'),
+            'add_new_item' => __('Add New Event', 'campaignpress'),
+            'edit_item' => __('Edit Event', 'campaignpress'),
+            'new_item' => __('New Event', 'campaignpress'),
+            'view_item' => __('View Event', 'campaignpress'),
+            'search_items' => __('Search Events', 'campaignpress'),
+            'not_found' => __('No events found', 'campaignpress'),
+            'not_found_in_trash' => __('No events found in trash', 'campaignpress'),
         ),
         'public' => true,
         'has_archive' => true,
@@ -76,17 +76,17 @@ function campaignpress_register_custom_post_types() {
     // Endorsements
     register_post_type('cp_endorsement', array(
         'labels' => array(
-            'name' => __('Endorsements', 'campaign-office'),
-            'singular_name' => __('Endorsement', 'campaign-office'),
-            'menu_name' => __('Endorsements', 'campaign-office'),
-            'add_new' => __('Add New', 'campaign-office'),
-            'add_new_item' => __('Add New Endorsement', 'campaign-office'),
-            'edit_item' => __('Edit Endorsement', 'campaign-office'),
-            'new_item' => __('New Endorsement', 'campaign-office'),
-            'view_item' => __('View Endorsement', 'campaign-office'),
-            'search_items' => __('Search Endorsements', 'campaign-office'),
-            'not_found' => __('No endorsements found', 'campaign-office'),
-            'not_found_in_trash' => __('No endorsements found in trash', 'campaign-office'),
+            'name' => __('Endorsements', 'campaignpress'),
+            'singular_name' => __('Endorsement', 'campaignpress'),
+            'menu_name' => __('Endorsements', 'campaignpress'),
+            'add_new' => __('Add New', 'campaignpress'),
+            'add_new_item' => __('Add New Endorsement', 'campaignpress'),
+            'edit_item' => __('Edit Endorsement', 'campaignpress'),
+            'new_item' => __('New Endorsement', 'campaignpress'),
+            'view_item' => __('View Endorsement', 'campaignpress'),
+            'search_items' => __('Search Endorsements', 'campaignpress'),
+            'not_found' => __('No endorsements found', 'campaignpress'),
+            'not_found_in_trash' => __('No endorsements found in trash', 'campaignpress'),
         ),
         'public' => true,
         'has_archive' => true,
@@ -101,17 +101,17 @@ function campaignpress_register_custom_post_types() {
     // Team Members
     register_post_type('cp_team', array(
         'labels' => array(
-            'name' => __('Team', 'campaign-office'),
-            'singular_name' => __('Team Member', 'campaign-office'),
-            'menu_name' => __('Team', 'campaign-office'),
-            'add_new' => __('Add New', 'campaign-office'),
-            'add_new_item' => __('Add New Team Member', 'campaign-office'),
-            'edit_item' => __('Edit Team Member', 'campaign-office'),
-            'new_item' => __('New Team Member', 'campaign-office'),
-            'view_item' => __('View Team Member', 'campaign-office'),
-            'search_items' => __('Search Team', 'campaign-office'),
-            'not_found' => __('No team members found', 'campaign-office'),
-            'not_found_in_trash' => __('No team members found in trash', 'campaign-office'),
+            'name' => __('Team', 'campaignpress'),
+            'singular_name' => __('Team Member', 'campaignpress'),
+            'menu_name' => __('Team', 'campaignpress'),
+            'add_new' => __('Add New', 'campaignpress'),
+            'add_new_item' => __('Add New Team Member', 'campaignpress'),
+            'edit_item' => __('Edit Team Member', 'campaignpress'),
+            'new_item' => __('New Team Member', 'campaignpress'),
+            'view_item' => __('View Team Member', 'campaignpress'),
+            'search_items' => __('Search Team', 'campaignpress'),
+            'not_found' => __('No team members found', 'campaignpress'),
+            'not_found_in_trash' => __('No team members found in trash', 'campaignpress'),
         ),
         'public' => true,
         'has_archive' => true,
@@ -126,17 +126,17 @@ function campaignpress_register_custom_post_types() {
     // Volunteer Opportunities
     register_post_type('cp_volunteer', array(
         'labels' => array(
-            'name' => __('Volunteers', 'campaign-office'),
-            'singular_name' => __('Volunteer Opportunity', 'campaign-office'),
-            'menu_name' => __('Volunteers', 'campaign-office'),
-            'add_new' => __('Add New', 'campaign-office'),
-            'add_new_item' => __('Add New Volunteer Opportunity', 'campaign-office'),
-            'edit_item' => __('Edit Volunteer Opportunity', 'campaign-office'),
-            'new_item' => __('New Volunteer Opportunity', 'campaign-office'),
-            'view_item' => __('View Volunteer Opportunity', 'campaign-office'),
-            'search_items' => __('Search Volunteers', 'campaign-office'),
-            'not_found' => __('No volunteer opportunities found', 'campaign-office'),
-            'not_found_in_trash' => __('No volunteer opportunities found in trash', 'campaign-office'),
+            'name' => __('Volunteers', 'campaignpress'),
+            'singular_name' => __('Volunteer Opportunity', 'campaignpress'),
+            'menu_name' => __('Volunteers', 'campaignpress'),
+            'add_new' => __('Add New', 'campaignpress'),
+            'add_new_item' => __('Add New Volunteer Opportunity', 'campaignpress'),
+            'edit_item' => __('Edit Volunteer Opportunity', 'campaignpress'),
+            'new_item' => __('New Volunteer Opportunity', 'campaignpress'),
+            'view_item' => __('View Volunteer Opportunity', 'campaignpress'),
+            'search_items' => __('Search Volunteers', 'campaignpress'),
+            'not_found' => __('No volunteer opportunities found', 'campaignpress'),
+            'not_found_in_trash' => __('No volunteer opportunities found in trash', 'campaignpress'),
         ),
         'public' => true,
         'has_archive' => true,
@@ -151,17 +151,17 @@ function campaignpress_register_custom_post_types() {
     // Press Releases
     register_post_type('cp_press_release', array(
         'labels' => array(
-            'name' => __('Press Releases', 'campaign-office'),
-            'singular_name' => __('Press Release', 'campaign-office'),
-            'menu_name' => __('Press Releases', 'campaign-office'),
-            'add_new' => __('Add New', 'campaign-office'),
-            'add_new_item' => __('Add New Press Release', 'campaign-office'),
-            'edit_item' => __('Edit Press Release', 'campaign-office'),
-            'new_item' => __('New Press Release', 'campaign-office'),
-            'view_item' => __('View Press Release', 'campaign-office'),
-            'search_items' => __('Search Press Releases', 'campaign-office'),
-            'not_found' => __('No press releases found', 'campaign-office'),
-            'not_found_in_trash' => __('No press releases found in trash', 'campaign-office'),
+            'name' => __('Press Releases', 'campaignpress'),
+            'singular_name' => __('Press Release', 'campaignpress'),
+            'menu_name' => __('Press Releases', 'campaignpress'),
+            'add_new' => __('Add New', 'campaignpress'),
+            'add_new_item' => __('Add New Press Release', 'campaignpress'),
+            'edit_item' => __('Edit Press Release', 'campaignpress'),
+            'new_item' => __('New Press Release', 'campaignpress'),
+            'view_item' => __('View Press Release', 'campaignpress'),
+            'search_items' => __('Search Press Releases', 'campaignpress'),
+            'not_found' => __('No press releases found', 'campaignpress'),
+            'not_found_in_trash' => __('No press releases found in trash', 'campaignpress'),
         ),
         'public' => true,
         'has_archive' => true,
@@ -181,7 +181,7 @@ add_action('init', 'campaignpress_register_custom_post_types', 20);
 function campaignpress_add_endorsement_meta_box() {
     add_meta_box(
         'campaignpress_endorsement_details',
-        __('Endorsement Details', 'campaign-office'),
+        __('Endorsement Details', 'campaignpress'),
         'campaignpress_endorsement_meta_box_callback',
         'cp_endorsement',
         'side',
@@ -201,20 +201,20 @@ function campaignpress_endorsement_meta_box_callback($post) {
     ?>
     <p>
         <label for="cp_endorser_title">
-            <strong><?php esc_html_e('Title/Position', 'campaign-office'); ?></strong>
+            <strong><?php esc_html_e('Title/Position', 'campaignpress'); ?></strong>
         </label><br>
         <input type="text" id="cp_endorser_title" name="cp_endorser_title"
                value="<?php echo esc_attr($endorser_title); ?>" class="widefat"
-               placeholder="<?php esc_attr_e('e.g., Mayor, Senator, CEO', 'campaign-office'); ?>">
+               placeholder="<?php esc_attr_e('e.g., Mayor, Senator, CEO', 'campaignpress'); ?>">
     </p>
 
     <p>
         <label for="cp_endorser_organization">
-            <strong><?php esc_html_e('Organization', 'campaign-office'); ?></strong>
+            <strong><?php esc_html_e('Organization', 'campaignpress'); ?></strong>
         </label><br>
         <input type="text" id="cp_endorser_organization" name="cp_endorser_organization"
                value="<?php echo esc_attr($endorser_organization); ?>" class="widefat"
-               placeholder="<?php esc_attr_e('e.g., City Council, ABC Company', 'campaign-office'); ?>">
+               placeholder="<?php esc_attr_e('e.g., City Council, ABC Company', 'campaignpress'); ?>">
     </p>
     <?php
 }
@@ -257,7 +257,7 @@ add_action('save_post_cp_endorsement', 'campaignpress_save_endorsement_meta');
 function campaignpress_add_team_meta_box() {
     add_meta_box(
         'campaignpress_team_details',
-        __('Team Member Details', 'campaign-office'),
+        __('Team Member Details', 'campaignpress'),
         'campaignpress_team_meta_box_callback',
         'cp_team',
         'side',
@@ -278,29 +278,29 @@ function campaignpress_team_meta_box_callback($post) {
     ?>
     <p>
         <label for="cp_team_position">
-            <strong><?php esc_html_e('Position', 'campaign-office'); ?></strong>
+            <strong><?php esc_html_e('Position', 'campaignpress'); ?></strong>
         </label><br>
         <input type="text" id="cp_team_position" name="cp_team_position"
                value="<?php echo esc_attr($team_position); ?>" class="widefat"
-               placeholder="<?php esc_attr_e('e.g., Campaign Manager', 'campaign-office'); ?>">
+               placeholder="<?php esc_attr_e('e.g., Campaign Manager', 'campaignpress'); ?>">
     </p>
 
     <p>
         <label for="cp_team_email">
-            <strong><?php esc_html_e('Email', 'campaign-office'); ?></strong>
+            <strong><?php esc_html_e('Email', 'campaignpress'); ?></strong>
         </label><br>
         <input type="email" id="cp_team_email" name="cp_team_email"
                value="<?php echo esc_attr($team_email); ?>" class="widefat"
-               placeholder="<?php esc_attr_e('email@example.com', 'campaign-office'); ?>">
+               placeholder="<?php esc_attr_e('email@example.com', 'campaignpress'); ?>">
     </p>
 
     <p>
         <label for="cp_team_phone">
-            <strong><?php esc_html_e('Phone', 'campaign-office'); ?></strong>
+            <strong><?php esc_html_e('Phone', 'campaignpress'); ?></strong>
         </label><br>
         <input type="tel" id="cp_team_phone" name="cp_team_phone"
                value="<?php echo esc_attr($team_phone); ?>" class="widefat"
-               placeholder="<?php esc_attr_e('(555) 123-4567', 'campaign-office'); ?>">
+               placeholder="<?php esc_attr_e('(555) 123-4567', 'campaignpress'); ?>">
     </p>
     <?php
 }
@@ -348,7 +348,7 @@ add_action('save_post_cp_team', 'campaignpress_save_team_meta');
 function campaignpress_add_event_meta_box() {
     add_meta_box(
         'campaignpress_event_details',
-        __('Event Details', 'campaign-office'),
+        __('Event Details', 'campaignpress'),
         'campaignpress_event_meta_box_callback',
         'cp_event',
         'normal',
@@ -371,7 +371,7 @@ function campaignpress_event_meta_box_callback($post) {
     <div class="campaignpress-event-details" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
         <p>
             <label for="cp_event_date">
-                <strong><?php esc_html_e('Date', 'campaign-office'); ?></strong>
+                <strong><?php esc_html_e('Date', 'campaignpress'); ?></strong>
             </label><br>
             <input type="date" id="cp_event_date" name="cp_event_date"
                    value="<?php echo esc_attr($event_date); ?>" class="widefat">
@@ -379,7 +379,7 @@ function campaignpress_event_meta_box_callback($post) {
 
         <p>
             <label for="cp_event_time">
-                <strong><?php esc_html_e('Time', 'campaign-office'); ?></strong>
+                <strong><?php esc_html_e('Time', 'campaignpress'); ?></strong>
             </label><br>
             <input type="time" id="cp_event_time" name="cp_event_time"
                    value="<?php echo esc_attr($event_time); ?>" class="widefat">
@@ -388,20 +388,20 @@ function campaignpress_event_meta_box_callback($post) {
 
     <p>
         <label for="cp_event_location">
-            <strong><?php esc_html_e('Location', 'campaign-office'); ?></strong>
+            <strong><?php esc_html_e('Location', 'campaignpress'); ?></strong>
         </label><br>
         <input type="text" id="cp_event_location" name="cp_event_location"
                value="<?php echo esc_attr($event_location); ?>" class="widefat"
-               placeholder="<?php esc_attr_e('e.g., Town Hall, 123 Main St', 'campaign-office'); ?>">
+               placeholder="<?php esc_attr_e('e.g., Town Hall, 123 Main St', 'campaignpress'); ?>">
     </p>
 
     <p>
         <label for="cp_event_capacity">
-            <strong><?php esc_html_e('Capacity', 'campaign-office'); ?></strong>
+            <strong><?php esc_html_e('Capacity', 'campaignpress'); ?></strong>
         </label><br>
         <input type="number" id="cp_event_capacity" name="cp_event_capacity"
                value="<?php echo esc_attr($event_capacity); ?>" class="widefat"
-               min="1" placeholder="<?php esc_attr_e('Max attendees', 'campaign-office'); ?>">
+               min="1" placeholder="<?php esc_attr_e('Max attendees', 'campaignpress'); ?>">
     </p>
     <?php
 }

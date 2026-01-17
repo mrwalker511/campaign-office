@@ -19,8 +19,8 @@ function campaignpress_block_categories($categories) {
         $categories,
         array(
             array(
-                'slug'  => 'campaign-office',
-                'title' => __('CampaignPress Blocks', 'campaign-office'),
+                'slug'  => 'campaignpress',
+                'title' => __('CampaignPress Blocks', 'campaignpress'),
                 'icon'  => 'megaphone',
             ),
         )
@@ -60,7 +60,7 @@ function campaignpress_register_blocks() {
         'attributes'      => array(
             'buttonText' => array(
                 'type'    => 'string',
-                'default' => __('Donate Now', 'campaign-office'),
+                'default' => __('Donate Now', 'campaignpress'),
             ),
             'donationUrl' => array(
                 'type'    => 'string',
@@ -106,7 +106,7 @@ function campaignpress_register_blocks() {
         'attributes'      => array(
             'title' => array(
                 'type'    => 'string',
-                'default' => __('Join Our Campaign', 'campaign-office'),
+                'default' => __('Join Our Campaign', 'campaignpress'),
             ),
             'description' => array(
                 'type'    => 'string',
@@ -114,7 +114,7 @@ function campaignpress_register_blocks() {
             ),
             'buttonText' => array(
                 'type'    => 'string',
-                'default' => __('Sign Up to Volunteer', 'campaign-office'),
+                'default' => __('Sign Up to Volunteer', 'campaignpress'),
             ),
             'buttonUrl' => array(
                 'type'    => 'string',
@@ -148,7 +148,7 @@ function campaignpress_render_donation_button_block($attributes) {
     // Type-safe attribute extraction with validation
     $button_text = isset($attributes['buttonText']) && is_string($attributes['buttonText'])
         ? $attributes['buttonText']
-        : __('Donate Now', 'campaign-office');
+        : __('Donate Now', 'campaignpress');
 
     $donation_url = isset($attributes['donationUrl']) && is_string($attributes['donationUrl'])
         ? $attributes['donationUrl']
@@ -179,7 +179,7 @@ function campaignpress_render_donation_button_block($attributes) {
 
     if (empty($donation_url)) {
         if (current_user_can('edit_posts')) {
-            return '<div class="cp-block-notice">' . __('Please set a donation URL in the block settings or theme customizer.', 'campaign-office') . '</div>';
+            return '<div class="cp-block-notice">' . __('Please set a donation URL in the block settings or theme customizer.', 'campaignpress') . '</div>';
         }
         return '';
     }
@@ -211,7 +211,7 @@ function campaignpress_render_campaign_progress_block($attributes) {
 
     $title = isset($attributes['title']) && is_string($attributes['title'])
         ? $attributes['title']
-        : __('Campaign Progress', 'campaign-office');
+        : __('Campaign Progress', 'campaignpress');
 
     $show_percentage = isset($attributes['showPercentage']) && is_bool($attributes['showPercentage'])
         ? $attributes['showPercentage']
@@ -227,7 +227,7 @@ function campaignpress_render_campaign_progress_block($attributes) {
 
     $output .= '<div class="cp-progress-stats">';
     $output .= '<span class="cp-progress-raised">$' . number_format($raised_amount) . '</span>';
-    $output .= '<span class="cp-progress-goal">' . sprintf(__('Goal: $%s', 'campaign-office'), number_format($goal_amount)) . '</span>';
+    $output .= '<span class="cp-progress-goal">' . sprintf(__('Goal: $%s', 'campaignpress'), number_format($goal_amount)) . '</span>';
     $output .= '</div>';
 
     $output .= '<div class="cp-progress-bar-container">';
@@ -294,12 +294,12 @@ function campaignpress_render_event_countdown_block($attributes) {
 
     $event_title = isset($attributes['eventTitle']) && is_string($attributes['eventTitle'])
         ? $attributes['eventTitle']
-        : __('Election Day', 'campaign-office');
+        : __('Election Day', 'campaignpress');
 
     // Validate date format (YYYY-MM-DD)
     if (empty($event_date) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $event_date)) {
         if (current_user_can('edit_posts')) {
-            return '<div class="cp-block-notice">' . __('Please set a valid event date (YYYY-MM-DD format).', 'campaign-office') . '</div>';
+            return '<div class="cp-block-notice">' . __('Please set a valid event date (YYYY-MM-DD format).', 'campaignpress') . '</div>';
         }
         return '';
     }
@@ -312,7 +312,7 @@ function campaignpress_render_event_countdown_block($attributes) {
     $time_diff = $target_timestamp - $current_timestamp;
 
     if ($time_diff < 0) {
-        return '<div class="cp-event-countdown"><p>' . esc_html__('This event has passed.', 'campaign-office') . '</p></div>';
+        return '<div class="cp-event-countdown"><p>' . esc_html__('This event has passed.', 'campaignpress') . '</p></div>';
     }
 
     $days = floor($time_diff / (60 * 60 * 24));
@@ -321,7 +321,7 @@ function campaignpress_render_event_countdown_block($attributes) {
     $output .= '<h3 class="cp-countdown-title">' . esc_html($event_title) . '</h3>';
     $output .= '<div class="cp-countdown-display">';
     $output .= '<span class="cp-countdown-number">' . $days . '</span>';
-    $output .= '<span class="cp-countdown-label">' . _n('Day', 'Days', $days, 'campaign-office') . '</span>';
+    $output .= '<span class="cp-countdown-label">' . _n('Day', 'Days', $days, 'campaignpress') . '</span>';
     $output .= '</div>';
     $output .= '</div>';
 
@@ -335,7 +335,7 @@ function campaignpress_render_volunteer_cta_block($attributes) {
     // Type-safe attribute extraction with validation
     $title = isset($attributes['title']) && is_string($attributes['title'])
         ? $attributes['title']
-        : __('Join Our Campaign', 'campaign-office');
+        : __('Join Our Campaign', 'campaignpress');
 
     $description = isset($attributes['description']) && is_string($attributes['description'])
         ? $attributes['description']
@@ -343,7 +343,7 @@ function campaignpress_render_volunteer_cta_block($attributes) {
 
     $button_text = isset($attributes['buttonText']) && is_string($attributes['buttonText'])
         ? $attributes['buttonText']
-        : __('Sign Up to Volunteer', 'campaign-office');
+        : __('Sign Up to Volunteer', 'campaignpress');
 
     $button_url = isset($attributes['buttonUrl']) && is_string($attributes['buttonUrl'])
         ? $attributes['buttonUrl']

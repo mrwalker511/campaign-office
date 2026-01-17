@@ -1,9 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cd:*)",
-      "Bash(grep:*)",
-      "Bash(find includes -name \"*.php\" -type f -exec sh -c 'if head -30 \"\"$1\"\" | grep -q \"\"^// Exit if accessed\"\" && ! grep -q \"\"^function\\\\|^class\"\" \"\"$1\"\" | head -5; then echo \"\"$1\"\"; fi' _ {} ;)"
+      "Bash(cd:*)"
     ]
   }
 }
+

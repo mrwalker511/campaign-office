@@ -13,8 +13,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// CRITICAL: Load translation support FIRST to prevent WordPress 6.7.0+ warnings.
-// This loads the textdomain immediately so all subsequent __() calls work properly.
+// Load translation support (registers textdomain loading on after_setup_theme hook)
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
 
 // Load Core Classes

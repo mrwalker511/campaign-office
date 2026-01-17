@@ -180,8 +180,7 @@ add_action('admin_init', 'campaignpress_handle_notice_dismissal');
  * Theme Setup
  */
 function campaignpress_setup() {
-    // Note: Translations are loaded by CP_Translation_Support at 'after_setup_theme' priority 1
-    // See includes/free/translation-support.php
+    // Note: Textdomain is loaded via after_setup_theme hook in includes/free/translation-support.php
 
     // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');

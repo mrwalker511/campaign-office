@@ -19,14 +19,14 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Load text domain IMMEDIATELY to prevent WordPress 6.7.0+ warnings.
+ * Load theme textdomain for translations.
  *
- * This must happen before any __() calls in other theme files.
- * WordPress 6.7.0+ warns if _load_textdomain_just_in_time() is triggered
- * before the 'init' action, which happens when __() is called for an
- * unloaded textdomain.
+ * WordPress 6.7.0+ requires textdomains to be loaded at the 'init' action
+ * or later. Loading earlier triggers a deprecation warning.
  */
-load_theme_textdomain('campaignpress', get_template_directory() . '/languages');
+add_action('after_setup_theme', function() {
+    load_theme_textdomain('campaignpress', get_template_directory() . '/languages');
+});
 
 /**
  * Class CP_Translation_Support

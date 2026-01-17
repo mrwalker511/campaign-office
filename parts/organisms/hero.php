@@ -18,27 +18,27 @@
         <div class="cp-hero__content">
             <!-- Badge -->
             <span class="cp-hero__badge">
-                <?php esc_html_e( 'Official Campaign Site', 'campaign-office' ); ?>
+                <?php esc_html_e( 'Official Campaign Site', 'campaignpress' ); ?>
             </span>
             
             <!-- Headline -->
             <h1 class="cp-hero__title">
-                <?php esc_html_e( 'Restoring Faith', 'campaign-office' ); ?><br>
-                <span class="cp-hero__title-italic"><?php esc_html_e( 'In America', 'campaign-office' ); ?></span>
+                <?php esc_html_e( 'Restoring Faith', 'campaignpress' ); ?><br>
+                <span class="cp-hero__title-italic"><?php esc_html_e( 'In America', 'campaignpress' ); ?></span>
             </h1>
             
             <!-- Subtitle -->
             <p class="cp-hero__subtitle">
-                <?php esc_html_e( 'Join the movement dedicated to protecting our constitutional rights, strengthening our economy, and securing a brighter future for our families.', 'campaign-office' ); ?>
+                <?php esc_html_e( 'Join the movement dedicated to protecting our constitutional rights, strengthening our economy, and securing a brighter future for our families.', 'campaignpress' ); ?>
             </p>
             
             <!-- CTA Group -->
             <div class="cp-hero__actions">
                 <a href="#volunteer" class="cp-btn cp-btn--primary">
-                    <?php esc_html_e( 'Join the Movement', 'campaign-office' ); ?>
+                    <?php esc_html_e( 'Join the Movement', 'campaignpress' ); ?>
                 </a>
                 <a href="#about" class="cp-btn cp-btn--outline">
-                    <?php esc_html_e( 'Watch the Video', 'campaign-office' ); ?>
+                    <?php esc_html_e( 'Watch the Video', 'campaignpress' ); ?>
                 </a>
             </div>
         </div>

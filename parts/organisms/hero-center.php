@@ -18,27 +18,27 @@
         <div class="cp-hero__content" style="max-width: 100%; text-align: center;">
             <!-- Badge -->
             <span class="cp-hero__badge" style="margin-left: auto; margin-right: auto;">
-                <?php esc_html_e( 'Campaign 2026', 'campaign-office' ); ?>
+                <?php esc_html_e( 'Campaign 2026', 'campaignpress' ); ?>
             </span>
             
             <!-- Headline -->
             <h1 class="cp-hero__title" style="text-align: center;">
-                <?php esc_html_e( 'Leadership That Puts', 'campaign-office' ); ?><br>
-                <span class="cp-hero__title-italic"><?php esc_html_e( 'People First', 'campaign-office' ); ?></span>
+                <?php esc_html_e( 'Leadership That Puts', 'campaignpress' ); ?><br>
+                <span class="cp-hero__title-italic"><?php esc_html_e( 'People First', 'campaignpress' ); ?></span>
             </h1>
             
             <!-- Subtitle -->
             <p class="cp-hero__subtitle" style="text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;">
-                <?php esc_html_e( 'Building stronger communities through transparency, accountability, and bold action for our district.', 'campaign-office' ); ?>
+                <?php esc_html_e( 'Building stronger communities through transparency, accountability, and bold action for our district.', 'campaignpress' ); ?>
             </p>
             
             <!-- CTA Group -->
             <div class="cp-hero__actions" style="justify-content: center;">
                 <a href="#join" class="cp-btn cp-btn--primary">
-                    <?php esc_html_e( 'Join the Movement', 'campaign-office' ); ?>
+                    <?php esc_html_e( 'Join the Movement', 'campaignpress' ); ?>
                 </a>
                 <a href="#platform" class="cp-btn cp-btn--outline">
-                    <?php esc_html_e( 'Our Platform', 'campaign-office' ); ?>
+                    <?php esc_html_e( 'Our Platform', 'campaignpress' ); ?>
                 </a>
             </div>
         </div>

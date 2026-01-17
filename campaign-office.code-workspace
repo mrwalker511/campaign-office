@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../campaign-office-core"
+		},
+		{
+			"path": "../wp/campaign-office-core"
 		}
 	],
 	"settings": {}

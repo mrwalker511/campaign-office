@@ -2,7 +2,7 @@
 /**
  * Title: Event Teaser
  * Slug: campaignpress/event-teaser
- * Categories: campaign-office, events
+ * Categories: campaignpress, events
  * Keywords: event, rally, town hall
  */
 ?>

@@ -16,7 +16,7 @@ const { test, expect } = require('@playwright/test');
 
 test.describe('Demo Import - Interface', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-demo-import');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-demo-import');
   });
 
   test('should display demo import page', async ({ page }) => {
@@ -81,7 +81,7 @@ test.describe('Demo Import - Interface', () => {
 
 test.describe('Demo Import - Content Selection', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-demo-import');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-demo-import');
   });
 
   test('should select all content', async ({ page }) => {
@@ -189,7 +189,7 @@ test.describe('Demo Import - Content Selection', () => {
 
 test.describe('Demo Import - AJAX Import Process', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-demo-import');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-demo-import');
   });
 
   test('should start import process', async ({ page }) => {
@@ -366,7 +366,7 @@ test.describe('Demo Import - AJAX Import Process', () => {
 
 test.describe('Demo Import - Error Handling', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-demo-import');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-demo-import');
   });
 
   test('should handle network errors gracefully', async ({ page }) => {
@@ -484,7 +484,7 @@ test.describe('Demo Import - Error Handling', () => {
 
 test.describe('Demo Import - Cancel Import', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-demo-import');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-demo-import');
   });
 
   test('should cancel import process', async ({ page }) => {
@@ -545,7 +545,7 @@ test.describe('Demo Import - Cancel Import', () => {
 
 test.describe('Demo Import - Accessibility', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-demo-import');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-demo-import');
   });
 
   test('should have accessible progress bar', async ({ page }) => {

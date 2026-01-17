@@ -24,29 +24,29 @@ $audit_entries = $wpdb->get_results("
 ");
 ?>
 <div class="wrap cp-fec-audit">
-    <h1><?php esc_html_e('FEC Audit Trail', 'campaign-office'); ?></h1>
+    <h1><?php esc_html_e('FEC Audit Trail', 'campaignpress'); ?></h1>
 
     <p class="description">
-        <?php esc_html_e('Complete audit trail of all FEC compliance actions. This log is retained for the period specified in your settings to meet FEC record-keeping requirements.', 'campaign-office'); ?>
+        <?php esc_html_e('Complete audit trail of all FEC compliance actions. This log is retained for the period specified in your settings to meet FEC record-keeping requirements.', 'campaignpress'); ?>
     </p>
 
     <!-- Filter Options -->
     <div class="tablenav top">
         <div class="alignleft actions">
             <select id="cp-fec-audit-filter">
-                <option value=""><?php esc_html_e('All Events', 'campaign-office'); ?></option>
-                <option value="contribution"><?php esc_html_e('Contributions', 'campaign-office'); ?></option>
-                <option value="donor"><?php esc_html_e('Donor Changes', 'campaign-office'); ?></option>
-                <option value="report"><?php esc_html_e('Reports', 'campaign-office'); ?></option>
-                <option value="limit"><?php esc_html_e('Limit Warnings', 'campaign-office'); ?></option>
-                <option value="compliance"><?php esc_html_e('Compliance Checks', 'campaign-office'); ?></option>
+                <option value=""><?php esc_html_e('All Events', 'campaignpress'); ?></option>
+                <option value="contribution"><?php esc_html_e('Contributions', 'campaignpress'); ?></option>
+                <option value="donor"><?php esc_html_e('Donor Changes', 'campaignpress'); ?></option>
+                <option value="report"><?php esc_html_e('Reports', 'campaignpress'); ?></option>
+                <option value="limit"><?php esc_html_e('Limit Warnings', 'campaignpress'); ?></option>
+                <option value="compliance"><?php esc_html_e('Compliance Checks', 'campaignpress'); ?></option>
             </select>
-            <button class="button" id="cp-fec-audit-filter-btn"><?php esc_html_e('Filter', 'campaign-office'); ?></button>
+            <button class="button" id="cp-fec-audit-filter-btn"><?php esc_html_e('Filter', 'campaignpress'); ?></button>
         </div>
         <div class="alignright">
             <a href="#" class="button" id="cp-fec-export-audit">
                 <span class="dashicons dashicons-download" style="vertical-align: middle;"></span>
-                <?php esc_html_e('Export Audit Log', 'campaign-office'); ?>
+                <?php esc_html_e('Export Audit Log', 'campaignpress'); ?>
             </a>
         </div>
     </div>
@@ -54,18 +54,18 @@ $audit_entries = $wpdb->get_results("
     <table class="wp-list-table widefat fixed striped">
         <thead>
             <tr>
-                <th style="width: 150px;"><?php esc_html_e('Timestamp', 'campaign-office'); ?></th>
-                <th style="width: 120px;"><?php esc_html_e('Event Type', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Description', 'campaign-office'); ?></th>
-                <th style="width: 120px;"><?php esc_html_e('User', 'campaign-office'); ?></th>
-                <th style="width: 100px;"><?php esc_html_e('IP Address', 'campaign-office'); ?></th>
+                <th style="width: 150px;"><?php esc_html_e('Timestamp', 'campaignpress'); ?></th>
+                <th style="width: 120px;"><?php esc_html_e('Event Type', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Description', 'campaignpress'); ?></th>
+                <th style="width: 120px;"><?php esc_html_e('User', 'campaignpress'); ?></th>
+                <th style="width: 100px;"><?php esc_html_e('IP Address', 'campaignpress'); ?></th>
             </tr>
         </thead>
         <tbody>
             <?php if (empty($audit_entries)): ?>
             <tr>
                 <td colspan="5" style="text-align: center; padding: 2rem;">
-                    <?php esc_html_e('No audit entries recorded yet. Actions will be logged as you use the FEC compliance system.', 'campaign-office'); ?>
+                    <?php esc_html_e('No audit entries recorded yet. Actions will be logged as you use the FEC compliance system.', 'campaignpress'); ?>
                 </td>
             </tr>
             <?php else: ?>
@@ -101,7 +101,7 @@ $audit_entries = $wpdb->get_results("
                             if (is_array($data) && !empty($data['amount'])):
                             ?>
                             <br><small style="color: #666;">
-                                <?php printf(esc_html__('Amount: $%s', 'campaign-office'), number_format($data['amount'], 2)); ?>
+                                <?php printf(esc_html__('Amount: $%s', 'campaignpress'), number_format($data['amount'], 2)); ?>
                             </small>
                             <?php endif; ?>
                         <?php endif; ?>
@@ -110,7 +110,7 @@ $audit_entries = $wpdb->get_results("
                         <?php if ($user): ?>
                             <?php echo esc_html($user->display_name); ?>
                         <?php else: ?>
-                            <span style="color: #999;"><?php esc_html_e('System', 'campaign-office'); ?></span>
+                            <span style="color: #999;"><?php esc_html_e('System', 'campaignpress'); ?></span>
                         <?php endif; ?>
                     </td>
                     <td>
@@ -123,14 +123,14 @@ $audit_entries = $wpdb->get_results("
     </table>
 
     <div class="card" style="margin-top: 20px;">
-        <h3><?php esc_html_e('Audit Retention Policy', 'campaign-office'); ?></h3>
+        <h3><?php esc_html_e('Audit Retention Policy', 'campaignpress'); ?></h3>
         <p>
             <?php
             $retention_years = get_option('cp_fec_audit_retention_years', 3);
             printf(
-                esc_html__('Audit logs are retained for %d years per FEC record-keeping requirements. You can adjust this in %s.', 'campaign-office'),
+                esc_html__('Audit logs are retained for %d years per FEC record-keeping requirements. You can adjust this in %s.', 'campaignpress'),
                 $retention_years,
-                '<a href="' . esc_url(admin_url('admin.php?page=cp-fec-settings')) . '">' . esc_html__('Settings', 'campaign-office') . '</a>'
+                '<a href="' . esc_url(admin_url('admin.php?page=cp-fec-settings')) . '">' . esc_html__('Settings', 'campaignpress') . '</a>'
             );
             ?>
         </p>

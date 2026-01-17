@@ -69,9 +69,9 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
 ?>
 
 <div class="wrap campaignpress-system-status-page">
-    <h1><?php _e('System Status', 'campaign-office'); ?></h1>
+    <h1><?php _e('System Status', 'campaignpress'); ?></h1>
     <p class="description">
-        <?php _e('View detailed system information and diagnostics for CampaignPress Premium.', 'campaign-office'); ?>
+        <?php _e('View detailed system information and diagnostics for CampaignPress Premium.', 'campaignpress'); ?>
     </p>
 
     <!-- Status Overview -->
@@ -81,9 +81,9 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
                 <span class="dashicons dashicons-<?php echo esc_attr($premium->is_premium_active() ? 'yes-alt' : 'dismiss'); ?>"></span>
             </div>
             <div class="cp-status-content">
-                <h3><?php _e('Premium Status', 'campaign-office'); ?></h3>
+                <h3><?php _e('Premium Status', 'campaignpress'); ?></h3>
                 <p class="cp-status-value">
-                    <?php echo $premium->is_premium_active() ? __('Active', 'campaign-office') : __('Inactive', 'campaign-office'); ?>
+                    <?php echo $premium->is_premium_active() ? __('Active', 'campaignpress') : __('Inactive', 'campaignpress'); ?>
                 </p>
             </div>
         </div>
@@ -93,7 +93,7 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
                 <span class="dashicons dashicons-admin-plugins"></span>
             </div>
             <div class="cp-status-content">
-                <h3><?php _e('Active Features', 'campaign-office'); ?></h3>
+                <h3><?php _e('Active Features', 'campaignpress'); ?></h3>
                 <p class="cp-status-value"><?php echo esc_html($active_features_count . ' / ' . count($all_features)); ?></p>
             </div>
         </div>
@@ -103,9 +103,9 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
                 <span class="dashicons dashicons-<?php echo esc_attr($all_requirements_met ? 'yes-alt' : 'warning'); ?>"></span>
             </div>
             <div class="cp-status-content">
-                <h3><?php _e('Requirements', 'campaign-office'); ?></h3>
+                <h3><?php _e('Requirements', 'campaignpress'); ?></h3>
                 <p class="cp-status-value">
-                    <?php echo $all_requirements_met ? __('All Met', 'campaign-office') : __('Issues Found', 'campaign-office'); ?>
+                    <?php echo $all_requirements_met ? __('All Met', 'campaignpress') : __('Issues Found', 'campaignpress'); ?>
                 </p>
             </div>
         </div>
@@ -116,12 +116,12 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
                     <span class="dashicons dashicons-calendar"></span>
                 </div>
                 <div class="cp-status-content">
-                    <h3><?php _e('License Expiry', 'campaign-office'); ?></h3>
+                    <h3><?php _e('License Expiry', 'campaignpress'); ?></h3>
                     <p class="cp-status-value">
                         <?php
                         $expiry = strtotime($license_data['expiry_date']);
                         $days = ceil(($expiry - time()) / DAY_IN_SECONDS);
-                        echo esc_html($days . ' ' . __('days', 'campaign-office'));
+                        echo esc_html($days . ' ' . __('days', 'campaignpress'));
                         ?>
                     </p>
                 </div>
@@ -131,74 +131,74 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
 
     <!-- System Requirements -->
     <div class="cp-section">
-        <h2><?php _e('System Requirements', 'campaign-office'); ?></h2>
+        <h2><?php _e('System Requirements', 'campaignpress'); ?></h2>
         <table class="widefat cp-requirements-table">
             <thead>
                 <tr>
-                    <th><?php _e('Requirement', 'campaign-office'); ?></th>
-                    <th><?php _e('Required', 'campaign-office'); ?></th>
-                    <th><?php _e('Current', 'campaign-office'); ?></th>
-                    <th><?php _e('Status', 'campaign-office'); ?></th>
+                    <th><?php _e('Requirement', 'campaignpress'); ?></th>
+                    <th><?php _e('Required', 'campaignpress'); ?></th>
+                    <th><?php _e('Current', 'campaignpress'); ?></th>
+                    <th><?php _e('Status', 'campaignpress'); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><?php _e('PHP Version', 'campaign-office'); ?></td>
+                    <td><?php _e('PHP Version', 'campaignpress'); ?></td>
                     <td>7.4+</td>
                     <td><?php echo esc_html(PHP_VERSION); ?></td>
                     <td>
                         <?php if ($requirements_met['php_version']): ?>
-                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaign-office'); ?></span>
+                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaignpress'); ?></span>
                         <?php else: ?>
-                            <span class="cp-status-error"><span class="dashicons dashicons-dismiss"></span> <?php _e('Failed', 'campaign-office'); ?></span>
+                            <span class="cp-status-error"><span class="dashicons dashicons-dismiss"></span> <?php _e('Failed', 'campaignpress'); ?></span>
                         <?php endif; ?>
                     </td>
                 </tr>
                 <tr>
-                    <td><?php _e('WordPress Version', 'campaign-office'); ?></td>
+                    <td><?php _e('WordPress Version', 'campaignpress'); ?></td>
                     <td>5.8+</td>
                     <td><?php echo esc_html(get_bloginfo('version')); ?></td>
                     <td>
                         <?php if ($requirements_met['wp_version']): ?>
-                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaign-office'); ?></span>
+                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaignpress'); ?></span>
                         <?php else: ?>
-                            <span class="cp-status-error"><span class="dashicons dashicons-dismiss"></span> <?php _e('Failed', 'campaign-office'); ?></span>
+                            <span class="cp-status-error"><span class="dashicons dashicons-dismiss"></span> <?php _e('Failed', 'campaignpress'); ?></span>
                         <?php endif; ?>
                     </td>
                 </tr>
                 <tr>
-                    <td><?php _e('MySQL Version', 'campaign-office'); ?></td>
+                    <td><?php _e('MySQL Version', 'campaignpress'); ?></td>
                     <td>5.6+</td>
                     <td><?php echo esc_html($GLOBALS['wpdb']->db_version()); ?></td>
                     <td>
                         <?php if ($requirements_met['mysql_version']): ?>
-                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaign-office'); ?></span>
+                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaignpress'); ?></span>
                         <?php else: ?>
-                            <span class="cp-status-error"><span class="dashicons dashicons-dismiss"></span> <?php _e('Failed', 'campaign-office'); ?></span>
+                            <span class="cp-status-error"><span class="dashicons dashicons-dismiss"></span> <?php _e('Failed', 'campaignpress'); ?></span>
                         <?php endif; ?>
                     </td>
                 </tr>
                 <tr>
-                    <td><?php _e('HTTPS', 'campaign-office'); ?></td>
-                    <td><?php _e('Enabled', 'campaign-office'); ?></td>
-                    <td><?php echo is_ssl() ? __('Yes', 'campaign-office') : __('No', 'campaign-office'); ?></td>
+                    <td><?php _e('HTTPS', 'campaignpress'); ?></td>
+                    <td><?php _e('Enabled', 'campaignpress'); ?></td>
+                    <td><?php echo is_ssl() ? __('Yes', 'campaignpress') : __('No', 'campaignpress'); ?></td>
                     <td>
                         <?php if ($requirements_met['https']): ?>
-                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaign-office'); ?></span>
+                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaignpress'); ?></span>
                         <?php else: ?>
-                            <span class="cp-status-warning"><span class="dashicons dashicons-warning"></span> <?php _e('Recommended', 'campaign-office'); ?></span>
+                            <span class="cp-status-warning"><span class="dashicons dashicons-warning"></span> <?php _e('Recommended', 'campaignpress'); ?></span>
                         <?php endif; ?>
                     </td>
                 </tr>
                 <tr>
-                    <td><?php _e('Permalinks', 'campaign-office'); ?></td>
-                    <td><?php _e('Enabled', 'campaign-office'); ?></td>
-                    <td><?php echo get_option('permalink_structure') ? __('Yes', 'campaign-office') : __('No', 'campaign-office'); ?></td>
+                    <td><?php _e('Permalinks', 'campaignpress'); ?></td>
+                    <td><?php _e('Enabled', 'campaignpress'); ?></td>
+                    <td><?php echo get_option('permalink_structure') ? __('Yes', 'campaignpress') : __('No', 'campaignpress'); ?></td>
                     <td>
                         <?php if ($requirements_met['permalink']): ?>
-                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaign-office'); ?></span>
+                            <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('OK', 'campaignpress'); ?></span>
                         <?php else: ?>
-                            <span class="cp-status-error"><span class="dashicons dashicons-dismiss"></span> <?php _e('Failed', 'campaign-office'); ?></span>
+                            <span class="cp-status-error"><span class="dashicons dashicons-dismiss"></span> <?php _e('Failed', 'campaignpress'); ?></span>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -208,14 +208,14 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
 
     <!-- Feature Status -->
     <div class="cp-section">
-        <h2><?php _e('Premium Features Status', 'campaign-office'); ?></h2>
+        <h2><?php _e('Premium Features Status', 'campaignpress'); ?></h2>
         <table class="widefat cp-features-status-table">
             <thead>
                 <tr>
-                    <th><?php _e('Feature', 'campaign-office'); ?></th>
-                    <th><?php _e('Required License', 'campaign-office'); ?></th>
-                    <th><?php _e('Status', 'campaign-office'); ?></th>
-                    <th><?php _e('File Status', 'campaign-office'); ?></th>
+                    <th><?php _e('Feature', 'campaignpress'); ?></th>
+                    <th><?php _e('Required License', 'campaignpress'); ?></th>
+                    <th><?php _e('Status', 'campaignpress'); ?></th>
+                    <th><?php _e('File Status', 'campaignpress'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -225,17 +225,17 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
                         <td><?php echo esc_html(ucfirst($feature['required_license'])); ?></td>
                         <td>
                             <?php if ($premium->is_feature_enabled($key)): ?>
-                                <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('Enabled', 'campaign-office'); ?></span>
+                                <span class="cp-status-ok"><span class="dashicons dashicons-yes-alt"></span> <?php _e('Enabled', 'campaignpress'); ?></span>
                             <?php else: ?>
-                                <span class="cp-status-disabled"><span class="dashicons dashicons-minus"></span> <?php _e('Disabled', 'campaign-office'); ?></span>
+                                <span class="cp-status-disabled"><span class="dashicons dashicons-minus"></span> <?php _e('Disabled', 'campaignpress'); ?></span>
                             <?php endif; ?>
                         </td>
                         <td>
                             <?php if (isset($feature['init_file']) && $feature['init_file']): ?>
                                 <?php if (file_exists($feature['init_file'])): ?>
-                                    <span class="cp-status-ok"><span class="dashicons dashicons-media-code"></span> <?php _e('File OK', 'campaign-office'); ?></span>
+                                    <span class="cp-status-ok"><span class="dashicons dashicons-media-code"></span> <?php _e('File OK', 'campaignpress'); ?></span>
                                 <?php else: ?>
-                                    <span class="cp-status-error"><span class="dashicons dashicons-warning"></span> <?php _e('File Missing', 'campaign-office'); ?></span>
+                                    <span class="cp-status-error"><span class="dashicons dashicons-warning"></span> <?php _e('File Missing', 'campaignpress'); ?></span>
                                 <?php endif; ?>
                             <?php else: ?>
                                 <span class="cp-status-disabled">—</span>
@@ -250,9 +250,9 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
     <!-- Activity Log -->
     <div class="cp-section">
         <h2>
-            <?php _e('Recent Activity', 'campaign-office'); ?>
+            <?php _e('Recent Activity', 'campaignpress'); ?>
             <button type="button" class="button button-small" id="cp-clear-logs" style="margin-left: 10px;">
-                <?php _e('Clear Logs', 'campaign-office'); ?>
+                <?php _e('Clear Logs', 'campaignpress'); ?>
             </button>
         </h2>
 
@@ -260,10 +260,10 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
             <table class="widefat cp-activity-log">
                 <thead>
                     <tr>
-                        <th><?php _e('Timestamp', 'campaign-office'); ?></th>
-                        <th><?php _e('Event', 'campaign-office'); ?></th>
-                        <th><?php _e('Details', 'campaign-office'); ?></th>
-                        <th><?php _e('User', 'campaign-office'); ?></th>
+                        <th><?php _e('Timestamp', 'campaignpress'); ?></th>
+                        <th><?php _e('Event', 'campaignpress'); ?></th>
+                        <th><?php _e('Details', 'campaignpress'); ?></th>
+                        <th><?php _e('User', 'campaignpress'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -274,7 +274,7 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
                             <td>
                                 <?php if (!empty($log['data'])): ?>
                                     <details>
-                                        <summary><?php _e('View Details', 'campaign-office'); ?></summary>
+                                        <summary><?php _e('View Details', 'campaignpress'); ?></summary>
                                         <pre><?php echo esc_html(print_r($log['data'], true)); ?></pre>
                                     </details>
                                 <?php else: ?>
@@ -286,9 +286,9 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
                                 $user_id = isset($log['user_id']) ? $log['user_id'] : 0;
                                 if ($user_id) {
                                     $user = get_user_by('id', $user_id);
-                                    echo $user ? esc_html($user->display_name) : __('Unknown', 'campaign-office');
+                                    echo $user ? esc_html($user->display_name) : __('Unknown', 'campaignpress');
                                 } else {
-                                    echo __('System', 'campaign-office');
+                                    echo __('System', 'campaignpress');
                                 }
                                 ?>
                             </td>
@@ -297,37 +297,37 @@ $all_requirements_met = !in_array(false, $requirements_met, true);
                 </tbody>
             </table>
         <?php else: ?>
-            <p class="description"><?php _e('No activity logs found. Enable logging in development mode to track events.', 'campaign-office'); ?></p>
+            <p class="description"><?php _e('No activity logs found. Enable logging in development mode to track events.', 'campaignpress'); ?></p>
         <?php endif; ?>
     </div>
 
     <!-- Diagnostic Tools -->
     <div class="cp-section">
-        <h2><?php _e('Diagnostic Tools', 'campaign-office'); ?></h2>
+        <h2><?php _e('Diagnostic Tools', 'campaignpress'); ?></h2>
         <div class="cp-diagnostic-tools">
             <button type="button" class="button" id="cp-run-diagnostics">
                 <span class="dashicons dashicons-admin-tools"></span>
-                <?php _e('Run Full Diagnostics', 'campaign-office'); ?>
+                <?php _e('Run Full Diagnostics', 'campaignpress'); ?>
             </button>
 
             <button type="button" class="button" id="cp-check-updates-btn">
                 <span class="dashicons dashicons-update"></span>
-                <?php _e('Check for Updates', 'campaign-office'); ?>
+                <?php _e('Check for Updates', 'campaignpress'); ?>
             </button>
 
             <button type="button" class="button" id="cp-test-connection">
                 <span class="dashicons dashicons-admin-site"></span>
-                <?php _e('Test License Server Connection', 'campaign-office'); ?>
+                <?php _e('Test License Server Connection', 'campaignpress'); ?>
             </button>
 
             <button type="button" class="button" id="cp-export-status">
                 <span class="dashicons dashicons-download"></span>
-                <?php _e('Export Status Report', 'campaign-office'); ?>
+                <?php _e('Export Status Report', 'campaignpress'); ?>
             </button>
         </div>
 
         <div id="cp-diagnostic-results" class="cp-diagnostic-results" style="display: none;">
-            <h3><?php _e('Diagnostic Results', 'campaign-office'); ?></h3>
+            <h3><?php _e('Diagnostic Results', 'campaignpress'); ?></h3>
             <div id="cp-diagnostic-output"></div>
         </div>
     </div>
@@ -507,7 +507,7 @@ jQuery(document).ready(function($) {
             diagnostics += '\nAll systems operational!\n';
 
             $output.html(diagnostics);
-            $btn.prop('disabled', false).html('<span class="dashicons dashicons-admin-tools"></span> <?php echo esc_js(__('Run Full Diagnostics', 'campaign-office')); ?>');
+            $btn.prop('disabled', false).html('<span class="dashicons dashicons-admin-tools"></span> <?php echo esc_js(__('Run Full Diagnostics', 'campaignpress')); ?>');
         }, 2000);
     });
 
@@ -527,9 +527,9 @@ jQuery(document).ready(function($) {
                 if (response.success) {
                     alert(response.data.message);
                 } else {
-                    alert('<?php echo esc_js(__('Failed to check for updates.', 'campaign-office')); ?>');
+                    alert('<?php echo esc_js(__('Failed to check for updates.', 'campaignpress')); ?>');
                 }
-                $btn.prop('disabled', false).html('<span class="dashicons dashicons-update"></span> <?php echo esc_js(__('Check for Updates', 'campaign-office')); ?>');
+                $btn.prop('disabled', false).html('<span class="dashicons dashicons-update"></span> <?php echo esc_js(__('Check for Updates', 'campaignpress')); ?>');
             }
         });
     });
@@ -540,8 +540,8 @@ jQuery(document).ready(function($) {
         $btn.prop('disabled', true).html('<span class="dashicons dashicons-update-alt"></span> Testing...');
 
         setTimeout(function() {
-            alert('<?php echo esc_js(__('Connection to license server successful!', 'campaign-office')); ?>');
-            $btn.prop('disabled', false).html('<span class="dashicons dashicons-admin-site"></span> <?php echo esc_js(__('Test License Server Connection', 'campaign-office')); ?>');
+            alert('<?php echo esc_js(__('Connection to license server successful!', 'campaignpress')); ?>');
+            $btn.prop('disabled', false).html('<span class="dashicons dashicons-admin-site"></span> <?php echo esc_js(__('Test License Server Connection', 'campaignpress')); ?>');
         }, 1500);
     });
 
@@ -581,12 +581,12 @@ jQuery(document).ready(function($) {
 
     // Clear logs
     $('#cp-clear-logs').on('click', function() {
-        if (!confirm('<?php echo esc_js(__('Are you sure you want to clear all activity logs?', 'campaign-office')); ?>')) {
+        if (!confirm('<?php echo esc_js(__('Are you sure you want to clear all activity logs?', 'campaignpress')); ?>')) {
             return;
         }
 
         // In a real implementation, this would make an AJAX call
-        alert('<?php echo esc_js(__('Logs cleared successfully!', 'campaign-office')); ?>');
+        alert('<?php echo esc_js(__('Logs cleared successfully!', 'campaignpress')); ?>');
         location.reload();
     });
 });

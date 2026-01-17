@@ -119,27 +119,27 @@ class CampaignPress_SMS_Integrations {
         $this->platforms = array(
             'twilio' => array(
                 'name' => 'Twilio',
-                'description' => __('Connect to Twilio for SMS, MMS, and conversation tracking', 'campaign-office'),
+                'description' => __('Connect to Twilio for SMS, MMS, and conversation tracking', 'campaignpress'),
                 'icon' => 'dashicons-smartphone',
                 'auth_type' => 'api_key',
                 'credentials' => array(
                     'account_sid' => array(
-                        'label' => __('Account SID', 'campaign-office'),
+                        'label' => __('Account SID', 'campaignpress'),
                         'type' => 'text',
                         'required' => true,
-                        'help' => __('Your Twilio Account SID', 'campaign-office')
+                        'help' => __('Your Twilio Account SID', 'campaignpress')
                     ),
                     'auth_token' => array(
-                        'label' => __('Auth Token', 'campaign-office'),
+                        'label' => __('Auth Token', 'campaignpress'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your Twilio Auth Token', 'campaign-office')
+                        'help' => __('Your Twilio Auth Token', 'campaignpress')
                     ),
                     'phone_number' => array(
-                        'label' => __('Phone Number', 'campaign-office'),
+                        'label' => __('Phone Number', 'campaignpress'),
                         'type' => 'text',
                         'required' => true,
-                        'help' => __('Your Twilio phone number (with country code, e.g., +1234567890)', 'campaign-office')
+                        'help' => __('Your Twilio phone number (with country code, e.g., +1234567890)', 'campaignpress')
                     )
                 ),
                 'features' => array('sms', 'mms', 'conversations', 'webhooks', 'scheduling'),
@@ -148,21 +148,21 @@ class CampaignPress_SMS_Integrations {
             ),
             'hustle' => array(
                 'name' => 'Hustle',
-                'description' => __('Connect to Hustle for peer-to-peer texting campaigns', 'campaign-office'),
+                'description' => __('Connect to Hustle for peer-to-peer texting campaigns', 'campaignpress'),
                 'icon' => 'dashicons-groups',
                 'auth_type' => 'api_key',
                 'credentials' => array(
                     'api_key' => array(
-                        'label' => __('API Key', 'campaign-office'),
+                        'label' => __('API Key', 'campaignpress'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your Hustle API key', 'campaign-office')
+                        'help' => __('Your Hustle API key', 'campaignpress')
                     ),
                     'organization_id' => array(
-                        'label' => __('Organization ID', 'campaign-office'),
+                        'label' => __('Organization ID', 'campaignpress'),
                         'type' => 'text',
                         'required' => true,
-                        'help' => __('Your Hustle organization ID', 'campaign-office')
+                        'help' => __('Your Hustle organization ID', 'campaignpress')
                     )
                 ),
                 'features' => array('p2p', 'campaigns', 'agents', 'webhooks'),
@@ -171,21 +171,21 @@ class CampaignPress_SMS_Integrations {
             ),
             'callhub' => array(
                 'name' => 'CallHub',
-                'description' => __('Connect to CallHub for SMS campaigns and click-to-text', 'campaign-office'),
+                'description' => __('Connect to CallHub for SMS campaigns and click-to-text', 'campaignpress'),
                 'icon' => 'dashicons-phone',
                 'auth_type' => 'api_key',
                 'credentials' => array(
                     'api_key' => array(
-                        'label' => __('API Key', 'campaign-office'),
+                        'label' => __('API Key', 'campaignpress'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your CallHub API key', 'campaign-office')
+                        'help' => __('Your CallHub API key', 'campaignpress')
                     ),
                     'agency_id' => array(
-                        'label' => __('Agency ID', 'campaign-office'),
+                        'label' => __('Agency ID', 'campaignpress'),
                         'type' => 'text',
                         'required' => true,
-                        'help' => __('Your CallHub agency ID', 'campaign-office')
+                        'help' => __('Your CallHub agency ID', 'campaignpress')
                     )
                 ),
                 'features' => array('sms_campaigns', 'click_to_text', 'contacts', 'webhooks'),
@@ -194,21 +194,21 @@ class CampaignPress_SMS_Integrations {
             ),
             'rumbleup' => array(
                 'name' => 'RumbleUp',
-                'description' => __('Connect to RumbleUp for peer-to-peer texting', 'campaign-office'),
+                'description' => __('Connect to RumbleUp for peer-to-peer texting', 'campaignpress'),
                 'icon' => 'dashicons-megaphone',
                 'auth_type' => 'api_key',
                 'credentials' => array(
                     'api_key' => array(
-                        'label' => __('API Key', 'campaign-office'),
+                        'label' => __('API Key', 'campaignpress'),
                         'type' => 'password',
                         'required' => true,
-                        'help' => __('Your RumbleUp API key', 'campaign-office')
+                        'help' => __('Your RumbleUp API key', 'campaignpress')
                     ),
                     'account_id' => array(
-                        'label' => __('Account ID', 'campaign-office'),
+                        'label' => __('Account ID', 'campaignpress'),
                         'type' => 'text',
                         'required' => true,
-                        'help' => __('Your RumbleUp account ID', 'campaign-office')
+                        'help' => __('Your RumbleUp account ID', 'campaignpress')
                     )
                 ),
                 'features' => array('p2p', 'bulk_sms', 'contacts', 'webhooks'),

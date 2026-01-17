@@ -172,72 +172,72 @@ class CampaignPress_Premium {
          */
         $this->premium_features = apply_filters('campaignpress_premium_features', array(
             'crm' => array(
-                'name' => __('Advanced CRM System', 'campaign-office'),
-                'description' => __('Complete donor and volunteer relationship management', 'campaign-office'),
+                'name' => __('Advanced CRM System', 'campaignpress'),
+                'description' => __('Complete donor and volunteer relationship management', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/crm/crm-init.php',
                 'required_license' => 'professional',
                 'icon' => 'dashicons-groups',
             ),
             'field_operations' => array(
-                'name' => __('Field Operations', 'campaign-office'),
-                'description' => __('Canvassing, phone banking, and field team management', 'campaign-office'),
+                'name' => __('Field Operations', 'campaignpress'),
+                'description' => __('Canvassing, phone banking, and field team management', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/field-operations/field-ops-init.php',
                 'required_license' => 'professional',
                 'icon' => 'dashicons-location',
             ),
             'compliance' => array(
-                'name' => __('FEC Compliance', 'campaign-office'),
-                'description' => __('Federal and state campaign finance compliance tools', 'campaign-office'),
+                'name' => __('FEC Compliance', 'campaignpress'),
+                'description' => __('Federal and state campaign finance compliance tools', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/compliance/compliance-init.php',
                 'required_license' => 'professional',
                 'icon' => 'dashicons-shield-alt',
             ),
             'analytics' => array(
-                'name' => __('Advanced Analytics', 'campaign-office'),
-                'description' => __('Deep insights into campaign performance and metrics', 'campaign-office'),
+                'name' => __('Advanced Analytics', 'campaignpress'),
+                'description' => __('Deep insights into campaign performance and metrics', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/analytics/analytics-init.php',
                 'required_license' => 'professional',
                 'icon' => 'dashicons-chart-line',
             ),
             'api' => array(
-                'name' => __('REST API Access', 'campaign-office'),
-                'description' => __('Connect external tools via REST API', 'campaign-office'),
+                'name' => __('REST API Access', 'campaignpress'),
+                'description' => __('Connect external tools via REST API', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/api/api-init.php',
                 'required_license' => 'professional',
                 'icon' => 'dashicons-rest-api',
             ),
             'white_label' => array(
-                'name' => __('White Label', 'campaign-office'),
-                'description' => __('Remove CampaignPress branding', 'campaign-office'),
+                'name' => __('White Label', 'campaignpress'),
+                'description' => __('Remove CampaignPress branding', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => null,
                 'required_license' => 'professional',
                 'icon' => 'dashicons-admin-appearance',
             ),
             'priority_support' => array(
-                'name' => __('Priority Support', 'campaign-office'),
-                'description' => __('24/7 priority support access', 'campaign-office'),
+                'name' => __('Priority Support', 'campaignpress'),
+                'description' => __('24/7 priority support access', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => null,
                 'required_license' => 'professional',
                 'icon' => 'dashicons-sos',
             ),
             'auto_updates' => array(
-                'name' => __('Automatic Updates', 'campaign-office'),
-                'description' => __('Automatic premium theme updates', 'campaign-office'),
+                'name' => __('Automatic Updates', 'campaignpress'),
+                'description' => __('Automatic premium theme updates', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => null,
                 'required_license' => 'professional',
                 'icon' => 'dashicons-update',
             ),
             'developer_console' => array(
-                'name' => __('Developer Console', 'campaign-office'),
-                'description' => __('Advanced developer tools and system management console', 'campaign-office'),
+                'name' => __('Developer Console', 'campaignpress'),
+                'description' => __('Advanced developer tools and system management console', 'campaignpress'),
                 'enabled' => true,
                 'init_file' => CAMPAIGNPRESS_INCLUDES_DIR . '/premium/developer-console/developer-console-init.php',
                 'required_license' => 'professional',
@@ -293,8 +293,8 @@ class CampaignPress_Premium {
     public function add_admin_menu() {
         // Main premium menu item
         add_menu_page(
-            __('CampaignPress Premium', 'campaign-office'),
-            __('CampaignPress Pro', 'campaign-office'),
+            __('CampaignPress Premium', 'campaignpress'),
+            __('CampaignPress Pro', 'campaignpress'),
             'manage_options',
             'campaignpress-premium',
             array($this, 'render_license_page'),
@@ -305,8 +305,8 @@ class CampaignPress_Premium {
         // License management submenu
         add_submenu_page(
             'campaignpress-premium',
-            __('License Management', 'campaign-office'),
-            __('License', 'campaign-office'),
+            __('License Management', 'campaignpress'),
+            __('License', 'campaignpress'),
             'manage_options',
             'campaignpress-premium',
             array($this, 'render_license_page')
@@ -316,8 +316,8 @@ class CampaignPress_Premium {
         if ($this->is_premium_active()) {
             add_submenu_page(
                 'campaignpress-premium',
-                __('Feature Management', 'campaign-office'),
-                __('Features', 'campaign-office'),
+                __('Feature Management', 'campaignpress'),
+                __('Features', 'campaignpress'),
                 'manage_options',
                 'campaignpress-features',
                 array($this, 'render_features_page')
@@ -326,8 +326,8 @@ class CampaignPress_Premium {
             // System status submenu
             add_submenu_page(
                 'campaignpress-premium',
-                __('System Status', 'campaign-office'),
-                __('System Status', 'campaign-office'),
+                __('System Status', 'campaignpress'),
+                __('System Status', 'campaignpress'),
                 'manage_options',
                 'campaignpress-system-status',
                 array($this, 'render_system_status_page')
@@ -338,8 +338,8 @@ class CampaignPress_Premium {
         if (!$this->is_premium_active() || $this->is_license_expired()) {
             add_submenu_page(
                 'campaignpress-premium',
-                __('Upgrade to Premium', 'campaign-office'),
-                __('Upgrade', 'campaign-office'),
+                __('Upgrade to Premium', 'campaignpress'),
+                __('Upgrade', 'campaignpress'),
                 'manage_options',
                 'campaignpress-upgrade',
                 array($this, 'render_upgrade_page')
@@ -439,11 +439,11 @@ class CampaignPress_Premium {
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('cp_premium_nonce'),
                 'strings' => array(
-                    'validating' => __('Validating license...', 'campaign-office'),
-                    'deactivating' => __('Deactivating license...', 'campaign-office'),
-                    'success' => __('Success!', 'campaign-office'),
-                    'error' => __('An error occurred.', 'campaign-office'),
-                    'confirm_deactivate' => __('Are you sure you want to deactivate your license?', 'campaign-office'),
+                    'validating' => __('Validating license...', 'campaignpress'),
+                    'deactivating' => __('Deactivating license...', 'campaignpress'),
+                    'success' => __('Success!', 'campaignpress'),
+                    'error' => __('An error occurred.', 'campaignpress'),
+                    'confirm_deactivate' => __('Are you sure you want to deactivate your license?', 'campaignpress'),
                 ),
             ));
         } elseif (defined('WP_DEBUG') && WP_DEBUG) {
@@ -459,7 +459,7 @@ class CampaignPress_Premium {
     public function display_admin_notices() {
         // Check if we're on a CampaignPress admin page
         $screen = get_current_screen();
-        if (!$screen || strpos($screen->id, 'campaign-office') === false) {
+        if (!$screen || strpos($screen->id, 'campaignpress') === false) {
             return;
         }
 
@@ -473,16 +473,16 @@ class CampaignPress_Premium {
                 ?>
                 <div class="notice notice-warning is-dismissible">
                     <p>
-                        <strong><?php _e('CampaignPress Premium License Expired', 'campaign-office'); ?></strong><br>
+                        <strong><?php _e('CampaignPress Premium License Expired', 'campaignpress'); ?></strong><br>
                         <?php
                         printf(
-                            __('Your license expired on %s. You have %d days remaining in your grace period. Please renew to continue receiving updates and support.', 'campaign-office'),
+                            __('Your license expired on %s. You have %d days remaining in your grace period. Please renew to continue receiving updates and support.', 'campaignpress'),
                             date_i18n(get_option('date_format'), strtotime($expiry_date)),
                             $days_remaining
                         );
                         ?>
                         <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-premium')); ?>" class="button button-primary" style="margin-left: 10px;">
-                            <?php _e('Renew License', 'campaign-office'); ?>
+                            <?php _e('Renew License', 'campaignpress'); ?>
                         </a>
                     </p>
                 </div>
@@ -491,10 +491,10 @@ class CampaignPress_Premium {
                 ?>
                 <div class="notice notice-error">
                     <p>
-                        <strong><?php _e('CampaignPress Premium Grace Period Ended', 'campaign-office'); ?></strong><br>
-                        <?php _e('Your grace period has ended. Premium features have been deactivated. Please renew your license.', 'campaign-office'); ?>
+                        <strong><?php _e('CampaignPress Premium Grace Period Ended', 'campaignpress'); ?></strong><br>
+                        <?php _e('Your grace period has ended. Premium features have been deactivated. Please renew your license.', 'campaignpress'); ?>
                         <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-premium')); ?>" class="button button-primary" style="margin-left: 10px;">
-                            <?php _e('Renew License', 'campaign-office'); ?>
+                            <?php _e('Renew License', 'campaignpress'); ?>
                         </a>
                     </p>
                 </div>
@@ -507,10 +507,10 @@ class CampaignPress_Premium {
             ?>
             <div class="notice notice-info is-dismissible">
                 <p>
-                    <strong><?php _e('Activate CampaignPress Premium', 'campaign-office'); ?></strong><br>
-                    <?php _e('Enter your license key to unlock premium features.', 'campaign-office'); ?>
+                    <strong><?php _e('Activate CampaignPress Premium', 'campaignpress'); ?></strong><br>
+                    <?php _e('Enter your license key to unlock premium features.', 'campaignpress'); ?>
                     <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-premium')); ?>" class="button button-primary" style="margin-left: 10px;">
-                        <?php _e('Activate License', 'campaign-office'); ?>
+                        <?php _e('Activate License', 'campaignpress'); ?>
                     </a>
                 </p>
             </div>
@@ -526,7 +526,7 @@ class CampaignPress_Premium {
     public function add_dashboard_widget() {
         wp_add_dashboard_widget(
             'campaignpress_premium_status',
-            __('CampaignPress Premium Status', 'campaign-office'),
+            __('CampaignPress Premium Status', 'campaignpress'),
             array($this, 'render_dashboard_widget')
         );
     }
@@ -545,15 +545,15 @@ class CampaignPress_Premium {
             <?php if ($is_active): ?>
                 <div class="cp-status-active">
                     <span class="dashicons dashicons-yes-alt" style="color: #46b450; font-size: 24px;"></span>
-                    <h3 style="margin: 10px 0;"><?php _e('Premium Active', 'campaign-office'); ?></h3>
+                    <h3 style="margin: 10px 0;"><?php _e('Premium Active', 'campaignpress'); ?></h3>
 
                     <?php if ($license_data): ?>
-                        <p><strong><?php _e('License Type:', 'campaign-office'); ?></strong> <?php echo esc_html(ucfirst($license_data['license_type'])); ?></p>
-                        <p><strong><?php _e('Expires:', 'campaign-office'); ?></strong> <?php echo esc_html(date_i18n(get_option('date_format'), strtotime($license_data['expiry_date']))); ?></p>
-                        <p><strong><?php _e('Site:', 'campaign-office'); ?></strong> <?php echo esc_html(get_bloginfo('name')); ?></p>
+                        <p><strong><?php _e('License Type:', 'campaignpress'); ?></strong> <?php echo esc_html(ucfirst($license_data['license_type'])); ?></p>
+                        <p><strong><?php _e('Expires:', 'campaignpress'); ?></strong> <?php echo esc_html(date_i18n(get_option('date_format'), strtotime($license_data['expiry_date']))); ?></p>
+                        <p><strong><?php _e('Site:', 'campaignpress'); ?></strong> <?php echo esc_html(get_bloginfo('name')); ?></p>
                     <?php endif; ?>
 
-                    <h4><?php _e('Active Features:', 'campaign-office'); ?></h4>
+                    <h4><?php _e('Active Features:', 'campaignpress'); ?></h4>
                     <ul style="margin-left: 20px;">
                         <?php
                         $enabled_features = $this->get_enabled_features();
@@ -565,38 +565,38 @@ class CampaignPress_Premium {
                             }
                         }
                         if ($count === 0) {
-                            echo '<li><em>' . __('No features enabled', 'campaign-office') . '</em></li>';
+                            echo '<li><em>' . __('No features enabled', 'campaignpress') . '</em></li>';
                         }
                         ?>
                     </ul>
 
                     <p style="margin-top: 15px;">
                         <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-features')); ?>" class="button button-secondary">
-                            <?php _e('Manage Features', 'campaign-office'); ?>
+                            <?php _e('Manage Features', 'campaignpress'); ?>
                         </a>
                     </p>
                 </div>
             <?php else: ?>
                 <div class="cp-status-inactive">
                     <span class="dashicons dashicons-lock" style="color: #dc3232; font-size: 24px;"></span>
-                    <h3 style="margin: 10px 0;"><?php _e('Premium Inactive', 'campaign-office'); ?></h3>
-                    <p><?php _e('Unlock powerful campaign management features with CampaignPress Premium.', 'campaign-office'); ?></p>
+                    <h3 style="margin: 10px 0;"><?php _e('Premium Inactive', 'campaignpress'); ?></h3>
+                    <p><?php _e('Unlock powerful campaign management features with CampaignPress Premium.', 'campaignpress'); ?></p>
 
                     <ul style="margin-left: 20px;">
-                        <li><?php _e('Advanced CRM System', 'campaign-office'); ?></li>
-                        <li><?php _e('Field Operations Management', 'campaign-office'); ?></li>
-                        <li><?php _e('FEC Compliance Tools', 'campaign-office'); ?></li>
-                        <li><?php _e('Advanced Analytics', 'campaign-office'); ?></li>
-                        <li><?php _e('Priority Support', 'campaign-office'); ?></li>
+                        <li><?php _e('Advanced CRM System', 'campaignpress'); ?></li>
+                        <li><?php _e('Field Operations Management', 'campaignpress'); ?></li>
+                        <li><?php _e('FEC Compliance Tools', 'campaignpress'); ?></li>
+                        <li><?php _e('Advanced Analytics', 'campaignpress'); ?></li>
+                        <li><?php _e('Priority Support', 'campaignpress'); ?></li>
                     </ul>
 
                     <p style="margin-top: 15px;">
                         <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-upgrade')); ?>" class="button button-primary">
-                            <?php _e('View Upgrade Options', 'campaign-office'); ?>
+                            <?php _e('View Upgrade Options', 'campaignpress'); ?>
                         </a>
                         <?php if (get_option('campaignpress_license_key')): ?>
                             <a href="<?php echo esc_url(admin_url('admin.php?page=campaignpress-premium')); ?>" class="button button-secondary">
-                                <?php _e('Check License', 'campaign-office'); ?>
+                                <?php _e('Check License', 'campaignpress'); ?>
                             </a>
                         <?php endif; ?>
                     </p>
@@ -623,21 +623,21 @@ class CampaignPress_Premium {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('cp_validate_license: nonce verification failed; user=' . get_current_user_id());
             }
-            wp_send_json_error(array('message' => __('Security check failed (invalid nonce).', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Security check failed (invalid nonce).', 'campaignpress')));
         }
 
         if (!current_user_can('manage_options')) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('cp_validate_license: insufficient permissions; user=' . get_current_user_id());
             }
-            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
         }
 
         $license_key = isset($_POST['license_key']) ? sanitize_text_field($_POST['license_key']) : '';
         $license_email = isset($_POST['license_email']) ? sanitize_email($_POST['license_email']) : '';
 
         if (empty($license_key)) {
-            wp_send_json_error(array('message' => __('License key is required.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('License key is required.', 'campaignpress')));
         }
 
         // Validate license with server
@@ -660,7 +660,7 @@ class CampaignPress_Premium {
             ));
 
             wp_send_json_success(array(
-                'message' => __('License activated successfully!', 'campaign-office'),
+                'message' => __('License activated successfully!', 'campaignpress'),
                 'data' => $result['data'],
             ));
         } else {
@@ -678,13 +678,13 @@ class CampaignPress_Premium {
         check_ajax_referer('cp_premium_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
         }
 
         $license_key = get_option('campaignpress_license_key');
 
         if (!$license_key) {
-            wp_send_json_error(array('message' => __('No license key found.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('No license key found.', 'campaignpress')));
         }
 
         // Deactivate license on server
@@ -703,7 +703,7 @@ class CampaignPress_Premium {
             'server_response' => $result['success'],
         ));
 
-        wp_send_json_success(array('message' => __('License deactivated successfully.', 'campaign-office')));
+        wp_send_json_success(array('message' => __('License deactivated successfully.', 'campaignpress')));
     }
 
     /**
@@ -716,18 +716,18 @@ class CampaignPress_Premium {
         check_ajax_referer('cp_premium_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
         }
 
         if (!$this->is_premium_active()) {
-            wp_send_json_error(array('message' => __('Premium is not active.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Premium is not active.', 'campaignpress')));
         }
 
         $feature = isset($_POST['feature']) ? sanitize_text_field($_POST['feature']) : '';
         $enabled = isset($_POST['enabled']) ? (bool) $_POST['enabled'] : false;
 
         if (!isset($this->premium_features[$feature])) {
-            wp_send_json_error(array('message' => __('Invalid feature.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Invalid feature.', 'campaignpress')));
         }
 
         // Get current enabled features
@@ -742,7 +742,7 @@ class CampaignPress_Premium {
         ));
 
         wp_send_json_success(array(
-            'message' => $enabled ? __('Feature enabled.', 'campaign-office') : __('Feature disabled.', 'campaign-office'),
+            'message' => $enabled ? __('Feature enabled.', 'campaignpress') : __('Feature disabled.', 'campaignpress'),
         ));
     }
 
@@ -756,7 +756,7 @@ class CampaignPress_Premium {
         check_ajax_referer('cp_premium_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Insufficient permissions.', 'campaignpress')));
         }
 
         // Force update check
@@ -767,12 +767,12 @@ class CampaignPress_Premium {
 
         if ($update_data) {
             wp_send_json_success(array(
-                'message' => __('Update available!', 'campaign-office'),
+                'message' => __('Update available!', 'campaignpress'),
                 'data' => $update_data,
             ));
         } else {
             wp_send_json_success(array(
-                'message' => __('Your theme is up to date.', 'campaign-office'),
+                'message' => __('Your theme is up to date.', 'campaignpress'),
                 'data' => null,
             ));
         }
@@ -795,7 +795,7 @@ class CampaignPress_Premium {
                 // Return mock validation
                 return array(
                     'success' => true,
-                    'message' => __('Development mode (mock server) - license validation bypassed', 'campaign-office'),
+                    'message' => __('Development mode (mock server) - license validation bypassed', 'campaignpress'),
                     'data' => array(
                         'license_type' => 'professional',
                         'expiry_date' => date('Y-m-d', strtotime('+1 year')),
@@ -807,7 +807,7 @@ class CampaignPress_Premium {
             // Regular dev mode bypass
             return array(
                 'success' => true,
-                'message' => __('Development mode - license validation bypassed', 'campaign-office'),
+                'message' => __('Development mode - license validation bypassed', 'campaignpress'),
                 'data' => array(
                     'license_type' => 'professional',
                     'expiry_date' => date('Y-m-d', strtotime('+1 year')),
@@ -835,7 +835,7 @@ class CampaignPress_Premium {
         if (!$mock_server_enabled && $is_default_url && !$has_custom_config) {
             return array(
                 'success' => false,
-                'message' => __('License server not configured. Please configure the license server URL in /includes/premium/config.php or use the campaignpress_license_server_url filter.', 'campaign-office'),
+                'message' => __('License server not configured. Please configure the license server URL in /includes/premium/config.php or use the campaignpress_license_server_url filter.', 'campaignpress'),
             );
         }
 
@@ -847,7 +847,7 @@ class CampaignPress_Premium {
             'license_key' => $license_key,
             'email' => $license_email,
             'domain' => home_url(),
-            'product' => 'campaign-office',
+            'product' => 'campaignpress',
             'version' => self::VERSION,
         );
 
@@ -865,7 +865,7 @@ class CampaignPress_Premium {
         if (is_wp_error($response)) {
             return array(
                 'success' => false,
-                'message' => sprintf(__('Connection error: %s', 'campaign-office'), $response->get_error_message()),
+                'message' => sprintf(__('Connection error: %s', 'campaignpress'), $response->get_error_message()),
             );
         }
 
@@ -874,13 +874,13 @@ class CampaignPress_Premium {
         if (!isset($body['success']) || !$body['success']) {
             return array(
                 'success' => false,
-                'message' => isset($body['message']) ? $body['message'] : __('License validation failed.', 'campaign-office'),
+                'message' => isset($body['message']) ? $body['message'] : __('License validation failed.', 'campaignpress'),
             );
         }
 
         return array(
             'success' => true,
-            'message' => __('License validated successfully.', 'campaign-office'),
+            'message' => __('License validated successfully.', 'campaignpress'),
             'data' => $body['data'],
         );
     }
@@ -1494,14 +1494,14 @@ function cp_license_meets_requirement($required_license) {
  */
 function cp_premium_only_notice($feature = '') {
     $message = $feature
-        ? sprintf(__('%s is a premium-only feature.', 'campaign-office'), $feature)
-        : __('This is a premium-only feature.', 'campaign-office');
+        ? sprintf(__('%s is a premium-only feature.', 'campaignpress'), $feature)
+        : __('This is a premium-only feature.', 'campaignpress');
 
     printf(
         '<div class="notice notice-warning"><p>%s <a href="%s">%s</a></p></div>',
         esc_html($message),
         esc_url(admin_url('admin.php?page=campaignpress-upgrade')),
-        esc_html__('Upgrade to Premium', 'campaign-office')
+        esc_html__('Upgrade to Premium', 'campaignpress')
     );
 }
 

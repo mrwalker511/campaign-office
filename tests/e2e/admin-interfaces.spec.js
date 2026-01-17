@@ -16,7 +16,7 @@ const { test, expect } = require('@playwright/test');
 
 test.describe('Premium Admin - License Management', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-premium');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-premium');
   });
 
   test('should display premium admin dashboard', async ({ page }) => {
@@ -114,7 +114,7 @@ test.describe('Premium Admin - License Management', () => {
 
 test.describe('FEC Compliance - Dashboard', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-fec');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-fec');
   });
 
   test('should display FEC compliance dashboard', async ({ page }) => {
@@ -213,7 +213,7 @@ test.describe('FEC Compliance - Dashboard', () => {
 
 test.describe('CRM - Contact Management', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-crm');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-crm');
   });
 
   test('should display CRM dashboard', async ({ page }) => {
@@ -382,7 +382,7 @@ test.describe('CRM - Contact Management', () => {
 
 test.describe('Field Operations - Management', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-field-ops');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-field-ops');
   });
 
   test('should display field operations dashboard', async ({ page }) => {
@@ -476,7 +476,7 @@ test.describe('Field Operations - Management', () => {
 
 test.describe('Analytics Dashboard', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-analytics');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-analytics');
   });
 
   test('should display analytics dashboard', async ({ page }) => {
@@ -562,7 +562,7 @@ test.describe('Analytics Dashboard', () => {
 
 test.describe('Developer Console', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-developer');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-developer');
   });
 
   test('should display developer console', async ({ page }) => {
@@ -632,7 +632,7 @@ test.describe('Developer Console', () => {
 
 test.describe('Admin Interfaces - Accessibility', () => {
   test('should support keyboard navigation', async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-premium');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-premium');
 
     // Tab through interface
     await page.keyboard.press('Tab');
@@ -646,7 +646,7 @@ test.describe('Admin Interfaces - Accessibility', () => {
   });
 
   test('should have proper heading hierarchy', async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-premium');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-premium');
 
     const h1 = await page.locator('h1').count();
     expect(h1).toBeGreaterThanOrEqual(1);
@@ -654,7 +654,7 @@ test.describe('Admin Interfaces - Accessibility', () => {
   });
 
   test('should have ARIA labels on forms', async ({ page }) => {
-    await page.goto('/wp-admin/admin.php?page=campaign-office-premium');
+    await page.goto('/wp-admin/admin.php?page=campaignpress-premium');
 
     const forms = await page.locator('form').all();
 

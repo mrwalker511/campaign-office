@@ -106,23 +106,23 @@ class CampaignPress_CRM_Interactions {
 	public function log_interaction( $data ) {
 		// Validate required fields
 		if ( empty( $data['contact_id'] ) ) {
-			return new WP_Error( 'missing_contact', __( 'Contact ID is required.', 'campaign-office' ) );
+			return new WP_Error( 'missing_contact', __( 'Contact ID is required.', 'campaignpress' ) );
 		}
 
 		if ( empty( $data['interaction_type'] ) ) {
-			return new WP_Error( 'missing_type', __( 'Interaction type is required.', 'campaign-office' ) );
+			return new WP_Error( 'missing_type', __( 'Interaction type is required.', 'campaignpress' ) );
 		}
 
 		// Validate contact exists
 		$contacts = new CampaignPress_CRM_Contacts();
 		$contact = $contacts->get_contact( $data['contact_id'] );
 		if ( ! $contact ) {
-			return new WP_Error( 'invalid_contact', __( 'Contact not found.', 'campaign-office' ) );
+			return new WP_Error( 'invalid_contact', __( 'Contact not found.', 'campaignpress' ) );
 		}
 
 		// Validate interaction type
 		if ( ! in_array( $data['interaction_type'], $this->interaction_types, true ) ) {
-			return new WP_Error( 'invalid_type', __( 'Invalid interaction type.', 'campaign-office' ) );
+			return new WP_Error( 'invalid_type', __( 'Invalid interaction type.', 'campaignpress' ) );
 		}
 
 		// Sanitize data
@@ -145,7 +145,7 @@ class CampaignPress_CRM_Interactions {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to log interaction.', 'campaign-office' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to log interaction.', 'campaignpress' ), $this->wpdb->last_error );
 		}
 
 		$interaction_id = $this->wpdb->insert_id;
@@ -177,7 +177,7 @@ class CampaignPress_CRM_Interactions {
 		// Verify interaction exists
 		$interaction = $this->get_interaction( $interaction_id );
 		if ( ! $interaction ) {
-			return new WP_Error( 'not_found', __( 'Interaction not found.', 'campaign-office' ) );
+			return new WP_Error( 'not_found', __( 'Interaction not found.', 'campaignpress' ) );
 		}
 
 		// Sanitize data
@@ -193,7 +193,7 @@ class CampaignPress_CRM_Interactions {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to update interaction.', 'campaign-office' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to update interaction.', 'campaignpress' ), $this->wpdb->last_error );
 		}
 
 		// Update contact statistics
@@ -220,7 +220,7 @@ class CampaignPress_CRM_Interactions {
 		// Verify interaction exists
 		$interaction = $this->get_interaction( $interaction_id );
 		if ( ! $interaction ) {
-			return new WP_Error( 'not_found', __( 'Interaction not found.', 'campaign-office' ) );
+			return new WP_Error( 'not_found', __( 'Interaction not found.', 'campaignpress' ) );
 		}
 
 		$contact_id = $interaction->contact_id;
@@ -233,7 +233,7 @@ class CampaignPress_CRM_Interactions {
 		);
 
 		if ( false === $result ) {
-			return new WP_Error( 'db_error', __( 'Failed to delete interaction.', 'campaign-office' ), $this->wpdb->last_error );
+			return new WP_Error( 'db_error', __( 'Failed to delete interaction.', 'campaignpress' ), $this->wpdb->last_error );
 		}
 
 		// Update contact statistics
@@ -790,7 +790,7 @@ class CampaignPress_CRM_Interactions {
 	 */
 	public function bulk_log_interactions( $interactions ) {
 		if ( empty( $interactions ) || ! is_array( $interactions ) ) {
-			return new WP_Error( 'invalid_data', __( 'Invalid interactions data.', 'campaign-office' ) );
+			return new WP_Error( 'invalid_data', __( 'Invalid interactions data.', 'campaignpress' ) );
 		}
 
 		$logged = 0;
@@ -806,7 +806,7 @@ class CampaignPress_CRM_Interactions {
 		}
 
 		if ( $logged === 0 ) {
-			return new WP_Error( 'bulk_log_failed', __( 'Failed to log any interactions.', 'campaign-office' ), $errors );
+			return new WP_Error( 'bulk_log_failed', __( 'Failed to log any interactions.', 'campaignpress' ), $errors );
 		}
 
 		// Log bulk action

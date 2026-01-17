@@ -2,7 +2,7 @@
 /**
  * Title: Contact Main
  * Slug: campaignpress/contact-main
- * Categories: campaign-office, call-to-action
+ * Categories: campaignpress, call-to-action
  * Keywords: contact, form, office, locations
  */
 ?>

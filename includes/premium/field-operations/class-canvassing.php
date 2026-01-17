@@ -208,8 +208,8 @@ class CP_Canvassing {
     public function add_admin_menu() {
         add_submenu_page(
             'cp-field-operations',
-            __('Canvassing', 'campaign-office'),
-            __('Canvassing', 'campaign-office'),
+            __('Canvassing', 'campaignpress'),
+            __('Canvassing', 'campaignpress'),
             'edit_posts',
             'cp-canvassing',
             array($this, 'render_admin_page')
@@ -217,8 +217,8 @@ class CP_Canvassing {
 
         add_submenu_page(
             'cp-canvassing',
-            __('Walk Lists', 'campaign-office'),
-            __('Walk Lists', 'campaign-office'),
+            __('Walk Lists', 'campaignpress'),
+            __('Walk Lists', 'campaignpress'),
             'edit_posts',
             'cp-walk-lists',
             array($this, 'render_walk_lists_page')
@@ -226,8 +226,8 @@ class CP_Canvassing {
 
         add_submenu_page(
             'cp-canvassing',
-            __('Territory Management', 'campaign-office'),
-            __('Territories', 'campaign-office'),
+            __('Territory Management', 'campaignpress'),
+            __('Territories', 'campaignpress'),
             'edit_posts',
             'cp-turfs',
             array($this, 'render_turfs_page')
@@ -235,8 +235,8 @@ class CP_Canvassing {
 
         add_submenu_page(
             'cp-canvassing',
-            __('Survey Builder', 'campaign-office'),
-            __('Surveys', 'campaign-office'),
+            __('Survey Builder', 'campaignpress'),
+            __('Surveys', 'campaignpress'),
             'edit_posts',
             'cp-canvass-surveys',
             array($this, 'render_surveys_page')
@@ -287,27 +287,27 @@ class CP_Canvassing {
 
         ?>
         <div class="wrap cp-canvassing-dashboard">
-            <h1><?php esc_html_e('Canvassing Dashboard', 'campaign-office'); ?></h1>
+            <h1><?php esc_html_e('Canvassing Dashboard', 'campaignpress'); ?></h1>
 
             <!-- Stats Cards -->
             <div class="cp-stats-grid">
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Doors Knocked Today', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Doors Knocked Today', 'campaignpress'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['doors_knocked'])); ?></div>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Conversations', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Conversations', 'campaignpress'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['conversations'])); ?></div>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Active Canvassers', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Active Canvassers', 'campaignpress'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['active_canvassers'])); ?></div>
                 </div>
 
                 <div class="cp-stat-card">
-                    <h3><?php esc_html_e('Completion Rate', 'campaign-office'); ?></h3>
+                    <h3><?php esc_html_e('Completion Rate', 'campaignpress'); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html(number_format($stats['completion_rate'], 1)); ?>%</div>
                 </div>
             </div>
@@ -315,28 +315,28 @@ class CP_Canvassing {
             <!-- Quick Actions -->
             <div class="cp-quick-actions">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-walk-lists&action=new')); ?>" class="button button-primary">
-                    <?php esc_html_e('Create Walk List', 'campaign-office'); ?>
+                    <?php esc_html_e('Create Walk List', 'campaignpress'); ?>
                 </a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-turfs&action=new')); ?>" class="button">
-                    <?php esc_html_e('Cut New Turf', 'campaign-office'); ?>
+                    <?php esc_html_e('Cut New Turf', 'campaignpress'); ?>
                 </a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=cp-canvass-surveys&action=new')); ?>" class="button">
-                    <?php esc_html_e('Create Survey', 'campaign-office'); ?>
+                    <?php esc_html_e('Create Survey', 'campaignpress'); ?>
                 </a>
                 <a href="#" class="button cp-export-data" data-type="canvassing">
-                    <?php esc_html_e('Export Data', 'campaign-office'); ?>
+                    <?php esc_html_e('Export Data', 'campaignpress'); ?>
                 </a>
             </div>
 
             <!-- Recent Activity -->
             <div class="cp-recent-activity">
-                <h2><?php esc_html_e('Recent Door Knocks', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Recent Door Knocks', 'campaignpress'); ?></h2>
                 <?php $this->render_recent_interactions(); ?>
             </div>
 
             <!-- Leaderboard -->
             <div class="cp-leaderboard">
-                <h2><?php esc_html_e('Top Canvassers This Week', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Top Canvassers This Week', 'campaignpress'); ?></h2>
                 <?php $this->render_leaderboard(); ?>
             </div>
         </div>
@@ -402,9 +402,9 @@ class CP_Canvassing {
 
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e('Walk Lists', 'campaign-office'); ?></h1>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Walk Lists', 'campaignpress'); ?></h1>
             <a href="<?php echo esc_url(admin_url('admin.php?page=cp-walk-lists&action=new')); ?>" class="page-title-action">
-                <?php esc_html_e('Create Walk List', 'campaign-office'); ?>
+                <?php esc_html_e('Create Walk List', 'campaignpress'); ?>
             </a>
 
             <hr class="wp-header-end">
@@ -412,19 +412,19 @@ class CP_Canvassing {
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Name', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Turf', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Addresses', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Completed', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Progress', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Name', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Turf', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Addresses', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Completed', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Progress', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($walk_lists)) : ?>
                         <tr>
-                            <td colspan="7"><?php esc_html_e('No walk lists found. Create your first walk list!', 'campaign-office'); ?></td>
+                            <td colspan="7"><?php esc_html_e('No walk lists found. Create your first walk list!', 'campaignpress'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($walk_lists as $list) : ?>
@@ -445,10 +445,10 @@ class CP_Canvassing {
                                 <td><span class="cp-status-badge cp-status-<?php echo esc_attr($list->status); ?>"><?php echo esc_html(ucfirst($list->status)); ?></span></td>
                                 <td>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-walk-lists&action=view&id=' . $list->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('View', 'campaign-office'); ?>
+                                        <?php esc_html_e('View', 'campaignpress'); ?>
                                     </a>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-walk-lists&action=export&id=' . $list->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('Export', 'campaign-office'); ?>
+                                        <?php esc_html_e('Export', 'campaignpress'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -487,64 +487,64 @@ class CP_Canvassing {
     private function render_new_walk_list_form() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Create Walk List', 'campaign-office'); ?></h1>
+            <h1><?php esc_html_e('Create Walk List', 'campaignpress'); ?></h1>
 
             <form id="cp-new-walk-list-form" class="cp-canvass-form">
                 <?php wp_nonce_field('cp_create_walk_list', 'cp_walk_list_nonce'); ?>
 
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><label for="walk_list_name"><?php esc_html_e('Walk List Name', 'campaign-office'); ?></label></th>
+                        <th scope="row"><label for="walk_list_name"><?php esc_html_e('Walk List Name', 'campaignpress'); ?></label></th>
                         <td><input type="text" id="walk_list_name" name="name" class="regular-text" required></td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="walk_list_description"><?php esc_html_e('Description', 'campaign-office'); ?></label></th>
+                        <th scope="row"><label for="walk_list_description"><?php esc_html_e('Description', 'campaignpress'); ?></label></th>
                         <td><textarea id="walk_list_description" name="description" rows="3" class="large-text"></textarea></td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="turf_id"><?php esc_html_e('Assign to Turf', 'campaign-office'); ?></label></th>
+                        <th scope="row"><label for="turf_id"><?php esc_html_e('Assign to Turf', 'campaignpress'); ?></label></th>
                         <td>
                             <select id="turf_id" name="turf_id">
-                                <option value=""><?php esc_html_e('Select Turf...', 'campaign-office'); ?></option>
+                                <option value=""><?php esc_html_e('Select Turf...', 'campaignpress'); ?></option>
                                 <?php echo $this->get_turfs_dropdown(); ?>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php esc_html_e('Target Criteria', 'campaign-office'); ?></th>
+                        <th scope="row"><?php esc_html_e('Target Criteria', 'campaignpress'); ?></th>
                         <td>
                             <fieldset>
                                 <label>
                                     <input type="checkbox" name="criteria[]" value="likely_supporters">
-                                    <?php esc_html_e('Likely Supporters', 'campaign-office'); ?>
+                                    <?php esc_html_e('Likely Supporters', 'campaignpress'); ?>
                                 </label><br>
                                 <label>
                                     <input type="checkbox" name="criteria[]" value="persuadable">
-                                    <?php esc_html_e('Persuadable Voters', 'campaign-office'); ?>
+                                    <?php esc_html_e('Persuadable Voters', 'campaignpress'); ?>
                                 </label><br>
                                 <label>
                                     <input type="checkbox" name="criteria[]" value="new_registrants">
-                                    <?php esc_html_e('New Registrants', 'campaign-office'); ?>
+                                    <?php esc_html_e('New Registrants', 'campaignpress'); ?>
                                 </label><br>
                                 <label>
                                     <input type="checkbox" name="criteria[]" value="high_turnout">
-                                    <?php esc_html_e('High Turnout Voters', 'campaign-office'); ?>
+                                    <?php esc_html_e('High Turnout Voters', 'campaignpress'); ?>
                                 </label>
                             </fieldset>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="zip_codes"><?php esc_html_e('ZIP Codes', 'campaign-office'); ?></label></th>
+                        <th scope="row"><label for="zip_codes"><?php esc_html_e('ZIP Codes', 'campaignpress'); ?></label></th>
                         <td>
-                            <input type="text" id="zip_codes" name="zip_codes" class="regular-text" placeholder="<?php esc_attr_e('Enter ZIP codes separated by commas', 'campaign-office'); ?>">
-                            <p class="description"><?php esc_html_e('Leave blank to use all ZIP codes in turf', 'campaign-office'); ?></p>
+                            <input type="text" id="zip_codes" name="zip_codes" class="regular-text" placeholder="<?php esc_attr_e('Enter ZIP codes separated by commas', 'campaignpress'); ?>">
+                            <p class="description"><?php esc_html_e('Leave blank to use all ZIP codes in turf', 'campaignpress'); ?></p>
                         </td>
                     </tr>
                 </table>
 
                 <p class="submit">
-                    <button type="submit" class="button button-primary"><?php esc_html_e('Generate Walk List', 'campaign-office'); ?></button>
-                    <a href="<?php echo esc_url(admin_url('admin.php?page=cp-walk-lists')); ?>" class="button"><?php esc_html_e('Cancel', 'campaign-office'); ?></a>
+                    <button type="submit" class="button button-primary"><?php esc_html_e('Generate Walk List', 'campaignpress'); ?></button>
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=cp-walk-lists')); ?>" class="button"><?php esc_html_e('Cancel', 'campaignpress'); ?></a>
                 </p>
             </form>
         </div>
@@ -588,30 +588,30 @@ class CP_Canvassing {
 
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e('Territory Management', 'campaign-office'); ?></h1>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Territory Management', 'campaignpress'); ?></h1>
             <a href="<?php echo esc_url(admin_url('admin.php?page=cp-turfs&action=new')); ?>" class="page-title-action">
-                <?php esc_html_e('Create Territory', 'campaign-office'); ?>
+                <?php esc_html_e('Create Territory', 'campaignpress'); ?>
             </a>
 
             <hr class="wp-header-end">
 
-            <p><?php esc_html_e('Divide your campaign area into manageable territories (turfs) for canvassing teams.', 'campaign-office'); ?></p>
+            <p><?php esc_html_e('Divide your campaign area into manageable territories (turfs) for canvassing teams.', 'campaignpress'); ?></p>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Territory Name', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Assigned To', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Addresses', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Priority', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Territory Name', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Assigned To', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Addresses', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Priority', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($turfs)) : ?>
                         <tr>
-                            <td colspan="6"><?php esc_html_e('No territories defined yet. Create your first territory!', 'campaign-office'); ?></td>
+                            <td colspan="6"><?php esc_html_e('No territories defined yet. Create your first territory!', 'campaignpress'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($turfs as $turf) : ?>
@@ -622,19 +622,19 @@ class CP_Canvassing {
                                 <td>
                                     <?php
                                     $priority_labels = array(
-                                        1 => __('Very Low', 'campaign-office'),
-                                        3 => __('Low', 'campaign-office'),
-                                        5 => __('Medium', 'campaign-office'),
-                                        7 => __('High', 'campaign-office'),
-                                        10 => __('Critical', 'campaign-office'),
+                                        1 => __('Very Low', 'campaignpress'),
+                                        3 => __('Low', 'campaignpress'),
+                                        5 => __('Medium', 'campaignpress'),
+                                        7 => __('High', 'campaignpress'),
+                                        10 => __('Critical', 'campaignpress'),
                                     );
-                                    echo esc_html($priority_labels[$turf->priority] ?? __('Medium', 'campaign-office'));
+                                    echo esc_html($priority_labels[$turf->priority] ?? __('Medium', 'campaignpress'));
                                     ?>
                                 </td>
                                 <td><span class="cp-status-badge cp-status-<?php echo esc_attr($turf->status); ?>"><?php echo esc_html(ucfirst($turf->status)); ?></span></td>
                                 <td>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-turfs&action=edit&id=' . $turf->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('Edit', 'campaign-office'); ?>
+                                        <?php esc_html_e('Edit', 'campaignpress'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -656,29 +656,29 @@ class CP_Canvassing {
 
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e('Survey Builder', 'campaign-office'); ?></h1>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Survey Builder', 'campaignpress'); ?></h1>
             <a href="<?php echo esc_url(admin_url('admin.php?page=cp-canvass-surveys&action=new')); ?>" class="page-title-action">
-                <?php esc_html_e('Create Survey', 'campaign-office'); ?>
+                <?php esc_html_e('Create Survey', 'campaignpress'); ?>
             </a>
 
             <hr class="wp-header-end">
 
-            <p><?php esc_html_e('Create custom surveys to collect voter opinions and feedback during canvassing.', 'campaign-office'); ?></p>
+            <p><?php esc_html_e('Create custom surveys to collect voter opinions and feedback during canvassing.', 'campaignpress'); ?></p>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Survey Name', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Questions', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Responses', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
-                        <th><?php esc_html_e('Actions', 'campaign-office'); ?></th>
+                        <th><?php esc_html_e('Survey Name', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Questions', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Responses', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
+                        <th><?php esc_html_e('Actions', 'campaignpress'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($surveys)) : ?>
                         <tr>
-                            <td colspan="5"><?php esc_html_e('No surveys created yet.', 'campaign-office'); ?></td>
+                            <td colspan="5"><?php esc_html_e('No surveys created yet.', 'campaignpress'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($surveys as $survey) : ?>
@@ -697,10 +697,10 @@ class CP_Canvassing {
                                 <td><span class="cp-status-badge cp-status-<?php echo esc_attr($survey->status); ?>"><?php echo esc_html(ucfirst($survey->status)); ?></span></td>
                                 <td>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-canvass-surveys&action=edit&id=' . $survey->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('Edit', 'campaign-office'); ?>
+                                        <?php esc_html_e('Edit', 'campaignpress'); ?>
                                     </a>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=cp-canvass-surveys&action=responses&id=' . $survey->id)); ?>" class="button button-small">
-                                        <?php esc_html_e('View Responses', 'campaign-office'); ?>
+                                        <?php esc_html_e('View Responses', 'campaignpress'); ?>
                                     </a>
                                 </td>
                             </tr>
@@ -721,7 +721,7 @@ class CP_Canvassing {
         ), $atts);
 
         if (!is_user_logged_in()) {
-            return '<p>' . esc_html__('You must be logged in to access the canvassing interface.', 'campaign-office') . '</p>';
+            return '<p>' . esc_html__('You must be logged in to access the canvassing interface.', 'campaignpress') . '</p>';
         }
 
         ob_start();
@@ -730,14 +730,14 @@ class CP_Canvassing {
             <!-- Connection Status -->
             <div class="cp-connection-status">
                 <span class="cp-status-indicator cp-online"></span>
-                <span class="cp-status-text"><?php esc_html_e('Connected', 'campaign-office'); ?></span>
+                <span class="cp-status-text"><?php esc_html_e('Connected', 'campaignpress'); ?></span>
             </div>
 
             <!-- Current Address Card -->
             <div class="cp-address-card">
                 <div class="cp-address-header">
-                    <h2 class="cp-address-text" id="cp-current-address"><?php esc_html_e('Loading...', 'campaign-office'); ?></h2>
-                    <button class="cp-gps-btn" id="cp-track-location" title="<?php esc_attr_e('Track my location', 'campaign-office'); ?>">
+                    <h2 class="cp-address-text" id="cp-current-address"><?php esc_html_e('Loading...', 'campaignpress'); ?></h2>
+                    <button class="cp-gps-btn" id="cp-track-location" title="<?php esc_attr_e('Track my location', 'campaignpress'); ?>">
                         <span class="dashicons dashicons-location"></span>
                     </button>
                 </div>
@@ -746,47 +746,47 @@ class CP_Canvassing {
 
             <!-- Quick Results -->
             <div class="cp-quick-results">
-                <h3><?php esc_html_e('Door Knock Result', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Door Knock Result', 'campaignpress'); ?></h3>
                 <div class="cp-result-buttons">
                     <button class="cp-result-btn cp-result-answered" data-result="answered">
                         <span class="dashicons dashicons-yes"></span>
-                        <?php esc_html_e('Answered', 'campaign-office'); ?>
+                        <?php esc_html_e('Answered', 'campaignpress'); ?>
                     </button>
                     <button class="cp-result-btn cp-result-not-home" data-result="not_home">
                         <span class="dashicons dashicons-minus"></span>
-                        <?php esc_html_e('Not Home', 'campaign-office'); ?>
+                        <?php esc_html_e('Not Home', 'campaignpress'); ?>
                     </button>
                     <button class="cp-result-btn cp-result-refused" data-result="refused">
                         <span class="dashicons dashicons-no"></span>
-                        <?php esc_html_e('Refused', 'campaign-office'); ?>
+                        <?php esc_html_e('Refused', 'campaignpress'); ?>
                     </button>
                     <button class="cp-result-btn cp-result-moved" data-result="moved">
                         <span class="dashicons dashicons-migrate"></span>
-                        <?php esc_html_e('Moved', 'campaign-office'); ?>
+                        <?php esc_html_e('Moved', 'campaignpress'); ?>
                     </button>
                     <button class="cp-result-btn cp-result-invalid" data-result="invalid_address">
                         <span class="dashicons dashicons-warning"></span>
-                        <?php esc_html_e('Invalid', 'campaign-office'); ?>
+                        <?php esc_html_e('Invalid', 'campaignpress'); ?>
                     </button>
                 </div>
             </div>
 
             <!-- Conversation Form (shown when "Answered" is clicked) -->
             <div class="cp-conversation-form" id="cp-conversation-form" style="display: none;">
-                <h3><?php esc_html_e('Conversation Details', 'campaign-office'); ?></h3>
+                <h3><?php esc_html_e('Conversation Details', 'campaignpress'); ?></h3>
 
                 <div class="cp-form-group">
-                    <label for="cp-voter-name"><?php esc_html_e('Voter Name', 'campaign-office'); ?></label>
+                    <label for="cp-voter-name"><?php esc_html_e('Voter Name', 'campaignpress'); ?></label>
                     <input type="text" id="cp-voter-name" class="cp-form-control">
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="cp-voter-email"><?php esc_html_e('Email (optional)', 'campaign-office'); ?></label>
+                    <label for="cp-voter-email"><?php esc_html_e('Email (optional)', 'campaignpress'); ?></label>
                     <input type="email" id="cp-voter-email" class="cp-form-control">
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="cp-voter-phone"><?php esc_html_e('Phone (optional)', 'campaign-office'); ?></label>
+                    <label for="cp-voter-phone"><?php esc_html_e('Phone (optional)', 'campaignpress'); ?></label>
                     <input type="tel" id="cp-voter-phone" class="cp-form-control">
                 </div>
 
@@ -794,12 +794,12 @@ class CP_Canvassing {
                 <div id="cp-survey-questions"></div>
 
                 <div class="cp-form-group">
-                    <label for="cp-notes"><?php esc_html_e('Notes', 'campaign-office'); ?></label>
+                    <label for="cp-notes"><?php esc_html_e('Notes', 'campaignpress'); ?></label>
                     <textarea id="cp-notes" class="cp-form-control" rows="4"></textarea>
                 </div>
 
                 <button class="cp-save-btn" id="cp-save-interaction">
-                    <?php esc_html_e('Save & Next Door', 'campaign-office'); ?>
+                    <?php esc_html_e('Save & Next Door', 'campaignpress'); ?>
                 </button>
             </div>
 
@@ -810,7 +810,7 @@ class CP_Canvassing {
                 </div>
                 <p class="cp-progress-text">
                     <span id="cp-completed-count">0</span> / <span id="cp-total-count">0</span>
-                    <?php esc_html_e('addresses completed', 'campaign-office'); ?>
+                    <?php esc_html_e('addresses completed', 'campaignpress'); ?>
                 </p>
             </div>
 
@@ -818,13 +818,13 @@ class CP_Canvassing {
             <div class="cp-navigation">
                 <button class="cp-nav-btn" id="cp-prev-address">
                     <span class="dashicons dashicons-arrow-left-alt2"></span>
-                    <?php esc_html_e('Previous', 'campaign-office'); ?>
+                    <?php esc_html_e('Previous', 'campaignpress'); ?>
                 </button>
                 <button class="cp-nav-btn" id="cp-skip-address">
-                    <?php esc_html_e('Skip', 'campaign-office'); ?>
+                    <?php esc_html_e('Skip', 'campaignpress'); ?>
                 </button>
                 <button class="cp-nav-btn cp-primary" id="cp-next-address">
-                    <?php esc_html_e('Next', 'campaign-office'); ?>
+                    <?php esc_html_e('Next', 'campaignpress'); ?>
                     <span class="dashicons dashicons-arrow-right-alt2"></span>
                 </button>
             </div>
@@ -832,7 +832,7 @@ class CP_Canvassing {
             <!-- Offline Queue Indicator -->
             <div class="cp-offline-queue" id="cp-offline-queue" style="display: none;">
                 <span class="dashicons dashicons-cloud"></span>
-                <span id="cp-queue-count">0</span> <?php esc_html_e('items waiting to sync', 'campaign-office'); ?>
+                <span id="cp-queue-count">0</span> <?php esc_html_e('items waiting to sync', 'campaignpress'); ?>
             </div>
         </div>
 
@@ -1041,7 +1041,7 @@ class CP_Canvassing {
         check_ajax_referer('cp_create_walk_list', 'cp_walk_list_nonce');
 
         if (!current_user_can('edit_posts')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         global $wpdb;
@@ -1051,7 +1051,7 @@ class CP_Canvassing {
         $turf_id = isset($_POST['turf_id']) ? absint($_POST['turf_id']) : null;
 
         if (empty($name)) {
-            wp_send_json_error(array('message' => __('Walk list name is required.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Walk list name is required.', 'campaignpress')));
         }
 
         // Insert walk list
@@ -1082,11 +1082,11 @@ class CP_Canvassing {
             );
 
             wp_send_json_success(array(
-                'message' => __('Walk list created successfully!', 'campaign-office'),
+                'message' => __('Walk list created successfully!', 'campaignpress'),
                 'walk_list_id' => $walk_list_id,
             ));
         } else {
-            wp_send_json_error(array('message' => __('Failed to create walk list.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Failed to create walk list.', 'campaignpress')));
         }
     }
 
@@ -1097,7 +1097,7 @@ class CP_Canvassing {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
 
         if (!current_user_can('edit_posts')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         $interaction_data = $this->sanitize_interaction_data($_POST);
@@ -1105,11 +1105,11 @@ class CP_Canvassing {
 
         if ($result) {
             wp_send_json_success(array(
-                'message' => __('Interaction saved successfully!', 'campaign-office'),
+                'message' => __('Interaction saved successfully!', 'campaignpress'),
                 'interaction_id' => $result,
             ));
         } else {
-            wp_send_json_error(array('message' => __('Failed to save interaction.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Failed to save interaction.', 'campaignpress')));
         }
     }
 
@@ -1275,15 +1275,15 @@ class CP_Canvassing {
         );
 
         if (empty($interactions)) {
-            echo '<p>' . esc_html__('No recent activity.', 'campaign-office') . '</p>';
+            echo '<p>' . esc_html__('No recent activity.', 'campaignpress') . '</p>';
             return;
         }
 
         echo '<table class="wp-list-table widefat fixed striped"><thead><tr>';
-        echo '<th>' . esc_html__('Time', 'campaign-office') . '</th>';
-        echo '<th>' . esc_html__('Address', 'campaign-office') . '</th>';
-        echo '<th>' . esc_html__('Canvasser', 'campaign-office') . '</th>';
-        echo '<th>' . esc_html__('Result', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Time', 'campaignpress') . '</th>';
+        echo '<th>' . esc_html__('Address', 'campaignpress') . '</th>';
+        echo '<th>' . esc_html__('Canvasser', 'campaignpress') . '</th>';
+        echo '<th>' . esc_html__('Result', 'campaignpress') . '</th>';
         echo '</tr></thead><tbody>';
 
         foreach ($interactions as $interaction) {
@@ -1319,15 +1319,15 @@ class CP_Canvassing {
         ));
 
         if (empty($leaderboard)) {
-            echo '<p>' . esc_html__('No canvassing activity this week yet.', 'campaign-office') . '</p>';
+            echo '<p>' . esc_html__('No canvassing activity this week yet.', 'campaignpress') . '</p>';
             return;
         }
 
         echo '<table class="wp-list-table widefat fixed striped"><thead><tr>';
-        echo '<th>' . esc_html__('Rank', 'campaign-office') . '</th>';
-        echo '<th>' . esc_html__('Canvasser', 'campaign-office') . '</th>';
-        echo '<th>' . esc_html__('Doors Knocked', 'campaign-office') . '</th>';
-        echo '<th>' . esc_html__('Conversations', 'campaign-office') . '</th>';
+        echo '<th>' . esc_html__('Rank', 'campaignpress') . '</th>';
+        echo '<th>' . esc_html__('Canvasser', 'campaignpress') . '</th>';
+        echo '<th>' . esc_html__('Doors Knocked', 'campaignpress') . '</th>';
+        echo '<th>' . esc_html__('Conversations', 'campaignpress') . '</th>';
         echo '</tr></thead><tbody>';
 
         $rank = 1;
@@ -1372,11 +1372,11 @@ class CP_Canvassing {
      */
     private function get_user_display_name($user_id) {
         if (!$user_id) {
-            return __('Unassigned', 'campaign-office');
+            return __('Unassigned', 'campaignpress');
         }
 
         $user = get_user_by('id', $user_id);
-        return $user ? $user->display_name : __('Unknown', 'campaign-office');
+        return $user ? $user->display_name : __('Unknown', 'campaignpress');
     }
 
     /**
@@ -1444,7 +1444,7 @@ class CP_Canvassing {
      */
     public function ajax_cut_turf() {
         // Implementation for territory cutting
-        wp_send_json_success(array('message' => __('Turf created successfully!', 'campaign-office')));
+        wp_send_json_success(array('message' => __('Turf created successfully!', 'campaignpress')));
     }
 
     /**
@@ -1454,13 +1454,13 @@ class CP_Canvassing {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
 
         if (!current_user_can('edit_posts')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         $walk_list_id = isset($_POST['walk_list_id']) ? absint($_POST['walk_list_id']) : 0;
 
         if (!$walk_list_id) {
-            wp_send_json_error(array('message' => __('Invalid walk list ID.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Invalid walk list ID.', 'campaignpress')));
         }
 
         global $wpdb;
@@ -1472,7 +1472,7 @@ class CP_Canvassing {
         ));
 
         if (!$walk_list) {
-            wp_send_json_error(array('message' => __('Walk list not found.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Walk list not found.', 'campaignpress')));
         }
 
         // Generate sample addresses for the walk list
@@ -1508,7 +1508,7 @@ class CP_Canvassing {
         check_ajax_referer('cp_field_ops_nonce', 'nonce');
 
         if (!current_user_can('edit_posts')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         $data_type = isset($_POST['data_type']) ? sanitize_text_field($_POST['data_type']) : 'interactions';
@@ -1567,11 +1567,11 @@ class CP_Canvassing {
                 break;
 
             default:
-                wp_send_json_error(array('message' => __('Invalid export type.', 'campaign-office')));
+                wp_send_json_error(array('message' => __('Invalid export type.', 'campaignpress')));
         }
 
         if (empty($data)) {
-            wp_send_json_error(array('message' => __('No data to export.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('No data to export.', 'campaignpress')));
         }
 
         // Generate CSV content

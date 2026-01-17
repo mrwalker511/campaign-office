@@ -257,45 +257,45 @@ class CampaignPress_FEC_Audit_Trail {
     private function get_event_description($event_type, $data) {
         $descriptions = array(
             'contribution_recorded' => sprintf(
-                __('Contribution of %s recorded from donor #%d', 'campaign-office'),
+                __('Contribution of %s recorded from donor #%d', 'campaignpress'),
                 isset($data['amount']) ? cp_fec_format_amount($data['amount']) : '$0.00',
                 isset($data['donor_id']) ? $data['donor_id'] : 0
             ),
             'contribution_refunded' => sprintf(
-                __('Contribution #%d refunded: %s', 'campaign-office'),
+                __('Contribution #%d refunded: %s', 'campaignpress'),
                 isset($data['contribution_id']) ? $data['contribution_id'] : 0,
                 isset($data['refund_amount']) ? cp_fec_format_amount($data['refund_amount']) : '$0.00'
             ),
             'contribution_limit_exceeded' => sprintf(
-                __('Contribution limit exceeded for donor #%d', 'campaign-office'),
+                __('Contribution limit exceeded for donor #%d', 'campaignpress'),
                 isset($data['donor_id']) ? $data['donor_id'] : 0
             ),
             'prohibited_contribution_blocked' => sprintf(
-                __('Prohibited contribution blocked from donor #%d: %s', 'campaign-office'),
+                __('Prohibited contribution blocked from donor #%d: %s', 'campaignpress'),
                 isset($data['donor_id']) ? $data['donor_id'] : 0,
                 isset($data['reason']) ? $data['reason'] : 'Unknown reason'
             ),
-            'donor_created' => __('New donor profile created', 'campaign-office'),
+            'donor_created' => __('New donor profile created', 'campaignpress'),
             'donor_updated' => sprintf(
-                __('Donor #%d profile updated', 'campaign-office'),
+                __('Donor #%d profile updated', 'campaignpress'),
                 isset($data['donor_id']) ? $data['donor_id'] : 0
             ),
             'donor_flagged_prohibited' => sprintf(
-                __('Donor #%d flagged as prohibited source', 'campaign-office'),
+                __('Donor #%d flagged as prohibited source', 'campaignpress'),
                 isset($data['donor_id']) ? $data['donor_id'] : 0
             ),
             'report_generated' => sprintf(
-                __('%s report generated for period %s', 'campaign-office'),
+                __('%s report generated for period %s', 'campaignpress'),
                 isset($data['report_type']) ? $data['report_type'] : 'Unknown',
                 isset($data['report_period']) ? $data['report_period'] : 'Unknown'
             ),
             'report_filed' => sprintf(
-                __('Report #%d filed with FEC', 'campaign-office'),
+                __('Report #%d filed with FEC', 'campaignpress'),
                 isset($data['report_id']) ? $data['report_id'] : 0
             ),
-            '48hour_notice_alert' => __('48-hour notice requirement triggered', 'campaign-office'),
-            'daily_compliance_check' => __('Daily compliance check completed', 'campaign-office'),
-            'settings_updated' => __('Compliance settings updated', 'campaign-office'),
+            '48hour_notice_alert' => __('48-hour notice requirement triggered', 'campaignpress'),
+            'daily_compliance_check' => __('Daily compliance check completed', 'campaignpress'),
+            'settings_updated' => __('Compliance settings updated', 'campaignpress'),
         );
 
         // Return custom description if available, otherwise use event type
@@ -574,7 +574,7 @@ class CampaignPress_FEC_Audit_Trail {
         $logs = $result['logs'];
 
         if (empty($logs)) {
-            return new WP_Error('no_logs', __('No audit logs found for export.', 'campaign-office'));
+            return new WP_Error('no_logs', __('No audit logs found for export.', 'campaignpress'));
         }
 
         // Create export directory
@@ -593,7 +593,7 @@ class CampaignPress_FEC_Audit_Trail {
         $file = fopen($filepath, 'w');
 
         if ($file === false) {
-            return new WP_Error('file_error', __('Failed to create export file.', 'campaign-office'));
+            return new WP_Error('file_error', __('Failed to create export file.', 'campaignpress'));
         }
 
         // Write CSV headers
@@ -729,7 +729,7 @@ class CampaignPress_FEC_Audit_Trail {
         $result = file_put_contents($filepath, $json);
 
         if ($result === false) {
-            return new WP_Error('archive_error', __('Failed to create archive file.', 'campaign-office'));
+            return new WP_Error('archive_error', __('Failed to create archive file.', 'campaignpress'));
         }
 
         return $filepath;

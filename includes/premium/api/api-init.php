@@ -78,8 +78,8 @@ function campaignpress_register_api_routes() {
 function campaignpress_api_admin_menu() {
     // Main API page
     add_menu_page(
-        __( 'API Settings', 'campaign-office' ),
-        __( 'API', 'campaign-office' ),
+        __( 'API Settings', 'campaignpress' ),
+        __( 'API', 'campaignpress' ),
         'manage_options',
         'campaignpress-api',
         'campaignpress_api_settings_page',
@@ -90,8 +90,8 @@ function campaignpress_api_admin_menu() {
     // API Keys submenu
     add_submenu_page(
         'campaignpress-api',
-        __( 'API Keys', 'campaign-office' ),
-        __( 'API Keys', 'campaign-office' ),
+        __( 'API Keys', 'campaignpress' ),
+        __( 'API Keys', 'campaignpress' ),
         'manage_options',
         'campaignpress-api-keys',
         'campaignpress_api_keys_page'
@@ -100,8 +100,8 @@ function campaignpress_api_admin_menu() {
     // Webhooks submenu
     add_submenu_page(
         'campaignpress-api',
-        __( 'Webhooks', 'campaign-office' ),
-        __( 'Webhooks', 'campaign-office' ),
+        __( 'Webhooks', 'campaignpress' ),
+        __( 'Webhooks', 'campaignpress' ),
         'manage_options',
         'campaignpress-webhooks',
         'campaignpress_webhooks_page'
@@ -110,8 +110,8 @@ function campaignpress_api_admin_menu() {
     // API Logs submenu
     add_submenu_page(
         'campaignpress-api',
-        __( 'API Logs', 'campaign-office' ),
-        __( 'API Logs', 'campaign-office' ),
+        __( 'API Logs', 'campaignpress' ),
+        __( 'API Logs', 'campaignpress' ),
         'manage_options',
         'campaignpress-api-logs',
         'campaignpress_api_logs_page'
@@ -120,8 +120,8 @@ function campaignpress_api_admin_menu() {
     // API Documentation submenu
     add_submenu_page(
         'campaignpress-api',
-        __( 'API Documentation', 'campaign-office' ),
-        __( 'Documentation', 'campaign-office' ),
+        __( 'API Documentation', 'campaignpress' ),
+        __( 'Documentation', 'campaignpress' ),
         'manage_options',
         'campaignpress-api-docs',
         'campaignpress_api_docs_page'
@@ -135,7 +135,7 @@ function campaignpress_api_admin_menu() {
  */
 function campaignpress_api_settings_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
-        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaign-office' ) );
+        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaignpress' ) );
     }
 
     // Handle form submission
@@ -147,7 +147,7 @@ function campaignpress_api_settings_page() {
         update_option( 'campaignpress_api_rate_limit', intval( $_POST['rate_limit'] ) );
         update_option( 'campaignpress_api_log_requests', isset( $_POST['log_requests'] ) ? 1 : 0 );
 
-        echo '<div class="notice notice-success"><p>' . __( 'Settings saved successfully.', 'campaign-office' ) . '</p></div>';
+        echo '<div class="notice notice-success"><p>' . __( 'Settings saved successfully.', 'campaignpress' ) . '</p></div>';
     }
 
     $api_enabled = get_option( 'campaignpress_api_enabled', 1 );
@@ -164,68 +164,68 @@ function campaignpress_api_settings_page() {
             <table class="form-table">
                 <tr>
                     <th scope="row">
-                        <label for="api_enabled"><?php esc_html_e( 'Enable API', 'campaign-office' ); ?></label>
+                        <label for="api_enabled"><?php esc_html_e( 'Enable API', 'campaignpress' ); ?></label>
                     </th>
                     <td>
                         <input type="checkbox" id="api_enabled" name="api_enabled" value="1" <?php checked( $api_enabled, 1 ); ?>>
-                        <p class="description"><?php esc_html_e( 'Enable or disable the REST API endpoints.', 'campaign-office' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Enable or disable the REST API endpoints.', 'campaignpress' ); ?></p>
                     </td>
                 </tr>
 
                 <tr>
                     <th scope="row">
-                        <label for="require_auth"><?php esc_html_e( 'Require Authentication', 'campaign-office' ); ?></label>
+                        <label for="require_auth"><?php esc_html_e( 'Require Authentication', 'campaignpress' ); ?></label>
                     </th>
                     <td>
                         <input type="checkbox" id="require_auth" name="require_auth" value="1" <?php checked( $require_auth, 1 ); ?>>
-                        <p class="description"><?php esc_html_e( 'Require API key authentication for all requests.', 'campaign-office' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Require API key authentication for all requests.', 'campaignpress' ); ?></p>
                     </td>
                 </tr>
 
                 <tr>
                     <th scope="row">
-                        <label for="rate_limit"><?php esc_html_e( 'Rate Limit', 'campaign-office' ); ?></label>
+                        <label for="rate_limit"><?php esc_html_e( 'Rate Limit', 'campaignpress' ); ?></label>
                     </th>
                     <td>
                         <input type="number" id="rate_limit" name="rate_limit" value="<?php echo esc_attr( $rate_limit ); ?>" class="small-text">
-                        <span><?php esc_html_e( 'requests per hour', 'campaign-office' ); ?></span>
-                        <p class="description"><?php esc_html_e( 'Maximum number of API requests allowed per hour per API key.', 'campaign-office' ); ?></p>
+                        <span><?php esc_html_e( 'requests per hour', 'campaignpress' ); ?></span>
+                        <p class="description"><?php esc_html_e( 'Maximum number of API requests allowed per hour per API key.', 'campaignpress' ); ?></p>
                     </td>
                 </tr>
 
                 <tr>
                     <th scope="row">
-                        <label for="log_requests"><?php esc_html_e( 'Log API Requests', 'campaign-office' ); ?></label>
+                        <label for="log_requests"><?php esc_html_e( 'Log API Requests', 'campaignpress' ); ?></label>
                     </th>
                     <td>
                         <input type="checkbox" id="log_requests" name="log_requests" value="1" <?php checked( $log_requests, 1 ); ?>>
-                        <p class="description"><?php esc_html_e( 'Log all API requests for debugging and monitoring.', 'campaign-office' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Log all API requests for debugging and monitoring.', 'campaignpress' ); ?></p>
                     </td>
                 </tr>
             </table>
 
-            <h2><?php esc_html_e( 'API Endpoints', 'campaign-office' ); ?></h2>
-            <p><?php esc_html_e( 'Base URL:', 'campaign-office' ); ?> <code><?php echo esc_url( rest_url( 'campaignpress/v1' ) ); ?></code></p>
+            <h2><?php esc_html_e( 'API Endpoints', 'campaignpress' ); ?></h2>
+            <p><?php esc_html_e( 'Base URL:', 'campaignpress' ); ?> <code><?php echo esc_url( rest_url( 'campaignpress/v1' ) ); ?></code></p>
 
             <div class="api-endpoints-list">
-                <h3><?php esc_html_e( 'Available Endpoints', 'campaign-office' ); ?></h3>
+                <h3><?php esc_html_e( 'Available Endpoints', 'campaignpress' ); ?></h3>
                 <ul>
-                    <li><code>GET /contacts</code> - <?php esc_html_e( 'List all contacts', 'campaign-office' ); ?></li>
-                    <li><code>GET /contacts/{id}</code> - <?php esc_html_e( 'Get a specific contact', 'campaign-office' ); ?></li>
-                    <li><code>POST /contacts</code> - <?php esc_html_e( 'Create a new contact', 'campaign-office' ); ?></li>
-                    <li><code>PUT /contacts/{id}</code> - <?php esc_html_e( 'Update a contact', 'campaign-office' ); ?></li>
-                    <li><code>DELETE /contacts/{id}</code> - <?php esc_html_e( 'Delete a contact', 'campaign-office' ); ?></li>
-                    <li><code>GET /events</code> - <?php esc_html_e( 'List all events', 'campaign-office' ); ?></li>
-                    <li><code>GET /events/{id}</code> - <?php esc_html_e( 'Get a specific event', 'campaign-office' ); ?></li>
-                    <li><code>POST /events</code> - <?php esc_html_e( 'Create a new event', 'campaign-office' ); ?></li>
-                    <li><code>PUT /events/{id}</code> - <?php esc_html_e( 'Update an event', 'campaign-office' ); ?></li>
-                    <li><code>DELETE /events/{id}</code> - <?php esc_html_e( 'Delete an event', 'campaign-office' ); ?></li>
-                    <li><code>GET /volunteers</code> - <?php esc_html_e( 'List all volunteers', 'campaign-office' ); ?></li>
-                    <li><code>POST /volunteers</code> - <?php esc_html_e( 'Create a new volunteer', 'campaign-office' ); ?></li>
-                    <li><code>POST /donations</code> - <?php esc_html_e( 'Record a donation (webhook)', 'campaign-office' ); ?></li>
-                    <li><code>GET /analytics</code> - <?php esc_html_e( 'Get analytics data', 'campaign-office' ); ?></li>
-                    <li><code>POST /field-ops/canvassing</code> - <?php esc_html_e( 'Submit canvassing results', 'campaign-office' ); ?></li>
-                    <li><code>POST /field-ops/phone-banking</code> - <?php esc_html_e( 'Submit phone banking results', 'campaign-office' ); ?></li>
+                    <li><code>GET /contacts</code> - <?php esc_html_e( 'List all contacts', 'campaignpress' ); ?></li>
+                    <li><code>GET /contacts/{id}</code> - <?php esc_html_e( 'Get a specific contact', 'campaignpress' ); ?></li>
+                    <li><code>POST /contacts</code> - <?php esc_html_e( 'Create a new contact', 'campaignpress' ); ?></li>
+                    <li><code>PUT /contacts/{id}</code> - <?php esc_html_e( 'Update a contact', 'campaignpress' ); ?></li>
+                    <li><code>DELETE /contacts/{id}</code> - <?php esc_html_e( 'Delete a contact', 'campaignpress' ); ?></li>
+                    <li><code>GET /events</code> - <?php esc_html_e( 'List all events', 'campaignpress' ); ?></li>
+                    <li><code>GET /events/{id}</code> - <?php esc_html_e( 'Get a specific event', 'campaignpress' ); ?></li>
+                    <li><code>POST /events</code> - <?php esc_html_e( 'Create a new event', 'campaignpress' ); ?></li>
+                    <li><code>PUT /events/{id}</code> - <?php esc_html_e( 'Update an event', 'campaignpress' ); ?></li>
+                    <li><code>DELETE /events/{id}</code> - <?php esc_html_e( 'Delete an event', 'campaignpress' ); ?></li>
+                    <li><code>GET /volunteers</code> - <?php esc_html_e( 'List all volunteers', 'campaignpress' ); ?></li>
+                    <li><code>POST /volunteers</code> - <?php esc_html_e( 'Create a new volunteer', 'campaignpress' ); ?></li>
+                    <li><code>POST /donations</code> - <?php esc_html_e( 'Record a donation (webhook)', 'campaignpress' ); ?></li>
+                    <li><code>GET /analytics</code> - <?php esc_html_e( 'Get analytics data', 'campaignpress' ); ?></li>
+                    <li><code>POST /field-ops/canvassing</code> - <?php esc_html_e( 'Submit canvassing results', 'campaignpress' ); ?></li>
+                    <li><code>POST /field-ops/phone-banking</code> - <?php esc_html_e( 'Submit phone banking results', 'campaignpress' ); ?></li>
                 </ul>
             </div>
 
@@ -242,7 +242,7 @@ function campaignpress_api_settings_page() {
  */
 function campaignpress_api_keys_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
-        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaign-office' ) );
+        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaignpress' ) );
     }
 
     // Handle key generation
@@ -252,7 +252,7 @@ function campaignpress_api_keys_page() {
         $api_key = campaignpress_generate_api_key( $key_name );
 
         echo '<div class="notice notice-success"><p>' .
-             sprintf( __( 'API Key generated: <strong>%s</strong> (Save this key - it will not be shown again)', 'campaign-office' ), esc_html( $api_key ) ) .
+             sprintf( __( 'API Key generated: <strong>%s</strong> (Save this key - it will not be shown again)', 'campaignpress' ), esc_html( $api_key ) ) .
              '</p></div>';
     }
 
@@ -262,7 +262,7 @@ function campaignpress_api_keys_page() {
         $key_id = intval( $_POST['key_id'] );
         campaignpress_delete_api_key( $key_id );
 
-        echo '<div class="notice notice-success"><p>' . __( 'API Key deleted successfully.', 'campaign-office' ) . '</p></div>';
+        echo '<div class="notice notice-success"><p>' . __( 'API Key deleted successfully.', 'campaignpress' ) . '</p></div>';
     }
 
     $api_keys = campaignpress_get_api_keys();
@@ -270,39 +270,39 @@ function campaignpress_api_keys_page() {
     <div class="wrap campaignpress-api-keys">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-        <h2><?php esc_html_e( 'Generate New API Key', 'campaign-office' ); ?></h2>
+        <h2><?php esc_html_e( 'Generate New API Key', 'campaignpress' ); ?></h2>
         <form method="post" action="">
             <?php wp_nonce_field( 'generate_api_key', 'api_key_nonce' ); ?>
             <table class="form-table">
                 <tr>
                     <th scope="row">
-                        <label for="key_name"><?php esc_html_e( 'Key Name', 'campaign-office' ); ?></label>
+                        <label for="key_name"><?php esc_html_e( 'Key Name', 'campaignpress' ); ?></label>
                     </th>
                     <td>
                         <input type="text" id="key_name" name="key_name" class="regular-text" required>
-                        <p class="description"><?php esc_html_e( 'A descriptive name for this API key.', 'campaign-office' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'A descriptive name for this API key.', 'campaignpress' ); ?></p>
                     </td>
                 </tr>
             </table>
-            <button type="submit" name="generate_api_key" class="button button-primary"><?php esc_html_e( 'Generate API Key', 'campaign-office' ); ?></button>
+            <button type="submit" name="generate_api_key" class="button button-primary"><?php esc_html_e( 'Generate API Key', 'campaignpress' ); ?></button>
         </form>
 
-        <h2><?php esc_html_e( 'Existing API Keys', 'campaign-office' ); ?></h2>
+        <h2><?php esc_html_e( 'Existing API Keys', 'campaignpress' ); ?></h2>
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th><?php esc_html_e( 'Name', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Key (truncated)', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Created', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Last Used', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Requests', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Actions', 'campaign-office' ); ?></th>
+                    <th><?php esc_html_e( 'Name', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Key (truncated)', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Created', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Last Used', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Requests', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Actions', 'campaignpress' ); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php if ( empty( $api_keys ) ) : ?>
                     <tr>
-                        <td colspan="6"><?php esc_html_e( 'No API keys found.', 'campaign-office' ); ?></td>
+                        <td colspan="6"><?php esc_html_e( 'No API keys found.', 'campaignpress' ); ?></td>
                     </tr>
                 <?php else : ?>
                     <?php foreach ( $api_keys as $key ) : ?>
@@ -317,8 +317,8 @@ function campaignpress_api_keys_page() {
                                     <?php wp_nonce_field( 'delete_api_key', 'delete_key_nonce' ); ?>
                                     <input type="hidden" name="key_id" value="<?php echo esc_attr( $key->id ); ?>">
                                     <button type="submit" name="delete_api_key" class="button button-small button-link-delete"
-                                            onclick="return confirm('<?php esc_attr_e( 'Are you sure you want to delete this API key?', 'campaign-office' ); ?>')">
-                                        <?php esc_html_e( 'Delete', 'campaign-office' ); ?>
+                                            onclick="return confirm('<?php esc_attr_e( 'Are you sure you want to delete this API key?', 'campaignpress' ); ?>')">
+                                        <?php esc_html_e( 'Delete', 'campaignpress' ); ?>
                                     </button>
                                 </form>
                             </td>
@@ -338,7 +338,7 @@ function campaignpress_api_keys_page() {
  */
 function campaignpress_webhooks_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
-        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaign-office' ) );
+        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaignpress' ) );
     }
 
     $webhooks = $GLOBALS['campaignpress_webhooks'];
@@ -346,13 +346,13 @@ function campaignpress_webhooks_page() {
     <div class="wrap campaignpress-webhooks">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-        <p><?php esc_html_e( 'Manage webhook subscriptions for external service integrations.', 'campaign-office' ); ?></p>
+        <p><?php esc_html_e( 'Manage webhook subscriptions for external service integrations.', 'campaignpress' ); ?></p>
 
         <div id="webhooks-content">
             <!-- Content loaded via JavaScript -->
             <div class="loading-spinner">
                 <span class="spinner is-active"></span>
-                <p><?php esc_html_e( 'Loading webhooks...', 'campaign-office' ); ?></p>
+                <p><?php esc_html_e( 'Loading webhooks...', 'campaignpress' ); ?></p>
             </div>
         </div>
     </div>
@@ -366,7 +366,7 @@ function campaignpress_webhooks_page() {
  */
 function campaignpress_api_logs_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
-        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaign-office' ) );
+        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaignpress' ) );
     }
 
     global $wpdb;
@@ -382,18 +382,18 @@ function campaignpress_api_logs_page() {
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th><?php esc_html_e( 'Timestamp', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Method', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Endpoint', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Status', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'IP Address', 'campaign-office' ); ?></th>
-                    <th><?php esc_html_e( 'Response Time', 'campaign-office' ); ?></th>
+                    <th><?php esc_html_e( 'Timestamp', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Method', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Endpoint', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Status', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'IP Address', 'campaignpress' ); ?></th>
+                    <th><?php esc_html_e( 'Response Time', 'campaignpress' ); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php if ( empty( $logs ) ) : ?>
                     <tr>
-                        <td colspan="6"><?php esc_html_e( 'No API logs found.', 'campaign-office' ); ?></td>
+                        <td colspan="6"><?php esc_html_e( 'No API logs found.', 'campaignpress' ); ?></td>
                     </tr>
                 <?php else : ?>
                     <?php foreach ( $logs as $log ) : ?>
@@ -420,36 +420,36 @@ function campaignpress_api_logs_page() {
  */
 function campaignpress_api_docs_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
-        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaign-office' ) );
+        wp_die( __( 'You do not have sufficient permissions to access this page.', 'campaignpress' ) );
     }
     ?>
     <div class="wrap campaignpress-api-docs">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
         <div class="api-documentation">
-            <h2><?php esc_html_e( 'Authentication', 'campaign-office' ); ?></h2>
-            <p><?php esc_html_e( 'Include your API key in the request header:', 'campaign-office' ); ?></p>
+            <h2><?php esc_html_e( 'Authentication', 'campaignpress' ); ?></h2>
+            <p><?php esc_html_e( 'Include your API key in the request header:', 'campaignpress' ); ?></p>
             <pre><code>X-CampaignPress-API-Key: your-api-key-here</code></pre>
 
-            <h2><?php esc_html_e( 'Endpoints', 'campaign-office' ); ?></h2>
+            <h2><?php esc_html_e( 'Endpoints', 'campaignpress' ); ?></h2>
 
-            <h3><?php esc_html_e( 'Contacts', 'campaign-office' ); ?></h3>
-            <p><code>GET /campaignpress/v1/contacts</code> - <?php esc_html_e( 'List contacts with pagination and filtering', 'campaign-office' ); ?></p>
-            <p><code>POST /campaignpress/v1/contacts</code> - <?php esc_html_e( 'Create a new contact', 'campaign-office' ); ?></p>
+            <h3><?php esc_html_e( 'Contacts', 'campaignpress' ); ?></h3>
+            <p><code>GET /campaignpress/v1/contacts</code> - <?php esc_html_e( 'List contacts with pagination and filtering', 'campaignpress' ); ?></p>
+            <p><code>POST /campaignpress/v1/contacts</code> - <?php esc_html_e( 'Create a new contact', 'campaignpress' ); ?></p>
 
-            <h3><?php esc_html_e( 'Events', 'campaign-office' ); ?></h3>
-            <p><code>GET /campaignpress/v1/events</code> - <?php esc_html_e( 'List events with pagination', 'campaign-office' ); ?></p>
-            <p><code>POST /campaignpress/v1/events</code> - <?php esc_html_e( 'Create a new event', 'campaign-office' ); ?></p>
+            <h3><?php esc_html_e( 'Events', 'campaignpress' ); ?></h3>
+            <p><code>GET /campaignpress/v1/events</code> - <?php esc_html_e( 'List events with pagination', 'campaignpress' ); ?></p>
+            <p><code>POST /campaignpress/v1/events</code> - <?php esc_html_e( 'Create a new event', 'campaignpress' ); ?></p>
 
-            <h3><?php esc_html_e( 'Rate Limits', 'campaign-office' ); ?></h3>
-            <p><?php echo sprintf( __( 'Current rate limit: %d requests per hour', 'campaign-office' ), get_option( 'campaignpress_api_rate_limit', 100 ) ); ?></p>
+            <h3><?php esc_html_e( 'Rate Limits', 'campaignpress' ); ?></h3>
+            <p><?php echo sprintf( __( 'Current rate limit: %d requests per hour', 'campaignpress' ), get_option( 'campaignpress_api_rate_limit', 100 ) ); ?></p>
 
-            <h3><?php esc_html_e( 'Third-Party Integrations', 'campaign-office' ); ?></h3>
-            <p><?php esc_html_e( 'CampaignPress API supports integration with:', 'campaign-office' ); ?></p>
+            <h3><?php esc_html_e( 'Third-Party Integrations', 'campaignpress' ); ?></h3>
+            <p><?php esc_html_e( 'CampaignPress API supports integration with:', 'campaignpress' ); ?></p>
             <ul>
-                <li><?php esc_html_e( 'NationBuilder - Sync contacts and events', 'campaign-office' ); ?></li>
-                <li><?php esc_html_e( 'NGP VAN - Import voter data and volunteer information', 'campaign-office' ); ?></li>
-                <li><?php esc_html_e( 'Action Network - Share petitions and fundraising campaigns', 'campaign-office' ); ?></li>
+                <li><?php esc_html_e( 'NationBuilder - Sync contacts and events', 'campaignpress' ); ?></li>
+                <li><?php esc_html_e( 'NGP VAN - Import voter data and volunteer information', 'campaignpress' ); ?></li>
+                <li><?php esc_html_e( 'Action Network - Share petitions and fundraising campaigns', 'campaignpress' ); ?></li>
             </ul>
         </div>
     </div>

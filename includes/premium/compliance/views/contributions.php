@@ -27,29 +27,29 @@ $contributions = $wpdb->get_results("
 ?>
 <div class="wrap cp-fec-contributions">
     <h1>
-        <?php esc_html_e('FEC Contributions', 'campaign-office'); ?>
+        <?php esc_html_e('FEC Contributions', 'campaignpress'); ?>
         <a href="#" class="page-title-action" id="cp-add-contribution-btn">
-            <?php esc_html_e('Add Contribution', 'campaign-office'); ?>
+            <?php esc_html_e('Add Contribution', 'campaignpress'); ?>
         </a>
     </h1>
 
     <table class="wp-list-table widefat fixed striped">
         <thead>
             <tr>
-                <th><?php esc_html_e('Date', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Donor', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Amount', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Type', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Election', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Status', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Occupation/Employer', 'campaign-office'); ?></th>
+                <th><?php esc_html_e('Date', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Donor', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Amount', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Type', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Election', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Status', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Occupation/Employer', 'campaignpress'); ?></th>
             </tr>
         </thead>
         <tbody>
             <?php if (empty($contributions)): ?>
             <tr>
                 <td colspan="7" style="text-align: center; padding: 2rem;">
-                    <?php esc_html_e('No contributions recorded yet.', 'campaign-office'); ?>
+                    <?php esc_html_e('No contributions recorded yet.', 'campaignpress'); ?>
                 </td>
             </tr>
             <?php else: ?>
@@ -65,7 +65,7 @@ $contributions = $wpdb->get_results("
                     <td>
                         <strong style="color: #00a32a;">$<?php echo esc_html(number_format($contribution->amount, 2)); ?></strong>
                         <?php if ($contribution->amount >= CP_FEC_ITEMIZATION_THRESHOLD): ?>
-                        <br><span class="dashicons dashicons-flag" title="<?php esc_attr_e('Itemized', 'campaign-office'); ?>" style="color: #d63638; font-size: 14px;"></span>
+                        <br><span class="dashicons dashicons-flag" title="<?php esc_attr_e('Itemized', 'campaignpress'); ?>" style="color: #d63638; font-size: 14px;"></span>
                         <?php endif; ?>
                     </td>
                     <td><?php echo esc_html(ucfirst($contribution->contribution_type ?? 'monetary')); ?></td>

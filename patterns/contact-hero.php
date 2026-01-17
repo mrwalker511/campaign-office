@@ -2,7 +2,7 @@
 /**
  * Title: Contact Hero
  * Slug: campaignpress/contact-hero
- * Categories: campaign-office, call-to-action
+ * Categories: campaignpress, call-to-action
  * Keywords: contact, help, help center
  */
 ?>

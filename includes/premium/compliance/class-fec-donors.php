@@ -140,7 +140,7 @@ class CampaignPress_FEC_Donors {
         ));
 
         if ($existing_donor_id) {
-            return new WP_Error('duplicate_donor', __('This contact is already registered as a donor.', 'campaign-office'), array('donor_id' => $existing_donor_id));
+            return new WP_Error('duplicate_donor', __('This contact is already registered as a donor.', 'campaignpress'), array('donor_id' => $existing_donor_id));
         }
 
         // Prepare FEC-specific data
@@ -179,7 +179,7 @@ class CampaignPress_FEC_Donors {
         ));
 
         if ($result === false) {
-            return new WP_Error('db_error', __('Failed to create donor record.', 'campaign-office'));
+            return new WP_Error('db_error', __('Failed to create donor record.', 'campaignpress'));
         }
 
         $donor_id = $wpdb->insert_id;
@@ -213,7 +213,7 @@ class CampaignPress_FEC_Donors {
         ));
 
         if (!$donor) {
-            return new WP_Error('donor_not_found', __('Donor not found.', 'campaign-office'));
+            return new WP_Error('donor_not_found', __('Donor not found.', 'campaignpress'));
         }
 
         // Update Central Contact Info
@@ -271,7 +271,7 @@ class CampaignPress_FEC_Donors {
             );
 
             if (false === $result) {
-                return new WP_Error('db_error', __('Failed to update donor record.', 'campaign-office'));
+                return new WP_Error('db_error', __('Failed to update donor record.', 'campaignpress'));
             }
         }
 
@@ -545,21 +545,21 @@ class CampaignPress_FEC_Donors {
         // Check for foreign national (non-US country)
         if (!empty($donor_data['country']) && strtoupper($donor_data['country']) !== 'US') {
             $is_prohibited = true;
-            $reason = __('Foreign national contributions are prohibited per 52 U.S.C. §30121', 'campaign-office');
+            $reason = __('Foreign national contributions are prohibited per 52 U.S.C. §30121', 'campaignpress');
             $type = 'foreign_national';
         }
 
         // Check for corporate entity making direct contribution
         if (!empty($donor_data['donor_type']) && $donor_data['donor_type'] === 'corporation') {
             $is_prohibited = true;
-            $reason = __('Corporate treasury contributions are prohibited per 52 U.S.C. §30118. Corporations may contribute through a connected PAC.', 'campaign-office');
+            $reason = __('Corporate treasury contributions are prohibited per 52 U.S.C. §30118. Corporations may contribute through a connected PAC.', 'campaignpress');
             $type = 'corporate';
         }
 
         // Check for labor organization making direct contribution
         if (!empty($donor_data['donor_type']) && $donor_data['donor_type'] === 'labor_union') {
             $is_prohibited = true;
-            $reason = __('Labor organization treasury contributions are prohibited per 52 U.S.C. §30118. Labor organizations may contribute through a connected PAC.', 'campaign-office');
+            $reason = __('Labor organization treasury contributions are prohibited per 52 U.S.C. §30118. Labor organizations may contribute through a connected PAC.', 'campaignpress');
             $type = 'labor';
         }
 
@@ -655,37 +655,37 @@ class CampaignPress_FEC_Donors {
 
         // Required fields for individuals
         if (empty($data['first_name'])) {
-            $errors[] = __('First name is required.', 'campaign-office');
+            $errors[] = __('First name is required.', 'campaignpress');
         }
 
         if (empty($data['last_name'])) {
-            $errors[] = __('Last name is required.', 'campaign-office');
+            $errors[] = __('Last name is required.', 'campaignpress');
         }
 
         if (empty($data['street1'])) {
-            $errors[] = __('Street address is required.', 'campaign-office');
+            $errors[] = __('Street address is required.', 'campaignpress');
         }
 
         if (empty($data['city'])) {
-            $errors[] = __('City is required.', 'campaign-office');
+            $errors[] = __('City is required.', 'campaignpress');
         }
 
         if (empty($data['state'])) {
-            $errors[] = __('State is required.', 'campaign-office');
+            $errors[] = __('State is required.', 'campaignpress');
         }
 
         if (empty($data['zip'])) {
-            $errors[] = __('ZIP code is required.', 'campaign-office');
+            $errors[] = __('ZIP code is required.', 'campaignpress');
         }
 
         // Email validation
         if (!empty($data['email']) && !is_email($data['email'])) {
-            $errors[] = __('Invalid email address.', 'campaign-office');
+            $errors[] = __('Invalid email address.', 'campaignpress');
         }
 
         // ZIP code format validation
         if (!empty($data['zip']) && !preg_match('/^\d{5}(-\d{4})?$/', $data['zip'])) {
-            $errors[] = __('Invalid ZIP code format. Use XXXXX or XXXXX-XXXX.', 'campaign-office');
+            $errors[] = __('Invalid ZIP code format. Use XXXXX or XXXXX-XXXX.', 'campaignpress');
         }
 
         if (!empty($errors)) {
@@ -715,14 +715,14 @@ class CampaignPress_FEC_Donors {
         ));
 
         if ($contribution_count > 0) {
-            return new WP_Error('has_contributions', __('Cannot delete donor with contribution history. Archive the donor instead.', 'campaign-office'));
+            return new WP_Error('has_contributions', __('Cannot delete donor with contribution history. Archive the donor instead.', 'campaignpress'));
         }
 
         // Delete donor
         $result = $wpdb->delete($this->table_name, array('id' => $donor_id), array('%d'));
 
         if ($result === false) {
-            return new WP_Error('db_error', __('Failed to delete donor.', 'campaign-office'));
+            return new WP_Error('db_error', __('Failed to delete donor.', 'campaignpress'));
         }
 
         // Action hook after deletion

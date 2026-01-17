@@ -301,7 +301,7 @@ class CampaignPress_API_Endpoints {
         if ( ! get_option( 'campaignpress_api_enabled', 1 ) ) {
             return new WP_Error(
                 'api_disabled',
-                __( 'API is currently disabled.', 'campaign-office' ),
+                __( 'API is currently disabled.', 'campaignpress' ),
                 array( 'status' => 503 )
             );
         }
@@ -312,7 +312,7 @@ class CampaignPress_API_Endpoints {
         if ( $require_auth && ! is_user_logged_in() ) {
             return new WP_Error(
                 'rest_forbidden',
-                __( 'Authentication required.', 'campaign-office' ),
+                __( 'Authentication required.', 'campaignpress' ),
                 array( 'status' => 401 )
             );
         }
@@ -322,7 +322,7 @@ class CampaignPress_API_Endpoints {
             if ( ! current_user_can( 'manage_options' ) ) {
                 return new WP_Error(
                     'rest_forbidden',
-                    __( 'You do not have permission to perform this action.', 'campaign-office' ),
+                    __( 'You do not have permission to perform this action.', 'campaignpress' ),
                     array( 'status' => 403 )
                 );
             }
@@ -486,7 +486,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $contact ) {
             return new WP_Error(
                 'contact_not_found',
-                __( 'Contact not found.', 'campaign-office' ),
+                __( 'Contact not found.', 'campaignpress' ),
                 array( 'status' => 404 )
             );
         }
@@ -523,7 +523,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $inserted ) {
             return new WP_Error(
                 'contact_creation_failed',
-                __( 'Failed to create contact.', 'campaign-office' ),
+                __( 'Failed to create contact.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -559,7 +559,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $contact ) {
             return new WP_Error(
                 'contact_not_found',
-                __( 'Contact not found.', 'campaign-office' ),
+                __( 'Contact not found.', 'campaignpress' ),
                 array( 'status' => 404 )
             );
         }
@@ -588,7 +588,7 @@ class CampaignPress_API_Endpoints {
         if ( $updated === false ) {
             return new WP_Error(
                 'contact_update_failed',
-                __( 'Failed to update contact.', 'campaign-office' ),
+                __( 'Failed to update contact.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -623,7 +623,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $contact ) {
             return new WP_Error(
                 'contact_not_found',
-                __( 'Contact not found.', 'campaign-office' ),
+                __( 'Contact not found.', 'campaignpress' ),
                 array( 'status' => 404 )
             );
         }
@@ -637,7 +637,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $deleted ) {
             return new WP_Error(
                 'contact_deletion_failed',
-                __( 'Failed to delete contact.', 'campaign-office' ),
+                __( 'Failed to delete contact.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -714,7 +714,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $post || $post->post_type !== 'campaign_event' ) {
             return new WP_Error(
                 'event_not_found',
-                __( 'Event not found.', 'campaign-office' ),
+                __( 'Event not found.', 'campaignpress' ),
                 array( 'status' => 404 )
             );
         }
@@ -752,7 +752,7 @@ class CampaignPress_API_Endpoints {
         if ( is_wp_error( $post_id ) ) {
             return new WP_Error(
                 'event_creation_failed',
-                __( 'Failed to create event.', 'campaign-office' ),
+                __( 'Failed to create event.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -794,7 +794,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $post || $post->post_type !== 'campaign_event' ) {
             return new WP_Error(
                 'event_not_found',
-                __( 'Event not found.', 'campaign-office' ),
+                __( 'Event not found.', 'campaignpress' ),
                 array( 'status' => 404 )
             );
         }
@@ -855,7 +855,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $post || $post->post_type !== 'campaign_event' ) {
             return new WP_Error(
                 'event_not_found',
-                __( 'Event not found.', 'campaign-office' ),
+                __( 'Event not found.', 'campaignpress' ),
                 array( 'status' => 404 )
             );
         }
@@ -865,7 +865,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $deleted ) {
             return new WP_Error(
                 'event_deletion_failed',
-                __( 'Failed to delete event.', 'campaign-office' ),
+                __( 'Failed to delete event.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -944,7 +944,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $volunteer ) {
             return new WP_Error(
                 'volunteer_not_found',
-                __( 'Volunteer not found.', 'campaign-office' ),
+                __( 'Volunteer not found.', 'campaignpress' ),
                 array( 'status' => 404 )
             );
         }
@@ -975,7 +975,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $inserted ) {
             return new WP_Error(
                 'volunteer_creation_failed',
-                __( 'Failed to create volunteer.', 'campaign-office' ),
+                __( 'Failed to create volunteer.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -1009,7 +1009,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $volunteer ) {
             return new WP_Error(
                 'volunteer_not_found',
-                __( 'Volunteer not found.', 'campaign-office' ),
+                __( 'Volunteer not found.', 'campaignpress' ),
                 array( 'status' => 404 )
             );
         }
@@ -1032,7 +1032,7 @@ class CampaignPress_API_Endpoints {
         if ( $updated === false ) {
             return new WP_Error(
                 'volunteer_update_failed',
-                __( 'Failed to update volunteer.', 'campaign-office' ),
+                __( 'Failed to update volunteer.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -1078,7 +1078,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $inserted ) {
             return new WP_Error(
                 'donation_recording_failed',
-                __( 'Failed to record donation.', 'campaign-office' ),
+                __( 'Failed to record donation.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -1114,7 +1114,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $analytics ) {
             return new WP_Error(
                 'analytics_unavailable',
-                __( 'Analytics module not available.', 'campaign-office' ),
+                __( 'Analytics module not available.', 'campaignpress' ),
                 array( 'status' => 503 )
             );
         }
@@ -1169,7 +1169,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $inserted ) {
             return new WP_Error(
                 'canvassing_submission_failed',
-                __( 'Failed to submit canvassing result.', 'campaign-office' ),
+                __( 'Failed to submit canvassing result.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -1205,7 +1205,7 @@ class CampaignPress_API_Endpoints {
         if ( ! $inserted ) {
             return new WP_Error(
                 'phone_banking_submission_failed',
-                __( 'Failed to submit phone banking result.', 'campaign-office' ),
+                __( 'Failed to submit phone banking result.', 'campaignpress' ),
                 array( 'status' => 500 )
             );
         }
@@ -1292,7 +1292,7 @@ class CampaignPress_API_Endpoints {
         if ( count( $requests ) > 50 ) {
             return new WP_Error(
                 'batch_limit_exceeded',
-                __( 'Maximum 50 requests per batch allowed.', 'campaign-office' ),
+                __( 'Maximum 50 requests per batch allowed.', 'campaignpress' ),
                 array( 'status' => 400 )
             );
         }

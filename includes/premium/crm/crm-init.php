@@ -197,7 +197,7 @@ class CampaignPress_CRM_Init {
         }
 
         // Load text domain for translations
-        load_plugin_textdomain( 'campaign-office', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+        load_plugin_textdomain( 'campaignpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
         // Allow customization after initialization
         do_action( 'cp_crm_init', $this );
@@ -227,8 +227,8 @@ class CampaignPress_CRM_Init {
     public function add_admin_menu() {
         // Main CRM menu
         add_menu_page(
-            __( 'CRM', 'campaign-office' ),
-            __( 'CRM', 'campaign-office' ),
+            __( 'CRM', 'campaignpress' ),
+            __( 'CRM', 'campaignpress' ),
             'edit_posts',
             'cp-crm',
             array( $this, 'render_dashboard_page' ),
@@ -239,8 +239,8 @@ class CampaignPress_CRM_Init {
         // Dashboard submenu
         add_submenu_page(
             'cp-crm',
-            __( 'CRM Dashboard', 'campaign-office' ),
-            __( 'Dashboard', 'campaign-office' ),
+            __( 'CRM Dashboard', 'campaignpress' ),
+            __( 'Dashboard', 'campaignpress' ),
             'edit_posts',
             'cp-crm',
             array( $this, 'render_dashboard_page' )
@@ -249,8 +249,8 @@ class CampaignPress_CRM_Init {
         // Contacts submenu
         add_submenu_page(
             'cp-crm',
-            __( 'Contacts', 'campaign-office' ),
-            __( 'Contacts', 'campaign-office' ),
+            __( 'Contacts', 'campaignpress' ),
+            __( 'Contacts', 'campaignpress' ),
             'edit_posts',
             'cp-crm-contacts',
             array( $this, 'render_contacts_page' )
@@ -259,8 +259,8 @@ class CampaignPress_CRM_Init {
         // Segments submenu
         add_submenu_page(
             'cp-crm',
-            __( 'Segments', 'campaign-office' ),
-            __( 'Segments', 'campaign-office' ),
+            __( 'Segments', 'campaignpress' ),
+            __( 'Segments', 'campaignpress' ),
             'edit_posts',
             'cp-crm-segments',
             array( $this, 'render_segments_page' )
@@ -269,8 +269,8 @@ class CampaignPress_CRM_Init {
         // Import/Export submenu
         add_submenu_page(
             'cp-crm',
-            __( 'Import/Export', 'campaign-office' ),
-            __( 'Import/Export', 'campaign-office' ),
+            __( 'Import/Export', 'campaignpress' ),
+            __( 'Import/Export', 'campaignpress' ),
             'manage_options',
             'cp-crm-import-export',
             array( $this, 'render_import_export_page' )
@@ -279,8 +279,8 @@ class CampaignPress_CRM_Init {
         // Interactions submenu
         add_submenu_page(
             'cp-crm',
-            __( 'Interactions', 'campaign-office' ),
-            __( 'Interactions', 'campaign-office' ),
+            __( 'Interactions', 'campaignpress' ),
+            __( 'Interactions', 'campaignpress' ),
             'edit_posts',
             'cp-crm-interactions',
             array( $this, 'render_interactions_page' )
@@ -305,28 +305,28 @@ class CampaignPress_CRM_Init {
 
             <div class="cp-crm-stats-grid">
                 <div class="cp-crm-stat-card">
-                    <h3><?php esc_html_e( 'Total Contacts', 'campaign-office' ); ?></h3>
+                    <h3><?php esc_html_e( 'Total Contacts', 'campaignpress' ); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html( number_format( $stats['total_contacts'] ) ); ?></div>
                 </div>
                 <div class="cp-crm-stat-card">
-                    <h3><?php esc_html_e( 'Total Interactions', 'campaign-office' ); ?></h3>
+                    <h3><?php esc_html_e( 'Total Interactions', 'campaignpress' ); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html( number_format( $stats['total_interactions'] ) ); ?></div>
                 </div>
                 <div class="cp-crm-stat-card">
-                    <h3><?php esc_html_e( 'Active Segments', 'campaign-office' ); ?></h3>
+                    <h3><?php esc_html_e( 'Active Segments', 'campaignpress' ); ?></h3>
                     <div class="cp-stat-number"><?php echo esc_html( number_format( $stats['total_segments'] ) ); ?></div>
                 </div>
             </div>
 
             <div class="cp-crm-section">
-                <h2><?php esc_html_e( 'Recent Contacts', 'campaign-office' ); ?></h2>
+                <h2><?php esc_html_e( 'Recent Contacts', 'campaignpress' ); ?></h2>
                 <table class="wp-list-table widefat fixed striped">
                     <thead>
                         <tr>
-                            <th><?php esc_html_e( 'Name', 'campaign-office' ); ?></th>
-                            <th><?php esc_html_e( 'Email', 'campaign-office' ); ?></th>
-                            <th><?php esc_html_e( 'Phone', 'campaign-office' ); ?></th>
-                            <th><?php esc_html_e( 'Created', 'campaign-office' ); ?></th>
+                            <th><?php esc_html_e( 'Name', 'campaignpress' ); ?></th>
+                            <th><?php esc_html_e( 'Email', 'campaignpress' ); ?></th>
+                            <th><?php esc_html_e( 'Phone', 'campaignpress' ); ?></th>
+                            <th><?php esc_html_e( 'Created', 'campaignpress' ); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -341,7 +341,7 @@ class CampaignPress_CRM_Init {
                             <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
-                                <td colspan="4"><?php esc_html_e( 'No contacts found.', 'campaign-office' ); ?></td>
+                                <td colspan="4"><?php esc_html_e( 'No contacts found.', 'campaignpress' ); ?></td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -364,13 +364,13 @@ class CampaignPress_CRM_Init {
             <div class="cp-crm-toolbar">
                 <form method="get" action="">
                     <input type="hidden" name="page" value="cp-crm-contacts">
-                    <input type="text" name="s" placeholder="<?php esc_attr_e( 'Search contacts...', 'campaign-office' ); ?>" class="regular-text">
-                    <button type="submit" class="button"><?php esc_html_e( 'Search', 'campaign-office' ); ?></button>
+                    <input type="text" name="s" placeholder="<?php esc_attr_e( 'Search contacts...', 'campaignpress' ); ?>" class="regular-text">
+                    <button type="submit" class="button"><?php esc_html_e( 'Search', 'campaignpress' ); ?></button>
                 </form>
-                <a href="#" class="button button-primary"><?php esc_html_e( 'Add New Contact', 'campaign-office' ); ?></a>
+                <a href="#" class="button button-primary"><?php esc_html_e( 'Add New Contact', 'campaignpress' ); ?></a>
             </div>
 
-            <p><?php esc_html_e( 'Use the search above to find and manage contacts in the CRM.', 'campaign-office' ); ?></p>
+            <p><?php esc_html_e( 'Use the search above to find and manage contacts in the CRM.', 'campaignpress' ); ?></p>
         </div>
         <?php
     }
@@ -385,9 +385,9 @@ class CampaignPress_CRM_Init {
         <div class="wrap cp-crm-segments">
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-            <p><?php esc_html_e( 'Manage contact segments and smart lists for targeted communication.', 'campaign-office' ); ?></p>
+            <p><?php esc_html_e( 'Manage contact segments and smart lists for targeted communication.', 'campaignpress' ); ?></p>
 
-            <a href="#" class="button button-primary"><?php esc_html_e( 'Create New Segment', 'campaign-office' ); ?></a>
+            <a href="#" class="button button-primary"><?php esc_html_e( 'Create New Segment', 'campaignpress' ); ?></a>
         </div>
         <?php
     }
@@ -403,36 +403,36 @@ class CampaignPress_CRM_Init {
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
             <div class="cp-crm-import-section">
-                <h2><?php esc_html_e( 'Import Contacts', 'campaign-office' ); ?></h2>
+                <h2><?php esc_html_e( 'Import Contacts', 'campaignpress' ); ?></h2>
                 <form method="post" enctype="multipart/form-data">
                     <?php wp_nonce_field( 'cp_crm_import', 'cp_crm_import_nonce' ); ?>
                     <table class="form-table">
                         <tr>
-                            <th scope="row"><?php esc_html_e( 'CSV File', 'campaign-office' ); ?></th>
+                            <th scope="row"><?php esc_html_e( 'CSV File', 'campaignpress' ); ?></th>
                             <td><input type="file" name="import_file" accept=".csv" required></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php esc_html_e( 'Format', 'campaign-office' ); ?></th>
+                            <th scope="row"><?php esc_html_e( 'Format', 'campaignpress' ); ?></th>
                             <td>
                                 <select name="format">
-                                    <option value="generic"><?php esc_html_e( 'Generic CSV', 'campaign-office' ); ?></option>
-                                    <option value="l2"><?php esc_html_e( 'L2 Political', 'campaign-office' ); ?></option>
-                                    <option value="targetsmart"><?php esc_html_e( 'TargetSmart', 'campaign-office' ); ?></option>
-                                    <option value="ngpvan"><?php esc_html_e( 'NGP VAN', 'campaign-office' ); ?></option>
+                                    <option value="generic"><?php esc_html_e( 'Generic CSV', 'campaignpress' ); ?></option>
+                                    <option value="l2"><?php esc_html_e( 'L2 Political', 'campaignpress' ); ?></option>
+                                    <option value="targetsmart"><?php esc_html_e( 'TargetSmart', 'campaignpress' ); ?></option>
+                                    <option value="ngpvan"><?php esc_html_e( 'NGP VAN', 'campaignpress' ); ?></option>
                                 </select>
                             </td>
                         </tr>
                     </table>
-                    <?php submit_button( __( 'Import Contacts', 'campaign-office' ) ); ?>
+                    <?php submit_button( __( 'Import Contacts', 'campaignpress' ) ); ?>
                 </form>
             </div>
 
             <div class="cp-crm-export-section">
-                <h2><?php esc_html_e( 'Export Contacts', 'campaign-office' ); ?></h2>
+                <h2><?php esc_html_e( 'Export Contacts', 'campaignpress' ); ?></h2>
                 <form method="post" action="">
                     <?php wp_nonce_field( 'cp_crm_export', 'cp_crm_export_nonce' ); ?>
-                    <p><?php esc_html_e( 'Export contacts to CSV format for use in other systems.', 'campaign-office' ); ?></p>
-                    <button type="submit" name="cp_crm_export" value="1" class="button button-secondary"><?php esc_html_e( 'Export All Contacts', 'campaign-office' ); ?></button>
+                    <p><?php esc_html_e( 'Export contacts to CSV format for use in other systems.', 'campaignpress' ); ?></p>
+                    <button type="submit" name="cp_crm_export" value="1" class="button button-secondary"><?php esc_html_e( 'Export All Contacts', 'campaignpress' ); ?></button>
                 </form>
             </div>
         </div>
@@ -449,7 +449,7 @@ class CampaignPress_CRM_Init {
         <div class="wrap cp-crm-interactions">
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-            <p><?php esc_html_e( 'View and manage all contact interactions including calls, emails, door knocks, and more.', 'campaign-office' ); ?></p>
+            <p><?php esc_html_e( 'View and manage all contact interactions including calls, emails, door knocks, and more.', 'campaignpress' ); ?></p>
         </div>
         <?php
     }
@@ -701,14 +701,14 @@ class CampaignPress_CRM_Init {
 
         // Check capabilities
         if ( ! current_user_can( 'edit_posts' ) ) {
-            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaign-office' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
         }
 
         $query = isset( $_GET['q'] ) ? sanitize_text_field( $_GET['q'] ) : '';
         $limit = isset( $_GET['limit'] ) ? absint( $_GET['limit'] ) : 20;
 
         if ( empty( $query ) ) {
-            wp_send_json_error( array( 'message' => __( 'Search query required.', 'campaign-office' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Search query required.', 'campaignpress' ) ) );
         }
 
         $contacts = $this->contacts->search_contacts( $query, $limit );
@@ -727,12 +727,12 @@ class CampaignPress_CRM_Init {
 
         // Check capabilities
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaign-office' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
         }
 
         // Handle file upload
         if ( empty( $_FILES['file'] ) ) {
-            wp_send_json_error( array( 'message' => __( 'No file uploaded.', 'campaign-office' ) ) );
+            wp_send_json_error( array( 'message' => __( 'No file uploaded.', 'campaignpress' ) ) );
         }
 
         $file = $_FILES['file'];
@@ -771,7 +771,7 @@ class CampaignPress_CRM_Init {
 
         // Check capabilities
         if ( ! current_user_can( 'edit_posts' ) ) {
-            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaign-office' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'campaignpress' ) ) );
         }
 
         // Get export parameters
@@ -901,7 +901,7 @@ class CampaignPress_CRM_Init {
         $contact = $this->contacts->get_contact( $request['id'] );
 
         if ( ! $contact ) {
-            return new WP_Error( 'not_found', __( 'Contact not found.', 'campaign-office' ), array( 'status' => 404 ) );
+            return new WP_Error( 'not_found', __( 'Contact not found.', 'campaignpress' ), array( 'status' => 404 ) );
         }
 
         return new WP_REST_Response( $contact, 200 );

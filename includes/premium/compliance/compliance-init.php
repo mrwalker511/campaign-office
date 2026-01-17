@@ -284,7 +284,7 @@ class CampaignPress_FEC_Compliance {
         }
 
         // Load text domain for translations
-        load_plugin_textdomain('campaign-office', false, dirname(plugin_basename(__FILE__)) . '/languages');
+        load_plugin_textdomain('campaignpress', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
         // Allow customization after initialization
         do_action('cp_fec_init', $this);
@@ -466,8 +466,8 @@ class CampaignPress_FEC_Compliance {
     public function add_admin_menu() {
         // Main FEC Compliance menu
         add_menu_page(
-            __('FEC Compliance', 'campaign-office'),
-            __('FEC Compliance', 'campaign-office'),
+            __('FEC Compliance', 'campaignpress'),
+            __('FEC Compliance', 'campaignpress'),
             'manage_options',
             'cp-fec-compliance',
             array($this, 'render_dashboard_page'),
@@ -478,8 +478,8 @@ class CampaignPress_FEC_Compliance {
         // Dashboard submenu
         add_submenu_page(
             'cp-fec-compliance',
-            __('Compliance Dashboard', 'campaign-office'),
-            __('Dashboard', 'campaign-office'),
+            __('Compliance Dashboard', 'campaignpress'),
+            __('Dashboard', 'campaignpress'),
             'manage_options',
             'cp-fec-compliance',
             array($this, 'render_dashboard_page')
@@ -488,8 +488,8 @@ class CampaignPress_FEC_Compliance {
         // Contributions submenu
         add_submenu_page(
             'cp-fec-compliance',
-            __('Contributions', 'campaign-office'),
-            __('Contributions', 'campaign-office'),
+            __('Contributions', 'campaignpress'),
+            __('Contributions', 'campaignpress'),
             'manage_options',
             'cp-fec-contributions',
             array($this, 'render_contributions_page')
@@ -498,8 +498,8 @@ class CampaignPress_FEC_Compliance {
         // Donors submenu
         add_submenu_page(
             'cp-fec-compliance',
-            __('Donors', 'campaign-office'),
-            __('Donors', 'campaign-office'),
+            __('Donors', 'campaignpress'),
+            __('Donors', 'campaignpress'),
             'manage_options',
             'cp-fec-donors',
             array($this, 'render_donors_page')
@@ -508,8 +508,8 @@ class CampaignPress_FEC_Compliance {
         // Reports submenu
         add_submenu_page(
             'cp-fec-compliance',
-            __('FEC Reports', 'campaign-office'),
-            __('Reports', 'campaign-office'),
+            __('FEC Reports', 'campaignpress'),
+            __('Reports', 'campaignpress'),
             'manage_options',
             'cp-fec-reports',
             array($this, 'render_reports_page')
@@ -518,8 +518,8 @@ class CampaignPress_FEC_Compliance {
         // Audit Trail submenu
         add_submenu_page(
             'cp-fec-compliance',
-            __('Audit Trail', 'campaign-office'),
-            __('Audit Trail', 'campaign-office'),
+            __('Audit Trail', 'campaignpress'),
+            __('Audit Trail', 'campaignpress'),
             'manage_options',
             'cp-fec-audit',
             array($this, 'render_audit_page')
@@ -528,8 +528,8 @@ class CampaignPress_FEC_Compliance {
         // Settings submenu
         add_submenu_page(
             'cp-fec-compliance',
-            __('Compliance Settings', 'campaign-office'),
-            __('Settings', 'campaign-office'),
+            __('Compliance Settings', 'campaignpress'),
+            __('Settings', 'campaignpress'),
             'manage_options',
             'cp-fec-settings',
             array($this, 'render_settings_page')
@@ -567,12 +567,12 @@ class CampaignPress_FEC_Compliance {
                 '48hour_threshold' => CP_FEC_48HOUR_THRESHOLD,
             ),
             'strings' => array(
-                'validating' => __('Validating contribution...', 'campaign-office'),
-                'processing' => __('Processing...', 'campaign-office'),
-                'success' => __('Success!', 'campaign-office'),
-                'error' => __('An error occurred.', 'campaign-office'),
-                'limit_exceeded' => __('Contribution limit exceeded!', 'campaign-office'),
-                'prohibited_source' => __('Prohibited contribution source!', 'campaign-office'),
+                'validating' => __('Validating contribution...', 'campaignpress'),
+                'processing' => __('Processing...', 'campaignpress'),
+                'success' => __('Success!', 'campaignpress'),
+                'error' => __('An error occurred.', 'campaignpress'),
+                'limit_exceeded' => __('Contribution limit exceeded!', 'campaignpress'),
+                'prohibited_source' => __('Prohibited contribution source!', 'campaignpress'),
             ),
         ));
     }
@@ -607,8 +607,8 @@ class CampaignPress_FEC_Compliance {
         if ($alert_email) {
             wp_mail(
                 $alert_email,
-                __('Quarterly FEC Report Due Soon', 'campaign-office'),
-                __('This is a reminder that your quarterly FEC report is due soon. Please log in to generate and file your report.', 'campaign-office')
+                __('Quarterly FEC Report Due Soon', 'campaignpress'),
+                __('This is a reminder that your quarterly FEC report is due soon. Please log in to generate and file your report.', 'campaignpress')
             );
         }
     }
@@ -632,7 +632,7 @@ class CampaignPress_FEC_Compliance {
         check_ajax_referer('cp_fec_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         $donor_id = isset($_POST['donor_id']) ? absint($_POST['donor_id']) : 0;
@@ -657,7 +657,7 @@ class CampaignPress_FEC_Compliance {
         check_ajax_referer('cp_fec_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         $contribution_data = isset($_POST['contribution']) ? $_POST['contribution'] : array();
@@ -680,7 +680,7 @@ class CampaignPress_FEC_Compliance {
         check_ajax_referer('cp_fec_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         $report_type = isset($_POST['report_type']) ? sanitize_text_field($_POST['report_type']) : 'quarterly';
@@ -704,7 +704,7 @@ class CampaignPress_FEC_Compliance {
         check_ajax_referer('cp_fec_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         $report_id = isset($_POST['report_id']) ? absint($_POST['report_id']) : 0;
@@ -727,7 +727,7 @@ class CampaignPress_FEC_Compliance {
         check_ajax_referer('cp_fec_nonce', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Permission denied.', 'campaign-office')));
+            wp_send_json_error(array('message' => __('Permission denied.', 'campaignpress')));
         }
 
         $donor_id = isset($_POST['donor_id']) ? absint($_POST['donor_id']) : 0;

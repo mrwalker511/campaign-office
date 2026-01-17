@@ -2,7 +2,7 @@
 /**
  * Title: Election Countdown
  * Slug: campaignpress/countdown-timer
- * Categories: campaign-office, featured
+ * Categories: campaignpress, featured
  * Keywords: countdown, election, day
  */
 ?>

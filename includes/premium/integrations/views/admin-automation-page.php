@@ -10,13 +10,13 @@ defined('ABSPATH') || exit;
 ?>
 
 <div class="wrap">
-    <h1><?php echo esc_html__('Automation Workflows', 'campaign-office'); ?></h1>
-    <p><?php echo esc_html__('Create and manage automated email and SMS workflows for your campaign.', 'campaign-office'); ?></p>
+    <h1><?php echo esc_html__('Automation Workflows', 'campaignpress'); ?></h1>
+    <p><?php echo esc_html__('Create and manage automated email and SMS workflows for your campaign.', 'campaignpress'); ?></p>
 
     <div class="cp-automation-container">
         <div class="cp-automation-header">
             <button class="button button-primary" id="cp-create-workflow">
-                <?php echo esc_html__('Create New Workflow', 'campaign-office'); ?>
+                <?php echo esc_html__('Create New Workflow', 'campaignpress'); ?>
             </button>
         </div>
 
@@ -24,18 +24,18 @@ defined('ABSPATH') || exit;
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php echo esc_html__('Workflow Name', 'campaign-office'); ?></th>
-                        <th><?php echo esc_html__('Trigger', 'campaign-office'); ?></th>
-                        <th><?php echo esc_html__('Actions', 'campaign-office'); ?></th>
-                        <th><?php echo esc_html__('Status', 'campaign-office'); ?></th>
-                        <th><?php echo esc_html__('Manage', 'campaign-office'); ?></th>
+                        <th><?php echo esc_html__('Workflow Name', 'campaignpress'); ?></th>
+                        <th><?php echo esc_html__('Trigger', 'campaignpress'); ?></th>
+                        <th><?php echo esc_html__('Actions', 'campaignpress'); ?></th>
+                        <th><?php echo esc_html__('Status', 'campaignpress'); ?></th>
+                        <th><?php echo esc_html__('Manage', 'campaignpress'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($workflows as $workflow) :
                         $workflow_id = isset($workflow['id']) ? intval($workflow['id']) : 0;
-                        $workflow_name = isset($workflow['name']) ? $workflow['name'] : __('Untitled Workflow', 'campaign-office');
-                        $workflow_trigger = isset($workflow['trigger']) ? $workflow['trigger'] : __('Unknown', 'campaign-office');
+                        $workflow_name = isset($workflow['name']) ? $workflow['name'] : __('Untitled Workflow', 'campaignpress');
+                        $workflow_trigger = isset($workflow['trigger']) ? $workflow['trigger'] : __('Unknown', 'campaignpress');
                         $workflow_status = isset($workflow['status']) ? $workflow['status'] : 'inactive';
                         $action_count = isset($workflow['actions']) ? count($workflow['actions']) : 0;
                     ?>
@@ -45,31 +45,31 @@ defined('ABSPATH') || exit;
                         <td>
                             <?php
                             /* translators: %d: number of actions */
-                            echo esc_html(sprintf(_n('%d action', '%d actions', $action_count, 'campaign-office'), $action_count));
+                            echo esc_html(sprintf(_n('%d action', '%d actions', $action_count, 'campaignpress'), $action_count));
                             ?>
                         </td>
                         <td>
                             <?php if ($workflow_status === 'active') : ?>
                                 <span class="dashicons dashicons-yes-alt" style="color: #46b450;"></span>
-                                <?php echo esc_html__('Active', 'campaign-office'); ?>
+                                <?php echo esc_html__('Active', 'campaignpress'); ?>
                             <?php else : ?>
                                 <span class="dashicons dashicons-dismiss" style="color: #dc3232;"></span>
-                                <?php echo esc_html__('Inactive', 'campaign-office'); ?>
+                                <?php echo esc_html__('Inactive', 'campaignpress'); ?>
                             <?php endif; ?>
                         </td>
                         <td>
                             <button class="button button-secondary cp-edit-workflow"
                                     data-workflow-id="<?php echo esc_attr($workflow_id); ?>">
-                                <?php echo esc_html__('Edit', 'campaign-office'); ?>
+                                <?php echo esc_html__('Edit', 'campaignpress'); ?>
                             </button>
                             <button class="button cp-toggle-workflow"
                                     data-workflow-id="<?php echo esc_attr($workflow_id); ?>"
                                     data-status="<?php echo esc_attr($workflow_status); ?>">
-                                <?php echo $workflow_status === 'active' ? esc_html__('Deactivate', 'campaign-office') : esc_html__('Activate', 'campaign-office'); ?>
+                                <?php echo $workflow_status === 'active' ? esc_html__('Deactivate', 'campaignpress') : esc_html__('Activate', 'campaignpress'); ?>
                             </button>
                             <button class="button cp-delete-workflow"
                                     data-workflow-id="<?php echo esc_attr($workflow_id); ?>">
-                                <?php echo esc_html__('Delete', 'campaign-office'); ?>
+                                <?php echo esc_html__('Delete', 'campaignpress'); ?>
                             </button>
                         </td>
                     </tr>
@@ -78,8 +78,8 @@ defined('ABSPATH') || exit;
             </table>
         <?php else : ?>
             <div class="cp-no-workflows">
-                <p><?php echo esc_html__('No workflows created yet.', 'campaign-office'); ?></p>
-                <p><?php echo esc_html__('Create your first automation workflow to streamline your campaign communications.', 'campaign-office'); ?></p>
+                <p><?php echo esc_html__('No workflows created yet.', 'campaignpress'); ?></p>
+                <p><?php echo esc_html__('Create your first automation workflow to streamline your campaign communications.', 'campaignpress'); ?></p>
             </div>
         <?php endif; ?>
     </div>

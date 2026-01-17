@@ -2,7 +2,7 @@
 /**
  * Title: Political Hero Section
  * Slug: campaignpress/hero-political
- * Categories: campaign-office, featured
+ * Categories: campaignpress, featured
  * Keywords: hero, political, campaign, cover
  */
 ?>

@@ -30,28 +30,28 @@ $donors = $wpdb->get_results("
 ?>
 <div class="wrap cp-fec-donors">
     <h1>
-        <?php esc_html_e('FEC Donors', 'campaign-office'); ?>
+        <?php esc_html_e('FEC Donors', 'campaignpress'); ?>
         <a href="#" class="page-title-action" id="cp-add-donor-btn">
-            <?php esc_html_e('Add Donor', 'campaign-office'); ?>
+            <?php esc_html_e('Add Donor', 'campaignpress'); ?>
         </a>
     </h1>
 
     <table class="wp-list-table widefat fixed striped">
         <thead>
             <tr>
-                <th><?php esc_html_e('Name', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Contact', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Occupation/Employer', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Total Contributed', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('# of Contributions', 'campaign-office'); ?></th>
-                <th><?php esc_html_e('Limit Status', 'campaign-office'); ?></th>
+                <th><?php esc_html_e('Name', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Contact', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Occupation/Employer', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Total Contributed', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('# of Contributions', 'campaignpress'); ?></th>
+                <th><?php esc_html_e('Limit Status', 'campaignpress'); ?></th>
             </tr>
         </thead>
         <tbody>
             <?php if (empty($donors)): ?>
             <tr>
                 <td colspan="6" style="text-align: center; padding: 2rem;">
-                    <?php esc_html_e('No donors recorded yet.', 'campaign-office'); ?>
+                    <?php esc_html_e('No donors recorded yet.', 'campaignpress'); ?>
                 </td>
             </tr>
             <?php else: ?>

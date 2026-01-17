@@ -77,7 +77,7 @@ class CampaignPress_CRM_Import_Export {
 	public function import_csv( $file_path, $args = array() ) {
 		// Validate file exists
 		if ( ! file_exists( $file_path ) ) {
-			return new WP_Error( 'file_not_found', __( 'CSV file not found.', 'campaign-office' ) );
+			return new WP_Error( 'file_not_found', __( 'CSV file not found.', 'campaignpress' ) );
 		}
 
 		// Parse arguments
@@ -100,7 +100,7 @@ class CampaignPress_CRM_Import_Export {
 
 		// Validate format
 		if ( ! in_array( $args['format'], $this->supported_formats, true ) ) {
-			return new WP_Error( 'invalid_format', __( 'Invalid import format.', 'campaign-office' ) );
+			return new WP_Error( 'invalid_format', __( 'Invalid import format.', 'campaignpress' ) );
 		}
 
 		// Initialize counters
@@ -118,7 +118,7 @@ class CampaignPress_CRM_Import_Export {
 		// Open file
 		$handle = fopen( $file_path, 'r' );
 		if ( false === $handle ) {
-			return new WP_Error( 'file_error', __( 'Unable to open CSV file.', 'campaign-office' ) );
+			return new WP_Error( 'file_error', __( 'Unable to open CSV file.', 'campaignpress' ) );
 		}
 
 		// Get field mapping
@@ -130,7 +130,7 @@ class CampaignPress_CRM_Import_Export {
 			$headers = fgetcsv( $handle, 0, $args['delimiter'], $args['enclosure'] );
 			if ( false === $headers ) {
 				fclose( $handle );
-				return new WP_Error( 'file_error', __( 'Unable to read CSV headers.', 'campaign-office' ) );
+				return new WP_Error( 'file_error', __( 'Unable to read CSV headers.', 'campaignpress' ) );
 			}
 		}
 
@@ -158,7 +158,7 @@ class CampaignPress_CRM_Import_Export {
 			$segment_result = $this->segments->create_segment( array(
 				'name'         => $args['segment_name'],
 				'segment_type' => 'static',
-				'description'  => sprintf( __( 'Imported from CSV on %s', 'campaign-office' ), date( 'Y-m-d H:i:s' ) ),
+				'description'  => sprintf( __( 'Imported from CSV on %s', 'campaignpress' ), date( 'Y-m-d H:i:s' ) ),
 			) );
 			if ( ! is_wp_error( $segment_result ) ) {
 				$segment_id = $segment_result;
@@ -179,7 +179,7 @@ class CampaignPress_CRM_Import_Export {
 			// Validate contact data
 			if ( empty( $contact_data['email'] ) && empty( $contact_data['first_name'] ) && empty( $contact_data['last_name'] ) ) {
 				$results['skipped']++;
-				$results['errors'][] = sprintf( __( 'Row %d: Missing required fields', 'campaign-office' ), $row_number );
+				$results['errors'][] = sprintf( __( 'Row %d: Missing required fields', 'campaignpress' ), $row_number );
 				continue;
 			}
 
@@ -256,7 +256,7 @@ class CampaignPress_CRM_Import_Export {
 					$result = $this->contacts->update_contact( $existing_contact->id, $contact_data );
 					if ( is_wp_error( $result ) ) {
 						$results['skipped']++;
-						$results['errors'][] = sprintf( __( 'Row %d: %s', 'campaign-office' ), $row_number, $result->get_error_message() );
+						$results['errors'][] = sprintf( __( 'Row %d: %s', 'campaignpress' ), $row_number, $result->get_error_message() );
 					} else {
 						$results['updated']++;
 						$contact_id = $existing_contact->id;
@@ -277,7 +277,7 @@ class CampaignPress_CRM_Import_Export {
 				$result = $this->contacts->create_contact( $contact_data );
 				if ( is_wp_error( $result ) ) {
 					$results['skipped']++;
-					$results['errors'][] = sprintf( __( 'Row %d: %s', 'campaign-office' ), $row_number, $result->get_error_message() );
+					$results['errors'][] = sprintf( __( 'Row %d: %s', 'campaignpress' ), $row_number, $result->get_error_message() );
 				} else {
 					$results['imported']++;
 					$contact_id = $result;
@@ -465,7 +465,7 @@ class CampaignPress_CRM_Import_Export {
 		$contacts = $this->get_contacts_for_export( $args );
 
 		if ( empty( $contacts ) ) {
-			return new WP_Error( 'no_contacts', __( 'No contacts to export.', 'campaign-office' ) );
+			return new WP_Error( 'no_contacts', __( 'No contacts to export.', 'campaignpress' ) );
 		}
 
 		// Get fields to export
@@ -483,7 +483,7 @@ class CampaignPress_CRM_Import_Export {
 		// Open file for writing
 		$handle = fopen( $file_path, 'w' );
 		if ( false === $handle ) {
-			return new WP_Error( 'file_error', __( 'Unable to create export file.', 'campaign-office' ) );
+			return new WP_Error( 'file_error', __( 'Unable to create export file.', 'campaignpress' ) );
 		}
 
 		// Write header row
@@ -600,19 +600,19 @@ class CampaignPress_CRM_Import_Export {
 	 */
 	public function parse_csv_headers( $file_path ) {
 		if ( ! file_exists( $file_path ) ) {
-			return new WP_Error( 'file_not_found', __( 'CSV file not found.', 'campaign-office' ) );
+			return new WP_Error( 'file_not_found', __( 'CSV file not found.', 'campaignpress' ) );
 		}
 
 		$handle = fopen( $file_path, 'r' );
 		if ( false === $handle ) {
-			return new WP_Error( 'file_error', __( 'Unable to open CSV file.', 'campaign-office' ) );
+			return new WP_Error( 'file_error', __( 'Unable to open CSV file.', 'campaignpress' ) );
 		}
 
 		$headers = fgetcsv( $handle );
 		fclose( $handle );
 
 		if ( false === $headers ) {
-			return new WP_Error( 'file_error', __( 'Unable to read CSV headers.', 'campaign-office' ) );
+			return new WP_Error( 'file_error', __( 'Unable to read CSV headers.', 'campaignpress' ) );
 		}
 
 		return $headers;
@@ -728,25 +728,25 @@ class CampaignPress_CRM_Import_Export {
 	public function validate_import_file( $file_path ) {
 		// Check file exists
 		if ( ! file_exists( $file_path ) ) {
-			return new WP_Error( 'file_not_found', __( 'File not found.', 'campaign-office' ) );
+			return new WP_Error( 'file_not_found', __( 'File not found.', 'campaignpress' ) );
 		}
 
 		// Check file size (max 50MB)
 		$file_size = filesize( $file_path );
 		if ( $file_size > 50 * 1024 * 1024 ) {
-			return new WP_Error( 'file_too_large', __( 'File size exceeds 50MB limit.', 'campaign-office' ) );
+			return new WP_Error( 'file_too_large', __( 'File size exceeds 50MB limit.', 'campaignpress' ) );
 		}
 
 		// Check file extension
 		$file_extension = strtolower( pathinfo( $file_path, PATHINFO_EXTENSION ) );
 		if ( ! in_array( $file_extension, array( 'csv', 'txt' ), true ) ) {
-			return new WP_Error( 'invalid_extension', __( 'File must be a CSV file.', 'campaign-office' ) );
+			return new WP_Error( 'invalid_extension', __( 'File must be a CSV file.', 'campaignpress' ) );
 		}
 
 		// Try to open file
 		$handle = fopen( $file_path, 'r' );
 		if ( false === $handle ) {
-			return new WP_Error( 'file_error', __( 'Unable to open file.', 'campaign-office' ) );
+			return new WP_Error( 'file_error', __( 'Unable to open file.', 'campaignpress' ) );
 		}
 
 		// Check if file is empty
@@ -754,7 +754,7 @@ class CampaignPress_CRM_Import_Export {
 		fclose( $handle );
 
 		if ( false === $first_line || empty( $first_line ) ) {
-			return new WP_Error( 'empty_file', __( 'File is empty.', 'campaign-office' ) );
+			return new WP_Error( 'empty_file', __( 'File is empty.', 'campaignpress' ) );
 		}
 
 		return true;
@@ -770,12 +770,12 @@ class CampaignPress_CRM_Import_Export {
 	 */
 	public function get_import_preview( $file_path, $rows = 10 ) {
 		if ( ! file_exists( $file_path ) ) {
-			return new WP_Error( 'file_not_found', __( 'CSV file not found.', 'campaign-office' ) );
+			return new WP_Error( 'file_not_found', __( 'CSV file not found.', 'campaignpress' ) );
 		}
 
 		$handle = fopen( $file_path, 'r' );
 		if ( false === $handle ) {
-			return new WP_Error( 'file_error', __( 'Unable to open CSV file.', 'campaign-office' ) );
+			return new WP_Error( 'file_error', __( 'Unable to open CSV file.', 'campaignpress' ) );
 		}
 
 		$preview = array(
@@ -788,7 +788,7 @@ class CampaignPress_CRM_Import_Export {
 		$preview['headers'] = fgetcsv( $handle );
 		if ( false === $preview['headers'] ) {
 			fclose( $handle );
-			return new WP_Error( 'file_error', __( 'Unable to read CSV headers.', 'campaign-office' ) );
+			return new WP_Error( 'file_error', __( 'Unable to read CSV headers.', 'campaignpress' ) );
 		}
 
 		// Detect format

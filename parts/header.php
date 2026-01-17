@@ -35,7 +35,7 @@ if (!defined('ABSPATH')) {
         </div>
 
         <!-- Primary Navigation -->
-        <nav class="cp-primary-navigation cp-nav__links" aria-label="<?php esc_attr_e('Primary Navigation', 'campaign-office'); ?>">
+        <nav class="cp-primary-navigation cp-nav__links" aria-label="<?php esc_attr_e('Primary Navigation', 'campaignpress'); ?>">
             <?php
             wp_nav_menu(array(
                 'theme_location' => 'primary',
@@ -50,12 +50,12 @@ if (!defined('ABSPATH')) {
         <!-- CTA Button -->
         <div class="cp-nav__cta">
             <a href="<?php echo esc_url(get_theme_mod('donate_url', '/donate/')); ?>" class="cp-btn cp-btn--primary">
-                <?php echo esc_html(get_theme_mod('donate_button_text', __('Donate', 'campaign-office'))); ?>
+                <?php echo esc_html(get_theme_mod('donate_button_text', __('Donate', 'campaignpress'))); ?>
             </a>
         </div>
 
         <!-- Mobile Menu Toggle -->
-        <button class="cp-nav__toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="<?php esc_attr_e('Toggle Menu', 'campaign-office'); ?>">
+        <button class="cp-nav__toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="<?php esc_attr_e('Toggle Menu', 'campaignpress'); ?>">
             <span class="cp-nav__toggle-bar"></span>
             <span class="cp-nav__toggle-bar"></span>
             <span class="cp-nav__toggle-bar"></span>
@@ -70,7 +70,7 @@ if (!defined('ABSPATH')) {
 function campaignpress_nav_fallback() {
     if (current_user_can('edit_theme_options')) {
         echo '<ul class="cp-nav__menu">';
-        echo '<li class="menu-item"><a href="' . esc_url(admin_url('nav-menus.php')) . '">' . esc_html__('Set up menu', 'campaign-office') . '</a></li>';
+        echo '<li class="menu-item"><a href="' . esc_url(admin_url('nav-menus.php')) . '">' . esc_html__('Set up menu', 'campaignpress') . '</a></li>';
         echo '</ul>';
     } else {
         wp_page_menu(array(

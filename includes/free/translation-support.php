@@ -40,8 +40,11 @@ class CP_Translation_Support {
      * Constructor
      */
     public function __construct() {
-        // Load text domain at 'init' to comply with WordPress 6.7.0+ requirements
-        add_action('init', array($this, 'load_textdomain'), 1);
+        // Load text domain at 'after_setup_theme' with early priority (1)
+        // This ensures translations are available before starter content and other
+        // after_setup_theme callbacks that use __() functions.
+        // WordPress 6.7.0+ warns if translations are triggered before textdomain is loaded.
+        add_action('after_setup_theme', array($this, 'load_textdomain'), 1);
 
         // Register language switcher widget
         add_action('widgets_init', array($this, 'register_language_switcher_widget'));
@@ -70,9 +73,11 @@ class CP_Translation_Support {
 
     /**
      * Load theme text domain for translations
+     *
+     * Called early during after_setup_theme (priority 1) to ensure
+     * translations are available for starter content and other theme setup.
      */
     public function load_textdomain() {
-        // Load theme translations
         load_theme_textdomain('campaignpress', CAMPAIGNPRESS_THEME_DIR . '/languages');
 
         // Register theme with WPML

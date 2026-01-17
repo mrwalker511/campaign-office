@@ -923,6 +923,23 @@ class CampaignPress_Premium {
      * @return object Modified transient
      */
     public function check_for_theme_update($transient) {
+        // Ensure transient is an object with required properties to prevent
+        // "Undefined array key" warnings in WordPress core (update.php)
+        if (!is_object($transient)) {
+            $transient = new stdClass();
+        }
+
+        // Ensure required properties exist (WordPress 6.7+ expects these)
+        if (!isset($transient->response)) {
+            $transient->response = array();
+        }
+        if (!isset($transient->no_update)) {
+            $transient->no_update = array();
+        }
+        if (!isset($transient->translations)) {
+            $transient->translations = array();
+        }
+
         if (!$this->is_premium_active() || !$this->is_feature_enabled('auto_updates')) {
             return $transient;
         }

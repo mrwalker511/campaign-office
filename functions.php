@@ -180,8 +180,8 @@ add_action('admin_init', 'campaignpress_handle_notice_dismissal');
  * Theme Setup
  */
 function campaignpress_setup() {
-    // Note: Translations are loaded separately at 'init' hook to comply with WordPress 6.7.0+
-    // See campaignpress_load_textdomain() below
+    // Note: Translations are loaded by CP_Translation_Support at 'after_setup_theme' priority 1
+    // See includes/free/translation-support.php
 
     // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');

@@ -255,6 +255,7 @@ class CampaignPress_Premium {
         // Admin hooks
         add_action('admin_menu', array($this, 'add_admin_menu'), 5);
         add_action('admin_init', array($this, 'register_settings'));
+        add_action('admin_init', array($this, 'auto_activate_from_constants'), 9);
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
         add_action('admin_notices', array($this, 'display_admin_notices'));
 
@@ -344,6 +345,44 @@ class CampaignPress_Premium {
                 'campaignpress-upgrade',
                 array($this, 'render_upgrade_page')
             );
+        }
+    }
+
+    /**
+     * Automatically activate license if constants are defined
+     *
+     * @since 2.1.0
+     */
+    public function auto_activate_from_constants() {
+        // Skip if already active
+        if (get_option('campaignpress_premium_active', false)) {
+            return;
+        }
+
+        // Check for constants
+        $license_key = defined('CAMPAIGNPRESS_LICENSE_KEY') ? CAMPAIGNPRESS_LICENSE_KEY : '';
+        $license_email = defined('CAMPAIGNPRESS_LICENSE_EMAIL') ? CAMPAIGNPRESS_LICENSE_EMAIL : '';
+
+        if (!empty($license_key) && !empty($license_email)) {
+            $result = $this->validate_license_key($license_key, $license_email);
+
+            if ($result['success']) {
+                update_option('campaignpress_license_key', $license_key);
+                update_option('campaignpress_license_email', $license_email);
+                update_option('campaignpress_license_status', 'active');
+                update_option('campaignpress_license_type', $result['data']['license_type']);
+                update_option('campaignpress_license_expiry', $result['data']['expiry_date']);
+                update_option('campaignpress_premium_active', true);
+                update_option('campaignpress_license_activated_date', current_time('mysql'));
+
+                $this->log_event('auto_activation_success', array(
+                    'license_type' => $result['data']['license_type'],
+                ));
+            } else {
+                $this->log_event('auto_activation_failed', array(
+                    'message' => $result['message'],
+                ));
+            }
         }
     }
 
@@ -640,6 +679,10 @@ class CampaignPress_Premium {
             wp_send_json_error(array('message' => __('License key is required.', 'campaignpress')));
         }
 
+        if (empty($license_email)) {
+            wp_send_json_error(array('message' => __('A valid email address is required for license validation.', 'campaignpress')));
+        }
+
         // Validate license with server
         $result = $this->validate_license_key($license_key, $license_email);
 
@@ -814,6 +857,24 @@ class CampaignPress_Premium {
                     'site_limit' => 5,
                 ),
             );
+        }
+
+        // Test License Check - prioritize predefined test licenses
+        $test_licenses = defined('CAMPAIGNPRESS_TEST_LICENSES') ? CAMPAIGNPRESS_TEST_LICENSES : array();
+        $test_licenses = apply_filters('campaignpress_test_licenses', $test_licenses);
+
+        if (!empty($test_licenses)) {
+            if (isset($test_licenses[$license_key]) && $test_licenses[$license_key] === $license_email) {
+                return array(
+                    'success' => true,
+                    'message' => __('Test license validated successfully.', 'campaignpress'),
+                    'data' => array(
+                        'license_type' => strpos($license_key, 'ENTERPRISE') !== false ? 'enterprise' : 'professional',
+                        'expiry_date' => date('Y-m-d', strtotime('+10 years')),
+                        'site_limit' => 100,
+                    ),
+                );
+            }
         }
 
         // Get license server URL - prioritize configured constant, then filter, then default

@@ -504,6 +504,32 @@ License Key: CP-DEV-INVALID-2024-FAKEFAKEFAKE
 Email: dev@campaignpress.test
 ```
 
+### Quick License Bypass (Local Development)
+
+To bypass license checks entirely and unlock all features, add this to your `wp-config.php`:
+
+```php
+define('CAMPAIGNPRESS_DEV_MODE', true);
+```
+
+### Test Licenses (Staging/Production Testing)
+
+If you need to test the license activation flow without using dev mode, you can use these predefined test licenses (configured in `/includes/premium/config.php`):
+
+| License Key | Email Address | Tier |
+|-------------|---------------|------|
+| `TEST-PRO-KEY-12345` | `test@campaignpress.com` | Professional |
+| `DEV-ENTERPRISE-999` | `dev@campaignpress.com` | Enterprise |
+
+### Auto-Activation via Constants
+
+You can also automatically activate a license by defining these constants in your `wp-config.php`:
+
+```php
+define('CAMPAIGNPRESS_LICENSE_KEY', 'TEST-PRO-KEY-12345');
+define('CAMPAIGNPRESS_LICENSE_EMAIL', 'test@campaignpress.com');
+```
+
 ### Mock License Server
 
 **File:** `dev-license-helper.php`

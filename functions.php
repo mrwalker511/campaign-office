@@ -852,3 +852,91 @@ function campaignpress_deactivation() {
     flush_rewrite_rules();
 }
 add_action('switch_theme', 'campaignpress_deactivation');
+
+/**
+ * Fix corrupted update transients on theme load
+ *
+ * If the update transients are corrupted (missing required structure),
+ * delete them so WordPress can regenerate them properly.
+ * This runs early before WordPress tries to use the transients.
+ *
+ * @since 2.1.0
+ */
+function campaignpress_fix_corrupted_transients() {
+    // Only run once per page load
+    static $fixed = false;
+    if ($fixed) {
+        return;
+    }
+    $fixed = true;
+
+    // Check and fix plugin update transient
+    $plugins_transient = get_site_transient('update_plugins');
+    if ($plugins_transient !== false && (!is_object($plugins_transient) || !isset($plugins_transient->response))) {
+        delete_site_transient('update_plugins');
+    }
+
+    // Check and fix theme update transient
+    $themes_transient = get_site_transient('update_themes');
+    if ($themes_transient !== false && (!is_object($themes_transient) || !isset($themes_transient->response))) {
+        delete_site_transient('update_themes');
+    }
+}
+// Run very early, before most WordPress operations
+add_action('muplugins_loaded', 'campaignpress_fix_corrupted_transients', 1);
+add_action('plugins_loaded', 'campaignpress_fix_corrupted_transients', 1);
+
+/**
+ * Fix WordPress update transient structure issues
+ *
+ * WordPress 6.7+ can throw "Undefined array key" warnings and fatal errors
+ * when update transients are missing expected properties. This ensures the
+ * required structure exists both when setting AND reading the transient.
+ *
+ * @since 2.1.0
+ */
+function campaignpress_fix_update_transient_plugins($transient) {
+    if (empty($transient) || !is_object($transient)) {
+        $transient = new stdClass();
+    }
+    if (!isset($transient->response) || !is_array($transient->response)) {
+        $transient->response = array();
+    }
+    if (!isset($transient->no_update) || !is_array($transient->no_update)) {
+        $transient->no_update = array();
+    }
+    if (!isset($transient->translations) || !is_array($transient->translations)) {
+        $transient->translations = array();
+    }
+    if (!isset($transient->checked) || !is_array($transient->checked)) {
+        $transient->checked = array();
+    }
+    return $transient;
+}
+// Fix when setting the transient
+add_filter('pre_set_site_transient_update_plugins', 'campaignpress_fix_update_transient_plugins', 1);
+// Fix when reading the transient (handles corrupted DB data)
+add_filter('site_transient_update_plugins', 'campaignpress_fix_update_transient_plugins', 1);
+
+function campaignpress_fix_update_transient_themes($transient) {
+    if (empty($transient) || !is_object($transient)) {
+        $transient = new stdClass();
+    }
+    if (!isset($transient->response) || !is_array($transient->response)) {
+        $transient->response = array();
+    }
+    if (!isset($transient->no_update) || !is_array($transient->no_update)) {
+        $transient->no_update = array();
+    }
+    if (!isset($transient->translations) || !is_array($transient->translations)) {
+        $transient->translations = array();
+    }
+    if (!isset($transient->checked) || !is_array($transient->checked)) {
+        $transient->checked = array();
+    }
+    return $transient;
+}
+// Fix when setting the transient
+add_filter('pre_set_site_transient_update_themes', 'campaignpress_fix_update_transient_themes', 1);
+// Fix when reading the transient (handles corrupted DB data)
+add_filter('site_transient_update_themes', 'campaignpress_fix_update_transient_themes', 1);

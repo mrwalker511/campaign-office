@@ -13,6 +13,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// CRITICAL: Load translation support FIRST to prevent WordPress 6.7.0+ warnings.
+// This loads the textdomain immediately so all subsequent __() calls work properly.
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
+
 // Load Core Classes
 $core_files = array(
     CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-performance.php',
@@ -67,7 +71,7 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/demo-content.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/admin-notices.php';
 // Event calendar enhancements moved to Campaign Office Core plugin
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
+// Note: translation-support.php is loaded at the top of this file (FIRST)
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/donation-enhancements.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/social-media-feeds.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-portal.php';

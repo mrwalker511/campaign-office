@@ -19,6 +19,16 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Load text domain IMMEDIATELY to prevent WordPress 6.7.0+ warnings.
+ *
+ * This must happen before any __() calls in other theme files.
+ * WordPress 6.7.0+ warns if _load_textdomain_just_in_time() is triggered
+ * before the 'init' action, which happens when __() is called for an
+ * unloaded textdomain.
+ */
+load_theme_textdomain('campaignpress', get_template_directory() . '/languages');
+
+/**
  * Class CP_Translation_Support
  *
  * Handles multi-language and translation functionality
@@ -40,11 +50,8 @@ class CP_Translation_Support {
      * Constructor
      */
     public function __construct() {
-        // Load text domain at 'after_setup_theme' with early priority (1)
-        // This ensures translations are available before starter content and other
-        // after_setup_theme callbacks that use __() functions.
-        // WordPress 6.7.0+ warns if translations are triggered before textdomain is loaded.
-        add_action('after_setup_theme', array($this, 'load_textdomain'), 1);
+        // Note: Textdomain is loaded immediately at file inclusion (see top of file)
+        // to prevent WordPress 6.7.0+ warnings about early translation loading.
 
         // Register language switcher widget
         add_action('widgets_init', array($this, 'register_language_switcher_widget'));
@@ -72,22 +79,7 @@ class CP_Translation_Support {
     }
 
     /**
-     * Load theme text domain for translations
-     *
-     * Called early during after_setup_theme (priority 1) to ensure
-     * translations are available for starter content and other theme setup.
-     */
-    public function load_textdomain() {
-        load_theme_textdomain('campaignpress', CAMPAIGNPRESS_THEME_DIR . '/languages');
-
-        // Register theme with WPML
-        if (function_exists('wpml_get_current_language')) {
-            $this->setup_wpml_config();
-        }
-    }
-
-    /**
-     * Setup WPML configuration
+     * Setup WPML configuration - register strings for translation
      */
     private function setup_wpml_config() {
         // Register strings for translation in WPML
@@ -111,6 +103,9 @@ class CP_Translation_Support {
         if (!function_exists('wpml_get_current_language')) {
             return;
         }
+
+        // Register WPML strings
+        $this->setup_wpml_config();
 
         // Make custom post types translatable
         add_filter('wpml_post_edit_can_translate', array($this, 'wpml_make_cpt_translatable'), 10, 3);

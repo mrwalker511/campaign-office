@@ -127,3 +127,27 @@ if (!defined('CAMPAIGNPRESS_LICENSE_CHECK_INTERVAL')) {
 if (!defined('CAMPAIGNPRESS_LICENSE_API_KEY')) {
     define('CAMPAIGNPRESS_LICENSE_API_KEY', '');
 }
+
+/**
+ * Test Licenses
+ *
+ * Predefined license keys and emails that are always accepted.
+ * Useful for testing on environments that are NOT in development mode.
+ * Format: array('license_key' => 'email_address')
+ */
+if (!defined('CAMPAIGNPRESS_TEST_LICENSES')) {
+    define('CAMPAIGNPRESS_TEST_LICENSES', array(
+        'TEST-PRO-KEY-12345' => 'test@campaignpress.com',
+        'DEV-ENTERPRISE-999' => 'dev@campaignpress.com',
+    ));
+}
+
+/**
+ * Auto-Activation Constants
+ *
+ * If you define these constants, the theme will attempt to automatically
+ * activate the license using these credentials on the first admin load.
+ *
+ * define('CAMPAIGNPRESS_LICENSE_KEY', 'your-key');
+ * define('CAMPAIGNPRESS_LICENSE_EMAIL', 'your-email');
+ */

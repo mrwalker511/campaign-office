@@ -61,6 +61,40 @@ add_filter('campaignpress_license_server_url', function($url) {
 });
 ```
 
+### Problem: License Key Rejected as Invalid
+
+**Symptoms:**
+- Error message: "License validation failed" or "Invalid license key"
+- Your predefined license key and email address are not being accepted
+
+**Solutions:**
+
+1. **Check Email Sanitization**
+   Ensure your email address is a valid format. The theme uses `sanitize_email()`, which will reject strings that don't look like real emails.
+
+2. **Use Test Licenses (Recommended for Staging)**
+   You can define specific license keys that are always accepted without a server connection. Edit `/includes/premium/config.php`:
+
+   ```php
+   define('CAMPAIGNPRESS_TEST_LICENSES', array(
+       'YOUR-KEY-HERE' => 'your-email@domain.com',
+   ));
+   ```
+
+3. **Use Auto-Activation Constants**
+   To automatically activate the license on load, add these to `wp-config.php`:
+
+   ```php
+   define('CAMPAIGNPRESS_LICENSE_KEY', 'TEST-PRO-KEY-12345');
+   define('CAMPAIGNPRESS_LICENSE_EMAIL', 'test@campaignpress.com');
+   ```
+
+4. **Verify Development Mode**
+   If you just want everything unlocked for local development:
+   ```php
+   define('CAMPAIGNPRESS_DEV_MODE', true);
+   ```
+
 ### Problem: License Validation Fails with Connection Error
 
 **Symptoms:**

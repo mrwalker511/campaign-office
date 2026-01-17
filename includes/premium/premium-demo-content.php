@@ -927,20 +927,36 @@ class CampaignPress_Premium_Demo_Content {
 
         // Delete in reverse order due to foreign keys
         if (!empty($ids['segments'])) {
-            $wpdb->query("DELETE FROM {$wpdb->prefix}cp_segments WHERE is_demo = 1");
+            $wpdb->query($wpdb->prepare(
+                "DELETE FROM {$wpdb->prefix}cp_segments WHERE is_demo = %d",
+                1
+            ));
         }
 
         if (!empty($ids['interactions'])) {
-            $wpdb->query("DELETE FROM {$wpdb->prefix}cp_interactions WHERE is_demo = 1");
+            $wpdb->query($wpdb->prepare(
+                "DELETE FROM {$wpdb->prefix}cp_interactions WHERE is_demo = %d",
+                1
+            ));
         }
 
         if (!empty($ids['contacts'])) {
-            $wpdb->query("DELETE FROM {$wpdb->prefix}cp_contact_tags WHERE contact_id IN (SELECT id FROM {$wpdb->prefix}cp_contacts WHERE is_demo = 1)");
-            $wpdb->query("DELETE FROM {$wpdb->prefix}cp_contacts WHERE is_demo = 1");
+            $wpdb->query($wpdb->prepare(
+                "DELETE FROM {$wpdb->prefix}cp_contact_tags WHERE contact_id IN (SELECT id FROM {$wpdb->prefix}cp_contacts WHERE is_demo = %d)",
+                1
+            ));
+            $wpdb->query($wpdb->prepare(
+                "DELETE FROM {$wpdb->prefix}cp_contacts WHERE is_demo = %d",
+                1
+            ));
         }
 
-        if (!empty($ids['tags'])) {
-            $wpdb->query("DELETE FROM {$wpdb->prefix}cp_tags WHERE id IN (" . implode(',', array_map('intval', $ids['tags'])) . ")");
+        if (!empty($ids['tags']) && is_array($ids['tags'])) {
+            $placeholders = implode(',', array_fill(0, count($ids['tags']), '%d'));
+            $wpdb->query($wpdb->prepare(
+                "DELETE FROM {$wpdb->prefix}cp_tags WHERE id IN ($placeholders)",
+                ...$ids['tags']
+            ));
         }
     }
 
@@ -952,10 +968,22 @@ class CampaignPress_Premium_Demo_Content {
     private function delete_field_ops_data($ids) {
         global $wpdb;
 
-        $wpdb->query("DELETE FROM {$wpdb->prefix}cp_canvass_turfs WHERE is_demo = 1");
-        $wpdb->query("DELETE FROM {$wpdb->prefix}cp_phone_campaigns WHERE is_demo = 1");
-        $wpdb->query("DELETE FROM {$wpdb->prefix}cp_gotv_lists WHERE is_demo = 1");
-        $wpdb->query("DELETE FROM {$wpdb->prefix}cp_volunteer_shifts WHERE is_demo = 1");
+        $wpdb->query($wpdb->prepare(
+            "DELETE FROM {$wpdb->prefix}cp_canvass_turfs WHERE is_demo = %d",
+            1
+        ));
+        $wpdb->query($wpdb->prepare(
+            "DELETE FROM {$wpdb->prefix}cp_phone_campaigns WHERE is_demo = %d",
+            1
+        ));
+        $wpdb->query($wpdb->prepare(
+            "DELETE FROM {$wpdb->prefix}cp_gotv_lists WHERE is_demo = %d",
+            1
+        ));
+        $wpdb->query($wpdb->prepare(
+            "DELETE FROM {$wpdb->prefix}cp_volunteer_shifts WHERE is_demo = %d",
+            1
+        ));
     }
 
     /**
@@ -966,8 +994,14 @@ class CampaignPress_Premium_Demo_Content {
     private function delete_compliance_data($ids) {
         global $wpdb;
 
-        $wpdb->query("DELETE FROM {$wpdb->prefix}cp_fec_contributions WHERE is_demo = 1");
-        $wpdb->query("DELETE FROM {$wpdb->prefix}cp_fec_donors WHERE is_demo = 1");
+        $wpdb->query($wpdb->prepare(
+            "DELETE FROM {$wpdb->prefix}cp_fec_contributions WHERE is_demo = %d",
+            1
+        ));
+        $wpdb->query($wpdb->prepare(
+            "DELETE FROM {$wpdb->prefix}cp_fec_donors WHERE is_demo = %d",
+            1
+        ));
     }
 }
 

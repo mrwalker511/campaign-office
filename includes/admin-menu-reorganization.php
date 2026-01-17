@@ -280,17 +280,17 @@ function cp_campaign_data_main_page() {
         
         <!-- Help Section -->
         <div class="card" style="margin-top: 20px;">
-            <h2><?php _e('Getting Started', 'campaign-office'); ?></h2>
-            <p><?php _e('Welcome to the Campaign Data hub! Here you can manage all aspects of your political campaign:', 'campaign-office'); ?></p>
+            <h2><?php _e('Getting Started', 'campaignpress'); ?></h2>
+            <p><?php _e('Welcome to the Campaign Data hub! Here you can manage all aspects of your political campaign:', 'campaignpress'); ?></p>
             <ol style="padding-left: 20px;">
-                <li><?php _e('<strong>Issues</strong> - Define your campaign platform and policy positions', 'campaign-office'); ?></li>
-                <li><?php _e('<strong>Events</strong> - Schedule and manage campaign events, rallies, and town halls', 'campaign-office'); ?></li>
-                <li><?php _e('<strong>Endorsements</strong> - Showcase support from organizations and community leaders', 'campaign-office'); ?></li>
-                <li><?php _e('<strong>Team</strong> - Introduce your campaign staff and leadership', 'campaign-office'); ?></li>
-                <li><?php _e('<strong>Volunteers</strong> - Manage volunteer recruitment and activities', 'campaign-office'); ?></li>
-                <li><?php _e('<strong>Press Releases</strong> - Official campaign statements and news', 'campaign-office'); ?></li>
+                <li><?php _e('<strong>Issues</strong> - Define your campaign platform and policy positions', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Events</strong> - Schedule and manage campaign events, rallies, and town halls', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Endorsements</strong> - Showcase support from organizations and community leaders', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Team</strong> - Introduce your campaign staff and leadership', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Volunteers</strong> - Manage volunteer recruitment and activities', 'campaignpress'); ?></li>
+                <li><?php _e('<strong>Press Releases</strong> - Official campaign statements and news', 'campaignpress'); ?></li>
             </ol>
-            <p><?php _e('Use the Analytics section to track campaign performance, donations, and engagement metrics.', 'campaign-office'); ?></p>
+            <p><?php _e('Use the Analytics section to track campaign performance, donations, and engagement metrics.', 'campaignpress'); ?></p>
         </div>
     </div>
     <?php
@@ -307,27 +307,27 @@ function cp_move_cpts_to_campaign_data() {
     // Note: CPT slugs have prefix 'cp_' as defined in custom-post-types.php
     $cpts_to_move = array(
         'cp_issue' => array(
-            'name' => __('Issues', 'campaign-office'),
+            'name' => __('Issues', 'campaignpress'),
             'icon' => 'dashicons-flag'
         ),
         'cp_event' => array(
-            'name' => __('Events', 'campaign-office'),
+            'name' => __('Events', 'campaignpress'),
             'icon' => 'dashicons-calendar-alt'
         ),
         'cp_endorsement' => array(
-            'name' => __('Endorsements', 'campaign-office'),
+            'name' => __('Endorsements', 'campaignpress'),
             'icon' => 'dashicons-thumbs-up'
         ),
         'cp_team' => array(
-            'name' => __('Team', 'campaign-office'),
+            'name' => __('Team', 'campaignpress'),
             'icon' => 'dashicons-groups'
         ),
         'cp_volunteer' => array(
-            'name' => __('Volunteers', 'campaign-office'),
+            'name' => __('Volunteers', 'campaignpress'),
             'icon' => 'dashicons-heart'
         ),
         'cp_press_release' => array(
-            'name' => __('Press Releases', 'campaign-office'),
+            'name' => __('Press Releases', 'campaignpress'),
             'icon' => 'dashicons-media-document'
         )
     );
@@ -465,8 +465,8 @@ function cp_move_analytics_to_campaignpress() {
     // Add Analytics as submenu under CampaignPress
     add_submenu_page(
         'campaignpress',                                 
-        __('Analytics', 'campaign-office'),               
-        __('Analytics', 'campaign-office'),               
+        __('Analytics', 'campaignpress'),               
+        __('Analytics', 'campaignpress'),               
         'manage_options',                                
         'cp-analytics',                            
         'cp_analytics_page_callback'                    
@@ -497,7 +497,7 @@ function cp_admin_menu_reorganization_notice() {
     if ($screen && $screen->id === 'toplevel_page_campaign-data-main') {
         ?>
         <div class="notice notice-success is-dismissible">
-            <p><?php _e('Admin menu reorganization is active. Your Campaign Data is now centralized!', 'campaign-office'); ?></p>
+            <p><?php _e('Admin menu reorganization is active. Your Campaign Data is now centralized!', 'campaignpress'); ?></p>
         </div>
         <?php
     }

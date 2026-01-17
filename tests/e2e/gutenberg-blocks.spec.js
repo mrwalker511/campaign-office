@@ -57,7 +57,7 @@ test.describe('Countdown Block', () => {
   });
 
   test('should have proper accessibility attributes', async ({ page }) => {
-    const countdown = page.locator('.wp-block-campaign-office-countdown');
+    const countdown = page.locator('.wp-block-campaignpress-countdown');
 
     if (await countdown.count() > 0) {
       // Should have ARIA label or role
@@ -76,7 +76,7 @@ test.describe('Donation Form Block', () => {
   });
 
   test('should display donation form with preset amounts', async ({ page }) => {
-    const donationForm = page.locator('.wp-block-campaign-office-donation-form');
+    const donationForm = page.locator('.wp-block-campaignpress-donation-form');
 
     if (await donationForm.count() > 0) {
       await expect(donationForm.first()).toBeVisible();
@@ -88,7 +88,7 @@ test.describe('Donation Form Block', () => {
   });
 
   test('should allow custom donation amount', async ({ page }) => {
-    const donationForm = page.locator('.wp-block-campaign-office-donation-form');
+    const donationForm = page.locator('.wp-block-campaignpress-donation-form');
 
     if (await donationForm.count() > 0) {
       const customAmountInput = donationForm.locator('input[name="amount"], input[name="custom_amount"]');
@@ -102,7 +102,7 @@ test.describe('Donation Form Block', () => {
   });
 
   test('should toggle recurring donation option', async ({ page }) => {
-    const donationForm = page.locator('.wp-block-campaign-office-donation-form');
+    const donationForm = page.locator('.wp-block-campaignpress-donation-form');
 
     if (await donationForm.count() > 0) {
       const recurringCheckbox = donationForm.locator('input[name="recurring"], input[type="checkbox"][name*="recurring"]');
@@ -118,7 +118,7 @@ test.describe('Donation Form Block', () => {
   });
 
   test('should display payment processor options', async ({ page }) => {
-    const donationForm = page.locator('.wp-block-campaign-office-donation-form');
+    const donationForm = page.locator('.wp-block-campaignpress-donation-form');
 
     if (await donationForm.count() > 0) {
       // Check for payment options (ActBlue, Stripe, PayPal)
@@ -131,7 +131,7 @@ test.describe('Donation Form Block', () => {
   });
 
   test('should show goal progress if configured', async ({ page }) => {
-    const donationForm = page.locator('.wp-block-campaign-office-donation-form');
+    const donationForm = page.locator('.wp-block-campaignpress-donation-form');
 
     if (await donationForm.count() > 0) {
       const progressBar = donationForm.locator('.progress-bar, [role="progressbar"]');
@@ -143,7 +143,7 @@ test.describe('Donation Form Block', () => {
   });
 
   test('should validate minimum donation amount', async ({ page }) => {
-    const donationForm = page.locator('.wp-block-campaign-office-donation-form');
+    const donationForm = page.locator('.wp-block-campaignpress-donation-form');
 
     if (await donationForm.count() > 0) {
       const amountInput = donationForm.locator('input[name="amount"]');
@@ -169,7 +169,7 @@ test.describe('Event Organizer Block', () => {
   });
 
   test('should display event list', async ({ page }) => {
-    const eventOrganizer = page.locator('.wp-block-campaign-office-event-organizer');
+    const eventOrganizer = page.locator('.wp-block-campaignpress-event-organizer');
 
     if (await eventOrganizer.count() > 0) {
       await expect(eventOrganizer.first()).toBeVisible();
@@ -181,7 +181,7 @@ test.describe('Event Organizer Block', () => {
   });
 
   test('should display event details', async ({ page }) => {
-    const eventOrganizer = page.locator('.wp-block-campaign-office-event-organizer');
+    const eventOrganizer = page.locator('.wp-block-campaignpress-event-organizer');
 
     if (await eventOrganizer.count() > 0) {
       const firstEvent = eventOrganizer.locator('.event-item, .event-card, article').first();
@@ -199,7 +199,7 @@ test.describe('Event Organizer Block', () => {
   });
 
   test('should display RSVP button', async ({ page }) => {
-    const eventOrganizer = page.locator('.wp-block-campaign-office-event-organizer');
+    const eventOrganizer = page.locator('.wp-block-campaignpress-event-organizer');
 
     if (await eventOrganizer.count() > 0) {
       const rsvpButton = eventOrganizer.locator('.rsvp-button, button:has-text("RSVP"), a:has-text("RSVP")');
@@ -211,7 +211,7 @@ test.describe('Event Organizer Block', () => {
   });
 
   test('should filter events by category', async ({ page }) => {
-    const eventOrganizer = page.locator('.wp-block-campaign-office-event-organizer');
+    const eventOrganizer = page.locator('.wp-block-campaignpress-event-organizer');
 
     if (await eventOrganizer.count() > 0) {
       const filterButtons = eventOrganizer.locator('[data-filter], .filter-button');
@@ -233,7 +233,7 @@ test.describe('Event Organizer Block', () => {
   });
 
   test('should switch between list and grid view', async ({ page }) => {
-    const eventOrganizer = page.locator('.wp-block-campaign-office-event-organizer');
+    const eventOrganizer = page.locator('.wp-block-campaignpress-event-organizer');
 
     if (await eventOrganizer.count() > 0) {
       const viewToggle = page.locator('[data-view], .view-toggle');
@@ -259,7 +259,7 @@ test.describe('Volunteer Matcher Block', () => {
   });
 
   test('should display volunteer matching form', async ({ page }) => {
-    const volunteerMatcher = page.locator('.wp-block-campaign-office-volunteer-matcher');
+    const volunteerMatcher = page.locator('.wp-block-campaignpress-volunteer-matcher');
 
     if (await volunteerMatcher.count() > 0) {
       await expect(volunteerMatcher.first()).toBeVisible();
@@ -271,7 +271,7 @@ test.describe('Volunteer Matcher Block', () => {
   });
 
   test('should show interest checkboxes', async ({ page }) => {
-    const volunteerMatcher = page.locator('.wp-block-campaign-office-volunteer-matcher');
+    const volunteerMatcher = page.locator('.wp-block-campaignpress-volunteer-matcher');
 
     if (await volunteerMatcher.count() > 0) {
       const interestCheckboxes = volunteerMatcher.locator('input[type="checkbox"][name*="interest"]');
@@ -287,7 +287,7 @@ test.describe('Volunteer Matcher Block', () => {
   });
 
   test('should show availability options', async ({ page }) => {
-    const volunteerMatcher = page.locator('.wp-block-campaign-office-volunteer-matcher');
+    const volunteerMatcher = page.locator('.wp-block-campaignpress-volunteer-matcher');
 
     if (await volunteerMatcher.count() > 0) {
       const availabilityInputs = volunteerMatcher.locator('[name*="availability"], [name*="days"]');
@@ -299,7 +299,7 @@ test.describe('Volunteer Matcher Block', () => {
   });
 
   test('should show skills selection', async ({ page }) => {
-    const volunteerMatcher = page.locator('.wp-block-campaign-office-volunteer-matcher');
+    const volunteerMatcher = page.locator('.wp-block-campaignpress-volunteer-matcher');
 
     if (await volunteerMatcher.count() > 0) {
       const skillsInputs = volunteerMatcher.locator('[name*="skills"], select[name*="skill"]');
@@ -311,7 +311,7 @@ test.describe('Volunteer Matcher Block', () => {
   });
 
   test('should submit volunteer matching form', async ({ page }) => {
-    const volunteerMatcher = page.locator('.wp-block-campaign-office-volunteer-matcher');
+    const volunteerMatcher = page.locator('.wp-block-campaignpress-volunteer-matcher');
 
     if (await volunteerMatcher.count() > 0) {
       const form = volunteerMatcher.locator('form').first();
@@ -341,7 +341,7 @@ test.describe('Hero Commander Block', () => {
   });
 
   test('should display hero section', async ({ page }) => {
-    const hero = page.locator('.wp-block-campaign-office-hero-commander');
+    const hero = page.locator('.wp-block-campaignpress-hero-commander');
 
     if (await hero.count() > 0) {
       await expect(hero.first()).toBeVisible();
@@ -349,7 +349,7 @@ test.describe('Hero Commander Block', () => {
   });
 
   test('should display hero content', async ({ page }) => {
-    const hero = page.locator('.wp-block-campaign-office-hero-commander');
+    const hero = page.locator('.wp-block-campaignpress-hero-commander');
 
     if (await hero.count() > 0) {
       // Check for headline
@@ -359,7 +359,7 @@ test.describe('Hero Commander Block', () => {
   });
 
   test('should display CTA buttons', async ({ page }) => {
-    const hero = page.locator('.wp-block-campaign-office-hero-commander');
+    const hero = page.locator('.wp-block-campaignpress-hero-commander');
 
     if (await hero.count() > 0) {
       const ctaButtons = hero.locator('a.button, button, .cta-button, .wp-block-button');
@@ -371,7 +371,7 @@ test.describe('Hero Commander Block', () => {
   });
 
   test('should handle background video if present', async ({ page }) => {
-    const hero = page.locator('.wp-block-campaign-office-hero-commander');
+    const hero = page.locator('.wp-block-campaignpress-hero-commander');
 
     if (await hero.count() > 0) {
       const video = hero.locator('video');
@@ -390,7 +390,7 @@ test.describe('Hero Commander Block', () => {
   });
 
   test('should be responsive', async ({ page }) => {
-    const hero = page.locator('.wp-block-campaign-office-hero-commander');
+    const hero = page.locator('.wp-block-campaignpress-hero-commander');
 
     if (await hero.count() > 0) {
       // Test mobile
@@ -414,7 +414,7 @@ test.describe('Progress Block', () => {
   });
 
   test('should display progress bar', async ({ page }) => {
-    const progress = page.locator('.wp-block-campaign-office-progress');
+    const progress = page.locator('.wp-block-campaignpress-progress');
 
     if (await progress.count() > 0) {
       await expect(progress.first()).toBeVisible();
@@ -426,7 +426,7 @@ test.describe('Progress Block', () => {
   });
 
   test('should show goal and current amount', async ({ page }) => {
-    const progress = page.locator('.wp-block-campaign-office-progress');
+    const progress = page.locator('.wp-block-campaignpress-progress');
 
     if (await progress.count() > 0) {
       const text = await progress.first().textContent();
@@ -438,7 +438,7 @@ test.describe('Progress Block', () => {
   });
 
   test('should display percentage', async ({ page }) => {
-    const progress = page.locator('.wp-block-campaign-office-progress');
+    const progress = page.locator('.wp-block-campaignpress-progress');
 
     if (await progress.count() > 0) {
       const percentage = progress.locator('[aria-valuenow], .percentage');
@@ -454,7 +454,7 @@ test.describe('Progress Block', () => {
   });
 
   test('should have proper ARIA attributes', async ({ page }) => {
-    const progress = page.locator('.wp-block-campaign-office-progress');
+    const progress = page.locator('.wp-block-campaignpress-progress');
 
     if (await progress.count() > 0) {
       const progressBar = progress.locator('[role="progressbar"]');
@@ -476,7 +476,7 @@ test.describe('Policy Platform Block', () => {
   });
 
   test('should display policy items', async ({ page }) => {
-    const policyPlatform = page.locator('.wp-block-campaign-office-policy-platform');
+    const policyPlatform = page.locator('.wp-block-campaignpress-policy-platform');
 
     if (await policyPlatform.count() > 0) {
       await expect(policyPlatform.first()).toBeVisible();
@@ -488,7 +488,7 @@ test.describe('Policy Platform Block', () => {
   });
 
   test('should expand/collapse policy details', async ({ page }) => {
-    const policyPlatform = page.locator('.wp-block-campaign-office-policy-platform');
+    const policyPlatform = page.locator('.wp-block-campaignpress-policy-platform');
 
     if (await policyPlatform.count() > 0) {
       const expandButton = policyPlatform.locator('[aria-expanded], .toggle, button:has-text("Read more")');
@@ -509,7 +509,7 @@ test.describe('Policy Platform Block', () => {
   });
 
   test('should display policy titles', async ({ page }) => {
-    const policyPlatform = page.locator('.wp-block-campaign-office-policy-platform');
+    const policyPlatform = page.locator('.wp-block-campaignpress-policy-platform');
 
     if (await policyPlatform.count() > 0) {
       const titles = policyPlatform.locator('h2, h3, h4, .policy-title');
@@ -518,7 +518,7 @@ test.describe('Policy Platform Block', () => {
   });
 
   test('should be accessible via keyboard', async ({ page }) => {
-    const policyPlatform = page.locator('.wp-block-campaign-office-policy-platform');
+    const policyPlatform = page.locator('.wp-block-campaignpress-policy-platform');
 
     if (await policyPlatform.count() > 0) {
       // Focus on the block

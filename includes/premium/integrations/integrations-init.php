@@ -119,8 +119,25 @@ class CampaignPress_Integrations {
      * @since 2.0.0
      */
     private function __construct() {
-        // Set testing mode from options
-        $this->testing_mode = get_option('campaignpress_integrations_testing_mode', false);
+        // Detect environment
+        $is_production = $this->is_production_environment();
+
+        // Set testing mode with safety checks
+        $testing_mode = get_option('campaignpress_integrations_testing_mode', false);
+
+        if ($is_production && $testing_mode) {
+            // Disable testing mode in production
+            $testing_mode = false;
+            update_option('campaignpress_integrations_testing_mode', false);
+
+            // Log security violation
+            error_log('CampaignPress Security: Testing mode automatically disabled in production environment');
+
+            // Notify administrators
+            $this->notify_admin_of_testing_mode_violation();
+        }
+
+        $this->testing_mode = $testing_mode;
 
         // Load dependencies
         $this->load_dependencies();
@@ -137,7 +154,8 @@ class CampaignPress_Integrations {
         // Log initialization
         $this->log_event('integrations_initialized', array(
             'version' => self::VERSION,
-            'testing_mode' => $this->testing_mode
+            'testing_mode' => $this->testing_mode,
+            'environment' => $is_production ? 'production' : 'development'
         ));
     }
 
@@ -465,12 +483,40 @@ class CampaignPress_Integrations {
      * @since 2.0.0
      */
     public function handle_email_webhook() {
+        // Check IP whitelist first
+        if (!$this->is_webhook_ip_allowed()) {
+            $this->log_event('webhook_ip_blocked', array(
+                'ip' => $this->get_client_ip(),
+                'type' => 'email'
+            ));
+            wp_send_json_error(array('message' => 'IP not allowed'), 403);
+            return;
+        }
+
+        // Check rate limiting
+        if (!$this->check_webhook_rate_limit('email')) {
+            $this->log_event('webhook_rate_limited', array(
+                'ip' => $this->get_client_ip(),
+                'type' => 'email'
+            ));
+            wp_send_json_error(array('message' => 'Rate limit exceeded'), 429);
+            return;
+        }
+
         // Get platform from request
         $platform = sanitize_text_field($_GET['platform'] ?? '');
 
         if (empty($platform)) {
             wp_send_json_error(array('message' => 'Platform not specified'));
+            return;
         }
+
+        // Log webhook received
+        $this->log_event('webhook_received', array(
+            'type' => 'email',
+            'platform' => $platform,
+            'ip' => $this->get_client_ip()
+        ));
 
         // Delegate to email integrations handler
         $this->email_integrations->handle_webhook($platform);
@@ -482,15 +528,191 @@ class CampaignPress_Integrations {
      * @since 2.0.0
      */
     public function handle_sms_webhook() {
+        // Check IP whitelist first
+        if (!$this->is_webhook_ip_allowed()) {
+            $this->log_event('webhook_ip_blocked', array(
+                'ip' => $this->get_client_ip(),
+                'type' => 'sms'
+            ));
+            wp_send_json_error(array('message' => 'IP not allowed'), 403);
+            return;
+        }
+
+        // Check rate limiting
+        if (!$this->check_webhook_rate_limit('sms')) {
+            $this->log_event('webhook_rate_limited', array(
+                'ip' => $this->get_client_ip(),
+                'type' => 'sms'
+            ));
+            wp_send_json_error(array('message' => 'Rate limit exceeded'), 429);
+            return;
+        }
+
         // Get platform from request
         $platform = sanitize_text_field($_GET['platform'] ?? '');
 
         if (empty($platform)) {
             wp_send_json_error(array('message' => 'Platform not specified'));
+            return;
         }
+
+        // Log webhook received
+        $this->log_event('webhook_received', array(
+            'type' => 'sms',
+            'platform' => $platform,
+            'ip' => $this->get_client_ip()
+        ));
 
         // Delegate to SMS integrations handler
         $this->sms_integrations->handle_webhook($platform);
+    }
+
+    /**
+     * Check if webhook request IP is allowed
+     *
+     * @return bool
+     * @since 2.0.0
+     */
+    private function is_webhook_ip_allowed() {
+        // In testing mode, allow localhost and private IPs
+        if ($this->testing_mode && !$this->is_production_environment()) {
+            $ip = $this->get_client_ip();
+            $allowed_test_ips = array('127.0.0.1', '::1', 'localhost');
+            if (in_array($ip, $allowed_test_ips, true) || $this->is_private_ip($ip)) {
+                return true;
+            }
+        }
+
+        // Get IP whitelist from options
+        $allowed_ips = get_option('campaignpress_webhook_allowed_ips', array());
+
+        // If no whitelist configured, deny all (secure by default)
+        if (empty($allowed_ips) || !is_array($allowed_ips)) {
+            return false;
+        }
+
+        $request_ip = $this->get_client_ip();
+        return in_array($request_ip, $allowed_ips, true);
+    }
+
+    /**
+     * Check webhook rate limit
+     *
+     * @param string $type Webhook type (email/sms)
+     * @return bool
+     * @since 2.0.0
+     */
+    private function check_webhook_rate_limit($type) {
+        $ip = $this->get_client_ip();
+        $key = 'webhook_' . md5($type . $ip);
+        $count = get_transient($key);
+
+        if ($count === false) {
+            set_transient($key, 1, MINUTE_IN_SECONDS);
+            return true;
+        }
+
+        // Max 10 webhooks per minute per IP
+        if ($count >= 10) {
+            return false;
+        }
+
+        set_transient($key, $count + 1, MINUTE_IN_SECONDS);
+        return true;
+    }
+
+    /**
+     * Get client IP address
+     *
+     * @return string
+     * @since 2.0.0
+     */
+    private function get_client_ip() {
+        $ip = '';
+
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (!empty($_SERVER['HTTP_X_REAL_IP'])) {
+            $ip = $_SERVER['HTTP_X_REAL_IP'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        }
+
+        return sanitize_text_field($ip);
+    }
+
+    /**
+     * Check if IP is a private IP address
+     *
+     * @param string $ip IP address to check
+     * @return bool
+     * @since 2.0.0
+     */
+    private function is_private_ip($ip) {
+        // Convert to long for comparison
+        $long_ip = ip2long($ip);
+
+        if ($long_ip === false) {
+            return false;
+        }
+
+        // Check private IP ranges
+        $private_ranges = array(
+            array('10.0.0.0', '10.255.255.255'),       // 10.0.0.0/8
+            array('172.16.0.0', '172.31.255.255'),     // 172.16.0.0/12
+            array('192.168.0.0', '192.168.255.255'),   // 192.168.0.0/16
+            array('127.0.0.0', '127.255.255.255'),     // 127.0.0.0/8
+            array('169.254.0.0', '169.254.255.255'),   // 169.254.0.0/16
+        );
+
+        foreach ($private_ranges as $range) {
+            $min = ip2long($range[0]);
+            $max = ip2long($range[1]);
+            if ($long_ip >= $min && $long_ip <= $max) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if running in production environment
+     *
+     * @return bool
+     * @since 2.0.0
+     */
+    private function is_production_environment() {
+        // Check for production environment constant
+        if (defined('WP_ENV') && WP_ENV === 'production') {
+            return true;
+        }
+
+        // Check for WP environment type
+        if (function_exists('wp_get_environment_type') && wp_get_environment_type() === 'production') {
+            return true;
+        }
+
+        // Check domain
+        $domain = parse_url(home_url(), PHP_URL_HOST);
+        $production_domains = apply_filters('campaignpress_production_domains', array());
+
+        if (!empty($production_domains) && in_array($domain, $production_domains, true)) {
+            return true;
+        }
+
+        // Check if localhost
+        $localhost_patterns = array('localhost', '127.0.0.1', '.local', '.test', '.dev');
+        foreach ($localhost_patterns as $pattern) {
+            if (strpos($domain, $pattern) !== false) {
+                return false;
+            }
+        }
+
+        // Default to production if not explicitly development
+        return true;
     }
 
     /**
@@ -557,10 +779,10 @@ class CampaignPress_Integrations {
     }
 
     /**
-     * Encrypt sensitive data
+     * Encrypt sensitive data with HMAC integrity verification
      *
      * @param string $data Data to encrypt
-     * @return string Encrypted data
+     * @return string Encrypted data with HMAC
      * @since 2.0.0
      */
     public function encrypt($data) {
@@ -569,24 +791,27 @@ class CampaignPress_Integrations {
         }
 
         // Generate encryption key from WordPress salts
-        $key = hash('sha256', AUTH_KEY . SECURE_AUTH_KEY);
+        $key = hash('sha256', AUTH_KEY . SECURE_AUTH_KEY, true);
 
         // Generate initialization vector
         $iv_length = openssl_cipher_iv_length(self::ENCRYPTION_METHOD);
         $iv = openssl_random_pseudo_bytes($iv_length);
 
         // Encrypt data
-        $encrypted = openssl_encrypt($data, self::ENCRYPTION_METHOD, $key, 0, $iv);
+        $encrypted = openssl_encrypt($data, self::ENCRYPTION_METHOD, $key, OPENSSL_RAW_DATA, $iv);
 
-        // Combine IV and encrypted data
-        return base64_encode($iv . $encrypted);
+        // Generate HMAC for integrity verification
+        $hmac = hash_hmac('sha256', $iv . $encrypted, $key, true);
+
+        // Combine IV, encrypted data, and HMAC
+        return base64_encode($iv . $encrypted . $hmac);
     }
 
     /**
-     * Decrypt sensitive data
+     * Decrypt sensitive data with HMAC integrity verification
      *
-     * @param string $data Encrypted data
-     * @return string Decrypted data
+     * @param string $data Encrypted data with HMAC
+     * @return string|false Decrypted data or false if tampered
      * @since 2.0.0
      */
     public function decrypt($data) {
@@ -595,18 +820,38 @@ class CampaignPress_Integrations {
         }
 
         // Generate decryption key from WordPress salts
-        $key = hash('sha256', AUTH_KEY . SECURE_AUTH_KEY);
+        $key = hash('sha256', AUTH_KEY . SECURE_AUTH_KEY, true);
 
         // Decode data
-        $data = base64_decode($data);
+        $decoded = base64_decode($data);
+        if ($decoded === false) {
+            return false;
+        }
 
-        // Extract IV and encrypted data
+        // Extract IV, encrypted data, and HMAC
         $iv_length = openssl_cipher_iv_length(self::ENCRYPTION_METHOD);
-        $iv = substr($data, 0, $iv_length);
-        $encrypted = substr($data, $iv_length);
+        $hmac_length = 32; // SHA-256 HMAC is 32 bytes
+
+        if (strlen($decoded) < ($iv_length + $hmac_length)) {
+            return false; // Data is too short
+        }
+
+        $iv = substr($decoded, 0, $iv_length);
+        $hmac_stored = substr($decoded, -$hmac_length);
+        $encrypted = substr($decoded, $iv_length, -$hmac_length);
+
+        // Verify HMAC first (prevents padding oracle attacks)
+        $hmac_calculated = hash_hmac('sha256', $iv . $encrypted, $key, true);
+        if (!hash_equals($hmac_stored, $hmac_calculated)) {
+            // Data has been tampered with
+            error_log('CampaignPress Security: Encrypted data integrity check failed - possible tampering detected');
+            return false;
+        }
 
         // Decrypt data
-        return openssl_decrypt($encrypted, self::ENCRYPTION_METHOD, $key, 0, $iv);
+        $decrypted = openssl_decrypt($encrypted, self::ENCRYPTION_METHOD, $key, OPENSSL_RAW_DATA, $iv);
+
+        return $decrypted;
     }
 
     /**
@@ -780,6 +1025,29 @@ class CampaignPress_Integrations {
             ),
             admin_url('admin-ajax.php')
         );
+    }
+
+    /**
+     * Notify administrators of testing mode security violation
+     *
+     * @since 2.0.0
+     */
+    private function notify_admin_of_testing_mode_violation() {
+        $admin_email = get_option('admin_email');
+        $site_name = wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES);
+
+        $subject = sprintf(
+            __('[Security Alert] Testing mode disabled on %s', 'campaignpress'),
+            $site_name
+        );
+
+        $message = sprintf(
+            __("CampaignPress detected that testing mode was enabled in a production environment and has automatically disabled it.\n\nSite: %s\nTime: %s\n\nTesting mode bypasses security controls and should NEVER be enabled in production.\n\nNo action is required - this is just a notification that the system automatically protected itself.\n\nIf you believe this is an error, please check your environment configuration.", 'campaignpress'),
+            home_url(),
+            current_time('mysql')
+        );
+
+        wp_mail($admin_email, $subject, $message, array('Content-Type: text/plain; charset=UTF-8'));
     }
 }
 

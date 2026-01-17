@@ -225,6 +225,60 @@ function campaignpress_handle_notice_dismissal() {
 add_action('admin_init', 'campaignpress_handle_notice_dismissal');
 
 /**
+ * Check minimum dependencies (WordPress & PHP versions)
+ *
+ * @since 2.1.0
+ */
+function campaignpress_check_dependencies() {
+    global $wp_version;
+
+    $min_wp_version = '6.4';
+    $min_php_version = '8.0';
+    $errors = array();
+
+    // Check WordPress version
+    if (version_compare($wp_version, $min_wp_version, '<')) {
+        $errors[] = sprintf(
+            __('CampaignPress requires WordPress %s or higher. You are running version %s. Please upgrade WordPress.', 'campaignpress'),
+            $min_wp_version,
+            $wp_version
+        );
+    }
+
+    // Check PHP version
+    if (version_compare(PHP_VERSION, $min_php_version, '<')) {
+        $errors[] = sprintf(
+            __('CampaignPress requires PHP %s or higher. You are running version %s. Please contact your hosting provider to upgrade PHP.', 'campaignpress'),
+            $min_php_version,
+            PHP_VERSION
+        );
+    }
+
+    // Display admin notices if there are errors
+    if (!empty($errors)) {
+        add_action('admin_notices', function() use ($errors) {
+            foreach ($errors as $error) {
+                echo '<div class="notice notice-error"><p><strong>' . esc_html__('CampaignPress Error:', 'campaignpress') . '</strong> ' . esc_html($error) . '</p></div>';
+            }
+        });
+
+        // Log errors
+        foreach ($errors as $error) {
+            error_log('CampaignPress Dependency Error: ' . $error);
+        }
+
+        // Return false to indicate dependency check failed
+        return false;
+    }
+
+    return true;
+}
+
+// Check dependencies on theme activation
+add_action('after_switch_theme', 'campaignpress_check_dependencies', 1);
+add_action('admin_init', 'campaignpress_check_dependencies', 1);
+
+/**
  * Theme Setup
  */
 function campaignpress_setup() {
@@ -495,7 +549,8 @@ function campaignpress_scripts() {
         'countdown_ended'  => __('Event has ended', 'campaignpress'),
         'day_singular'     => __('Day', 'campaignpress'),
         'day_plural'       => __('Days', 'campaignpress'),
-        'debug'            => defined('WP_DEBUG') && WP_DEBUG,
+        // Only expose debug mode to administrators
+        'debug'            => (defined('WP_DEBUG') && WP_DEBUG && current_user_can('manage_options')),
     ));
 }
 add_action('wp_enqueue_scripts', 'campaignpress_scripts');

@@ -841,6 +841,26 @@ class CP_Volunteer_Portal {
 
         global $wpdb;
 
+        // For session tokens, limit to 3 concurrent sessions (HIGH PRIORITY #6)
+        if ($token_type === 'session') {
+            $active_sessions = $wpdb->get_var($wpdb->prepare(
+                "SELECT COUNT(*) FROM {$this->tokens_table}
+                 WHERE volunteer_id = %d AND token_type = 'session' AND consumed = 0 AND expires_at > NOW()",
+                absint($volunteer_id)
+            ));
+
+            if ($active_sessions >= 3) {
+                // Revoke oldest session automatically
+                $wpdb->query($wpdb->prepare(
+                    "UPDATE {$this->tokens_table}
+                     SET consumed = 1
+                     WHERE volunteer_id = %d AND token_type = 'session' AND consumed = 0
+                     ORDER BY created_at ASC LIMIT 1",
+                    absint($volunteer_id)
+                ));
+            }
+        }
+
         $token = $this->generate_portal_token(64);
         $token_hash = hash('sha256', $token);
 
@@ -854,6 +874,7 @@ class CP_Volunteer_Portal {
             'expires_at' => $expires_at,
             'consumed' => 0,
             'created_at' => gmdate('Y-m-d H:i:s', $now),
+            'last_seen_at' => gmdate('Y-m-d H:i:s', $now),
         ));
 
         if (false === $result) {
@@ -863,6 +884,62 @@ class CP_Volunteer_Portal {
         return $token;
     }
 
+    /**
+     * Invalidate all sessions for a volunteer
+     *
+     * @param int $volunteer_id Volunteer ID
+     * @return bool Success status
+     * @since 2.0.0
+     */
+    private function invalidate_all_sessions($volunteer_id) {
+        if (!$this->tokens_table_exists()) {
+            return false;
+        }
+
+        global $wpdb;
+        $result = $wpdb->update(
+            $this->tokens_table,
+            array('consumed' => 1),
+            array(
+                'volunteer_id' => absint($volunteer_id),
+                'token_type' => 'session'
+            ),
+            array('%d'),
+            array('%d', '%s')
+        );
+
+        return $result !== false;
+    }
+
+    /**
+     * Invalidate a specific session by token
+     *
+     * @param string $session_token Session token
+     * @return bool Success status
+     * @since 2.0.0
+     */
+    private function invalidate_session($session_token) {
+        if (!$this->tokens_table_exists()) {
+            return false;
+        }
+
+        global $wpdb;
+        $token_hash = hash('sha256', $session_token);
+
+        $result = $wpdb->update(
+            $this->tokens_table,
+            array('consumed' => 1),
+            array(
+                'token_hash' => $token_hash,
+                'token_type' => 'session'
+            ),
+            array('%d'),
+            array('%s', '%s')
+        );
+
+        return $result !== false;
+    }
+
     private function consume_login_token_and_start_session($login_token) {
         if (!$this->tokens_table_exists()) {
             return new WP_Error('missing_tokens_table', __('Volunteer portal authentication is not available yet. Please try again later.', 'campaignpress'));
@@ -870,10 +947,29 @@ class CP_Volunteer_Portal {
 
         global $wpdb;
 
+        $now = current_time('timestamp', true);
         $token_hash = hash('sha256', $login_token);
+
+        // Use atomic UPDATE with consumed=0 check to prevent replay attacks
+        $updated = $wpdb->query($wpdb->prepare(
+            "UPDATE {$this->tokens_table}
+             SET consumed = 1, last_seen_at = %s
+             WHERE token_hash = %s AND token_type = %s AND consumed = 0 AND expires_at > %s",
+            gmdate('Y-m-d H:i:s', $now),
+            $token_hash,
+            'login',
+            gmdate('Y-m-d H:i:s', $now)
+        ));
+
+        if ($updated === 0 || $updated === false) {
+            // Token was already used, expired, or doesn't exist
+            return new WP_Error('invalid_token', __('Login link is invalid or has already been used.', 'campaignpress'));
+        }
+
+        // Get volunteer ID after successful token consumption
         $row = $wpdb->get_row($wpdb->prepare(
-            "SELECT id, volunteer_id, expires_at FROM {$this->tokens_table}
-             WHERE token_hash = %s AND token_type = %s AND consumed = 0
+            "SELECT volunteer_id FROM {$this->tokens_table}
+             WHERE token_hash = %s AND token_type = %s
              LIMIT 1",
             $token_hash,
             'login'
@@ -883,24 +979,15 @@ class CP_Volunteer_Portal {
             return new WP_Error('invalid_token', __('Invalid login token.', 'campaignpress'));
         }
 
-        $now = current_time('timestamp', true);
-        $expires_ts = strtotime($row->expires_at . ' UTC');
-
-        if ($expires_ts < $now) {
-            $wpdb->update($this->tokens_table, array('consumed' => 1), array('id' => absint($row->id)));
-            return new WP_Error('expired_token', __('Login token expired.', 'campaignpress'));
-        }
-
-        // Mark login token consumed
-        $wpdb->update($this->tokens_table, array('consumed' => 1), array('id' => absint($row->id)));
-
-        // Create a long-lived session token
-        $session_token = $this->create_portal_token_record(absint($row->volunteer_id), 'session', 30 * DAY_IN_SECONDS);
+        // Create a session token (reduced from 30 days to 7 days)
+        $session_ttl = 7 * DAY_IN_SECONDS;
+        $session_token = $this->create_portal_token_record(absint($row->volunteer_id), 'session', $session_ttl);
         if (is_wp_error($session_token)) {
             return $session_token;
         }
 
-        $this->set_cookie('cp_volunteer_session', $session_token, $now + (30 * DAY_IN_SECONDS));
+        // Set secure cookie
+        $this->set_cookie('cp_volunteer_session', $session_token, $now + $session_ttl);
 
         return true;
     }
@@ -1072,30 +1159,42 @@ class CP_Volunteer_Portal {
         $redirect_to = isset($_POST['redirect_to']) ? esc_url_raw($_POST['redirect_to']) : '';
         $redirect_to = wp_validate_redirect($redirect_to, home_url('/'));
 
+        // Start timing for constant-time response
+        $start_time = microtime(true);
+
         $volunteer = $this->find_volunteer_by_email($email);
 
-        // Always return a generic response to avoid email enumeration.
-        $generic_message = __('If that email address is in our system, we’ll send a login link.', 'campaignpress');
+        // Always return a generic response to avoid email enumeration
+        $generic_message = __('If that email address is in our system, we\'ll send a login link.', 'campaignpress');
 
-        if (!$volunteer) {
-            wp_send_json_success(array('message' => $generic_message));
+        // Always process in constant time
+        if ($volunteer) {
+            $login_token = $this->create_portal_token_record(absint($volunteer->id), 'login', 15 * MINUTE_IN_SECONDS);
+
+            if (!is_wp_error($login_token)) {
+                $login_url = add_query_arg('cpvp_token', $login_token, $redirect_to);
+
+                $site_name = wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES);
+                $subject = sprintf(__('Your Volunteer Portal login link for %s', 'campaignpress'), $site_name);
+                $message = sprintf(
+                    __("Use the link below to access your volunteer portal. This link expires in 15 minutes:\n\n%s\n\nIf you did not request this email, you can ignore it.", 'campaignpress'),
+                    esc_url_raw($login_url)
+                );
+
+                wp_mail($email, $subject, $message);
+            }
         }
 
-        $login_token = $this->create_portal_token_record(absint($volunteer->id), 'login', 15 * MINUTE_IN_SECONDS);
-        if (is_wp_error($login_token)) {
-            wp_send_json_error(array('message' => $login_token->get_error_message()));
+        // Calculate elapsed time and add artificial delay to prevent timing attacks
+        $elapsed = microtime(true) - $start_time;
+        $target_time = 0.8; // Target 800ms minimum response time
+
+        if ($elapsed < $target_time) {
+            // Add random delay between remaining time and +200ms to make timing analysis harder
+            $remaining = $target_time - $elapsed;
+            $delay = $remaining + (mt_rand(0, 200) / 1000); // Add 0-200ms random delay
+            usleep((int)($delay * 1000000)); // Convert to microseconds
         }
-
-        $login_url = add_query_arg('cpvp_token', $login_token, $redirect_to);
-
-        $site_name = wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES);
-        $subject = sprintf(__('Your Volunteer Portal login link for %s', 'campaignpress'), $site_name);
-        $message = sprintf(
-            __("Use the link below to access your volunteer portal. This link expires in 15 minutes:\n\n%s\n\nIf you did not request this email, you can ignore it.", 'campaignpress'),
-            esc_url_raw($login_url)
-        );
-
-        wp_mail($email, $subject, $message);
 
         wp_send_json_success(array('message' => $generic_message));
     }

@@ -696,8 +696,14 @@ class CampaignPress_SMS_Integrations {
         // Verify webhook signature based on platform
         $verified = $this->verify_webhook_signature($platform, $integration, $raw_data);
 
-        if (!$verified && !campaignpress_integrations()->is_testing_mode()) {
-            wp_send_json_error(array('message' => 'Invalid webhook signature'));
+        // Signature verification must always pass (testing mode is already restricted in production)
+        if (!$verified) {
+            // Log failed verification
+            campaignpress_integrations()->log_event('webhook_signature_failed', array(
+                'platform' => $platform,
+                'ip' => $_SERVER['REMOTE_ADDR'] ?? ''
+            ));
+            wp_send_json_error(array('message' => 'Invalid webhook signature'), 403);
             return;
         }
 

@@ -78,7 +78,16 @@ class CP_Translation_Support {
      * translations are available for starter content and other theme setup.
      */
     public function load_textdomain() {
-        load_theme_textdomain('campaignpress', CAMPAIGNPRESS_THEME_DIR . '/languages');
+        // Use the theme directory name as the actual text domain
+        $theme_dir_name = basename(get_template_directory());
+
+        // Try to load text domain with the correct directory name
+        load_theme_textdomain($theme_dir_name, CAMPAIGNPRESS_THEME_DIR . '/languages');
+
+        // Also try legacy text domain for backward compatibility
+        if ($theme_dir_name !== CAMPAIGNPRESS_LEGACY_TEXT_DOMAIN) {
+            load_theme_textdomain(CAMPAIGNPRESS_LEGACY_TEXT_DOMAIN, CAMPAIGNPRESS_THEME_DIR . '/languages');
+        }
 
         // Register theme with WPML
         if (function_exists('wpml_get_current_language')) {

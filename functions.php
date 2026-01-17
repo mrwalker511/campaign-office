@@ -21,6 +21,19 @@ define('CAMPAIGNPRESS_INCLUDES_DIR', CAMPAIGNPRESS_THEME_DIR . '/includes');
 define('CAMPAIGNPRESS_ASSETS_URI', CAMPAIGNPRESS_THEME_URI . '/assets');
 
 /**
+ * Text Domain Handling
+ * WordPress uses the theme directory name as the default text domain.
+ * We need to detect this and use it consistently.
+ */
+define('CAMPAIGNPRESS_TEXT_DOMAIN', basename(CAMPAIGNPRESS_THEME_DIR));
+
+/**
+ * Legacy Name Compatibility
+ * Support both old (campaign-office) and new (campaignpress) naming
+ */
+define('CAMPAIGNPRESS_LEGACY_TEXT_DOMAIN', 'campaignpress');
+
+/**
  * Development License Helper (Auto-loaded for Testing)
  *
  * If dev-license-helper.php exists in the theme directory, it will be auto-loaded.
@@ -58,18 +71,50 @@ if (defined('CAMPAIGNPRESS_DEV_MODE') && CAMPAIGNPRESS_DEV_MODE) {
 }
 
 /**
- * Check for Campaign Office Core Plugin
+ * Set up theme text domain
+ * 
+ * WordPress uses the theme directory name as the text domain by default.
+ * We need to handle this dynamically to avoid activation errors when the
+ * directory name doesn't match the hardcoded text domain.
+ */
+function campaignpress_setup_textdomain() {
+    $theme_dir = basename(get_template_directory());
+    $text_domain = 'campaignpress';
+
+    // If the directory name doesn't match our expected text domain,
+    // we need to load translations with the directory name as the domain
+    if ($theme_dir !== $text_domain) {
+        load_theme_textdomain($theme_dir, CAMPAIGNPRESS_THEME_DIR . '/languages');
+    }
+
+    // Always load with our standard text domain for backward compatibility
+    load_theme_textdomain($text_domain, CAMPAIGNPRESS_THEME_DIR . '/languages');
+}
+add_action('after_setup_theme', 'campaignpress_setup_textdomain', 1);
+
+/**
+ * Check for CampaignPress Core Plugin
  *
- * The theme works best with the Campaign Office Core plugin which provides
+ * The theme works best with the CampaignPress Core plugin which provides
  * custom post types, volunteer management, and other campaign features.
+ * Supports both old and new plugin class names for backward compatibility.
  */
 function campaignpress_check_core_plugin() {
-    if (!class_exists('Campaign_Office_Core')) {
-        add_action('admin_notices', 'campaignpress_core_plugin_notice');
-    } else {
-        // Plugin is active - add theme support
-        add_theme_support('campaign-office-core');
+    // Check for new CampaignPress Core plugin (prefer this)
+    if (class_exists('CampaignPress_Core')) {
+        add_theme_support('campaignpress-core');
+        return;
     }
+
+    // Check for legacy Campaign Office Core plugin
+    if (class_exists('Campaign_Office_Core')) {
+        add_theme_support('campaignpress-core'); // Use new theme support name
+        add_theme_support('campaign-office-core'); // Legacy support
+        return;
+    }
+
+    // No core plugin active
+    add_action('admin_notices', 'campaignpress_core_plugin_notice');
 }
 add_action('after_setup_theme', 'campaignpress_check_core_plugin');
 
@@ -88,12 +133,15 @@ function campaignpress_core_plugin_notice() {
         return;
     }
 
-    $plugin_slug = 'campaign-office-core';
+    $plugin_slug = 'campaignpress-core'; // New plugin name
     $plugin_file = $plugin_slug . '/' . $plugin_slug . '.php';
+
+    // Also check for legacy plugin
+    $legacy_plugin_file = 'campaign-office-core/campaign-office-core.php';
 
     // Check if plugin is installed but not activated
     $all_plugins = get_plugins();
-    $is_installed = isset($all_plugins[$plugin_file]);
+    $is_installed = isset($all_plugins[$plugin_file]) || isset($all_plugins[$legacy_plugin_file]);
 
     if ($is_installed) {
         // Plugin is installed but not activated
@@ -104,14 +152,14 @@ function campaignpress_core_plugin_notice() {
 
         $message = sprintf(
             /* translators: %s: plugin name */
-            __('CampaignPress theme works best with the %s plugin. The plugin is installed but not active.', 'campaignpress'),
-            '<strong>Campaign Office Core</strong>'
+            esc_html__('CampaignPress theme works best with the %s plugin. The plugin is installed but not active.', CAMPAIGNPRESS_TEXT_DOMAIN),
+            '<strong>CampaignPress Core</strong>'
         );
 
-        $button = sprintf(
+         $button = sprintf(
             '<a href="%s" class="button button-primary">%s</a>',
             esc_url($activate_url),
-            __('Activate Plugin', 'campaignpress')
+            esc_html__('Activate Plugin', CAMPAIGNPRESS_TEXT_DOMAIN)
         );
     } else {
         // Plugin is not installed
@@ -122,8 +170,8 @@ function campaignpress_core_plugin_notice() {
 
         $message = sprintf(
             /* translators: %s: plugin name */
-            __('CampaignPress theme requires the %s plugin for full functionality.', 'campaignpress'),
-            '<strong>Campaign Office Core</strong>'
+            esc_html__('CampaignPress theme requires the %s plugin for full functionality.', CAMPAIGNPRESS_TEXT_DOMAIN),
+            '<strong>CampaignPress Core</strong>'
         );
 
         $button = sprintf(

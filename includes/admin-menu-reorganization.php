@@ -167,42 +167,42 @@ function cp_campaign_data_main_page() {
             
             <!-- Campaign Content -->
             <div class="card">
-                <h2><?php _e('Campaign Content', 'campaign-office'); ?></h2>
+                <h2><?php _e('Campaign Content', 'campaignpress'); ?></h2>
                 <ul style="margin: 0; padding-left: 20px;">
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('edit.php?post_type=cp_issue'); ?>" class="row-title">
                             <span class="dashicons dashicons-flag" style="color: #2271b1;"></span>
-                            <?php _e('Manage Issues', 'campaign-office'); ?>
+                            <?php _e('Manage Issues', 'campaignpress'); ?>
                         </a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('edit.php?post_type=cp_event'); ?>" class="row-title">
                             <span class="dashicons dashicons-calendar-alt" style="color: #00a32a;"></span>
-                            <?php _e('Manage Events', 'campaign-office'); ?>
+                            <?php _e('Manage Events', 'campaignpress'); ?>
                         </a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('edit.php?post_type=cp_endorsement'); ?>" class="row-title">
                             <span class="dashicons dashicons-thumbs-up" style="color: #d63638;"></span>
-                            <?php _e('Manage Endorsements', 'campaign-office'); ?>
+                            <?php _e('Manage Endorsements', 'campaignpress'); ?>
                         </a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('edit.php?post_type=cp_team'); ?>" class="row-title">
                             <span class="dashicons dashicons-groups" style="color: #9b51e0;"></span>
-                            <?php _e('Manage Team', 'campaign-office'); ?>
+                            <?php _e('Manage Team', 'campaignpress'); ?>
                         </a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('edit.php?post_type=cp_volunteer'); ?>" class="row-title">
                             <span class="dashicons dashicons-heart" style="color: #f0b849;"></span>
-                            <?php _e('Manage Volunteers', 'campaign-office'); ?>
+                            <?php _e('Manage Volunteers', 'campaignpress'); ?>
                         </a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('edit.php?post_type=cp_press_release'); ?>" class="row-title">
                             <span class="dashicons dashicons-media-document" style="color: #3498db;"></span>
-                            <?php _e('Manage Press', 'campaign-office'); ?>
+                            <?php _e('Manage Press', 'campaignpress'); ?>
                         </a>
                     </li>
                 </ul>
@@ -211,7 +211,7 @@ function cp_campaign_data_main_page() {
             <!-- Analytics & Reports (Premium Only) -->
             <?php if (function_exists('cp_is_premium_active') && cp_is_premium_active()) : ?>
             <div class="card">
-                <h2><?php _e('Analytics & Reports', 'campaign-office'); ?></h2>
+                <h2><?php _e('Analytics & Reports', 'campaignpress'); ?></h2>
                 <ul style="margin: 0; padding-left: 20px;">
                     <li style="margin-bottom: 10px;">
                         <?php 
@@ -222,25 +222,25 @@ function cp_campaign_data_main_page() {
                         ?>
                         <a href="<?php echo admin_url('admin.php?page=' . $analytics_slug); ?>" class="row-title">
                             <span class="dashicons dashicons-chart-area" style="color: #2271b1;"></span>
-                            <?php _e('Campaign Analytics', 'campaign-office'); ?>
+                            <?php _e('Campaign Analytics', 'campaignpress'); ?>
                         </a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('admin.php?page=campaignpress-metrics'); ?>" class="row-title">
                             <span class="dashicons dashicons-dashboard" style="color: #00a32a;"></span>
-                            <?php _e('Performance Metrics', 'campaign-office'); ?>
+                            <?php _e('Performance Metrics', 'campaignpress'); ?>
                         </a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('admin.php?page=campaignpress-reports'); ?>" class="row-title">
                             <span class="dashicons dashicons-media-document" style="color: #d63638;"></span>
-                            <?php _e('Reports', 'campaign-office'); ?>
+                            <?php _e('Reports', 'campaignpress'); ?>
                         </a>
                     </li>
                     <li style="margin-bottom: 10px;">
                         <a href="<?php echo admin_url('admin.php?page=campaignpress-test-data'); ?>" class="row-title">
                             <span class="dashicons dashicons-database" style="color: #f0b849;"></span>
-                            <?php _e('Generate Test Data', 'campaign-office'); ?>
+                            <?php _e('Generate Test Data', 'campaignpress'); ?>
                         </a>
                     </li>
                 </ul>
@@ -249,29 +249,29 @@ function cp_campaign_data_main_page() {
             
             <!-- Quick Actions -->
             <div class="card">
-                <h2><?php _e('Quick Actions', 'campaign-office'); ?></h2>
+                <h2><?php _e('Quick Actions', 'campaignpress'); ?></h2>
                 <p style="margin-bottom: 15px;">
                     <a href="<?php echo admin_url('post-new.php?post_type=cp_issue'); ?>" class="button button-primary button-large" style="width: 100%; text-align: center;">
                         <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
-                        <?php _e('Add New Issue', 'campaign-office'); ?>
+                        <?php _e('Add New Issue', 'campaignpress'); ?>
                     </a>
                 </p>
                 <p style="margin-bottom: 15px;">
                     <a href="<?php echo admin_url('post-new.php?post_type=cp_event'); ?>" class="button button-secondary button-large" style="width: 100%; text-align: center;">
                         <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
-                        <?php _e('Add New Event', 'campaign-office'); ?>
+                        <?php _e('Add New Event', 'campaignpress'); ?>
                     </a>
                 </p>
                 <p style="margin-bottom: 15px;">
                     <a href="<?php echo admin_url('post-new.php?post_type=cp_endorsement'); ?>" class="button button-secondary button-large" style="width: 100%; text-align: center;">
                         <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
-                        <?php _e('Add New Endorsement', 'campaign-office'); ?>
+                        <?php _e('Add New Endorsement', 'campaignpress'); ?>
                     </a>
                 </p>
                 <p style="margin-bottom: 15px;">
                     <a href="<?php echo admin_url('post-new.php?post_type=cp_press_release'); ?>" class="button button-secondary button-large" style="width: 100%; text-align: center;">
                         <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
-                        <?php _e('Add New Press Release', 'campaign-office'); ?>
+                        <?php _e('Add New Press Release', 'campaignpress'); ?>
                     </a>
                 </p>
             </div>

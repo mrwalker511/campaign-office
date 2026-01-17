@@ -289,7 +289,7 @@ class CP_Volunteer_Portal {
         ?>
         <div class="cp-volunteer-login-wrapper">
             <div class="cp-volunteer-login-box">
-                <h2><?php esc_html_e('Volunteer Login', 'campaign-office'); ?></h2>
+                <h2><?php esc_html_e('Volunteer Login', 'campaignpress'); ?></h2>
                 <p class="description">
                     <?php esc_html_e('Enter your email address and we’ll send you a secure login link.', 'campaign-office'); ?>
                 </p>

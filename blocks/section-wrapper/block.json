@@ -4,7 +4,7 @@
     "name": "campaignpress/section-wrapper",
     "version": "1.0.0",
     "title": "Responsive Section",
-    "category": "campaign-office",
+    "category": "campaignpress",
     "icon": "layout",
     "description": "Drag-and-drop container with breakpoint controls.",
     "supports": {
@@ -28,7 +28,7 @@
             "default": "1rem"
         }
     },
-    "textdomain": "campaign-office",
+    "textdomain": "campaignpress",
     "editorScript": "file:./index.js",
     "render": "file:./render.php",
     "style": "file:./style.css"

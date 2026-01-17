@@ -13,10 +13,10 @@
     const __ = wp.i18n.__;
 
     registerBlockType('campaignpress/mission-control', {
-        title: __('Mission Control Center', 'campaign-office'),
-        description: __('Central dashboard with election countdown, weather, and momentum metrics.', 'campaign-office'),
+        title: __('Mission Control Center', 'campaignpress'),
+        description: __('Central dashboard with election countdown, weather, and momentum metrics.', 'campaignpress'),
         icon: 'dashboard',
-        category: 'campaign-office',
+        category: 'campaignpress',
         supports: {
             html: false,
             align: ['wide', 'full']
@@ -39,19 +39,19 @@
                 InspectorControls,
                 null,
                 wp.element.createElement(PanelBody, {
-                    title: __('Mission Control Settings', 'campaign-office'),
+                    title: __('Mission Control Settings', 'campaignpress'),
                     initialOpen: true
                 },
                     wp.element.createElement(TextControl, {
-                        label: __('Election Date', 'campaign-office'),
-                        help: __('Enter election date (YYYY-MM-DD format)', 'campaign-office'),
+                        label: __('Election Date', 'campaignpress'),
+                        help: __('Enter election date (YYYY-MM-DD format)', 'campaignpress'),
                         value: electionDate,
                         onChange: (value) => setAttributes({ electionDate: value }),
                         placeholder: '2024-11-05'
                     }),
                     wp.element.createElement(TextControl, {
-                        label: __('Location City', 'campaign-office'),
-                        help: __('Enter city name for weather display', 'campaign-office'),
+                        label: __('Location City', 'campaignpress'),
+                        help: __('Enter city name for weather display', 'campaignpress'),
                         value: locationCity,
                         onChange: (value) => setAttributes({ locationCity: value }),
                         placeholder: 'Washington DC'

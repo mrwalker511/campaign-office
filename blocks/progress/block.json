@@ -4,7 +4,7 @@
     "name": "campaignpress/progress",
     "version": "2.0.0",
     "title": "Progress Tracker",
-    "category": "campaign-office",
+    "category": "campaignpress",
     "icon": "chart-bar",
     "description": "Visual goal meters for fundraising, volunteer recruitment, and voter outreach.",
     "supports": {
@@ -61,7 +61,7 @@
             "default": true
         }
     },
-    "textdomain": "campaign-office",
+    "textdomain": "campaignpress",
     "editorScript": "file:./index.js",
     "render": "file:./render.php",
     "style": "file:./style.css"

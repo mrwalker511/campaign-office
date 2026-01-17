@@ -2,14 +2,14 @@
 /**
  * Title: Staff Directory
  * Slug: campaignpress/staff-directory
- * Categories: campaign-office, team
+ * Categories: campaignpress, team
  * Keywords: staff, team, directory
  */
 ?>
 <!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide">
     <!-- wp:heading {"textAlign":"center","level":2} -->
-    <h2 class="wp-block-heading has-text-align-center"><?php esc_html_e( 'Meet the Team', 'campaign-office' ); ?></h2>
+    <h2 class="wp-block-heading has-text-align-center"><?php esc_html_e( 'Meet the Team', 'campaignpress' ); ?></h2>
     <!-- /wp:heading -->
 
     <!-- wp:columns {"style":{"spacing":{"blockGap":"2rem"}}} -->
@@ -23,7 +23,7 @@
             <h3 class="wp-block-heading has-text-align-center has-lg-font-size">Jane Doe</h3>
             <!-- /wp:heading -->
             <!-- wp:paragraph {"align":"center","fontSize":"sm","style":{"color":{"text":"var:preset|color|neutral-600"}}} -->
-            <p class="has-text-align-center has-text-color has-sm-font-size" style="color:var(--wp--preset--color--neutral-600)"><?php esc_html_e( 'Campaign Manager', 'campaign-office' ); ?></p>
+            <p class="has-text-align-center has-text-color has-sm-font-size" style="color:var(--wp--preset--color--neutral-600)"><?php esc_html_e( 'Campaign Manager', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
         </div>
         <!-- /wp:column -->
@@ -37,7 +37,7 @@
             <h3 class="wp-block-heading has-text-align-center has-lg-font-size">John Smith</h3>
             <!-- /wp:heading -->
             <!-- wp:paragraph {"align":"center","fontSize":"sm","style":{"color":{"text":"var:preset|color|neutral-600"}}} -->
-            <p class="has-text-align-center has-text-color has-sm-font-size" style="color:var(--wp--preset--color--neutral-600)"><?php esc_html_e( 'Communications', 'campaign-office' ); ?></p>
+            <p class="has-text-align-center has-text-color has-sm-font-size" style="color:var(--wp--preset--color--neutral-600)"><?php esc_html_e( 'Communications', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
         </div>
         <!-- /wp:column -->
@@ -51,7 +51,7 @@
             <h3 class="wp-block-heading has-text-align-center has-lg-font-size">Mary Jones</h3>
             <!-- /wp:heading -->
             <!-- wp:paragraph {"align":"center","fontSize":"sm","style":{"color":{"text":"var:preset|color|neutral-600"}}} -->
-            <p class="has-text-align-center has-text-color has-sm-font-size" style="color:var(--wp--preset--color--neutral-600)"><?php esc_html_e( 'Field Director', 'campaign-office' ); ?></p>
+            <p class="has-text-align-center has-text-color has-sm-font-size" style="color:var(--wp--preset--color--neutral-600)"><?php esc_html_e( 'Field Director', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
         </div>
         <!-- /wp:column -->

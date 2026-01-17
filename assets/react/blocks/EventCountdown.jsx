@@ -7,7 +7,7 @@ import ServerSideRender from '@wordpress/server-side-render';
 import { __ } from '@wordpress/i18n';
 
 registerBlockType('campaignpress/event-countdown', {
-    title: __('Event Countdown', 'campaign-office'),
+    title: __('Event Countdown', 'campaignpress'),
     category: 'campaignpress',
     icon: 'clock',
     attributes: {
@@ -17,7 +17,7 @@ registerBlockType('campaignpress/event-countdown', {
         },
         eventTitle: {
             type: 'string',
-            default: __('Election Day', 'campaign-office'),
+            default: __('Election Day', 'campaignpress'),
         },
     },
     edit: function (props) {

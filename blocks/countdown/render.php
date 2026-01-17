@@ -17,24 +17,24 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
     <?php endif; ?>
 
     <?php if (empty($target_date)): ?>
-        <p class="campaignpress-countdown-placeholder"><?php esc_html_e('Please set a date in block settings.', 'campaign-office'); ?></p>
+        <p class="campaignpress-countdown-placeholder"><?php esc_html_e('Please set a date in block settings.', 'campaignpress'); ?></p>
     <?php else: ?>
         <div class="campaignpress-countdown-timer">
             <div class="campaignpress-countdown-item">
                 <span class="campaignpress-countdown-number" data-unit="days">00</span>
-                <span class="campaignpress-countdown-label"><?php esc_html_e('Days', 'campaign-office'); ?></span>
+                <span class="campaignpress-countdown-label"><?php esc_html_e('Days', 'campaignpress'); ?></span>
             </div>
             <div class="campaignpress-countdown-item">
                 <span class="campaignpress-countdown-number" data-unit="hours">00</span>
-                <span class="campaignpress-countdown-label"><?php esc_html_e('Hours', 'campaign-office'); ?></span>
+                <span class="campaignpress-countdown-label"><?php esc_html_e('Hours', 'campaignpress'); ?></span>
             </div>
             <div class="campaignpress-countdown-item">
                 <span class="campaignpress-countdown-number" data-unit="minutes">00</span>
-                <span class="campaignpress-countdown-label"><?php esc_html_e('Minutes', 'campaign-office'); ?></span>
+                <span class="campaignpress-countdown-label"><?php esc_html_e('Minutes', 'campaignpress'); ?></span>
             </div>
              <div class="campaignpress-countdown-item">
                 <span class="campaignpress-countdown-number" data-unit="seconds">00</span>
-                <span class="campaignpress-countdown-label"><?php esc_html_e('Seconds', 'campaign-office'); ?></span>
+                <span class="campaignpress-countdown-label"><?php esc_html_e('Seconds', 'campaignpress'); ?></span>
             </div>
         </div>
     <?php endif; ?>

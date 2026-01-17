@@ -4,7 +4,7 @@
     "name": "campaignpress/policy-platform",
     "version": "1.0.0",
     "title": "Policy Platform",
-    "category": "campaign-office",
+    "category": "campaignpress",
     "icon": "book-alt",
     "description": "Interactive accordions for policy details with vote tracking.",
     "supports": {
@@ -33,7 +33,7 @@
             ]
         }
     },
-    "textdomain": "campaign-office",
+    "textdomain": "campaignpress",
     "editorScript": "file:./index.js",
     "viewScript": "file:./view.js",
     "render": "file:./render.php",

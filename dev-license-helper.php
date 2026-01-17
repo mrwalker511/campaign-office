@@ -14,7 +14,7 @@
  * 3. Test license activation/deactivation flows
  *
  * Add to wp-config.php (before "That's all, stop editing!"):
- *   require_once __DIR__ . '/wp-content/themes/campaign-office/dev-license-helper.php';
+ *   require_once __DIR__ . '/wp-content/themes/campaignpress/dev-license-helper.php';
  */
 
 if (!defined('ABSPATH')) {
@@ -232,8 +232,8 @@ add_action('admin_notices', function() {
 		?>
 		<div class="notice notice-info">
 			<p>
-				<strong><?php _e('Development Mode Active', 'campaign-office'); ?></strong><br>
-				<?php _e('Mock license server is active. Use test license keys from dev-license-helper.php', 'campaign-office'); ?>
+				<strong><?php _e('Development Mode Active', 'campaignpress'); ?></strong><br>
+				<?php _e('Mock license server is active. Use test license keys from dev-license-helper.php', 'campaignpress'); ?>
 			</p>
 			<p style="font-family: monospace; font-size: 0.9em;">
 				<strong>Test License Keys:</strong><br>

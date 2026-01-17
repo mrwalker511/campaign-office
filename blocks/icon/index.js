@@ -27,15 +27,15 @@ const IconPicker = ({ selectedIcon, onSelect, onClose }) => {
 
 	// Common icon categories
 	const iconCategories = {
-		all: __('All Icons', 'campaign-office'),
-		arrows: __('Arrows & Navigation', 'campaign-office'),
-		communication: __('Communication', 'campaign-office'),
-		ui: __('User Interface', 'campaign-office'),
-		files: __('Files & Documents', 'campaign-office'),
-		media: __('Media', 'campaign-office'),
-		social: __('Social', 'campaign-office'),
-		status: __('Status & Alerts', 'campaign-office'),
-		data: __('Data & Charts', 'campaign-office'),
+		all: __('All Icons', 'campaignpress'),
+		arrows: __('Arrows & Navigation', 'campaignpress'),
+		communication: __('Communication', 'campaignpress'),
+		ui: __('User Interface', 'campaignpress'),
+		files: __('Files & Documents', 'campaignpress'),
+		media: __('Media', 'campaignpress'),
+		social: __('Social', 'campaignpress'),
+		status: __('Status & Alerts', 'campaignpress'),
+		data: __('Data & Charts', 'campaignpress'),
 	};
 
 	// Popular campaign-related icons
@@ -66,14 +66,14 @@ const IconPicker = ({ selectedIcon, onSelect, onClose }) => {
 		<div className="cp-icon-picker-modal" onClick={onClose}>
 			<div className="cp-icon-picker-content" onClick={(e) => e.stopPropagation()}>
 				<div className="cp-icon-picker-header">
-					<h2>{__('Choose an Icon', 'campaign-office')}</h2>
+					<h2>{__('Choose an Icon', 'campaignpress')}</h2>
 					<button className="cp-icon-picker-close" onClick={onClose}>×</button>
 				</div>
 
 				<div className="cp-icon-picker-search">
 					<input
 						type="text"
-						placeholder={__('Search icons...', 'campaign-office')}
+						placeholder={__('Search icons...', 'campaignpress')}
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
 					/>
@@ -81,15 +81,15 @@ const IconPicker = ({ selectedIcon, onSelect, onClose }) => {
 
 				<div className="cp-icon-picker-filters">
 					<select value={style} onChange={(e) => setStyle(e.target.value)}>
-						<option value="outline">{__('Outline', 'campaign-office')}</option>
-						<option value="solid">{__('Solid', 'campaign-office')}</option>
-						<option value="mini">{__('Mini', 'campaign-office')}</option>
+					<option value="outline">{__('Outline', 'campaignpress')}</option>
+					<option value="solid">{__('Solid', 'campaignpress')}</option>
+					<option value="mini">{__('Mini', 'campaignpress')}</option>
 					</select>
 				</div>
 
 				<div className="cp-icon-picker-grid">
 					{loading ? (
-						<div className="cp-icon-picker-loading">{__('Loading icons...', 'campaign-office')}</div>
+						<div className="cp-icon-picker-loading">{__('Loading icons...', 'campaignpress')}</div>
 					) : (
 						<div className="cp-icon-grid">
 							{filteredIcons.map(icon => (
@@ -109,9 +109,9 @@ const IconPicker = ({ selectedIcon, onSelect, onClose }) => {
 				</div>
 
 				<div className="cp-icon-picker-footer">
-					<button onClick={onClose}>{__('Cancel', 'campaign-office')}</button>
+					<button onClick={onClose}>{__('Cancel', 'campaignpress')}</button>
 					<button className="primary" onClick={() => { onSelect(selectedIcon); onClose(); }}>
-						{__('Insert Icon', 'campaign-office')}
+						{__('Insert Icon', 'campaignpress')}
 					</button>
 				</div>
 			</div>
@@ -150,48 +150,48 @@ registerBlockType(metadata.name, {
 				</BlockControls>
 
 				<InspectorControls>
-					<PanelBody title={__('Icon Settings', 'campaign-office')} initialOpen={true}>
+					<PanelBody title={__('Icon Settings', 'campaignpress')} initialOpen={true}>
 						<div style={{ marginBottom: '1rem' }}>
 							<Button
 								variant="secondary"
 								onClick={() => setShowPicker(true)}
 								style={{ width: '100%' }}
 							>
-								{__('Choose Icon', 'campaign-office')}
+								{__('Choose Icon', 'campaignpress')}
 							</Button>
 							<p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
-								{__('Current:', 'campaign-office')} <strong>{icon}</strong>
+								{__('Current:', 'campaignpress')} <strong>{icon}</strong>
 							</p>
 						</div>
 
 						<SelectControl
-							label={__('Icon Style', 'campaign-office')}
+							label={__('Icon Style', 'campaignpress')}
 							value={iconStyle}
 							options={[
-								{ label: __('Outline', 'campaign-office'), value: 'outline' },
-								{ label: __('Solid', 'campaign-office'), value: 'solid' },
-								{ label: __('Mini (20px)', 'campaign-office'), value: 'mini' },
-								{ label: __('Micro (16px)', 'campaign-office'), value: 'micro' },
+							{ label: __('Outline', 'campaignpress'), value: 'outline' },
+							{ label: __('Solid', 'campaignpress'), value: 'solid' },
+							{ label: __('Mini (20px)', 'campaignpress'), value: 'mini' },
+							{ label: __('Micro (16px)', 'campaignpress'), value: 'micro' },
 							]}
 							onChange={(value) => setAttributes({ iconStyle: value })}
 						/>
 
 						<SelectControl
-							label={__('Icon Size', 'campaign-office')}
+							label={__('Icon Size', 'campaignpress')}
 							value={iconSize}
 							options={[
-								{ label: __('Small (18px)', 'campaign-office'), value: 'sm' },
-								{ label: __('Medium (24px)', 'campaign-office'), value: 'md' },
-								{ label: __('Large (32px)', 'campaign-office'), value: 'lg' },
-								{ label: __('Extra Large (48px)', 'campaign-office'), value: 'xl' },
-								{ label: __('Custom', 'campaign-office'), value: 'custom' },
+							{ label: __('Small (18px)', 'campaignpress'), value: 'sm' },
+							{ label: __('Medium (24px)', 'campaignpress'), value: 'md' },
+							{ label: __('Large (32px)', 'campaignpress'), value: 'lg' },
+							{ label: __('Extra Large (48px)', 'campaignpress'), value: 'xl' },
+							{ label: __('Custom', 'campaignpress'), value: 'custom' },
 							]}
 							onChange={(value) => setAttributes({ iconSize: value })}
 						/>
 
 						{iconSize === 'custom' && (
 							<RangeControl
-								label={__('Custom Size (px)', 'campaign-office')}
+								label={__('Custom Size (px)', 'campaignpress')}
 								value={customSize}
 								onChange={(value) => setAttributes({ customSize: value })}
 								min={12}
@@ -201,7 +201,7 @@ registerBlockType(metadata.name, {
 
 						<div style={{ marginBottom: '1rem' }}>
 							<label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>
-								{__('Icon Color', 'campaign-office')}
+								{__('Icon Color', 'campaignpress')}
 							</label>
 							<ColorPicker
 								color={iconColor}
@@ -215,36 +215,36 @@ registerBlockType(metadata.name, {
 									onClick={() => setAttributes({ iconColor: '' })}
 									style={{ marginTop: '0.5rem' }}
 								>
-									{__('Reset Color', 'campaign-office')}
+									{__('Reset Color', 'campaignpress')}
 								</Button>
 							)}
 						</div>
 					</PanelBody>
 
-					<PanelBody title={__('Link Settings', 'campaign-office')} initialOpen={false}>
+					<PanelBody title={__('Link Settings', 'campaignpress')} initialOpen={false}>
 						<TextControl
-							label={__('Link URL', 'campaign-office')}
+							label={__('Link URL', 'campaignpress')}
 							value={linkUrl}
 							onChange={(value) => setAttributes({ linkUrl: value })}
 							type="url"
-							help={__('Make the icon clickable by adding a URL', 'campaign-office')}
+							help={__('Make the icon clickable by adding a URL', 'campaignpress')}
 						/>
 
 						{linkUrl && (
 							<ToggleControl
-								label={__('Open in new tab', 'campaign-office')}
+								label={__('Open in new tab', 'campaignpress')}
 								checked={linkTarget === '_blank'}
 								onChange={(value) => setAttributes({ linkTarget: value ? '_blank' : '_self' })}
 							/>
 						)}
 					</PanelBody>
 
-					<PanelBody title={__('Accessibility', 'campaign-office')} initialOpen={false}>
+					<PanelBody title={__('Accessibility', 'campaignpress')} initialOpen={false}>
 						<TextControl
-							label={__('ARIA Label', 'campaign-office')}
+							label={__('ARIA Label', 'campaignpress')}
 							value={ariaLabel}
 							onChange={(value) => setAttributes({ ariaLabel: value })}
-							help={__('Describe the icon for screen readers', 'campaign-office')}
+							help={__('Describe the icon for screen readers', 'campaignpress')}
 						/>
 					</PanelBody>
 				</InspectorControls>

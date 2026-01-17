@@ -1,0 +1,26 @@
+<!-- wp:group {"className":"cp-nav","layout":{"type":"default"}} -->
+<div class="wp-block-group cp-nav">
+    <!-- wp:group {"align":"wide","className":"cp-nav__inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+    <div class="wp-block-group alignwide cp-nav__inner">
+        <!-- wp:group {"layout":{"type":"flex","orientation":"vertical","flexWrap":"nowrap"}} -->
+        <div class="wp-block-group">
+            <!-- wp:site-title {"level":0,"style":{"typography":{"fontFamily":"var(--ds-font-serif)","fontSize":"1.5rem","fontWeight":"700","textTransform":"uppercase","lineHeight":"1"}},"textColor":"primary"} /-->
+            <!-- wp:paragraph {"className":"cp-nav__tagline","style":{"typography":{"fontSize":"0.625rem","fontWeight":"700","letterSpacing":"0.3em","textTransform":"uppercase"}},"textColor":"secondary"} -->
+            <p class="cp-nav__tagline has-secondary-color has-text-color" style="font-size:0.625rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase">For Your Community</p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:group -->
+
+        <!-- wp:navigation {"className":"cp-primary-navigation cp-nav__links","style":{"typography":{"fontSize":"0.875rem","fontWeight":"600","textTransform":"uppercase","letterSpacing":"0.05em"}},"layout":{"type":"flex","justifyContent":"right"}} /-->
+
+        <!-- wp:buttons -->
+        <div class="wp-block-buttons">
+            <!-- wp:button {"backgroundColor":"secondary","className":"cp-btn cp-btn--primary","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.05em","fontWeight":"700"}}} -->
+            <div class="wp-block-button cp-btn cp-btn--primary"><a class="wp-block-button__link has-secondary-background-color has-background wp-element-button" style="text-transform:uppercase;letter-spacing:0.05em;font-weight:700">Donate</a></div>
+            <!-- /wp:button -->
+        </div>
+        <!-- /wp:buttons -->
+    </div>
+    <!-- /wp:group -->
+</div>
+<!-- /wp:group -->

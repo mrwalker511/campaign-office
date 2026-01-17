@@ -27,11 +27,11 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
                         <div class="cp-policy-actions">
                             <button class="cp-vote-btn cp-action-btn" data-policy-id="<?php echo esc_attr( $index ); ?>">
                                 <?php echo wp_kses( campaignpress_get_heroicon('hand-thumb-up', 'solid', array('aria-hidden' => 'true')), campaignpress_get_allowed_svg_tags() ); ?>
-                                <span class="cp-vote-count"><?php echo esc_html($policy['votes']); ?></span> <?php esc_html_e('Support this', 'campaign-office'); ?>
+                                <span class="cp-vote-count"><?php echo esc_html($policy['votes']); ?></span> <?php esc_html_e('Support this', 'campaignpress'); ?>
                             </button>
                             <button class="cp-download-btn cp-action-btn">
                                 <?php echo wp_kses( campaignpress_get_heroicon('arrow-down-tray', 'outline', array('aria-hidden' => 'true')), campaignpress_get_allowed_svg_tags() ); ?>
-                                <?php esc_html_e('Download PDF', 'campaign-office'); ?>
+                                <?php esc_html_e('Download PDF', 'campaignpress'); ?>
                             </button>
                         </div>
                     </div>

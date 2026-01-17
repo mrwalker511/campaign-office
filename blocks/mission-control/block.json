@@ -4,7 +4,7 @@
     "name": "campaignpress/mission-control",
     "version": "1.0.0",
     "title": "Mission Control Center",
-    "category": "campaign-office",
+    "category": "campaignpress",
     "icon": "dashboard",
     "description": "Central dashboard with election countdown, weather, and momentum.",
     "supports": {
@@ -24,7 +24,7 @@
             "default": "Washington DC"
         }
     },
-    "textdomain": "campaign-office",
+    "textdomain": "campaignpress",
     "editorScript": "file:./index.js",
     "viewScript": "file:./view.js",
     "render": "file:./render.php",

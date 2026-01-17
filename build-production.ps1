@@ -80,7 +80,7 @@ else {
 }
 
 # Create temp directory
-$TempDir = Join-Path $env:TEMP "campaign-office-build-$(Get-Random)"
+$TempDir = Join-Path $env:TEMP "campaignpress-build-$(Get-Random)"
 $BuildDir = Join-Path $TempDir $ThemeName
 Write-Host "[3/5] Creating temporary build directory..." -ForegroundColor $InfoColor
 New-Item -ItemType Directory -Path $BuildDir -Force | Out-Null

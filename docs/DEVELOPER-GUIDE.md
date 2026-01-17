@@ -48,7 +48,7 @@ npm run build
 ### Project Structure
 
 ```
-campaign-office/
+campaignpress/
 ├── theme.json              # Design system configuration
 ├── functions.php           # Theme bootstrap
 ├── blocks/                 # Custom Gutenberg blocks (React)
@@ -326,7 +326,7 @@ registerBlockType('campaignpress/your-block', {
     "name": "campaignpress/block-name",
     "version": "1.0.0",
     "title": "Block Title",
-    "category": "campaign-office",
+    "category": "campaignpress",
     "icon": "star-filled",
     "description": "Block description",
     "supports": {
@@ -340,7 +340,7 @@ registerBlockType('campaignpress/your-block', {
             "default": "value"
         }
     },
-    "textdomain": "campaign-office",
+    "textdomain": "campaignpress",
     "editorScript": "file:./index.js",
     "editorStyle": "file:./editor.css",
     "style": "file:./style.css",
@@ -512,7 +512,7 @@ To enable the mock license server for testing the actual license flow:
 
 1. Add to `wp-config.php`:
    ```php
-   require_once __DIR__ . '/wp-content/themes/campaign-office/dev-license-helper.php';
+   require_once __DIR__ . '/wp-content/themes/campaignpress/dev-license-helper.php';
    ```
 
 2. Temporarily disable dev mode bypass in `functions.php`:
@@ -803,7 +803,7 @@ function sync_volunteer_to_crm($volunteer_id, $data) {
 - All use `cp_` prefix (e.g., `cp_issue`, `cp_event`, `cp_volunteer`)
 
 **Text Domain:**
-- Always use `'campaign-office'`
+- Always use `'campaignpress'`
 
 ### Security
 

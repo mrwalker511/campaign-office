@@ -208,12 +208,12 @@ function campaign_office_plugin_notice() {
             <p>
                 <?php
                 printf(
-                    __('The Campaign Office theme works best with the %s plugin. Please install and activate it for full functionality.', 'campaign-office'),
+                    __('The CampaignPress theme works best with the %s plugin. Please install and activate it for full functionality.', 'campaignpress'),
                     '<strong>Campaign Office Core</strong>'
                 );
                 ?>
                 <a href="<?php echo admin_url('plugin-install.php?s=campaign+office+core&tab=search'); ?>" class="button button-primary">
-                    <?php _e('Install Plugin', 'campaign-office'); ?>
+                    <?php _e('Install Plugin', 'campaignpress'); ?>
                 </a>
             </p>
         </div>
@@ -236,7 +236,7 @@ public function theme_check_notice() {
     $theme = wp_get_theme();
     $is_campaign_office_theme = (
         'Campaign Office' === $theme->get('Name') ||
-        'campaign-office' === $theme->get('Template')
+        'campaignpress' === $theme->get('Template')
     );
 
     if (!$is_campaign_office_theme && current_user_can('switch_themes')) {
@@ -296,7 +296,7 @@ $message = apply_filters('campaign_office_email_content', $message, $type, $reci
 // Add custom volunteer field
 add_filter('campaign_office_volunteer_fields', function($fields) {
     $fields['t_shirt_size'] = array(
-        'label' => __('T-Shirt Size', 'campaign-office'),
+        'label' => __('T-Shirt Size', 'campaignpress'),
         'type' => 'select',
         'options' => array('S', 'M', 'L', 'XL')
     );

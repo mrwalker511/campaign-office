@@ -305,7 +305,7 @@ Injects event details before content:
 ## Code Quality
 
 ### WordPress Standards
-- ✅ Proper text domain usage ('campaign-office')
+- ✅ Proper text domain usage ('campaignpress')
 - ✅ Translation ready (__ and _e functions)
 - ✅ Sanitization on all inputs
 - ✅ Escaping on all outputs

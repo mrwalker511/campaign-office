@@ -104,14 +104,14 @@ function campaignpress_core_plugin_notice() {
 
         $message = sprintf(
             /* translators: %s: plugin name */
-            __('Campaign Office theme works best with the %s plugin. The plugin is installed but not active.', 'campaign-office'),
+            __('CampaignPress theme works best with the %s plugin. The plugin is installed but not active.', 'campaignpress'),
             '<strong>Campaign Office Core</strong>'
         );
 
         $button = sprintf(
             '<a href="%s" class="button button-primary">%s</a>',
             esc_url($activate_url),
-            __('Activate Plugin', 'campaign-office')
+            __('Activate Plugin', 'campaignpress')
         );
     } else {
         // Plugin is not installed
@@ -122,14 +122,14 @@ function campaignpress_core_plugin_notice() {
 
         $message = sprintf(
             /* translators: %s: plugin name */
-            __('Campaign Office theme requires the %s plugin for full functionality.', 'campaign-office'),
+            __('CampaignPress theme requires the %s plugin for full functionality.', 'campaignpress'),
             '<strong>Campaign Office Core</strong>'
         );
 
         $button = sprintf(
             '<a href="%s" class="button button-primary">%s</a>',
             esc_url($install_url),
-            __('Install Plugin', 'campaign-office')
+            __('Install Plugin', 'campaignpress')
         );
     }
 
@@ -149,12 +149,12 @@ function campaignpress_core_plugin_notice() {
         <p>
             <?php echo wp_kses_post($button); ?>
             <a href="<?php echo esc_url($dismiss_url); ?>" class="button">
-                <?php esc_html_e('Dismiss', 'campaign-office'); ?>
+                <?php esc_html_e('Dismiss', 'campaignpress'); ?>
             </a>
         </p>
         <p>
             <small>
-                <?php _e('Note: Without the plugin, some features like volunteer management, custom post types, and event RSVPs will not be available.', 'campaign-office'); ?>
+                <?php _e('Note: Without the plugin, some features like volunteer management, custom post types, and event RSVPs will not be available.', 'campaignpress'); ?>
             </small>
         </p>
     </div>
@@ -201,8 +201,8 @@ function campaignpress_setup() {
     // Navigation is handled by the Navigation block in block themes
     // Menus can be created in Appearance > Menus and assigned via the Navigation block
     register_nav_menus(array(
-        'primary' => __('Primary Menu', 'campaign-office'),
-        'footer'  => __('Footer Menu', 'campaign-office'),
+        'primary' => __('Primary Menu', 'campaignpress'),
+        'footer'  => __('Footer Menu', 'campaignpress'),
     ));
 
     // Switch default core markup to output valid HTML5
@@ -234,8 +234,8 @@ function campaignpress_setup() {
                 'text_about' => array(
                     'text',
                     array(
-                        'title' => __('About the Campaign', 'campaign-office'),
-                        'text'  => __('Fighting for a better future for our community. Join our movement today.', 'campaign-office'),
+                        'title' => __('About the Campaign', 'campaignpress'),
+                        'text'  => __('Fighting for a better future for our community. Join our movement today.', 'campaignpress'),
                     ),
                 ),
             ),
@@ -243,13 +243,13 @@ function campaignpress_setup() {
         'posts' => array(
             'home' => array(
                 'post_type' => 'page',
-                'post_title' => __('Home', 'campaign-office'),
+                'post_title' => __('Home', 'campaignpress'),
                 'post_content' => '<!-- wp:pattern {"slug":"campaignpress/hero-section"} /--> <!-- wp:pattern {"slug":"campaignpress/issue-card"} /--> <!-- wp:pattern {"slug":"campaignpress/donation-cta"} /-->',
                 'template' => 'front-page.html',
             ),
             'about' => array(
                 'post_type' => 'page',
-                'post_title' => __('About Marcus', 'campaign-office'),
+                'post_title' => __('About Marcus', 'campaignpress'),
                 'post_content' => '<!-- wp:heading --><h2>' . __('Meet the Candidate', 'campaign-office') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('I was born and raised in this community...', 'campaign-office') . '</p><!-- /wp:paragraph -->',
             ),
             'contact' => array(

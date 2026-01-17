@@ -4,7 +4,7 @@
     "name": "campaignpress/style-panel",
     "version": "1.0.0",
     "title": "Inline Style Panel",
-    "category": "campaign-office",
+    "category": "campaignpress",
     "icon": "art",
     "description": "A wrapper block that adds Elementor-like style controls to any content.",
     "supports": {
@@ -28,7 +28,7 @@
             "default": "0px"
         }
     },
-    "textdomain": "campaign-office",
+    "textdomain": "campaignpress",
     "editorScript": "file:./index.js",
     "render": "file:./render.php"
 }

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Extract attributes with defaults
-$title             = $attributes['title'] ?? __( 'Upcoming Events', 'campaign-office' );
+$title             = $attributes['title'] ?? __( 'Upcoming Events', 'campaignpress' );
 $display_type      = $attributes['displayType'] ?? 'list';
 $events_to_show    = absint( $attributes['eventsToShow'] ?? 5 );
 $show_past_events  = $attributes['showPastEvents'] ?? false;
@@ -129,11 +129,11 @@ $events_query = new WP_Query( $args );
                             <div class="cp-event-actions">
                                 <?php if ( $event_rsvp_url ) : ?>
                                     <a href="<?php echo esc_url( $event_rsvp_url ); ?>" class="cp-event-rsvp-btn" target="_blank" rel="noopener">
-                                        <?php esc_html_e( 'RSVP', 'campaign-office' ); ?>
+                                        <?php esc_html_e( 'RSVP', 'campaignpress' ); ?>
                                     </a>
                                 <?php endif; ?>
                                 <a href="<?php the_permalink(); ?>" class="cp-event-details-btn">
-                                    <?php esc_html_e( 'Details', 'campaign-office' ); ?>
+                                    <?php esc_html_e( 'Details', 'campaignpress' ); ?>
                                 </a>
                             </div>
                         <?php endif; ?>
@@ -142,7 +142,7 @@ $events_query = new WP_Query( $args );
             <?php endwhile; ?>
         </div>
     <?php else : ?>
-        <p class="cp-no-events"><?php esc_html_e( 'No upcoming events scheduled.', 'campaign-office' ); ?></p>
+        <p class="cp-no-events"><?php esc_html_e( 'No upcoming events scheduled.', 'campaignpress' ); ?></p>
     <?php endif; ?>
     <?php wp_reset_postdata(); ?>
 </div>

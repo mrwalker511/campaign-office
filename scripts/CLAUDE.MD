@@ -9,7 +9,7 @@
 ### Repository Structure
 
 ```
-campaign-office/          # Theme (CampaignPress)
+campaignpress/            # Theme (CampaignPress)
 ├── assets/               # CSS, JS, images, fonts
 ├── blocks/               # Custom Gutenberg blocks
 ├── includes/             # PHP functionality modules
@@ -388,7 +388,7 @@ Email:        dev@campaignpress.test
 
 1. Create PHP file in `/patterns/`
 2. Add pattern registration in `/includes/block-patterns.php`
-3. Use `campaignpress/campaign-office` category
+3. Use `campaignpress/block-name` category
 
 ### Creating a Custom Template
 
@@ -467,7 +467,7 @@ TargetScore: 95
 ### PHP
 
 - Follow WordPress Coding Standards
-- Use `campaign-office` text domain for all strings
+- Use `campaignpress` text domain for all strings
 - Prefix all functions with `campaignpress_`
 - Prefix all options with `campaignpress_`
 - Document functions with PHPDoc

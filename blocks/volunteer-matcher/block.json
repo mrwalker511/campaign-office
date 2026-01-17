@@ -4,7 +4,7 @@
     "name": "campaignpress/volunteer-matcher",
     "version": "2.0.0",
     "title": "Volunteer Matcher",
-    "category": "campaign-office",
+    "category": "campaignpress",
     "icon": "groups",
     "description": "Display a volunteer signup form with smart matching to opportunities",
     "supports": {
@@ -43,7 +43,7 @@
             "type": "string"
         }
     },
-    "textdomain": "campaign-office",
+    "textdomain": "campaignpress",
     "editorScript": "file:./index.js",
     "render": "file:./render.php",
     "style": "file:./style.css"

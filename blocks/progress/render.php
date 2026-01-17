@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Extract attributes with defaults
-$title           = $attributes['title'] ?? __( 'Campaign Progress', 'campaign-office' );
+$title           = $attributes['title'] ?? __( 'Campaign Progress', 'campaignpress' );
 $goal_type       = $attributes['goalType'] ?? 'fundraising';
 $current_value   = absint( $attributes['currentValue'] ?? 0 );
 $goal_value      = absint( $attributes['goalValue'] ?? 10000 );
@@ -54,7 +54,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
                 <?php
                 printf(
                     /* translators: %s: goal amount */
-                    esc_html__( 'Goal: %s', 'campaign-office' ),
+                    esc_html__( 'Goal: %s', 'campaignpress' ),
                     esc_html( $formatted_goal )
                 );
                 ?>

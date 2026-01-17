@@ -22,7 +22,7 @@ test.describe('Countdown Block', () => {
   });
 
   test('should display countdown timer', async ({ page }) => {
-    const countdown = page.locator('.wp-block-campaign-office-countdown');
+    const countdown = page.locator('.wp-block-campaignpress-countdown');
 
     if (await countdown.count() > 0) {
       await expect(countdown.first()).toBeVisible();
@@ -37,7 +37,7 @@ test.describe('Countdown Block', () => {
   });
 
   test('should update countdown every second', async ({ page }) => {
-    const countdown = page.locator('.wp-block-campaign-office-countdown');
+    const countdown = page.locator('.wp-block-campaignpress-countdown');
 
     if (await countdown.count() > 0) {
       // Get initial time

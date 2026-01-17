@@ -60,7 +60,7 @@
 			"default": ""
 		}
 	},
-	"textdomain": "campaign-office",
+	"textdomain": "campaignpress",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./editor.css",
 	"style": "file:./style.css",

@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Extract attributes with defaults
-$heading            = $attributes['heading'] ?? __( 'Support Our Campaign', 'campaign-office' );
-$description        = $attributes['description'] ?? __( 'Your contribution helps us build a better future.', 'campaign-office' );
+$heading            = $attributes['heading'] ?? __( 'Support Our Campaign', 'campaignpress' );
+$description        = $attributes['description'] ?? __( 'Your contribution helps us build a better future.', 'campaignpress' );
 $tiers              = $attributes['tiers'] ?? array();
 $allow_custom       = $attributes['allowCustomAmount'] ?? true;
 $min_custom         = absint( $attributes['minCustomAmount'] ?? 5 );
@@ -28,9 +28,9 @@ $goal_amount        = absint( $attributes['goalAmount'] ?? 10000 );
 $current_amount     = absint( $attributes['currentAmount'] ?? 0 );
 $primary_color      = $attributes['primaryColor'] ?? '#0053c3';
 $background_color   = $attributes['backgroundColor'] ?? '#ffffff';
-$button_text        = $attributes['buttonText'] ?? __( 'Donate Now', 'campaign-office' );
+$button_text        = $attributes['buttonText'] ?? __( 'Donate Now', 'campaignpress' );
 $show_disclaimer    = $attributes['showDisclaimer'] ?? true;
-$disclaimer_text    = $attributes['disclaimerText'] ?? __( 'Contributions are not tax deductible. By donating, you certify that you are a U.S. citizen or permanent resident.', 'campaign-office' );
+$disclaimer_text    = $attributes['disclaimerText'] ?? __( 'Contributions are not tax deductible. By donating, you certify that you are a U.S. citizen or permanent resident.', 'campaignpress' );
 
 // Calculate goal percentage
 $goal_percentage = $goal_amount > 0 ? min( 100, ( $current_amount / $goal_amount ) * 100 ) : 0;
@@ -61,7 +61,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
                     <?php
                     printf(
                         /* translators: %s: goal amount */
-                        esc_html__( 'Goal: %s', 'campaign-office' ),
+                        esc_html__( 'Goal: %s', 'campaignpress' ),
                         esc_html( $currency_symbol . number_format( $goal_amount ) )
                     );
                     ?>
@@ -95,7 +95,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
 
     <?php if ( $allow_custom ) : ?>
         <div class="cp-custom-amount">
-            <label for="cp-custom-amount-input"><?php esc_html_e( 'Or enter custom amount:', 'campaign-office' ); ?></label>
+            <label for="cp-custom-amount-input"><?php esc_html_e( 'Or enter custom amount:', 'campaignpress' ); ?></label>
             <div class="cp-custom-amount-input-wrapper">
                 <span class="cp-currency-symbol"><?php echo esc_html( $currency_symbol ); ?></span>
                 <input
@@ -114,7 +114,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
         <div class="cp-recurring-option">
             <label class="cp-recurring-label">
                 <input type="checkbox" id="cp-recurring-checkbox" class="cp-recurring-checkbox">
-                <span><?php esc_html_e( 'Make this a monthly donation', 'campaign-office' ); ?></span>
+                <span><?php esc_html_e( 'Make this a monthly donation', 'campaignpress' ); ?></span>
             </label>
         </div>
     <?php endif; ?>
@@ -131,7 +131,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
 
     <?php if ( $enable_crypto && ! empty( $btc_address ) ) : ?>
         <div class="cp-crypto-option">
-            <p class="cp-crypto-label"><?php esc_html_e( 'Or donate with cryptocurrency:', 'campaign-office' ); ?></p>
+            <p class="cp-crypto-label"><?php esc_html_e( 'Or donate with cryptocurrency:', 'campaignpress' ); ?></p>
             <code class="cp-btc-address"><?php echo esc_html( $btc_address ); ?></code>
         </div>
     <?php endif; ?>

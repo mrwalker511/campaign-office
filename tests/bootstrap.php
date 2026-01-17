@@ -41,7 +41,7 @@ function _manually_load_theme() {
     register_theme_directory( dirname( __DIR__ ) );
 
     // Switch to our theme
-    switch_theme( 'campaign-office' );
+    switch_theme( 'campaignpress' );
 
     // Load theme files
     require dirname( __DIR__ ) . '/functions.php';

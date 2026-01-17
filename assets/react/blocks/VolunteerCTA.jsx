@@ -7,13 +7,13 @@ import ServerSideRender from '@wordpress/server-side-render';
 import { __ } from '@wordpress/i18n';
 
 registerBlockType('campaignpress/volunteer-cta', {
-    title: __('Volunteer CTA', 'campaign-office'),
+    title: __('Volunteer CTA', 'campaignpress'),
     category: 'campaignpress',
     icon: 'groups',
     attributes: {
         title: {
             type: 'string',
-            default: __('Join Our Campaign', 'campaign-office'),
+            default: __('Join Our Campaign', 'campaignpress'),
         },
         description: {
             type: 'string',
@@ -21,7 +21,7 @@ registerBlockType('campaignpress/volunteer-cta', {
         },
         buttonText: {
             type: 'string',
-            default: __('Sign Up to Volunteer', 'campaign-office'),
+            default: __('Sign Up to Volunteer', 'campaignpress'),
         },
         buttonUrl: {
             type: 'string',

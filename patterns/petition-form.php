@@ -2,7 +2,7 @@
 /**
  * Title: Petition Form
  * Slug: campaignpress/petition-form
- * Categories: campaign-office, call-to-action
+ * Categories: campaignpress, call-to-action
  * Keywords: petition, form, signature
  */
 ?>
@@ -13,15 +13,15 @@
         <!-- wp:column {"width":"60%"} -->
         <div class="wp-block-column" style="flex-basis:60%">
             <!-- wp:heading {"level":2} -->
-            <h2 class="wp-block-heading"><?php esc_html_e( 'Sign the Petition', 'campaign-office' ); ?></h2>
+            <h2 class="wp-block-heading"><?php esc_html_e( 'Sign the Petition', 'campaignpress' ); ?></h2>
             <!-- /wp:heading -->
 
             <!-- wp:paragraph {"fontSize":"lg"} -->
-            <p class="has-lg-font-size"><?php esc_html_e( 'We need 5,000 signatures to get this initiative on the ballot.', 'campaign-office' ); ?></p>
+            <p class="has-lg-font-size"><?php esc_html_e( 'We need 5,000 signatures to get this initiative on the ballot.', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
 
             <!-- wp:paragraph -->
-            <p><?php esc_html_e( 'Join your neighbors in demanding change. By signing this petition, you are sending a clear message that we deserve better infrastructure and safer streets.', 'campaign-office' ); ?></p>
+            <p><?php esc_html_e( 'Join your neighbors in demanding change. By signing this petition, you are sending a clear message that we deserve better infrastructure and safer streets.', 'campaignpress' ); ?></p>
             <!-- /wp:paragraph -->
 
             <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","right":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6"}}},"backgroundColor":"neutral-100"} -->
@@ -30,7 +30,7 @@
                 <p><em>[Petition Form Shortcode Placeholder]</em></p>
                 <!-- /wp:paragraph -->
                  <!-- wp:button {"className":"is-style-fill"} -->
-                <div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Sign Petition', 'campaign-office' ); ?></a></div>
+                <div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Sign Petition', 'campaignpress' ); ?></a></div>
                 <!-- /wp:button -->
             </div>
             <!-- /wp:group -->

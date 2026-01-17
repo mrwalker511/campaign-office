@@ -11,9 +11,9 @@ $version = (Select-String -Path "style.css" -Pattern "Version:\s*(.+)" | Select-
 Write-Host "Version: $version" -ForegroundColor Green
 
 # Setup paths
-$tempDir = Join-Path $env:TEMP "campaign-office-build-$(Get-Date -Format 'yyyyMMddHHmmss')"
-$outputZip = "campaign-office-testing.zip"
-$themeName = "campaign-office"
+$tempDir = Join-Path $env:TEMP "campaignpress-build-$(Get-Date -Format 'yyyyMMddHHmmss')"
+$outputZip = "campaignpress-testing.zip"
+$themeName = "campaignpress"
 $themeDir = Join-Path $tempDir $themeName
 
 Write-Host "Creating temporary build directory..." -ForegroundColor Yellow

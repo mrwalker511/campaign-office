@@ -40,7 +40,7 @@ class CP_Translation_Support {
      * Constructor
      */
     public function __construct() {
-        // Note: Textdomain is loaded in functions.php at 'after_setup_theme' priority 1
+        // Note: Textdomain is loaded in functions.php at 'init' priority 1 per WordPress 6.7+
 
         // Register language switcher widget
         add_action('widgets_init', array($this, 'register_language_switcher_widget'));
@@ -70,9 +70,9 @@ class CP_Translation_Support {
     /**
      * Load theme text domain for translations
      *
-     * Note: Primary textdomain loading is handled in functions.php at 'after_setup_theme'
-     * priority 1. This method provides additional compatibility for directory name
-     * mismatches and WPML integration.
+     * Note: Primary textdomain loading is handled in functions.php at 'init' priority 1
+     * per WordPress 6.7+ requirements. This method provides additional compatibility
+     * for directory name mismatches and WPML integration.
      */
     public function load_textdomain() {
         // Use the theme directory name as the actual text domain

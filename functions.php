@@ -71,8 +71,8 @@ if (!defined('CAMPAIGNPRESS_DEV_MODE')) {
 /**
  * Set up theme text domain
  *
- * Load textdomain at 'after_setup_theme' priority 1 so it's available before
- * other callbacks (like nav menu registration) need translations.
+ * WordPress 6.7+ requires textdomain to be loaded at 'init' or later.
+ * Translation functions (__(), _e(), etc.) must NOT be used before 'init'.
  * We handle dynamic directory names to avoid errors when the directory
  * doesn't match the hardcoded text domain.
  */
@@ -89,7 +89,7 @@ function campaignpress_setup_textdomain() {
     // Always load with our standard text domain for backward compatibility
     load_theme_textdomain($text_domain, CAMPAIGNPRESS_THEME_DIR . '/languages');
 }
-add_action('after_setup_theme', 'campaignpress_setup_textdomain', 1);
+add_action('init', 'campaignpress_setup_textdomain', 1);
 
 /**
  * Check for CampaignPress Core Plugin
@@ -281,7 +281,8 @@ add_action('admin_init', 'campaignpress_check_dependencies', 1);
  * Theme Setup
  */
 function campaignpress_setup() {
-    // Note: Textdomain is loaded via campaignpress_setup_textdomain() at after_setup_theme priority 1
+    // Note: Textdomain is loaded at 'init' priority 1 per WordPress 6.7+ requirements.
+    // Do NOT use __() or _e() in this function - use plain strings instead.
 
     // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');
@@ -300,9 +301,11 @@ function campaignpress_setup() {
 
     // Navigation is handled by the Navigation block in block themes
     // Menus can be created in Appearance > Menus and assigned via the Navigation block
+    // Note: Using plain strings here because WordPress 6.7+ requires textdomain
+    // to be loaded at 'init' or later. These strings are still translatable via .pot files.
     register_nav_menus(array(
-        'primary' => __('Primary Menu', 'campaignpress'),
-        'footer'  => __('Footer Menu', 'campaignpress'),
+        'primary' => 'Primary Menu',
+        'footer'  => 'Footer Menu',
     ));
 
     // Switch default core markup to output valid HTML5
@@ -338,14 +341,16 @@ function campaignpress_setup() {
     remove_theme_support('core-block-patterns');
 
     // Add support for Starter Content
+    // Note: Using plain strings because WordPress 6.7+ requires textdomain at 'init' or later.
+    // These strings are still translatable via .pot files for i18n tools.
     add_theme_support('starter-content', array(
         'widgets' => array(
             'main-sidebar' => array(
                 'text_about' => array(
                     'text',
                     array(
-                        'title' => __('About the Campaign', 'campaignpress'),
-                        'text'  => __('Fighting for a better future for our community. Join our movement today.', 'campaignpress'),
+                        'title' => 'About the Campaign',
+                        'text'  => 'Fighting for a better future for our community. Join our movement today.',
                     ),
                 ),
             ),
@@ -353,43 +358,43 @@ function campaignpress_setup() {
         'posts' => array(
             'home' => array(
                 'post_type' => 'page',
-                'post_title' => __('Home', 'campaignpress'),
+                'post_title' => 'Home',
                 'post_content' => '<!-- wp:pattern {"slug":"campaignpress/hero-section"} /--> <!-- wp:pattern {"slug":"campaignpress/issue-card"} /--> <!-- wp:pattern {"slug":"campaignpress/donation-cta"} /-->',
                 'template' => 'front-page.html',
             ),
             'about' => array(
                 'post_type' => 'page',
-                'post_title' => __('About Marcus', 'campaignpress'),
-                'post_content' => '<!-- wp:heading --><h2>' . __('Meet the Candidate', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('I was born and raised in this community...', 'campaignpress') . '</p><!-- /wp:paragraph -->',
+                'post_title' => 'About Marcus',
+                'post_content' => '<!-- wp:heading --><h2>Meet the Candidate</h2><!-- /wp:heading --><!-- wp:paragraph --><p>I was born and raised in this community...</p><!-- /wp:paragraph -->',
             ),
             'contact' => array(
                 'post_type' => 'page',
-                'post_title' => __('Contact', 'campaignpress'),
-                'post_content' => '<!-- wp:heading --><h2>' . __('Get in Touch', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('Email: info@campaign.test', 'campaignpress') . '</p><!-- /wp:paragraph -->',
+                'post_title' => 'Contact',
+                'post_content' => '<!-- wp:heading --><h2>Get in Touch</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Email: info@campaign.test</p><!-- /wp:paragraph -->',
             ),
             'volunteer' => array(
                 'post_type' => 'page',
-                'post_title' => __('Volunteer', 'campaignpress'),
-                'post_content' => '<!-- wp:heading --><h2>' . __('Join Our Team', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:paragraph --><p>' . __('Sign up to volunteer today.', 'campaignpress') . '</p><!-- /wp:paragraph -->',
+                'post_title' => 'Volunteer',
+                'post_content' => '<!-- wp:heading --><h2>Join Our Team</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Sign up to volunteer today.</p><!-- /wp:paragraph -->',
             ),
             'donate' => array(
                 'post_type' => 'page',
-                'post_title' => __('Donate', 'campaignpress'),
-                'post_content' => '<!-- wp:heading {"textAlign":"center"} --><h2 class="has-text-align-center">' . __('Fuel Our Movement', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:paragraph {"align":"center"} --><p class="has-text-align-center">' . __('Your contribution helps us reach more voters and spread our message of hope.', 'campaignpress') . '</p><!-- /wp:paragraph --> [cp_donation_button processor="actblue" text="' . __('Donate via ActBlue', 'campaignpress') . '" style="primary" size="large"]',
+                'post_title' => 'Donate',
+                'post_content' => '<!-- wp:heading {"textAlign":"center"} --><h2 class="has-text-align-center">Fuel Our Movement</h2><!-- /wp:heading --><!-- wp:paragraph {"align":"center"} --><p class="has-text-align-center">Your contribution helps us reach more voters and spread our message of hope.</p><!-- /wp:paragraph --> [cp_donation_button processor="actblue" text="Donate via ActBlue" style="primary" size="large"]',
             ),
             'volunteer-dashboard' => array(
                 'post_type' => 'page',
-                'post_title' => __('Volunteer Portal', 'campaignpress'),
+                'post_title' => 'Volunteer Portal',
                 'post_content' => '[cp_volunteer_portal]',
             ),
             'events' => array(
                 'post_type' => 'page',
-                'post_title' => __('Events', 'campaignpress'),
-                'post_content' => '<!-- wp:heading --><h2>' . __('Join Us at an Upcoming Event', 'campaignpress') . '</h2><!-- /wp:heading --><!-- wp:query {"query":{"postType":"cp_event"}} --><div class="wp-block-query"><!-- wp:post-template --> <!-- wp:post-title {"isLink":true} /--> <!-- wp:post-excerpt /--> <!-- /wp:post-template --></div><!-- /wp:query -->',
+                'post_title' => 'Events',
+                'post_content' => '<!-- wp:heading --><h2>Join Us at an Upcoming Event</h2><!-- /wp:heading --><!-- wp:query {"query":{"postType":"cp_event"}} --><div class="wp-block-query"><!-- wp:post-template --> <!-- wp:post-title {"isLink":true} /--> <!-- wp:post-excerpt /--> <!-- /wp:post-template --></div><!-- /wp:query -->',
             ),
             'press-releases' => array(
                 'post_type' => 'page',
-                'post_title' => __('News', 'campaignpress'),
+                'post_title' => 'News',
             ),
         ),
         'options' => array(

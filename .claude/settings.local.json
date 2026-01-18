@@ -69,7 +69,11 @@
       "Bash(npm run build:*)",
       "Bash(pwsh -File build-production.ps1)",
       "Bash(powershell.exe -ExecutionPolicy Bypass -File build-production.ps1)",
-      "Bash(if exist nul del nul)"
+      "Bash(if exist nul del nul)",
+      "Bash(npx vite build:*)",
+      "Bash(node -e \"import\\(''vite''\\).then\\(v => console.log\\(''Vite version:'', v.version\\)\\)\")",
+      "Bash(node:*)",
+      "Bash(node_modules/.bin/vite.cmd build --config build/vite.config.js)"
     ],
     "deny": [],
     "ask": []

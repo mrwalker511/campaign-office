@@ -3,6 +3,7 @@
  * Dynamic Block Registration Loader
  *
  * Scans the blocks directory and registers all valid block.json files.
+ * Blocks use IIFE format JavaScript that doesn't require transpilation.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

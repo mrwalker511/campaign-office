@@ -29,21 +29,51 @@
             "type": "string",
             "default": "Together, we can build a better tomorrow"
         },
-        "enableTypewriter": {
+        "typewriterEnabled": {
             "type": "boolean",
-            "default": true
+            "default": false
         },
-        "typewriterPhrases": {
+        "typewriterTexts": {
             "type": "array",
             "default": ["Fighting for Our Future", "Building a Better Tomorrow", "Working for Change"]
         },
-        "backgroundImage": {
-            "type": "string",
-            "default": ""
+        "typewriterSpeed": {
+            "type": "number",
+            "default": 100
         },
-        "enableParallax": {
+        "backgroundType": {
+            "type": "string",
+            "default": "color"
+        },
+        "backgroundImage": {
+            "type": "object",
+            "default": {
+                "url": "",
+                "id": 0,
+                "alt": ""
+            }
+        },
+        "backgroundVideo": {
+            "type": "object",
+            "default": {
+                "url": "",
+                "id": 0
+            }
+        },
+        "backgroundColor": {
+            "type": "string",
+            "default": "#14213d"
+        },
+        "gradientColors": {
+            "type": "object",
+            "default": {
+                "start": "#14213d",
+                "end": "#ff8800"
+            }
+        },
+        "overlayEnabled": {
             "type": "boolean",
-            "default": true
+            "default": false
         },
         "overlayColor": {
             "type": "string",
@@ -51,37 +81,58 @@
         },
         "overlayOpacity": {
             "type": "number",
-            "default": 50
+            "default": 0.5
         },
         "minHeight": {
             "type": "string",
             "default": "600px"
         },
-        "textAlignment": {
+        "textAlign": {
             "type": "string",
             "default": "center"
         },
-        "primaryButtonText": {
+        "textColor": {
             "type": "string",
-            "default": "Donate Now"
+            "default": "#ffffff"
         },
-        "primaryButtonUrl": {
+        "headlineSize": {
             "type": "string",
-            "default": ""
+            "default": "clamp(2rem, 5vw, 4rem)"
         },
-        "secondaryButtonText": {
+        "subheadlineSize": {
             "type": "string",
-            "default": "Get Involved"
+            "default": "1.25rem"
         },
-        "secondaryButtonUrl": {
+        "contentMaxWidth": {
             "type": "string",
-            "default": ""
+            "default": "800px"
         },
-        "showButtons": {
+        "primaryCTA": {
+            "type": "object",
+            "default": {
+                "enabled": true,
+                "text": "Donate Now",
+                "url": ""
+            }
+        },
+        "secondaryCTA": {
+            "type": "object",
+            "default": {
+                "enabled": true,
+                "text": "Get Involved",
+                "url": ""
+            }
+        },
+        "parallaxEnabled": {
             "type": "boolean",
-            "default": true
+            "default": false
+        },
+        "animationStyle": {
+            "type": "string",
+            "default": "none"
         }
     },
     "textdomain": "campaign-office",
-    "editorScript": "file:./index.js"
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php"
 }

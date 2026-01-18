@@ -25,9 +25,16 @@ function campaignpress_register_custom_icons_block() {
 	wp_register_script(
 		'campaignpress-custom-icons-block',
 		get_template_directory_uri() . '/assets/js/custom-icons-block.js',
-		array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n' ),
-		CAMPAIGNPRESS_VERSION
+		array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n' ),
+		CAMPAIGNPRESS_VERSION,
+		true
 	);
+
+	// Localize script with AJAX data for icon loading
+	wp_localize_script( 'campaignpress-custom-icons-block', 'cpIconsBrowser', array(
+		'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+		'nonce'   => wp_create_nonce( 'cp_icons_browser' ),
+	) );
 
 	wp_register_style(
 		'campaignpress-custom-icons-block-editor',

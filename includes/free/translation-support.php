@@ -40,7 +40,7 @@ class CP_Translation_Support {
      * Constructor
      */
     public function __construct() {
-        // Note: Textdomain is loaded in functions.php at 'init' priority 1 per WordPress 6.7+
+        // Note: Textdomain is loaded in functions.php at 'init' priority 0 per WordPress 6.7+
 
         // Register language switcher widget
         add_action('widgets_init', array($this, 'register_language_switcher_widget'));
@@ -70,7 +70,7 @@ class CP_Translation_Support {
     /**
      * Load theme text domain for translations
      *
-     * Note: Primary textdomain loading is handled in functions.php at 'init' priority 1
+     * Note: Primary textdomain loading is handled in functions.php at 'init' priority 0
      * per WordPress 6.7+ requirements. This method provides additional compatibility
      * for directory name mismatches and WPML integration.
      */
@@ -448,8 +448,8 @@ class CP_Language_Switcher_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'cp_language_switcher',
-            __('CampaignPress Language Switcher', 'campaignpress'),
-            array('description' => __('Display language switcher for multilingual campaigns', 'campaignpress'))
+            __( 'CampaignPress Language Switcher', 'campaignpress' ),
+            array( 'description' => __( 'Display language switcher for multilingual campaigns', 'campaignpress' ) )
         );
     }
 

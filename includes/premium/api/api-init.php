@@ -21,6 +21,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 function campaignpress_api_init() {
+    // Ensure API tables exist (in case theme was activated before API module was added)
+    campaignpress_maybe_create_api_tables();
+
     // Require API classes
     require_once dirname( __FILE__ ) . '/class-api-endpoints.php';
     require_once dirname( __FILE__ ) . '/class-api-webhooks.php';
@@ -739,6 +742,41 @@ function campaignpress_delete_api_key( $key_id ) {
 }
 
 /**
+ * Maybe Create API Tables
+ *
+ * Creates API tables if they don't exist. Uses a transient to avoid
+ * checking on every page load.
+ *
+ * @since 2.0.0
+ */
+function campaignpress_maybe_create_api_tables() {
+    // Check if we've already verified tables exist this session
+    $tables_verified = get_transient( 'campaignpress_api_tables_verified' );
+    if ( $tables_verified ) {
+        return;
+    }
+
+    global $wpdb;
+    $keys_table = $wpdb->prefix . 'campaignpress_api_keys';
+
+    // Check if the API keys table exists
+    $table_exists = $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT COUNT(1) FROM information_schema.tables WHERE table_schema = %s AND table_name = %s",
+            DB_NAME,
+            $keys_table
+        )
+    );
+
+    if ( ! $table_exists ) {
+        campaignpress_create_api_tables();
+    }
+
+    // Set transient for 24 hours to avoid repeated checks
+    set_transient( 'campaignpress_api_tables_verified', true, DAY_IN_SECONDS );
+}
+
+/**
  * Create API Tables
  *
  * @since 1.0.0
@@ -778,5 +816,8 @@ function campaignpress_create_api_tables() {
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql_keys );
     dbDelta( $sql_logs );
+
+    // Clear the verification transient so next check confirms tables exist
+    delete_transient( 'campaignpress_api_tables_verified' );
 }
 add_action( 'after_switch_theme', 'campaignpress_create_api_tables' );

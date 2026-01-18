@@ -952,6 +952,12 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/block-templates.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/icons-browser.php';
 
 /**
+ * Custom icons integration
+ */
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-icons.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-icons-block.php';
+
+/**
  * Security: Remove WordPress version from head
  */
 remove_action('wp_head', 'wp_generator');

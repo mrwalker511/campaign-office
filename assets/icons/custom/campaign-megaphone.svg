@@ -1,0 +1,8 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Campaign megaphone icon -->
+  <path d="M3 11L11 3H19C20.1046 3 21 3.89543 21 5V11C21 12.1046 20.1046 13 19 13H13L11 15V21L8 18H5C3.89543 18 3 17.1046 3 16V11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Sound waves -->
+  <path d="M15 6V3M18 8V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <!-- Base -->
+  <rect x="7" y="19" width="10" height="2" fill="currentColor" rx="1"/>
+</svg>

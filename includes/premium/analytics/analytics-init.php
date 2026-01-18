@@ -46,6 +46,7 @@ function campaignpress_analytics_init() {
 	add_action( 'wp_ajax_campaignpress_get_analytics_data', 'campaignpress_ajax_get_analytics_data' );
 	add_action( 'wp_ajax_campaignpress_export_analytics', 'campaignpress_ajax_export_analytics' );
 	add_action( 'wp_ajax_campaignpress_update_metric', 'campaignpress_ajax_update_metric' );
+	add_action( 'wp_ajax_campaignpress_add_metric', 'campaignpress_ajax_add_metric' );
 }
 add_action( 'init', 'campaignpress_analytics_init', 5 );
 
@@ -262,6 +263,184 @@ function campaignpress_metrics_dashboard_page() {
 			</div>
 		</div>
 	</div>
+
+	<!-- Add Metric Modal -->
+	<div id="add-metric-modal" class="cp-modal" style="display:none;">
+		<div class="cp-modal-overlay"></div>
+		<div class="cp-modal-content">
+			<div class="cp-modal-header">
+				<h2><?php esc_html_e( 'Add New Metric', 'campaignpress' ); ?></h2>
+				<button class="cp-modal-close" aria-label="<?php esc_attr_e( 'Close', 'campaignpress' ); ?>">&times;</button>
+			</div>
+			<div class="cp-modal-body">
+				<form id="add-metric-form">
+					<?php wp_nonce_field( 'campaignpress_add_metric', 'add_metric_nonce' ); ?>
+
+					<table class="form-table">
+						<tr>
+							<th scope="row">
+								<label for="metric_key"><?php esc_html_e( 'Metric Key', 'campaignpress' ); ?> <span class="required">*</span></label>
+							</th>
+							<td>
+								<input type="text" id="metric_key" name="metric_key" class="regular-text" required pattern="[a-z0-9_]+" title="<?php esc_attr_e( 'Only lowercase letters, numbers, and underscores', 'campaignpress' ); ?>">
+								<p class="description"><?php esc_html_e( 'Unique identifier (e.g., social_media_followers). Only lowercase letters, numbers, and underscores.', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="metric_name"><?php esc_html_e( 'Metric Name', 'campaignpress' ); ?> <span class="required">*</span></label>
+							</th>
+							<td>
+								<input type="text" id="metric_name" name="metric_name" class="regular-text" required>
+								<p class="description"><?php esc_html_e( 'Display name (e.g., Social Media Followers)', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="metric_type"><?php esc_html_e( 'Metric Type', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<select id="metric_type" name="metric_type" class="regular-text">
+									<option value="count"><?php esc_html_e( 'Count', 'campaignpress' ); ?></option>
+									<option value="currency"><?php esc_html_e( 'Currency', 'campaignpress' ); ?></option>
+									<option value="percentage"><?php esc_html_e( 'Percentage', 'campaignpress' ); ?></option>
+									<option value="hours"><?php esc_html_e( 'Hours', 'campaignpress' ); ?></option>
+									<option value="score"><?php esc_html_e( 'Score', 'campaignpress' ); ?></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="metric_description"><?php esc_html_e( 'Description', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<textarea id="metric_description" name="description" class="large-text" rows="3"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="metric_unit"><?php esc_html_e( 'Unit', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<input type="text" id="metric_unit" name="unit" class="regular-text" placeholder="<?php esc_attr_e( 'e.g., followers, USD, %', 'campaignpress' ); ?>">
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="goal_value"><?php esc_html_e( 'Goal Value', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<input type="number" id="goal_value" name="goal_value" class="regular-text" step="0.01" min="0" value="0">
+								<p class="description"><?php esc_html_e( 'The ultimate goal to achieve', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="target_value"><?php esc_html_e( 'Target Value', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<input type="number" id="target_value" name="target_value" class="regular-text" step="0.01" min="0" value="0">
+								<p class="description"><?php esc_html_e( 'Periodic target (e.g., monthly target)', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="alert_threshold"><?php esc_html_e( 'Alert Threshold', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<input type="number" id="alert_threshold" name="alert_threshold" class="regular-text" step="0.01" min="0" value="0">
+								<p class="description"><?php esc_html_e( 'Show warning if below this value', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div class="cp-modal-footer">
+				<button type="button" class="button cp-modal-cancel"><?php esc_html_e( 'Cancel', 'campaignpress' ); ?></button>
+				<button type="button" class="button button-primary" id="save-metric-btn"><?php esc_html_e( 'Add Metric', 'campaignpress' ); ?></button>
+			</div>
+		</div>
+	</div>
+
+	<style>
+		.cp-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 100000;
+		}
+		.cp-modal-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.6);
+		}
+		.cp-modal-content {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: #fff;
+			border-radius: 8px;
+			width: 90%;
+			max-width: 600px;
+			max-height: 90vh;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+		}
+		.cp-modal-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 15px 20px;
+			border-bottom: 1px solid #ddd;
+			background: #f6f7f7;
+		}
+		.cp-modal-header h2 {
+			margin: 0;
+			font-size: 18px;
+		}
+		.cp-modal-close {
+			background: none;
+			border: none;
+			font-size: 24px;
+			cursor: pointer;
+			color: #666;
+			padding: 0;
+			line-height: 1;
+		}
+		.cp-modal-close:hover {
+			color: #d63638;
+		}
+		.cp-modal-body {
+			padding: 20px;
+			overflow-y: auto;
+			flex: 1;
+		}
+		.cp-modal-body .form-table th {
+			padding: 10px 0;
+			width: 150px;
+		}
+		.cp-modal-body .form-table td {
+			padding: 10px 0;
+		}
+		.cp-modal-footer {
+			display: flex;
+			justify-content: flex-end;
+			gap: 10px;
+			padding: 15px 20px;
+			border-top: 1px solid #ddd;
+			background: #f6f7f7;
+		}
+		.required {
+			color: #d63638;
+		}
+	</style>
 	<?php
 }
 
@@ -390,5 +569,60 @@ function campaignpress_ajax_update_metric() {
 		wp_send_json_success( array( 'message' => __( 'Metric updated successfully', 'campaignpress' ) ) );
 	} else {
 		wp_send_json_error( array( 'message' => __( 'Failed to update metric', 'campaignpress' ) ) );
+	}
+}
+
+/**
+ * AJAX Handler: Add New Metric
+ *
+ * @since 2.0.0
+ */
+function campaignpress_ajax_add_metric() {
+	check_ajax_referer( 'campaignpress_analytics_nonce', 'nonce' );
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaignpress' ) ) );
+	}
+
+	// Validate required fields
+	$metric_key = isset( $_POST['metric_key'] ) ? sanitize_key( $_POST['metric_key'] ) : '';
+	$metric_name = isset( $_POST['metric_name'] ) ? sanitize_text_field( $_POST['metric_name'] ) : '';
+
+	if ( empty( $metric_key ) || empty( $metric_name ) ) {
+		wp_send_json_error( array( 'message' => __( 'Metric key and name are required', 'campaignpress' ) ) );
+	}
+
+	// Prepare metric data
+	$metric_data = array(
+		'metric_key'        => $metric_key,
+		'metric_name'       => $metric_name,
+		'metric_type'       => isset( $_POST['metric_type'] ) ? sanitize_text_field( $_POST['metric_type'] ) : 'count',
+		'description'       => isset( $_POST['description'] ) ? sanitize_textarea_field( $_POST['description'] ) : '',
+		'unit'              => isset( $_POST['unit'] ) ? sanitize_text_field( $_POST['unit'] ) : '',
+		'goal_value'        => isset( $_POST['goal_value'] ) ? floatval( $_POST['goal_value'] ) : 0,
+		'target_value'      => isset( $_POST['target_value'] ) ? floatval( $_POST['target_value'] ) : 0,
+		'alert_threshold'   => isset( $_POST['alert_threshold'] ) ? floatval( $_POST['alert_threshold'] ) : 0,
+		'comparison_period' => 'previous_period',
+		'is_active'         => 1,
+	);
+
+	$metrics = $GLOBALS['campaignpress_metrics'];
+
+	// Check if metric with this key already exists
+	$existing = $metrics->get_metric_by_key( $metric_key );
+	if ( $existing ) {
+		wp_send_json_error( array( 'message' => __( 'A metric with this key already exists', 'campaignpress' ) ) );
+	}
+
+	// Create the metric
+	$result = $metrics->create_metric( $metric_data );
+
+	if ( $result ) {
+		wp_send_json_success( array(
+			'message'   => __( 'Metric added successfully', 'campaignpress' ),
+			'metric_id' => $result,
+		) );
+	} else {
+		wp_send_json_error( array( 'message' => __( 'Failed to add metric', 'campaignpress' ) ) );
 	}
 }

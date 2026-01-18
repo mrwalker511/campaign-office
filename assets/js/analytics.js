@@ -420,16 +420,109 @@
          * Show add metric modal
          */
         showAddMetricModal: function () {
-            // Modal implementation
-            alert('Add metric modal - to be implemented');
+            const self = this;
+            const $modal = $('#add-metric-modal');
+
+            // Reset form
+            $('#add-metric-form')[0].reset();
+
+            // Show modal
+            $modal.fadeIn(200);
+
+            // Bind modal events
+            $modal.find('.cp-modal-close, .cp-modal-cancel, .cp-modal-overlay').off('click').on('click', function (e) {
+                if (e.target === this) {
+                    self.hideModal($modal);
+                }
+            });
+
+            // Handle save
+            $('#save-metric-btn').off('click').on('click', function () {
+                self.saveMetric();
+            });
+
+            // Handle form submit (Enter key)
+            $('#add-metric-form').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                self.saveMetric();
+            });
+
+            // Close on Escape key
+            $(document).on('keydown.metricModal', function (e) {
+                if (e.key === 'Escape') {
+                    self.hideModal($modal);
+                }
+            });
+        },
+
+        /**
+         * Hide modal
+         */
+        hideModal: function ($modal) {
+            $modal.fadeOut(200);
+            $(document).off('keydown.metricModal');
+        },
+
+        /**
+         * Save metric via AJAX
+         */
+        saveMetric: function () {
+            const self = this;
+            const $form = $('#add-metric-form');
+            const $saveBtn = $('#save-metric-btn');
+
+            // Validate form
+            if (!$form[0].checkValidity()) {
+                $form[0].reportValidity();
+                return;
+            }
+
+            // Get form data
+            const formData = {
+                action: 'campaignpress_add_metric',
+                nonce: campaignpressAnalytics.nonce,
+                metric_key: $('#metric_key').val(),
+                metric_name: $('#metric_name').val(),
+                metric_type: $('#metric_type').val(),
+                description: $('#metric_description').val(),
+                unit: $('#metric_unit').val(),
+                goal_value: $('#goal_value').val() || 0,
+                target_value: $('#target_value').val() || 0,
+                alert_threshold: $('#alert_threshold').val() || 0
+            };
+
+            // Disable button and show loading
+            $saveBtn.prop('disabled', true).text('Saving...');
+
+            $.ajax({
+                url: campaignpressAnalytics.ajaxUrl,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        self.hideModal($('#add-metric-modal'));
+                        self.showSuccess(response.data.message || 'Metric added successfully');
+                        // Reload dashboard to show new metric
+                        self.loadDashboardData();
+                    } else {
+                        self.showError(response.data.message || 'Failed to add metric');
+                    }
+                },
+                error: function () {
+                    self.showError('Failed to add metric. Please try again.');
+                },
+                complete: function () {
+                    $saveBtn.prop('disabled', false).text('Add Metric');
+                }
+            });
         },
 
         /**
          * Show goals modal
          */
         showGoalsModal: function () {
-            // Modal implementation
-            alert('Set goals modal - to be implemented');
+            // TODO: Implement goals modal
+            alert('Set goals modal - coming soon');
         },
 
         /**

@@ -225,6 +225,22 @@ class CampaignPress_CRM_Segments {
 	}
 
 	/**
+	 * Get total segment count
+	 *
+	 * @since 1.0.0
+	 * @param bool $active_only Whether to count only active segments
+	 * @return int Total number of segments
+	 */
+	public function get_segment_count( $active_only = false ) {
+		$sql = "SELECT COUNT(*) FROM {$this->segments_table}";
+		if ( $active_only ) {
+			$sql .= " WHERE is_active = 1";
+		}
+		$count = $this->wpdb->get_var( $sql );
+		return (int) $count;
+	}
+
+	/**
 	 * Get a single segment by ID
 	 *
 	 * @since 1.0.0

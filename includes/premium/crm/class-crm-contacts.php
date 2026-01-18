@@ -288,6 +288,20 @@ class CampaignPress_CRM_Contacts {
 	}
 
 	/**
+	 * Get total contact count
+	 *
+	 * @since 1.0.0
+	 * @return int Total number of contacts
+	 */
+	public function get_contact_count() {
+		$master_table = $this->wpdb->prefix . 'cp_contacts';
+		$count = $this->wpdb->get_var(
+			"SELECT COUNT(*) FROM {$this->table_name} v JOIN {$master_table} c ON v.contact_id = c.id"
+		);
+		return (int) $count;
+	}
+
+	/**
 	 * Get contacts with pagination and filtering
 	 *
 	 * @since 1.0.0

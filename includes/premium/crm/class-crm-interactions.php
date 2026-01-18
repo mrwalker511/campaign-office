@@ -250,6 +250,17 @@ class CampaignPress_CRM_Interactions {
 	}
 
 	/**
+	 * Get total interaction count
+	 *
+	 * @since 1.0.0
+	 * @return int Total number of interactions
+	 */
+	public function get_interaction_count() {
+		$count = $this->wpdb->get_var( "SELECT COUNT(*) FROM {$this->table_name}" );
+		return (int) $count;
+	}
+
+	/**
 	 * Get a single interaction by ID
 	 *
 	 * @since 1.0.0

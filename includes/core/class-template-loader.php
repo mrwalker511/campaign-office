@@ -42,8 +42,28 @@ class Template_Loader {
             $new_template = $t;
         } elseif (is_search() && ($t = self::get_template_path('search.php'))) {
             $new_template = $t;
-        } elseif (is_front_page() && ($t = self::get_template_path('front-page.php'))) {
-            $new_template = $t;
+        } elseif (is_front_page()) {
+            // Check for customizer homepage layout setting
+            $homepage_layout = get_theme_mod('campaignpress_homepage_layout', 'modern');
+            
+            // Map layout names to template files
+            $layout_templates = array(
+                'classic'     => 'home-classic-statesman.html',
+                'modern'      => 'home.html',
+                'traditional' => 'home-grassroots.html',
+            );
+            
+            // Get the template file for the selected layout
+            $layout_template = isset($layout_templates[$homepage_layout]) 
+                ? $layout_templates[$homepage_layout] 
+                : 'home.html';
+            
+            // Try to load the layout-specific template
+            if (($t = self::get_template_path($layout_template))) {
+                $new_template = $t;
+            } elseif (($t = self::get_template_path('front-page.php'))) {
+                $new_template = $t;
+            }
         } elseif (is_home() && ($t = self::get_template_path('home.php'))) {
             $new_template = $t;
         } elseif (is_post_type_archive() && ($t = self::get_template_path('archive-' . get_post_type() . '.php'))) {

@@ -1,0 +1,139 @@
+/**
+ * Custom Icons Block Styles
+ *
+ * Styles for the custom icons Gutenberg block
+ *
+ * @package CampaignPress
+ * @since 2.1.0
+ */
+
+/* Block wrapper */
+.wp-block-campaignpress-custom-icon {
+	margin: 1em 0;
+	text-align: center;
+}
+
+/* Icon preview */
+.custom-icon-preview {
+	padding: 1rem;
+	background: #f9f9f9;
+	border: 2px dashed #ddd;
+	border-radius: 4px;
+	text-align: center;
+}
+
+.custom-icon-display {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.custom-icon-label {
+	font-size: 0.875rem;
+	color: #666;
+	font-weight: 500;
+}
+
+/* Icon placeholder */
+.custom-icon-placeholder {
+	padding: 2rem;
+	text-align: center;
+	background: #fafafa;
+	border: 2px dashed #ccc;
+	border-radius: 4px;
+	margin: 1rem 0;
+}
+
+/* Icon grid for selector */
+.custom-icon-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	gap: 1rem;
+	margin: 1rem 0;
+}
+
+.custom-icon-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 1rem;
+	border: 2px solid #e0e0e0;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	background: white;
+}
+
+.custom-icon-item:hover {
+	border-color: #0073aa;
+	background: #f0f8ff;
+	transform: translateY(-1px);
+}
+
+.custom-icon-item.selected {
+	border-color: #0073aa;
+	background: #e6f3ff;
+}
+
+.custom-icon-item .icon-name {
+	font-size: 0.75rem;
+	color: #555;
+	text-align: center;
+	word-break: break-word;
+}
+
+/* Icon size classes */
+.custom-icon-sm {
+	width: 16px;
+	height: 16px;
+}
+
+.custom-icon-md {
+	width: 24px;
+	height: 24px;
+}
+
+.custom-icon-lg {
+	width: 32px;
+	height: 32px;
+}
+
+.custom-icon-xl {
+	width: 48px;
+	height: 48px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.custom-icon-grid {
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.custom-icon-item {
+		padding: 0.75rem;
+	}
+
+	.custom-icon-item .icon-name {
+		font-size: 0.7rem;
+	}
+}
+
+/* Editor styles */
+.editor-styles-wrapper .wp-block-campaignpress-custom-icon {
+	font-family: inherit;
+}
+
+/* Print styles */
+@media print {
+	.custom-icon-grid {
+		display: none;
+	}
+
+	.custom-icon-preview {
+		background: white !important;
+		border: 1px solid #000 !important;
+	}
+}

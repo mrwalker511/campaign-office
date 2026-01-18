@@ -81,15 +81,17 @@ function campaignpress_setup_textdomain() {
     $text_domain = 'campaignpress';
 
     // If the directory name doesn't match our expected text domain,
-    // we need to load translations with the directory name as the domain
+    // we need to load translations with the directory name as the domain.
     if ($theme_dir !== $text_domain) {
         load_theme_textdomain($theme_dir, CAMPAIGNPRESS_THEME_DIR . '/languages');
     }
 
-    // Always load with our standard text domain for backward compatibility
+    // Always load with our standard text domain for backward compatibility.
     load_theme_textdomain($text_domain, CAMPAIGNPRESS_THEME_DIR . '/languages');
 }
-add_action('init', 'campaignpress_setup_textdomain', 1);
+// Use priority 0 to ensure translations are available before any init-priority-1
+// callbacks (including core widgets initialization) call translation functions.
+add_action('init', 'campaignpress_setup_textdomain', 0);
 
 /**
  * Check for CampaignPress Core Plugin

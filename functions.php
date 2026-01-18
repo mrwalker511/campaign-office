@@ -71,9 +71,10 @@ if (!defined('CAMPAIGNPRESS_DEV_MODE')) {
 /**
  * Set up theme text domain
  *
- * WordPress 6.7+ requires textdomain to be loaded at 'init' or later.
- * We need to handle this dynamically to avoid activation errors when the
- * directory name doesn't match the hardcoded text domain.
+ * Load textdomain at 'after_setup_theme' priority 1 so it's available before
+ * other callbacks (like nav menu registration) need translations.
+ * We handle dynamic directory names to avoid errors when the directory
+ * doesn't match the hardcoded text domain.
  */
 function campaignpress_setup_textdomain() {
     $theme_dir = basename(get_template_directory());
@@ -88,7 +89,7 @@ function campaignpress_setup_textdomain() {
     // Always load with our standard text domain for backward compatibility
     load_theme_textdomain($text_domain, CAMPAIGNPRESS_THEME_DIR . '/languages');
 }
-add_action('init', 'campaignpress_setup_textdomain', 1);
+add_action('after_setup_theme', 'campaignpress_setup_textdomain', 1);
 
 /**
  * Check for CampaignPress Core Plugin
@@ -280,7 +281,7 @@ add_action('admin_init', 'campaignpress_check_dependencies', 1);
  * Theme Setup
  */
 function campaignpress_setup() {
-    // Note: Textdomain is loaded via after_setup_theme hook in includes/free/translation-support.php
+    // Note: Textdomain is loaded via campaignpress_setup_textdomain() at after_setup_theme priority 1
 
     // Add default posts and comments RSS feed links to head
     add_theme_support('automatic-feed-links');

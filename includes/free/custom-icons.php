@@ -282,10 +282,10 @@ function campaignpress_custom_icons_admin_page() {
             <div class="notice notice-info">
                 <p>
                     <?php
-                 printf(
-                     __( 'No custom icons found. Add your SVG icons to the <code>%s</code> directory.', 'campaignpress' ),
-                     '/assets/icons/custom/'
-                 );
+                    printf(
+                        __( 'No custom icons found. Add your SVG icons to the <code>%s</code> directory.', 'campaignpress' ),
+                        '/assets/icons/custom/'
+                    );
                     ?>
                 </p>
             </div>
@@ -320,7 +320,8 @@ function campaignpress_custom_icons_admin_page() {
 
     <script>
     function copyIconCode(iconName) {
-        const code = `<?php echo "<?php campaignpress_custom_icon('" ?>` + iconName + `<?php echo "', array('class' => 'custom-icon-md')); ?>";`;
+        // Construct the PHP string to be copied
+        const code = '<?php echo "<?php campaignpress_custom_icon( \'"; ?>' + iconName + '<?php echo "\', array( \'class\' => \'custom-icon-md\' ) ); ?>"; ?>';
         
         navigator.clipboard.writeText(code).then(function() {
             alert('<?php _e( 'Code copied to clipboard!', 'campaignpress' ); ?>');
@@ -328,4 +329,4 @@ function campaignpress_custom_icons_admin_page() {
     }
     </script>
     <?php
-}
+} // <--- THIS is the closing bracket you were missing!

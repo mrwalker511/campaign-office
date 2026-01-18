@@ -22,6 +22,8 @@ $core_files = array(
     CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-template-loader.php',
     CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-contact-manager.php',
     CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-script-manager.php',
+    CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-security-logger.php',
+    CAMPAIGNPRESS_INCLUDES_DIR . '/core/class-url-validator.php',
 );
 
 foreach ($core_files as $file) {

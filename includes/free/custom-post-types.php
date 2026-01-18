@@ -18,8 +18,8 @@ if (!defined('ABSPATH')) {
  * Register Campaign Custom Post Types
  */
 function campaignpress_register_custom_post_types() {
-    // Only register if plugin is NOT active
-    if (class_exists('Campaign_Office_Core')) {
+    // Only register if the CampaignPress Core plugin (or legacy Campaign Office Core plugin) is NOT active
+    if (class_exists('CampaignPress_Core') || class_exists('Campaign_Office_Core')) {
         return;
     }
 

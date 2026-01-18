@@ -156,13 +156,15 @@ function campaignpress_customize_register($wp_customize) {
     $wp_customize->add_setting('campaignpress_homepage_layout', array(
         'default'           => 'modern',
         'sanitize_callback' => 'campaignpress_sanitize_layout',
+        'transport'         => 'refresh',
     ));
 
     $wp_customize->add_control('campaignpress_homepage_layout', array(
-        'label'    => __('Homepage Layout', 'campaignpress'),
-        'section'  => 'campaignpress_layout',
-        'type'     => 'select',
-        'choices'  => array(
+        'label'       => __('Homepage Layout', 'campaignpress'),
+        'description' => __('Changes the homepage template. The page will refresh when you change this option.', 'campaignpress'),
+        'section'     => 'campaignpress_layout',
+        'type'        => 'select',
+        'choices'     => array(
             'classic'      => __('Classic Candidate', 'campaignpress'),
             'modern'       => __('Modern Progressive', 'campaignpress'),
             'traditional'  => __('Conservative Traditional', 'campaignpress'),

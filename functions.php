@@ -909,6 +909,24 @@ function campaignpress_primary_menu_layout_body_class($classes) {
 add_filter('body_class', 'campaignpress_primary_menu_layout_body_class');
 
 /**
+ * Add body class for homepage layout
+ */
+function campaignpress_homepage_layout_body_class($classes) {
+    if (is_front_page()) {
+        $homepage_layout = get_theme_mod('campaignpress_homepage_layout', 'modern');
+        
+        if (!in_array($homepage_layout, array('classic', 'modern', 'traditional'), true)) {
+            $homepage_layout = 'modern';
+        }
+        
+        $classes[] = 'homepage-layout-' . sanitize_html_class($homepage_layout);
+    }
+    
+    return $classes;
+}
+add_filter('body_class', 'campaignpress_homepage_layout_body_class');
+
+/**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar

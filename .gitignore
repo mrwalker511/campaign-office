@@ -78,3 +78,4 @@ docker-compose.override.yaml
 !style.css
 !functions.php
 # Add other specific files if they are being ignored incorrectly
+nul

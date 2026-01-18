@@ -448,12 +448,7 @@
             });
         },
 
-        loadSavedQueries: function () {
-            $('#saved-queries-content').html('<div class="cp-loading">Loading saved queries...</div>');
-
-            // Placeholder - would load from database
-            $('#saved-queries-content').html('<p>No saved queries yet.</p>');
-        },
+        // Note: loadSavedQueries is defined at the end of this object with full implementation
 
         loadCampaignPressStats: function () {
             var $container = $('#cp-stats-content');
@@ -778,13 +773,132 @@
 
         saveSecuritySettings: function (e) {
             e.preventDefault();
-            alert('Security settings saved (placeholder)');
+            var self = this;
+
+            // Collect form data
+            var formData = $('#security-settings-form').serialize();
+
+            $.ajax({
+                url: cpDevConsole.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'cp_dev_save_security_settings',
+                    nonce: cpDevConsole.nonce,
+                    settings: formData
+                },
+                success: function (response) {
+                    if (response.success) {
+                        self.showNotice('Security settings saved successfully.', 'success');
+                    } else {
+                        self.showNotice(response.message || 'Failed to save settings.', 'error');
+                    }
+                },
+                error: function () {
+                    self.showNotice('Error saving security settings. Please try again.', 'error');
+                }
+            });
         },
 
-        // Missing Method Stubs to prevent JS crash
-        saveQuery: function () { alert('Save Query function coming soon.'); },
-        loadSavedQuery: function () { alert('Load Saved Query function coming soon.'); },
-        loadSavedQueries: function () { $('#saved-queries-content').html('<p>No saved queries yet.</p>'); },
+        /**
+         * Show WordPress-style notice
+         */
+        showNotice: function (message, type) {
+            type = type || 'info';
+            var noticeClass = type === 'error' ? 'notice-error' : (type === 'success' ? 'notice-success' : 'notice-info');
+            var $notice = $('<div class="notice ' + noticeClass + ' is-dismissible"><p>' + message + '</p><button type="button" class="notice-dismiss"></button></div>');
+
+            // Remove any existing notices first
+            $('.cp-dev-console .notice').remove();
+
+            // Add notice to the top of the content area
+            $('#tab-settings .cp-dev-card:first').before($notice);
+
+            // Bind dismiss button
+            $notice.find('.notice-dismiss').on('click', function () {
+                $notice.fadeOut(function () { $(this).remove(); });
+            });
+
+            // Auto-dismiss after 5 seconds
+            setTimeout(function () {
+                $notice.fadeOut(function () { $(this).remove(); });
+            }, 5000);
+        },
+
+        // Query management functions
+        saveQuery: function () {
+            var query = $('#db-query').val().trim();
+            if (!query) {
+                this.showNotice('Please enter a query to save.', 'error');
+                return;
+            }
+
+            var queryName = prompt('Enter a name for this query:');
+            if (!queryName) return;
+
+            var savedQueries = JSON.parse(localStorage.getItem('cp_saved_queries') || '[]');
+            savedQueries.push({
+                name: queryName,
+                query: query,
+                savedAt: new Date().toISOString()
+            });
+
+            // Keep only last 20 queries
+            if (savedQueries.length > 20) {
+                savedQueries = savedQueries.slice(-20);
+            }
+
+            localStorage.setItem('cp_saved_queries', JSON.stringify(savedQueries));
+            this.loadSavedQueries();
+            this.showNotice('Query saved successfully.', 'success');
+        },
+
+        loadSavedQuery: function () {
+            var queryData = $(this).data('query');
+            if (queryData) {
+                $('#db-query').val(queryData);
+                DevConsole.showNotice('Query loaded into editor.', 'success');
+            }
+        },
+        loadSavedQueries: function () {
+            var savedQueries = JSON.parse(localStorage.getItem('cp_saved_queries') || '[]');
+
+            if (savedQueries.length === 0) {
+                $('#saved-queries-content').html('<p>No saved queries yet. Use the "Save Query" button to save your queries.</p>');
+                return;
+            }
+
+            var html = '<ul class="cp-saved-queries-list">';
+            savedQueries.forEach(function (item, index) {
+                var savedDate = new Date(item.savedAt).toLocaleDateString();
+                html += '<li class="cp-saved-query-item">';
+                html += '<button class="button button-small load-saved-query" data-query="' + DevConsole.escapeHtml(item.query) + '">';
+                html += DevConsole.escapeHtml(item.name);
+                html += '</button>';
+                html += '<span class="cp-query-date">' + savedDate + '</span>';
+                html += '<button class="button-link cp-delete-query" data-index="' + index + '" title="Delete">&times;</button>';
+                html += '</li>';
+            });
+            html += '</ul>';
+
+            $('#saved-queries-content').html(html);
+
+            // Bind delete handlers
+            $('.cp-delete-query').off('click').on('click', function () {
+                var index = $(this).data('index');
+                var queries = JSON.parse(localStorage.getItem('cp_saved_queries') || '[]');
+                queries.splice(index, 1);
+                localStorage.setItem('cp_saved_queries', JSON.stringify(queries));
+                DevConsole.loadSavedQueries();
+            });
+        },
+
+        /**
+         * Escape HTML to prevent XSS
+         */
+        escapeHtml: function (text) {
+            var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return String(text).replace(/[&<>"']/g, function (m) { return map[m]; });
+        },
         loadAPIEndpoints: function () {
             var endpoints = [
                 { path: '/contacts', methods: ['GET', 'POST'], description: 'Manage CRM contacts' },

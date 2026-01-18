@@ -47,6 +47,8 @@ function campaignpress_analytics_init() {
 	add_action( 'wp_ajax_campaignpress_export_analytics', 'campaignpress_ajax_export_analytics' );
 	add_action( 'wp_ajax_campaignpress_update_metric', 'campaignpress_ajax_update_metric' );
 	add_action( 'wp_ajax_campaignpress_add_metric', 'campaignpress_ajax_add_metric' );
+	add_action( 'wp_ajax_campaignpress_get_goals', 'campaignpress_ajax_get_goals' );
+	add_action( 'wp_ajax_campaignpress_save_goals', 'campaignpress_ajax_save_goals' );
 }
 add_action( 'init', 'campaignpress_analytics_init', 5 );
 
@@ -362,6 +364,67 @@ function campaignpress_metrics_dashboard_page() {
 		</div>
 	</div>
 
+	<!-- Goals Modal -->
+	<div id="goals-modal" class="cp-modal" style="display:none;">
+		<div class="cp-modal-overlay"></div>
+		<div class="cp-modal-content">
+			<div class="cp-modal-header">
+				<h2><?php esc_html_e( 'Set Campaign Goals', 'campaignpress' ); ?></h2>
+				<button class="cp-modal-close" aria-label="<?php esc_attr_e( 'Close', 'campaignpress' ); ?>">&times;</button>
+			</div>
+			<div class="cp-modal-body">
+				<form id="goals-form">
+					<?php wp_nonce_field( 'campaignpress_save_goals', 'save_goals_nonce' ); ?>
+					<p class="description" style="margin-bottom: 20px;">
+						<?php esc_html_e( 'Set your campaign goals to track progress on the dashboard. Leave blank to hide that goal.', 'campaignpress' ); ?>
+					</p>
+					<table class="form-table">
+						<tr>
+							<th scope="row">
+								<label for="goal_fundraising"><?php esc_html_e( 'Fundraising Goal', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<input type="number" id="goal_fundraising" name="fundraising" class="regular-text" step="0.01" min="0" value="0">
+								<p class="description"><?php esc_html_e( 'Total fundraising target (e.g., 50000)', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="goal_volunteers"><?php esc_html_e( 'Volunteer Goal', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<input type="number" id="goal_volunteers" name="volunteers" class="regular-text" step="1" min="0" value="0">
+								<p class="description"><?php esc_html_e( 'Total number of volunteers to recruit', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="goal_events"><?php esc_html_e( 'Events Goal', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<input type="number" id="goal_events" name="events" class="regular-text" step="1" min="0" value="0">
+								<p class="description"><?php esc_html_e( 'Total number of events to host', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="goal_contacts"><?php esc_html_e( 'Contacts Goal', 'campaignpress' ); ?></label>
+							</th>
+							<td>
+								<input type="number" id="goal_contacts" name="contacts" class="regular-text" step="1" min="0" value="0">
+								<p class="description"><?php esc_html_e( 'Total number of contacts to add to CRM', 'campaignpress' ); ?></p>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div class="cp-modal-footer">
+				<button type="button" class="button cp-modal-cancel"><?php esc_html_e( 'Cancel', 'campaignpress' ); ?></button>
+				<button type="button" class="button button-primary" id="save-goals-btn"><?php esc_html_e( 'Save Goals', 'campaignpress' ); ?></button>
+			</div>
+		</div>
+	</div>
+
 	<style>
 		.cp-modal {
 			position: fixed;
@@ -624,5 +687,61 @@ function campaignpress_ajax_add_metric() {
 		) );
 	} else {
 		wp_send_json_error( array( 'message' => __( 'Failed to add metric', 'campaignpress' ) ) );
+	}
+}
+
+/**
+ * AJAX handler to get campaign goals
+ *
+ * @since 2.0.0
+ */
+function campaignpress_ajax_get_goals() {
+	check_ajax_referer( 'campaignpress_analytics_nonce', 'nonce' );
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaignpress' ) ) );
+	}
+
+	$goals = get_option( 'campaignpress_campaign_goals', array(
+		'fundraising' => 0,
+		'volunteers'  => 0,
+		'events'      => 0,
+		'contacts'    => 0,
+	) );
+
+	wp_send_json_success( array( 'goals' => $goals ) );
+}
+
+/**
+ * AJAX handler to save campaign goals
+ *
+ * @since 2.0.0
+ */
+function campaignpress_ajax_save_goals() {
+	check_ajax_referer( 'campaignpress_analytics_nonce', 'nonce' );
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'campaignpress' ) ) );
+	}
+
+	$goals = array(
+		'fundraising' => isset( $_POST['fundraising'] ) ? floatval( $_POST['fundraising'] ) : 0,
+		'volunteers'  => isset( $_POST['volunteers'] ) ? absint( $_POST['volunteers'] ) : 0,
+		'events'      => isset( $_POST['events'] ) ? absint( $_POST['events'] ) : 0,
+		'contacts'    => isset( $_POST['contacts'] ) ? absint( $_POST['contacts'] ) : 0,
+	);
+
+	$result = update_option( 'campaignpress_campaign_goals', $goals );
+
+	if ( $result !== false ) {
+		wp_send_json_success( array( 'message' => __( 'Goals saved successfully', 'campaignpress' ) ) );
+	} else {
+		// Check if the goals are unchanged (which also returns false)
+		$current_goals = get_option( 'campaignpress_campaign_goals', array() );
+		if ( $current_goals === $goals ) {
+			wp_send_json_success( array( 'message' => __( 'Goals saved successfully', 'campaignpress' ) ) );
+		} else {
+			wp_send_json_error( array( 'message' => __( 'Failed to save goals', 'campaignpress' ) ) );
+		}
 	}
 }

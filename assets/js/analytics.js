@@ -521,8 +521,112 @@
          * Show goals modal
          */
         showGoalsModal: function () {
-            // TODO: Implement goals modal
-            alert('Set goals modal - coming soon');
+            const self = this;
+            const $modal = $('#goals-modal');
+
+            // Load current goals
+            this.loadCurrentGoals();
+
+            // Show modal
+            $modal.fadeIn(200);
+
+            // Bind modal events
+            $modal.find('.cp-modal-close, .cp-modal-cancel, .cp-modal-overlay').off('click').on('click', function (e) {
+                if (e.target === this) {
+                    self.hideGoalsModal($modal);
+                }
+            });
+
+            // Handle save
+            $('#save-goals-btn').off('click').on('click', function () {
+                self.saveGoals();
+            });
+
+            // Handle form submit (Enter key)
+            $('#goals-form').off('submit').on('submit', function (e) {
+                e.preventDefault();
+                self.saveGoals();
+            });
+
+            // Close on Escape key
+            $(document).on('keydown.goalsModal', function (e) {
+                if (e.key === 'Escape') {
+                    self.hideGoalsModal($modal);
+                }
+            });
+        },
+
+        /**
+         * Hide goals modal
+         */
+        hideGoalsModal: function ($modal) {
+            $modal.fadeOut(200);
+            $(document).off('keydown.goalsModal');
+        },
+
+        /**
+         * Load current goals
+         */
+        loadCurrentGoals: function () {
+            $.ajax({
+                url: campaignpressAnalytics.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'campaignpress_get_goals',
+                    nonce: campaignpressAnalytics.nonce
+                },
+                success: function (response) {
+                    if (response.success && response.data.goals) {
+                        const goals = response.data.goals;
+                        $('#goal_fundraising').val(goals.fundraising || 0);
+                        $('#goal_volunteers').val(goals.volunteers || 0);
+                        $('#goal_events').val(goals.events || 0);
+                        $('#goal_contacts').val(goals.contacts || 0);
+                    }
+                }
+            });
+        },
+
+        /**
+         * Save goals via AJAX
+         */
+        saveGoals: function () {
+            const self = this;
+            const $saveBtn = $('#save-goals-btn');
+
+            const formData = {
+                action: 'campaignpress_save_goals',
+                nonce: campaignpressAnalytics.nonce,
+                fundraising: $('#goal_fundraising').val() || 0,
+                volunteers: $('#goal_volunteers').val() || 0,
+                events: $('#goal_events').val() || 0,
+                contacts: $('#goal_contacts').val() || 0
+            };
+
+            // Disable button and show loading
+            $saveBtn.prop('disabled', true).text('Saving...');
+
+            $.ajax({
+                url: campaignpressAnalytics.ajaxUrl,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        self.hideGoalsModal($('#goals-modal'));
+                        self.showSuccess(response.data.message || 'Goals saved successfully');
+                        // Reload dashboard to reflect new goals
+                        self.loadDashboardData();
+                    } else {
+                        self.showError(response.data.message || 'Failed to save goals');
+                    }
+                },
+                error: function () {
+                    self.showError('Failed to save goals. Please try again.');
+                },
+                complete: function () {
+                    $saveBtn.prop('disabled', false).text('Save Goals');
+                }
+            });
         },
 
         /**

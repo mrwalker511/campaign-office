@@ -61,6 +61,7 @@ class CP_Campaign_Communications {
         add_action('wp_ajax_cp_send_test_sms', array($this, 'ajax_send_test_sms'));
         add_action('wp_ajax_cp_send_campaign', array($this, 'ajax_send_campaign'));
         add_action('wp_ajax_cp_get_campaign_stats', array($this, 'ajax_get_campaign_stats'));
+        add_action('wp_ajax_cp_create_campaign', array($this, 'ajax_create_campaign'));
 
         // Shortcodes
         add_shortcode('cp_subscribe_form', array($this, 'render_subscribe_form'));
@@ -557,6 +558,159 @@ class CP_Campaign_Communications {
                     <?php endif; ?>
                 </tbody>
             </table>
+
+            <!-- New Campaign Modal -->
+            <div id="cp-new-campaign-modal" class="cp-modal" style="display: none;">
+                <div class="cp-modal-overlay"></div>
+                <div class="cp-modal-content" style="max-width: 600px;">
+                    <div class="cp-modal-header">
+                        <h2><?php esc_html_e('Create New Campaign', 'campaignpress'); ?></h2>
+                        <button type="button" class="cp-modal-close">&times;</button>
+                    </div>
+                    <form id="cp-new-campaign-form">
+                        <div class="cp-modal-body">
+                            <table class="form-table">
+                                <tr>
+                                    <th scope="row">
+                                        <label for="campaign_name"><?php esc_html_e('Campaign Name', 'campaignpress'); ?> <span class="required">*</span></label>
+                                    </th>
+                                    <td>
+                                        <input type="text" id="campaign_name" name="campaign_name" class="regular-text" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="campaign_type"><?php esc_html_e('Type', 'campaignpress'); ?></label>
+                                    </th>
+                                    <td>
+                                        <select id="campaign_type" name="campaign_type" class="regular-text">
+                                            <option value="email"><?php esc_html_e('Email', 'campaignpress'); ?></option>
+                                            <option value="sms"><?php esc_html_e('SMS', 'campaignpress'); ?></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="campaign_subject"><?php esc_html_e('Subject', 'campaignpress'); ?></label>
+                                    </th>
+                                    <td>
+                                        <input type="text" id="campaign_subject" name="campaign_subject" class="regular-text">
+                                        <p class="description"><?php esc_html_e('Email subject line (not used for SMS)', 'campaignpress'); ?></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="campaign_message"><?php esc_html_e('Message', 'campaignpress'); ?> <span class="required">*</span></label>
+                                    </th>
+                                    <td>
+                                        <textarea id="campaign_message" name="campaign_message" rows="6" class="large-text" required></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="campaign_audience"><?php esc_html_e('Audience', 'campaignpress'); ?></label>
+                                    </th>
+                                    <td>
+                                        <select id="campaign_audience" name="campaign_audience" class="regular-text">
+                                            <option value="all"><?php esc_html_e('All Subscribers', 'campaignpress'); ?></option>
+                                            <option value="donors"><?php esc_html_e('Donors Only', 'campaignpress'); ?></option>
+                                            <option value="volunteers"><?php esc_html_e('Volunteers Only', 'campaignpress'); ?></option>
+                                            <option value="new"><?php esc_html_e('New Subscribers (Last 30 days)', 'campaignpress'); ?></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="cp-modal-footer">
+                            <button type="button" class="button cp-modal-cancel"><?php esc_html_e('Cancel', 'campaignpress'); ?></button>
+                            <button type="submit" class="button button-primary" id="cp-save-campaign-btn"><?php esc_html_e('Create Campaign', 'campaignpress'); ?></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <style>
+                .cp-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100000; }
+                .cp-modal-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); }
+                .cp-modal-content { position: relative; background: #fff; margin: 50px auto; border-radius: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); max-height: calc(100vh - 100px); overflow-y: auto; }
+                .cp-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #ddd; }
+                .cp-modal-header h2 { margin: 0; }
+                .cp-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; padding: 0; line-height: 1; }
+                .cp-modal-body { padding: 20px; }
+                .cp-modal-footer { padding: 15px 20px; border-top: 1px solid #ddd; text-align: right; }
+                .cp-modal-footer .button { margin-left: 10px; }
+                .required { color: #d63638; }
+            </style>
+
+            <script>
+            jQuery(document).ready(function($) {
+                // Show new campaign modal
+                $('#cp-new-campaign-btn').on('click', function(e) {
+                    e.preventDefault();
+                    $('#cp-new-campaign-form')[0].reset();
+                    $('#cp-new-campaign-modal').fadeIn(200);
+                });
+
+                // Close modal handlers
+                $('.cp-modal-close, .cp-modal-cancel, .cp-modal-overlay').on('click', function(e) {
+                    if (e.target === this) {
+                        $('#cp-new-campaign-modal').fadeOut(200);
+                    }
+                });
+
+                // Close on Escape key
+                $(document).on('keydown', function(e) {
+                    if (e.key === 'Escape' && $('#cp-new-campaign-modal').is(':visible')) {
+                        $('#cp-new-campaign-modal').fadeOut(200);
+                    }
+                });
+
+                // Save campaign
+                $('#cp-new-campaign-form').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var $btn = $('#cp-save-campaign-btn');
+                    $btn.prop('disabled', true).text('<?php esc_js_e('Creating...', 'campaignpress'); ?>');
+
+                    $.ajax({
+                        url: ajaxurl,
+                        type: 'POST',
+                        data: {
+                            action: 'cp_create_campaign',
+                            nonce: $('#cp_campaign_nonce').val(),
+                            name: $('#campaign_name').val(),
+                            type: $('#campaign_type').val(),
+                            subject: $('#campaign_subject').val(),
+                            message: $('#campaign_message').val(),
+                            audience: $('#campaign_audience').val()
+                        },
+                        success: function(response) {
+                            $btn.prop('disabled', false).text('<?php esc_js_e('Create Campaign', 'campaignpress'); ?>');
+                            if (response.success) {
+                                $('#cp-new-campaign-modal').fadeOut(200);
+                                location.reload();
+                            } else {
+                                alert(response.data.message || '<?php esc_js_e('Failed to create campaign', 'campaignpress'); ?>');
+                            }
+                        },
+                        error: function() {
+                            $btn.prop('disabled', false).text('<?php esc_js_e('Create Campaign', 'campaignpress'); ?>');
+                            alert('<?php esc_js_e('Error creating campaign. Please try again.', 'campaignpress'); ?>');
+                        }
+                    });
+                });
+
+                // Toggle subject field visibility based on campaign type
+                $('#campaign_type').on('change', function() {
+                    var $subjectRow = $('#campaign_subject').closest('tr');
+                    if ($(this).val() === 'sms') {
+                        $subjectRow.hide();
+                    } else {
+                        $subjectRow.show();
+                    }
+                });
+            });
+            </script>
         </div>
         <?php
     }
@@ -966,6 +1120,69 @@ class CP_Campaign_Communications {
         }
 
         wp_send_json_success($stats);
+    }
+
+    /**
+     * AJAX handler to create a new campaign
+     */
+    public function ajax_create_campaign() {
+        check_ajax_referer('cp_campaign_nonce_action', 'nonce');
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'campaignpress')));
+        }
+
+        $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+        $type = isset($_POST['type']) ? sanitize_text_field($_POST['type']) : 'email';
+        $subject = isset($_POST['subject']) ? sanitize_text_field($_POST['subject']) : '';
+        $message = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
+        $audience = isset($_POST['audience']) ? sanitize_text_field($_POST['audience']) : 'all';
+
+        if (empty($name)) {
+            wp_send_json_error(array('message' => __('Campaign name is required', 'campaignpress')));
+        }
+
+        if (empty($message)) {
+            wp_send_json_error(array('message' => __('Campaign message is required', 'campaignpress')));
+        }
+
+        // Validate type
+        if (!in_array($type, array('email', 'sms'), true)) {
+            $type = 'email';
+        }
+
+        // Validate audience
+        if (!in_array($audience, array('all', 'donors', 'volunteers', 'new'), true)) {
+            $audience = 'all';
+        }
+
+        global $wpdb;
+
+        $result = $wpdb->insert(
+            $this->campaigns_table,
+            array(
+                'name' => $name,
+                'type' => $type,
+                'subject' => $subject,
+                'message' => $message,
+                'audience' => $audience,
+                'status' => 'draft',
+                'created_by' => get_current_user_id(),
+                'created_at' => current_time('mysql'),
+            ),
+            array('%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s')
+        );
+
+        if ($result === false) {
+            wp_send_json_error(array('message' => __('Failed to create campaign. Please try again.', 'campaignpress')));
+        }
+
+        $campaign_id = $wpdb->insert_id;
+
+        wp_send_json_success(array(
+            'message' => __('Campaign created successfully!', 'campaignpress'),
+            'campaign_id' => $campaign_id
+        ));
     }
 
     /**

@@ -769,11 +769,20 @@ class CampaignPress_Email_Integrations {
 
         // Signature verification must always pass (testing mode is already restricted in production)
         if (!$verified) {
-            // Log failed verification
-            campaignpress_integrations()->log_event('webhook_signature_failed', array(
-                'platform' => $platform,
-                'ip' => $_SERVER['REMOTE_ADDR'] ?? ''
-            ));
+            // Log failed verification with security logger
+            if (class_exists('CampaignPress_Security_Logger')) {
+                CampaignPress_Security_Logger::get_instance()->log_event(
+                    'webhook_signature_failed',
+                    sprintf(__('Webhook signature verification failed for %s platform', 'campaignpress'), $platform),
+                    array(
+                        'platform' => $platform,
+                        'ip_address' => $_SERVER['REMOTE_ADDR'] ?? '',
+                        'integration_id' => $integration['id'] ?? 0
+                    ),
+                    'high'
+                );
+            }
+            
             wp_send_json_error(array('message' => 'Invalid webhook signature'), 403);
             return;
         }
@@ -781,37 +790,59 @@ class CampaignPress_Email_Integrations {
         // Parse webhook data
         $data = json_decode($raw_data, true);
 
+        // Validate webhook data structure
+        if (!$this->validate_webhook_data($data, $platform)) {
+            if (class_exists('CampaignPress_Security_Logger')) {
+                CampaignPress_Security_Logger::get_instance()->log_event(
+                    'webhook_invalid_data',
+                    sprintf(__('Invalid webhook data received from %s platform', 'campaignpress'), $platform),
+                    array(
+                        'platform' => $platform,
+                        'data_structure' => is_array($data) ? array_keys($data) : array()
+                    ),
+                    'medium'
+                );
+            }
+            wp_send_json_error(array('message' => 'Invalid webhook data'));
+            return;
+        }
+
         // Process webhook based on platform
+        $success = false;
         switch ($platform) {
             case 'mailchimp':
-                $this->process_mailchimp_webhook($integration, $data);
+                $success = $this->process_mailchimp_webhook($integration, $data);
                 break;
 
             case 'action_network':
-                $this->process_action_network_webhook($integration, $data);
+                $success = $this->process_action_network_webhook($integration, $data);
                 break;
 
             case 'constant_contact':
-                $this->process_constant_contact_webhook($integration, $data);
+                $success = $this->process_constant_contact_webhook($integration, $data);
                 break;
 
             case 'sendgrid':
-                $this->process_sendgrid_webhook($integration, $data);
+                $success = $this->process_sendgrid_webhook($integration, $data);
                 break;
 
             case 'mailerlite':
-                $this->process_mailerlite_webhook($integration, $data);
+                $success = $this->process_mailerlite_webhook($integration, $data);
                 break;
         }
 
-        // Log webhook
-        campaignpress_integrations()->log_event('email_webhook_received', array(
+        // Log webhook event using action hook (for centralized logging)
+        do_action('campaignpress_webhook_received', $platform, $data['type'] ?? 'unknown', $success, array(
             'platform' => $platform,
             'integration_id' => $integration['id'],
-            'event_type' => $data['type'] ?? 'unknown'
+            'data_keys' => is_array($data) ? array_keys($data) : array()
         ));
 
-        wp_send_json_success(array('message' => 'Webhook processed'));
+        if ($success) {
+            wp_send_json_success(array('message' => 'Webhook processed successfully'));
+        } else {
+            wp_send_json_error(array('message' => 'Webhook processing failed'));
+        }
     }
 
     /**
@@ -1409,5 +1440,158 @@ class CampaignPress_Email_Integrations {
         }
 
         return false;
+    }
+
+    /**
+     * Validate webhook data structure
+     *
+     * @param array $data Webhook data
+     * @param string $platform Platform identifier
+     * @return bool True if valid, false otherwise
+     */
+    private function validate_webhook_data($data, $platform) {
+        // Basic JSON validation
+        if (!is_array($data)) {
+            return false;
+        }
+
+        // Check for minimum required fields based on platform
+        switch ($platform) {
+            case 'mailchimp':
+                // Mailchimp webhooks should have a type and typically an email
+                if (!isset($data['type'])) {
+                    return false;
+                }
+                // Check for suspicious fields
+                return !$this->has_suspicious_fields($data);
+
+            case 'sendgrid':
+                // SendGrid webhooks should have events array
+                if (!isset($data['events']) || !is_array($data['events'])) {
+                    return false;
+                }
+                // Validate first event structure
+                if (!empty($data['events']) && !$this->validate_sendgrid_event($data['events'][0])) {
+                    return false;
+                }
+                return !$this->has_suspicious_fields($data);
+
+            case 'mailerlite':
+                // MailerLite webhooks should have type and data
+                if (!isset($data['type']) || !isset($data['data'])) {
+                    return false;
+                }
+                return !$this->has_suspicious_fields($data);
+
+            case 'action_network':
+            case 'constant_contact':
+                // Generic validation for other platforms
+                return !$this->has_suspicious_fields($data);
+
+            default:
+                // Unknown platform, apply generic validation
+                return !$this->has_suspicious_fields($data);
+        }
+    }
+
+    /**
+     * Check for suspicious fields in webhook data
+     *
+     * @param array $data Data to check
+     * @return bool True if suspicious fields found
+     */
+    private function has_suspicious_fields($data) {
+        if (!is_array($data)) {
+            return false;
+        }
+
+        $suspicious_patterns = array(
+            '/^__/', // PHP magic methods
+            '/^php:/', // PHP protocol
+            '/^file:/', // File protocol
+            '/^ftp:/', // FTP protocol
+            '/eval/i', // Eval function
+            '/exec/i', // Exec function
+            '/system/i', // System function
+            '/shell_exec/i', // Shell exec function
+            '/passthru/i', // Passthru function
+        );
+
+        foreach ($data as $key => $value) {
+            // Check field names
+            if (is_string($key)) {
+                foreach ($suspicious_patterns as $pattern) {
+                    if (preg_match($pattern, $key)) {
+                        if (class_exists('CampaignPress_Security_Logger')) {
+                            CampaignPress_Security_Logger::get_instance()->log_event(
+                                'webhook_suspicious_field',
+                                'Suspicious field detected in webhook data',
+                                array(
+                                    'field_name' => $key,
+                                    'field_value' => is_string($value) ? substr($value, 0, 100) : gettype($value)
+                                ),
+                                'high'
+                            );
+                        }
+                        return true;
+                    }
+                }
+            }
+
+            // Recursively check nested arrays
+            if (is_array($value) && $this->has_suspicious_fields($value)) {
+                return true;
+            }
+
+            // Check string values for suspicious content
+            if (is_string($value)) {
+                foreach (array_slice($suspicious_patterns, 0, 3) as $pattern) { // Check fewer patterns for values
+                    if (preg_match($pattern, $value)) {
+                        if (class_exists('CampaignPress_Security_Logger')) {
+                            CampaignPress_Security_Logger::get_instance()->log_event(
+                                'webhook_suspicious_content',
+                                'Suspicious content detected in webhook value',
+                                array(
+                                    'field_name' => is_string($key) ? $key : 'unknown',
+                                    'field_value' => substr($value, 0, 100)
+                                ),
+                                'medium'
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Validate SendGrid event structure
+     *
+     * @param array $event SendGrid event
+     * @return bool True if valid
+     */
+    private function validate_sendgrid_event($event) {
+        if (!is_array($event)) {
+            return false;
+        }
+
+        // SendGrid events should have timestamp and email at minimum
+        if (!isset($event['timestamp']) || !isset($event['email'])) {
+            return false;
+        }
+
+        // Validate timestamp is numeric
+        if (!is_numeric($event['timestamp'])) {
+            return false;
+        }
+
+        // Validate email format
+        if (!is_email($event['email'])) {
+            return false;
+        }
+
+        return true;
     }
 }

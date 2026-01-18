@@ -776,6 +776,15 @@ class CP_Campaign_Communications {
 
         $url = "https://api.twilio.com/2010-04-01/Accounts/{$account_sid}/Messages.json";
 
+        // Validate URL before making request (SSRF protection)
+        if (class_exists('CampaignPress_URL_Validator')) {
+            $url_validator = CampaignPress_URL_Validator::get_instance();
+            $validation = $url_validator->validate_url($url);
+            if (is_wp_error($validation)) {
+                return array('success' => false, 'error' => 'URL validation failed: ' . $validation->get_error_message());
+            }
+        }
+
         $response = wp_remote_post($url, array(
             'headers' => array(
                 'Authorization' => 'Basic ' . base64_encode($account_sid . ':' . $auth_token),
@@ -792,6 +801,23 @@ class CP_Campaign_Communications {
         }
 
         $body = json_decode(wp_remote_retrieve_body($response), true);
+
+        // Validate Twilio API response structure
+        if (!$this->validate_twilio_response($body)) {
+            // Log suspicious response
+            if (class_exists('CampaignPress_Security_Logger')) {
+                CampaignPress_Security_Logger::get_instance()->log_event(
+                    'external_api_validation_failed',
+                    'Twilio API response validation failed',
+                    array(
+                        'response_keys' => array_keys($body),
+                        'expected_keys' => array('sid', 'status', 'date_created')
+                    ),
+                    'high'
+                );
+            }
+            return array('success' => false, 'error' => 'Invalid response from SMS provider');
+        }
 
         if (isset($body['sid'])) {
             return array('success' => true, 'sid' => $body['sid']);
@@ -810,6 +836,19 @@ class CP_Campaign_Communications {
 
         $datacenter = substr($api_key, strpos($api_key, '-') + 1);
         $url = "https://{$datacenter}.api.mailchimp.com/3.0/lists/{$list_id}/members";
+
+        // Validate URL before making request (SSRF protection)
+        if (class_exists('CampaignPress_URL_Validator')) {
+            $url_validator = CampaignPress_URL_Validator::get_instance();
+            $validation = $url_validator->validate_url($url);
+            if (is_wp_error($validation)) {
+                // Log failed sync attempt
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('CampaignPress Mailchimp URL Validation Error: ' . $validation->get_error_message());
+                }
+                return false;
+            }
+        }
 
         $data = array(
             'email_address' => $subscriber_data['email'],
@@ -841,10 +880,29 @@ class CP_Campaign_Communications {
         }
 
         $response_code = wp_remote_retrieve_response_code($response);
-        if ($response_code < 200 || $response_code >= 300) {
-            $body = json_decode(wp_remote_retrieve_body($response), true);
-            $error_message = $body['detail'] ?? 'Unknown error';
+        $body = json_decode(wp_remote_retrieve_body($response), true);
 
+        // Validate Mailchimp API response structure
+        if (!$this->validate_mailchimp_response($body, $response_code)) {
+            // Log suspicious response
+            if (class_exists('CampaignPress_Security_Logger')) {
+                CampaignPress_Security_Logger::get_instance()->log_event(
+                    'external_api_validation_failed',
+                    'Mailchimp API response validation failed',
+                    array(
+                        'response_code' => $response_code,
+                        'response_keys' => is_array($body) ? array_keys($body) : array(),
+                        'expected_structure' => 'Mailchimp API response with status and data fields'
+                    ),
+                    'medium'
+                );
+            }
+            return false;
+        }
+
+        $error_message = $body['detail'] ?? 'Unknown error';
+
+        if ($response_code < 200 || $response_code >= 300) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('CampaignPress Mailchimp Error: ' . $error_message . ' (Code: ' . $response_code . ')');
             }
@@ -908,6 +966,127 @@ class CP_Campaign_Communications {
         }
 
         wp_send_json_success($stats);
+    }
+
+    /**
+     * Validate Twilio API response structure
+     *
+     * @param array $response The response body from Twilio API
+     * @return bool True if response is valid, false otherwise
+     */
+    private function validate_twilio_response($response) {
+        // Check if response is valid JSON array/object
+        if (!is_array($response)) {
+            return false;
+        }
+
+        // Check for expected Twilio response fields
+        $expected_fields = array('sid', 'status', 'date_created');
+        foreach ($expected_fields as $field) {
+            if (!isset($response[$field])) {
+                return false;
+            }
+        }
+
+        // Validate SID format (starts with "SM" for messages)
+        if (isset($response['sid']) && !preg_match('/^SM[a-fA-F0-9]{32}$/', $response['sid'])) {
+            return false;
+        }
+
+        // Validate status field
+        $valid_statuses = array('queued', 'sending', 'sent', 'failed', 'delivered', 'undelivered', 'receiving', 'received');
+        if (isset($response['status']) && !in_array($response['status'], $valid_statuses, true)) {
+            return false;
+        }
+
+        // Check for suspicious additional fields (potential injection)
+        $allowed_fields = array('sid', 'date_created', 'date_updated', 'date_sent', 'account_sid', 'from', 'to', 'body', 'status', 'num_segments', 'direction', 'api_version', 'price', 'price_unit', 'error_code', 'error_message', 'uri', 'subresource_uris');
+        foreach ($response as $key => $value) {
+            if (!in_array($key, $allowed_fields, true)) {
+                // Unknown field, but don't fail validation - just log it
+                if (class_exists('CampaignPress_Security_Logger')) {
+                    CampaignPress_Security_Logger::get_instance()->log_event(
+                        'external_api_unknown_field',
+                        'Twilio API response contains unknown field',
+                        array(
+                            'field_name' => $key,
+                            'field_value' => $value
+                        ),
+                        'low'
+                    );
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate Mailchimp API response structure
+     *
+     * @param array|object $response The response body from Mailchimp API
+     * @param int $response_code The HTTP response code
+     * @return bool True if response is valid, false otherwise
+     */
+    private function validate_mailchimp_response($response, $response_code) {
+        // Check if response is valid JSON array/object
+        if (!is_array($response) && !is_object($response)) {
+            return false;
+        }
+
+        // Convert to array for easier handling
+        $response = (array) $response;
+
+        // Check for success response (2xx codes)
+        if ($response_code >= 200 && $response_code < 300) {
+            // Successful responses should have at least an id or email_address
+            if (!isset($response['id']) && !isset($response['email_address'])) {
+                return false;
+            }
+        }
+
+        // Check for error response (4xx, 5xx codes)
+        if ($response_code >= 400) {
+            // Error responses should have a detail field
+            if (!isset($response['detail'])) {
+                return false;
+            }
+
+            // Validate error detail is a string
+            if (!is_string($response['detail'])) {
+                return false;
+            }
+        }
+
+        // Validate expected fields if present
+        if (isset($response['id']) && !preg_match('/^[a-zA-Z0-9]+$/', $response['id'])) {
+            return false; // Invalid ID format
+        }
+
+        if (isset($response['email_address']) && !is_email($response['email_address'])) {
+            return false; // Invalid email format
+        }
+
+        // Check for suspicious fields
+        $suspicious_fields = array('__construct', '__wakeup', 'system', 'exec', 'shell_exec', 'passthru', 'eval');
+        foreach ($response as $key => $value) {
+            if (in_array(strtolower($key), $suspicious_fields, true)) {
+                if (class_exists('CampaignPress_Security_Logger')) {
+                    CampaignPress_Security_Logger::get_instance()->log_event(
+                        'external_api_potential_injection',
+                        'Mailchimp API response contains suspicious field',
+                        array(
+                            'field_name' => $key,
+                            'field_value' => $value
+                        ),
+                        'high'
+                    );
+                }
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 

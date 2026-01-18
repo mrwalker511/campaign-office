@@ -19,16 +19,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Load theme textdomain for translations.
- *
- * WordPress 6.7.0+ requires textdomains to be loaded at the 'init' action
- * or later. Loading earlier triggers a deprecation warning.
- */
-add_action('after_setup_theme', function() {
-    load_theme_textdomain('campaignpress', get_template_directory() . '/languages');
-});
-
-/**
  * Class CP_Translation_Support
  *
  * Handles multi-language and translation functionality
@@ -81,8 +71,9 @@ class CP_Translation_Support {
     /**
      * Load theme text domain for translations
      *
-     * Called early during after_setup_theme (priority 1) to ensure
-     * translations are available for starter content and other theme setup.
+     * Note: Primary textdomain loading is handled in functions.php at 'init' priority 1
+     * to comply with WordPress 6.7+ requirements. This method provides additional
+     * compatibility for directory name mismatches and WPML integration.
      */
     public function load_textdomain() {
         // Use the theme directory name as the actual text domain

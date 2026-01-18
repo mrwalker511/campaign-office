@@ -72,8 +72,8 @@ if (defined('CAMPAIGNPRESS_DEV_MODE') && CAMPAIGNPRESS_DEV_MODE) {
 
 /**
  * Set up theme text domain
- * 
- * WordPress uses the theme directory name as the text domain by default.
+ *
+ * WordPress 6.7+ requires textdomain to be loaded at 'init' or later.
  * We need to handle this dynamically to avoid activation errors when the
  * directory name doesn't match the hardcoded text domain.
  */
@@ -90,7 +90,7 @@ function campaignpress_setup_textdomain() {
     // Always load with our standard text domain for backward compatibility
     load_theme_textdomain($text_domain, CAMPAIGNPRESS_THEME_DIR . '/languages');
 }
-add_action('after_setup_theme', 'campaignpress_setup_textdomain', 1);
+add_action('init', 'campaignpress_setup_textdomain', 1);
 
 /**
  * Check for CampaignPress Core Plugin

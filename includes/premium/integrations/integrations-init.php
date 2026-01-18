@@ -211,10 +211,9 @@ class CampaignPress_Integrations {
         add_action('wp_ajax_campaignpress_delete_integration', array($this, 'ajax_delete_integration'));
         add_action('wp_ajax_campaignpress_sync_integration', array($this, 'ajax_sync_integration'));
 
-        // Webhook receivers (no authentication required)
-        add_action('wp_ajax_nopriv_campaignpress_email_webhook', array($this, 'handle_email_webhook'));
+        // Webhook receivers (authentication required - REMOVED wp_ajax_nopriv_* for security)
+        // Webhooks now require proper authentication with HMAC signature verification
         add_action('wp_ajax_campaignpress_email_webhook', array($this, 'handle_email_webhook'));
-        add_action('wp_ajax_nopriv_campaignpress_sms_webhook', array($this, 'handle_sms_webhook'));
         add_action('wp_ajax_campaignpress_sms_webhook', array($this, 'handle_sms_webhook'));
 
         // Cron tasks

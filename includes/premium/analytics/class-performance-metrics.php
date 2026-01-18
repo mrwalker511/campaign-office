@@ -111,14 +111,15 @@ class CampaignPress_Performance_Metrics {
 	/**
 	 * Create Default Metrics
 	 *
+	 * Creates default metrics if they don't exist. Each metric is checked
+	 * individually to allow adding missing metrics even when some already exist.
+	 *
 	 * @since 1.0.0
 	 */
 	private function maybe_create_default_metrics() {
-		$existing = $this->wpdb->get_var( "SELECT COUNT(*) FROM {$this->metrics_table}" );
-
-		if ( $existing > 0 ) {
-			return;
-		}
+		// Note: We no longer return early if metrics exist because create_metric()
+		// now checks for existing metrics by key before inserting. This allows
+		// missing default metrics to be added even if some already exist.
 
 		$default_metrics = array(
 			array(
@@ -254,6 +255,12 @@ class CampaignPress_Performance_Metrics {
 		// Validate required fields
 		if ( empty( $data['metric_key'] ) || empty( $data['metric_name'] ) ) {
 			return false;
+		}
+
+		// Check if metric already exists by key to avoid duplicate entry errors
+		$existing = $this->get_metric_by_key( $data['metric_key'] );
+		if ( $existing ) {
+			return $existing->id;
 		}
 
 		$inserted = $this->wpdb->insert(

@@ -404,7 +404,7 @@ function campaignpress_setup() {
         ),
         'nav_menus' => array(
             'primary' => array(
-                'name' => __('Primary Menu', 'campaignpress'),
+                'name' => 'Primary Menu',
                 'items' => array(
                     'link_home',
                     'page_about',

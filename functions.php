@@ -64,9 +64,7 @@ if (file_exists($dev_helper_path)) {
  *
  * NEVER set this to true in production or distributed versions.
  */
-if (defined('CAMPAIGNPRESS_DEV_MODE') && CAMPAIGNPRESS_DEV_MODE) {
-    // Development mode is enabled via wp-config.php or dev-license-helper.php
-} else {
+if (!defined('CAMPAIGNPRESS_DEV_MODE')) {
     define('CAMPAIGNPRESS_DEV_MODE', false);
 }
 
@@ -323,7 +321,17 @@ function campaignpress_setup() {
     // are now controlled via theme.json - no add_theme_support() calls needed
 
     // Editor stylesheet for Site Editor
-    add_editor_style('assets/css/dist/tailwind.css');
+    // Prefer compiled assets when available; fall back to source editor styles.
+    $editor_style = '';
+    if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/css/editor.css')) {
+        $editor_style = 'assets/dist/css/editor.css';
+    } elseif (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/css/editor.css')) {
+        $editor_style = 'assets/css/editor.css';
+    }
+
+    if (!empty($editor_style)) {
+        add_editor_style($editor_style);
+    }
 
     // Disable default block patterns (we'll create custom ones)
     remove_theme_support('core-block-patterns');
@@ -437,18 +445,29 @@ function campaignpress_scripts() {
     );
 
     // Tailwind CSS (Combined Design System)
-    // Builds from assets/css/app.css to assets/css/dist/tailwind.css
-    $tailwind_css = get_template_directory_uri() . '/assets/css/dist/tailwind.css';
+    // Only enqueue compiled Tailwind output. Source Tailwind files contain @apply/@layer
+    // directives and will cause CSS parse errors if served directly.
+    $tailwind_css_url = '';
     if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/css/tailwind.css')) {
-        $tailwind_css = get_template_directory_uri() . '/assets/dist/css/tailwind.css';
+        $tailwind_css_url = get_template_directory_uri() . '/assets/dist/css/tailwind.css';
+    } elseif (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/css/dist/tailwind.css')) {
+        $tailwind_css_url = get_template_directory_uri() . '/assets/css/dist/tailwind.css';
     }
-    
-    wp_enqueue_style(
-        'campaignpress-tailwind',
-        $tailwind_css,
-        array('campaignpress-style'),
-        CAMPAIGNPRESS_VERSION
-    );
+
+    // Default dependency chain (if Tailwind isn't present)
+    $design_tokens_deps = array('campaignpress-style');
+
+    if (!empty($tailwind_css_url)) {
+        wp_enqueue_style(
+            'campaignpress-tailwind',
+            $tailwind_css_url,
+            array('campaignpress-style'),
+            CAMPAIGNPRESS_VERSION
+        );
+        $design_tokens_deps = array('campaignpress-tailwind');
+    } elseif (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('CampaignPress: Tailwind build not found. Skipping compiled Tailwind enqueue.');
+    }
 
     // Design Tokens CSS - Bridges theme.json tokens to custom CSS variables
     // Provides consistent --cp-* variables across the theme
@@ -456,11 +475,11 @@ function campaignpress_scripts() {
     if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/css/design-tokens.css')) {
         $design_tokens_css = get_template_directory_uri() . '/assets/dist/css/design-tokens.css';
     }
-    
+
     wp_enqueue_style(
         'campaignpress-design-tokens',
         $design_tokens_css,
-        array('campaignpress-tailwind'),
+        $design_tokens_deps,
         CAMPAIGNPRESS_VERSION
     );
 
@@ -469,7 +488,7 @@ function campaignpress_scripts() {
     if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/css/animations.css')) {
         $animations_css = get_template_directory_uri() . '/assets/dist/css/animations.css';
     }
-    
+
     wp_enqueue_style(
         'campaignpress-animations',
         $animations_css,
@@ -519,14 +538,24 @@ function campaignpress_scripts() {
     );
 
     // Classic Statesman Homepage React App
-    // Enqueue on homepage or when using classic-statesman template
-    $classic_statesman_js = get_template_directory_uri() . '/assets/react/index.jsx';
+    // Only enqueue the compiled build (do not enqueue JSX sources).
+    $classic_statesman_js = '';
     if (file_exists(CAMPAIGNPRESS_THEME_DIR . '/assets/dist/js/classic-statesman.js')) {
         $classic_statesman_js = get_template_directory_uri() . '/assets/dist/js/classic-statesman.js';
     }
 
+    /**
+     * Filter: Override the Classic Statesman script URL.
+     *
+     * This can be used in development to point at a Vite dev server, or to
+     * provide an alternate build path.
+     *
+     * Return an empty string to disable.
+     */
+    $classic_statesman_js = apply_filters('campaignpress_classic_statesman_script_url', $classic_statesman_js);
+
     // Load on front page or classic statesman template
-    if (is_front_page() || is_page_template('home-classic-statesman.html')) {
+    if ((is_front_page() || is_page_template('home-classic-statesman.html')) && !empty($classic_statesman_js)) {
         wp_enqueue_script(
             'campaignpress-classic-statesman',
             $classic_statesman_js,
@@ -534,6 +563,8 @@ function campaignpress_scripts() {
             CAMPAIGNPRESS_VERSION,
             true
         );
+    } elseif ((is_front_page() || is_page_template('home-classic-statesman.html')) && defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('CampaignPress: Classic Statesman build not found. Skipping enqueue.');
     }
 
     // Comment reply script

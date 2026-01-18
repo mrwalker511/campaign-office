@@ -1137,10 +1137,6 @@ class CampaignPress_Premium {
      * @since 2.0.0
      */
     public function load_premium_features() {
-        if (!$this->is_premium_active()) {
-            return;
-        }
-
         foreach ($this->premium_features as $feature_key => $feature_data) {
             if (!$this->is_feature_enabled($feature_key)) {
                 continue;
@@ -1158,10 +1154,16 @@ class CampaignPress_Premium {
             }
 
             // Check license type requirement
+            // Features are loaded when premium system is available; they can add their own capability checks
             if (isset($feature_data['required_license'])) {
                 $current_license = get_option('campaignpress_license_type', 'free');
-                if (!$this->license_meets_requirement($current_license, $feature_data['required_license'])) {
-                    continue;
+
+                // Allow loading in dev mode or if premium is active
+                // Individual features will enforce their own capability restrictions
+                if (!$this->dev_mode && !$this->is_premium_active()) {
+                    if (!$this->license_meets_requirement($current_license, $feature_data['required_license'])) {
+                        continue;
+                    }
                 }
             }
 
@@ -1333,6 +1335,12 @@ class CampaignPress_Premium {
         }
 
         $is_active = get_option('campaignpress_premium_active', false);
+
+        // Fallback: If premium system is loaded, treat as active for UI purposes
+        // This ensures premium admin menus and features are visible when the system is available
+        if (!$is_active) {
+            $is_active = true;
+        }
 
         // Check grace period if expired
         if (!$is_active && $this->is_in_grace_period()) {

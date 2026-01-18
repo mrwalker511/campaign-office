@@ -68,7 +68,8 @@
       "Bash(npm update:*)",
       "Bash(npm run build:*)",
       "Bash(pwsh -File build-production.ps1)",
-      "Bash(powershell.exe -ExecutionPolicy Bypass -File build-production.ps1)"
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File build-production.ps1)",
+      "Bash(if exist nul del nul)"
     ],
     "deny": [],
     "ask": []

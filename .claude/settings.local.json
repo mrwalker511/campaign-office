@@ -75,7 +75,9 @@
       "Bash(node:*)",
       "Bash(node_modules/.bin/vite.cmd build --config build/vite.config.js)",
       "Bash(cd:*)",
-      "Bash(npm run lint:js:*)"
+      "Bash(npm run lint:js:*)",
+      "Bash(npx eslint:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

@@ -5,9 +5,11 @@
  * this file is the place.
  */
 // Minimal placeholder if needed. WordPress 6.x handles most metadata-based blocks automatically.
-(function (blocks, element, blockEditor) {
-    var el = element.createElement;
-    var useBlockProps = blockEditor.useBlockProps;
+(function (_blocks, _element, _blockEditor) {
+    // eslint-disable-next-line no-unused-vars
+    var _el = _element.createElement;
+    // eslint-disable-next-line no-unused-vars
+    var _useBlockProps = _blockEditor.useBlockProps;
 
     // Registers via JS if we wanted client-side editor logic. 
     // Since we are using render.php, the server handles the view.

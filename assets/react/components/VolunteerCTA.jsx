@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Mail, Phone, MapPin } from 'lucide-react';
+import { Users } from 'lucide-react';
 
 const VolunteerCTA = ({
   backgroundImage = '/assets/images/volunteer-office.jpg',

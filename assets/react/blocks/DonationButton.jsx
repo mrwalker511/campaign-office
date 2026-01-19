@@ -28,7 +28,7 @@ registerBlockType('campaignpress/donation-button', {
             default: 'left',
         },
     },
-    edit: function (props) {
+    edit: function Edit(props) {
         const blockProps = useBlockProps();
         return (
             <div {...blockProps}>

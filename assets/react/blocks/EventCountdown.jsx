@@ -20,7 +20,7 @@ registerBlockType('campaignpress/event-countdown', {
             default: __('Election Day', 'campaignpress'),
         },
     },
-    edit: function (props) {
+    edit: function Edit(props) {
         const blockProps = useBlockProps();
         return (
             <div {...blockProps}>

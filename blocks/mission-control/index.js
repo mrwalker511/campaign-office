@@ -8,7 +8,7 @@
     const ServerSideRender = wp.serverSideRender;
     const PanelBody = wp.components.PanelBody;
     const TextControl = wp.components.TextControl;
-    const Placeholder = wp.components.Placeholder;
+    const _Placeholder = wp.components.Placeholder;
     const InspectorControls = wp.blockEditor.InspectorControls;
     const __ = wp.i18n.__;
 

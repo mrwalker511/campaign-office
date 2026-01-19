@@ -21,7 +21,7 @@ const TestimonialCard = ({ quote, name, title, delay = 0 }) => {
         <Quote className="text-gold" size={40} />
       </div>
       <blockquote className="font-sans text-neutral-700 text-base md:text-lg leading-relaxed mb-8 italic">
-        "{quote}"
+        "&ldquo;{quote}&rdquo;"
       </blockquote>
       <div className="border-t-2 border-neutral-200 pt-6">
         <cite className="not-italic">

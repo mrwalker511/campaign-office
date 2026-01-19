@@ -73,7 +73,7 @@ const CandidateBioSplit = ({
                 <Quote className="text-gold" size={32} />
               </div>
               <blockquote className="font-display text-navy text-xl md:text-2xl italic mb-4 leading-relaxed">
-                "{quote}"
+                "&ldquo;{quote}&rdquo;"
               </blockquote>
               <cite className="font-sans text-neutral-600 text-sm uppercase tracking-wider not-italic font-semibold">
                 — {quoteAttribution}

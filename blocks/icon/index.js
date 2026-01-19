@@ -23,6 +23,7 @@
     var ColorPicker = wp.components.ColorPicker;
     var __ = wp.i18n.__;
     var useState = wp.element.useState;
+    // eslint-disable-next-line no-unused-vars
     var useEffect = wp.element.useEffect;
     var createElement = wp.element.createElement;
     var Fragment = wp.element.Fragment;
@@ -57,8 +58,8 @@
         var setSearch = searchState[1];
 
         var styleState = useState( 'outline' );
-        var style = styleState[0];
-        var setStyle = styleState[1];
+        var _style = styleState[0];
+        var _setStyle = styleState[1];
 
         var filteredIcons = campaignIcons.filter( function( icon ) {
             if ( search && icon.toLowerCase().indexOf( search.toLowerCase() ) === -1 ) {

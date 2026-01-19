@@ -28,7 +28,7 @@ registerBlockType('campaignpress/campaign-progress', {
             default: true,
         },
     },
-    edit: function (props) {
+    edit: function Edit(props) {
         const blockProps = useBlockProps();
         return (
             <div {...blockProps}>

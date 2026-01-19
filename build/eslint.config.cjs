@@ -5,6 +5,10 @@ module.exports = {
     es2021: true,
     node: true,
   },
+  globals: {
+    wp: 'readonly',
+    campaignpress_vars: 'readonly',
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',

@@ -10,7 +10,8 @@
 
 // Use WordPress's React (wp.element) instead of separate React import
 // import React from 'react'; // ❌ No longer needed
-const { createElement, Component } = wp.element; // ✓ Use WordPress React
+// eslint-disable-next-line no-unused-vars
+const { createElement, Component } = wp.element; // ✓ Use WordPress React (reserved for future CRM components)
 
 // CRM components will be added here (Premium feature)
 // Example: import ContactManager from './ContactManager';

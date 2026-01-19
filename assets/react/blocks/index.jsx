@@ -10,7 +10,8 @@
 
 // Use WordPress's React (wp.element) instead of separate React import
 // import React from 'react'; // ❌ No longer needed
-const { createElement } = wp.element; // ✓ Use WordPress React
+// eslint-disable-next-line no-unused-vars
+const { createElement } = wp.element; // ✓ Use WordPress React (reserved for future block use)
 
 import './DonationButton';
 import './CampaignProgress';

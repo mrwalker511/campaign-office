@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Load translation support (registers textdomain loading on after_setup_theme hook)
+// Load translation support (provides WPML/Polylang compatibility)
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/translation-support.php';
 
 // Load Core Classes

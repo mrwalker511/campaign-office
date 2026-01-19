@@ -28,25 +28,27 @@ According to WordPress core:
 
 ## Fix Applied
 
-### 1. Changed Textdomain Loading Priority
-**File:** `functions.php` (line 94)
+### 1. Changed Textdomain Loading Hook
+**File:** `functions.php` (lines 92-97)
 
 Changed from:
 ```php
-add_action('init', 'campaignpress_setup_textdomain', 1);
+add_action('init', 'campaignpress_setup_textdomain', 0);
 ```
 
 To:
 ```php
-// Use priority 0 to ensure translations are available before any init-priority-1
-// callbacks (including core widgets initialization) call translation functions.
-add_action('init', 'campaignpress_setup_textdomain', 0);
+// Load textdomain at after_setup_theme to ensure it's available before any code
+// tries to use translation functions. This prevents WordPress's just-in-time
+// textdomain loading from triggering the "triggered too early" warning.
+add_action('after_setup_theme', 'campaignpress_setup_textdomain');
 ```
 
-**Why this works:**
-- Priority 0 runs before priority 1
-- Textdomain is now loaded BEFORE `widgets_init` fires
-- Translation functions are available when widget class is instantiated
+**Why `after_setup_theme` instead of `init` priority 0:**
+- `after_setup_theme` runs before `init`, ensuring textdomain is loaded first
+- WordPress's just-in-time textdomain loading can still trigger before `init` priority 0 in some edge cases
+- While WordPress 6.7+ docs suggest `init`, `after_setup_theme` is the traditional theme approach and still valid
+- This prevents race conditions with widget registration and block initialization
 
 ### 2. Widget Constructor Continues to Use Translation Functions
 **File:** `includes/free/translation-support.php` (lines 448-454)
@@ -63,9 +65,9 @@ public function __construct() {
 ```
 
 **Why this works:**
-- Textdomain is loaded at `init` priority 0
-- Widget registration happens at `init` priority 1 (via `widgets_init`)
-- Translation functions work correctly when widget is instantiated
+- Textdomain is loaded at `after_setup_theme` (before `init`)
+- Widget registration happens at `widgets_init` (during `init` at priority 1)
+- Translation functions are available well before widgets are instantiated
 
 ## Testing
 To verify the fix works:
@@ -77,14 +79,14 @@ To verify the fix works:
 ## Prevention Guidelines
 To avoid this issue in the future:
 
-1. **Always load textdomain early:**
+1. **Always load textdomain at `after_setup_theme` for themes:**
    ```php
-   add_action('init', 'your_textdomain_function', 0); // Priority 0!
+   add_action('after_setup_theme', 'your_textdomain_function');
    ```
 
 2. **Be cautious with translation functions in constructors:**
-   - If a class is instantiated early (before `init`), avoid `__()` calls
-   - If instantiation happens at `init` priority 1 or later, it's safe
+   - If a class is instantiated early (before `after_setup_theme`), avoid `__()` calls
+   - If instantiation happens at `init` or later, it's safe
 
 3. **File-level code runs immediately:**
    - Any code outside functions/classes runs when file is included
@@ -92,11 +94,12 @@ To avoid this issue in the future:
 
 4. **Widget registration timing:**
    - `widgets_init` fires during `init` at priority 1
-   - Textdomain must be loaded at priority 0 or earlier
+   - Textdomain must be loaded before `init` to be safe
 
 ## Files Modified
-- `/functions.php`: Changed textdomain loading to `init` priority 0
-- `/includes/free/translation-support.php`: Updated comments to reflect new priority
+- `/functions.php`: Changed textdomain loading to `after_setup_theme` hook
+- `/includes/core/loader.php`: Updated comment about translation support
+- `/includes/free/translation-support.php`: Contains WPML/Polylang compatibility (no changes needed)
 
 ## WordPress Version Compatibility
 - **WordPress 6.7+:** Required for this fix (warning didn't exist in earlier versions)
@@ -109,7 +112,11 @@ To avoid this issue in the future:
 - WordPress Coding Standards: https://developer.wordpress.org/apis/handbook/internationalization/
 
 ## Date
-2025-01-18
+2025-01-19 (Updated)
 
 ## Status
-✅ **FIXED** - Textdomain loading properly ordered to eliminate WordPress 6.7+ warnings
+✅ **FIXED** - Textdomain now loads at `after_setup_theme` to eliminate WordPress 6.7+ warnings
+
+## Revision History
+- 2025-01-18: Initial fix using `init` priority 0
+- 2025-01-19: Changed to `after_setup_theme` hook for more reliable early loading

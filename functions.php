@@ -71,8 +71,11 @@ if (!defined('CAMPAIGNPRESS_DEV_MODE')) {
 /**
  * Set up theme text domain
  *
- * WordPress 6.7+ requires textdomain to be loaded at 'init' or later.
- * Translation functions (__(), _e(), etc.) must NOT be used before 'init'.
+ * Loads the textdomain at 'after_setup_theme' to ensure translations are
+ * available before any code attempts to use translation functions.
+ * This prevents WordPress's just-in-time textdomain loading from triggering
+ * the "triggered too early" warning in WordPress 6.7+.
+ *
  * We handle dynamic directory names to avoid errors when the directory
  * doesn't match the hardcoded text domain.
  */
@@ -89,9 +92,12 @@ function campaignpress_setup_textdomain() {
     // Always load with our standard text domain for backward compatibility.
     load_theme_textdomain($text_domain, CAMPAIGNPRESS_THEME_DIR . '/languages');
 }
-// Use priority 0 to ensure translations are available before any init-priority-1
-// callbacks (including core widgets initialization) call translation functions.
-add_action('init', 'campaignpress_setup_textdomain', 0);
+// Load textdomain at after_setup_theme to ensure it's available before any code
+// tries to use translation functions. This prevents WordPress's just-in-time
+// textdomain loading from triggering the "triggered too early" warning.
+// Note: While WordPress 6.7+ docs suggest 'init', after_setup_theme is earlier
+// and still valid for themes, preventing race conditions with widget registration.
+add_action('after_setup_theme', 'campaignpress_setup_textdomain');
 
 /**
  * Check for CampaignPress Core Plugin

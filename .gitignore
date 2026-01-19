@@ -1,81 +1,72 @@
-# ------------------------------------------------------
-# 1. WordPress Core & Config (The Safety Net)
-# Ignored in case you accidentally download WP here
-# ------------------------------------------------------
-wp-admin/
-wp-includes/
-wp-content/plugins/
-wp-content/mu-plugins/
-wp-content/uploads/
-wp-content/upgrade/
-wp-config.php
-wp-config-sample.php
-xmlrpc.php
-license.txt
-readme.html
-
-# ------------------------------------------------------
-# 2. Dependencies & Build Tools
-# ------------------------------------------------------
+# Dependencies
 node_modules/
-package-lock.json
-# Uncomment the line above if you don't want to lock versions, 
-# but usually, you WANT to commit package-lock.json.
+vendor/
+composer.lock
 
-/vendor/
-# Only ignore /vendor if you use Composer to manage dev tools.
-# If your theme relies on composer libs to run, Keep it!
+# Build outputs
+assets/dist/
+assets/css/dist/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-dist/
-build/
-# If you compile SCSS/JS, usually you ignore the source maps
-*.css.map
-*.js.map
-
-# ------------------------------------------------------
-# 3. System & IDE Files (Junk)
-# ------------------------------------------------------
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+
+# IDE files
 .vscode/
 .idea/
-*.log
+*.swp
+*.swo
 
-# ------------------------------------------------------
-# 4. DDEV & Docker (Optional)
-# ------------------------------------------------------
-.ddev/.global_commands/
-.ddev/db_snapshots/
-.ddev/mysql_history
-.ddev/bash_history
-.ddev/traefik/
-
-# NOTE: You usually WANT to commit .ddev/config.yaml and 
-# .ddev/docker-compose.override.yaml so your team can 
-# spin up the environment too.
-
-# IGNORE WORDPRESS CORE
-wp-admin/
-wp-includes/
-wp-content/plugins/
-wp-content/mu-plugins/
+# WordPress
+wp-config.php
 wp-content/uploads/
 wp-content/upgrade/
-wp-content/index.php
-wp-*.php
-xmlrpc.php
-license.txt
-readme.html
-index.php
+wp-content/backup-*/
+wp-content/cache/
+wp-content/backup-*
+wp-content/wflogs/
+wp-content/upgrade/
+wp-content/extensions/
 
-# IGNORE DDEV/DOCKER
-.ddev/
-docker-compose.yml
-docker-compose.override.yaml
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
 
-# EXCEPTION: DO NOT IGNORE MY THEME
-# (If your theme is in the root, we need to allow specific files)
-!style.css
-!functions.php
-# Add other specific files if they are being ignored incorrectly
-nul
+# Testing
+coverage/
+.nyc_output/
+tests/e2e/reports/
+tests/e2e/playwright-report/
+
+# Build artifacts
+*.tgz
+*.tar.gz
+
+# Cache
+.cache/
+.parcel-cache/
+.npm/
+.eslintcache
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Database
+*.sqlite
+*.db
+
+# Security
+dev-license-helper.php

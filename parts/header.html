@@ -1,26 +1,37 @@
-<!-- wp:group {"className":"cp-nav","style":{"spacing":{"padding":{"top":"var:preset|spacing|2","bottom":"var:preset|spacing|2"}}},"backgroundColor":"white","layout":{"type":"default"}} -->
-<div class="wp-block-group cp-nav has-white-background-color has-background" style="padding-top:var(--wp--preset--spacing--2);padding-bottom:var(--wp--preset--spacing--2)">
-    <!-- wp:group {"align":"wide","className":"cp-nav__inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-    <div class="wp-block-group alignwide cp-nav__inner">
-        <!-- wp:group {"className":"cp-nav__brand","layout":{"type":"flex","orientation":"vertical","flexWrap":"nowrap"}} -->
-        <div class="wp-block-group cp-nav__brand">
-            <!-- wp:site-logo {"width":120,"shouldSyncIcon":true} /-->
-            <!-- wp:site-title {"level":0,"style":{"typography":{"fontSize":"1.5rem","fontWeight":"700","textTransform":"uppercase","lineHeight":"1"}},"textColor":"primary"} /-->
-        </div>
-        <!-- /wp:group -->
+<!-- wp:group {"tagName":"header","className":"wp-block-group site-header","layout":{"type":"constrained"}} -->
+<div class="wp-block-group site-header">
 
-        <!-- wp:navigation {"ref":"","overlayMenu":"mobile","className":"cp-primary-navigation cp-nav__links","style":{"typography":{"fontSize":"0.875rem","fontWeight":"600","textTransform":"uppercase","letterSpacing":"0.05em"},"spacing":{"blockGap":"var:preset|spacing|6"}},"textColor":"neutral-800","layout":{"type":"flex","justifyContent":"center"}} -->
-        <!-- wp:page-list /-->
-        <!-- /wp:navigation -->
+<!-- wp:group {"className":"wp-block-group header-inner","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+<div class="wp-block-group header-inner">
 
-        <!-- wp:buttons -->
-        <div class="wp-block-buttons">
-            <!-- wp:button {"backgroundColor":"secondary","textColor":"white","className":"cp-btn cp-btn--primary","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.05em","fontWeight":"700"}}} -->
-            <div class="wp-block-button cp-btn cp-btn--primary"><a class="wp-block-button__link has-white-color has-secondary-background-color has-text-color has-background wp-element-button" style="text-transform:uppercase;letter-spacing:0.05em;font-weight:700">Donate</a></div>
-            <!-- /wp:button -->
-        </div>
-        <!-- /wp:buttons -->
-    </div>
-    <!-- /wp:group -->
+<!-- wp:group {"className":"wp-block-group site-branding","layout":{"type":"constrained"}} -->
+<div class="wp-block-group site-branding">
+
+<!-- wp:site-logo {"width":64,"height":64} /-->
+
+<!-- wp:group {"className":"wp-block-group site-title-wrapper","layout":{"type":"constrained"}} -->
+<div class="wp-block-group site-title-wrapper">
+
+<!-- wp:site-title {"level":1} /-->
+
+<!-- wp:site-tagline {"fontSize":"small"} /-->
+
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"wp-block-group main-navigation","layout":{"type":"constrained"}} -->
+<div class="wp-block-group main-navigation">
+
+<!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex"}} /-->
+
+</div>
+<!-- /wp:group -->
+
+</div>
+<!-- /wp:group -->
+
 </div>
 <!-- /wp:group -->

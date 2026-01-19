@@ -32,8 +32,8 @@
     "test:e2e:headed": "playwright test --config tests/playwright.config.js --headed",
     "test:e2e:ui": "playwright test --config tests/playwright.config.js --ui",
     "test:performance": "node tests/performance/run-performance-tests.js",
-    "lint:js": "eslint \"assets/js/**/*.js\" \"assets/react/**/*.{js,jsx}\" \"blocks/**/*.js\" --config build/eslint.config.json",
-    "lint:js:fix": "eslint \"assets/js/**/*.js\" \"assets/react/**/*.{js,jsx}\" \"blocks/**/*.js\" --config build/eslint.config.json --fix",
+    "lint:js": "eslint \"assets/js/**/*.js\" \"assets/react/**/*.{js,jsx}\" \"blocks/**/*.js\" --config build/eslint.config.js",
+    "lint:js:fix": "eslint \"assets/js/**/*.js\" \"assets/react/**/*.{js,jsx}\" \"blocks/**/*.js\" --config build/eslint.config.js --fix",
     "lint:css": "stylelint \"assets/css/**/*.css\" --config build/stylelint.config.json",
     "lint:css:fix": "stylelint \"assets/css/**/*.css\" --config build/stylelint.config.json --fix"
   },

@@ -1,0 +1,60 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "wp": "readonly",
+    "jQuery": "readonly",
+    "ajaxurl": "readonly",
+    "cpPremium": "readonly",
+    "cpPremiumFeatures": "readonly",
+    "cpPremiumTemplates": "readonly",
+    "cpIconsBrowser": "readonly",
+    "cpFieldOps": "readonly",
+    "cpCompliance": "readonly",
+    "cpDonorManager": "readonly",
+    "cpVolunteerPortal": "readonly",
+    "cpVolunteerMatcher": "readonly",
+    "cpFEC": "readonly",
+    "cpCRM": "readonly",
+    "cpDesignStudio": "readonly",
+    "cpTemplateManager": "readonly",
+    "campaignpress_vars": "readonly",
+    "campaignpress_admin_notices": "readonly",
+    "campaignpressAnalytics": "readonly",
+    "campaignpressDemoImport": "readonly",
+    "Chart": "readonly"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "ignorePatterns": [
+    "**/*.min.js",
+    "**/min/**",
+    "**/dist/**",
+    "**/vendor/**",
+    "**/node_modules/**"
+  ],
+  "rules": {
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/no-unescaped-entities": "off",
+    "no-unused-vars": "warn",
+    "no-console": "off"
+  }
+}

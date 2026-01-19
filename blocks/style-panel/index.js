@@ -7,7 +7,7 @@
     var useBlockProps = blockEditor.useBlockProps;
 
     blocks.registerBlockType('campaignpress/style-panel', {
-        edit: function () {
+        edit: function Edit() {
             var blockProps = useBlockProps({ className: 'cp-style-panel-editor' });
             return el('div', blockProps, el(InnerBlocks));
         },

@@ -31,7 +31,7 @@
                 default: 'Washington DC'
             }
         },
-        edit: function (props) {
+        edit: function Edit(props) {
             const { attributes, setAttributes } = props;
             const { electionDate, locationCity } = attributes;
 

@@ -4,7 +4,7 @@
     var useBlockProps = blockEditor.useBlockProps;
 
     blocks.registerBlockType('campaignpress/section-wrapper', {
-        edit: function () {
+        edit: function Edit() {
             var blockProps = useBlockProps({ className: 'cp-section-editor' });
             return el('div', blockProps, el(InnerBlocks));
         },

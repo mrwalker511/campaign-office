@@ -166,7 +166,7 @@
 
     // Register block
     registerBlockType( 'campaignpress/icon', {
-        edit: function( props ) {
+        edit: function Edit( props ) {
             var attributes = props.attributes;
             var setAttributes = props.setAttributes;
             var icon = attributes.icon;

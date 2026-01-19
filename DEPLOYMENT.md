@@ -118,6 +118,7 @@ For testing premium features without a license:
 ## ✨ Features Available
 
 ### Free Features (Always Active)
+
 - Custom post types (Issues, Events, Endorsements, Team, Volunteers, Press Releases)
 - Gutenberg blocks (7 blocks)
 - Elementor widgets (10 widgets)
@@ -130,14 +131,15 @@ For testing premium features without a license:
 - Demo content generator
 
 ### Premium Features (License Required)
-- **CRM System** - Manage 50,000+ contacts with engagement scoring
-- **Field Operations** - Canvassing, phone banking, GOTV, scheduling
-- **Analytics Dashboard** - Performance metrics and KPI tracking
-- **FEC Compliance** - Automatic contribution tracking
-- **REST API** - Full REST API with webhooks
-- **Developer Console** - Database inspector, API tester, data export
-- **Email/SMS Integrations** - Mailchimp, Twilio workflows
-- **Admin Pages** - License management, system status, upgrade paths
+
+**CRM System** - Manage 50,000+ contacts with engagement scoring
+**Field Operations** - Canvassing, phone banking, GOTV, scheduling
+**Analytics Dashboard** - Performance metrics and KPI tracking
+**FEC Compliance** - Automatic contribution tracking
+**REST API** - Full REST API with webhooks
+**Developer Console** - Database inspector, API tester, data export
+**Email/SMS Integrations** - Mailchimp, Twilio workflows
+**Admin Pages** - License management, system status, upgrade paths
 
 ## 🧪 Testing Commands
 

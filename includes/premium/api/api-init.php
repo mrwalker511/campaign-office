@@ -813,9 +813,70 @@ function campaignpress_create_api_tables() {
         KEY method_endpoint (method, endpoint(50))
     ) $charset_collate;";
 
+    // API Contacts table
+    $sql_contacts = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}campaignpress_contacts (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        first_name varchar(100) NOT NULL,
+        last_name varchar(100) NOT NULL,
+        email varchar(100),
+        phone varchar(20),
+        address text,
+        city varchar(100),
+        state varchar(50),
+        zip varchar(20),
+        created_at datetime DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY email (email)
+    ) $charset_collate;";
+
+    // API Donations table
+    $sql_donations = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}campaignpress_donations (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        contact_id bigint(20) NOT NULL,
+        amount decimal(10,2) NOT NULL,
+        currency varchar(10) DEFAULT 'USD',
+        source varchar(50),
+        transaction_id varchar(100),
+        status varchar(20) DEFAULT 'completed',
+        donation_date datetime DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY contact_id (contact_id)
+    ) $charset_collate;";
+
+    // API Canvassing Results table
+    $sql_canvassing = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}campaignpress_canvassing_results (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        volunteer_id bigint(20) NOT NULL,
+        contact_id bigint(20) NOT NULL,
+        result varchar(50) NOT NULL,
+        support_level int(2),
+        notes text,
+        canvass_date datetime DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY volunteer_id (volunteer_id),
+        KEY contact_id (contact_id)
+    ) $charset_collate;";
+
+    // API Phone Banking table
+    $sql_phone_banking = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}campaignpress_phone_banking (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        volunteer_id bigint(20) NOT NULL,
+        contact_id bigint(20) NOT NULL,
+        call_result varchar(50) NOT NULL,
+        notes text,
+        call_date datetime DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY volunteer_id (volunteer_id),
+        KEY contact_id (contact_id)
+    ) $charset_collate;";
+
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql_keys );
     dbDelta( $sql_logs );
+    dbDelta( $sql_contacts );
+    dbDelta( $sql_donations );
+    dbDelta( $sql_canvassing );
+    dbDelta( $sql_phone_banking );
 
     // Clear the verification transient so next check confirms tables exist
     delete_transient( 'campaignpress_api_tables_verified' );

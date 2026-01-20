@@ -342,23 +342,45 @@ class CP_Analytics_Dashboard {
     private function get_campaign_metrics() {
         global $wpdb;
 
-        // Sample data - in production this would query real database tables
+        $volunteers_table = $wpdb->prefix . 'cp_volunteers';
+        $hours_table = $wpdb->prefix . 'cp_volunteer_hours';
+        $rsvps_table = $wpdb->prefix . 'cp_event_rsvps';
+        $subscribers_table = $wpdb->prefix . 'cp_subscribers';
+
+        // Check if tables exist and get counts
+        $volunteers_count = $wpdb->get_var("SHOW TABLES LIKE '{$volunteers_table}'") ? $wpdb->get_var("SELECT COUNT(*) FROM {$volunteers_table}") : 0;
+        $total_hours = $wpdb->get_var("SHOW TABLES LIKE '{$hours_table}'") ? $wpdb->get_var("SELECT SUM(hours) FROM {$hours_table} WHERE verified = 1") : 0;
+        
+        $event_attendance = 0;
+        if ($wpdb->get_var("SHOW TABLES LIKE '{$rsvps_table}'")) {
+            $event_attendance = $wpdb->get_var("SELECT SUM(1 + guests) FROM {$rsvps_table} WHERE status = 'confirmed'");
+        }
+        
+        $total_events = wp_count_posts('cp_event')->publish;
+        
+        $email_subs = 0;
+        $sms_subs = 0;
+        if ($wpdb->get_var("SHOW TABLES LIKE '{$subscribers_table}'")) {
+            $email_subs = $wpdb->get_var("SELECT COUNT(*) FROM {$subscribers_table} WHERE subscribed_email = 1 AND status = 'active'");
+            $sms_subs = $wpdb->get_var("SELECT COUNT(*) FROM {$subscribers_table} WHERE subscribed_sms = 1 AND status = 'active'");
+        }
+
         return array(
             'volunteers' => array(
-                'total' => 1247,
-                'change' => 12.5,
+                'total' => intval($volunteers_count),
+                'change' => 0,
             ),
             'hours' => array(
-                'total' => 8452.5,
-                'change' => 18.3,
+                'total' => floatval($total_hours),
+                'change' => 0,
             ),
             'events' => array(
-                'total_events' => 42,
-                'attendance' => 3856,
+                'total_events' => intval($total_events),
+                'attendance' => intval($event_attendance),
             ),
             'subscribers' => array(
-                'email' => 12547,
-                'sms' => 8234,
+                'email' => intval($email_subs),
+                'sms' => intval($sms_subs),
             ),
         );
     }

@@ -97,7 +97,7 @@ $color = CP_Theme_JSON_Helper::get_color('primary');
 | File | Purpose |
 |------|---------|
 | `theme.json` | Design token definitions (source of truth) |
-| `docs/DESIGN-REFERENCE.md` | Complete style guide |
+| `docs/guides/DESIGN-REFERENCE.md` | Complete style guide |
 | `includes/free/class-theme-json-helper.php` | PHP helper for accessing tokens |
 
 ---

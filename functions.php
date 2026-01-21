@@ -42,7 +42,7 @@ define('CAMPAIGNPRESS_LEGACY_TEXT_DOMAIN', 'campaignpress');
  *   Free: CP-DEV-FREE-2024-F1R2E3E4EEEE
  *   Email: dev@campaignpress.test
  */
-$dev_helper_path = CAMPAIGNPRESS_THEME_DIR . '/dev-license-helper.php';
+$dev_helper_path = CAMPAIGNPRESS_INCLUDES_DIR . '/dev-license-helper.php';
 if (file_exists($dev_helper_path)) {
     require_once $dev_helper_path;
 }
@@ -866,7 +866,7 @@ add_action('enqueue_block_editor_assets', 'campaignpress_block_editor_assets');
 /**
  * Register Block Patterns
  */
-require_once get_template_directory() . '/includes/block-patterns.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/block-patterns.php';
 
 /**
  * Register Block Pattern Category

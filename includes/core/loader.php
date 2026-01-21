@@ -58,7 +58,7 @@ if (class_exists('CampaignPress_Contact_Manager')) {
 // Load Free Features (Legacy functional style)
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/font-preconnect.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-bootstrap-navwalker.php';
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/admin-dashboard-fixes.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/admin/admin-dashboard-fixes.php';
 // Custom post types - provides fallback if CampaignPress Core plugin is not active
 if (!class_exists('CampaignPress_Core') && !class_exists('Campaign_Office_Core')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';
@@ -95,4 +95,4 @@ if (file_exists(CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/premium/premium-init.php';
 }
 
-require_once get_template_directory() . '/includes/admin-menu-reorganization.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/admin/admin-menu-reorganization.php';

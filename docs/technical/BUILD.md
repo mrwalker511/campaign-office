@@ -8,17 +8,17 @@ This document explains how to create production-ready distribution packages of t
 
 ```powershell
 # Run from theme directory
-.\build-production.ps1
+.\scripts/build-production.ps1
 ```
 
 ### Linux/macOS/Git Bash
 
 ```bash
 # Make script executable (first time only)
-chmod +x build-production.sh
+chmod +x scripts/build-production.sh
 
 # Run from theme directory
-./build-production.sh
+./scripts/build-production.sh
 ```
 
 ## What Gets Included
@@ -60,36 +60,36 @@ The build script automatically excludes:
 
 **PowerShell:**
 ```powershell
-.\build-production.ps1 -OutputDir "C:\releases"
+.\scripts/build-production.ps1 -OutputDir "C:\releases"
 ```
 
 **Bash:**
 ```bash
-./build-production.sh /path/to/output
+./scripts/build-production.sh /path/to/output
 ```
 
 ### Specify Version
 
 **PowerShell:**
 ```powershell
-.\build-production.ps1 -Version "2.1.0"
+.\scripts/build-production.ps1 -Version "2.1.0"
 ```
 
 **Bash:**
 ```bash
-./build-production.sh . 2.1.0
+./scripts/build-production.sh . 2.1.0
 ```
 
 ### Both Directory and Version
 
 **PowerShell:**
 ```powershell
-.\build-production.ps1 -OutputDir "C:\releases" -Version "2.1.0"
+.\scripts/build-production.ps1 -OutputDir "C:\releases" -Version "2.1.0"
 ```
 
 **Bash:**
 ```bash
-./build-production.sh /path/to/output 2.1.0
+./scripts/build-production.sh /path/to/output 2.1.0
 ```
 
 ## Output
@@ -148,14 +148,14 @@ If you get an execution policy error on Windows:
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 
 # Option 2: Run with bypass flag
-powershell -ExecutionPolicy Bypass -File .\build-production.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts/build-production.ps1
 ```
 
 ### Bash: Permission Denied
 
 Make the script executable:
 ```bash
-chmod +x build-production.sh
+chmod +x scripts/build-production.sh
 ```
 
 ### Bash: zip command not found
@@ -182,7 +182,7 @@ To customize what files are included/excluded, edit the `$ExcludePatterns` array
 
 If you want to include your source files (React, SCSS, etc.), comment out these lines:
 
-**PowerShell (`build-production.ps1`):**
+**PowerShell (`scripts/build-production.ps1`):**
 ```powershell
 # Comment out these lines:
 # "assets/src",
@@ -190,7 +190,7 @@ If you want to include your source files (React, SCSS, etc.), comment out these 
 # "assets/scss",
 ```
 
-**Bash (`build-production.sh`):**
+**Bash (`scripts/build-production.sh`):**
 ```bash
 # Comment out these lines:
 # --exclude='assets/src' \

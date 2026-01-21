@@ -8,13 +8,13 @@ export default defineConfig({
   root: '.',
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './assets/react'),
-      '@components': path.resolve(__dirname, './assets/react/components'),
-      '@blocks': path.resolve(__dirname, './blocks'),
+      '@': path.resolve(__dirname, '../assets/react'),
+      '@components': path.resolve(__dirname, '../assets/react/components'),
+      '@blocks': path.resolve(__dirname, '../blocks'),
     },
   },
   build: {
-    outDir: 'assets/dist',
+    outDir: '../assets/dist',
     sourcemap: false,
     minify: 'terser',
     terserOptions: {
@@ -25,12 +25,12 @@ export default defineConfig({
     },
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'assets/js/main.js'),
-        blocks: path.resolve(__dirname, 'assets/react/blocks/index.jsx'),
-        crm: path.resolve(__dirname, 'assets/react/crm/index.jsx'),
+        main: path.resolve(__dirname, '../assets/js/main.js'),
+        blocks: path.resolve(__dirname, '../assets/react/blocks/index.jsx'),
+        crm: path.resolve(__dirname, '../assets/react/crm/index.jsx'),
       },
       output: {
-        dir: 'assets/dist/js',
+        dir: '../assets/dist/js',
         entryFileNames: '[name].js',
         chunkFileNames: 'chunks/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
@@ -39,7 +39,7 @@ export default defineConfig({
           if (/\.(css)$/.test(assetInfo.name)) {
             return `css/[name]-[hash].${ext}`;
           }
-          return `assets/[name]-[hash].${ext}`;
+          return `../assets/[name]-[hash].${ext}`;
         },
       },
     },

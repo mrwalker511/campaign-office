@@ -548,17 +548,32 @@ function campaignpress_customizer_output_css() {
     // Hero overlay opacity (convert 0-100 to 0-1)
     $opacity_decimal = $hero_opacity / 100;
     $hero_css .= '.is-style-campaign-hero .wp-block-cover__background,';
-    $hero_css .= '.hero-video-section .wp-block-cover__background {';
+    $hero_css .= '.campaign-hero .wp-block-cover__background,';
+    $hero_css .= '.hero-section .wp-block-cover__background,';
+    $hero_css .= '.hero-video-section .wp-block-cover__background,';
+    $hero_css .= '.cp-hero .wp-block-cover__background {';
     $hero_css .= 'opacity: ' . esc_attr($opacity_decimal) . ' !important;';
     $hero_css .= '}';
 
     // Hero background image (only apply if media type is image and URL is set)
     if ($hero_media_type === 'image' && $hero_image) {
         $hero_css .= '.is-style-campaign-hero,';
-        $hero_css .= '.hero-video-section {';
+        $hero_css .= '.campaign-hero,';
+        $hero_css .= '.hero-section,';
+        $hero_css .= '.hero-video-section,';
+        $hero_css .= '.cp-hero {';
         $hero_css .= 'background-image: url("' . $hero_image . '") !important;';
         $hero_css .= 'background-size: cover !important;';
         $hero_css .= 'background-position: center !important;';
+        $hero_css .= '}';
+        
+        // Ensure standard wp-block-cover image is hidden when custom background is applied
+        $hero_css .= '.is-style-campaign-hero .wp-block-cover__image-background,';
+        $hero_css .= '.campaign-hero .wp-block-cover__image-background,';
+        $hero_css .= '.hero-section .wp-block-cover__image-background,';
+        $hero_css .= '.hero-video-section .wp-block-cover__image-background,';
+        $hero_css .= '.cp-hero .wp-block-cover__image-background {';
+        $hero_css .= 'display: none !important;';
         $hero_css .= '}';
     }
 
@@ -618,7 +633,7 @@ function campaignpress_hero_video_output() {
     <script id="campaignpress-hero-video-script">
     (function() {
         document.addEventListener('DOMContentLoaded', function() {
-            var heroSections = document.querySelectorAll('.is-style-campaign-hero, .hero-video-section');
+            var heroSections = document.querySelectorAll('.is-style-campaign-hero, .campaign-hero, .hero-section, .hero-video-section, .cp-hero');
             var videoUrl = <?php echo wp_json_encode($hero_video); ?>;
 
             heroSections.forEach(function(section) {

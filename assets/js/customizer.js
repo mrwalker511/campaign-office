@@ -187,7 +187,7 @@
       value.bind(function (newval) {
         var opacity = parseFloat(newval) / 100;
         $(
-          '.is-style-campaign-hero .wp-block-cover__background, .hero-video-section .wp-block-cover__background'
+          '.is-style-campaign-hero .wp-block-cover__background, .campaign-hero .wp-block-cover__background, .hero-section .wp-block-cover__background, .hero-video-section .wp-block-cover__background, .cp-hero .wp-block-cover__background'
         ).css('opacity', opacity);
       });
     });
@@ -197,10 +197,16 @@
       value.bind(function (newval) {
         var mediaType = wp.customize('campaignpress_hero_media_type').get();
         if (mediaType === 'image' && newval) {
-          $('.is-style-campaign-hero, .hero-video-section').css(
+          var $heroSections = $('.is-style-campaign-hero, .campaign-hero, .hero-section, .hero-video-section, .cp-hero');
+          
+          // Update background-image on the wrapper
+          $heroSections.css(
             'background-image',
             'url("' + newval + '")'
           );
+
+          // Also update <img> if it exists (standard wp-block-cover structure)
+          $heroSections.find('.wp-block-cover__image-background').attr('src', newval);
         }
       });
     });
@@ -208,11 +214,14 @@
     // Hero media type toggle
     wp.customize('campaignpress_hero_media_type', function (value) {
       value.bind(function (newval) {
-        var $heroSections = $('.is-style-campaign-hero, .hero-video-section');
+        var $heroSections = $('.is-style-campaign-hero, .campaign-hero, .hero-section, .hero-video-section, .cp-hero');
 
         if (newval === 'video') {
           // Remove background image when video is selected
           $heroSections.css('background-image', 'none');
+          
+          // Hide image background if it's an <img> tag
+          $heroSections.find('.wp-block-cover__image-background').hide();
 
           // Add video if URL is set
           var videoUrl = wp.customize('campaignpress_hero_video').get();
@@ -241,12 +250,17 @@
                   'z-index': 0,
                 });
                 $section.prepend($video);
+              } else {
+                $section.find('.cp-hero-video').show();
               }
             });
           }
         } else {
-          // Remove video elements when image is selected
-          $heroSections.find('.cp-hero-video').remove();
+          // Remove/Hide video elements when image is selected
+          $heroSections.find('.cp-hero-video').hide();
+          
+          // Show image background
+          $heroSections.find('.wp-block-cover__image-background').show();
 
           // Restore background image if set
           var imageUrl = wp.customize('campaignpress_hero_image').get();
@@ -267,10 +281,10 @@
 
         var $video = $('.cp-hero-video');
         if ($video.length && newval) {
-          $video.attr('src', newval);
+          $video.attr('src', newval).show();
         } else if (newval) {
           // Video doesn't exist yet, create it
-          var $heroSections = $('.is-style-campaign-hero, .hero-video-section');
+          var $heroSections = $('.is-style-campaign-hero, .campaign-hero, .hero-section, .hero-video-section, .cp-hero');
           $heroSections.each(function () {
             var $section = $(this);
             if (!$section.find('.cp-hero-video').length) {
@@ -295,6 +309,8 @@
                 'z-index': 0,
               });
               $section.prepend($newVideo);
+            } else {
+              $section.find('.cp-hero-video').attr('src', newval).show();
             }
           });
         }

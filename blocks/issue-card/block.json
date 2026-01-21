@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/issue-card",
+    "version": "1.0.0",
+    "title": "Issue Card",
+    "category": "campaignpress",
+    "icon": "megaphone",
+    "description": "Display policy positions and key issues with icons and descriptions.",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "attributes": {
+        "issueTitle": {
+            "type": "string",
+            "default": ""
+        },
+        "issueDescription": {
+            "type": "string",
+            "default": ""
+        },
+        "iconName": {
+            "type": "string",
+            "default": "megaphone"
+        }
+    },
+    "textdomain": "campaignpress",
+    "render": "file:./render.php"
+}

@@ -1,0 +1,34 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/volunteer-cta",
+    "version": "1.0.0",
+    "title": "Volunteer CTA",
+    "category": "campaignpress",
+    "icon": "groups",
+    "description": "Call-to-action for volunteer recruitment with customizable text and button.",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Join Our Campaign"
+        },
+        "description": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonText": {
+            "type": "string",
+            "default": "Sign Up to Volunteer"
+        },
+        "buttonUrl": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "textdomain": "campaignpress",
+    "render": "file:./render.php"
+}

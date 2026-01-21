@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/event-countdown",
+    "version": "1.0.0",
+    "title": "Event Countdown",
+    "category": "campaignpress",
+    "icon": "clock",
+    "description": "Display a countdown timer for upcoming events or election day.",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "attributes": {
+        "eventDate": {
+            "type": "string",
+            "default": ""
+        },
+        "eventTitle": {
+            "type": "string",
+            "default": "Election Day"
+        }
+    },
+    "textdomain": "campaignpress",
+    "render": "file:./render.php"
+}

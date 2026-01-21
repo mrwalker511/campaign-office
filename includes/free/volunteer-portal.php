@@ -137,6 +137,51 @@ class CP_Volunteer_Portal {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
 
+        // Volunteers table
+        $volunteers_table = $wpdb->prefix . 'cp_volunteers';
+        $sql_volunteers = "CREATE TABLE IF NOT EXISTS {$volunteers_table} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            contact_id bigint(20) UNSIGNED DEFAULT NULL,
+            first_name varchar(100) NOT NULL,
+            last_name varchar(100) NOT NULL,
+            email varchar(100) NOT NULL,
+            phone varchar(20) DEFAULT NULL,
+            zip_code varchar(10) DEFAULT NULL,
+            interests text DEFAULT NULL,
+            availability text DEFAULT NULL,
+            skills text DEFAULT NULL,
+            status varchar(20) DEFAULT 'new',
+            source varchar(50) DEFAULT NULL,
+            notes text DEFAULT NULL,
+            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY contact_id (contact_id),
+            KEY email (email),
+            KEY status (status),
+            KEY created_at (created_at)
+        ) $charset_collate;";
+
+        // Event RSVPs table
+        $rsvps_table = $wpdb->prefix . 'cp_event_rsvps';
+        $sql_rsvps = "CREATE TABLE IF NOT EXISTS {$rsvps_table} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            event_id bigint(20) UNSIGNED NOT NULL,
+            contact_id bigint(20) UNSIGNED DEFAULT NULL,
+            first_name varchar(100) NOT NULL,
+            last_name varchar(100) NOT NULL,
+            email varchar(100) NOT NULL,
+            phone varchar(20) DEFAULT NULL,
+            guests int(11) DEFAULT 0,
+            status varchar(20) DEFAULT 'confirmed',
+            notes text DEFAULT NULL,
+            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY event_id (event_id),
+            KEY contact_id (contact_id),
+            KEY email (email)
+        ) $charset_collate;";
+
         // Volunteer shifts table
         $sql_shifts = "CREATE TABLE IF NOT EXISTS {$this->shifts_table} (
             id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -212,6 +257,8 @@ class CP_Volunteer_Portal {
         ) $charset_collate;";
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql_volunteers);
+        dbDelta($sql_rsvps);
         dbDelta($sql_shifts);
         dbDelta($sql_hours);
         dbDelta($sql_assignments);

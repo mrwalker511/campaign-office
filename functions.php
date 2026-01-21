@@ -21,13 +21,6 @@ define('CAMPAIGNPRESS_INCLUDES_DIR', CAMPAIGNPRESS_THEME_DIR . '/includes');
 define('CAMPAIGNPRESS_ASSETS_URI', CAMPAIGNPRESS_THEME_URI . '/assets');
 
 /**
- * Text Domain Handling
- * WordPress uses the theme directory name as the default text domain.
- * We need to detect this and use it consistently.
- */
-define('CAMPAIGNPRESS_TEXT_DOMAIN', basename(CAMPAIGNPRESS_THEME_DIR));
-
-/**
  * Legacy Name Compatibility
  * Support both old (campaign-office) and new (campaignpress) naming
  */
@@ -159,14 +152,14 @@ function campaignpress_core_plugin_notice() {
 
         $message = sprintf(
             /* translators: %s: plugin name */
-            esc_html__('CampaignPress theme works best with the %s plugin. The plugin is installed but not active.', CAMPAIGNPRESS_TEXT_DOMAIN),
+            esc_html__('CampaignPress theme works best with the %s plugin. The plugin is installed but not active.', 'campaignpress'),
             '<strong>CampaignPress Core</strong>'
         );
 
          $button = sprintf(
             '<a href="%s" class="button button-primary">%s</a>',
             esc_url($activate_url),
-            esc_html__('Activate Plugin', CAMPAIGNPRESS_TEXT_DOMAIN)
+            esc_html__('Activate Plugin', 'campaignpress')
         );
     } else {
         // Plugin is not installed
@@ -177,7 +170,7 @@ function campaignpress_core_plugin_notice() {
 
         $message = sprintf(
             /* translators: %s: plugin name */
-            esc_html__('CampaignPress theme requires the %s plugin for full functionality.', CAMPAIGNPRESS_TEXT_DOMAIN),
+            esc_html__('CampaignPress theme requires the %s plugin for full functionality.', 'campaignpress'),
             '<strong>CampaignPress Core</strong>'
         );
 

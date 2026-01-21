@@ -1158,9 +1158,9 @@ class CampaignPress_Premium {
             if (isset($feature_data['required_license'])) {
                 $current_license = get_option('campaignpress_license_type', 'free');
 
-                // Allow loading in dev mode or if premium is active
+                // Allow loading in dev mode
                 // Individual features will enforce their own capability restrictions
-                if (!$this->dev_mode && !$this->is_premium_active()) {
+                if (!$this->dev_mode) {
                     if (!$this->license_meets_requirement($current_license, $feature_data['required_license'])) {
                         continue;
                     }

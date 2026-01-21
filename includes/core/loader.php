@@ -65,6 +65,7 @@ if (!class_exists('CampaignPress_Core') && !class_exists('Campaign_Office_Core')
 }
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-functions.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/block-templates.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/integrations.php';
@@ -76,6 +77,7 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/accessibility.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/donation-enhancements.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/social-media-feeds.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-portal.php';
+require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/volunteer-management.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/campaign-communications.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/analytics-dashboard.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-theme-json-helper.php';

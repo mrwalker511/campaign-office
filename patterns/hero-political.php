@@ -6,10 +6,10 @@
  * Keywords: hero, political, campaign, cover
  */
 ?>
-<!-- wp:group {"align":"full","className":"cp-hero","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}},"backgroundColor":"primary","layout":{"type":"default"}} -->
-<div class="wp-block-group alignfull cp-hero has-primary-background-color has-background" style="padding-top:0;padding-bottom:0">
-    <!-- wp:cover {"url":"<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero-placeholder.jpg' ); ?>","dimRatio":60,"overlayColor":"primary","minHeight":90,"minHeightUnit":"vh","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|16"}}}} -->
-    <div class="wp-block-cover alignfull" style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--16);min-height:90vh">
+<!-- wp:group {"align":"full","className":"cp-hero hero-video-section","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}},"backgroundColor":"primary","layout":{"type":"default"}} -->
+<div class="wp-block-group alignfull cp-hero hero-video-section has-primary-background-color has-background" style="padding-top:0;padding-bottom:0">
+    <!-- wp:cover {"url":"<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero-placeholder.jpg' ); ?>","dimRatio":60,"overlayColor":"primary","minHeight":90,"minHeightUnit":"vh","align":"full","className":"is-style-campaign-hero","style":{"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|16"}}}} -->
+    <div class="wp-block-cover alignfull is-style-campaign-hero" style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--16);min-height:90vh">
         <span aria-hidden="true" class="wp-block-cover__background has-primary-background-color has-background-dim-60 has-background-dim"></span>
         <img class="wp-block-cover__image-background" alt="" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero-placeholder.jpg' ); ?>" data-object-fit="cover"/>
         <div class="wp-block-cover__inner-container">

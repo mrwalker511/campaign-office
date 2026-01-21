@@ -14,8 +14,14 @@ function campaignpress_register_advanced_blocks() {
     $blocks_dir = CAMPAIGNPRESS_THEME_DIR . '/blocks';
     $block_registry = WP_Block_Type_Registry::get_instance();
 
-    // List of advanced blocks to register
+    // List of all blocks to register
     $blocks = [
+        // Core blocks (legacy migration)
+        'donation-button'  => 'campaignpress/donation-button',
+        'issue-card'       => 'campaignpress/issue-card',
+        'volunteer-cta'    => 'campaignpress/volunteer-cta',
+        'event-countdown'  => 'campaignpress/event-countdown',
+        // Advanced blocks
         'countdown'         => 'campaignpress/countdown',
         'progress'          => 'campaignpress/progress',
         'donation-form'     => 'campaignpress/donation-form',

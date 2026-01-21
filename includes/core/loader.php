@@ -63,7 +63,6 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/admin/admin-dashboard-fixes.php';
 if (!class_exists('CampaignPress_Core') && !class_exists('Campaign_Office_Core')) {
     require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/custom-post-types.php';
 }
-require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/gutenberg-blocks.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/customizer.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/event-management.php';
 require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/template-functions.php';
@@ -85,9 +84,6 @@ require_once CAMPAIGNPRESS_INCLUDES_DIR . '/free/class-theme-json-helper.php';
 // Load Block Logic
 if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/registration.php' ) ) {
     require_once CAMPAIGNPRESS_THEME_DIR . '/blocks/registration.php';
-}
-if ( file_exists( CAMPAIGNPRESS_THEME_DIR . '/blocks/block-view-loader.php' ) ) {
-    require_once CAMPAIGNPRESS_THEME_DIR . '/blocks/block-view-loader.php';
 }
 
 // Load Premium Features

@@ -1,0 +1,40 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "campaignpress/donation-button",
+    "version": "1.0.0",
+    "title": "Donation Button",
+    "category": "campaignpress",
+    "icon": "money-alt",
+    "description": "Simple donation button linking to ActBlue, WinRed, or other payment processor.",
+    "supports": {
+        "html": false,
+        "align": ["left", "center", "right"],
+        "color": {
+            "text": true,
+            "background": true
+        }
+    },
+    "attributes": {
+        "buttonText": {
+            "type": "string",
+            "default": "Donate Now"
+        },
+        "donationUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonStyle": {
+            "type": "string",
+            "default": "primary",
+            "enum": ["primary", "secondary", "outline"]
+        },
+        "alignment": {
+            "type": "string",
+            "default": "left",
+            "enum": ["left", "center", "right"]
+        }
+    },
+    "textdomain": "campaignpress",
+    "render": "file:./render.php"
+}

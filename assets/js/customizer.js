@@ -187,7 +187,7 @@
       value.bind(function (newval) {
         var opacity = parseFloat(newval) / 100;
         $(
-          '.is-style-campaign-hero .wp-block-cover__background, .campaign-hero .wp-block-cover__background, .hero-section .wp-block-cover__background, .hero-video-section .wp-block-cover__background, .cp-hero .wp-block-cover__background'
+          '.is-style-campaign-hero .wp-block-cover__background, .campaign-hero .wp-block-cover__background, .hero-section .wp-block-cover__background, .hero-video-section .wp-block-cover__background, .cp-hero .wp-block-cover__background, .cp-hero__overlay'
         ).css('opacity', opacity);
       });
     });
@@ -198,9 +198,16 @@
         var mediaType = wp.customize('campaignpress_hero_media_type').get();
         if (mediaType === 'image' && newval) {
           var $heroSections = $('.is-style-campaign-hero, .campaign-hero, .hero-section, .hero-video-section, .cp-hero');
+          var $heroBgElements = $('.cp-hero__bg');
           
           // Update background-image on the wrapper
           $heroSections.css(
+            'background-image',
+            'url("' + newval + '")'
+          );
+
+          // Update background-image on the bg element
+          $heroBgElements.css(
             'background-image',
             'url("' + newval + '")'
           );
@@ -215,10 +222,12 @@
     wp.customize('campaignpress_hero_media_type', function (value) {
       value.bind(function (newval) {
         var $heroSections = $('.is-style-campaign-hero, .campaign-hero, .hero-section, .hero-video-section, .cp-hero');
+        var $heroBgElements = $('.cp-hero__bg');
 
         if (newval === 'video') {
           // Remove background image when video is selected
           $heroSections.css('background-image', 'none');
+          $heroBgElements.css('background-image', 'none');
           
           // Hide image background if it's an <img> tag
           $heroSections.find('.wp-block-cover__image-background').hide();
@@ -266,6 +275,7 @@
           var imageUrl = wp.customize('campaignpress_hero_image').get();
           if (imageUrl) {
             $heroSections.css('background-image', 'url("' + imageUrl + '")');
+            $heroBgElements.css('background-image', 'url("' + imageUrl + '")');
           }
         }
       });

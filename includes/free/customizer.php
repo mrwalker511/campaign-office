@@ -551,7 +551,8 @@ function campaignpress_customizer_output_css() {
     $hero_css .= '.campaign-hero .wp-block-cover__background,';
     $hero_css .= '.hero-section .wp-block-cover__background,';
     $hero_css .= '.hero-video-section .wp-block-cover__background,';
-    $hero_css .= '.cp-hero .wp-block-cover__background {';
+    $hero_css .= '.cp-hero .wp-block-cover__background,';
+    $hero_css .= '.cp-hero__overlay {';
     $hero_css .= 'opacity: ' . esc_attr($opacity_decimal) . ' !important;';
     $hero_css .= '}';
 
@@ -561,7 +562,8 @@ function campaignpress_customizer_output_css() {
         $hero_css .= '.campaign-hero,';
         $hero_css .= '.hero-section,';
         $hero_css .= '.hero-video-section,';
-        $hero_css .= '.cp-hero {';
+        $hero_css .= '.cp-hero,';
+        $hero_css .= '.cp-hero__bg {';
         $hero_css .= 'background-image: url("' . $hero_image . '") !important;';
         $hero_css .= 'background-size: cover !important;';
         $hero_css .= 'background-position: center !important;';

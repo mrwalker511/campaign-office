@@ -25,6 +25,13 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+*.sublime-project
+*.sublime-workspace
+.fleet/
+*.code-workspace
+
+# AI/Development Tools
+.claude/
 
 # WordPress
 wp-config.php
@@ -48,6 +55,9 @@ coverage/
 .nyc_output/
 tests/e2e/reports/
 tests/e2e/playwright-report/
+playwright-report/
+test-results/
+.playwright/
 
 # Build artifacts
 *.tgz
